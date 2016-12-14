@@ -17,9 +17,8 @@ var ng2_table_1 = require("ng2-table/ng2-table");
 var ng2_bootstrap_1 = require("ng2-bootstrap/ng2-bootstrap");
 var ng2_bootstrap_2 = require("ng2-bootstrap/ng2-bootstrap");
 var app_routing_module_1 = require("./app-routing.module");
-var app_component_1 = require("../components/app.component");
-var header_component_1 = require("../components/header.component");
-var navbar_component_1 = require("../components/navbar.component");
+var index_1 = require("../components/index");
+var index_2 = require("../services/index");
 var AppModule = (function () {
     function AppModule() {
     }
@@ -38,11 +37,43 @@ AppModule = __decorate([
             app_routing_module_1.AppRoutingModule,
         ],
         declarations: [
-            app_component_1.AppComponent,
-            header_component_1.HeaderComponent,
-            navbar_component_1.NavbarComponent
+            index_1.AppComponent,
+            index_1.AttachmentComponent,
+            index_1.BookingComponent,
+            index_1.CompanyComponent,
+            index_1.ContractComponent,
+            index_1.DevelopmentComponent,
+            index_1.FacilityComponent,
+            index_1.HeaderComponent,
+            index_1.IncidentComponent,
+            index_1.NavbarComponent,
+            index_1.NewsletterComponent,
+            index_1.PaymentComponent,
+            index_1.PetitionComponent,
+            index_1.PollComponent,
+            index_1.QuotationComponent,
+            index_1.SettingComponent,
+            index_1.UserComponent,
+            index_1.VisitComponent,
         ],
-        bootstrap: [app_component_1.AppComponent]
+        providers: [
+            index_2.AttachmentService,
+            index_2.BookingService,
+            index_2.CompanyService,
+            index_2.ContractService,
+            index_2.DevelopmentService,
+            index_2.FacilityService,
+            index_2.IncidentService,
+            index_2.NewsletterService,
+            index_2.PaymentService,
+            index_2.PetitionService,
+            index_2.PollService,
+            index_2.QuotationService,
+            index_2.SettingService,
+            index_2.UserService,
+            index_2.VisitService,
+        ],
+        bootstrap: [index_1.AppComponent]
     }),
     __metadata("design:paramtypes", [])
 ], AppModule);

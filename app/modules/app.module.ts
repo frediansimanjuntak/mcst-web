@@ -8,9 +8,44 @@ import { Ng2BootstrapModule }           from 'ng2-bootstrap/ng2-bootstrap';
 import { PaginationModule }             from 'ng2-bootstrap/ng2-bootstrap';
 import { AppRoutingModule }     		from './app-routing.module';
 
-import { AppComponent }  				from '../components/app.component';
-import { HeaderComponent }  			from '../components/header.component';
-import { NavbarComponent }  			from '../components/navbar.component';
+import { 
+  AppComponent,
+  AttachmentComponent,
+  BookingComponent,
+  CompanyComponent,
+  ContractComponent,
+  DevelopmentComponent,
+  FacilityComponent,
+  HeaderComponent,
+  IncidentComponent,
+  NavbarComponent,
+  NewsletterComponent,
+  PaymentComponent,
+  PetitionComponent,
+  PollComponent,
+  QuotationComponent,
+  SettingComponent,
+  UserComponent,
+  VisitComponent,
+} from '../components/index';
+
+import { 
+  AttachmentService,
+  BookingService,
+  CompanyService,
+  ContractService,
+  DevelopmentService,
+  FacilityService,
+  IncidentService,
+  NewsletterService,
+  PaymentService,
+  PetitionService,
+  PollService,
+  QuotationService,
+  SettingService,
+  UserService,
+  VisitService,
+} from '../services/index';
 
 @NgModule({
   imports:      [ 
@@ -25,8 +60,40 @@ import { NavbarComponent }  			from '../components/navbar.component';
   ],
   declarations: [ 
   	AppComponent,
-  	HeaderComponent,
-  	NavbarComponent 
+    AttachmentComponent,
+    BookingComponent,
+    CompanyComponent,
+    ContractComponent,
+    DevelopmentComponent,
+    FacilityComponent,
+    HeaderComponent,
+    IncidentComponent,
+    NavbarComponent,
+    NewsletterComponent,
+    PaymentComponent,
+    PetitionComponent,
+    PollComponent,
+    QuotationComponent,
+    SettingComponent,
+    UserComponent,
+    VisitComponent, 
+  ],
+  providers: [ 
+    AttachmentService,
+    BookingService,
+    CompanyService,
+    ContractService,
+    DevelopmentService,
+    FacilityService,
+    IncidentService,
+    NewsletterService,
+    PaymentService,
+    PetitionService,
+    PollService,
+    QuotationService,
+    SettingService,
+    UserService,
+    VisitService,
   ],
   bootstrap:    [ AppComponent ]
 })
