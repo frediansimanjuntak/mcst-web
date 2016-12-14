@@ -19,7 +19,7 @@ AppComponent = __decorate([
     core_1.Component({
         moduleId: module.id,
         selector: 'my-app',
-        template: "\n  \t<header></header>\n  \t<navbar></navbar>\n  \t<router-outlet></router-outlet>\n\t",
+        template: "\n  \t<header></header>\n  \t<navbar></navbar>\n\t",
     }),
     __metadata("design:paramtypes", [])
 ], AppComponent);

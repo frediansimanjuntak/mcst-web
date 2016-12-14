@@ -7,7 +7,6 @@ import '../rxjs-operators';
   template: `
   	<header></header>
   	<navbar></navbar>
-  	<router-outlet></router-outlet>
 	`,
 })
 
