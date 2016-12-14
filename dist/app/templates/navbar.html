@@ -1,11 +1,59 @@
-<nav>
-      <!-- <a routerLink="/dashboard" routerLinkActive="active">Dashboard</a> -->
-      <a routerLink="/dashboard" routerLinkActive="active">Dashboard</a>
-      <a routerLink="/heroes" routerLinkActive="active">Operation</a>
-      <a routerLink="/upload" routerLinkActive="active">Manage Request</a>
-      <a routerLink="/form" routerLinkActive="active">Facilities Booking</a>
-      <a routerLink="/table" routerLinkActive="active">Payment System</a>
-      <a routerLink="/users" routerLinkActive="active">Resident Database</a>
-      <a routerLink="/table" routerLinkActive="active">Manage Community</a>
-      <a routerLink="/users" routerLinkActive="active">Useful Information</a>
-</nav>
+<div class="navbar-component">
+	<div class="container">
+		<nav>
+		    <ul class="nav nav-justified">
+	            <li class="active"><a routerLink="/dashboard" routerLinkActive="active">Dashboard</a></li>
+				<li class="dropdown">
+			        <a class="dropdown-toggle" data-toggle="dropdown" href="#">Operations
+			        <span class="caret"></span></a>
+			        <ul class="dropdown-menu">
+			          <li><a href="#">Guest, Visitor & Contractors</a></li>
+			          <li><a href="#">Incident Reports</a></li>
+			          <li><a href="#">Manage Orders</a></li>
+			          <li><a href="#">Manage Projects</a></li>
+			        </ul>
+			    </li>
+			    <li class="dropdown">
+			        <a class="dropdown-toggle" data-toggle="dropdown" href="#">Manage Request
+			        <span class="caret"></span></a>
+			        <ul class="dropdown-menu">
+			          <li><a href="#">Browse Request</a></li>
+			          <li><a href="#">Add Request</a></li>
+			          <li><a href="#">Search Reference.no</a></li>
+			        </ul>
+			    </li>
+	            <li><a routerLink="/form" routerLinkActive="active">Facilities Booking</a></li>
+			    <li><a routerLink="/table" routerLinkActive="active">Payment System</a></li>
+			    <li class="dropdown">
+			        <a class="dropdown-toggle" data-toggle="dropdown" href="#">Resident Database
+			        <span class="caret"></span></a>
+			        <ul class="dropdown-menu">
+			          <li><a href="#">Browse Database</a></li>
+			          <li><a href="#">Add Resident</a></li>
+			          <li><a href="#">Manage Access control</a></li>
+			        </ul>
+			    </li>
+		        <li class="dropdown">
+			        <a class="dropdown-toggle" data-toggle="dropdown" href="#">Manage Community
+			        <span class="caret"></span></a>
+			        <ul class="dropdown-menu">
+			          <li><a href="#">Manage Announcement</a></li>
+			          <li><a href="#">E-voting</a></li>
+			          <li><a href="#">Manage Feedbacks</a></li>
+			          <li><a href="#">Lost & Found</a></li>
+			        </ul>
+			    </li>
+			    <li class="dropdown">
+			        <a class="dropdown-toggle" data-toggle="dropdown" href="#">Useful Information
+			        <span class="caret"></span></a>
+			        <ul class="dropdown-menu">
+			          <li><a href="#">AG & Circular</a></li>
+			          <li><a href="#">Contact Directory</a></li>
+			        </ul>
+			    </li>
+			</ul>
+		</nav>
+	</div>	
+</div>
+	
+		
