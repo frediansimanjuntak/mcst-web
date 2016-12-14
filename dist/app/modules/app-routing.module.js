@@ -9,19 +9,21 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 var core_1 = require("@angular/core");
-require("../rxjs-operators");
-var AppComponent = (function () {
-    function AppComponent() {
+var router_1 = require("@angular/router");
+// import { DashboardComponent }   from './dashboard.component';
+// import { HeroesComponent }      from './heroes.component';
+var routes = [];
+var AppRoutingModule = (function () {
+    function AppRoutingModule() {
     }
-    return AppComponent;
+    return AppRoutingModule;
 }());
-AppComponent = __decorate([
-    core_1.Component({
-        moduleId: module.id,
-        selector: 'my-app',
-        template: "\n  \t<header></header>\n  \t<navbar></navbar>\n  \t<router-outlet></router-outlet>\n\t",
+AppRoutingModule = __decorate([
+    core_1.NgModule({
+        imports: [router_1.RouterModule.forRoot(routes)],
+        exports: [router_1.RouterModule]
     }),
     __metadata("design:paramtypes", [])
-], AppComponent);
-exports.AppComponent = AppComponent;
-//# sourceMappingURL=app.component.js.map
+], AppRoutingModule);
+exports.AppRoutingModule = AppRoutingModule;
+//# sourceMappingURL=app-routing.module.js.map

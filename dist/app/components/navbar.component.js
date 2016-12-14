@@ -9,19 +9,18 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 var core_1 = require("@angular/core");
-require("../rxjs-operators");
-var AppComponent = (function () {
-    function AppComponent() {
+var NavbarComponent = (function () {
+    function NavbarComponent() {
     }
-    return AppComponent;
+    return NavbarComponent;
 }());
-AppComponent = __decorate([
+NavbarComponent = __decorate([
     core_1.Component({
         moduleId: module.id,
-        selector: 'my-app',
-        template: "\n  \t<header></header>\n  \t<navbar></navbar>\n  \t<router-outlet></router-outlet>\n\t",
+        selector: 'navbar',
+        templateUrl: '../templates/navbar.html'
     }),
     __metadata("design:paramtypes", [])
-], AppComponent);
-exports.AppComponent = AppComponent;
-//# sourceMappingURL=app.component.js.map
+], NavbarComponent);
+exports.NavbarComponent = NavbarComponent;
+//# sourceMappingURL=navbar.component.js.map
