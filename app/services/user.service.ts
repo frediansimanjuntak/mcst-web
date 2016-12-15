@@ -1,40 +1,48 @@
 import { Injectable } from '@angular/core';
 import { Http, Headers, RequestOptions, Response } from '@angular/http';
- 
+import { Observable } from 'rxjs/Rx';
 import { User } from '../models/index';
  
 @Injectable()
 export class UserService {
     constructor(private http: Http) {}
- 
-    getAll() {
-        return this.http.get('https://192.168.10.73:3333/api/users',  this.jwt()).map((response: Response) => response.json());
+
+    getAllUser(){
+        return this.http.get('https://192.168.10.73:3333/api/users')
+            .map((res:Response) => res.json())
+            .catch((error:any) => Observable.throw(error.json().error || 'Server error'));
     }
- 
-    getById(id: number) {
-        return this.http.get('https://192.168.10.73:3333/api/users' + id, this.jwt()).map((response: Response) => response.json());
+
+    getById(usersID:string){
+        return this.http.get('https://192.168.10.73:3333/api/users' + usersID)
+            .map((res:Response) => res.json())
+            .catch((error:any) => Observable.throw(error.json().error || 'Server error'));
     }
- 
-    create(user: User) {
-        return this.http.post('https://192.168.10.73:3333/api/users', user, this.jwt()).map((response: Response) => console.log(response.json()));
+
+    addUser(body:User){
+        let options = new RequestOptions({
+            headers: new Headers({ 'Content-Type': 'application/json;charset=UTF-8' }) 
+        });
+        return this.http.post('https://192.168.10.73:3333/api/users',body, options)
+            .map((res:Response) => res.json())
+            .catch((error:any) => Observable.throw(error.json().error || 'Server error'));
     }
- 
-    update(user: User) {
-        return this.http.put('https://192.168.10.73:3333/api/users' + user._id, user, this.jwt()).map((response: Response) => response.json());
+
+    updateUser(body:User){
+        let options = new RequestOptions({
+            headers: new Headers({ 'Content-Type': 'application/json;charset=UTF-8' }) 
+        });
+        return this.http.put('https://192.168.10.73:3333/api/users' + body._id,body, options)
+            .map((res:Response) => res.json())
+            .catch((error:any) => Observable.throw(error.json().error || 'Server error'));
     }
- 
-    delete(id: number) {
-        return this.http.delete('https://192.168.10.73:3333/api/users' + id, this.jwt()).map((response: Response) => response.json());
-    }
- 
-    // private helper methods
- 
-    private jwt() {
-        // create authorization header with jwt token
-        let currentUser = JSON.parse(localStorage.getItem('currentUser'));
-        if (currentUser && currentUser.token) {
-            let headers = new Headers({ 'Authorization': 'Bearer ' + currentUser.token });
-            return new RequestOptions({ headers: headers });
-        }
+
+    deleteUser(usersID:string){
+        let options = new RequestOptions({
+            headers: new Headers({ 'Content-Type': 'application/json;charset=UTF-8' }) 
+        });
+        return this.http.delete('https://192.168.10.73:3333/api/users' + usersID,options)
+            .map((res:Response) => res.json())
+            .catch((error:any) => Observable.throw(error.json().error || 'Server error'));
     }
 }

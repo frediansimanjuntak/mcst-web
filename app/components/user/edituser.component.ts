@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
- 
+import { Router } from '@angular/router';
+
+import { AlertService, UserService } from '../../services/index';
 import { User } from '../../models/index';
-import { UserService } from '../../services/index';
  
 @Component({
     moduleId: module.id,
@@ -26,28 +27,22 @@ export class EditUserComponent implements OnInit {
     users: User[] = [];
     model: any = {};
  
-    constructor(private userService: UserService) {
+    constructor(private router: Router,
+        private userService: UserService,
+        private alertService: AlertService) {
         this.user = JSON.parse(localStorage.getItem('user'));
         console.log(this.user)
     }
  
-    ngOnInit() {
-        this.loadAllUsers();
-    }
- 
-    deleteUser(id: number) {
-        this.userService.delete(id) 
-        // .subscribe(() => { this.loadAllUsers() });
+    register() {
+        this.userService.create(this.model)
         .subscribe(
-			response => {
-				if(response.error) { 
-	                alert(`The user could not be deleted, server Error.`);
-	            } else {
-	                this.loadAllUsers()
-	            }
+            data => {
+                this.alertService.success('Registration successful', true);
+                this.router.navigate(['/user']);
             },
-            error=> { 
-                alert(`The user could not be deleted, server Error.`);
+            error => {
+                this.alertService.error(error);
             }
         );
     }
@@ -57,13 +52,15 @@ export class EditUserComponent implements OnInit {
 		.subscribe(
 			response => {
 				if(response.error) { 
-	                alert(`The user could not be updated, server Error.`);
+	                this.alertService.error(response.error);
 	            } else {
 	                // EmitterService.get(this.userList).emit(response.users);
+                     this.alertService.success('Registration successful', true);
+                     this.router.navigate(['/user']);
 	            }
             },
             error=> { 
-            	alert(`The user could not be updated, server Error.`);
+            	this.alertService.error(error);
             }
         );
 	}
