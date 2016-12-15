@@ -1,24 +1,38 @@
 .header-component{
 	background-color: #30333c;
+  margin-bottom: 0 !important;
+  border-radius: 0 !important;
 }
 
 .navbar-component, .dropdown-menu {
 	background-color: #c1baa7 !important;
 }
 
-.nav {
+.nav, .dropdown-menu {
       margin-bottom: 0;
       border-radius: 0;
       font-size: 12px !important;
 }
 
-.nav > li > a {
-    padding: 10px 0px !important;
-    color: #5b595c;
+.navbar-brand-centered {
+      position: absolute;
+      left: 45%;
+      display: block;
+      width: 160px;
+      text-align: center;
+      font-size: 250%;
+    }
+.navbar>.container .navbar-brand-centered, 
+.navbar>.container-fluid .navbar-brand-centered {
+    margin-left: -80px;
 }
 
 .header-component > div > h1 {
   color: #ffffff !important;
   font-family: Arial, Helvetica, sans-serif;
   font-size: 250%;
+}
+
+.header-component {
+  color: #ffffff;
 }
