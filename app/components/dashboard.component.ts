@@ -4,8 +4,8 @@ import { MENUS } from './mock-menu';
 @Component({
   moduleId: module.id,
   selector: 'dashboard',
-  templateUrl: 'dashboard.html',
-  styleUrls: [ 'dashboard.css' ]
+  templateUrl: '../templates/dashboard.html',
+  // styleUrls: [ 'dashboard.css' ]
 })
 export class DashboardComponent implements OnInit {
   menus = MENUS;

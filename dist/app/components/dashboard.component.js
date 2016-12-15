@@ -15,11 +15,11 @@ var DashboardComponent = (function () {
         this.menus = mock_menu_1.MENUS;
     }
     DashboardComponent.prototype.ngOnInit = function () {
-        this.dashboardMenu[0] = this.menus[0];
-        this.dashboardMenu[1] = this.menus[0];
-        this.dashboardMenu[2] = this.menus[0];
-        this.dashboardMenu[3] = this.menus[0];
-        this.dashboardMenu[4] = this.menus[0];
+        this.menus1[0] = this.menus[2];
+        this.menus1[1] = this.menus[3];
+        this.menus1[2] = this.menus[4];
+        this.menus1[3] = this.menus[5];
+        this.menus1[4] = this.menus[6];
     };
     return DashboardComponent;
 }());
@@ -27,8 +27,7 @@ DashboardComponent = __decorate([
     core_1.Component({
         moduleId: module.id,
         selector: 'dashboard',
-        templateUrl: 'dashboard.component.html',
-        styleUrls: ['dashboard.component.css']
+        templateUrl: '../templates/dashboard.html',
     }),
     __metadata("design:paramtypes", [])
 ], DashboardComponent);
