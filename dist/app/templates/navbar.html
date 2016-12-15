@@ -9,57 +9,19 @@
     </div>
      <div class="collapse navbar-collapse" id="myNavbar">
 		    <ul class="nav nav-nav nav-justified">
-	            <li class="active"><a routerLink="/dashboard" routerLinkActive="active">Dashboard</a></li>
-				<li class="dropdown">
-			        <a class="dropdown-toggle" data-toggle="dropdown" href="#">Operations
-			        <span class="caret"></span></a>
-			        <ul class="dropdown-menu">
-			          <li><a href="#">Guest, Visitor & Contractors</a></li>
-			          <li><a href="#">Incident Reports</a></li>
-			          <li><a href="#">Manage Orders</a></li>
-			          <li><a href="#">Manage Projects</a></li>
+		      	<li *ngFor="let menu of menus" [class.dropdown]="menu.sub" class="active" >
+		      		<a 	[routerLink]="menu.link" [class.dropdown-toggle]="menu.sub"
+		      			data-toggle="dropdown" routerLinkActive="active">
+		      			{{ menu.name }}<span class="caret" *ngIf="menu.sub"></span>
+		      		</a>
+		      		<ul *ngIf="menu.sub" class="dropdown-menu">
+			          <li>
+			          	<a *ngFor="let sub of menu.sub" [routerLink]="sub.link">{{ sub.name }}</a>
+			          </li>
 			        </ul>
-			    </li>
-			    <li class="dropdown">
-			        <a class="dropdown-toggle" data-toggle="dropdown" href="#">Manage Request
-			        <span class="caret"></span></a>
-			        <ul class="dropdown-menu">
-			          <li><a href="#">Browse Request</a></li>
-			          <li><a href="#">Add Request</a></li>
-			          <li><a href="#">Search Reference.no</a></li>
-			        </ul>
-			    </li>
-	            <li><a routerLink="/form" routerLinkActive="active">Facilities Booking</a></li>
-			    <li><a routerLink="/table" routerLinkActive="active">Payment System</a></li>
-			    <li class="dropdown">
-			        <a class="dropdown-toggle" data-toggle="dropdown" href="#">Resident Database
-			        <span class="caret"></span></a>
-			        <ul class="dropdown-menu">
-			          <li><a href="#">Browse Database</a></li>
-			          <li><a href="#">Add Resident</a></li>
-			          <li><a href="#">Manage Access control</a></li>
-			        </ul>
-			    </li>
-		        <li class="dropdown">
-			        <a class="dropdown-toggle" data-toggle="dropdown" href="#">Manage Community
-			        <span class="caret"></span></a>
-			        <ul class="dropdown-menu">
-			          <li><a href="#">Manage Announcement</a></li>
-			          <li><a href="#">E-voting</a></li>
-			          <li><a href="#">Manage Feedbacks</a></li>
-			          <li><a href="#">Lost & Found</a></li>
-			        </ul>
-			    </li>
-			    <li class="dropdown">
-			        <a class="dropdown-toggle" data-toggle="dropdown" href="#">Useful Information
-			        <span class="caret"></span></a>
-			        <ul class="dropdown-menu">
-			          <li><a href="#">AG & Circular</a></li>
-			          <li><a href="#">Contact Directory</a></li>
-			        </ul>
-			    </li>
+		      	</li>
 			</ul>
-			 </div>
+	 </div>
 			 </div>
 		</nav>
 		
