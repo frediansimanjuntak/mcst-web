@@ -1,10 +1,10 @@
-import { Development, Attachment, User, Property, Quotation } from './index'
+import { Development, Attachment, User, Quotation } from './index'
 
 export class Contract {
   _id : string;
   reference_no : string;
   development : Development;
-  property : Property;
+  property : string;
   title : string;
   contract_type : string;
   // reference_type : string; not sure how to make

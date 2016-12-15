@@ -1,10 +1,10 @@
-import { User, Development, Property, Attachment, Contract } from './index';
+import { User, Development, Attachment, Contract } from './index';
 
 export class Petition {
   _id : string;
   reference_no : string;
   development : Development;
-  property : Property;
+  property : string;
   petition_type : string;
   attachment : Attachment[];
   contract : Contract;

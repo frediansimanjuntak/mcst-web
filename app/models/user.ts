@@ -1,4 +1,4 @@
-import { Development, Property, UserGroup } from './index';
+import { Development, UserGroup } from './index';
 
 export class User {
   _id : string;
@@ -9,7 +9,7 @@ export class User {
   role : string;
   default_property : {
     development : Development,
-    property : Property,
+    property : string,
     role : string
   };
   details : {
@@ -25,19 +25,19 @@ export class User {
   rented_property : [
     {
       development : Development,
-      property : Property,
+      property : string,
     }
   ];
   owned_property : [
     {
       development : Development,
-      property : Property
+      property : string
     }
   ];
   authorized_property : [
     {
       development : Development,
-      property : Property
+      property : string
     }
   ];
   active : true;

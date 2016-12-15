@@ -1,9 +1,9 @@
-import { User, Development, Property } from './index';
+import { User, Development } from './index';
 
 export class Visit {
   _id : string;
   development : Development;
-  property : Property;
+  property : string;
   visitor : {
     prefix : string,
     full_name : string,

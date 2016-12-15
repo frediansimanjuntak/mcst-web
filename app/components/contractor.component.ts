@@ -3,13 +3,13 @@ import '../rxjs-operators';
 
 @Component({
   moduleId: module.id,
-  selector: 'setting',
+  selector: 'contractor',
   template: `
   	<header></header>
   	<navbar></navbar>
 	`,
 })
 
-export class SettingComponent  { 
+export class ContractorComponent  { 
 	
 }

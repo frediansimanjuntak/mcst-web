@@ -1,10 +1,10 @@
-import { Development, Facility, Payment, User, Property } from './index'
+import { Development, Facility, Payment, User } from './index'
 
 export class Booking {
   _id : string;
   reference_no : string; 
   development : Development;
-  property : Property;
+  property : string;
   facility : Facility;
   booking_type :string;
   start_time : string;

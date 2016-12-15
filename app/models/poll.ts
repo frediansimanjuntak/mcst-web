@@ -1,4 +1,4 @@
-import { User, Development, Property } from './index';
+import { User, Development } from './index';
 
 export class Poll {
    _id : string;
@@ -8,7 +8,7 @@ export class Poll {
   development : Development;
   votes : [
     {
-      property : Property,
+      property : string,
       answer : string,
       voted_by : User,
       voted_at : string,

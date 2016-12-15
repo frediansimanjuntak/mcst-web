@@ -1,11 +1,11 @@
-import { Development, Attachment, Contract, User, Property } from './index'
+import { Development, Attachment, Contract, User } from './index'
 
 export class Incident {
   _id : string;
   reference_no : string;
   title : string;
   development : Development;
-  property : Property;
+  property : string;
   incident_type : string;
   landlord_acceptance : string;
   attachment : Attachment[];

@@ -1,10 +1,10 @@
- import { Development, Property, Attachment, User } from './index'
+ import { Development, Attachment, User } from './index'
 
 export class Payment {
   _id : string;
   serial_no : string;
   development : Development;
-  property : Property;
+  property : string;
   payment_type : string;
   payment_proof : Attachment[];/*link to attachment*/
   sender : User;
