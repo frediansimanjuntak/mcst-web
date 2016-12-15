@@ -10,9 +10,11 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 var core_1 = require("@angular/core");
 var router_1 = require("@angular/router");
-// import { DashboardComponent }   from './dashboard.component';
-// import { HeroesComponent }      from './heroes.component';
-var routes = [];
+var index_1 = require("../components/index");
+var routes = [
+    { path: '', redirectTo: '/login', pathMatch: 'full' },
+    { path: 'login', component: index_1.LoginComponent },
+];
 var AppRoutingModule = (function () {
     function AppRoutingModule() {
     }
