@@ -1,11 +1,11 @@
 import { Component, ElementRef, OnInit } from '@angular/core';
-import { AuthenticationService } from '../services/index';
+import { AuthenticationService } from '../../services/index';
 import { Router } from '@angular/router'; 
 @Component({
     moduleId: module.id,
     selector: 'login-form',
     providers: [AuthenticationService],
-    templateUrl: '../templates/login.html',
+    templateUrl: '../../templates/login.html',
 })
  
 export class LoginComponent implements OnInit {
