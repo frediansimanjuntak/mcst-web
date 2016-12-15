@@ -54,6 +54,7 @@ AppModule = __decorate([
             index_1.PetitionComponent,
             index_1.PollComponent,
             index_1.QuotationComponent,
+            index_1.RegisterComponent,
             index_1.UserComponent,
             index_1.UserGroupComponent,
             index_1.VisitComponent,

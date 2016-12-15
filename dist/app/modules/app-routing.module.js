@@ -14,6 +14,7 @@ var index_1 = require("../components/index");
 var routes = [
     { path: '', redirectTo: '/login', pathMatch: 'full' },
     { path: 'login', component: index_1.LoginComponent },
+    { path: 'register', component: index_1.RegisterComponent },
 ];
 var AppRoutingModule = (function () {
     function AppRoutingModule() {

@@ -13,6 +13,7 @@ import {
   HeaderComponent,
   IncidentComponent,
   LoginComponent,
+  RegisterComponent,
   NavbarComponent,
   PaymentComponent,
   PetitionComponent,
@@ -25,7 +26,7 @@ import {
 const routes: Routes = [
   { path: '', redirectTo: '/login', pathMatch: 'full' },
   { path: 'login',  component: LoginComponent },
-  // { path: 'detail/:id', component: HeroDetailComponent },
+  { path: 'register', component: RegisterComponent },
   // { path: 'heroes',     component: HeroesComponent },
   // { path: 'upload', 	component: FileUploadComponent },
   // { path: 'form',     component: HeroFormComponent },
