@@ -37,6 +37,7 @@ AppModule = __decorate([
             app_routing_module_1.AppRoutingModule,
         ],
         declarations: [
+            index_1.AlertComponent,
             index_1.AppComponent,
             index_1.AttachmentComponent,
             index_1.BookingComponent,
@@ -58,6 +59,7 @@ AppModule = __decorate([
             index_1.VisitComponent,
         ],
         providers: [
+            index_2.AlertService,
             index_2.AttachmentService,
             index_2.AuthenticationService,
             index_2.BookingService,

@@ -2,6 +2,7 @@
 function __export(m) {
     for (var p in m) if (!exports.hasOwnProperty(p)) exports[p] = m[p];
 }
+__export(require("./alert.component"));
 __export(require("./app.component"));
 __export(require("./attachment.component"));
 __export(require("./booking.component"));
@@ -19,6 +20,7 @@ __export(require("./petition.component"));
 __export(require("./poll.component"));
 __export(require("./quotation.component"));
 __export(require("./user-group.component"));
-__export(require("./user.component"));
+__export(require("./user/user.component"));
+__export(require("./user/edituser.component"));
 __export(require("./visit.component"));
 //# sourceMappingURL=index.js.map

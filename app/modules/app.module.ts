@@ -9,6 +9,7 @@ import { PaginationModule }             from 'ng2-bootstrap/ng2-bootstrap';
 import { AppRoutingModule }     		from './app-routing.module';
 
 import { 
+  AlertComponent,
   AppComponent,
   AttachmentComponent,
   BookingComponent,
@@ -30,7 +31,8 @@ import {
   VisitComponent,
 } from '../components/index';
 
-import { 
+import {
+  AlertService,
   AttachmentService,
   AuthenticationService,
   BookingService,
@@ -61,6 +63,7 @@ import {
   	AppRoutingModule,
   ],
   declarations: [ 
+    AlertComponent,
   	AppComponent,
     AttachmentComponent,
     BookingComponent,
@@ -82,6 +85,7 @@ import {
     VisitComponent, 
   ],
   providers: [ 
+    AlertService,
     AttachmentService,
     AuthenticationService,
     BookingService,

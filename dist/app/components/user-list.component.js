@@ -10,18 +10,18 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 var core_1 = require("@angular/core");
 var index_1 = require("../services/index");
-var UserComponent = (function () {
-    function UserComponent(userService) {
+var UserListComponent = (function () {
+    function UserListComponent(userService) {
         this.userService = userService;
         this.users = [];
         this.model = {};
         this.user = JSON.parse(localStorage.getItem('user'));
         console.log(this.user);
     }
-    UserComponent.prototype.ngOnInit = function () {
+    UserListComponent.prototype.ngOnInit = function () {
         this.loadAllUsers();
     };
-    UserComponent.prototype.deleteUser = function (id) {
+    UserListComponent.prototype.deleteUser = function (id) {
         var _this = this;
         this.userService.delete(id)
             .subscribe(function (response) {
@@ -35,7 +35,7 @@ var UserComponent = (function () {
             alert("The user could not be deleted, server Error.");
         });
     };
-    UserComponent.prototype.updateUser = function () {
+    UserListComponent.prototype.updateUser = function () {
         this.userService.update(this.model)
             .subscribe(function (response) {
             if (response.error) {
@@ -47,18 +47,18 @@ var UserComponent = (function () {
             alert("The user could not be updated, server Error.");
         });
     };
-    UserComponent.prototype.loadAllUsers = function () {
+    UserListComponent.prototype.loadAllUsers = function () {
         var _this = this;
         this.userService.getAll().subscribe(function (users) { _this.users = users; console.log(users); });
     };
-    return UserComponent;
+    return UserListComponent;
 }());
-UserComponent = __decorate([
+UserListComponent = __decorate([
     core_1.Component({
         moduleId: module.id,
         template: "\n    <div class=\"col-md-6 col-md-offset-3\">\n    <h1>Hi {{user.username}}!</h1>\n    <p>You're logged in with Angular 2!!</p>\n    <h3>All registered users:</h3>\n    <ul>\n        <li *ngFor=\"let user of users\">\n            {{user.username}}\n            - <a (click)=\"deleteUser(user.id)\">Delete</a>\n        </li>\n    </ul>\n    <p><a [routerLink]=\"['/login']\">Logout</a></p>\n</div>\n  ",
     }),
     __metadata("design:paramtypes", [index_1.UserService])
-], UserComponent);
-exports.UserComponent = UserComponent;
-//# sourceMappingURL=user.component.js.map
+], UserListComponent);
+exports.UserListComponent = UserListComponent;
+//# sourceMappingURL=user-list.component.js.map

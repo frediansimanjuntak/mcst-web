@@ -1,3 +1,4 @@
+export * from './alert.service';
 export * from './attachment.service';
 export * from './authentication.service';
 export * from './booking.service';

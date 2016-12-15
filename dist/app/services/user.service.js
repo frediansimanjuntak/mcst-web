@@ -10,11 +10,34 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 var core_1 = require("@angular/core");
 var http_1 = require("@angular/http");
-// import { User } from '../models/index';
 var UserService = (function () {
     function UserService(http) {
         this.http = http;
     }
+    UserService.prototype.getAll = function () {
+        return this.http.get('https://192.168.10.73:3333/api/users', this.jwt()).map(function (response) { return response.json(); });
+    };
+    UserService.prototype.getById = function (id) {
+        return this.http.get('https://192.168.10.73:3333/api/users' + id, this.jwt()).map(function (response) { return response.json(); });
+    };
+    UserService.prototype.create = function (user) {
+        return this.http.post('https://192.168.10.73:3333/api/users', user, this.jwt()).map(function (response) { return console.log(response.json()); });
+    };
+    UserService.prototype.update = function (user) {
+        return this.http.put('https://192.168.10.73:3333/api/users' + user._id, user, this.jwt()).map(function (response) { return response.json(); });
+    };
+    UserService.prototype.delete = function (id) {
+        return this.http.delete('https://192.168.10.73:3333/api/users' + id, this.jwt()).map(function (response) { return response.json(); });
+    };
+    // private helper methods
+    UserService.prototype.jwt = function () {
+        // create authorization header with jwt token
+        var currentUser = JSON.parse(localStorage.getItem('currentUser'));
+        if (currentUser && currentUser.token) {
+            var headers = new http_1.Headers({ 'Authorization': 'Bearer ' + currentUser.token });
+            return new http_1.RequestOptions({ headers: headers });
+        }
+    };
     return UserService;
 }());
 UserService = __decorate([

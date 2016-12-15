@@ -2,6 +2,7 @@
 function __export(m) {
     for (var p in m) if (!exports.hasOwnProperty(p)) exports[p] = m[p];
 }
+__export(require("./alert.service"));
 __export(require("./attachment.service"));
 __export(require("./authentication.service"));
 __export(require("./booking.service"));

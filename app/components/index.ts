@@ -1,3 +1,4 @@
+export * from './alert.component'
 export * from './app.component';
 export * from './attachment.component';
 export * from './booking.component';
@@ -15,5 +16,6 @@ export * from './petition.component';
 export * from './poll.component';
 export * from './quotation.component';
 export * from './user-group.component';
-export * from './user.component';
+export * from './user/user.component';
+export * from './user/edituser.component';
 export * from './visit.component';
