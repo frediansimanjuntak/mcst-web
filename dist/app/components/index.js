@@ -10,6 +10,7 @@ __export(require("./company.component"));
 __export(require("./contract.component"));
 __export(require("./contractor.component"));
 __export(require("./development.component"));
+__export(require("./dashboard.component"));
 __export(require("./facility.component"));
 __export(require("./header.component"));
 __export(require("./incident.component"));
