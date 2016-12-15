@@ -9,21 +9,26 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 var core_1 = require("@angular/core");
-var mock_menu_1 = require("./mock-menu");
-var NavbarComponent = (function () {
-    function NavbarComponent() {
-        this.menus = mock_menu_1.MENUS;
+var DashboardComponent = (function () {
+    function DashboardComponent(heroService) {
+        this.heroService = heroService;
+        this.heroes = [];
     }
-    return NavbarComponent;
+    DashboardComponent.prototype.ngOnInit = function () {
+        var _this = this;
+        this.heroService.getHeroes()
+            .then(function (heroes) { return _this.heroes = heroes.slice(1, 5); });
+    };
+    return DashboardComponent;
 }());
-NavbarComponent = __decorate([
+DashboardComponent = __decorate([
     core_1.Component({
         moduleId: module.id,
-        selector: 'navbar',
-        templateUrl: '../templates/navbar.html',
-        styleUrls: ['../templates/styles/navbar.css']
+        selector: 'dashboard',
+        templateUrl: 'dashboard.component.html',
+        styleUrls: ['dashboard.component.css']
     }),
-    __metadata("design:paramtypes", [])
-], NavbarComponent);
-exports.NavbarComponent = NavbarComponent;
-//# sourceMappingURL=navbar.component.js.map
+    __metadata("design:paramtypes", [Object])
+], DashboardComponent);
+exports.DashboardComponent = DashboardComponent;
+//# sourceMappingURL=dashboard.component.js.map

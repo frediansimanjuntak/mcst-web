@@ -10,13 +10,13 @@
      <div class="collapse navbar-collapse" id="myNavbar">
 		    <ul class="nav nav-nav nav-justified">
 		      	<li *ngFor="let menu of menus" [class.dropdown]="menu.sub" class="active" >
-		      		<a 	[routerLink]="menu.link" [class.dropdown-toggle]="menu.sub"
-		      			data-toggle="dropdown" routerLinkActive="active">
-		      			{{ menu.name }}<span class="caret" *ngIf="menu.sub"></span>
+		      		<a routerLinkActive="active"[routerLink]="menu.link" [class.dropdown-toggle]="menu.sub"
+		      			data-toggle="dropdown">
+		      			<strong>{{ menu.name }}</strong><span class="caret" *ngIf="menu.sub"></span>
 		      		</a>
 		      		<ul *ngIf="menu.sub" class="dropdown-menu">
 			          <li>
-			          	<a *ngFor="let sub of menu.sub" [routerLink]="sub.link">{{ sub.name }}</a>
+			          	<a *ngFor="let sub of menu.sub" [routerLink]="sub.link"><strong>{{ sub.name }}</strong></a>
 			          </li>
 			        </ul>
 		      	</li>
