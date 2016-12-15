@@ -10,11 +10,45 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 var core_1 = require("@angular/core");
 var http_1 = require("@angular/http");
-// import { User } from '../models/index';
+var Rx_1 = require("rxjs/Rx");
 var IncidentService = (function () {
     function IncidentService(http) {
         this.http = http;
     }
+    IncidentService.prototype.getAll = function () {
+        return this.http.get('https://192.168.10.73:3333/api/incidents')
+            .map(function (res) { return res.json(); })
+            .catch(function (error) { return Rx_1.Observable.throw(error.json().error || 'Server error'); });
+    };
+    IncidentService.prototype.getById = function (id) {
+        return this.http.get('https://192.168.10.73:3333/api/incidents' + id)
+            .map(function (res) { return res.json(); })
+            .catch(function (error) { return Rx_1.Observable.throw(error.json().error || 'Server error'); });
+    };
+    IncidentService.prototype.create = function (body) {
+        var options = new http_1.RequestOptions({
+            headers: new http_1.Headers({ 'Content-Type': 'application/json;charset=UTF-8' })
+        });
+        return this.http.post('https://192.168.10.73:3333/api/incidents', body, options)
+            .map(function (res) { return res.json(); })
+            .catch(function (error) { return Rx_1.Observable.throw(error.json().error || 'Server error'); });
+    };
+    IncidentService.prototype.update = function (body) {
+        var options = new http_1.RequestOptions({
+            headers: new http_1.Headers({ 'Content-Type': 'application/json;charset=UTF-8' })
+        });
+        return this.http.put('https://192.168.10.73:3333/api/incidents' + body._id, body, options)
+            .map(function (res) { return res.json(); })
+            .catch(function (error) { return Rx_1.Observable.throw(error.json().error || 'Server error'); });
+    };
+    IncidentService.prototype.delete = function (id) {
+        var options = new http_1.RequestOptions({
+            headers: new http_1.Headers({ 'Content-Type': 'application/json;charset=UTF-8' })
+        });
+        return this.http.delete('https://192.168.10.73:3333/api/incidents' + id, options)
+            .map(function (res) { return res.json(); })
+            .catch(function (error) { return Rx_1.Observable.throw(error.json().error || 'Server error'); });
+    };
     return IncidentService;
 }());
 IncidentService = __decorate([
