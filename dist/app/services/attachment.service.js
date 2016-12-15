@@ -15,17 +15,17 @@ var AttachmentService = (function () {
     function AttachmentService(http) {
         this.http = http;
     }
-    AttachmentService.prototype.getAllAttachment = function () {
+    AttachmentService.prototype.getAll = function () {
         return this.http.get('https://192.168.10.73:3333/api/attachments')
             .map(function (res) { return res.json(); })
             .catch(function (error) { return Rx_1.Observable.throw(error.json().error || 'Server error'); });
     };
-    AttachmentService.prototype.getById = function (attachmentsID) {
-        return this.http.get('https://192.168.10.73:3333/api/attachments' + attachmentsID)
+    AttachmentService.prototype.getById = function (id) {
+        return this.http.get('https://192.168.10.73:3333/api/attachments' + id)
             .map(function (res) { return res.json(); })
             .catch(function (error) { return Rx_1.Observable.throw(error.json().error || 'Server error'); });
     };
-    AttachmentService.prototype.addAttachment = function (body) {
+    AttachmentService.prototype.create = function (body) {
         var options = new http_1.RequestOptions({
             headers: new http_1.Headers({ 'Content-Type': 'application/json;charset=UTF-8' })
         });
@@ -33,7 +33,7 @@ var AttachmentService = (function () {
             .map(function (res) { return res.json(); })
             .catch(function (error) { return Rx_1.Observable.throw(error.json().error || 'Server error'); });
     };
-    AttachmentService.prototype.updateAttachment = function (body) {
+    AttachmentService.prototype.update = function (body) {
         var options = new http_1.RequestOptions({
             headers: new http_1.Headers({ 'Content-Type': 'application/json;charset=UTF-8' })
         });
@@ -41,11 +41,11 @@ var AttachmentService = (function () {
             .map(function (res) { return res.json(); })
             .catch(function (error) { return Rx_1.Observable.throw(error.json().error || 'Server error'); });
     };
-    AttachmentService.prototype.deleteAttachment = function (attachmentsID) {
+    AttachmentService.prototype.delete = function (id) {
         var options = new http_1.RequestOptions({
             headers: new http_1.Headers({ 'Content-Type': 'application/json;charset=UTF-8' })
         });
-        return this.http.delete('https://192.168.10.73:3333/api/attachments' + attachmentsID, options)
+        return this.http.delete('https://192.168.10.73:3333/api/attachments' + id, options)
             .map(function (res) { return res.json(); })
             .catch(function (error) { return Rx_1.Observable.throw(error.json().error || 'Server error'); });
     };

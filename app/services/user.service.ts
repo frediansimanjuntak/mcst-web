@@ -7,19 +7,19 @@ import { User } from '../models/index';
 export class UserService {
     constructor(private http: Http) {}
 
-    getAllUser(){
+    getAll(){
         return this.http.get('https://192.168.10.73:3333/api/users')
             .map((res:Response) => res.json())
             .catch((error:any) => Observable.throw(error.json().error || 'Server error'));
     }
 
-    getById(usersID:string){
-        return this.http.get('https://192.168.10.73:3333/api/users' + usersID)
+    getById(id:string){
+        return this.http.get('https://192.168.10.73:3333/api/users' + id)
             .map((res:Response) => res.json())
             .catch((error:any) => Observable.throw(error.json().error || 'Server error'));
     }
 
-    addUser(body:User){
+    create(body:User){
         let options = new RequestOptions({
             headers: new Headers({ 'Content-Type': 'application/json;charset=UTF-8' }) 
         });
@@ -28,7 +28,7 @@ export class UserService {
             .catch((error:any) => Observable.throw(error.json().error || 'Server error'));
     }
 
-    updateUser(body:User){
+    update(body:User){
         let options = new RequestOptions({
             headers: new Headers({ 'Content-Type': 'application/json;charset=UTF-8' }) 
         });
@@ -37,11 +37,11 @@ export class UserService {
             .catch((error:any) => Observable.throw(error.json().error || 'Server error'));
     }
 
-    deleteUser(usersID:string){
+    delete(id:string){
         let options = new RequestOptions({
             headers: new Headers({ 'Content-Type': 'application/json;charset=UTF-8' }) 
         });
-        return this.http.delete('https://192.168.10.73:3333/api/users' + usersID,options)
+        return this.http.delete('https://192.168.10.73:3333/api/users' + id,options)
             .map((res:Response) => res.json())
             .catch((error:any) => Observable.throw(error.json().error || 'Server error'));
     }

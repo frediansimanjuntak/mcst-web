@@ -11,21 +11,21 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 var core_1 = require("@angular/core");
 var http_1 = require("@angular/http");
 var Rx_1 = require("rxjs/Rx");
-var AttachmentService = (function () {
-    function AttachmentService(http) {
+var BookingService = (function () {
+    function BookingService(http) {
         this.http = http;
     }
-    AttachmentService.prototype.getAllBooking = function () {
+    BookingService.prototype.getAll = function () {
         return this.http.get('https://192.168.10.73:3333/api/bookings')
             .map(function (res) { return res.json(); })
             .catch(function (error) { return Rx_1.Observable.throw(error.json().error || 'Server error'); });
     };
-    AttachmentService.prototype.getById = function (bookingsID) {
-        return this.http.get('https://192.168.10.73:3333/api/bookings' + bookingsID)
+    BookingService.prototype.getById = function (id) {
+        return this.http.get('https://192.168.10.73:3333/api/bookings' + id)
             .map(function (res) { return res.json(); })
             .catch(function (error) { return Rx_1.Observable.throw(error.json().error || 'Server error'); });
     };
-    AttachmentService.prototype.addBooking = function (body) {
+    BookingService.prototype.create = function (body) {
         var options = new http_1.RequestOptions({
             headers: new http_1.Headers({ 'Content-Type': 'application/json;charset=UTF-8' })
         });
@@ -33,7 +33,7 @@ var AttachmentService = (function () {
             .map(function (res) { return res.json(); })
             .catch(function (error) { return Rx_1.Observable.throw(error.json().error || 'Server error'); });
     };
-    AttachmentService.prototype.updateBooking = function (body) {
+    BookingService.prototype.update = function (body) {
         var options = new http_1.RequestOptions({
             headers: new http_1.Headers({ 'Content-Type': 'application/json;charset=UTF-8' })
         });
@@ -41,19 +41,19 @@ var AttachmentService = (function () {
             .map(function (res) { return res.json(); })
             .catch(function (error) { return Rx_1.Observable.throw(error.json().error || 'Server error'); });
     };
-    AttachmentService.prototype.deleteBooking = function (bookingsID) {
+    BookingService.prototype.delete = function (id) {
         var options = new http_1.RequestOptions({
             headers: new http_1.Headers({ 'Content-Type': 'application/json;charset=UTF-8' })
         });
-        return this.http.delete('https://192.168.10.73:3333/api/bookings' + bookingsID, options)
+        return this.http.delete('https://192.168.10.73:3333/api/bookings' + id, options)
             .map(function (res) { return res.json(); })
             .catch(function (error) { return Rx_1.Observable.throw(error.json().error || 'Server error'); });
     };
-    return AttachmentService;
+    return BookingService;
 }());
-AttachmentService = __decorate([
+BookingService = __decorate([
     core_1.Injectable(),
     __metadata("design:paramtypes", [http_1.Http])
-], AttachmentService);
-exports.AttachmentService = AttachmentService;
+], BookingService);
+exports.BookingService = BookingService;
 //# sourceMappingURL=booking.service.js.map

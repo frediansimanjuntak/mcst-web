@@ -24,7 +24,7 @@ export class UserComponent implements OnInit {
         this.loadAllUsers();
     }
  
-    deleteUser(id: number) {
+    deleteUser(id: string) {
         this.userService.delete(id) 
         // .subscribe(() => { this.loadAllUsers() });
         .subscribe(

@@ -7,19 +7,19 @@ import { Attachment } from '../models/index';
 export class AttachmentService {
     constructor(private http: Http) {}
 
-    getAllAttachment(){
+    getAll(){
         return this.http.get('https://192.168.10.73:3333/api/attachments')
             .map((res:Response) => res.json())
             .catch((error:any) => Observable.throw(error.json().error || 'Server error'));
     }
 
-    getById(attachmentsID:string){
-        return this.http.get('https://192.168.10.73:3333/api/attachments' + attachmentsID)
+    getById(id:string){
+        return this.http.get('https://192.168.10.73:3333/api/attachments' + id)
             .map((res:Response) => res.json())
             .catch((error:any) => Observable.throw(error.json().error || 'Server error'));
     }
 
-    addAttachment(body:Attachment){
+    create(body:Attachment){
         let options = new RequestOptions({
             headers: new Headers({ 'Content-Type': 'application/json;charset=UTF-8' }) 
         });
@@ -28,7 +28,7 @@ export class AttachmentService {
             .catch((error:any) => Observable.throw(error.json().error || 'Server error'));
     }
 
-    updateAttachment(body:Attachment){
+    update(body:Attachment){
         let options = new RequestOptions({
             headers: new Headers({ 'Content-Type': 'application/json;charset=UTF-8' }) 
         });
@@ -37,11 +37,11 @@ export class AttachmentService {
             .catch((error:any) => Observable.throw(error.json().error || 'Server error'));
     }
 
-    deleteAttachment(attachmentsID:string){
+    delete(id:string){
         let options = new RequestOptions({
             headers: new Headers({ 'Content-Type': 'application/json;charset=UTF-8' }) 
         });
-        return this.http.delete('https://192.168.10.73:3333/api/attachments' + attachmentsID, options)
+        return this.http.delete('https://192.168.10.73:3333/api/attachments' + id, options)
             .map((res:Response) => res.json())
             .catch((error:any) => Observable.throw(error.json().error || 'Server error'));
     }

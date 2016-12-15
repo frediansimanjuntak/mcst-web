@@ -15,17 +15,17 @@ var UserService = (function () {
     function UserService(http) {
         this.http = http;
     }
-    UserService.prototype.getAllUser = function () {
+    UserService.prototype.getAll = function () {
         return this.http.get('https://192.168.10.73:3333/api/users')
             .map(function (res) { return res.json(); })
             .catch(function (error) { return Rx_1.Observable.throw(error.json().error || 'Server error'); });
     };
-    UserService.prototype.getById = function (usersID) {
-        return this.http.get('https://192.168.10.73:3333/api/users' + usersID)
+    UserService.prototype.getById = function (id) {
+        return this.http.get('https://192.168.10.73:3333/api/users' + id)
             .map(function (res) { return res.json(); })
             .catch(function (error) { return Rx_1.Observable.throw(error.json().error || 'Server error'); });
     };
-    UserService.prototype.addUser = function (body) {
+    UserService.prototype.create = function (body) {
         var options = new http_1.RequestOptions({
             headers: new http_1.Headers({ 'Content-Type': 'application/json;charset=UTF-8' })
         });
@@ -33,7 +33,7 @@ var UserService = (function () {
             .map(function (res) { return res.json(); })
             .catch(function (error) { return Rx_1.Observable.throw(error.json().error || 'Server error'); });
     };
-    UserService.prototype.updateUser = function (body) {
+    UserService.prototype.update = function (body) {
         var options = new http_1.RequestOptions({
             headers: new http_1.Headers({ 'Content-Type': 'application/json;charset=UTF-8' })
         });
@@ -41,11 +41,11 @@ var UserService = (function () {
             .map(function (res) { return res.json(); })
             .catch(function (error) { return Rx_1.Observable.throw(error.json().error || 'Server error'); });
     };
-    UserService.prototype.deleteUser = function (usersID) {
+    UserService.prototype.delete = function (id) {
         var options = new http_1.RequestOptions({
             headers: new http_1.Headers({ 'Content-Type': 'application/json;charset=UTF-8' })
         });
-        return this.http.delete('https://192.168.10.73:3333/api/users' + usersID, options)
+        return this.http.delete('https://192.168.10.73:3333/api/users' + id, options)
             .map(function (res) { return res.json(); })
             .catch(function (error) { return Rx_1.Observable.throw(error.json().error || 'Server error'); });
     };
