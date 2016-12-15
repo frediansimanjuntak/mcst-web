@@ -7,6 +7,7 @@ import '../rxjs-operators';
   template: `
   	<header></header>
   	<navbar></navbar>
+  	<login-form></login-form>
 	`,
 })
 

@@ -1,4 +1,5 @@
 export * from './attachment.service';
+export * from './authentication.service';
 export * from './booking.service';
 export * from './company.service';
 export * from './contract.service';

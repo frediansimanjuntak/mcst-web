@@ -12,6 +12,7 @@ __export(require("./development.component"));
 __export(require("./facility.component"));
 __export(require("./header.component"));
 __export(require("./incident.component"));
+__export(require("./login.component"));
 __export(require("./navbar.component"));
 __export(require("./payment.component"));
 __export(require("./petition.component"));
