@@ -9,42 +9,42 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 var core_1 = require("@angular/core");
+var router_1 = require("@angular/router");
 var index_1 = require("../../services/index");
 var EditUserComponent = (function () {
-    function EditUserComponent(userService) {
+    function EditUserComponent(router, userService, alertService) {
+        this.router = router;
         this.userService = userService;
+        this.alertService = alertService;
         this.users = [];
         this.model = {};
         this.user = JSON.parse(localStorage.getItem('user'));
         console.log(this.user);
     }
-    EditUserComponent.prototype.ngOnInit = function () {
-        this.loadAllUsers();
-    };
-    EditUserComponent.prototype.deleteUser = function (id) {
+    EditUserComponent.prototype.register = function () {
         var _this = this;
-        this.userService.delete(id)
-            .subscribe(function (response) {
-            if (response.error) {
-                alert("The user could not be deleted, server Error.");
-            }
-            else {
-                _this.loadAllUsers();
-            }
+        this.userService.create(this.model)
+            .subscribe(function (data) {
+            _this.alertService.success('Registration successful', true);
+            _this.router.navigate(['/user']);
         }, function (error) {
-            alert("The user could not be deleted, server Error.");
+            _this.alertService.error(error);
         });
     };
     EditUserComponent.prototype.updateUser = function () {
+        var _this = this;
         this.userService.update(this.model)
             .subscribe(function (response) {
             if (response.error) {
-                alert("The user could not be updated, server Error.");
+                _this.alertService.error(response.error);
             }
             else {
+                // EmitterService.get(this.userList).emit(response.users);
+                _this.alertService.success('Registration successful', true);
+                _this.router.navigate(['/user']);
             }
         }, function (error) {
-            alert("The user could not be updated, server Error.");
+            _this.alertService.error(error);
         });
     };
     EditUserComponent.prototype.loadAllUsers = function () {
@@ -58,7 +58,9 @@ EditUserComponent = __decorate([
         moduleId: module.id,
         template: "\n    <div class=\"col-md-6 col-md-offset-3\">\n    <h1>Hi {{user.username}}!</h1>\n    <p>You're logged in with Angular 2!!</p>\n    <h3>All registered users:</h3>\n    <ul>\n        <li *ngFor=\"let user of users\">\n            {{user.username}}\n            - <a (click)=\"deleteUser(user.id)\">Delete</a>\n        </li>\n    </ul>\n    <p><a [routerLink]=\"['/login']\">Logout</a></p>\n</div>\n  ",
     }),
-    __metadata("design:paramtypes", [index_1.UserService])
+    __metadata("design:paramtypes", [router_1.Router,
+        index_1.UserService,
+        index_1.AlertService])
 ], EditUserComponent);
 exports.EditUserComponent = EditUserComponent;
 //# sourceMappingURL=edituser.component.js.map
