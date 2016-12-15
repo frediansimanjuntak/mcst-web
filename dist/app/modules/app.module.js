@@ -47,6 +47,7 @@ AppModule = __decorate([
             index_1.FacilityComponent,
             index_1.HeaderComponent,
             index_1.IncidentComponent,
+            index_1.LoginComponent,
             index_1.NavbarComponent,
             index_1.PaymentComponent,
             index_1.PetitionComponent,
@@ -58,6 +59,7 @@ AppModule = __decorate([
         ],
         providers: [
             index_2.AttachmentService,
+            index_2.AuthenticationService,
             index_2.BookingService,
             index_2.CompanyService,
             index_2.ContractService,

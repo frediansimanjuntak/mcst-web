@@ -19,6 +19,7 @@ import {
   FacilityComponent,
   HeaderComponent,
   IncidentComponent,
+  LoginComponent,
   NavbarComponent,
   PaymentComponent,
   PetitionComponent,
@@ -31,6 +32,7 @@ import {
 
 import { 
   AttachmentService,
+  AuthenticationService,
   BookingService,
   CompanyService,
   ContractService,
@@ -69,6 +71,7 @@ import {
     FacilityComponent,
     HeaderComponent,
     IncidentComponent,
+    LoginComponent,
     NavbarComponent,
     PaymentComponent,
     PetitionComponent,
@@ -80,6 +83,7 @@ import {
   ],
   providers: [ 
     AttachmentService,
+    AuthenticationService,
     BookingService,
     CompanyService,
     ContractService,

@@ -8,6 +8,7 @@ export * from './development.component';
 export * from './facility.component';
 export * from './header.component';
 export * from './incident.component';
+export * from './login.component';
 export * from './navbar.component';
 export * from './payment.component';
 export * from './petition.component';
