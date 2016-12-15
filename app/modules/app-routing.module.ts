@@ -27,11 +27,12 @@ const routes: Routes = [
   { path: '', redirectTo: '/login', pathMatch: 'full' },
   { path: 'login',  component: LoginComponent },
   { path: 'register', component: RegisterComponent },
+  { path: 'user',     component: UserComponent }
   // { path: 'heroes',     component: HeroesComponent },
   // { path: 'upload', 	component: FileUploadComponent },
   // { path: 'form',     component: HeroFormComponent },
   // { path: 'table',     component: TableDemoComponent },
-  // { path: 'users',     component: UsersComponent }
+  
 ];
 
 @NgModule({
