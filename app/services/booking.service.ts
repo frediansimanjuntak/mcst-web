@@ -4,22 +4,22 @@ import { Observable } from 'rxjs/Rx';
 import { Booking } from '../models/index';
  
 @Injectable()
-export class AttachmentService {
+export class BookingService {
     constructor(private http: Http) {}
 
-    getAllBooking(){
+    getAll(){
         return this.http.get('https://192.168.10.73:3333/api/bookings')
             .map((res:Response) => res.json())
             .catch((error:any) => Observable.throw(error.json().error || 'Server error'));
     }
 
-    getById(bookingsID:string){
-        return this.http.get('https://192.168.10.73:3333/api/bookings' + bookingsID)
+    getById(id:string){
+        return this.http.get('https://192.168.10.73:3333/api/bookings' + id)
             .map((res:Response) => res.json())
             .catch((error:any) => Observable.throw(error.json().error || 'Server error'));
     }
 
-    addBooking(body:Booking){
+    create(body:Booking){
         let options = new RequestOptions({
             headers: new Headers({ 'Content-Type': 'application/json;charset=UTF-8' }) 
         });
@@ -28,7 +28,7 @@ export class AttachmentService {
             .catch((error:any) => Observable.throw(error.json().error || 'Server error'));
     }
 
-    updateBooking(body:Booking){
+    update(body:Booking){
         let options = new RequestOptions({
             headers: new Headers({ 'Content-Type': 'application/json;charset=UTF-8' }) 
         });
@@ -37,11 +37,11 @@ export class AttachmentService {
             .catch((error:any) => Observable.throw(error.json().error || 'Server error'));
     }
 
-    deleteBooking(bookingsID:string){
+    delete(id:string){
         let options = new RequestOptions({
             headers: new Headers({ 'Content-Type': 'application/json;charset=UTF-8' }) 
         });
-        return this.http.delete('https://192.168.10.73:3333/api/bookings' + bookingsID, options)
+        return this.http.delete('https://192.168.10.73:3333/api/bookings' + id, options)
             .map((res:Response) => res.json())
             .catch((error:any) => Observable.throw(error.json().error || 'Server error'));
     }
