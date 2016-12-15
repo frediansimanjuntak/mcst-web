@@ -2,7 +2,7 @@
 exports.MENUS = [
     {
         name: 'Dashboard',
-        link: '/dashbard'
+        link: '/dashboard'
     },
     {
         name: 'Operations',

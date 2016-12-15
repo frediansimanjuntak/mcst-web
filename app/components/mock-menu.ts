@@ -1,7 +1,7 @@
 export const MENUS: any[] = [
   { 
   	name: 'Dashboard',
-  	link: '/dashbard' 
+  	link: '/dashboard' 
   },
   { 
   	name: 'Operations',
