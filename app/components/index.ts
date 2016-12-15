@@ -6,6 +6,7 @@ export * from './company.component';
 export * from './contract.component';
 export * from './contractor.component';
 export * from './development.component';
+export * from './dashboard.component';
 export * from './facility.component';
 export * from './header.component';
 export * from './incident.component';

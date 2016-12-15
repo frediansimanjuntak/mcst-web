@@ -9,15 +9,17 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 var core_1 = require("@angular/core");
+var mock_menu_1 = require("./mock-menu");
 var DashboardComponent = (function () {
-    function DashboardComponent(heroService) {
-        this.heroService = heroService;
-        this.heroes = [];
+    function DashboardComponent() {
+        this.menus = mock_menu_1.MENUS;
     }
     DashboardComponent.prototype.ngOnInit = function () {
-        var _this = this;
-        this.heroService.getHeroes()
-            .then(function (heroes) { return _this.heroes = heroes.slice(1, 5); });
+        this.dashboardMenu[0] = this.menus[0];
+        this.dashboardMenu[1] = this.menus[0];
+        this.dashboardMenu[2] = this.menus[0];
+        this.dashboardMenu[3] = this.menus[0];
+        this.dashboardMenu[4] = this.menus[0];
     };
     return DashboardComponent;
 }());
@@ -28,7 +30,7 @@ DashboardComponent = __decorate([
         templateUrl: 'dashboard.component.html',
         styleUrls: ['dashboard.component.css']
     }),
-    __metadata("design:paramtypes", [Object])
+    __metadata("design:paramtypes", [])
 ], DashboardComponent);
 exports.DashboardComponent = DashboardComponent;
 //# sourceMappingURL=dashboard.component.js.map

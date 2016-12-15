@@ -1,20 +1,22 @@
 import { Component, OnInit } from '@angular/core';
-
+import { MENUS } from './mock-menu';
+  
 @Component({
   moduleId: module.id,
   selector: 'dashboard',
-  templateUrl: 'dashboard.component.html',
-  styleUrls: [ 'dashboard.component.css' ]
+  templateUrl: 'dashboard.html',
+  styleUrls: [ 'dashboard.css' ]
 })
 export class DashboardComponent implements OnInit {
-
-  heroes: Hero[] = [];
-
-  constructor(private heroService: HeroService) { }
-
+  menus = MENUS;
+  menus1: any;
+ 
   ngOnInit(): void {
-    this.heroService.getHeroes()
-      .then(heroes => this.heroes = heroes.slice(1, 5));
+    this.menus1[0] = this.menus[2];
+    this.menus1[1] = this.menus[3];
+    this.menus1[2] = this.menus[4];
+    this.menus1[3] = this.menus[5];
+    this.menus1[4] = this.menus[6];
   }
 }
 
