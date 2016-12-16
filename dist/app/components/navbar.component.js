@@ -9,10 +9,10 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 var core_1 = require("@angular/core");
-var mock_menu_1 = require("./mock-menu");
+var menu_1 = require("../models/menu");
 var NavbarComponent = (function () {
     function NavbarComponent() {
-        this.menus = mock_menu_1.MENUS;
+        this.menus = menu_1.MENUS;
     }
     return NavbarComponent;
 }());

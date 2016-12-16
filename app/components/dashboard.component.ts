@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { MENUS } from './mock-menu';
+import { MENUS } from '../models/menu';
   
 @Component({
   moduleId: module.id,
@@ -7,9 +7,10 @@ import { MENUS } from './mock-menu';
   templateUrl: '../templates/dashboard.html',
   // styleUrls: [ 'dashboard.css' ]
 })
-export class DashboardComponent implements OnInit {
+export class DashboardComponent {
   menus = MENUS;
-  menus1: any;
+  menus1: any = [];
+  today: number = Date.now();
  
   ngOnInit(): void {
     this.menus1[0] = this.menus[2];

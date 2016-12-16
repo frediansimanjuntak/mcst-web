@@ -65,4 +65,4 @@ exports.MENUS = [
         ]
     },
 ];
-//# sourceMappingURL=mock-menu.js.map
+//# sourceMappingURL=menu.js.map
