@@ -9,10 +9,44 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 var core_1 = require("@angular/core");
+var router_1 = require("@angular/router");
+var index_1 = require("../../services/index");
 require("../../rxjs-operators");
 var EditDevelopmentComponent = (function () {
-    function EditDevelopmentComponent() {
+    function EditDevelopmentComponent(router, developmentService, alertService) {
+        this.router = router;
+        this.developmentService = developmentService;
+        this.alertService = alertService;
+        this.developments = [];
+        this.model = {};
     }
+    EditDevelopmentComponent.prototype.createUser = function () {
+        var _this = this;
+        console.log(this.model);
+        this.developmentService.create(this.model)
+            .subscribe(function (data) {
+            _this.alertService.success('Create development successful', true);
+            _this.router.navigate(['/development']);
+        }, function (error) {
+            _this.alertService.error(error);
+        });
+    };
+    EditDevelopmentComponent.prototype.updateUser = function () {
+        var _this = this;
+        this.developmentService.update(this.model)
+            .subscribe(function (response) {
+            if (response.error) {
+                _this.alertService.error(response.error);
+            }
+            else {
+                // EmitterService.get(this.userList).emit(response.users);
+                _this.alertService.success('Update development successful', true);
+                _this.router.navigate(['/development']);
+            }
+        }, function (error) {
+            _this.alertService.error(error);
+        });
+    };
     return EditDevelopmentComponent;
 }());
 EditDevelopmentComponent = __decorate([
@@ -21,7 +55,9 @@ EditDevelopmentComponent = __decorate([
         selector: 'edit-development',
         template: "",
     }),
-    __metadata("design:paramtypes", [])
+    __metadata("design:paramtypes", [router_1.Router,
+        index_1.DevelopmentService,
+        index_1.AlertService])
 ], EditDevelopmentComponent);
 exports.EditDevelopmentComponent = EditDevelopmentComponent;
 //# sourceMappingURL=edit-development.component.js.map

@@ -19,8 +19,6 @@ var EditUserComponent = (function () {
         this.alertService = alertService;
         this.users = [];
         this.model = {};
-        this.user = JSON.parse(localStorage.getItem('user'));
-        console.log(this.user);
     }
     EditUserComponent.prototype.createUser = function () {
         var _this = this;
@@ -48,10 +46,6 @@ var EditUserComponent = (function () {
         }, function (error) {
             _this.alertService.error(error);
         });
-    };
-    EditUserComponent.prototype.loadAllUsers = function () {
-        var _this = this;
-        this.userService.getAll().subscribe(function (users) { _this.users = users; console.log(users); });
     };
     return EditUserComponent;
 }());

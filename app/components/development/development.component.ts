@@ -1,4 +1,7 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router'; 
+import { Development } from '../../models/index';
+import { DevelopmentService, AlertService } from '../../services/index';
 import '../../rxjs-operators';
 
 @Component({
@@ -7,6 +10,37 @@ import '../../rxjs-operators';
   template: ``,
 })
 
-export class DevelopmentComponent  { 
-	
+export class DevelopmentComponent implements OnInit { 
+	development: Development;
+    developments: Development[] = [];
+    model: any = {};
+
+    constructor(private developmentService: DevelopmentService,private alertService: AlertService) {}
+
+    ngOnInit() {
+        this.loadAllDevelopments();
+    }
+ 
+    deleteUser(id: string) {
+        this.developmentService.delete(id) 
+        // .subscribe(() => { this.loadAllUsers() });
+        .subscribe(
+			response => {
+				if(response.error) { 
+	                alert(`The development could not be deleted, server Error.`);
+	            } else {
+                    this.alertService.success('Delete development successful', true);
+	                this.loadAllDevelopments()
+	            }
+            },
+            error=> { 
+                alert(`The Development could not be deleted, server Error.`);
+            }
+        );
+    }
+
+   
+    private loadAllDevelopments() {
+        this.userService.getAll().subscribe(developments => { this.developments = developments; console.log(developments) });
+    }
 }
