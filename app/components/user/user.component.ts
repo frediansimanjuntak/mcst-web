@@ -2,7 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router'; 
 import { User } from '../../models/index';
 import { UserService } from '../../services/index';
- 
+import '../../rxjs-operators';
+
 @Component({
     moduleId: module.id,
     templateUrl: '../../templates/user.html',

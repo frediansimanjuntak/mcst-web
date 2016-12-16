@@ -20,6 +20,7 @@ export class UserService {
     }
 
     create(body:User){
+        console.log(body);
         let options = new RequestOptions({
             headers: new Headers({ 'Content-Type': 'application/json;charset=UTF-8' }) 
         });

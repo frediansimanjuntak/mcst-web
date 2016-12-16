@@ -29,6 +29,7 @@ import {
   QuotationComponent,
   RegisterComponent,
   UserComponent,
+  EditUserComponent,
   UserGroupComponent,
   VisitComponent,
 } from '../components/index';
@@ -84,6 +85,7 @@ import {
     QuotationComponent,
     RegisterComponent,
     UserComponent,
+    EditUserComponent,
     UserGroupComponent,
     VisitComponent, 
   ],

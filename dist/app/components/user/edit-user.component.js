@@ -11,6 +11,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 var core_1 = require("@angular/core");
 var router_1 = require("@angular/router");
 var index_1 = require("../../services/index");
+require("../../rxjs-operators");
 var EditUserComponent = (function () {
     function EditUserComponent(router, userService, alertService) {
         this.router = router;
@@ -23,6 +24,7 @@ var EditUserComponent = (function () {
     }
     EditUserComponent.prototype.createUser = function () {
         var _this = this;
+        console.log(this.model);
         this.userService.create(this.model)
             .subscribe(function (data) {
             _this.alertService.success('Create user successful', true);
@@ -56,7 +58,7 @@ var EditUserComponent = (function () {
 EditUserComponent = __decorate([
     core_1.Component({
         moduleId: module.id,
-        template: "\n    <div class=\"col-md-6 col-md-offset-3\">\n    <h1>Hi {{user.username}}!</h1>\n    <p>You're logged in with Angular 2!!</p>\n    <h3>All registered users:</h3>\n    <ul>\n        <li *ngFor=\"let user of users\">\n            {{user.username}}\n            - <a (click)=\"deleteUser(user.id)\">Delete</a>\n        </li>\n    </ul>\n    <p><a [routerLink]=\"['/login']\">Logout</a></p>\n</div>\n  ",
+        templateUrl: '../../templates/edit-user.html',
     }),
     __metadata("design:paramtypes", [router_1.Router,
         index_1.UserService,

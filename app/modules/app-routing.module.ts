@@ -21,6 +21,7 @@ import {
   PollComponent,
   QuotationComponent,
   UserComponent,
+  EditUserComponent,
   UserGroupComponent,
   VisitComponent,
 } from '../components/index';
@@ -30,7 +31,7 @@ const routes: Routes = [
   { path: 'register', component: RegisterComponent },
   { path: 'user',     component: UserComponent },
   { path: 'dashboard',     component: DashboardComponent },
-  // { path: 'upload', 	component: FileUploadComponent },
+  { path: 'user/add', 	component: EditUserComponent },
   // { path: 'form',     component: HeroFormComponent },
   // { path: 'table',     component: TableDemoComponent },
   

@@ -17,6 +17,7 @@ var routes = [
     { path: 'register', component: index_1.RegisterComponent },
     { path: 'user', component: index_1.UserComponent },
     { path: 'dashboard', component: index_1.DashboardComponent },
+    { path: 'user/add', component: index_1.EditUserComponent },
 ];
 var AppRoutingModule = (function () {
     function AppRoutingModule() {

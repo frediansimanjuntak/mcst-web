@@ -3,23 +3,11 @@ import { Router } from '@angular/router';
 
 import { AlertService, UserService } from '../../services/index';
 import { User } from '../../models/index';
- 
+import '../../rxjs-operators';
+
 @Component({
     moduleId: module.id,
-    template: `
-    <div class="col-md-6 col-md-offset-3">
-    <h1>Hi {{user.username}}!</h1>
-    <p>You're logged in with Angular 2!!</p>
-    <h3>All registered users:</h3>
-    <ul>
-        <li *ngFor="let user of users">
-            {{user.username}}
-            - <a (click)="deleteUser(user.id)">Delete</a>
-        </li>
-    </ul>
-    <p><a [routerLink]="['/login']">Logout</a></p>
-</div>
-  `,
+    templateUrl: '../../templates/edit-user.html',
 })
  
 export class EditUserComponent {
@@ -35,6 +23,7 @@ export class EditUserComponent {
     }
  
     createUser() {
+        console.log(this.model);
         this.userService.create(this.model)
         .subscribe(
             data => {

@@ -10,6 +10,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 var core_1 = require("@angular/core");
 var index_1 = require("../../services/index");
+require("../../rxjs-operators");
 var UserComponent = (function () {
     function UserComponent(userService) {
         this.userService = userService;
