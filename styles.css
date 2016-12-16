@@ -1,7 +1,7 @@
 .main {
   padding: 50px !important;
 }
-
+  
 .header-component{
 	background-color: #30333c;
   margin-bottom: 0 !important;
@@ -39,4 +39,41 @@
 
 .header-component {
   color: #ffffff;
+}
+
+.control-label {
+    text-align: left !important;
+    padding: 0 !important;
+}
+
+.form-control {
+  border-radius: 0 !important;
+}
+
+.btn {
+  border-radius: 0 !important;
+  min-width: 150px ;
+  height: 35px;
+  border-bottom-width: 4px !important;
+  border-bottom-style: solid;
+  font-weight: bold !important;
+}
+
+.form-control {
+  display: inline !important;
+}
+
+.btn-primary {
+  background-color: rgb(181,173,150) !important;
+  color: white;
+  border-right-color: rgb(181,173,150) !important;
+  border-top-color: rgb(181,173,150) !important;
+  border-left-color: rgb(181,173,150) !important;
+  border-bottom-color: rgb(154,141,107) !important;
+}
+
+.btn-default {
+  background-color: rgb(240,240,240) !important;
+  color: rgb(109,110,114) !important;
+  border-bottom-color: rgb(222,222,222);
 }

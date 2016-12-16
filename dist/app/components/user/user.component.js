@@ -26,7 +26,7 @@ var UserComponent = (function () {
                 filtering: { filterString: '', placeholder: 'Filter by Email' }
             },
             { title: 'Phone', className: ['phone-header', 'text-success'], name: 'phone', sort: false },
-            { title: 'Role.', name: 'role', sort: '', filtering: { filterString: '', placeholder: 'Filter by role.' } },
+            { title: 'Role', name: 'role', sort: '', filtering: { filterString: '', placeholder: 'Filter by role.' } },
             { title: 'Active', className: 'text-warning', name: 'active' }
         ];
         this.page = 1;
