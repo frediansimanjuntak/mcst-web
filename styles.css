@@ -1,3 +1,7 @@
+.main {
+  padding: 50px !important;
+}
+
 .header-component{
 	background-color: #30333c;
   margin-bottom: 0 !important;

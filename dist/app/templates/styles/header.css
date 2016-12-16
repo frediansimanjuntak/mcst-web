@@ -12,3 +12,7 @@ a {
 	color: white;
 	text-decoration: underline;
 }
+
+li : hover {
+	background-color: transparent !important;  
+}

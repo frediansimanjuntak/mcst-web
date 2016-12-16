@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { MENUS } from './mock-menu';
+import { MENUS } from '../models/menu';
 
 @Component({
 	moduleId: module.id,

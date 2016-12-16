@@ -9,10 +9,12 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 var core_1 = require("@angular/core");
-var mock_menu_1 = require("./mock-menu");
+var menu_1 = require("../models/menu");
 var DashboardComponent = (function () {
     function DashboardComponent() {
-        this.menus = mock_menu_1.MENUS;
+        this.menus = menu_1.MENUS;
+        this.menus1 = [];
+        this.today = Date.now();
     }
     DashboardComponent.prototype.ngOnInit = function () {
         this.menus1[0] = this.menus[2];
