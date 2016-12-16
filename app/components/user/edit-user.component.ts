@@ -34,11 +34,11 @@ export class EditUserComponent {
         console.log(this.user)
     }
  
-    register() {
+    createUser() {
         this.userService.create(this.model)
         .subscribe(
             data => {
-                this.alertService.success('Registration successful', true);
+                this.alertService.success('Create user successful', true);
                 this.router.navigate(['/user']);
             },
             error => {
@@ -55,7 +55,7 @@ export class EditUserComponent {
 	                this.alertService.error(response.error);
 	            } else {
 	                // EmitterService.get(this.userList).emit(response.users);
-                     this.alertService.success('Registration successful', true);
+                     this.alertService.success('Update User successful', true);
                      this.router.navigate(['/user']);
 	            }
             },

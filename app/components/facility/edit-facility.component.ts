@@ -3,13 +3,10 @@ import '../rxjs-operators';
 
 @Component({
   moduleId: module.id,
-  selector: 'poll',
-  template: `
-  	<header></header>
-  	<navbar></navbar>
-	`,
+  selector: 'edit-facility',
+  template: ``,
 })
 
-export class PollComponent  { 
+export class EditFacilityComponent  { 
 	
 }
