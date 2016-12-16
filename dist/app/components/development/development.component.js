@@ -38,7 +38,7 @@ var DevelopmentComponent = (function () {
     };
     DevelopmentComponent.prototype.loadAllDevelopments = function () {
         var _this = this;
-        this.userService.getAll().subscribe(function (developments) { _this.developments = developments; console.log(developments); });
+        this.developmentService.getAll().subscribe(function (developments) { _this.developments = developments; console.log(developments); });
     };
     return DevelopmentComponent;
 }());
