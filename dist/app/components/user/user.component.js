@@ -12,8 +12,9 @@ var core_1 = require("@angular/core");
 var index_1 = require("../../services/index");
 require("../../rxjs-operators");
 var UserComponent = (function () {
-    function UserComponent(userService) {
+    function UserComponent(userService, alertService) {
         this.userService = userService;
+        this.alertService = alertService;
         this.users = [];
         this.model = {};
         this.rows = [];
@@ -57,22 +58,11 @@ var UserComponent = (function () {
                 alert("The user could not be deleted, server Error.");
             }
             else {
+                _this.alertService.success('Create user successful', true);
                 _this.loadAllUsers();
             }
         }, function (error) {
             alert("The user could not be deleted, server Error.");
-        });
-    };
-    UserComponent.prototype.updateUser = function () {
-        this.userService.update(this.model)
-            .subscribe(function (response) {
-            if (response.error) {
-                alert("The user could not be updated, server Error.");
-            }
-            else {
-            }
-        }, function (error) {
-            alert("The user could not be updated, server Error.");
         });
     };
     UserComponent.prototype.loadAllUsers = function () {
@@ -168,7 +158,7 @@ UserComponent = __decorate([
         moduleId: module.id,
         templateUrl: '../../templates/user.html',
     }),
-    __metadata("design:paramtypes", [index_1.UserService])
+    __metadata("design:paramtypes", [index_1.UserService, index_1.AlertService])
 ], UserComponent);
 exports.UserComponent = UserComponent;
 //# sourceMappingURL=user.component.js.map

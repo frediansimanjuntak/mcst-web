@@ -17,10 +17,7 @@ export class EditUserComponent {
  
     constructor(private router: Router,
         private userService: UserService,
-        private alertService: AlertService) {
-        this.user = JSON.parse(localStorage.getItem('user'));
-        console.log(this.user)
-    }
+        private alertService: AlertService) {}
  
     createUser() {
         console.log(this.model);
@@ -53,9 +50,4 @@ export class EditUserComponent {
             }
         );
 	}
-
- 
-    private loadAllUsers() {
-        this.userService.getAll().subscribe(users => { this.users = users; console.log(users) });
-    }
 }

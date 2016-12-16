@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router'; 
 import { User } from '../../models/index';
-import { UserService } from '../../services/index';
+import { UserService, AlertService } from '../../services/index';
 import '../../rxjs-operators';
 
 @Component({
@@ -14,7 +14,7 @@ export class UserComponent implements OnInit {
     users: User[] = [];
     model: any = {};
  
-    constructor(private userService: UserService) {
+    constructor(private userService: UserService,private alertService: AlertService) {
         this.length = this.data.length;
         this.user = JSON.parse(localStorage.getItem('user'));
         console.log(this.user)
@@ -33,6 +33,7 @@ export class UserComponent implements OnInit {
 				if(response.error) { 
 	                alert(`The user could not be deleted, server Error.`);
 	            } else {
+                    this.alertService.success('Create user successful', true);
 	                this.loadAllUsers()
 	            }
             },
@@ -42,23 +43,7 @@ export class UserComponent implements OnInit {
         );
     }
 
-    updateUser(){
-		this.userService.update(this.model)
-		.subscribe(
-			response => {
-				if(response.error) { 
-	                alert(`The user could not be updated, server Error.`);
-	            } else {
-	                // EmitterService.get(this.userList).emit(response.users);
-	            }
-            },
-            error=> { 
-            	alert(`The user could not be updated, server Error.`);
-            }
-        );
-	}
-
- 
+   
     private loadAllUsers() {
         this.userService.getAll().subscribe(users => { this.users = users; console.log(users) });
     }
