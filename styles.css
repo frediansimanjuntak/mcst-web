@@ -77,3 +77,9 @@
   color: rgb(109,110,114) !important;
   border-bottom-color: rgb(222,222,222);
 }
+
+.btn-info {
+  background-color: white !important;
+  color: rgb(109,110,114) !important;
+  border-color: rgb(222,222,222);
+}
