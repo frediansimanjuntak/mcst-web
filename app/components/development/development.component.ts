@@ -4,10 +4,7 @@ import '../rxjs-operators';
 @Component({
   moduleId: module.id,
   selector: 'development',
-  template: `
-  	<header></header>
-  	<navbar></navbar>
-	`,
+  template: ``,
 })
 
 export class DevelopmentComponent  { 

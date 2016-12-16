@@ -4,10 +4,7 @@ import '../rxjs-operators';
 @Component({
   moduleId: module.id,
   selector: 'visit',
-  template: `
-  	<header></header>
-  	<navbar></navbar>
-	`,
+  template: ``,
 })
 
 export class VisitComponent  { 
