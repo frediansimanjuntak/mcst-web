@@ -41,6 +41,6 @@ export class DevelopmentComponent implements OnInit {
 
    
     private loadAllDevelopments() {
-        this.userService.getAll().subscribe(developments => { this.developments = developments; console.log(developments) });
+        this.developmentService.getAll().subscribe(developments => { this.developments = developments; console.log(developments) });
     }
 }
