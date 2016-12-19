@@ -21,6 +21,8 @@ export * from './incident/edit-incident.component';
 export * from './auth/login.component';
 export * from './auth/register.component';
 export * from './navbar.component';
+export * from './newsletter/newsletter.component';
+export * from './newsletter/edit-newsletter.component';
 export * from './payment/payment.component';
 export * from './payment/edit-payment.component';
 export * from './petition/petition.component';

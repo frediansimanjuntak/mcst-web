@@ -4,7 +4,7 @@ import { Observable } from 'rxjs/Rx';
 import { Development } from '../models/index';
  
 @Injectable()
-export class DevelopmentService {
+export class NewsletterService {
     constructor(private http: Http) {}
 
     getAll(){
