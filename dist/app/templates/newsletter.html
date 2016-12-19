@@ -1,0 +1,37 @@
+<div class="container">
+	<div (click)="$event.preventDefault()">
+	  <hr />
+	  <tabset>
+	    <tab heading="Draft">
+	    	<div class="row">
+			  <div class="col-md-4">
+			    <input *ngIf="config.filtering" placeholder="Filter all columns"
+			           [ngTableFiltering]="config.filtering"
+			           class="form-control"
+			           (tableChanged)="onChangeTable(config)"/>
+			  </div>
+			</div>
+			<br>
+			<ng-table [config]="config"
+			          (tableChanged)="onChangeTable(config)"
+			          (cellClicked)="onCellClick($event)"
+			          [rows]="rows" [columns]="columns">
+			</ng-table>
+			<pagination *ngIf="config.paging"
+			            class="pagination-sm"
+			            [(ngModel)]="page"
+			            [totalItems]="length"
+			            [itemsPerPage]="itemsPerPage"
+			            [maxSize]="maxSize"
+			            [boundaryLinks]="true"
+			            [rotate]="false"
+			            (pageChanged)="onChangeTable(config, $event)"
+			            (numPages)="numPages = $event">
+			</pagination>
+	    </tab>
+	    <tab heading="Published">
+	    	Tab 2 Here
+	    </tab>	
+	  </tabset>
+	</div>
+</div>

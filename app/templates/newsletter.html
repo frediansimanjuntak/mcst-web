@@ -1,0 +1,17 @@
+<div class="container">
+	<div (click)="$event.preventDefault()">
+	  <hr />
+	  <tabset>
+	    <tab heading="Datatable"><table-demo></table-demo></tab>
+	    <tab heading="Accordion"><accordion-demo></accordion-demo></tab>
+	    <tab heading="Form"><form-validation></form-validation></tab>
+	    <tab heading="Full Calender"><angular2-fullcalendar [options]="calendarOptions"></angular2-fullcalendar></tab>
+	    <tab (select)="alertMe()">
+	      <template tabHeading>
+	        <i class="glyphicon glyphicon-bell"></i> Alert!
+	      </template>
+	      I've got an HTML heading, and a select callback. Pretty cool!
+	    </tab>
+	  </tabset>
+	</div>
+</div>

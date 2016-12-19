@@ -11,44 +11,166 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 var core_1 = require("@angular/core");
 var index_1 = require("../../services/index");
 require("../../rxjs-operators");
-var DevelopmentComponent = (function () {
-    function DevelopmentComponent(developmentService, alertService) {
-        this.developmentService = developmentService;
+var NewsletterComponent = (function () {
+    function NewsletterComponent(newsletterservice, alertService) {
+        this.newsletterservice = newsletterservice;
         this.alertService = alertService;
-        this.developments = [];
+        this.newsletters = [];
         this.model = {};
+        this.tabs = [
+            { title: 'Dynamic Title 1', content: '' },
+            { title: 'Dynamic Title 2', content: 'Dynamic content 2', disabled: true },
+            { title: 'Dynamic Title 3', content: 'Dynamic content 3', removable: true },
+            { title: 'Dynamic Title 4', content: 'Dynamic content 4', customClass: 'customClass' }
+        ];
+        //Table----------------------
+        this.rows = [];
+        this.columns = [
+            { title: 'Name', name: 'name', filtering: { filterString: '', placeholder: 'Filter by name' } },
+            {
+                title: 'Email',
+                name: 'email',
+                sort: false,
+                filtering: { filterString: '', placeholder: 'Filter by Email' }
+            },
+            { title: 'Phone', className: ['phone-header', 'text-success'], name: 'phone', sort: false },
+            { title: 'Role', name: 'role', sort: '', filtering: { filterString: '', placeholder: 'Filter by role.' } },
+            { title: 'Active', className: 'text-warning', name: 'active' }
+        ];
+        this.page = 1;
+        this.itemsPerPage = 10;
+        this.maxSize = 5;
+        this.numPages = 1;
+        this.length = 0;
+        this.config = {
+            paging: true,
+            sorting: { columns: this.columns },
+            filtering: { filterString: '' },
+            className: ['table-striped', 'table-bordered']
+        };
+        this.data = this.newsletters;
     }
-    DevelopmentComponent.prototype.ngOnInit = function () {
-        this.loadAllDevelopments();
+    NewsletterComponent.prototype.ngOnInit = function () {
+        this.loadAllNewsletters();
+        this.onChangeTable(this.config);
     };
-    DevelopmentComponent.prototype.deleteUser = function (id) {
+    NewsletterComponent.prototype.deleteUser = function (id) {
+        //      this.newsletterservice.delete(id) 
+        //      // .subscribe(() => { this.loadAllUsers() });
+        //      .subscribe(
+        // response => {
+        // 	if(response.error) { 
+        //               alert(`The development could not be deleted, server Error.`);
+        //           } else {
+        //                  this.alertService.success('Delete development successful', true);
+        //               this.loadAllNewsletters()
+        //           }
+        //          },
+        //          error=> { 
+        //              alert(`The Development could not be deleted, server Error.`);
+        //          }
+        //      );
+    };
+    NewsletterComponent.prototype.loadAllNewsletters = function () {
         var _this = this;
-        this.developmentService.delete(id)
-            .subscribe(function (response) {
-            if (response.error) {
-                alert("The development could not be deleted, server Error.");
+        this.newsletterservice.getAll().subscribe(function (newsletters) { _this.newsletters = newsletters; console.log(newsletters); });
+    };
+    NewsletterComponent.prototype.setActiveTab = function (index) {
+        this.tabs[index].active = true;
+    };
+    ;
+    NewsletterComponent.prototype.changePage = function (page, data) {
+        if (data === void 0) { data = this.data; }
+        var start = (page.page - 1) * page.itemsPerPage;
+        var end = page.itemsPerPage > -1 ? (start + page.itemsPerPage) : data.length;
+        return data.slice(start, end);
+    };
+    NewsletterComponent.prototype.changeSort = function (data, config) {
+        if (!config.sorting) {
+            return data;
+        }
+        var columns = this.config.sorting.columns || [];
+        var columnName = void 0;
+        var sort = void 0;
+        for (var i = 0; i < columns.length; i++) {
+            if (columns[i].sort !== '' && columns[i].sort !== false) {
+                columnName = columns[i].name;
+                sort = columns[i].sort;
             }
-            else {
-                _this.alertService.success('Delete development successful', true);
-                _this.loadAllDevelopments();
+        }
+        if (!columnName) {
+            return data;
+        }
+        // simple sorting
+        return data.sort(function (previous, current) {
+            if (previous[columnName] > current[columnName]) {
+                return sort === 'desc' ? -1 : 1;
             }
-        }, function (error) {
-            alert("The Development could not be deleted, server Error.");
+            else if (previous[columnName] < current[columnName]) {
+                return sort === 'asc' ? -1 : 1;
+            }
+            return 0;
         });
     };
-    DevelopmentComponent.prototype.loadAllDevelopments = function () {
+    NewsletterComponent.prototype.changeFilter = function (data, config) {
         var _this = this;
-        this.developmentService.getAll().subscribe(function (developments) { _this.developments = developments; console.log(developments); });
+        var filteredData = data;
+        this.columns.forEach(function (column) {
+            if (column.filtering) {
+                filteredData = filteredData.filter(function (item) {
+                    return item[column.name].match(column.filtering.filterString);
+                });
+            }
+        });
+        if (!config.filtering) {
+            return filteredData;
+        }
+        if (config.filtering.columnName) {
+            return filteredData.filter(function (item) {
+                return item[config.filtering.columnName].match(_this.config.filtering.filterString);
+            });
+        }
+        var tempArray = [];
+        filteredData.forEach(function (item) {
+            var flag = false;
+            _this.columns.forEach(function (column) {
+                if (item[column.name].toString().match(_this.config.filtering.filterString)) {
+                    flag = true;
+                }
+            });
+            if (flag) {
+                tempArray.push(item);
+            }
+        });
+        filteredData = tempArray;
+        return filteredData;
     };
-    return DevelopmentComponent;
+    NewsletterComponent.prototype.onChangeTable = function (config, page) {
+        if (page === void 0) { page = { page: this.page, itemsPerPage: this.itemsPerPage }; }
+        if (config.filtering) {
+            Object.assign(this.config.filtering, config.filtering);
+        }
+        if (config.sorting) {
+            Object.assign(this.config.sorting, config.sorting);
+        }
+        var filteredData = this.changeFilter(this.data, this.config);
+        var sortedData = this.changeSort(filteredData, this.config);
+        this.rows = page && config.paging ? this.changePage(page, sortedData) : sortedData;
+        this.length = sortedData.length;
+    };
+    NewsletterComponent.prototype.onCellClick = function (data) {
+        console.log(data);
+    };
+    return NewsletterComponent;
 }());
-DevelopmentComponent = __decorate([
+NewsletterComponent = __decorate([
     core_1.Component({
         moduleId: module.id,
-        selector: 'development',
-        template: "",
+        selector: 'newsletter',
+        templateUrl: '../../templates/newsletter.html',
     }),
-    __metadata("design:paramtypes", [index_1.DevelopmentService, index_1.AlertService])
-], DevelopmentComponent);
-exports.DevelopmentComponent = DevelopmentComponent;
+    __metadata("design:paramtypes", [typeof (_a = typeof index_1.NewsletterService !== "undefined" && index_1.NewsletterService) === "function" && _a || Object, index_1.AlertService])
+], NewsletterComponent);
+exports.NewsletterComponent = NewsletterComponent;
+var _a;
 //# sourceMappingURL=newsletter.component.js.map
