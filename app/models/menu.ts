@@ -58,7 +58,7 @@ export const MENUS: any[] = [
   	name: 'Useful Information', 
   	link: '',
   	sub : [
-  		{ name : 'AGM & Circular', link: '' },
+  		{ name : 'AGM & Circular', link: '/newsletter' },
   		{ name : 'Contact Directory', link: '' },
       { name : 'User', link: '/user' },
   	]

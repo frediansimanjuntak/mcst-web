@@ -26,16 +26,17 @@ var NewsletterComponent = (function () {
         //Table----------------------
         this.rows = [];
         this.columns = [
-            { title: 'Name', name: 'name', filtering: { filterString: '', placeholder: 'Filter by name' } },
+            { title: 'Date', name: 'date', filtering: { filterString: '', placeholder: 'Filter by date' } },
             {
-                title: 'Email',
-                name: 'email',
+                title: 'Title',
+                name: 'title',
                 sort: false,
                 filtering: { filterString: '', placeholder: 'Filter by Email' }
             },
-            { title: 'Phone', className: ['phone-header', 'text-success'], name: 'phone', sort: false },
-            { title: 'Role', name: 'role', sort: '', filtering: { filterString: '', placeholder: 'Filter by role.' } },
-            { title: 'Active', className: 'text-warning', name: 'active' }
+            { title: 'Uploaded on', className: ['phone-header', 'text-success'], name: 'sticky', sort: false },
+            { title: 'Uploaded by', name: 'auto_post_on', sort: '', filtering: { filterString: '', placeholder: 'Filter by role.' } },
+            { title: 'Attachments', className: 'text-warning', name: 'valid till' },
+            { title: 'Actions', className: 'text-warning', name: 'created n' }
         ];
         this.page = 1;
         this.itemsPerPage = 10;
@@ -48,28 +49,26 @@ var NewsletterComponent = (function () {
             filtering: { filterString: '' },
             className: ['table-striped', 'table-bordered']
         };
-        this.data = this.newsletters;
+        this.data = [];
     }
     NewsletterComponent.prototype.ngOnInit = function () {
-        this.loadAllNewsletters();
+        // this.loadAllNewsletters();
         this.onChangeTable(this.config);
     };
     NewsletterComponent.prototype.deleteUser = function (id) {
-        //      this.newsletterservice.delete(id) 
-        //      // .subscribe(() => { this.loadAllUsers() });
-        //      .subscribe(
-        // response => {
-        // 	if(response.error) { 
-        //               alert(`The development could not be deleted, server Error.`);
-        //           } else {
-        //                  this.alertService.success('Delete development successful', true);
-        //               this.loadAllNewsletters()
-        //           }
-        //          },
-        //          error=> { 
-        //              alert(`The Development could not be deleted, server Error.`);
-        //          }
-        //      );
+        var _this = this;
+        this.newsletterservice.delete(id)
+            .subscribe(function (response) {
+            if (response.error) {
+                alert("The development could not be deleted, server Error.");
+            }
+            else {
+                _this.alertService.success('Delete development successful', true);
+                _this.loadAllNewsletters();
+            }
+        }, function (error) {
+            alert("The Development could not be deleted, server Error.");
+        });
     };
     NewsletterComponent.prototype.loadAllNewsletters = function () {
         var _this = this;
@@ -146,6 +145,7 @@ var NewsletterComponent = (function () {
         return filteredData;
     };
     NewsletterComponent.prototype.onChangeTable = function (config, page) {
+        var _this = this;
         if (page === void 0) { page = { page: this.page, itemsPerPage: this.itemsPerPage }; }
         if (config.filtering) {
             Object.assign(this.config.filtering, config.filtering);
@@ -153,10 +153,15 @@ var NewsletterComponent = (function () {
         if (config.sorting) {
             Object.assign(this.config.sorting, config.sorting);
         }
-        var filteredData = this.changeFilter(this.data, this.config);
-        var sortedData = this.changeSort(filteredData, this.config);
-        this.rows = page && config.paging ? this.changePage(page, sortedData) : sortedData;
-        this.length = sortedData.length;
+        this.newsletterservice.getAll()
+            .subscribe(function (Response) {
+            _this.data = Response;
+            _this.length = _this.data.length;
+            var filteredData = _this.changeFilter(_this.data, _this.config);
+            var sortedData = _this.changeSort(filteredData, _this.config);
+            _this.rows = page && config.paging ? _this.changePage(page, sortedData) : sortedData;
+            _this.length = sortedData.length;
+        });
     };
     NewsletterComponent.prototype.onCellClick = function (data) {
         console.log(data);
@@ -169,8 +174,7 @@ NewsletterComponent = __decorate([
         selector: 'newsletter',
         templateUrl: '../../templates/newsletter.html',
     }),
-    __metadata("design:paramtypes", [typeof (_a = typeof index_1.NewsletterService !== "undefined" && index_1.NewsletterService) === "function" && _a || Object, index_1.AlertService])
+    __metadata("design:paramtypes", [index_1.NewsletterService, index_1.AlertService])
 ], NewsletterComponent);
 exports.NewsletterComponent = NewsletterComponent;
-var _a;
 //# sourceMappingURL=newsletter.component.js.map

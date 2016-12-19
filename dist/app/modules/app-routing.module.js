@@ -18,6 +18,9 @@ var routes = [
     { path: 'user', component: index_1.UserComponent },
     { path: 'dashboard', component: index_1.DashboardComponent },
     { path: 'user/add', component: index_1.EditUserComponent },
+    { path: 'newsletter', component: index_1.NewsletterComponent },
+    { path: 'newsletter/add', component: index_1.EditNewsletterComponent },
+    { path: 'newsletter/edit:id', component: index_1.EditNewsletterComponent },
 ];
 var AppRoutingModule = (function () {
     function AppRoutingModule() {

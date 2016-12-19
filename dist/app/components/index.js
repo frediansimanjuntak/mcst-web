@@ -25,6 +25,8 @@ __export(require("./incident/edit-incident.component"));
 __export(require("./auth/login.component"));
 __export(require("./auth/register.component"));
 __export(require("./navbar.component"));
+__export(require("./newsletter/newsletter.component"));
+__export(require("./newsletter/edit-newsletter.component"));
 __export(require("./payment/payment.component"));
 __export(require("./payment/edit-payment.component"));
 __export(require("./petition/petition.component"));

@@ -1,8 +1,18 @@
 <div class="container">
+	<div class="title">
+		AGM & CIRCULAR
+	</div>
+	Home > AGM & Circular
+	<div class="row">
+		<div class="col-md-4 pull-right">
+				  		<a class="btn btn-default pull-right" [routerLink]="['newsletter/add']">
+				  		<i class="fa fa-plus" aria-hidden="true"></i>&nbsp;Upload AGM / Circular</a>
+		</div>
+	</div>
 	<div (click)="$event.preventDefault()">
 	  <hr />
 	  <tabset>
-	    <tab heading="Draft">
+	    <tab heading="AGM">
 	    	<div class="row">
 			  <div class="col-md-4">
 			    <input *ngIf="config.filtering" placeholder="Filter all columns"
@@ -29,7 +39,7 @@
 			            (numPages)="numPages = $event">
 			</pagination>
 	    </tab>
-	    <tab heading="Published">
+	    <tab heading="Circular">
 	    	Tab 2 Here
 	    </tab>	
 	  </tabset>

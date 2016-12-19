@@ -11,21 +11,21 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 var core_1 = require("@angular/core");
 var http_1 = require("@angular/http");
 var Rx_1 = require("rxjs/Rx");
-var DevelopmentService = (function () {
-    function DevelopmentService(http) {
+var NewsletterService = (function () {
+    function NewsletterService(http) {
         this.http = http;
     }
-    DevelopmentService.prototype.getAll = function () {
+    NewsletterService.prototype.getAll = function () {
         return this.http.get('https://192.168.10.73:3333/api/newsletters')
             .map(function (res) { return res.json(); })
             .catch(function (error) { return Rx_1.Observable.throw(error.json().error || 'Server error'); });
     };
-    DevelopmentService.prototype.getById = function (id) {
+    NewsletterService.prototype.getById = function (id) {
         return this.http.get('https://192.168.10.73:3333/api/newsletters' + id)
             .map(function (res) { return res.json(); })
             .catch(function (error) { return Rx_1.Observable.throw(error.json().error || 'Server error'); });
     };
-    DevelopmentService.prototype.create = function (body) {
+    NewsletterService.prototype.create = function (body) {
         var options = new http_1.RequestOptions({
             headers: new http_1.Headers({ 'Content-Type': 'application/json;charset=UTF-8' })
         });
@@ -33,7 +33,7 @@ var DevelopmentService = (function () {
             .map(function (res) { return res.json(); })
             .catch(function (error) { return Rx_1.Observable.throw(error.json().error || 'Server error'); });
     };
-    DevelopmentService.prototype.update = function (body) {
+    NewsletterService.prototype.update = function (body) {
         var options = new http_1.RequestOptions({
             headers: new http_1.Headers({ 'Content-Type': 'application/json;charset=UTF-8' })
         });
@@ -41,7 +41,7 @@ var DevelopmentService = (function () {
             .map(function (res) { return res.json(); })
             .catch(function (error) { return Rx_1.Observable.throw(error.json().error || 'Server error'); });
     };
-    DevelopmentService.prototype.delete = function (id) {
+    NewsletterService.prototype.delete = function (id) {
         var options = new http_1.RequestOptions({
             headers: new http_1.Headers({ 'Content-Type': 'application/json;charset=UTF-8' })
         });
@@ -49,11 +49,11 @@ var DevelopmentService = (function () {
             .map(function (res) { return res.json(); })
             .catch(function (error) { return Rx_1.Observable.throw(error.json().error || 'Server error'); });
     };
-    return DevelopmentService;
+    return NewsletterService;
 }());
-DevelopmentService = __decorate([
+NewsletterService = __decorate([
     core_1.Injectable(),
     __metadata("design:paramtypes", [http_1.Http])
-], DevelopmentService);
-exports.DevelopmentService = DevelopmentService;
+], NewsletterService);
+exports.NewsletterService = NewsletterService;
 //# sourceMappingURL=newsletter.service.js.map
