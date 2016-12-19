@@ -9,9 +9,14 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 var core_1 = require("@angular/core");
+var user_service_1 = require("../services/user.service");
 var HeaderComponent = (function () {
-    function HeaderComponent() {
+    function HeaderComponent(userService) {
+        this.userService = userService;
+        this.users = [];
         this.title = 'MCST';
+        this.user = JSON.parse(localStorage.getItem('user'));
+        console.log(this.user);
     }
     return HeaderComponent;
 }());
@@ -22,7 +27,7 @@ HeaderComponent = __decorate([
         templateUrl: '../templates/header.html',
         styleUrls: ['../templates/styles/header.css']
     }),
-    __metadata("design:paramtypes", [])
+    __metadata("design:paramtypes", [user_service_1.UserService])
 ], HeaderComponent);
 exports.HeaderComponent = HeaderComponent;
 //# sourceMappingURL=header.component.js.map
