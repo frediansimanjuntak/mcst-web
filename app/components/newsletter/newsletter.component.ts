@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router'; 
 import { Development } from '../../models/index';
-import { NewsletterService} from '../../services/index';
+import { NewsletterService, AlertService} from '../../services/index';
 import '../../rxjs-operators';
 
 @Component({
@@ -11,33 +11,33 @@ import '../../rxjs-operators';
 })
 
 export class NewsletterComponent implements OnInit { 
-	newsletter: Development;
+	  newsletter: Development;
     newsletters: Development[] = [];
     model: any = {};
 
-    constructor(private newsletterservice: NewsletterService) {}
+    constructor(private newsletterservice: NewsletterService, private alertService: AlertService) {}
 
     ngOnInit() {
-        this.loadAllNewsletters();
+        // this.loadAllNewsletters();
         this.onChangeTable(this.config);
     }
  
     deleteUser(id: string) {
-   //      this.newsletterservice.delete(id) 
-   //      // .subscribe(() => { this.loadAllUsers() });
-   //      .subscribe(
-			// response => {
-			// 	if(response.error) { 
-	  //               alert(`The development could not be deleted, server Error.`);
-	  //           } else {
-   //                  this.alertService.success('Delete development successful', true);
-	  //               this.loadAllNewsletters()
-	  //           }
-   //          },
-   //          error=> { 
-   //              alert(`The Development could not be deleted, server Error.`);
-   //          }
-   //      );
+        this.newsletterservice.delete(id) 
+        // .subscribe(() => { this.loadAllUsers() });
+        .subscribe(
+			response => {
+				if(response.error) { 
+	                alert(`The development could not be deleted, server Error.`);
+	            } else {
+                    this.alertService.success('Delete development successful', true);
+	                this.loadAllNewsletters()
+	            }
+            },
+            error=> { 
+                alert(`The Development could not be deleted, server Error.`);
+            }
+        );
     }
 
     private loadAllNewsletters() {
@@ -58,17 +58,17 @@ export class NewsletterComponent implements OnInit {
     //Table----------------------
     public rows:Array<any> = [];
     public columns:Array<any> = [
-    {title: 'Title', name: 'title', filtering: {filterString: '', placeholder: 'Filter by name'}},
+    {title: 'Date', name: 'date', filtering: {filterString: '', placeholder: 'Filter by date'}},
     {
-      title: 'Message',
-      name: 'message',
+      title: 'Title',
+      name: 'title',
       sort: false,
       filtering: {filterString: '', placeholder: 'Filter by Email'}
     },
-    {title: 'Sticky', className: ['phone-header', 'text-success'], name: 'sticky', sort: false},
-    {title: 'Auto post on', name: 'auto_post_on', sort: '', filtering: {filterString: '', placeholder: 'Filter by role.'}},
-    {title: 'Valid till', className: 'text-warning', name: 'valid till'},
-    {title: 'Created on', className: 'text-warning', name: 'created n'}
+    {title: 'Uploaded on', className: ['phone-header', 'text-success'], name: 'sticky', sort: false},
+    {title: 'Uploaded by', name: 'auto_post_on', sort: '', filtering: {filterString: '', placeholder: 'Filter by role.'}},
+    {title: 'Attachments', className: 'text-warning', name: 'valid till'},
+    {title: 'Actions', className: 'text-warning', name: 'created n'}
   ];
   public page:number = 1;
   public itemsPerPage:number = 10;
@@ -83,7 +83,7 @@ export class NewsletterComponent implements OnInit {
     className: ['table-striped', 'table-bordered']
   };
 
-  private data:Array<any> = this.newsletters;
+  private data:Array<any> = [];
 
   public changePage(page:any, data:Array<any> = this.data):Array<any> {
     let start = (page.page - 1) * page.itemsPerPage;
@@ -166,9 +166,9 @@ export class NewsletterComponent implements OnInit {
     if (config.sorting) {
       Object.assign(this.config.sorting, config.sorting);
     }
-    this.newsletterservice.getNewsletter()
+    this.newsletterservice.getAll()
          .subscribe(Response => {
-            this.data =languages;
+            this.data = Response;
             this.length = this.data.length;
             let filteredData = this.changeFilter(this.data, this.config);
             let sortedData = this.changeSort(filteredData, this.config);

@@ -25,17 +25,17 @@ var NewsletterComponent = (function () {
         //Table----------------------
         this.rows = [];
         this.columns = [
-            { title: 'Title', name: 'title', filtering: { filterString: '', placeholder: 'Filter by name' } },
+            { title: 'Date', name: 'date', filtering: { filterString: '', placeholder: 'Filter by date' } },
             {
-                title: 'Message',
-                name: 'message',
+                title: 'Title',
+                name: 'title',
                 sort: false,
                 filtering: { filterString: '', placeholder: 'Filter by Email' }
             },
-            { title: 'Sticky', className: ['phone-header', 'text-success'], name: 'sticky', sort: false },
-            { title: 'Auto post on', name: 'auto_post_on', sort: '', filtering: { filterString: '', placeholder: 'Filter by role.' } },
-            { title: 'Valid till', className: 'text-warning', name: 'valid till' },
-            { title: 'Created on', className: 'text-warning', name: 'created n' }
+            { title: 'Uploaded on', className: ['phone-header', 'text-success'], name: 'sticky', sort: false },
+            { title: 'Uploaded by', name: 'auto_post_on', sort: '', filtering: { filterString: '', placeholder: 'Filter by role.' } },
+            { title: 'Attachments', className: 'text-warning', name: 'valid till' },
+            { title: 'Actions', className: 'text-warning', name: 'created n' }
         ];
         this.page = 1;
         this.itemsPerPage = 10;
@@ -48,28 +48,26 @@ var NewsletterComponent = (function () {
             filtering: { filterString: '' },
             className: ['table-striped', 'table-bordered']
         };
-        this.data = this.newsletters;
+        this.data = [];
     }
     NewsletterComponent.prototype.ngOnInit = function () {
-        this.loadAllNewsletters();
+        // this.loadAllNewsletters();
         this.onChangeTable(this.config);
     };
     NewsletterComponent.prototype.deleteUser = function (id) {
-        //      this.newsletterservice.delete(id) 
-        //      // .subscribe(() => { this.loadAllUsers() });
-        //      .subscribe(
-        // response => {
-        // 	if(response.error) { 
-        //               alert(`The development could not be deleted, server Error.`);
-        //           } else {
-        //                  this.alertService.success('Delete development successful', true);
-        //               this.loadAllNewsletters()
-        //           }
-        //          },
-        //          error=> { 
-        //              alert(`The Development could not be deleted, server Error.`);
-        //          }
-        //      );
+        var _this = this;
+        this.newsletterservice.delete(id)
+            .subscribe(function (response) {
+            if (response.error) {
+                alert("The development could not be deleted, server Error.");
+            }
+            else {
+                _this.alertService.success('Delete development successful', true);
+                _this.loadAllNewsletters();
+            }
+        }, function (error) {
+            alert("The Development could not be deleted, server Error.");
+        });
     };
     NewsletterComponent.prototype.loadAllNewsletters = function () {
         var _this = this;
@@ -154,9 +152,9 @@ var NewsletterComponent = (function () {
         if (config.sorting) {
             Object.assign(this.config.sorting, config.sorting);
         }
-        this.newsletterservice.getNewsletter()
+        this.newsletterservice.getAll()
             .subscribe(function (Response) {
-            _this.data = languages;
+            _this.data = Response;
             _this.length = _this.data.length;
             var filteredData = _this.changeFilter(_this.data, _this.config);
             var sortedData = _this.changeSort(filteredData, _this.config);
@@ -175,7 +173,7 @@ NewsletterComponent = __decorate([
         selector: 'newsletter',
         templateUrl: '../../templates/newsletter.html',
     }),
-    __metadata("design:paramtypes", [index_1.NewsletterService])
+    __metadata("design:paramtypes", [index_1.NewsletterService, index_1.AlertService])
 ], NewsletterComponent);
 exports.NewsletterComponent = NewsletterComponent;
 //# sourceMappingURL=newsletter.component.js.map

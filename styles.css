@@ -1,6 +1,13 @@
 .main {
   padding: 50px !important;
 }
+
+.title {
+  text-transform: uppercase;
+  font-weight: bold;
+  font-size: 20px;
+  padding-top: 20px;
+}
   
 .header-component{
 	background-color: #30333c;
@@ -81,5 +88,5 @@
 .btn-info {
   background-color: white !important;
   color: rgb(109,110,114) !important;
-  border-color: rgb(222,222,222);
+  border-color: rgb(222,222,222) !important;
 }
