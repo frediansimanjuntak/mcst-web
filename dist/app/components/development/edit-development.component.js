@@ -20,7 +20,7 @@ var EditDevelopmentComponent = (function () {
         this.developments = [];
         this.model = {};
     }
-    EditDevelopmentComponent.prototype.createUser = function () {
+    EditDevelopmentComponent.prototype.createDevelopment = function () {
         var _this = this;
         console.log(this.model);
         this.developmentService.create(this.model)
@@ -31,7 +31,7 @@ var EditDevelopmentComponent = (function () {
             _this.alertService.error(error);
         });
     };
-    EditDevelopmentComponent.prototype.updateUser = function () {
+    EditDevelopmentComponent.prototype.updateDevelopment = function () {
         var _this = this;
         this.developmentService.update(this.model)
             .subscribe(function (response) {

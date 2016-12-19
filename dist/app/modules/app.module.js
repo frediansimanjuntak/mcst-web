@@ -52,6 +52,7 @@ AppModule = __decorate([
             index_1.DashboardComponent,
             data_filter_pipe_1.DataFilterPipe,
             index_1.DevelopmentComponent,
+            index_1.EditDevelopmentComponent,
             index_1.FacilityComponent,
             index_1.HeaderComponent,
             index_1.IncidentComponent,

@@ -21,6 +21,9 @@ var routes = [
     { path: 'newsletter', component: index_1.NewsletterComponent },
     { path: 'newsletter/add', component: index_1.EditNewsletterComponent },
     { path: 'newsletter/edit:id', component: index_1.EditNewsletterComponent },
+    { path: 'development', component: index_1.DevelopmentComponent },
+    { path: 'development/add', component: index_1.EditDevelopmentComponent },
+    { path: 'development/edit:id', component: index_1.EditDevelopmentComponent },
 ];
 var AppRoutingModule = (function () {
     function AppRoutingModule() {

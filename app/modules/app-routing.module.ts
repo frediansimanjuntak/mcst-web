@@ -9,6 +9,7 @@ import {
   ContractComponent,
   ContractorComponent,
   DevelopmentComponent,
+  EditDevelopmentComponent,
   DashboardComponent,
   FacilityComponent,
   HeaderComponent,
@@ -37,6 +38,9 @@ const routes: Routes = [
   { path: 'newsletter',   component: NewsletterComponent },
   { path: 'newsletter/add',   component: EditNewsletterComponent },
   { path: 'newsletter/edit:id',   component: EditNewsletterComponent },
+  { path: 'development',   component: DevelopmentComponent },
+  { path: 'development/add',   component: EditDevelopmentComponent },
+  { path: 'development/edit:id',   component: EditDevelopmentComponent },
   // { path: 'form',     component: HeroFormComponent },
   // { path: 'table',     component: TableDemoComponent },
   
