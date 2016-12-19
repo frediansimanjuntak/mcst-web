@@ -12,9 +12,8 @@ var core_1 = require("@angular/core");
 var index_1 = require("../../services/index");
 require("../../rxjs-operators");
 var NewsletterComponent = (function () {
-    function NewsletterComponent(newsletterservice, alertService) {
+    function NewsletterComponent(newsletterservice) {
         this.newsletterservice = newsletterservice;
-        this.alertService = alertService;
         this.newsletters = [];
         this.model = {};
         this.tabs = [
@@ -26,16 +25,17 @@ var NewsletterComponent = (function () {
         //Table----------------------
         this.rows = [];
         this.columns = [
-            { title: 'Name', name: 'name', filtering: { filterString: '', placeholder: 'Filter by name' } },
+            { title: 'Title', name: 'title', filtering: { filterString: '', placeholder: 'Filter by name' } },
             {
-                title: 'Email',
-                name: 'email',
+                title: 'Message',
+                name: 'message',
                 sort: false,
                 filtering: { filterString: '', placeholder: 'Filter by Email' }
             },
-            { title: 'Phone', className: ['phone-header', 'text-success'], name: 'phone', sort: false },
-            { title: 'Role', name: 'role', sort: '', filtering: { filterString: '', placeholder: 'Filter by role.' } },
-            { title: 'Active', className: 'text-warning', name: 'active' }
+            { title: 'Sticky', className: ['phone-header', 'text-success'], name: 'sticky', sort: false },
+            { title: 'Auto post on', name: 'auto_post_on', sort: '', filtering: { filterString: '', placeholder: 'Filter by role.' } },
+            { title: 'Valid till', className: 'text-warning', name: 'valid till' },
+            { title: 'Created on', className: 'text-warning', name: 'created n' }
         ];
         this.page = 1;
         this.itemsPerPage = 10;
@@ -146,6 +146,7 @@ var NewsletterComponent = (function () {
         return filteredData;
     };
     NewsletterComponent.prototype.onChangeTable = function (config, page) {
+        var _this = this;
         if (page === void 0) { page = { page: this.page, itemsPerPage: this.itemsPerPage }; }
         if (config.filtering) {
             Object.assign(this.config.filtering, config.filtering);
@@ -153,10 +154,15 @@ var NewsletterComponent = (function () {
         if (config.sorting) {
             Object.assign(this.config.sorting, config.sorting);
         }
-        var filteredData = this.changeFilter(this.data, this.config);
-        var sortedData = this.changeSort(filteredData, this.config);
-        this.rows = page && config.paging ? this.changePage(page, sortedData) : sortedData;
-        this.length = sortedData.length;
+        this.newsletterservice.getNewsletter()
+            .subscribe(function (Response) {
+            _this.data = languages;
+            _this.length = _this.data.length;
+            var filteredData = _this.changeFilter(_this.data, _this.config);
+            var sortedData = _this.changeSort(filteredData, _this.config);
+            _this.rows = page && config.paging ? _this.changePage(page, sortedData) : sortedData;
+            _this.length = sortedData.length;
+        });
     };
     NewsletterComponent.prototype.onCellClick = function (data) {
         console.log(data);
@@ -169,8 +175,7 @@ NewsletterComponent = __decorate([
         selector: 'newsletter',
         templateUrl: '../../templates/newsletter.html',
     }),
-    __metadata("design:paramtypes", [typeof (_a = typeof index_1.NewsletterService !== "undefined" && index_1.NewsletterService) === "function" && _a || Object, index_1.AlertService])
+    __metadata("design:paramtypes", [index_1.NewsletterService])
 ], NewsletterComponent);
 exports.NewsletterComponent = NewsletterComponent;
-var _a;
 //# sourceMappingURL=newsletter.component.js.map

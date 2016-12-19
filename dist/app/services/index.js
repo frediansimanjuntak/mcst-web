@@ -12,6 +12,7 @@ __export(require("./contractor.service"));
 __export(require("./development.service"));
 __export(require("./facility.service"));
 __export(require("./incident.service"));
+__export(require("./newsletter.service"));
 __export(require("./payment.service"));
 __export(require("./petition.service"));
 __export(require("./poll.service"));

@@ -1,0 +1,48 @@
+<div class="container">
+	<form [formGroup]="myForm" class="form-horizontal" (ngSubmit)="f.form.valid && createNewsletter()" #f="ngForm" novalidate>
+	  <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !title.valid }>
+	    <label class="control-label col-sm-2" for="title">Title:</label>
+	    <div class="col-sm-10">
+	      <input type="text" class="form-control" id="title" placeholder="Enter title" formControlName="title" required />
+	      <div *ngIf="f.submitted && !title.valid" class="help-block">Title is required</div>
+	    </div>
+	  </div>
+	  <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !description.valid }>
+	    <label class="control-label col-sm-2" for="description">Description:</label>
+	    <div class="col-sm-10">
+	      <textarea class="form-control" id="description" placeholder="Enter email" formControlName="description" required></textarea>
+	      <div *ngIf="f.submitted && !description.valid" class="help-block">Description is required</div>
+	    </div>
+	  </div>
+	  <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !type.valid }>
+	    <label class="control-label col-sm-2" for="type">Type:</label>
+	    <div class="col-sm-10"> 
+	    <select class="form-control" id="type" formControlName="type" required>
+ 			<option value="circular">Circular</option>
+  			<option value="agm">AGM</option>
+		</select>
+	      <div *ngIf="f.submitted && !type.valid" class="help-block">Type is required</div>
+	    </div>
+	  </div>
+	  <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !released.valid }>
+	    <label class="control-label col-sm-2" for="phone">Release now:</label>
+	    <div class="col-sm-10"> 
+	      <input type="radio" name="released" formControlName="released" value="true" checked="checked"> Yes &nbsp;
+  		  <input type="radio" name="released" formControlName="released" value="false"> No
+	      <div *ngIf="f.submitted && !released.valid" class="help-block">Released is required</div>
+	    </div>
+	  </div>
+	  <div formGroupName="pinned" class="form-group" [ngClass]="{ 'has-error': f.submitted && !rank.valid }>
+	    <label class="control-label col-sm-2" for="rank">Rank:</label>
+	    <div class="col-sm-10"> 
+	      <input type="text" class="form-control" id="rank" placeholder="Enter Rank" formControlName="rank" required />
+	      <div *ngIf="f.submitted && !rank.valid" class="help-block">Rank is required</div>
+	    </div>
+	  </div>
+	  <div class="form-group"> 
+	    <div class="col-sm-offset-2 col-sm-10">
+	      <button type="submit" class="btn btn-default">Submit</button>
+	    </div>
+	  </div>
+	</form>	
+</div>
