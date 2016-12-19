@@ -9,7 +9,7 @@ import { User } from '../../models/index';
 @Component({
   moduleId: module.id,
   selector: 'edit-development',
-  template: ``,
+  templateUrl: '../../templates/edit-newsletter.html'
 })
 
 export class EditNewsletterComponent  { 
