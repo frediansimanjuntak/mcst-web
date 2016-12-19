@@ -19,7 +19,7 @@ export class EditDevelopmentComponent  {
     	private developmentService: DevelopmentService,
     	private alertService: AlertService) {}
 
-    createUser() {
+    createDevelopment() {
         console.log(this.model);
         this.developmentService.create(this.model)
         .subscribe(
@@ -33,7 +33,7 @@ export class EditDevelopmentComponent  {
         );
     }
 
-    updateUser(){
+    updateDevelopment(){
 		this.developmentService.update(this.model)
 		.subscribe(
 			response => {

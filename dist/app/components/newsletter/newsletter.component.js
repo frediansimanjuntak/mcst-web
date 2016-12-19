@@ -12,8 +12,9 @@ var core_1 = require("@angular/core");
 var index_1 = require("../../services/index");
 require("../../rxjs-operators");
 var NewsletterComponent = (function () {
-    function NewsletterComponent(newsletterservice) {
+    function NewsletterComponent(newsletterservice, alertService) {
         this.newsletterservice = newsletterservice;
+        this.alertService = alertService;
         this.newsletters = [];
         this.model = {};
         this.tabs = [
