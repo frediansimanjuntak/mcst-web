@@ -16,6 +16,8 @@ import {
   LoginComponent,
   RegisterComponent,
   NavbarComponent,
+  NewsletterComponent,
+  EditNewsletterComponent,
   PaymentComponent,
   PetitionComponent,
   PollComponent,
@@ -32,6 +34,9 @@ const routes: Routes = [
   { path: 'user',     component: UserComponent },
   { path: 'dashboard',     component: DashboardComponent },
   { path: 'user/add', 	component: EditUserComponent },
+  { path: 'newsletter',   component: NewsletterComponent },
+  { path: 'newsletter/add',   component: EditNewsletterComponent },
+  { path: 'newsletter/edit:id',   component: EditNewsletterComponent },
   // { path: 'form',     component: HeroFormComponent },
   // { path: 'table',     component: TableDemoComponent },
   
