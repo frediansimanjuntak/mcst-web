@@ -17,9 +17,9 @@ exports.MENUS = [
         name: 'Manage Request',
         description: 'Track request for permits such as renovation, move-in, move-out and bulk delivery',
         sub: [
-            { name: 'Browse Request', link: '' },
-            { name: 'Add Request', link: '' },
-            { name: 'Search Reference.no', link: '' }
+            { name: 'Browse Request', link: '#' },
+            { name: 'Add Request', link: '#' },
+            { name: 'Search Reference.no', link: '#' }
         ]
     },
     {

@@ -1,4 +1,6 @@
 import { Component } from '@angular/core';
+import { User } from '../models/user';
+import { UserService } from '../services/user.service';
 
 @Component({
 	moduleId: module.id.replace("/dist/", "/"),
@@ -8,5 +10,12 @@ import { Component } from '@angular/core';
 })
 
 export class HeaderComponent {
+	user: User;	
+    users: User[] = [];	
 	title = 'MCST'; 
+
+	constructor(private userService: UserService) {
+        this.user = JSON.parse(localStorage.getItem('user'));
+        console.log(this.user)
+    }
 }

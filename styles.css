@@ -32,7 +32,8 @@
       width: 160px;
       text-align: center;
       font-size: 250%;
-    }
+}
+
 .navbar>.container .navbar-brand-centered, 
 .navbar>.container-fluid .navbar-brand-centered {
     margin-left: -80px;
