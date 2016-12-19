@@ -10,16 +10,50 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 var core_1 = require("@angular/core");
 var http_1 = require("@angular/http");
-// import { User } from '../models/index';
-var NewsletterService = (function () {
-    function NewsletterService(http) {
+var Rx_1 = require("rxjs/Rx");
+var DevelopmentService = (function () {
+    function DevelopmentService(http) {
         this.http = http;
     }
-    return NewsletterService;
+    DevelopmentService.prototype.getAll = function () {
+        return this.http.get('https://192.168.10.73:3333/api/newsletters')
+            .map(function (res) { return res.json(); })
+            .catch(function (error) { return Rx_1.Observable.throw(error.json().error || 'Server error'); });
+    };
+    DevelopmentService.prototype.getById = function (id) {
+        return this.http.get('https://192.168.10.73:3333/api/newsletters' + id)
+            .map(function (res) { return res.json(); })
+            .catch(function (error) { return Rx_1.Observable.throw(error.json().error || 'Server error'); });
+    };
+    DevelopmentService.prototype.create = function (body) {
+        var options = new http_1.RequestOptions({
+            headers: new http_1.Headers({ 'Content-Type': 'application/json;charset=UTF-8' })
+        });
+        return this.http.post('https://192.168.10.73:3333/api/newsletters', body, options)
+            .map(function (res) { return res.json(); })
+            .catch(function (error) { return Rx_1.Observable.throw(error.json().error || 'Server error'); });
+    };
+    DevelopmentService.prototype.update = function (body) {
+        var options = new http_1.RequestOptions({
+            headers: new http_1.Headers({ 'Content-Type': 'application/json;charset=UTF-8' })
+        });
+        return this.http.put('https://192.168.10.73:3333/api/newsletters' + body._id, body, options)
+            .map(function (res) { return res.json(); })
+            .catch(function (error) { return Rx_1.Observable.throw(error.json().error || 'Server error'); });
+    };
+    DevelopmentService.prototype.delete = function (id) {
+        var options = new http_1.RequestOptions({
+            headers: new http_1.Headers({ 'Content-Type': 'application/json;charset=UTF-8' })
+        });
+        return this.http.delete('https://192.168.10.73:3333/api/newsletters' + id, options)
+            .map(function (res) { return res.json(); })
+            .catch(function (error) { return Rx_1.Observable.throw(error.json().error || 'Server error'); });
+    };
+    return DevelopmentService;
 }());
-NewsletterService = __decorate([
+DevelopmentService = __decorate([
     core_1.Injectable(),
     __metadata("design:paramtypes", [http_1.Http])
-], NewsletterService);
-exports.NewsletterService = NewsletterService;
+], DevelopmentService);
+exports.DevelopmentService = DevelopmentService;
 //# sourceMappingURL=newsletter.service.js.map
