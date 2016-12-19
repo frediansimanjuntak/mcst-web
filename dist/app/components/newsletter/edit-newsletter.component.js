@@ -77,7 +77,7 @@ EditNewsletterComponent = __decorate([
     core_1.Component({
         moduleId: module.id,
         selector: 'edit-development',
-        template: "",
+        templateUrl: '../../templates/edit-newsletter.html'
     }),
     __metadata("design:paramtypes", [router_1.Router,
         index_1.NewsletterService,

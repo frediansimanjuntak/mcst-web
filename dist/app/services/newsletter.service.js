@@ -16,7 +16,7 @@ var NewsletterService = (function () {
         this.http = http;
     }
     NewsletterService.prototype.getAll = function () {
-        return this.http.get('https://192.168.10.73:3333/api/newsletters')
+        return this.http.get('https://192.168.10.38:3000/api/newsletters')
             .map(function (res) { return res.json(); })
             .catch(function (error) { return Rx_1.Observable.throw(error.json().error || 'Server error'); });
     };
@@ -45,7 +45,7 @@ var NewsletterService = (function () {
         var options = new http_1.RequestOptions({
             headers: new http_1.Headers({ 'Content-Type': 'application/json;charset=UTF-8' })
         });
-        return this.http.delete('https://192.168.10.73:3333/api/newsletters' + id, options)
+        return this.http.delete('https://192.168.10.38:3000/api/newsletters/' + id, options)
             .map(function (res) { return res.json(); })
             .catch(function (error) { return Rx_1.Observable.throw(error.json().error || 'Server error'); });
     };

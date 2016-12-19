@@ -8,7 +8,7 @@ export class NewsletterService {
     constructor(private http: Http) {}
 
     getAll(){
-        return this.http.get('https://192.168.10.73:3333/api/newsletters')
+        return this.http.get('https://192.168.10.38:3000/api/newsletters')
             .map((res:Response) => res.json())
             .catch((error:any) => Observable.throw(error.json().error || 'Server error'));
     }
@@ -41,7 +41,7 @@ export class NewsletterService {
         let options = new RequestOptions({
             headers: new Headers({ 'Content-Type': 'application/json;charset=UTF-8' }) 
         });
-        return this.http.delete('https://192.168.10.73:3333/api/newsletters' + id, options)
+        return this.http.delete('https://192.168.10.38:3000/api/newsletters/' + id, options)
             .map((res:Response) => res.json())
             .catch((error:any) => Observable.throw(error.json().error || 'Server error'));
     }

@@ -28,7 +28,9 @@
       'angular-in-memory-web-api': 'npm:angular-in-memory-web-api/bundles/in-memory-web-api.umd.js',
       'moment': 'npm:moment/',
       'ng2-table': 'npm:ng2-table',
+      'angular2-datatable': 'npm:angular2-datatable',
       'ng2-bootstrap': 'npm:ng2-bootstrap',
+      'lodash': 'npm:lodash',
       'jquery' : 'npm:jquery/dist/',
     },
     // packages tells the System loader how to load when no filename and/or no extension
@@ -39,6 +41,11 @@
       'ng2-table': { main: 'ng2-table.js', defaultExtension: 'js' },
       'ng2-bootstrap': { main: 'ng2-bootstrap.js', defaultExtension: 'js' },
       'jquery': { main: 'jquery.js', defaultExtension: 'js' },
+      'angular2-datatable': {
+        main: 'index.js',
+        defaultExtension: 'js'
+      },
+      'lodash': { main: 'lodash.js', defaultExtension: 'js' }
     }
   });
 })(this);
