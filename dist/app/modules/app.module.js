@@ -46,6 +46,7 @@ AppModule = __decorate([
             index_1.ContractorComponent,
             index_1.DashboardComponent,
             index_1.DevelopmentComponent,
+            index_1.EditDevelopmentComponent,
             index_1.FacilityComponent,
             index_1.HeaderComponent,
             index_1.IncidentComponent,
