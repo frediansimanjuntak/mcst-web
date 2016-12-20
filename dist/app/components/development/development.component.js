@@ -52,7 +52,7 @@ DevelopmentComponent = __decorate([
     core_1.Component({
         moduleId: module.id,
         selector: 'development',
-        templateUrl: '../../templates/development.html',
+        templateUrl: '/app/templates/development.html',
     }),
     __metadata("design:paramtypes", [index_1.DevelopmentService, index_1.AlertService])
 ], DevelopmentComponent);

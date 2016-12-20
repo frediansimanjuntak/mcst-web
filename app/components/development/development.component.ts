@@ -11,7 +11,7 @@ import { Observable} from 'rxjs/Observable';
 @Component({
   moduleId: module.id,
   selector: 'development',
-  templateUrl: '../../templates/development.html',
+  templateUrl: '/app/templates/development.html',
 })
 
 export class DevelopmentComponent implements OnInit { 
