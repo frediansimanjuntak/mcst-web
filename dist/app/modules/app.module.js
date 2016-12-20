@@ -17,7 +17,6 @@ var http_1 = require("@angular/http");
 var ng2_table_1 = require("ng2-table/ng2-table");
 var ng2_bootstrap_1 = require("ng2-bootstrap/ng2-bootstrap");
 var ng2_bootstrap_2 = require("ng2-bootstrap/ng2-bootstrap");
-// import {DataTableModule}                from "angular2-datatable";
 var app_routing_module_1 = require("./app-routing.module");
 var data_filter_pipe_1 = require("../components/newsletter/data-filter.pipe");
 var primeng_1 = require("primeng/primeng");

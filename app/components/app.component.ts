@@ -5,7 +5,7 @@ import '../rxjs-operators';
   moduleId: module.id,
   selector: 'my-app',
   template: `
-  	<header></header>
+  	<headers></headers>
   	<navbar></navbar>
   	<router-outlet></router-outlet>
 	`,

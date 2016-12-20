@@ -7,7 +7,6 @@ import { HttpModule }                   from '@angular/http';
 import { Ng2TableModule }               from 'ng2-table/ng2-table';
 import { Ng2BootstrapModule }           from 'ng2-bootstrap/ng2-bootstrap';
 import { PaginationModule }             from 'ng2-bootstrap/ng2-bootstrap';
-// import {DataTableModule}                from "angular2-datatable";
 import { AppRoutingModule }     		    from './app-routing.module';
 import { DataFilterPipe }               from '../components/newsletter/data-filter.pipe';
 import { url }                          from '../global'
