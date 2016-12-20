@@ -42,24 +42,28 @@ var NewsletterComponent = (function () {
     NewsletterComponent.prototype.deleteNewsletter = function (id) {
         var _this = this;
         this.newsletterservice.delete(id)
-            .subscribe(function (response) {
-            if (response.error) {
-                alert("The user could not be deleted, server Error.");
+            .then(function (response) {
+            if (response) {
+                console.log(response);
+                // console.log(response.error());
+                alert("The user could not be deleted, server sibuk.");
             }
             else {
                 _this.alertService.success('Create user successful', true);
-                _this.loadAllNewsletters();
+                alert("The Newsletter successful");
+                _this.ngOnInit();
             }
         }, function (error) {
+            console.log(error);
             alert("The Newsletter could not be deleted, server Error.");
         });
     };
     NewsletterComponent.prototype.loadAllNewsletters = function () {
         var _this = this;
         this.newsletterservice.getAll()
-            .subscribe(function (newsletters) {
+            .subscribe(function (data) {
             setTimeout(function () {
-                _this.data = newsletters.json();
+                _this.data = data;
                 console.log(_this.data);
             }, 1000);
         });
@@ -75,6 +79,7 @@ NewsletterComponent = __decorate([
         moduleId: module.id,
         selector: 'newsletter',
         templateUrl: '../../templates/newsletter.html',
+        styleUrls: ['../../templates/styles/newsletter.css']
     }),
     __metadata("design:paramtypes", [http_1.Http, index_1.NewsletterService, index_1.AlertService])
 ], NewsletterComponent);

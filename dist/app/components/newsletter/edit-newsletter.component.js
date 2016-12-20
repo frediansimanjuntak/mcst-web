@@ -21,7 +21,7 @@ var EditNewsletterComponent = (function () {
         this.formbuilder = formbuilder;
         this.developments = [];
         this.model = {};
-        this.user = JSON.parse(localStorage.getItem('user'));
+        // this.user = JSON.parse(localStorage.getItem('user'));
     }
     EditNewsletterComponent.prototype.ngOnInit = function () {
         this.myForm = this.formbuilder.group({
@@ -35,12 +35,6 @@ var EditNewsletterComponent = (function () {
                     rank: [''],
                 }),
                 released_by: [''],
-                created_by: [this.user._id],
-                if: function (released, released_by) {
-                    if (released === void 0) { released = "true"; }
-                    if (released_by === void 0) { released_by = ""; }
-                    released_by = this.user._id;
-                }
             })
         });
     };
@@ -50,9 +44,10 @@ var EditNewsletterComponent = (function () {
         this.newsletterService.create(this.model)
             .subscribe(function (data) {
             _this.alertService.success('Create development successful', true);
-            _this.router.navigate(['/development']);
+            _this.router.navigate(['/newsletter']);
         }, function (error) {
-            _this.alertService.error(error);
+            console.log(error);
+            alert("The Newsletter could not be deleted, server Error.");
         });
     };
     EditNewsletterComponent.prototype.updateNewsletter = function () {

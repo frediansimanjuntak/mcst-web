@@ -11,9 +11,11 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 var core_1 = require("@angular/core");
 var http_1 = require("@angular/http");
 var Rx_1 = require("rxjs/Rx");
+require("rxjs/add/operator/toPromise");
 var NewsletterService = (function () {
     function NewsletterService(http) {
         this.http = http;
+        this.headers = new http_1.Headers({ 'Content-Type': 'application/json' });
     }
     NewsletterService.prototype.getAll = function () {
         return this.http.get('https://192.168.10.38:3000/api/newsletters')
@@ -29,7 +31,7 @@ var NewsletterService = (function () {
         var options = new http_1.RequestOptions({
             headers: new http_1.Headers({ 'Content-Type': 'application/json;charset=UTF-8' })
         });
-        return this.http.post('https://192.168.10.73:3333/api/newsletters', body, options)
+        return this.http.post('https://192.168.10.38:3000/api/newsletters', body, options)
             .map(function (res) { return res.json(); })
             .catch(function (error) { return Rx_1.Observable.throw(error.json().error || 'Server error'); });
     };
@@ -42,12 +44,14 @@ var NewsletterService = (function () {
             .catch(function (error) { return Rx_1.Observable.throw(error.json().error || 'Server error'); });
     };
     NewsletterService.prototype.delete = function (id) {
-        var options = new http_1.RequestOptions({
-            headers: new http_1.Headers({ 'Content-Type': 'application/json;charset=UTF-8' })
-        });
-        return this.http.delete('https://192.168.10.38:3000/api/newsletters/' + id, options)
-            .map(function (res) { return res.json(); })
-            .catch(function (error) { return Rx_1.Observable.throw(error.json().error || 'Server error'); });
+        return this.http.delete('https://192.168.10.38:3000/api/newsletters/' + id, { headers: this.headers })
+            .toPromise()
+            .then(function () { return null; })
+            .catch(this.handleError);
+    };
+    NewsletterService.prototype.handleError = function (error) {
+        console.error('An error occurred', error); // for demo purposes only
+        return Promise.reject(error.message || error);
     };
     return NewsletterService;
 }());
