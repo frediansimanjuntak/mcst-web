@@ -17,10 +17,10 @@ var http_1 = require("@angular/http");
 var ng2_table_1 = require("ng2-table/ng2-table");
 var ng2_bootstrap_1 = require("ng2-bootstrap/ng2-bootstrap");
 var ng2_bootstrap_2 = require("ng2-bootstrap/ng2-bootstrap");
-var angular2_datatable_1 = require("angular2-datatable");
+// import {DataTableModule}                from "angular2-datatable";
 var app_routing_module_1 = require("./app-routing.module");
 var data_filter_pipe_1 = require("../components/newsletter/data-filter.pipe");
-var global_1 = require("../global");
+var primeng_1 = require("primeng/primeng");
 var index_1 = require("../components/index");
 var index_2 = require("../services/index");
 var AppModule = (function () {
@@ -32,7 +32,7 @@ AppModule = __decorate([
     core_1.NgModule({
         imports: [
             common_1.CommonModule,
-            angular2_datatable_1.DataTableModule,
+            primeng_1.DataTableModule,
             platform_browser_1.BrowserModule,
             forms_1.FormsModule,
             forms_2.ReactiveFormsModule,
@@ -41,6 +41,7 @@ AppModule = __decorate([
             ng2_bootstrap_1.Ng2BootstrapModule,
             ng2_bootstrap_2.PaginationModule,
             app_routing_module_1.AppRoutingModule,
+            primeng_1.SharedModule,
         ],
         declarations: [
             index_1.AlertComponent,
@@ -90,7 +91,7 @@ AppModule = __decorate([
             index_2.UserGroupService,
             index_2.VisitService,
         ],
-        bootstrap: [index_1.AppComponent, [global_1.url]]
+        bootstrap: [index_1.AppComponent]
     }),
     __metadata("design:paramtypes", [])
 ], AppModule);
