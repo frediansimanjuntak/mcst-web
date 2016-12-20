@@ -8,7 +8,7 @@ import '../../rxjs-operators';
 @Component({
   moduleId: module.id,
   selector: 'newsletter',
-  templateUrl: '../../templates/newsletter.html',
+  template: `wow`,
   styleUrls: [ '../../templates/styles/newsletter.css' ]
 })
 

@@ -10,6 +10,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 var core_1 = require("@angular/core");
 var http_1 = require("@angular/http");
+var Rx_1 = require("rxjs/Rx");
 var global_1 = require("../global");
 require("rxjs/add/operator/toPromise");
 var DevelopmentService = (function () {
@@ -17,18 +18,34 @@ var DevelopmentService = (function () {
         this.http = http;
         this.headers = new http_1.Headers({ 'Content-Type': 'application/json' });
     }
+    // getAll(){
+    //     return this.http.get(url + 'api/developments')
+    //            .toPromise()
+    //            .then(response => {response.json() as Development[], console.log(response.json()) })
+    //            .catch(this.handleError);
+    // }
+    // getById(id:number){
+    //     return this.http.get(url + 'api/developments/' + id)
+    //       .toPromise()
+    //       .then(response => {response.json() as Development, console.log(response.json())}) 
+    //       .catch(this.handleError);
+    // }
     DevelopmentService.prototype.getAll = function () {
         return this.http.get(global_1.url + 'api/developments')
-            .toPromise()
-            .then(function (response) { return response.json().data; })
-            .catch(this.handleError);
+            .map(function (res) { return res.json(); })
+            .catch(function (error) { return Rx_1.Observable.throw(error.json().error || 'Server error'); });
     };
     DevelopmentService.prototype.getById = function (id) {
-        return this.http.get(global_1.url + 'api/developments' + id)
-            .toPromise()
-            .then(function (response) { return response.json().data; })
-            .catch(this.handleError);
+        return this.http.get(global_1.url + 'api/developments/' + id)
+            .map(function (res) { return res.json(); })
+            .catch(function (error) { return Rx_1.Observable.throw(error.json().error || 'Server error'); });
     };
+    // getByName(name:string): Promise<Development>{
+    //     return this.http.get(url + 'api/developments/' + name)
+    //       .toPromise()
+    //       .then(response => response.json().data as Development)
+    //       .catch(this.handleError);
+    // }
     DevelopmentService.prototype.create = function (body) {
         return this.http.post(global_1.url + 'api/developments', body, { headers: this.headers })
             .toPromise()
@@ -36,7 +53,7 @@ var DevelopmentService = (function () {
             .catch(this.handleError);
     };
     DevelopmentService.prototype.update = function (body) {
-        return this.http.put(global_1.url + 'api/developments' + body._id, body, { headers: this.headers })
+        return this.http.put(global_1.url + 'api/developments/' + body._id, body, { headers: this.headers })
             .toPromise()
             .then(function (res) { return res.json().data; })
             .catch(this.handleError);

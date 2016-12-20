@@ -6,7 +6,7 @@
 		Home > Development
 		<div class="row">
 			<div class="col-md-4 pull-right">
-					  		<a class="btn btn-default pull-right" [routerLink]="['/development/add']">
+					  		<a class="btn btn-default pull-right" (click)="add()">
 					  		<i class="fa fa-plus" aria-hidden="true"></i>&nbsp;Add Development</a>
 			</div>
 		</div>
@@ -22,10 +22,8 @@
 		    <!-- </p-column> -->
 		    <p-column styleClass="col-button">
 		    	<template let-development="rowData" pTemplate="body">
-		        <button type="button" [routerLink]="['/development/add'+development._id]">Edit</button>
-		    	</template>
-		    	<template let-development="rowData" pTemplate="body">
-		        <button type="button" (click)="deleteDevelopment(development)">Delete</button>
+		        	<button type="button" (click)="edit(development)">Edit</button>
+		        	<button type="button" (click)="deleteDevelopment(development)">Delete</button>
 		    	</template>
 		    </p-column>
 		</p-dataTable>

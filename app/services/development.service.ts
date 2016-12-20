@@ -10,19 +10,39 @@ export class DevelopmentService {
     private headers = new Headers({'Content-Type': 'application/json'});
     constructor(private http: Http) {}
 
-    getAll(): Promise<Development[]>{
+    // getAll(){
+    //     return this.http.get(url + 'api/developments')
+    //            .toPromise()
+    //            .then(response => {response.json() as Development[], console.log(response.json()) })
+    //            .catch(this.handleError);
+    // }
+
+    // getById(id:number){
+    //     return this.http.get(url + 'api/developments/' + id)
+    //       .toPromise()
+    //       .then(response => {response.json() as Development, console.log(response.json())}) 
+    //       .catch(this.handleError);
+
+    // }
+
+    getAll(){
         return this.http.get(url + 'api/developments')
-               .toPromise()
-               .then(response => response.json().data as Development[])
-               .catch(this.handleError);
+            .map((res:Response) => res.json())
+            .catch((error:any) => Observable.throw(error.json().error || 'Server error'));
     }
 
-    getById(id:string): Promise<Development>{
-        return this.http.get(url + 'api/developments' + id)
-          .toPromise()
-          .then(response => response.json().data as Development)
-          .catch(this.handleError);
+    getById(id:string){
+        return this.http.get(url + 'api/developments/' + id)
+            .map((res:Response) => res.json())
+            .catch((error:any) => Observable.throw(error.json().error || 'Server error'));
     }
+
+    // getByName(name:string): Promise<Development>{
+    //     return this.http.get(url + 'api/developments/' + name)
+    //       .toPromise()
+    //       .then(response => response.json().data as Development)
+    //       .catch(this.handleError);
+    // }
 
     create(body:any): Promise<Development> {
         return this.http.post(url +  'api/developments', body, {headers: this.headers})
@@ -32,7 +52,7 @@ export class DevelopmentService {
     }
 
     update(body:Development): Promise<Development> {
-        return this.http.put(url + 'api/developments' + body._id,body {headers: this.headers})
+        return this.http.put(url + 'api/developments/' + body._id,body, {headers: this.headers})
             .toPromise()
             .then(res => res.json().data)
             .catch(this.handleError);

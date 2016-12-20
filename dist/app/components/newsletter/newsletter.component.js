@@ -78,7 +78,7 @@ NewsletterComponent = __decorate([
     core_1.Component({
         moduleId: module.id,
         selector: 'newsletter',
-        templateUrl: '../../templates/newsletter.html',
+        template: "wow",
         styleUrls: ['../../templates/styles/newsletter.css']
     }),
     __metadata("design:paramtypes", [http_1.Http, index_1.NewsletterService, index_1.AlertService])
