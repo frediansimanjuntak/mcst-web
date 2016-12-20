@@ -43,7 +43,7 @@ export class DevelopmentService {
         let options = new RequestOptions({
             headers: new Headers({ 'Content-Type': 'application/json;charset=UTF-8' }) 
         });
-        return this.http.delete(url + 'api/developments' + id, options)
+        return this.http.delete(url + 'api/developments/' + id, options)
             .map((res:Response) => res.json())
             .catch((error:any) => Observable.throw(error.json().error || 'Server error'));
     }

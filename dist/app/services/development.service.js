@@ -46,7 +46,7 @@ var DevelopmentService = (function () {
         var options = new http_1.RequestOptions({
             headers: new http_1.Headers({ 'Content-Type': 'application/json;charset=UTF-8' })
         });
-        return this.http.delete(global_1.url + 'api/developments' + id, options)
+        return this.http.delete(global_1.url + 'api/developments/' + id, options)
             .map(function (res) { return res.json(); })
             .catch(function (error) { return Rx_1.Observable.throw(error.json().error || 'Server error'); });
     };

@@ -32,6 +32,7 @@
       'ng2-bootstrap': 'npm:ng2-bootstrap',
       'lodash': 'npm:lodash',
       'jquery' : 'npm:jquery/dist/',
+      'primeng': 'npm:primeng' 
     },
     // packages tells the System loader how to load when no filename and/or no extension
     packages: {
@@ -45,7 +46,8 @@
         main: 'index.js',
         defaultExtension: 'js'
       },
-      'lodash': { main: 'lodash.js', defaultExtension: 'js' }
+      'lodash': { main: 'lodash.js', defaultExtension: 'js' },
+      primeng: { defaultExtension: 'js' },
     }
   });
 })(this);
