@@ -122,6 +122,6 @@ import {
     UserGroupService,
     VisitService,
   ],
-  bootstrap:    [ AppComponent, [url] ] 
+  bootstrap:    [ AppComponent ] 
 })
 export class AppModule { }
