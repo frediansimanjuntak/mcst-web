@@ -1,39 +1,18 @@
-<div class="container">
-	<h1>Development</h1>
-	<p>Home > Development > List</p>
-	<a href="#">Back To Last Page</a>
-	
-	<div class="row">
-		<div class="col-md-9">
-			<div class="row">
-			  <div class="col-md-4">
-			    <input *ngIf="config.filtering" placeholder="Filter all columns"
-			           [ngTableFiltering]="config.filtering"
-			           class="form-control"
-			           (tableChanged)="onChangeTable(config)"/>
-			  </div>
-			</div>
-			<br>
-			<ng-table [config]="config"
-			          (tableChanged)="onChangeTable(config)"
-			          (cellClicked)="onCellClick($event)"
-			          [rows]="rows" [columns]="columns">
-			</ng-table>
-			<pagination *ngIf="config.paging"
-			            class="pagination-sm"
-			            [(ngModel)]="page"
-			            [totalItems]="length"
-			            [itemsPerPage]="itemsPerPage"
-			            [maxSize]="maxSize"
-			            [boundaryLinks]="true"
-			            [rotate]="false"
-			            (pageChanged)="onChangeTable(config, $event)"
-			            (numPages)="numPages = $event">
-			</pagination>
-			<pre *ngIf="config.paging" class="card card-block card-header">Page: {{page}} / {{numPages}}</pre>
-		</div>
-		<div class="col-md-3">
-			
-		</div>
-	</div>
-</div>
+<h3 class="first">Basic</h3>
+<p-dataTable [value]="developments" [rows]="10" [paginator]="true">
+    <p-column field="name" header="Name" sortable="true" [filter]="true" filterPlaceholder="Search name"></p-column>
+    <p-column field="owner" header="Owner" sortable="true" [filter]="true" filterPlaceholder="Search owner"></p-column>
+    <!-- <p-column field="description" header="Description" sortable="true" [filter]="true" filterPlaceholder="Search"> -->
+    <p-column field="description" header="Description" sortable="true" [filter]="true" filterPlaceholder="Search description">>
+        <template let-col let-car="rowData" pTemplate="body">
+            <span [style.color]="car[col.field]">{{car[col.field]}}</span>
+        </template>
+    </p-column>
+    <!-- </p-column> -->
+    <p-column styleClass="col-button">
+    	<template let-car="rowData" pTemplate="body">
+        <button type="button" (click)="deleteDevelopment(car)">Delete</button>
+    	</template>
+    </p-column>
+</p-dataTable>
+
