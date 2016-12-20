@@ -10,45 +10,46 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 var core_1 = require("@angular/core");
 var http_1 = require("@angular/http");
-var Rx_1 = require("rxjs/Rx");
 var global_1 = require("../global");
+require("rxjs/add/operator/toPromise");
 var DevelopmentService = (function () {
     function DevelopmentService(http) {
         this.http = http;
+        this.headers = new http_1.Headers({ 'Content-Type': 'application/json' });
     }
     DevelopmentService.prototype.getAll = function () {
         return this.http.get(global_1.url + 'api/developments')
-            .map(function (res) { return res.json(); })
-            .catch(function (error) { return Rx_1.Observable.throw(error.json().error || 'Server error'); });
+            .toPromise()
+            .then(function (response) { return response.json().data; })
+            .catch(this.handleError);
     };
     DevelopmentService.prototype.getById = function (id) {
         return this.http.get(global_1.url + 'api/developments' + id)
-            .map(function (res) { return res.json(); })
-            .catch(function (error) { return Rx_1.Observable.throw(error.json().error || 'Server error'); });
+            .toPromise()
+            .then(function (response) { return response.json().data; })
+            .catch(this.handleError);
     };
     DevelopmentService.prototype.create = function (body) {
-        var options = new http_1.RequestOptions({
-            headers: new http_1.Headers({ 'Content-Type': 'application/json;charset=UTF-8' })
-        });
-        return this.http.post(global_1.url + 'api/developments', body, options)
-            .map(function (res) { return res.json(); })
-            .catch(function (error) { return Rx_1.Observable.throw(error.json().error || 'Server error'); });
+        return this.http.post(global_1.url + 'api/developments', body, { headers: this.headers })
+            .toPromise()
+            .then(function (res) { return res.json().data; })
+            .catch(this.handleError);
     };
     DevelopmentService.prototype.update = function (body) {
-        var options = new http_1.RequestOptions({
-            headers: new http_1.Headers({ 'Content-Type': 'application/json;charset=UTF-8' })
-        });
-        return this.http.put(global_1.url + 'api/developments' + body._id, body, options)
-            .map(function (res) { return res.json(); })
-            .catch(function (error) { return Rx_1.Observable.throw(error.json().error || 'Server error'); });
+        return this.http.put(global_1.url + 'api/developments' + body._id, body, { headers: this.headers })
+            .toPromise()
+            .then(function (res) { return res.json().data; })
+            .catch(this.handleError);
     };
     DevelopmentService.prototype.delete = function (id) {
-        var options = new http_1.RequestOptions({
-            headers: new http_1.Headers({ 'Content-Type': 'application/json;charset=UTF-8' })
-        });
-        return this.http.delete(global_1.url + 'api/developments/' + id, options)
-            .map(function (res) { return res.json(); })
-            .catch(function (error) { return Rx_1.Observable.throw(error.json().error || 'Server error'); });
+        return this.http.delete(global_1.url + 'api/developments/' + id, { headers: this.headers })
+            .toPromise()
+            .then(function () { return null; })
+            .catch(this.handleError);
+    };
+    DevelopmentService.prototype.handleError = function (error) {
+        console.error('An error occurred', error); // for demo purposes only
+        return Promise.reject(error.message || error);
     };
     return DevelopmentService;
 }());

@@ -24,8 +24,8 @@ var EditDevelopmentComponent = (function () {
         var _this = this;
         console.log(this.model);
         this.developmentService.create(this.model)
-            .subscribe(function (data) {
-            _this.alertService.success('Create development successful', true);
+            .then(function (response) {
+            _this.alertService.success('Update development successful', true);
             _this.router.navigate(['/development']);
         }, function (error) {
             _this.alertService.error(error);
@@ -34,15 +34,9 @@ var EditDevelopmentComponent = (function () {
     EditDevelopmentComponent.prototype.updateDevelopment = function () {
         var _this = this;
         this.developmentService.update(this.model)
-            .subscribe(function (response) {
-            if (response.error) {
-                _this.alertService.error(response.error);
-            }
-            else {
-                // EmitterService.get(this.userList).emit(response.users);
-                _this.alertService.success('Update development successful', true);
-                _this.router.navigate(['/development']);
-            }
+            .then(function (response) {
+            _this.alertService.success('Update development successful', true);
+            _this.router.navigate(['/development']);
         }, function (error) {
             _this.alertService.error(error);
         });
@@ -53,7 +47,7 @@ EditDevelopmentComponent = __decorate([
     core_1.Component({
         moduleId: module.id,
         selector: 'edit-development',
-        template: "",
+        templateUrl: '/app/templates/edit-development.html',
     }),
     __metadata("design:paramtypes", [router_1.Router,
         index_1.DevelopmentService,

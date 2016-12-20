@@ -35,9 +35,9 @@ export class DevelopmentComponent implements OnInit {
     deleteDevelopment(car: Development) {
         this.developmentService.delete(car._id) 
         // .subscribe(() => { this.loadAllUsers() });
-        .subscribe(
+        .then(
 			response => {
-				if(response.error) { 
+				if(response) { 
 	                alert(`The development could not be deleted, server Error.`);
 	            } else {
                     this.alertService.success('Delete development successful', true);
@@ -49,7 +49,6 @@ export class DevelopmentComponent implements OnInit {
             }
         );
     }
-
    
     private loadAllDevelopments() {
         this.developmentService.getAll().subscribe(developments => { this.developments = developments; console.log(developments) });

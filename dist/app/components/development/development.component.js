@@ -30,8 +30,8 @@ var DevelopmentComponent = (function () {
     DevelopmentComponent.prototype.deleteDevelopment = function (car) {
         var _this = this;
         this.developmentService.delete(car._id)
-            .subscribe(function (response) {
-            if (response.error) {
+            .then(function (response) {
+            if (response) {
                 alert("The development could not be deleted, server Error.");
             }
             else {

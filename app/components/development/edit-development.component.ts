@@ -7,7 +7,7 @@ import '../../rxjs-operators';
 @Component({
   moduleId: module.id,
   selector: 'edit-development',
-  template: ``,
+  templateUrl: '/app/templates/edit-development.html',
 })
 
 export class EditDevelopmentComponent  { 
@@ -22,12 +22,12 @@ export class EditDevelopmentComponent  {
     createDevelopment() {
         console.log(this.model);
         this.developmentService.create(this.model)
-        .subscribe(
-            data => {
-                this.alertService.success('Create development successful', true);
+        .then(
+            response => {
+                this.alertService.success('Update development successful', true);
                 this.router.navigate(['/development']);
             },
-            error => {
+            error => { 
                 this.alertService.error(error);
             }
         );
@@ -35,17 +35,12 @@ export class EditDevelopmentComponent  {
 
     updateDevelopment(){
 		this.developmentService.update(this.model)
-		.subscribe(
+		.then(
 			response => {
-				if(response.error) { 
-	                this.alertService.error(response.error);
-	            } else {
-	                // EmitterService.get(this.userList).emit(response.users);
-                     this.alertService.success('Update development successful', true);
-                     this.router.navigate(['/development']);
-	            }
+                this.alertService.success('Update development successful', true);
+                this.router.navigate(['/development']);
             },
-            error=> { 
+            error => { 
             	this.alertService.error(error);
             }
         );
