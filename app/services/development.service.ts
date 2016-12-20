@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Http, Headers, RequestOptions, Response } from '@angular/http';
 import { Observable } from 'rxjs/Rx';
 import { Development } from '../models/index';
-import { url } from '../global'
+import { url } from '../global';
 import 'rxjs/add/operator/toPromise';
  
 @Injectable()
