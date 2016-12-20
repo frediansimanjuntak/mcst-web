@@ -13,9 +13,8 @@ var http_1 = require("@angular/http");
 var index_1 = require("../../services/index");
 require("../../rxjs-operators");
 var NewsletterComponent = (function () {
-
-    function NewsletterComponent(newsletterservice, alertService) {
-
+    function NewsletterComponent(http, newsletterservice, alertService) {
+        this.http = http;
         this.newsletterservice = newsletterservice;
         this.alertService = alertService;
         this.newsletters = [];
