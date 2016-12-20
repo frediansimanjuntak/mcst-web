@@ -23,7 +23,7 @@ export class EditNewsletterComponent  {
     	private newsletterService: NewsletterService,
     	private alertService: AlertService,
         private formbuilder: FormBuilder ) {
-        this.user = JSON.parse(localStorage.getItem('user'));
+        // this.user = JSON.parse(localStorage.getItem('user'));
     }
 
     ngOnInit() {
@@ -38,10 +38,10 @@ export class EditNewsletterComponent  {
                     rank: [''],
                 }),
                 released_by: [''],
-                created_by: [this.user._id],
-                if(released = "true" , released_by = "") {
-                    released_by = this.user._id
-                }
+                // created_by: [this.user._id],
+                // if(released = "true" , released_by = "") {
+                //     released_by = this.user._id
+                // }
             })
         })
     }
@@ -52,10 +52,11 @@ export class EditNewsletterComponent  {
         .subscribe(
             data => {
                 this.alertService.success('Create development successful', true);
-                this.router.navigate(['/development']);
+                this.router.navigate(['/newsletter']);
             },
             error => {
-                this.alertService.error(error);
+                console.log(error);
+                alert(`The Newsletter could not be deleted, server Error.`);
             }
         );
     }

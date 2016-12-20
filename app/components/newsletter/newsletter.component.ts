@@ -9,6 +9,7 @@ import '../../rxjs-operators';
   moduleId: module.id,
   selector: 'newsletter',
   templateUrl: '../../templates/newsletter.html',
+  styleUrls: [ '../../templates/styles/newsletter.css' ]
 })
 
 export class NewsletterComponent implements OnInit { 
@@ -38,16 +39,20 @@ export class NewsletterComponent implements OnInit {
 
     deleteNewsletter(id: string) {
         this.newsletterservice.delete(id) 
-          .subscribe(
+          .then(
             response => {
-              if(response.error) { 
-                alert(`The user could not be deleted, server Error.`);
+              if(response) { 
+                console.log(response);
+                // console.log(response.error());
+                alert(`The user could not be deleted, server sibuk.`);
               } else {
                 this.alertService.success('Create user successful', true);
-                this.loadAllNewsletters()
+                alert(`The Newsletter successful`);
+                this.ngOnInit()
               }
             },
             error=> { 
+              console.log(error);
                 alert(`The Newsletter could not be deleted, server Error.`);
             }
         );
@@ -55,9 +60,9 @@ export class NewsletterComponent implements OnInit {
 
     private loadAllNewsletters() {
         this.newsletterservice.getAll()
-            .subscribe((newsletters)=> {
+            .subscribe((data)=> {
                 setTimeout(()=> {
-                    this.data = newsletters.json();
+                    this.data = data;
                     console.log(this.data);
                 }, 1000);
             });
