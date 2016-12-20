@@ -1,45 +1,33 @@
 <div class="container">
 	<div class="main">
 		<div class="title">
-			Users
+			User
 		</div>
-		<p>Home > Users > List</p>
-		<a href="#">Back To Last Page</a>
-		
+		Home > User
 		<div class="row">
-				<div class="row">
-				  <div class="col-md-4">
-				    <input *ngIf="config.filtering" placeholder="Filter all columns"
-				           [ngTableFiltering]="config.filtering"
-				           class="form-control"
-				           (tableChanged)="onChangeTable(config)"/>
-				  </div>
-				  <div class="col-md-4">
-				  		<a class="btn btn-default" [routerLink]="['/user/add']">
-				  		<i class="fa fa-plus" aria-hidden="true"></i>&nbsp;Create User</a>
-				  </div>
-				</div>
-				<br>
-				<ng-table [config]="config"
-				          (tableChanged)="onChangeTable(config)"
-				          (cellClicked)="onCellClick($event)"
-				          [rows]="rows" [columns]="columns">
-				</ng-table>
-				<pagination *ngIf="config.paging"
-				            class="pagination-sm"
-				            [(ngModel)]="page"
-				            [totalItems]="length"
-				            [itemsPerPage]="itemsPerPage"
-				            [maxSize]="maxSize"
-				            [boundaryLinks]="true"
-				            [rotate]="false"
-				            (pageChanged)="onChangeTable(config, $event)"
-				            (numPages)="numPages = $event">
-				</pagination>
-				<pre *ngIf="config.paging" class="card card-block card-header">Page: {{page}} / {{numPages}}</pre>
-			<div class="col-md-3">
-				
+			<div class="col-md-4 pull-right">
+					  		<a class="btn btn-default pull-right" [routerLink]="['/user/add']">
+					  		<i class="fa fa-plus" aria-hidden="true"></i>&nbsp;Add User</a>
 			</div>
 		</div>
+		<p-dataTable [value]="users" [rows]="10" [paginator]="true">
+		    <p-column field="username" header="Username" sortable="true" [filter]="true" filterPlaceholder="Search username"></p-column>
+		    <p-column field="email" header="Email" sortable="true" [filter]="true" filterPlaceholder="Search email"></p-column>
+		   	<p-column field="phone" header="Phone" sortable="true" [filter]="true" filterPlaceholder="Search phone"></p-column>
+		    <p-column field="role" header="Role" sortable="true" [filter]="true" filterPlaceholder="Search role">>
+		        <template let-col let-user="rowData" pTemplate="body">
+		            <span [style.color]="user[col.field]">{{user[col.field]}}</span>
+		        </template>
+		    </p-column>
+		    <p-column styleClass="col-button">
+		    	<template let-user="rowData" pTemplate="body">
+		        <button type="button" [routerLink]="['/user/edit'+user._id]>Edit</button>
+		    	</template>
+		    	<template let-user="rowData" pTemplate="body">
+		        <button type="button" (click)="deleteDevelopment(user)">Delete</button>
+		    	</template>
+		    </p-column>
+		</p-dataTable>
 	</div>
 </div>
+
