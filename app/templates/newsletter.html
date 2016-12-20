@@ -1,17 +1,101 @@
 <div class="container">
-	<div (click)="$event.preventDefault()">
-	  <hr />
-	  <tabset>
-	    <tab heading="Datatable"><table-demo></table-demo></tab>
-	    <tab heading="Accordion"><accordion-demo></accordion-demo></tab>
-	    <tab heading="Form"><form-validation></form-validation></tab>
-	    <tab heading="Full Calender"><angular2-fullcalendar [options]="calendarOptions"></angular2-fullcalendar></tab>
-	    <tab (select)="alertMe()">
-	      <template tabHeading>
-	        <i class="glyphicon glyphicon-bell"></i> Alert!
-	      </template>
-	      I've got an HTML heading, and a select callback. Pretty cool!
-	    </tab>
-	  </tabset>
+	<div class="main">
+		<div class="title">
+			AGM & CIRCULAR
+		</div>
+		Home > AGM & Circular
+		<div class="row">
+			<div class="col-md-4 pull-right">
+					  		<a class="btn btn-default pull-right" [routerLink]="['/newsletter/add']">
+					  		<i class="fa fa-plus" aria-hidden="true"></i>&nbsp;Upload AGM / Circular</a>
+			</div>
+		</div>
+		<div (click)="$event.preventDefault()">
+		  <tabset>
+		    <tab heading="AGM">
+		    	<div class="container-fluid">
+				        <div class="panel panel-default">
+							<table class="table table-striped" [mfData]="data | dataFilter : filterQuery" #mf="mfDataTable"
+				                   [mfRowsOnPage]="rowsOnPage" [(mfSortBy)]="sortBy" [(mfSortOrder)]="sortOrder">
+				                <thead>
+				                <tr>
+				                    <th>
+				                        <mfDefaultSorter by="name">Date</mfDefaultSorter>
+				                    </th>
+				                    <th>
+				                        <mfDefaultSorter by="email">Title</mfDefaultSorter>
+				                    </th>
+				                    <th>
+				                        <mfDefaultSorter by="age">Uploaded on</mfDefaultSorter>
+				                    </th>
+				                    <th>
+				                        <mfDefaultSorter by="age">Uploaded by</mfDefaultSorter>
+				                    </th>
+				                    <th>
+				                        <mfDefaultSorter [by]="sortByWordLength">Attachment</mfDefaultSorter>
+				                    </th>
+				                    <th></th>
+				                </tr>
+				                <tr>
+				                    <th colspan="5">
+				                        Filter by name:
+				                        <input class="form-control" [(ngModel)]="filterQuery"/>
+				                    </th>
+				                </tr>
+				                </thead>
+				                <tbody>
+				                <tr *ngFor="let item of mf.data">
+				                    <td>{{item.release_at}}</td>
+				                    <td>{{item.title}}</td>
+				                    <td>{{item.created_at}}</td>
+				                    <td>{{item.created_by}}</td>
+				                    <td>{{item.attachment}}</td>
+				                    <td>
+				                    	<button class="btn btn-success">Release</button>
+				                        <button (click)="deleteNewsletter(item._id)" title="Delete"><i class="fa fa-trash-o" aria-hidden="true"></i></button>
+				                    </td>
+				                </tr>
+				                </tbody>
+				                <tfoot>
+				                <tr>
+				                    <td colspan="5">
+				                        <mfBootstrapPaginator [rowsOnPageSet]="[5,10,15]"></mfBootstrapPaginator>
+				                    </td>
+				                </tr>
+				                </tfoot>
+				            </table>
+				    </div>
+				</div>
+		    	<!-- <div class="row">
+				  <div class="col-md-4">
+				    <input *ngIf="config.filtering" placeholder="Filter all columns"
+				           [ngTableFiltering]="config.filtering"
+				           class="form-control"
+				           (tableChanged)="onChangeTable(config)"/>
+				  </div>
+				</div>
+				<br>
+				<ng-table [config]="config"
+				          (tableChanged)="onChangeTable(config)"
+				          (cellClicked)="onCellClick($event)"
+				          [rows]="rows" [columns]="columns">
+				</ng-table>
+				<pagination *ngIf="config.paging"
+				            class="pagination-sm"
+				            [(ngModel)]="page"
+				            [totalItems]="length"
+				            [itemsPerPage]="itemsPerPage"
+				            [maxSize]="maxSize"
+				            [boundaryLinks]="true"
+				            [rotate]="false"
+				            (pageChanged)="onChangeTable(config, $event)"
+				            (numPages)="numPages = $event">
+				</pagination> -->
+		    </tab>
+		    <tab heading="Circular">
+		    	
+		    </tab>	
+		  </tabset>
+		</div>	
 	</div>
 </div>

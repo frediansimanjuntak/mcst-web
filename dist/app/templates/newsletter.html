@@ -13,33 +13,6 @@
 		<div (click)="$event.preventDefault()">
 		  <tabset>
 		    <tab heading="AGM">
-		    	<!-- <div class="row">
-				  <div class="col-md-4">
-				    <input *ngIf="config.filtering" placeholder="Filter all columns"
-				           [ngTableFiltering]="config.filtering"
-				           class="form-control"
-				           (tableChanged)="onChangeTable(config)"/>
-				  </div>
-				</div>
-				<br>
-				<ng-table [config]="config"
-				          (tableChanged)="onChangeTable(config)"
-				          (cellClicked)="onCellClick($event)"
-				          [rows]="rows" [columns]="columns">
-				</ng-table>
-				<pagination *ngIf="config.paging"
-				            class="pagination-sm"
-				            [(ngModel)]="page"
-				            [totalItems]="length"
-				            [itemsPerPage]="itemsPerPage"
-				            [maxSize]="maxSize"
-				            [boundaryLinks]="true"
-				            [rotate]="false"
-				            (pageChanged)="onChangeTable(config, $event)"
-				            (numPages)="numPages = $event">
-				</pagination> -->
-		    </tab>
-		    <tab heading="Circular">
 		    	<div class="container-fluid">
 				        <div class="panel panel-default">
 							<table class="table table-striped" [mfData]="data | dataFilter : filterQuery" #mf="mfDataTable"
@@ -72,13 +45,14 @@
 				                </thead>
 				                <tbody>
 				                <tr *ngFor="let item of mf.data">
-				                    <td>{{item.name}}</td>
-				                    <td>{{item.owner}}</td>
-				                    <td>-</td>
-				                    <td class="text-right">{{item.description}}</td>
-				                    <td><!-- {{item.propert | uppercase}} --></td>
+				                    <td>{{item.release_at}}</td>
+				                    <td>{{item.title}}</td>
+				                    <td>{{item.created_at}}</td>
+				                    <td>{{item.created_by}}</td>
+				                    <td>{{item.attachment}}</td>
 				                    <td>
-				                        <button (click)="deleteNewsletter(item._id)" class="btn btn-danger"></button>
+				                    	<button class="btn btn-success">Release</button>
+				                        <button (click)="deleteNewsletter(item._id)" title="Delete"><i class="fa fa-trash-o" aria-hidden="true"></i></button>
 				                    </td>
 				                </tr>
 				                </tbody>
@@ -92,6 +66,34 @@
 				            </table>
 				    </div>
 				</div>
+		    	<!-- <div class="row">
+				  <div class="col-md-4">
+				    <input *ngIf="config.filtering" placeholder="Filter all columns"
+				           [ngTableFiltering]="config.filtering"
+				           class="form-control"
+				           (tableChanged)="onChangeTable(config)"/>
+				  </div>
+				</div>
+				<br>
+				<ng-table [config]="config"
+				          (tableChanged)="onChangeTable(config)"
+				          (cellClicked)="onCellClick($event)"
+				          [rows]="rows" [columns]="columns">
+				</ng-table>
+				<pagination *ngIf="config.paging"
+				            class="pagination-sm"
+				            [(ngModel)]="page"
+				            [totalItems]="length"
+				            [itemsPerPage]="itemsPerPage"
+				            [maxSize]="maxSize"
+				            [boundaryLinks]="true"
+				            [rotate]="false"
+				            (pageChanged)="onChangeTable(config, $event)"
+				            (numPages)="numPages = $event">
+				</pagination> -->
+		    </tab>
+		    <tab heading="Circular">
+		    	
 		    </tab>	
 		  </tabset>
 		</div>	
