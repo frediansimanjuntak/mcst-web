@@ -1,0 +1,37 @@
+<div class="container">
+  <h1>Upload AGM / Circular</h1>
+  <form [formGroup]="myForm" novalidate (ngSubmit)="save(myForm.value, myForm.valid)">
+    <div class="form-group">
+      <label for="">Title</label>
+      <input type="text" class="form-control" formControlName="title">
+      <small [hidden]="myForm.controls.title.valid || (myForm.controls.title.pristine && !submitted)" class="text-danger">
+            Title is required (minimum 5 characters).
+          </small>
+      <!--<pre class="margin-20">{{ myForm.controls.name.errors | json }}</pre>-->
+    </div>
+    <div class="form-group" formGroupName="description">
+      <label for="">Description</label>
+      <input type="text" class="form-control" formControlName="description">
+      <small [hidden]="myForm.controls.description.valid || (myForm.controls.address.controls.street.pristine && !submitted)" class="text-danger">
+            Street required
+          </small>
+    </div>
+    <div class="form-group" formGroupName="address">
+      <label for="">Postcode</label>
+      <input type="text" class="form-control" formControlName="postcode">
+    </div>
+    <button type="submit" class="btn btn-default">Submit</button>
+    <div class="margin-20">
+      <div>myForm details:-</div>
+      <pre>Is myForm valid?: <br>{{myForm.valid | json}}</pre>
+      <pre>Is myForm submitted?: <br>{{submitted | json}}</pre>
+      <pre>myForm value: <br>{{myForm.value | json}}</pre>
+    </div>
+    <div class="margin-20">
+      Form changes:
+    </div>
+    <div *ngFor="let event of events" class="margin-20">
+      <pre> {{ event | json }} </pre>
+    </div>
+  </form>
+</div>

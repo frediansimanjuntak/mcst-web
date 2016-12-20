@@ -37,14 +37,14 @@ export class NewsletterComponent implements OnInit {
     }
 
     deleteNewsletter(id: string) {
-          this.newsletterservice.delete(id) 
-            .subscribe(
-                response => {
-        if(response.error) { 
-                  alert(`The user could not be deleted, server Error.`);
+        this.newsletterservice.delete(id) 
+          .subscribe(
+            response => {
+              if(response.error) { 
+                alert(`The user could not be deleted, server Error.`);
               } else {
-                    this.alertService.success('Create user successful', true);
-                  this.loadAllNewsletters()
+                this.alertService.success('Create user successful', true);
+                this.loadAllNewsletters()
               }
             },
             error=> { 
