@@ -1,7 +1,7 @@
 import { User, Attachment } from './index'
 
 export class Development {
-  _id : number;
+  _id : string;
   name : string;
   owner : User;
   staff : User[];
