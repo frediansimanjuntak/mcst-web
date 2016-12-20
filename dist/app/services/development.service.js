@@ -11,17 +11,18 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 var core_1 = require("@angular/core");
 var http_1 = require("@angular/http");
 var Rx_1 = require("rxjs/Rx");
+var global_1 = require("../global");
 var DevelopmentService = (function () {
     function DevelopmentService(http) {
         this.http = http;
     }
     DevelopmentService.prototype.getAll = function () {
-        return this.http.get('https://192.168.10.38:3000/api/developments')
+        return this.http.get(global_1.url + 'api/developments')
             .map(function (res) { return res.json(); })
             .catch(function (error) { return Rx_1.Observable.throw(error.json().error || 'Server error'); });
     };
     DevelopmentService.prototype.getById = function (id) {
-        return this.http.get('https://192.168.10.38:3000/api/developments' + id)
+        return this.http.get(global_1.url + 'api/developments' + id)
             .map(function (res) { return res.json(); })
             .catch(function (error) { return Rx_1.Observable.throw(error.json().error || 'Server error'); });
     };
@@ -29,7 +30,7 @@ var DevelopmentService = (function () {
         var options = new http_1.RequestOptions({
             headers: new http_1.Headers({ 'Content-Type': 'application/json;charset=UTF-8' })
         });
-        return this.http.post('https://192.168.10.38:3000/api/developments', body, options)
+        return this.http.post(global_1.url + 'api/developments', body, options)
             .map(function (res) { return res.json(); })
             .catch(function (error) { return Rx_1.Observable.throw(error.json().error || 'Server error'); });
     };
@@ -37,7 +38,7 @@ var DevelopmentService = (function () {
         var options = new http_1.RequestOptions({
             headers: new http_1.Headers({ 'Content-Type': 'application/json;charset=UTF-8' })
         });
-        return this.http.put('https://192.168.10.38:3000/api/developments' + body._id, body, options)
+        return this.http.put(global_1.url + 'api/developments' + body._id, body, options)
             .map(function (res) { return res.json(); })
             .catch(function (error) { return Rx_1.Observable.throw(error.json().error || 'Server error'); });
     };
@@ -45,7 +46,7 @@ var DevelopmentService = (function () {
         var options = new http_1.RequestOptions({
             headers: new http_1.Headers({ 'Content-Type': 'application/json;charset=UTF-8' })
         });
-        return this.http.delete('https://192.168.10.38:3000/api/developments' + id, options)
+        return this.http.delete(global_1.url + 'api/developments' + id, options)
             .map(function (res) { return res.json(); })
             .catch(function (error) { return Rx_1.Observable.throw(error.json().error || 'Server error'); });
     };

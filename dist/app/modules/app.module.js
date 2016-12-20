@@ -20,6 +20,7 @@ var ng2_bootstrap_2 = require("ng2-bootstrap/ng2-bootstrap");
 var angular2_datatable_1 = require("angular2-datatable");
 var app_routing_module_1 = require("./app-routing.module");
 var data_filter_pipe_1 = require("../components/newsletter/data-filter.pipe");
+var global_1 = require("../global");
 var index_1 = require("../components/index");
 var index_2 = require("../services/index");
 var AppModule = (function () {
@@ -89,7 +90,7 @@ AppModule = __decorate([
             index_2.UserGroupService,
             index_2.VisitService,
         ],
-        bootstrap: [index_1.AppComponent]
+        bootstrap: [index_1.AppComponent, [global_1.url]]
     }),
     __metadata("design:paramtypes", [])
 ], AppModule);

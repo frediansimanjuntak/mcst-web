@@ -10,6 +10,8 @@ import { PaginationModule }             from 'ng2-bootstrap/ng2-bootstrap';
 import {DataTableModule}                from "angular2-datatable";
 import { AppRoutingModule }     		    from './app-routing.module';
 import { DataFilterPipe }               from '../components/newsletter/data-filter.pipe';
+import { url }                          from '../global'
+
 import { 
   AlertComponent,
   AppComponent,
@@ -120,6 +122,6 @@ import {
     UserGroupService,
     VisitService,
   ],
-  bootstrap:    [ AppComponent ]
+  bootstrap:    [ AppComponent, [url] ] 
 })
 export class AppModule { }
