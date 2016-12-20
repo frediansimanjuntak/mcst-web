@@ -1,14 +1,15 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router'; 
-import {Http} from "@angular/http";
 import { Development } from '../../models/index';
 import { NewsletterService, AlertService} from '../../services/index';
 import '../../rxjs-operators';
+import {NG_TABLE_DIRECTIVES}    from 'ng2-table/ng2-table'
+import { Observable} from 'rxjs/Observable';
 
 @Component({
   moduleId: module.id,
   selector: 'newsletter',
-  templateUrl: '../../templates/newsletter.html',
+  templateUrl: '/app/templates/newsletter.html',
   styleUrls: [ '../../templates/styles/newsletter.css' ]
 })
 
@@ -16,17 +17,26 @@ export class NewsletterComponent implements OnInit {
 	  newsletter: Development;
     newsletters: Development[] = [];
     model: any = {};
-    public data;  
+    cols: any[];
+    public dataAgm;
+    public dataCircular;    
     public filterQuery = "";
     public rowsOnPage = 10;
     public sortBy = "email";
     public sortOrder = "asc";
 
-    constructor(private http: Http, private newsletterservice: NewsletterService, private alertService: AlertService) {
+    constructor(private newsletterservice: NewsletterService, private alertService: AlertService) {
     }
 
     ngOnInit(): void {
         this.loadAllNewsletters();
+         this.cols = [
+            {field: 'date', header: 'Date'},
+            {field: 'title', header: 'Title'},
+            {field: 'uploaded_on', header: 'Uploaded on'},
+            {field: 'uploaded_by', header: 'Uploaded by'},
+            {field: 'attachment', header: 'Attachment'},
+        ];
     }
 
     public toInt(num: string) {
@@ -37,14 +47,14 @@ export class NewsletterComponent implements OnInit {
         return a.city.length;
     }
 
-    deleteNewsletter(id: string) {
-        this.newsletterservice.delete(id) 
+    deleteNewsletter(newsletter: any) {
+        this.newsletterservice.delete(newsletter._id) 
           .then(
             response => {
               if(response) { 
                 console.log(response);
                 // console.log(response.error());
-                alert(`The user could not be deleted, server sibuk.`);
+                alert(`The user could not be deleted, server Error.`);
               } else {
                 this.alertService.success('Create user successful', true);
                 alert(`The Newsletter successful`);
@@ -62,8 +72,10 @@ export class NewsletterComponent implements OnInit {
         this.newsletterservice.getAll()
             .subscribe((data)=> {
                 setTimeout(()=> {
-                    this.data = data;
-                    console.log(this.data);
+                    this.dataAgm      = data.filter(data => data.type === 'AGM' );
+                    this.dataCircular = data.filter(data => data.type === 'Circular' );
+                // .filter(x => x == this.personId)
+                    console.log(this.dataAgm);
                 }, 1000);
             });
     }
