@@ -52,7 +52,7 @@ var EditUserComponent = (function () {
 EditUserComponent = __decorate([
     core_1.Component({
         moduleId: module.id,
-        templateUrl: '../../templates/edit-user.html',
+        templateUrl: '/app/templates/edit-user.html',
     }),
     __metadata("design:paramtypes", [router_1.Router,
         index_1.UserService,

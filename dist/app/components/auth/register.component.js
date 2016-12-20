@@ -36,7 +36,7 @@ var RegisterComponent = (function () {
 RegisterComponent = __decorate([
     core_1.Component({
         moduleId: module.id,
-        templateUrl: '../../templates/register.html'
+        templateUrl: '/app/templates/register.html'
     }),
     __metadata("design:paramtypes", [router_1.Router,
         index_1.UserService,

@@ -19,8 +19,8 @@ HeaderComponent = __decorate([
     core_1.Component({
         moduleId: module.id,
         selector: 'headers',
-        templateUrl: '../templates/header.html',
-        styleUrls: ['../templates/styles/header.css']
+        templateUrl: '/app/templates/header.html',
+        styleUrls: ['../../app/templates/styles/header.css']
     }),
     __metadata("design:paramtypes", [])
 ], HeaderComponent);

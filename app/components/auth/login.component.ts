@@ -5,7 +5,7 @@ import { Router } from '@angular/router';
     moduleId: module.id,
     selector: 'login-form',
     providers: [AuthenticationService],
-    templateUrl: '../../templates/login.html',
+    templateUrl: '/app/templates/login.html',
 })
  
 export class LoginComponent implements OnInit {

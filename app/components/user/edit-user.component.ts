@@ -7,7 +7,7 @@ import '../../rxjs-operators';
 
 @Component({
     moduleId: module.id,
-    templateUrl: '../../templates/edit-user.html',
+    templateUrl: '/app/templates/edit-user.html',
 })
  
 export class EditUserComponent {
