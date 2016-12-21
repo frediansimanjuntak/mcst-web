@@ -31,6 +31,20 @@ var RegisterComponent = (function () {
             _this.loading = false;
         });
     };
+    RegisterComponent.prototype.number = function (event) {
+        var pattern = /[0-9\+\ ]/;
+        var inputChar = String.fromCharCode(event.charCode);
+        if (!pattern.test(inputChar)) {
+            event.preventDefault();
+        }
+    };
+    RegisterComponent.prototype.text = function (event) {
+        var pattern = /[a-z\ ]/;
+        var inputChar = String.fromCharCode(event.charCode);
+        if (!pattern.test(inputChar)) {
+            event.preventDefault();
+        }
+    };
     return RegisterComponent;
 }());
 RegisterComponent = __decorate([
