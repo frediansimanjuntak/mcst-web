@@ -7,7 +7,7 @@ import { Observable} from 'rxjs/Observable';
 
 @Component({
     moduleId: module.id,
-    templateUrl: '../../templates/user.html',
+    templateUrl: '/app/templates/user.html',
 })
  
 export class UserComponent implements OnInit {
