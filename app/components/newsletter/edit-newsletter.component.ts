@@ -6,6 +6,11 @@ import { FormBuilder, FormGroup } from '@angular/forms';
 import '../../rxjs-operators';
 import { User } from '../../models/index';
 
+const TYPES: any[] = [
+  { value: 'agm', name: 'AGM' },
+  { value: 'circular', name: 'Circular' },
+];
+
 @Component({
   moduleId: module.id,
   selector: 'edit-development',
@@ -18,11 +23,13 @@ export class EditNewsletterComponent  {
     model: any = {};
     myForm: FormGroup;
     user: User;
+    types = TYPES;
 
     constructor(private router: Router,
     	private newsletterService: NewsletterService,
     	private alertService: AlertService,
         private formbuilder: FormBuilder ) {
+        
         // this.user = JSON.parse(localStorage.getItem('user'));
     }
 

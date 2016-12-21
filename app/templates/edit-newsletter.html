@@ -19,12 +19,11 @@
                         <span *ngIf="f.submitted && !description.valid" class="help-block">Description is required</span>
                     </div>
                 </div>
-                <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !type.valid }">
+                <div class="form-group">
                   <label class="control-label col-sm-4" for="type">Type :</label>
                   <div class="col-sm-8">
                       <select class="form-control" name="type" id="type" [(ngModel)]="model.type" #type="ngModel" required>
-                        <option [value]="agm">AGM</option>
-                        <option [value]="circular">Circular</option>
+                        <option *ngFor="let x of types" [value]="x.value">{{x.name}}</option>
                       </select>
                   </div>  
                 </div>
@@ -36,8 +35,8 @@
                     </div>
                 </div>
 
-                <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !release.valid }">
-                    <label class="control-label col-sm-4" for="release">Release :</label>
+                <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !released.valid }">
+                    <label class="control-label col-sm-4" for="released">Release :</label>
                     <div class="col-sm-8">
                         <!-- <div class="radio">
                           <label><input type="radio" [(ngModel)]="model.release" #release="ngModel" name="release">Yes</label>
@@ -45,9 +44,9 @@
                         <div class="radio">
                           <label><input type="radio" [(ngModel)]="model.release" #release="ngModel" name="release">No</label>
                         </div> -->
-                        <label><input type="radio" name="release" [(ngModel)]="model.release" [value]="true">Yes</label>
-                        <label><input type="radio" name="release" [(ngModel)]="model.release" checked [value]="false">No</label>
-                        <span *ngIf="f.submitted && !release.valid" class="help-block">Release is required</span>
+                        <label><input type="radio" name="released" [(ngModel)]="model.released" [value]="true">Yes</label>
+                        <label><input type="radio" name="released" [(ngModel)]="model.released" checked [value]="false">No</label>
+                        <span *ngIf="f.submitted && !released.valid" class="help-block">Release is required</span>
                     </div>
                 </div>
 

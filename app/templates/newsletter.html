@@ -49,10 +49,10 @@
 				     <p-column field="attachment" header="Attachment" sortable="true" [filter]="true" filterPlaceholder="Search Attachment"></p-column>
 				    <!-- </p-column> -->
 				    <p-column styleClass="col-button">
-				    	<template let-data="rowData" pTemplate="body">
-				        <button type="button" [routerLink]="['/newsletter/add'+newsletter._id]">Edit</button>
+				    	<template let-dataCircular="rowData" pTemplate="body">
+				        <button type="button" [routerLink]="['/newsletter/add'+newsletter._id]">Publish</button>
 				    	</template>
-				    	<template let-data="rowData" pTemplate="body">
+				    	<template let-dataCircular="rowData" pTemplate="body">
 				        <button type="button" (click)="deleteNewsletter(dataCircular)">Delete</button>
 				    	</template>
 				    </p-column>

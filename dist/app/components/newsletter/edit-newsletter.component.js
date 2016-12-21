@@ -13,6 +13,10 @@ var router_1 = require("@angular/router");
 var index_1 = require("../../services/index");
 var forms_1 = require("@angular/forms");
 require("../../rxjs-operators");
+var TYPES = [
+    { value: 'agm', name: 'AGM' },
+    { value: 'circular', name: 'Circular' },
+];
 var EditNewsletterComponent = (function () {
     function EditNewsletterComponent(router, newsletterService, alertService, formbuilder) {
         this.router = router;
@@ -21,6 +25,7 @@ var EditNewsletterComponent = (function () {
         this.formbuilder = formbuilder;
         this.developments = [];
         this.model = {};
+        this.types = TYPES;
         // this.user = JSON.parse(localStorage.getItem('user'));
     }
     EditNewsletterComponent.prototype.ngOnInit = function () {
