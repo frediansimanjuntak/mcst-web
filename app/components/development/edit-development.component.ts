@@ -1,51 +1,74 @@
-import { Component } from '@angular/core';
-import { Router } from '@angular/router'; 
+import { Component, OnInit } from '@angular/core';
+import { Router, Params, ActivatedRoute } from '@angular/router'; 
 import { Development } from '../../models/index';
 import { DevelopmentService, AlertService } from '../../services/index';
 import '../../rxjs-operators';
+import 'rxjs/add/operator/switchMap';
 
 @Component({
   moduleId: module.id,
   selector: 'edit-development',
-  template: ``,
+  templateUrl: '/app/templates/edit-development.html',
 })
 
-export class EditDevelopmentComponent  { 
+export class EditDevelopmentComponent implements OnInit { 
 	development: Development;
-    developments: Development[] = [];
     model: any = {};
+    id: string;
 
     constructor(private router: Router,
     	private developmentService: DevelopmentService,
-    	private alertService: AlertService) {}
+    	private alertService: AlertService,
+        private route: ActivatedRoute,) {}
+    
+
+    // ngOnInit(): void {
+    //     this.route.params
+    //   .switchMap((params: Params) => this.developmentService.getById(params['name']))
+    //   .subscribe(development => this.development = development);
+    //   console.log(this.route.params);
+    //    // this.developmentService.getById(name).then(development => { this.development = development; console.log(development) });
+    //     // this.onChangeTable(this.config);
+    // }
+
+    // ngOnInit() {
+        // this.route.params.subscribe((params: Params) => {
+            // this.developmentService.getById(params['id'])
+            // .subscribe(development => {this.development = development; console.log(development);});
+        // });
+    // }
+
+    ngOnInit(): void {   
+        this.route.params.subscribe(params => {
+            this.id = params['id'];
+        });
+        if( this.id != null) {
+            this.developmentService.getById(this.id).subscribe(development => this.development = development);
+        }
+    }
 
     createDevelopment() {
         console.log(this.model);
         this.developmentService.create(this.model)
-        .subscribe(
-            data => {
-                this.alertService.success('Create development successful', true);
+        .then(
+            response => {
+                this.alertService.success('Update development successful', true);
                 this.router.navigate(['/development']);
             },
-            error => {
+            error => { 
                 this.alertService.error(error);
             }
         );
     }
 
     updateDevelopment(){
-		this.developmentService.update(this.model)
-		.subscribe(
+		this.developmentService.update(this.development)
+		.then(
 			response => {
-				if(response.error) { 
-	                this.alertService.error(response.error);
-	            } else {
-	                // EmitterService.get(this.userList).emit(response.users);
-                     this.alertService.success('Update development successful', true);
-                     this.router.navigate(['/development']);
-	            }
+                this.alertService.success('Update development successful', true);
+                this.router.navigate(['/development']);
             },
-            error=> { 
+            error => { 
             	this.alertService.error(error);
             }
         );
