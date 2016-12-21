@@ -6,10 +6,15 @@ import { FormBuilder, FormGroup } from '@angular/forms';
 import '../../rxjs-operators';
 import { User } from '../../models/index';
 
+const TYPES: any[] = [
+  { value: 'agm', name: 'AGM' },
+  { value: 'circular', name: 'Circular' },
+];
+
 @Component({
   moduleId: module.id,
   selector: 'edit-development',
-  templateUrl: '../../templates/edit-newsletter.html'
+  templateUrl: '/app/templates/edit-newsletter.html'
 })
 
 export class EditNewsletterComponent  { 
@@ -18,11 +23,13 @@ export class EditNewsletterComponent  {
     model: any = {};
     myForm: FormGroup;
     user: User;
+    types = TYPES;
 
     constructor(private router: Router,
     	private newsletterService: NewsletterService,
     	private alertService: AlertService,
         private formbuilder: FormBuilder ) {
+        
         // this.user = JSON.parse(localStorage.getItem('user'));
     }
 
@@ -51,12 +58,12 @@ export class EditNewsletterComponent  {
         this.newsletterService.create(this.model)
         .subscribe(
             data => {
-                this.alertService.success('Create development successful', true);
+                this.alertService.success('Create newsletter successful', true);
                 this.router.navigate(['/newsletter']);
             },
             error => {
                 console.log(error);
-                alert(`The Newsletter could not be deleted, server Error.`);
+                alert(`The Newsletter could not be save, server Error.`);
             }
         );
     }
@@ -69,8 +76,8 @@ export class EditNewsletterComponent  {
 	                this.alertService.error(response.error);
 	            } else {
 	                // EmitterService.get(this.userList).emit(response.users);
-                     this.alertService.success('Update development successful', true);
-                     this.router.navigate(['/development']);
+                     this.alertService.success('Update newsletter successful', true);
+                     this.router.navigate(['/newsletter']);
 	            }
             },
             error=> { 

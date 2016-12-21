@@ -13,6 +13,10 @@ var router_1 = require("@angular/router");
 var index_1 = require("../../services/index");
 var forms_1 = require("@angular/forms");
 require("../../rxjs-operators");
+var TYPES = [
+    { value: 'agm', name: 'AGM' },
+    { value: 'circular', name: 'Circular' },
+];
 var EditNewsletterComponent = (function () {
     function EditNewsletterComponent(router, newsletterService, alertService, formbuilder) {
         this.router = router;
@@ -21,6 +25,7 @@ var EditNewsletterComponent = (function () {
         this.formbuilder = formbuilder;
         this.developments = [];
         this.model = {};
+        this.types = TYPES;
         // this.user = JSON.parse(localStorage.getItem('user'));
     }
     EditNewsletterComponent.prototype.ngOnInit = function () {
@@ -43,11 +48,11 @@ var EditNewsletterComponent = (function () {
         console.log(this.model);
         this.newsletterService.create(this.model)
             .subscribe(function (data) {
-            _this.alertService.success('Create development successful', true);
+            _this.alertService.success('Create newsletter successful', true);
             _this.router.navigate(['/newsletter']);
         }, function (error) {
             console.log(error);
-            alert("The Newsletter could not be deleted, server Error.");
+            alert("The Newsletter could not be save, server Error.");
         });
     };
     EditNewsletterComponent.prototype.updateNewsletter = function () {
@@ -59,8 +64,8 @@ var EditNewsletterComponent = (function () {
             }
             else {
                 // EmitterService.get(this.userList).emit(response.users);
-                _this.alertService.success('Update development successful', true);
-                _this.router.navigate(['/development']);
+                _this.alertService.success('Update newsletter successful', true);
+                _this.router.navigate(['/newsletter']);
             }
         }, function (error) {
             _this.alertService.error(error);
@@ -72,7 +77,7 @@ EditNewsletterComponent = __decorate([
     core_1.Component({
         moduleId: module.id,
         selector: 'edit-development',
-        templateUrl: '../../templates/edit-newsletter.html'
+        templateUrl: '/app/templates/edit-newsletter.html'
     }),
     __metadata("design:paramtypes", [router_1.Router,
         index_1.NewsletterService,

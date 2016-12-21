@@ -29,7 +29,7 @@ DashboardComponent = __decorate([
     core_1.Component({
         moduleId: module.id,
         selector: 'dashboard',
-        templateUrl: '../templates/dashboard.html',
+        templateUrl: '/app//templates/dashboard.html',
     }),
     __metadata("design:paramtypes", [])
 ], DashboardComponent);

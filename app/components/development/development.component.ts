@@ -13,7 +13,7 @@ import { Observable} from 'rxjs/Observable';
 })
 
 export class DevelopmentComponent implements OnInit { 
-	development: Development;
+	  development: Development;
     developments: Development[] = [];
     model: any = {};
      cols: any[];

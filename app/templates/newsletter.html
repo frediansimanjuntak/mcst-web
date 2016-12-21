@@ -13,87 +13,50 @@
 		<div (click)="$event.preventDefault()">
 		  <tabset>
 		    <tab heading="AGM">
-		    	<div class="container-fluid">
-				        <div class="panel panel-default">
-							<table class="table table-striped" [mfData]="data | dataFilter : filterQuery" #mf="mfDataTable"
-				                   [mfRowsOnPage]="rowsOnPage" [(mfSortBy)]="sortBy" [(mfSortOrder)]="sortOrder">
-				                <thead>
-				                <tr>
-				                    <th>
-				                        <mfDefaultSorter by="name">Date</mfDefaultSorter>
-				                    </th>
-				                    <th>
-				                        <mfDefaultSorter by="email">Title</mfDefaultSorter>
-				                    </th>
-				                    <th>
-				                        <mfDefaultSorter by="age">Uploaded on</mfDefaultSorter>
-				                    </th>
-				                    <th>
-				                        <mfDefaultSorter by="age">Uploaded by</mfDefaultSorter>
-				                    </th>
-				                    <th>
-				                        <mfDefaultSorter [by]="sortByWordLength">Attachment</mfDefaultSorter>
-				                    </th>
-				                    <th></th>
-				                </tr>
-				                <tr>
-				                    <th colspan="5">
-				                        Filter by name:
-				                        <input class="form-control" [(ngModel)]="filterQuery"/>
-				                    </th>
-				                </tr>
-				                </thead>
-				                <tbody>
-				                <tr *ngFor="let item of mf.data">
-				                    <td>{{item.release_at}}</td>
-				                    <td>{{item.title}}</td>
-				                    <td>{{item.created_at}}</td>
-				                    <td>{{item.created_by}}</td>
-				                    <td>{{item.attachment}}</td>
-				                    <td>
-				                    	<button class="btn btn-success">Release</button>
-				                        <button (click)="deleteNewsletter(item._id)" title="Delete"><i class="fa fa-trash-o" aria-hidden="true"></i></button>
-				                    </td>
-				                </tr>
-				                </tbody>
-				                <tfoot>
-				                <tr>
-				                    <td colspan="5">
-				                        <mfBootstrapPaginator [rowsOnPageSet]="[5,10,15]"></mfBootstrapPaginator>
-				                    </td>
-				                </tr>
-				                </tfoot>
-				            </table>
-				    </div>
-				</div>
-		    	<!-- <div class="row">
-				  <div class="col-md-4">
-				    <input *ngIf="config.filtering" placeholder="Filter all columns"
-				           [ngTableFiltering]="config.filtering"
-				           class="form-control"
-				           (tableChanged)="onChangeTable(config)"/>
-				  </div>
-				</div>
-				<br>
-				<ng-table [config]="config"
-				          (tableChanged)="onChangeTable(config)"
-				          (cellClicked)="onCellClick($event)"
-				          [rows]="rows" [columns]="columns">
-				</ng-table>
-				<pagination *ngIf="config.paging"
-				            class="pagination-sm"
-				            [(ngModel)]="page"
-				            [totalItems]="length"
-				            [itemsPerPage]="itemsPerPage"
-				            [maxSize]="maxSize"
-				            [boundaryLinks]="true"
-				            [rotate]="false"
-				            (pageChanged)="onChangeTable(config, $event)"
-				            (numPages)="numPages = $event">
-				</pagination> -->
+		    	<p-dataTable [value]="dataAgm" [rows]="10" [paginator]="true">
+				    <p-column field="created_at" header="Date" sortable="true" [filter]="true" filterPlaceholder="Search date"></p-column>
+				    <p-column field="title" header="Title" sortable="true" [filter]="true" filterPlaceholder="Search Title"></p-column>
+				    <!-- <p-column field="description" header="Description" sortable="true" [filter]="true" filterPlaceholder="Search"> -->
+				    <p-column field="created_at" header="Uploaded on" sortable="true" [filter]="true" filterPlaceholder="Search Uploaded on">
+				        <template let-col let-data="rowData" pTemplate="body">
+				            <span [style.color]="data[col.field]">{{data[col.field]}}</span>
+				        </template>
+				    </p-column>
+				    <p-column field="uploaded_by" header="Uploaded by" sortable="true" [filter]="true" filterPlaceholder="Search Uploaded by"></p-column>
+				     <p-column field="attachment" header="Attachment" sortable="true" [filter]="true" filterPlaceholder="Search Attachment"></p-column>
+				    <!-- </p-column> -->
+				    <p-column styleClass="col-button">
+				    	<template let-data="rowData" pTemplate="body">
+				        <button type="button" [routerLink]="['/newsletter/add'+newsletter._id]">Edit</button>
+				    	</template>
+				    	<template let-data="rowData" pTemplate="body">
+				        <button type="button" (click)="deleteNewsletter(dataAgm)">Delete</button>
+				    	</template>
+				    </p-column>
+				</p-dataTable>
 		    </tab>
 		    <tab heading="Circular">
-		    	
+		    	<p-dataTable [value]="dataCircular" [rows]="10" [paginator]="true">
+				    <p-column field="created_at" header="Date" sortable="true" [filter]="true" filterPlaceholder="Search date"></p-column>
+				    <p-column field="title" header="Title" sortable="true" [filter]="true" filterPlaceholder="Search Title"></p-column>
+				    <!-- <p-column field="description" header="Description" sortable="true" [filter]="true" filterPlaceholder="Search"> -->
+				    <p-column field="created_at" header="Uploaded on" sortable="true" [filter]="true" filterPlaceholder="Search Uploaded on">
+				        <template let-col let-data="rowData" pTemplate="body">
+				            <span [style.color]="data[col.field]">{{data[col.field]}}</span>
+				        </template>
+				    </p-column>
+				    <p-column field="uploaded_by" header="Uploaded by" sortable="true" [filter]="true" filterPlaceholder="Search Uploaded by"></p-column>
+				     <p-column field="attachment" header="Attachment" sortable="true" [filter]="true" filterPlaceholder="Search Attachment"></p-column>
+				    <!-- </p-column> -->
+				    <p-column styleClass="col-button">
+				    	<template let-dataCircular="rowData" pTemplate="body">
+				        <button type="button" [routerLink]="['/newsletter/add'+newsletter._id]">Publish</button>
+				    	</template>
+				    	<template let-dataCircular="rowData" pTemplate="body">
+				        <button type="button" (click)="deleteNewsletter(dataCircular)">Delete</button>
+				    	</template>
+				    </p-column>
+				</p-dataTable>
 		    </tab>	
 		  </tabset>
 		</div>	

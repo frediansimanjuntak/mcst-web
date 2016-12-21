@@ -5,7 +5,7 @@ import { AlertService, UserService } from '../../services/index';
 
 @Component({
     moduleId: module.id,
-    templateUrl: '../../templates/register.html'
+    templateUrl: '/app/templates/register.html'
 })
 
 export class RegisterComponent {

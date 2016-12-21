@@ -4,7 +4,7 @@ import { MENUS } from '../models/menu';
 @Component({
   moduleId: module.id,
   selector: 'dashboard',
-  templateUrl: '../templates/dashboard.html',
+  templateUrl: '/app//templates/dashboard.html',
   // styleUrls: [ 'dashboard.css' ]
 })
 export class DashboardComponent {
