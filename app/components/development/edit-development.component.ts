@@ -14,11 +14,13 @@ import 'rxjs/add/operator/switchMap';
 export class EditDevelopmentComponent implements OnInit { 
 	development: Development;
     model: any = {};
+    id: string;
 
     constructor(private router: Router,
     	private developmentService: DevelopmentService,
     	private alertService: AlertService,
         private route: ActivatedRoute,) {}
+    
 
     // ngOnInit(): void {
     //     this.route.params
@@ -36,12 +38,14 @@ export class EditDevelopmentComponent implements OnInit {
         // });
     // }
 
-    ngOnInit(): void {
-    this.route.params
-      .switchMap((params: Params) => this.developmentService.getById(params['id']))
-      .subscribe(development => {this.development = development, console.log(development);
-      });
-  }
+    ngOnInit(): void {   
+        this.route.params.subscribe(params => {
+            this.id = params['id'];
+        });
+        if( this.id != null) {
+            this.developmentService.getById(this.id).subscribe(development => this.development = development);
+        }
+    }
 
     createDevelopment() {
         console.log(this.model);
@@ -58,8 +62,7 @@ export class EditDevelopmentComponent implements OnInit {
     }
 
     updateDevelopment(){
-        console.log(this.model._id);
-		this.developmentService.update(this.model)
+		this.developmentService.update(this.development)
 		.then(
 			response => {
                 this.alertService.success('Update development successful', true);

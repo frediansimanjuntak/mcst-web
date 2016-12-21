@@ -37,11 +37,12 @@ var EditDevelopmentComponent = (function () {
     // }
     EditDevelopmentComponent.prototype.ngOnInit = function () {
         var _this = this;
-        this.route.params
-            .switchMap(function (params) { return _this.developmentService.getById(params['id']); })
-            .subscribe(function (development) {
-            _this.development = development, console.log(development);
+        this.route.params.subscribe(function (params) {
+            _this.id = params['id'];
         });
+        if (this.id != null) {
+            this.developmentService.getById(this.id).subscribe(function (development) { return _this.development = development; });
+        }
     };
     EditDevelopmentComponent.prototype.createDevelopment = function () {
         var _this = this;
@@ -56,8 +57,7 @@ var EditDevelopmentComponent = (function () {
     };
     EditDevelopmentComponent.prototype.updateDevelopment = function () {
         var _this = this;
-        console.log(this.model._id);
-        this.developmentService.update(this.model)
+        this.developmentService.update(this.development)
             .then(function (response) {
             _this.alertService.success('Update development successful', true);
             _this.router.navigate(['/development']);

@@ -52,7 +52,7 @@ export class DevelopmentService {
     }
 
     update(body:Development): Promise<Development> {
-        return this.http.put(url + 'api/developments/' + body._id,body, {headers: this.headers})
+        return this.http.post(url + 'api/developments/update/' + body._id,body, {headers: this.headers})
             .toPromise()
             .then(res => res.json().data)
             .catch(this.handleError);

@@ -23,9 +23,9 @@ export class DevelopmentComponent implements OnInit {
     constructor(private router: Router,private developmentService: DevelopmentService,private alertService: AlertService) {}
 
     ngOnInit() {
-        // this.loadAllDevelopments();
+        this.loadAllDevelopments();
         // this.onChangeTable(this.config);
-        console.log(this.loadAllDevelopments());
+        
     }
  
     deleteDevelopment(development: Development) {

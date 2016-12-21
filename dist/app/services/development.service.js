@@ -53,7 +53,7 @@ var DevelopmentService = (function () {
             .catch(this.handleError);
     };
     DevelopmentService.prototype.update = function (body) {
-        return this.http.put(global_1.url + 'api/developments/' + body._id, body, { headers: this.headers })
+        return this.http.post(global_1.url + 'api/developments/update/' + body._id, body, { headers: this.headers })
             .toPromise()
             .then(function (res) { return res.json().data; })
             .catch(this.handleError);
