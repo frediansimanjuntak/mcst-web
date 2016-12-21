@@ -11,44 +11,44 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 var core_1 = require("@angular/core");
 var http_1 = require("@angular/http");
 var Rx_1 = require("rxjs/Rx");
+var global_1 = require("../global");
+require("rxjs/add/operator/toPromise");
 var UserService = (function () {
     function UserService(http) {
         this.http = http;
+        this.headers = new http_1.Headers({ 'Content-Type': 'application/json' });
     }
     UserService.prototype.getAll = function () {
-        return this.http.get('https://192.168.10.73:3333/api/users')
+        return this.http.get(global_1.url + 'api/users')
             .map(function (res) { return res.json(); })
             .catch(function (error) { return Rx_1.Observable.throw(error.json().error || 'Server error'); });
     };
     UserService.prototype.getById = function (id) {
-        return this.http.get('https://192.168.10.73:3333/api/users' + id)
+        return this.http.get(global_1.url + 'api/users/' + id)
             .map(function (res) { return res.json(); })
             .catch(function (error) { return Rx_1.Observable.throw(error.json().error || 'Server error'); });
     };
     UserService.prototype.create = function (body) {
-        console.log(body);
-        var options = new http_1.RequestOptions({
-            headers: new http_1.Headers({ 'Content-Type': 'application/json;charset=UTF-8' })
-        });
-        return this.http.post('https://192.168.10.73:3333/api/users', body, options)
-            .map(function (res) { return res.json(); })
-            .catch(function (error) { return Rx_1.Observable.throw(error.json().error || 'Server error'); });
+        return this.http.post(global_1.url + 'api/users', body, { headers: this.headers })
+            .toPromise()
+            .then(function (res) { return res.json().data; })
+            .catch(this.handleError);
     };
     UserService.prototype.update = function (body) {
-        var options = new http_1.RequestOptions({
-            headers: new http_1.Headers({ 'Content-Type': 'application/json;charset=UTF-8' })
-        });
-        return this.http.put('https://192.168.10.73:3333/api/users' + body._id, body, options)
-            .map(function (res) { return res.json(); })
-            .catch(function (error) { return Rx_1.Observable.throw(error.json().error || 'Server error'); });
+        return this.http.post(global_1.url + 'api/users/update/' + body._id, body, { headers: this.headers })
+            .toPromise()
+            .then(function (res) { return res.json().data; })
+            .catch(this.handleError);
     };
     UserService.prototype.delete = function (id) {
-        var options = new http_1.RequestOptions({
-            headers: new http_1.Headers({ 'Content-Type': 'application/json;charset=UTF-8' })
-        });
-        return this.http.delete('https://192.168.10.73:3333/api/users' + id, options)
-            .map(function (res) { return res.json(); })
-            .catch(function (error) { return Rx_1.Observable.throw(error.json().error || 'Server error'); });
+        return this.http.delete(global_1.url + 'api/users/' + id, { headers: this.headers })
+            .toPromise()
+            .then(function () { return null; })
+            .catch(this.handleError);
+    };
+    UserService.prototype.handleError = function (error) {
+        console.error('An error occurred', error); // for demo purposes only
+        return Promise.reject(error.message || error);
     };
     return UserService;
 }());
