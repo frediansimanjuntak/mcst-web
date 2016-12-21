@@ -14,6 +14,7 @@ var index_1 = require("../../services/index");
 require("rxjs/add/operator/switchMap");
 require("../../rxjs-operators");
 var EditUserComponent = (function () {
+    // developmentID: string;
     function EditUserComponent(router, userService, route, alertService, developmentService) {
         this.router = router;
         this.userService = userService;
@@ -21,15 +22,26 @@ var EditUserComponent = (function () {
         this.alertService = alertService;
         this.developmentService = developmentService;
         this.model = {};
+        this.developmentID = "585a07d7870e2713c857b802";
     }
     EditUserComponent.prototype.ngOnInit = function () {
         var _this = this;
+        this.developmentService.getAll()
+            .subscribe(function (data) {
+            setTimeout(function () {
+                _this.data = data.find(function (data) { return data._id === _this.developmentID; });
+                _this.unit = _this.data.properties;
+                console.log(_this.unit);
+            }, 1000);
+        });
         this.route.params.subscribe(function (params) {
             _this.id = params['id'];
         });
         if (this.id != null) {
             this.userService.getById(this.id).subscribe(function (user) { return _this.user = user; });
         }
+        ;
+        // this.developmentService.getAll().subscribe(developments => { this.developments = developments; });
     };
     EditUserComponent.prototype.createUser = function () {
         var _this = this;

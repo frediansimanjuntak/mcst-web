@@ -19,6 +19,7 @@ var UserComponent = (function () {
         this.alertService = alertService;
         this.users = [];
         this.model = {};
+        this.developmentID = "585a07d7870e2713c857b802";
         // this.user = JSON.parse(localStorage.getItem('user'));
         // console.log(this.user)
     }
@@ -40,10 +41,10 @@ var UserComponent = (function () {
         this.userService.getAll().subscribe(function (users) { _this.users = users; console.log(users); });
     };
     UserComponent.prototype.add = function () {
-        this.router.navigate(['/user/add']);
+        this.router.navigate(['/user/add', this.developmentID]);
     };
     UserComponent.prototype.edit = function (user) {
-        this.router.navigate(['/user/edit', user._id]);
+        this.router.navigate(['/user/edit', this.developmentID, user._id]);
     };
     return UserComponent;
 }());

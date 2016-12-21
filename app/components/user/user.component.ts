@@ -14,6 +14,7 @@ export class UserComponent implements OnInit {
     user: User;
     users: User[] = [];
     model: any = {};
+    developmentID = "585a07d7870e2713c857b802";
  
     constructor(private router: Router,private userService: UserService,private alertService: AlertService) {
         // this.user = JSON.parse(localStorage.getItem('user'));
@@ -42,10 +43,10 @@ export class UserComponent implements OnInit {
     }
 
     add(){
-        this.router.navigate(['/user/add']);
+        this.router.navigate(['/user/add' , this.developmentID]);
     }
 
     edit(user: User){
-        this.router.navigate(['/user/edit', user._id]);
+        this.router.navigate(['/user/edit', this.developmentID, user._id ]);
     }
 }
