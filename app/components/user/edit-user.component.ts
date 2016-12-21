@@ -30,7 +30,6 @@ export class EditUserComponent {
     }
  
     createUser() {
-        console.log(this.model);
         this.userService.create(this.model)
         .then(
             data => {
@@ -44,7 +43,7 @@ export class EditUserComponent {
     }
 
     updateUser(){
-		    this.userService.update(this.model)
+		    this.userService.update(this.user)
 		    .then(response => {
                   this.alertService.success('Update User successful', true);
                   this.router.navigate(['/user']);

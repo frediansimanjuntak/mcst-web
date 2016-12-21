@@ -46,7 +46,6 @@ var EditDevelopmentComponent = (function () {
     };
     EditDevelopmentComponent.prototype.createDevelopment = function () {
         var _this = this;
-        console.log(this.model);
         this.developmentService.create(this.model)
             .then(function (response) {
             _this.alertService.success('Update development successful', true);

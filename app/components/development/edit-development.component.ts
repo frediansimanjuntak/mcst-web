@@ -48,7 +48,6 @@ export class EditDevelopmentComponent implements OnInit {
     }
 
     createDevelopment() {
-        console.log(this.model);
         this.developmentService.create(this.model)
         .then(
             response => {

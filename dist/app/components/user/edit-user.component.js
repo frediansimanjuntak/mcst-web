@@ -32,7 +32,6 @@ var EditUserComponent = (function () {
     };
     EditUserComponent.prototype.createUser = function () {
         var _this = this;
-        console.log(this.model);
         this.userService.create(this.model)
             .then(function (data) {
             _this.alertService.success('Create user successful', true);
@@ -43,7 +42,7 @@ var EditUserComponent = (function () {
     };
     EditUserComponent.prototype.updateUser = function () {
         var _this = this;
-        this.userService.update(this.model)
+        this.userService.update(this.user)
             .then(function (response) {
             _this.alertService.success('Update User successful', true);
             _this.router.navigate(['/user']);
