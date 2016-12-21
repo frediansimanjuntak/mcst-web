@@ -23,7 +23,7 @@ var RegisterComponent = (function () {
         var _this = this;
         this.loading = true;
         this.userService.create(this.model)
-            .subscribe(function (data) {
+            .then(function (data) {
             _this.alertService.success('Registration successful', true);
             _this.router.navigate(['/login']);
         }, function (error) {
