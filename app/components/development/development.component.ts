@@ -2,9 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router'; 
 import { Development } from '../../models/index';
 import { DevelopmentService, AlertService } from '../../services/index';
-import { HeaderComponent } from '../header.component';
 import '../../rxjs-operators';
-import {NG_TABLE_DIRECTIVES}    from 'ng2-table/ng2-table'
 import { Observable} from 'rxjs/Observable';
 
 

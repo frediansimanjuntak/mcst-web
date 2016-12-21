@@ -11,20 +11,30 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 var core_1 = require("@angular/core");
 var router_1 = require("@angular/router");
 var index_1 = require("../../services/index");
+require("rxjs/add/operator/switchMap");
 require("../../rxjs-operators");
 var EditUserComponent = (function () {
-    function EditUserComponent(router, userService, alertService) {
+    function EditUserComponent(router, userService, route, alertService) {
         this.router = router;
         this.userService = userService;
+        this.route = route;
         this.alertService = alertService;
-        this.users = [];
         this.model = {};
     }
+    EditUserComponent.prototype.ngOnInit = function () {
+        var _this = this;
+        this.route.params.subscribe(function (params) {
+            _this.id = params['id'];
+        });
+        if (this.id != null) {
+            this.userService.getById(this.id).subscribe(function (user) { return _this.user = user; });
+        }
+    };
     EditUserComponent.prototype.createUser = function () {
         var _this = this;
         console.log(this.model);
         this.userService.create(this.model)
-            .subscribe(function (data) {
+            .then(function (data) {
             _this.alertService.success('Create user successful', true);
             _this.router.navigate(['/user']);
         }, function (error) {
@@ -34,15 +44,9 @@ var EditUserComponent = (function () {
     EditUserComponent.prototype.updateUser = function () {
         var _this = this;
         this.userService.update(this.model)
-            .subscribe(function (response) {
-            if (response.error) {
-                _this.alertService.error(response.error);
-            }
-            else {
-                // EmitterService.get(this.userList).emit(response.users);
-                _this.alertService.success('Update User successful', true);
-                _this.router.navigate(['/user']);
-            }
+            .then(function (response) {
+            _this.alertService.success('Update User successful', true);
+            _this.router.navigate(['/user']);
         }, function (error) {
             _this.alertService.error(error);
         });
@@ -56,6 +60,7 @@ EditUserComponent = __decorate([
     }),
     __metadata("design:paramtypes", [router_1.Router,
         index_1.UserService,
+        router_1.ActivatedRoute,
         index_1.AlertService])
 ], EditUserComponent);
 exports.EditUserComponent = EditUserComponent;
