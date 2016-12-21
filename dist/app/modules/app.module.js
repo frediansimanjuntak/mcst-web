@@ -20,6 +20,7 @@ var ng2_bootstrap_2 = require("ng2-bootstrap/ng2-bootstrap");
 var app_routing_module_1 = require("./app-routing.module");
 var data_filter_pipe_1 = require("../components/newsletter/data-filter.pipe");
 var primeng_1 = require("primeng/primeng");
+var equal_validator_directive_1 = require("../components/user/equal-validator.directive");
 var index_1 = require("../components/index");
 var index_2 = require("../services/index");
 var AppModule = (function () {
@@ -43,6 +44,7 @@ AppModule = __decorate([
             primeng_1.SharedModule,
         ],
         declarations: [
+            equal_validator_directive_1.EqualValidator,
             index_1.AlertComponent,
             index_1.AppComponent,
             index_1.AttachmentComponent,

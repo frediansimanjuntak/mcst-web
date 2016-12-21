@@ -25,9 +25,9 @@ var UserComponent = (function () {
     UserComponent.prototype.ngOnInit = function () {
         this.loadAllUsers();
     };
-    UserComponent.prototype.deleteUser = function (id) {
+    UserComponent.prototype.deleteUser = function (user) {
         var _this = this;
-        this.userService.delete(id)
+        this.userService.delete(user._id)
             .then(function (response) {
             _this.alertService.success('Create user successful', true);
             _this.loadAllUsers();

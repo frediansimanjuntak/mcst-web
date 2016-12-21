@@ -11,6 +11,7 @@ import { AppRoutingModule }     		    from './app-routing.module';
 import { DataFilterPipe }               from '../components/newsletter/data-filter.pipe';
 import { url }                          from '../global'
 import { DataTableModule,SharedModule } from 'primeng/primeng';
+import { EqualValidator }               from '../components/user/equal-validator.directive';
 
 import { 
   AlertComponent,
@@ -76,6 +77,7 @@ import {
     SharedModule,
   ],
   declarations: [ 
+    EqualValidator,
     AlertComponent,
   	AppComponent,
     AttachmentComponent,

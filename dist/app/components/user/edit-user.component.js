@@ -14,11 +14,12 @@ var index_1 = require("../../services/index");
 require("rxjs/add/operator/switchMap");
 require("../../rxjs-operators");
 var EditUserComponent = (function () {
-    function EditUserComponent(router, userService, route, alertService) {
+    function EditUserComponent(router, userService, route, alertService, developmentService) {
         this.router = router;
         this.userService = userService;
         this.route = route;
         this.alertService = alertService;
+        this.developmentService = developmentService;
         this.model = {};
     }
     EditUserComponent.prototype.ngOnInit = function () {
@@ -50,6 +51,20 @@ var EditUserComponent = (function () {
             _this.alertService.error(error);
         });
     };
+    EditUserComponent.prototype.number = function (event) {
+        var pattern = /[0-9\+\ ]/;
+        var inputChar = String.fromCharCode(event.charCode);
+        if (!pattern.test(inputChar)) {
+            event.preventDefault();
+        }
+    };
+    EditUserComponent.prototype.text = function (event) {
+        var pattern = /[a-z\ ]/;
+        var inputChar = String.fromCharCode(event.charCode);
+        if (!pattern.test(inputChar)) {
+            event.preventDefault();
+        }
+    };
     return EditUserComponent;
 }());
 EditUserComponent = __decorate([
@@ -60,7 +75,8 @@ EditUserComponent = __decorate([
     __metadata("design:paramtypes", [router_1.Router,
         index_1.UserService,
         router_1.ActivatedRoute,
-        index_1.AlertService])
+        index_1.AlertService,
+        index_1.DevelopmentService])
 ], EditUserComponent);
 exports.EditUserComponent = EditUserComponent;
 //# sourceMappingURL=edit-user.component.js.map

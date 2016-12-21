@@ -24,8 +24,8 @@ export class UserComponent implements OnInit {
         this.loadAllUsers();
     }
  
-    deleteUser(id: string) {
-        this.userService.delete(id) 
+    deleteUser(user:User) {
+        this.userService.delete(user._id) 
         .then(response => {
                   this.alertService.success('Create user successful', true);
 	                this.loadAllUsers()

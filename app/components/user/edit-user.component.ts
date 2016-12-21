@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, Params, ActivatedRoute } from '@angular/router';
-import { AlertService, UserService } from '../../services/index';
+import { AlertService, UserService, DevelopmentService } from '../../services/index';
 import { User } from '../../models/index';
+import { EqualValidator } from './equal-validator.directive';
 import 'rxjs/add/operator/switchMap';
 import '../../rxjs-operators';
 
@@ -18,7 +19,8 @@ export class EditUserComponent {
     constructor(private router: Router,
         private userService: UserService,
         private route: ActivatedRoute,
-        private alertService: AlertService) {}
+        private alertService: AlertService,
+        private developmentService: DevelopmentService) {}
 
     ngOnInit(): void {   
         this.route.params.subscribe(params => {
@@ -52,5 +54,21 @@ export class EditUserComponent {
             	    this.alertService.error(error);
               }
         );
-	  }
+	}
+
+    number(event: any) {
+        const pattern = /[0-9\+\ ]/;
+        let inputChar = String.fromCharCode(event.charCode);
+        if (!pattern.test(inputChar)) {
+            event.preventDefault();
+        }
+    }
+
+    text(event: any) {
+        const pattern = /[a-z\ ]/;
+        let inputChar = String.fromCharCode(event.charCode);
+        if (!pattern.test(inputChar)) {
+            event.preventDefault();
+        }
+    }
 }

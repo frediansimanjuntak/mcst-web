@@ -16,7 +16,7 @@
                 <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !email.valid }">
                     <label class="control-label col-sm-2" for="email">Email :</label>
                     <div class="col-sm-10">
-                        <input type="email" class="form-control" name="email" [(ngModel)]="user.email" #email="ngModel" required placeholder="Input email here"/>
+                        <input type="email" class="form-control" name="email" [(ngModel)]="user.email" #email="ngModel" required pattern=”^[a-zA-Z0–9_.+-]+@[a-zA-Z0–9-]+.[a-zA-Z0–9-.]+$” placeholder="Input email here"/>
                         <span *ngIf="f.submitted && !email.valid" class="help-block">Email is required</span>
                     </div>
                 </div>
@@ -30,7 +30,7 @@
                 <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !phone.valid }">
                     <label class="control-label col-sm-2" for="phone">Phone :</label>
                     <div class="col-sm-10">
-                        <input type="number" class="form-control" name="phone" [(ngModel)]="user.phone" #phone="ngModel" required placeholder="Input phone number here"/>
+                        <input type="text" class="form-control" name="phone" [(ngModel)]="user.phone" #phone="ngModel" required placeholder="Input phone number here"/>
                         <span *ngIf="f.submitted && !phone.valid" class="help-block">Phone is required</span>
                     </div>
                 </div>
@@ -63,7 +63,7 @@
                 <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !username.valid }">
                     <label class="control-label col-sm-2" for="username">Username :</label>
                     <div class="col-sm-10">
-                        <input type="text" class="form-control" name="username" [(ngModel)]="model.username" #username="ngModel" required placeholder="Input username here" />
+                        <input type="text" (keypress)="text($event)" class="form-control" pattern="[a-zA-Z ]*" name="username" [(ngModel)]="model.username" #username="ngModel" required placeholder="Input username here" />
                         <span *ngIf="f.submitted && !username.valid" class="help-block">Username is required</span>
                     </div>
                 </div>
@@ -77,25 +77,34 @@
                 <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !password.valid }">
                     <label class="control-label col-sm-2" for="password">Password :</label>
                     <div class="col-sm-10">
-                        <input type="password" class="form-control" name="password" [(ngModel)]="model.password" #password="ngModel" required placeholder="Input password here"/>
+                        <input type="password" class="form-control" name="password" [(ngModel)]="model.password" #password="ngModel" required validateEqual="confirmPassword" reverse="true" placeholder="Input password here"/>
                         <span *ngIf="f.submitted && !password.valid" class="help-block">Password is required</span>
                     </div>
+                </div>
+                <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !confirmPassword.valid }">
+                    <label class="control-label col-sm-2" for="confirmpassword">Retype password</label>
+                    <div class="col-sm-10">
+                        <input type="password" class="form-control" name="confirmPassword" [ngModel]="model.confirmPassword" required validateEqual="password" reverse="false" #confirmPassword="ngModel" placeholder="Re-input password here">
+                        <span [hidden]="confirmPassword.valid || (confirmPassword.pristine && !f.submitted)" class="text-danger">
+                            Password mismatch
+                        </span>
+                    </div>                
                 </div>
                 <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !phone.valid }">
                     <label class="control-label col-sm-2" for="phone">Phone :</label>
                     <div class="col-sm-10">
-                        <input type="number" class="form-control" name="phone" [(ngModel)]="model.phone" #phone="ngModel" required placeholder="Input phone number here"/>
-                        <span *ngIf="f.submitted && !phone.valid" class="help-block">Phone is required</span>
+                        <input pattern="[0-9]+" (keypress)="number($event)" type="text" class="form-control" name="phone" [(ngModel)]="model.phone" #phone="ngModel" required placeholder="Input phone number here"/>
+                        <span *ngIf="f.submitted && !phone.valid" class="help-block">Phone is required and must be a number</span>
                     </div>
                 </div>
                 <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !role.valid }">
                   <label class="control-label col-sm-2" for="role">Role :</label>
                   <div class="col-sm-10">
-                      <select class="form-control" name="role" id="role" [(ngModel)]="model.role" #role="ngModel" required>
+                      <select class="form-control" name="role" id="role" [(ngModel)]="model.role" #role="ngModel" placeholder="Choose role">
                         <option value="master">Master</option>
                         <option value="super-admin">Super Admin</option>
                         <option value="admin">Admin</option>
-                        <option value="user">User</option>
+                        <option value="user" selected>User</option>
                       </select>
                   </div>  
                 </div>
