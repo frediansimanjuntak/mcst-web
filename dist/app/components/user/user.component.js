@@ -50,7 +50,7 @@ var UserComponent = (function () {
 UserComponent = __decorate([
     core_1.Component({
         moduleId: module.id,
-        templateUrl: '../../templates/user.html',
+        templateUrl: '/app/templates/user.html',
     }),
     __metadata("design:paramtypes", [router_1.Router, index_1.UserService, index_1.AlertService])
 ], UserComponent);

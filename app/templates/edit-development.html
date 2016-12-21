@@ -40,7 +40,7 @@
             	Add Developement
         	</div>
             <p>Home > Developement > Add </p>
-  			<form class="form-horizontal col-md-6" name="form" (ngSubmit)="f.form.valid && updateDevelopment()" #f="ngForm" novalidate>
+  			<form class="form-horizontal col-md-6" name="form" (ngSubmit)="f.form.valid && createDevelopment()" #f="ngForm" novalidate>
                 <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !name.valid }">
                     <label class="control-label col-sm-2" for="name">Name :</label>
                     <div class="col-sm-10">
