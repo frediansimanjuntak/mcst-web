@@ -25,6 +25,8 @@ import {
   QuotationComponent,
   UserComponent,
   EditUserComponent,
+  UnitComponent,
+  EditUnitComponent,
   UserGroupComponent,
   VisitComponent,
 } from '../components/index';
@@ -42,6 +44,9 @@ const routes: Routes = [
   { path: 'development',   component: DevelopmentComponent },
   { path: 'development/add',   component: EditDevelopmentComponent },
   { path: 'development/edit/:id',   component: EditDevelopmentComponent },
+
+  { path: 'unit',   component: UnitComponent },
+  { path: 'unit/add',   component: EditUnitComponent },
   // { path: 'development/edit/:name',   component: EditDevelopmentComponent },
   // { path: 'form',     component: HeroFormComponent },
   // { path: 'table',     component: TableDemoComponent },

@@ -18,7 +18,6 @@ var ng2_table_1 = require("ng2-table/ng2-table");
 var ng2_bootstrap_1 = require("ng2-bootstrap/ng2-bootstrap");
 var ng2_bootstrap_2 = require("ng2-bootstrap/ng2-bootstrap");
 var app_routing_module_1 = require("./app-routing.module");
-var data_filter_pipe_1 = require("../components/newsletter/data-filter.pipe");
 var primeng_1 = require("primeng/primeng");
 var index_1 = require("../components/index");
 var index_2 = require("../services/index");
@@ -51,7 +50,6 @@ AppModule = __decorate([
             index_1.ContractComponent,
             index_1.ContractorComponent,
             index_1.DashboardComponent,
-            data_filter_pipe_1.DataFilterPipe,
             index_1.DevelopmentComponent,
             index_1.EditDevelopmentComponent,
             index_1.FacilityComponent,
@@ -68,6 +66,8 @@ AppModule = __decorate([
             index_1.RegisterComponent,
             index_1.UserComponent,
             index_1.EditUserComponent,
+            index_1.EditUnitComponent,
+            index_1.UnitComponent,
             index_1.UserGroupComponent,
             index_1.VisitComponent,
         ],
@@ -87,6 +87,7 @@ AppModule = __decorate([
             index_2.PollService,
             index_2.QuotationService,
             index_2.UserService,
+            index_2.UnitService,
             index_2.UserGroupService,
             index_2.VisitService,
         ],

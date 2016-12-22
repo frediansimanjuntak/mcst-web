@@ -8,7 +8,6 @@ import { Ng2TableModule }               from 'ng2-table/ng2-table';
 import { Ng2BootstrapModule }           from 'ng2-bootstrap/ng2-bootstrap';
 import { PaginationModule }             from 'ng2-bootstrap/ng2-bootstrap';
 import { AppRoutingModule }     		    from './app-routing.module';
-import { DataFilterPipe }               from '../components/newsletter/data-filter.pipe';
 import { url }                          from '../global'
 import { DataTableModule,SharedModule } from 'primeng/primeng';
 
@@ -37,6 +36,8 @@ import {
   RegisterComponent,
   UserComponent,
   EditUserComponent,
+  UnitComponent,
+  EditUnitComponent,
   UserGroupComponent,
   VisitComponent,
 } from '../components/index';
@@ -58,6 +59,7 @@ import {
   QuotationService,
   UserService,
   UserGroupService,
+  UnitService,
   VisitService,
 } from '../services/index';
 
@@ -84,7 +86,6 @@ import {
     ContractComponent,
     ContractorComponent,
     DashboardComponent,
-    DataFilterPipe,
     DevelopmentComponent,
     EditDevelopmentComponent,
     FacilityComponent,
@@ -101,6 +102,8 @@ import {
     RegisterComponent,
     UserComponent,
     EditUserComponent,
+    EditUnitComponent,
+    UnitComponent,
     UserGroupComponent,
     VisitComponent, 
   ],
@@ -120,6 +123,7 @@ import {
     PollService,
     QuotationService,
     UserService,
+    UnitService,
     UserGroupService,
     VisitService,
   ],

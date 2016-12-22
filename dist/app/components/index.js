@@ -39,6 +39,8 @@ __export(require("./user-group/user-group.component"));
 __export(require("./user-group/edit-user-group.component"));
 __export(require("./user/user.component"));
 __export(require("./user/edit-user.component"));
+__export(require("./unit/unit.component"));
+__export(require("./unit/edit-unit.component"));
 __export(require("./visit/visit.component"));
 __export(require("./visit/edit-visit.component"));
 //# sourceMappingURL=index.js.map
