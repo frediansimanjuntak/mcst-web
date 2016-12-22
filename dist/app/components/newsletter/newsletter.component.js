@@ -32,7 +32,7 @@ var NewsletterComponent = (function () {
         ];
     }
     NewsletterComponent.prototype.ngOnInit = function () {
-        this.developmentId = '585a07d7870e2713c857b802';
+        this.developmentId = '585b36585d3cc41224fe518a';
         this.loadAllNewsletters();
         this.cols = [
             { field: 'date', header: 'Date' },
@@ -66,20 +66,21 @@ var NewsletterComponent = (function () {
     };
     NewsletterComponent.prototype.releaseNewsletter = function (newsletter) {
         var _this = this;
-        newsletter.released = 'true';
-        console.log(newsletter);
-        this.newsletterservice.update(newsletter)
-            .subscribe(function (response) {
-            if (response.error) {
-                _this.alertService.error(response.error);
+        this.newsletterservice.release(newsletter._id, this.developmentId)
+            .then(function (response) {
+            if (response) {
+                console.log(response);
+                // console.log(response.error());
+                alert("The Newsletter could not be release, server Error.");
             }
             else {
-                // EmitterService.get(this.userList).emit(response.users);
-                _this.alertService.success('Release newsletter successful', true);
+                _this.alertService.success('Release Newsletter successful', true);
+                alert("Release Newsletter successful");
                 _this.ngOnInit();
             }
         }, function (error) {
-            _this.alertService.error(error);
+            console.log(error);
+            alert("The Newsletter could not be release, server Error.");
         });
     };
     NewsletterComponent.prototype.loadAllNewsletters = function () {
@@ -105,7 +106,7 @@ NewsletterComponent = __decorate([
         moduleId: module.id,
         selector: 'newsletter',
         templateUrl: '/app/templates/newsletter.html',
-        styleUrls: ['../../templates/styles/newsletter.css']
+        styleUrls: ['/app/templates/styles/newsletter.css']
     }),
     __metadata("design:paramtypes", [index_1.NewsletterService, index_1.AlertService])
 ], NewsletterComponent);

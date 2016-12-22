@@ -20,7 +20,7 @@ HeaderComponent = __decorate([
         moduleId: module.id,
         selector: 'headers',
         templateUrl: '/app/templates/header.html',
-        styleUrls: ['../../app/templates/styles/header.css']
+        styleUrls: ['/app/templates/styles/header.css']
     }),
     __metadata("design:paramtypes", [])
 ], HeaderComponent);
