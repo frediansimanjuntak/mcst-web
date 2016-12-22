@@ -8,6 +8,7 @@
 			<div class="col-md-4 pull-right">
 					  		<a class="btn btn-default pull-right" [routerLink]="['/newsletter/add']">
 					  		<i class="fa fa-plus" aria-hidden="true"></i>&nbsp;Upload AGM / Circular</a>
+					  		
 			</div>
 		</div>
 		<div (click)="$event.preventDefault()">
@@ -22,15 +23,13 @@
 				            <span [style.color]="data[col.field]">{{data[col.field]}}</span>
 				        </template>
 				    </p-column>
-				    <p-column field="uploaded_by" header="Uploaded by" sortable="true" [filter]="true" filterPlaceholder="Search Uploaded by"></p-column>
+				    <p-column field="created_by" header="Uploaded by" sortable="true" [filter]="true" filterPlaceholder="Search Uploaded by"></p-column>
 				     <p-column field="attachment" header="Attachment" sortable="true" [filter]="true" filterPlaceholder="Search Attachment"></p-column>
 				    <!-- </p-column> -->
 				    <p-column styleClass="col-button">
-				    	<template let-data="rowData" pTemplate="body">
-				        <button type="button" [routerLink]="['/newsletter/add'+newsletter._id]">Edit</button>
-				    	</template>
-				    	<template let-data="rowData" pTemplate="body">
-				        <button type="button" (click)="deleteNewsletter(dataAgm)">Delete</button>
+				    	<template let-dataAgm="rowData" pTemplate="body">
+				    	<button  *ngIf="dataAgm.released == 'false'" type="button" (click)="releaseNewsletter(dataAgm)">Release</button>
+				        <button class="pull-right" type="button" (click)="deleteNewsletter(dataAgm)">Delete</button>
 				    	</template>
 				    </p-column>
 				</p-dataTable>
@@ -50,10 +49,8 @@
 				    <!-- </p-column> -->
 				    <p-column styleClass="col-button">
 				    	<template let-dataCircular="rowData" pTemplate="body">
-				        <button type="button" [routerLink]="['/newsletter/add'+newsletter._id]">Publish</button>
-				    	</template>
-				    	<template let-dataCircular="rowData" pTemplate="body">
-				        <button type="button" (click)="deleteNewsletter(dataCircular)">Delete</button>
+				    	 	<button  *ngIf="dataCircular.released == 'false'" type="button" (click)="releaseNewsletter(dataCircular)">Release</button>
+				        	<button class="pull-right" type="button" (click)="deleteNewsletter(dataCircular)">Delete</button>
 				    	</template>
 				    </p-column>
 				</p-dataTable>

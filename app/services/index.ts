@@ -14,5 +14,6 @@ export * from './petition.service';
 export * from './poll.service';
 export * from './quotation.service';
 export * from './user.service';
+export * from './unit.service';
 export * from './user-group.service';
 export * from './visit.service';

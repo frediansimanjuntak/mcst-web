@@ -12,30 +12,30 @@ var core_1 = require("@angular/core");
 var http_1 = require("@angular/http");
 var Rx_1 = require("rxjs/Rx");
 require("rxjs/add/operator/toPromise");
-var NewsletterService = (function () {
-    function NewsletterService(http) {
+var UnitService = (function () {
+    function UnitService(http) {
         this.http = http;
         this.headers = new http_1.Headers({ 'Content-Type': 'application/json' });
     }
-    NewsletterService.prototype.getAll = function () {
+    UnitService.prototype.getAll = function () {
         return this.http.get('https://192.168.10.38:3000/api/developments')
             .map(function (res) { return res.json(); })
             .catch(function (error) { return Rx_1.Observable.throw(error.json().error || 'Server error'); });
     };
-    NewsletterService.prototype.getById = function (id) {
+    UnitService.prototype.getById = function (id) {
         return this.http.get('https://192.168.10.73:3333/api/newsletters' + id)
             .map(function (res) { return res.json(); })
             .catch(function (error) { return Rx_1.Observable.throw(error.json().error || 'Server error'); });
     };
-    NewsletterService.prototype.create = function (body) {
+    UnitService.prototype.create = function (body) {
         var options = new http_1.RequestOptions({
             headers: new http_1.Headers({ 'Content-Type': 'application/json;charset=UTF-8' })
         });
-        return this.http.post('https://192.168.10.38:3000/api/newsletters/' + '585a07d7870e2713c857b802', body, options)
+        return this.http.post('https://192.168.10.38:3000/api/properties/' + '585a07d7870e2713c857b802', body, options)
             .map(function (res) { return res.json(); })
             .catch(function (error) { return Rx_1.Observable.throw(error.json().error || 'Server error'); });
     };
-    NewsletterService.prototype.update = function (body) {
+    UnitService.prototype.update = function (body) {
         var options = new http_1.RequestOptions({
             headers: new http_1.Headers({ 'Content-Type': 'application/json;charset=UTF-8' })
         });
@@ -43,21 +43,21 @@ var NewsletterService = (function () {
             .map(function (res) { return res.json(); })
             .catch(function (error) { return Rx_1.Observable.throw(error.json().error || 'Server error'); });
     };
-    NewsletterService.prototype.delete = function (id, id_dev) {
+    UnitService.prototype.delete = function (id, id_dev) {
         return this.http.delete('https://192.168.10.38:3000/api/newsletters/' + id_dev + '/' + id, { headers: this.headers })
             .toPromise()
             .then(function () { return null; })
             .catch(this.handleError);
     };
-    NewsletterService.prototype.handleError = function (error) {
+    UnitService.prototype.handleError = function (error) {
         console.error('An error occurred', error); // for demo purposes only
         return Promise.reject(error.message || error);
     };
-    return NewsletterService;
+    return UnitService;
 }());
-NewsletterService = __decorate([
+UnitService = __decorate([
     core_1.Injectable(),
     __metadata("design:paramtypes", [http_1.Http])
-], NewsletterService);
-exports.NewsletterService = NewsletterService;
-//# sourceMappingURL=newsletter.service.js.map
+], UnitService);
+exports.UnitService = UnitService;
+//# sourceMappingURL=unit.service.js.map

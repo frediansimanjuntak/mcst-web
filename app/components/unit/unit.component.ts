@@ -1,21 +1,21 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router'; 
 import { Development } from '../../models/index';
-import { NewsletterService, AlertService} from '../../services/index';
+import { UnitService, AlertService} from '../../services/index';
 import '../../rxjs-operators';
 import {NG_TABLE_DIRECTIVES}    from 'ng2-table/ng2-table'
 import { Observable} from 'rxjs/Observable';
 
 @Component({
   moduleId: module.id,
-  selector: 'newsletter',
-  templateUrl: '/app/templates/newsletter.html',
-  styleUrls: [ '../../templates/styles/newsletter.css' ]
+  selector: 'unit',
+  templateUrl: '/app/templates/unit.html',
+  // styleUrls: [ '../../templates/styles/un.css' ]
 })
 
-export class NewsletterComponent implements OnInit { 
-	  newsletter: Development;
-    newsletters: Development[] = [];
+export class UnitComponent implements OnInit { 
+	  unit: Development;
+    units: Development[] = [];
     model: any = {};
     cols: any[];
     public developmentId;
@@ -27,12 +27,12 @@ export class NewsletterComponent implements OnInit {
     public sortBy = "email";
     public sortOrder = "asc";
 
-    constructor(private newsletterservice: NewsletterService, private alertService: AlertService) {
+    constructor(private unitservice: UnitService, private alertService: AlertService) {
     }
 
     ngOnInit(): void {
         this.developmentId = '585a07d7870e2713c857b802';
-        this.loadAllNewsletters();
+        this.loadAllUnits();
          this.cols = [
             {field: 'date', header: 'Date'},
             {field: 'title', header: 'Title'},
@@ -50,8 +50,8 @@ export class NewsletterComponent implements OnInit {
         return a.city.length;
     }
 
-    deleteNewsletter(newsletter: any) {
-        this.newsletterservice.delete(newsletter._id, this.developmentId) 
+    deleteUnit(newsletter: any) {
+        this.unitservice.delete(newsletter._id, this.developmentId) 
           .then(
             response => {
               if(response) { 
@@ -71,34 +71,34 @@ export class NewsletterComponent implements OnInit {
         );
     }
 
-    releaseNewsletter(newsletter: any){
-      newsletter.released = 'true';
-      console.log(newsletter);
-      this.newsletterservice.update(newsletter)
-      .subscribe(
-        response => {
-          if(response.error) { 
-                    this.alertService.error(response.error);
-                } else {
-                    // EmitterService.get(this.userList).emit(response.users);
-                       this.alertService.success('Release newsletter successful', true);
-                       this.ngOnInit()
-                }
-              },
-              error=> { 
-                this.alertService.error(error);
-              }
-          );
-    }
+    // releaseNewsletter(newsletter: any){
+    //   newsletter.released = 'true';
+    //   console.log(newsletter);
+    //   this.newsletterservice.update(newsletter)
+    //   .subscribe(
+    //     response => {
+    //       if(response.error) { 
+    //                 this.alertService.error(response.error);
+    //             } else {
+    //                 // EmitterService.get(this.userList).emit(response.users);
+    //                    this.alertService.success('Release newsletter successful', true);
+    //                    this.ngOnInit()
+    //             }
+    //           },
+    //           error=> { 
+    //             this.alertService.error(error);
+    //           }
+    //       );
+    // }
 
-    private loadAllNewsletters() {
-        this.newsletterservice.getAll()
+    private loadAllUnits() {
+        this.unitservice.getAll()
             .subscribe((data)=> {
                 setTimeout(()=> {
 
                     this.data          = data.find(data => data._id === this.developmentId );
-                    this.dataAgm       = this.data.newsletter.filter(data => data.type === 'agm' ); 
-                    this.dataCircular  = this.data.newsletter.filter(data => data.type === 'circular' ); 
+                    // this.dataAgm       = this.data.newsletter.filter(data => data.type === 'agm' ); 
+                    // this.dataCircular  = this.data.newsletter.filter(data => data.type === 'circular' ); 
                     console.log(this.dataAgm);
                 }, 1000);
             });

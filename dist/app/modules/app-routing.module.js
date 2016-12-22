@@ -26,6 +26,8 @@ var routes = [
     { path: 'development', component: index_1.DevelopmentComponent },
     { path: 'development/add', component: index_1.EditDevelopmentComponent },
     { path: 'development/edit/:id', component: index_1.EditDevelopmentComponent },
+    { path: 'unit', component: index_1.UnitComponent },
+    { path: 'unit/add', component: index_1.EditUnitComponent },
 ];
 var AppRoutingModule = (function () {
     function AppRoutingModule() {

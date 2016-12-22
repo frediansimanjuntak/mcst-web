@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router'; 
 import { Development } from '../../models/index';
-import { NewsletterService, AlertService } from '../../services/index';
+import { UnitService, AlertService } from '../../services/index';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import '../../rxjs-operators';
 import { User } from '../../models/index';
@@ -13,20 +13,20 @@ const TYPES: any[] = [
 
 @Component({
   moduleId: module.id,
-  selector: 'edit-development',
-  templateUrl: '/app/templates/edit-newsletter.html'
+  selector: 'edit-unit',
+  templateUrl: '/app/templates/edit-unit.html'
 })
 
-export class EditNewsletterComponent  { 
+export class EditUnitComponent  { 
 	development: Development;
     developments: Development[] = [];
-    model: any = {};
+    model: any;
     myForm: FormGroup;
     user: User;
     types = TYPES;
 
     constructor(private router: Router,
-    	private newsletterService: NewsletterService,
+    	private unitservice: UnitService,
     	private alertService: AlertService,
         private formbuilder: FormBuilder ) {
         
@@ -53,45 +53,38 @@ export class EditNewsletterComponent  {
         })
     }
 
-    createNewsletter() {
-        if(this.model.released == true){
-            this.model.released_by = '583e4e9dd97c97149884fef5';
-            this.model.released_at =  Date.now();
-        } else {
-            this.model.released_by = null;
-            this.model.released_at = null;
-        }
+    createUnit() {
         this.model.created_by = '583e4e9dd97c97149884fef5';
         // this.model.pinned.rank = 0;
         console.log(this.model);
-        this.newsletterService.create(this.model)
+        this.unitservice.create(this.model)
         .subscribe(
             data => {
-                this.alertService.success('Create newsletter successful', true);
+                this.alertService.success('Create Unit successful', true);
                 this.router.navigate(['/newsletter']);
             },
             error => {
                 console.log(error);
-                alert(`The Newsletter could not be save, server Error.`);
+                alert(`The Unit could not be save, server Error.`);
             }
         );
     }
 
-    updateNewsletter(){
-		this.newsletterService.update(this.model)
-		.subscribe(
-			response => {
-				if(response.error) { 
-	                this.alertService.error(response.error);
-	            } else {
-	                // EmitterService.get(this.userList).emit(response.users);
-                     this.alertService.success('Update newsletter successful', true);
-                     this.router.navigate(['/newsletter']);
-	            }
-            },
-            error=> { 
-            	this.alertService.error(error);
-            }
-        );
-	}
+ //    updateNewsletter(){
+	// 	this.unitservice.update(this.model)
+	// 	.subscribe(
+	// 		response => {
+	// 			if(response.error) { 
+	//                 this.alertService.error(response.error);
+	//             } else {
+	//                 // EmitterService.get(this.userList).emit(response.users);
+ //                     this.alertService.success('Update newsletter successful', true);
+ //                     this.router.navigate(['/newsletter']);
+	//             }
+ //            },
+ //            error=> { 
+ //            	this.alertService.error(error);
+ //            }
+ //        );
+	// }
 }

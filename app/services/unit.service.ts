@@ -6,7 +6,7 @@ import { url } from '../global'
 import 'rxjs/add/operator/toPromise';
  
 @Injectable()
-export class NewsletterService {
+export class UnitService {
     private headers = new Headers({'Content-Type': 'application/json'});
     constructor(private http: Http) {}
 
@@ -26,7 +26,7 @@ export class NewsletterService {
         let options = new RequestOptions({
             headers: new Headers({ 'Content-Type': 'application/json;charset=UTF-8' }) 
         });
-        return this.http.post('https://192.168.10.38:3000/api/newsletters/' + '585a07d7870e2713c857b802',body, options)
+        return this.http.post('https://192.168.10.38:3000/api/properties/' + '585a07d7870e2713c857b802',body, options)
             .map((res:Response) => res.json())
             .catch((error:any) => Observable.throw(error.json().error || 'Server error'));
     }

@@ -11,11 +11,11 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 var core_1 = require("@angular/core");
 var index_1 = require("../../services/index");
 require("../../rxjs-operators");
-var NewsletterComponent = (function () {
-    function NewsletterComponent(newsletterservice, alertService) {
-        this.newsletterservice = newsletterservice;
+var UnitComponent = (function () {
+    function UnitComponent(unitservice, alertService) {
+        this.unitservice = unitservice;
         this.alertService = alertService;
-        this.newsletters = [];
+        this.units = [];
         this.model = {};
         this.filterQuery = "";
         this.rowsOnPage = 10;
@@ -31,9 +31,9 @@ var NewsletterComponent = (function () {
             { title: 'Dynamic Title 4', content: 'Dynamic content 4', customClass: 'customClass' }
         ];
     }
-    NewsletterComponent.prototype.ngOnInit = function () {
+    UnitComponent.prototype.ngOnInit = function () {
         this.developmentId = '585a07d7870e2713c857b802';
-        this.loadAllNewsletters();
+        this.loadAllUnits();
         this.cols = [
             { field: 'date', header: 'Date' },
             { field: 'title', header: 'Title' },
@@ -42,12 +42,12 @@ var NewsletterComponent = (function () {
             { field: 'attachment', header: 'Attachment' },
         ];
     };
-    NewsletterComponent.prototype.toInt = function (num) {
+    UnitComponent.prototype.toInt = function (num) {
         return +num;
     };
-    NewsletterComponent.prototype.deleteNewsletter = function (newsletter) {
+    UnitComponent.prototype.deleteUnit = function (newsletter) {
         var _this = this;
-        this.newsletterservice.delete(newsletter._id, this.developmentId)
+        this.unitservice.delete(newsletter._id, this.developmentId)
             .then(function (response) {
             if (response) {
                 console.log(response);
@@ -64,50 +64,50 @@ var NewsletterComponent = (function () {
             alert("The Newsletter could not be deleted, server Error.");
         });
     };
-    NewsletterComponent.prototype.releaseNewsletter = function (newsletter) {
+    // releaseNewsletter(newsletter: any){
+    //   newsletter.released = 'true';
+    //   console.log(newsletter);
+    //   this.newsletterservice.update(newsletter)
+    //   .subscribe(
+    //     response => {
+    //       if(response.error) { 
+    //                 this.alertService.error(response.error);
+    //             } else {
+    //                 // EmitterService.get(this.userList).emit(response.users);
+    //                    this.alertService.success('Release newsletter successful', true);
+    //                    this.ngOnInit()
+    //             }
+    //           },
+    //           error=> { 
+    //             this.alertService.error(error);
+    //           }
+    //       );
+    // }
+    UnitComponent.prototype.loadAllUnits = function () {
         var _this = this;
-        newsletter.released = 'true';
-        console.log(newsletter);
-        this.newsletterservice.update(newsletter)
-            .subscribe(function (response) {
-            if (response.error) {
-                _this.alertService.error(response.error);
-            }
-            else {
-                // EmitterService.get(this.userList).emit(response.users);
-                _this.alertService.success('Release newsletter successful', true);
-                _this.ngOnInit();
-            }
-        }, function (error) {
-            _this.alertService.error(error);
-        });
-    };
-    NewsletterComponent.prototype.loadAllNewsletters = function () {
-        var _this = this;
-        this.newsletterservice.getAll()
+        this.unitservice.getAll()
             .subscribe(function (data) {
             setTimeout(function () {
                 _this.data = data.find(function (data) { return data._id === _this.developmentId; });
-                _this.dataAgm = _this.data.newsletter.filter(function (data) { return data.type === 'agm'; });
-                _this.dataCircular = _this.data.newsletter.filter(function (data) { return data.type === 'circular'; });
+                // this.dataAgm       = this.data.newsletter.filter(data => data.type === 'agm' ); 
+                // this.dataCircular  = this.data.newsletter.filter(data => data.type === 'circular' ); 
                 console.log(_this.dataAgm);
             }, 1000);
         });
     };
-    NewsletterComponent.prototype.setActiveTab = function (index) {
+    UnitComponent.prototype.setActiveTab = function (index) {
         this.tabs[index].active = true;
     };
     ;
-    return NewsletterComponent;
+    return UnitComponent;
 }());
-NewsletterComponent = __decorate([
+UnitComponent = __decorate([
     core_1.Component({
         moduleId: module.id,
-        selector: 'newsletter',
-        templateUrl: '/app/templates/newsletter.html',
-        styleUrls: ['../../templates/styles/newsletter.css']
+        selector: 'unit',
+        templateUrl: '/app/templates/unit.html',
     }),
-    __metadata("design:paramtypes", [index_1.NewsletterService, index_1.AlertService])
-], NewsletterComponent);
-exports.NewsletterComponent = NewsletterComponent;
-//# sourceMappingURL=newsletter.component.js.map
+    __metadata("design:paramtypes", [index_1.UnitService, index_1.AlertService])
+], UnitComponent);
+exports.UnitComponent = UnitComponent;
+//# sourceMappingURL=unit.component.js.map

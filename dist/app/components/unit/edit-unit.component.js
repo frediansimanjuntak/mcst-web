@@ -17,18 +17,17 @@ var TYPES = [
     { value: 'agm', name: 'AGM' },
     { value: 'circular', name: 'Circular' },
 ];
-var EditNewsletterComponent = (function () {
-    function EditNewsletterComponent(router, newsletterService, alertService, formbuilder) {
+var EditUnitComponent = (function () {
+    function EditUnitComponent(router, unitservice, alertService, formbuilder) {
         this.router = router;
-        this.newsletterService = newsletterService;
+        this.unitservice = unitservice;
         this.alertService = alertService;
         this.formbuilder = formbuilder;
         this.developments = [];
-        this.model = {};
         this.types = TYPES;
         // this.user = JSON.parse(localStorage.getItem('user'));
     }
-    EditNewsletterComponent.prototype.ngOnInit = function () {
+    EditUnitComponent.prototype.ngOnInit = function () {
         this.myForm = this.formbuilder.group({
             newsletter: this.formbuilder.group({
                 title: [''],
@@ -43,56 +42,32 @@ var EditNewsletterComponent = (function () {
             })
         });
     };
-    EditNewsletterComponent.prototype.createNewsletter = function () {
+    EditUnitComponent.prototype.createUnit = function () {
         var _this = this;
-        if (this.model.released == true) {
-            this.model.released_by = '583e4e9dd97c97149884fef5';
-            this.model.released_at = Date.now();
-        }
-        else {
-            this.model.released_by = null;
-            this.model.released_at = null;
-        }
         this.model.created_by = '583e4e9dd97c97149884fef5';
         // this.model.pinned.rank = 0;
         console.log(this.model);
-        this.newsletterService.create(this.model)
+        this.unitservice.create(this.model)
             .subscribe(function (data) {
-            _this.alertService.success('Create newsletter successful', true);
+            _this.alertService.success('Create Unit successful', true);
             _this.router.navigate(['/newsletter']);
         }, function (error) {
             console.log(error);
-            alert("The Newsletter could not be save, server Error.");
+            alert("The Unit could not be save, server Error.");
         });
     };
-    EditNewsletterComponent.prototype.updateNewsletter = function () {
-        var _this = this;
-        this.newsletterService.update(this.model)
-            .subscribe(function (response) {
-            if (response.error) {
-                _this.alertService.error(response.error);
-            }
-            else {
-                // EmitterService.get(this.userList).emit(response.users);
-                _this.alertService.success('Update newsletter successful', true);
-                _this.router.navigate(['/newsletter']);
-            }
-        }, function (error) {
-            _this.alertService.error(error);
-        });
-    };
-    return EditNewsletterComponent;
+    return EditUnitComponent;
 }());
-EditNewsletterComponent = __decorate([
+EditUnitComponent = __decorate([
     core_1.Component({
         moduleId: module.id,
-        selector: 'edit-development',
-        templateUrl: '/app/templates/edit-newsletter.html'
+        selector: 'edit-unit',
+        templateUrl: '/app/templates/edit-unit.html'
     }),
     __metadata("design:paramtypes", [router_1.Router,
-        index_1.NewsletterService,
+        index_1.UnitService,
         index_1.AlertService,
         forms_1.FormBuilder])
-], EditNewsletterComponent);
-exports.EditNewsletterComponent = EditNewsletterComponent;
-//# sourceMappingURL=edit-newsletter.component.js.map
+], EditUnitComponent);
+exports.EditUnitComponent = EditUnitComponent;
+//# sourceMappingURL=edit-unit.component.js.map

@@ -18,6 +18,7 @@ __export(require("./petition.service"));
 __export(require("./poll.service"));
 __export(require("./quotation.service"));
 __export(require("./user.service"));
+__export(require("./unit.service"));
 __export(require("./user-group.service"));
 __export(require("./visit.service"));
 //# sourceMappingURL=index.js.map
