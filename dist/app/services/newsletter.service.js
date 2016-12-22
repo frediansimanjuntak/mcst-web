@@ -18,7 +18,7 @@ var NewsletterService = (function () {
         this.headers = new http_1.Headers({ 'Content-Type': 'application/json' });
     }
     NewsletterService.prototype.getAll = function () {
-        return this.http.get('https://192.168.10.38:3000/api/newsletters')
+        return this.http.get('https://192.168.10.38:3000/api/developments')
             .map(function (res) { return res.json(); })
             .catch(function (error) { return Rx_1.Observable.throw(error.json().error || 'Server error'); });
     };
@@ -31,7 +31,7 @@ var NewsletterService = (function () {
         var options = new http_1.RequestOptions({
             headers: new http_1.Headers({ 'Content-Type': 'application/json;charset=UTF-8' })
         });
-        return this.http.post('https://192.168.10.38:3000/api/newsletters', body, options)
+        return this.http.post('https://192.168.10.38:3000/api/newsletters/' + '585a07d7870e2713c857b802', body, options)
             .map(function (res) { return res.json(); })
             .catch(function (error) { return Rx_1.Observable.throw(error.json().error || 'Server error'); });
     };
@@ -43,8 +43,8 @@ var NewsletterService = (function () {
             .map(function (res) { return res.json(); })
             .catch(function (error) { return Rx_1.Observable.throw(error.json().error || 'Server error'); });
     };
-    NewsletterService.prototype.delete = function (id) {
-        return this.http.delete('https://192.168.10.38:3000/api/newsletters/' + id, { headers: this.headers })
+    NewsletterService.prototype.delete = function (id, id_dev) {
+        return this.http.delete('https://192.168.10.38:3000/api/newsletters/' + id_dev + '/' + id, { headers: this.headers })
             .toPromise()
             .then(function () { return null; })
             .catch(this.handleError);

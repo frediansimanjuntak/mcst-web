@@ -35,5 +35,7 @@ export * from './user-group/user-group.component';
 export * from './user-group/edit-user-group.component';
 export * from './user/user.component';
 export * from './user/edit-user.component';
+export * from './unit/unit.component';
+export * from './unit/edit-unit.component';
 export * from './visit/visit.component';
 export * from './visit/edit-visit.component';

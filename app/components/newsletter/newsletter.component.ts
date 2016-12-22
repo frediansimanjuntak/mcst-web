@@ -18,6 +18,8 @@ export class NewsletterComponent implements OnInit {
     newsletters: Development[] = [];
     model: any = {};
     cols: any[];
+    public developmentId;
+    public data;
     public dataAgm;
     public dataCircular;    
     public filterQuery = "";
@@ -29,6 +31,7 @@ export class NewsletterComponent implements OnInit {
     }
 
     ngOnInit(): void {
+        this.developmentId = '585a07d7870e2713c857b802';
         this.loadAllNewsletters();
          this.cols = [
             {field: 'date', header: 'Date'},
@@ -48,16 +51,16 @@ export class NewsletterComponent implements OnInit {
     }
 
     deleteNewsletter(newsletter: any) {
-        this.newsletterservice.delete(newsletter._id) 
+        this.newsletterservice.delete(newsletter._id, this.developmentId) 
           .then(
             response => {
               if(response) { 
                 console.log(response);
                 // console.log(response.error());
-                alert(`The user could not be deleted, server Error.`);
+                alert(`The Newsletter could not be deleted, server Error.`);
               } else {
                 this.alertService.success('Create user successful', true);
-                alert(`The Newsletter successful`);
+                alert(`Delete Newsletter successful`);
                 this.ngOnInit()
               }
             },
@@ -68,13 +71,34 @@ export class NewsletterComponent implements OnInit {
         );
     }
 
+    releaseNewsletter(newsletter: any){
+      newsletter.released = 'true';
+      console.log(newsletter);
+      this.newsletterservice.update(newsletter)
+      .subscribe(
+        response => {
+          if(response.error) { 
+                    this.alertService.error(response.error);
+                } else {
+                    // EmitterService.get(this.userList).emit(response.users);
+                       this.alertService.success('Release newsletter successful', true);
+                       this.ngOnInit()
+                }
+              },
+              error=> { 
+                this.alertService.error(error);
+              }
+          );
+    }
+
     private loadAllNewsletters() {
         this.newsletterservice.getAll()
             .subscribe((data)=> {
                 setTimeout(()=> {
-                    this.dataAgm      = data.filter(data => data.type === 'AGM' );
-                    this.dataCircular = data.filter(data => data.type === 'Circular' );
-                // .filter(x => x == this.personId)
+
+                    this.data          = data.find(data => data._id === this.developmentId );
+                    this.dataAgm       = this.data.newsletter.filter(data => data.type === 'agm' ); 
+                    this.dataCircular  = this.data.newsletter.filter(data => data.type === 'circular' ); 
                     console.log(this.dataAgm);
                 }, 1000);
             });

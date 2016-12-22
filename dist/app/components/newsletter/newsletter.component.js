@@ -32,6 +32,7 @@ var NewsletterComponent = (function () {
         ];
     }
     NewsletterComponent.prototype.ngOnInit = function () {
+        this.developmentId = '585a07d7870e2713c857b802';
         this.loadAllNewsletters();
         this.cols = [
             { field: 'date', header: 'Date' },
@@ -46,16 +47,16 @@ var NewsletterComponent = (function () {
     };
     NewsletterComponent.prototype.deleteNewsletter = function (newsletter) {
         var _this = this;
-        this.newsletterservice.delete(newsletter._id)
+        this.newsletterservice.delete(newsletter._id, this.developmentId)
             .then(function (response) {
             if (response) {
                 console.log(response);
                 // console.log(response.error());
-                alert("The user could not be deleted, server Error.");
+                alert("The Newsletter could not be deleted, server Error.");
             }
             else {
                 _this.alertService.success('Create user successful', true);
-                alert("The Newsletter successful");
+                alert("Delete Newsletter successful");
                 _this.ngOnInit();
             }
         }, function (error) {
@@ -63,14 +64,32 @@ var NewsletterComponent = (function () {
             alert("The Newsletter could not be deleted, server Error.");
         });
     };
+    NewsletterComponent.prototype.releaseNewsletter = function (newsletter) {
+        var _this = this;
+        newsletter.released = 'true';
+        console.log(newsletter);
+        this.newsletterservice.update(newsletter)
+            .subscribe(function (response) {
+            if (response.error) {
+                _this.alertService.error(response.error);
+            }
+            else {
+                // EmitterService.get(this.userList).emit(response.users);
+                _this.alertService.success('Release newsletter successful', true);
+                _this.ngOnInit();
+            }
+        }, function (error) {
+            _this.alertService.error(error);
+        });
+    };
     NewsletterComponent.prototype.loadAllNewsletters = function () {
         var _this = this;
         this.newsletterservice.getAll()
             .subscribe(function (data) {
             setTimeout(function () {
-                _this.dataAgm = data.filter(function (data) { return data.type === 'AGM'; });
-                _this.dataCircular = data.filter(function (data) { return data.type === 'Circular'; });
-                // .filter(x => x == this.personId)
+                _this.data = data.find(function (data) { return data._id === _this.developmentId; });
+                _this.dataAgm = _this.data.newsletter.filter(function (data) { return data.type === 'agm'; });
+                _this.dataCircular = _this.data.newsletter.filter(function (data) { return data.type === 'circular'; });
                 console.log(_this.dataAgm);
             }, 1000);
         });

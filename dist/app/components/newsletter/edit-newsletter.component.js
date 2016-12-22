@@ -45,6 +45,16 @@ var EditNewsletterComponent = (function () {
     };
     EditNewsletterComponent.prototype.createNewsletter = function () {
         var _this = this;
+        if (this.model.released == true) {
+            this.model.released_by = '583e4e9dd97c97149884fef5';
+            this.model.released_at = Date.now();
+        }
+        else {
+            this.model.released_by = null;
+            this.model.released_at = null;
+        }
+        this.model.created_by = '583e4e9dd97c97149884fef5';
+        // this.model.pinned.rank = 0;
         console.log(this.model);
         this.newsletterService.create(this.model)
             .subscribe(function (data) {
