@@ -15,10 +15,6 @@ export class EditUserComponent {
     user: User;
     model: any = {};
     id: string;
-    developmentID = "585a07d7870e2713c857b802";
-    data: any;
-    unit: any;
-    // developmentID: string;
  
     constructor(private router: Router,
         private userService: UserService,
@@ -26,42 +22,17 @@ export class EditUserComponent {
         private alertService: AlertService,
         private developmentService: DevelopmentService) {}
 
-
-
     ngOnInit(): void {   
-        this.developmentService.getAll()
-            .subscribe((data)=> {
-                setTimeout(()=> {
-                    this.data = data.find(data => data._id === this.developmentID );
-                    this.unit = this.data.properties;
-                    console.log(this.unit);
-                    
-                }, 1000);
-            });
         this.route.params.subscribe(params => {
             this.id = params['id'];
         });
-        
         if( this.id != null) {
             this.userService.getById(this.id).subscribe(user => this.user = user);
         };
         // this.developmentService.getAll().subscribe(developments => { this.developments = developments; });
     }
 
-    createUser() {
-        this.userService.create(this.model)
-        .then(
-            data => {
-                this.alertService.success('Create user successful', true);
-                this.router.navigate(['/user']);
-            },
-            error => {
-                this.alertService.error(error);
-            }
-        );
-    }
-
-    updateUser(){
+    updateSetting(){
 		    this.userService.update(this.user)
 		    .then(response => {
                   this.alertService.success('Update User successful', true);

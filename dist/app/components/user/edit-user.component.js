@@ -11,20 +11,42 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 var core_1 = require("@angular/core");
 var router_1 = require("@angular/router");
 var index_1 = require("../../services/index");
+require("rxjs/add/operator/switchMap");
 require("../../rxjs-operators");
 var EditUserComponent = (function () {
-    function EditUserComponent(router, userService, alertService) {
+    // developmentID: string;
+    function EditUserComponent(router, userService, route, alertService, developmentService) {
         this.router = router;
         this.userService = userService;
+        this.route = route;
         this.alertService = alertService;
-        this.users = [];
+        this.developmentService = developmentService;
         this.model = {};
+        this.developmentID = "585a07d7870e2713c857b802";
     }
+    EditUserComponent.prototype.ngOnInit = function () {
+        var _this = this;
+        this.developmentService.getAll()
+            .subscribe(function (data) {
+            setTimeout(function () {
+                _this.data = data.find(function (data) { return data._id === _this.developmentID; });
+                _this.unit = _this.data.properties;
+                console.log(_this.unit);
+            }, 1000);
+        });
+        this.route.params.subscribe(function (params) {
+            _this.id = params['id'];
+        });
+        if (this.id != null) {
+            this.userService.getById(this.id).subscribe(function (user) { return _this.user = user; });
+        }
+        ;
+        // this.developmentService.getAll().subscribe(developments => { this.developments = developments; });
+    };
     EditUserComponent.prototype.createUser = function () {
         var _this = this;
-        console.log(this.model);
         this.userService.create(this.model)
-            .subscribe(function (data) {
+            .then(function (data) {
             _this.alertService.success('Create user successful', true);
             _this.router.navigate(['/user']);
         }, function (error) {
@@ -33,19 +55,27 @@ var EditUserComponent = (function () {
     };
     EditUserComponent.prototype.updateUser = function () {
         var _this = this;
-        this.userService.update(this.model)
-            .subscribe(function (response) {
-            if (response.error) {
-                _this.alertService.error(response.error);
-            }
-            else {
-                // EmitterService.get(this.userList).emit(response.users);
-                _this.alertService.success('Update User successful', true);
-                _this.router.navigate(['/user']);
-            }
+        this.userService.update(this.user)
+            .then(function (response) {
+            _this.alertService.success('Update User successful', true);
+            _this.router.navigate(['/user']);
         }, function (error) {
             _this.alertService.error(error);
         });
+    };
+    EditUserComponent.prototype.number = function (event) {
+        var pattern = /[0-9\+\ ]/;
+        var inputChar = String.fromCharCode(event.charCode);
+        if (!pattern.test(inputChar)) {
+            event.preventDefault();
+        }
+    };
+    EditUserComponent.prototype.text = function (event) {
+        var pattern = /[a-z\ ]/;
+        var inputChar = String.fromCharCode(event.charCode);
+        if (!pattern.test(inputChar)) {
+            event.preventDefault();
+        }
     };
     return EditUserComponent;
 }());
@@ -56,7 +86,9 @@ EditUserComponent = __decorate([
     }),
     __metadata("design:paramtypes", [router_1.Router,
         index_1.UserService,
-        index_1.AlertService])
+        router_1.ActivatedRoute,
+        index_1.AlertService,
+        index_1.DevelopmentService])
 ], EditUserComponent);
 exports.EditUserComponent = EditUserComponent;
 //# sourceMappingURL=edit-user.component.js.map

@@ -19,41 +19,27 @@ var UserComponent = (function () {
         this.alertService = alertService;
         this.users = [];
         this.model = {};
-        this.developmentID = "585a07d7870e2713c857b802";
         // this.user = JSON.parse(localStorage.getItem('user'));
         // console.log(this.user)
     }
     UserComponent.prototype.ngOnInit = function () {
-        this.loadAllUsers();
+        this.loadSetting();
     };
-    UserComponent.prototype.deleteUser = function (user) {
-        var _this = this;
-        this.userService.delete(user._id)
-            .then(function (response) {
-            _this.alertService.success('Create user successful', true);
-            _this.loadAllUsers();
-        }, function (error) {
-            alert("The user could not be deleted, server Error.");
-        });
-    };
-    UserComponent.prototype.loadAllUsers = function () {
+    UserComponent.prototype.loadSetting = function () {
         var _this = this;
         this.userService.getAll().subscribe(function (users) { _this.users = users; console.log(users); });
     };
-    UserComponent.prototype.add = function () {
-        this.router.navigate(['/user/add', this.developmentID]);
-    };
     UserComponent.prototype.edit = function (user) {
-        this.router.navigate(['/user/edit', this.developmentID, user._id]);
+        this.router.navigate(['/setting/edit', user._id]);
     };
     return UserComponent;
 }());
 UserComponent = __decorate([
     core_1.Component({
         moduleId: module.id,
-        templateUrl: '/app/templates/user.html',
+        templateUrl: '/app/templates/setting.html',
     }),
     __metadata("design:paramtypes", [router_1.Router, index_1.UserService, index_1.AlertService])
 ], UserComponent);
 exports.UserComponent = UserComponent;
-//# sourceMappingURL=user.component.js.map
+//# sourceMappingURL=setting.component.js.map

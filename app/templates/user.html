@@ -6,7 +6,7 @@
 		Home > User
 		<div class="row">
 			<div class="col-md-4 pull-right">
-					  		<a class="btn btn-default pull-right" [routerLink]="['/user/add']">
+					  		<a class="btn btn-default pull-right" (click)="add()">
 					  		<i class="fa fa-plus" aria-hidden="true"></i>&nbsp;Add User</a>
 			</div>
 		</div>
@@ -19,15 +19,17 @@
 		            <span [style.color]="user[col.field]">{{user[col.field]}}</span>
 		        </template>
 		    </p-column>
-		    <p-column styleClass="col-button">
+		    <p-column styleClass="col-button" header="action">
 		    	<template let-user="rowData" pTemplate="body">
-		        <button type="button" [routerLink]="['/user/edit'+user._id]>Edit</button>
-		    	</template>
-		    	<template let-user="rowData" pTemplate="body">
-		        <button type="button" (click)="deleteDevelopment(user)">Delete</button>
+		        <button type="button" (click)="edit(user)">Edit</button>
+		        <button type="button" (click)="deleteUser(user)">Delete</button>
 		    	</template>
 		    </p-column>
 		</p-dataTable>
 	</div>
 </div>
+
+
+
+
 

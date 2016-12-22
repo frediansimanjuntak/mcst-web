@@ -20,7 +20,7 @@ export class RegisterComponent {
     register() {
         this.loading = true;
         this.userService.create(this.model)
-        .subscribe(
+        .then(
             data => {
                 this.alertService.success('Registration successful', true);
                 this.router.navigate(['/login']);
@@ -30,5 +30,21 @@ export class RegisterComponent {
                 this.loading = false;
             }
         );
+    }
+
+    number(event: any) {
+        const pattern = /[0-9\+\ ]/;
+        let inputChar = String.fromCharCode(event.charCode);
+        if (!pattern.test(inputChar)) {
+            event.preventDefault();
+        }
+    }
+
+    text(event: any) {
+        const pattern = /[a-z\ ]/;
+        let inputChar = String.fromCharCode(event.charCode);
+        if (!pattern.test(inputChar)) {
+            event.preventDefault();
+        }
     }
 }

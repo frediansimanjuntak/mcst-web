@@ -11,50 +11,74 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 var core_1 = require("@angular/core");
 var router_1 = require("@angular/router");
 var index_1 = require("../../services/index");
-var RegisterComponent = (function () {
-    function RegisterComponent(router, userService, alertService) {
+require("rxjs/add/operator/switchMap");
+require("../../rxjs-operators");
+var EditUserComponent = (function () {
+    function EditUserComponent(router, userService, route, alertService, developmentService) {
         this.router = router;
         this.userService = userService;
+        this.route = route;
         this.alertService = alertService;
+        this.developmentService = developmentService;
         this.model = {};
-        this.loading = false;
     }
-    RegisterComponent.prototype.register = function () {
+    EditUserComponent.prototype.ngOnInit = function () {
         var _this = this;
-        this.loading = true;
+        this.route.params.subscribe(function (params) {
+            _this.id = params['id'];
+        });
+        if (this.id != null) {
+            this.userService.getById(this.id).subscribe(function (user) { return _this.user = user; });
+        }
+        ;
+        // this.developmentService.getAll().subscribe(developments => { this.developments = developments; });
+    };
+    EditUserComponent.prototype.createUser = function () {
+        var _this = this;
         this.userService.create(this.model)
             .then(function (data) {
-            _this.alertService.success('Registration successful', true);
-            _this.router.navigate(['/login']);
+            _this.alertService.success('Create user successful', true);
+            _this.router.navigate(['/user']);
         }, function (error) {
             _this.alertService.error(error);
-            _this.loading = false;
         });
     };
-    RegisterComponent.prototype.number = function (event) {
+    EditUserComponent.prototype.updateUser = function () {
+        var _this = this;
+        this.userService.update(this.user)
+            .then(function (response) {
+            _this.alertService.success('Update User successful', true);
+            _this.router.navigate(['/user']);
+        }, function (error) {
+            _this.alertService.error(error);
+        });
+    };
+    EditUserComponent.prototype.number = function (event) {
         var pattern = /[0-9\+\ ]/;
         var inputChar = String.fromCharCode(event.charCode);
         if (!pattern.test(inputChar)) {
             event.preventDefault();
         }
     };
-    RegisterComponent.prototype.text = function (event) {
+    EditUserComponent.prototype.text = function (event) {
         var pattern = /[a-z\ ]/;
         var inputChar = String.fromCharCode(event.charCode);
         if (!pattern.test(inputChar)) {
             event.preventDefault();
         }
     };
-    return RegisterComponent;
+    return EditUserComponent;
 }());
-RegisterComponent = __decorate([
+EditUserComponent = __decorate([
     core_1.Component({
         moduleId: module.id,
-        templateUrl: '/app/templates/register.html'
+        templateUrl: '/app/templates/edit-user.html',
     }),
     __metadata("design:paramtypes", [router_1.Router,
         index_1.UserService,
-        index_1.AlertService])
-], RegisterComponent);
-exports.RegisterComponent = RegisterComponent;
-//# sourceMappingURL=register.component.js.map
+        router_1.ActivatedRoute,
+        index_1.AlertService,
+        index_1.DevelopmentService])
+], EditUserComponent);
+exports.EditUserComponent = EditUserComponent;
+//# sourceMappingURL=edit-user.component.js.map
