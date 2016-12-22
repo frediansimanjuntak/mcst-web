@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { Router, Params, ActivatedRoute } from '@angular/router';
 import { AlertService, UserService, DevelopmentService } from '../../services/index';
 import { User } from '../../models/index';
-import { EqualValidator } from './equal-validator.directive';
 import 'rxjs/add/operator/switchMap';
 import '../../rxjs-operators';
 
@@ -11,7 +10,7 @@ import '../../rxjs-operators';
     templateUrl: '/app/templates/edit-user.html',
 })
  
-export class EditUserComponent {
+export class EditSettingComponent {
     user: User;
     model: any = {};
     id: string;
