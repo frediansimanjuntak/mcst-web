@@ -28,7 +28,7 @@
 				    <!-- </p-column> -->
 				    <p-column styleClass="col-button">
 				    	<template let-dataAgm="rowData" pTemplate="body">
-				    	<button  *ngIf="dataAgm.released == 'false'" type="button" (click)="releaseNewsletter(dataAgm)">Release</button>
+				    	<button  *ngIf="dataAgm.released == false" type="button" (click)="releaseNewsletter(dataAgm)">Release</button>
 				        <button class="pull-right" type="button" (click)="deleteNewsletter(dataAgm)">Delete</button>
 				    	</template>
 				    </p-column>
@@ -49,7 +49,7 @@
 				    <!-- </p-column> -->
 				    <p-column styleClass="col-button">
 				    	<template let-dataCircular="rowData" pTemplate="body">
-				    	 	<button  *ngIf="dataCircular.released == 'false'" type="button" (click)="releaseNewsletter(dataCircular)">Release</button>
+				    	 	<button  *ngIf="dataCircular.released == false" type="button" (click)="releaseNewsletter(dataCircular)">Release</button>
 				        	<button class="pull-right" type="button" (click)="deleteNewsletter(dataCircular)">Delete</button>
 				    	</template>
 				    </p-column>
