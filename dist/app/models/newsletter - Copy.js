@@ -1,1 +1,0 @@
-//# sourceMappingURL=newsletter - Copy.js.map

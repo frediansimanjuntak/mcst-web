@@ -13,10 +13,8 @@ var router_1 = require("@angular/router");
 var index_1 = require("../../services/index");
 var forms_1 = require("@angular/forms");
 require("../../rxjs-operators");
-var TYPES = [
-    { value: 'agm', name: 'AGM' },
-    { value: 'circular', name: 'Circular' },
-];
+// import { User } from '../../models/index';
+// import { Unit } from '../../models/unit.interface';
 var EditUnitComponent = (function () {
     function EditUnitComponent(router, unitservice, alertService, formbuilder) {
         this.router = router;
@@ -24,30 +22,47 @@ var EditUnitComponent = (function () {
         this.alertService = alertService;
         this.formbuilder = formbuilder;
         this.developments = [];
-        this.types = TYPES;
+        this.events = []; // use later to display form changes
         // this.user = JSON.parse(localStorage.getItem('user'));
     }
     EditUnitComponent.prototype.ngOnInit = function () {
         this.myForm = this.formbuilder.group({
-            newsletter: this.formbuilder.group({
-                title: [''],
-                description: [''],
-                type: [''],
-                attachment: [''],
-                released: [''],
-                pinned: this.formbuilder.group({
-                    rank: [''],
-                }),
-                released_by: [''],
-            })
+            address: this.formbuilder.group({
+                street: [''],
+                postcode: [''],
+                unit_no: [''],
+                unit_no_2: [''],
+                block_no: [''],
+                street_name: [''],
+                postal_code: [''],
+                country: [''],
+                full_address: ['']
+            }),
+            status: [''],
+            created_by: ['583e4e9dd97c97149884fef5']
         });
+        this.subcribeToFormChanges();
     };
-    EditUnitComponent.prototype.createUnit = function () {
+    EditUnitComponent.prototype.subcribeToFormChanges = function () {
         var _this = this;
-        this.model.created_by = '583e4e9dd97c97149884fef5';
+        var myFormStatusChanges$ = this.myForm.statusChanges;
+        var myFormValueChanges$ = this.myForm.valueChanges;
+        myFormStatusChanges$.subscribe(function (x) { return _this.events.push({ event: 'STATUS_CHANGED', object: x }); });
+        myFormValueChanges$.subscribe(function (x) { return _this.events.push({ event: 'VALUE_CHANGED', object: x }); });
+    };
+    // save(model: Unit, isValid: boolean) {
+    //     this.submitted = true; // set form submit to true
+    //     // check if model is valid
+    //     // if valid, call API to save customer
+    //     console.log(model, isValid);
+    // }
+    EditUnitComponent.prototype.createUnit = function (model) {
+        var _this = this;
+        this.submitted = true;
+        // model.properties.created_by = '583e4e9dd97c97149884fef5';
         // this.model.pinned.rank = 0;
-        console.log(this.model);
-        this.unitservice.create(this.model)
+        console.log(model);
+        this.unitservice.create(model)
             .subscribe(function (data) {
             _this.alertService.success('Create Unit successful', true);
             _this.router.navigate(['/newsletter']);

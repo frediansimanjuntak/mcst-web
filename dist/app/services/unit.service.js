@@ -31,7 +31,7 @@ var UnitService = (function () {
         var options = new http_1.RequestOptions({
             headers: new http_1.Headers({ 'Content-Type': 'application/json;charset=UTF-8' })
         });
-        return this.http.post('https://192.168.10.38:3000/api/properties/' + '585a07d7870e2713c857b802', body, options)
+        return this.http.post('https://192.168.10.38:3000/api/properties/' + '585b36585d3cc41224fe518a', body, options)
             .map(function (res) { return res.json(); })
             .catch(function (error) { return Rx_1.Observable.throw(error.json().error || 'Server error'); });
     };

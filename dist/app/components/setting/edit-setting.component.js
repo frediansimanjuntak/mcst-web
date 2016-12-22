@@ -13,8 +13,8 @@ var router_1 = require("@angular/router");
 var index_1 = require("../../services/index");
 require("rxjs/add/operator/switchMap");
 require("../../rxjs-operators");
-var EditUserComponent = (function () {
-    function EditUserComponent(router, userService, route, alertService, developmentService) {
+var EditSettingComponent = (function () {
+    function EditSettingComponent(router, userService, route, alertService, developmentService) {
         this.router = router;
         this.userService = userService;
         this.route = route;
@@ -22,7 +22,7 @@ var EditUserComponent = (function () {
         this.developmentService = developmentService;
         this.model = {};
     }
-    EditUserComponent.prototype.ngOnInit = function () {
+    EditSettingComponent.prototype.ngOnInit = function () {
         var _this = this;
         this.route.params.subscribe(function (params) {
             _this.id = params['id'];
@@ -33,7 +33,7 @@ var EditUserComponent = (function () {
         ;
         // this.developmentService.getAll().subscribe(developments => { this.developments = developments; });
     };
-    EditUserComponent.prototype.updateSetting = function () {
+    EditSettingComponent.prototype.updateSetting = function () {
         var _this = this;
         this.userService.update(this.user)
             .then(function (response) {
@@ -43,23 +43,23 @@ var EditUserComponent = (function () {
             _this.alertService.error(error);
         });
     };
-    EditUserComponent.prototype.number = function (event) {
+    EditSettingComponent.prototype.number = function (event) {
         var pattern = /[0-9\+\ ]/;
         var inputChar = String.fromCharCode(event.charCode);
         if (!pattern.test(inputChar)) {
             event.preventDefault();
         }
     };
-    EditUserComponent.prototype.text = function (event) {
+    EditSettingComponent.prototype.text = function (event) {
         var pattern = /[a-z\ ]/;
         var inputChar = String.fromCharCode(event.charCode);
         if (!pattern.test(inputChar)) {
             event.preventDefault();
         }
     };
-    return EditUserComponent;
+    return EditSettingComponent;
 }());
-EditUserComponent = __decorate([
+EditSettingComponent = __decorate([
     core_1.Component({
         moduleId: module.id,
         templateUrl: '/app/templates/edit-user.html',
@@ -69,6 +69,6 @@ EditUserComponent = __decorate([
         router_1.ActivatedRoute,
         index_1.AlertService,
         index_1.DevelopmentService])
-], EditUserComponent);
-exports.EditUserComponent = EditUserComponent;
+], EditSettingComponent);
+exports.EditSettingComponent = EditSettingComponent;
 //# sourceMappingURL=edit-setting.component.js.map

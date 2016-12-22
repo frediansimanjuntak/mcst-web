@@ -30,7 +30,7 @@ var EditUserComponent = (function () {
             .subscribe(function (data) {
             setTimeout(function () {
                 _this.data = data.find(function (data) { return data._id === _this.developmentID; });
-                _this.unit = _this.data.properties;
+                _this.unit = _this.data.properties.filter(function (data) { return data.landlord === ''; });
                 console.log(_this.unit);
             }, 1000);
         });
