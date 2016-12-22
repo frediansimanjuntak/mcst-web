@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, Params, ActivatedRoute } from '@angular/router';
 import { AlertService, UserService, DevelopmentService } from '../../services/index';
-import { User } from '../../models/index';
+import { User, Development } from '../../models/index';
 import { EqualValidator } from './equal-validator.directive';
 import 'rxjs/add/operator/switchMap';
 import '../../rxjs-operators';
@@ -15,9 +15,10 @@ export class EditUserComponent {
     user: User;
     model: any = {};
     id: string;
-    developmentID = "585a07d7870e2713c857b802";
+    developmentID = "585b36585d3cc41224fe518a";
     data: any;
-    unit: any;
+    units: any;
+    development: Development;
     // developmentID: string;
  
     constructor(private router: Router,
@@ -28,16 +29,14 @@ export class EditUserComponent {
 
 
 
-    ngOnInit(): void {   
-        this.developmentService.getAll()
-            .subscribe((data)=> {
-                setTimeout(()=> {
-                    this.data = data.find(data => data._id === this.developmentID );
-                    this.unit = this.data.properties.filter(data => data.landlord === '' ); 
-                    console.log(this.unit);
-                    
-                }, 1000);
+    ngOnInit(): void {  
+        let self = this; 
+        this.developmentService.getById("585b36585d3cc41224fe518a")
+            .subscribe(development => {
+                self.development = development; 
+                console.log(development);
             });
+            
         this.route.params.subscribe(params => {
             this.id = params['id'];
         });

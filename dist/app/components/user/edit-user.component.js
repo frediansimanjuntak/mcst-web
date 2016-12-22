@@ -22,17 +22,15 @@ var EditUserComponent = (function () {
         this.alertService = alertService;
         this.developmentService = developmentService;
         this.model = {};
-        this.developmentID = "585a07d7870e2713c857b802";
+        this.developmentID = "585b36585d3cc41224fe518a";
     }
     EditUserComponent.prototype.ngOnInit = function () {
         var _this = this;
-        this.developmentService.getAll()
-            .subscribe(function (data) {
-            setTimeout(function () {
-                _this.data = data.find(function (data) { return data._id === _this.developmentID; });
-                _this.unit = _this.data.properties.filter(function (data) { return data.landlord === ''; });
-                console.log(_this.unit);
-            }, 1000);
+        var self = this;
+        this.developmentService.getById("585b36585d3cc41224fe518a")
+            .subscribe(function (development) {
+            self.development = development;
+            console.log(development);
         });
         this.route.params.subscribe(function (params) {
             _this.id = params['id'];
