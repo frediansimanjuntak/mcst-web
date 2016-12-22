@@ -33,7 +33,7 @@ export class EditUserComponent {
             .subscribe((data)=> {
                 setTimeout(()=> {
                     this.data = data.find(data => data._id === this.developmentID );
-                    this.unit = this.data.properties;
+                    this.unit = this.data.properties.filter(data => data.landlord === '' ); 
                     console.log(this.unit);
                     
                 }, 1000);
@@ -62,14 +62,15 @@ export class EditUserComponent {
     }
 
     updateUser(){
-		    this.userService.update(this.user)
-		    .then(response => {
-                  this.alertService.success('Update User successful', true);
-                  this.router.navigate(['/user']);
-	            },
-              error=> { 
-            	    this.alertService.error(error);
-              }
+		this.userService.update(this.user)
+		.then(
+            response => {
+                this.alertService.success('Update User successful', true);
+                this.router.navigate(['/user']);
+	        },
+            error=> { 
+            	this.alertService.error(error);
+            }
         );
 	}
 
