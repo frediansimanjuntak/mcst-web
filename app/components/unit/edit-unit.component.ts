@@ -1,9 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router'; 
+import { Router, Params, ActivatedRoute } from '@angular/router'; 
 import { Development } from '../../models/index';
 import { UnitService, AlertService } from '../../services/index';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import '../../rxjs-operators';
+import 'rxjs/add/operator/switchMap';
 // import { User } from '../../models/index';
 // import { Unit } from '../../models/unit.interface';
 
@@ -14,15 +15,20 @@ import '../../rxjs-operators';
 })
 
 export class EditUnitComponent implements OnInit { 
-	development: Development;
-    developments: Development[] = [];
-    // model: any;
-    public myForm: FormGroup;
+	unit: any;
+    units: Development[] = [];
+    
+    model: any = {};
+    id: string;
+    public developmentId;
+    myForm: FormGroup;
     public submitted: boolean; // keep track on whether form is submitted
     public events: any[] = []; // use later to display form changes
  
 
-    constructor(private router: Router,
+    constructor(
+        private router: Router,
+        private route: ActivatedRoute,
     	private unitservice: UnitService,
     	private alertService: AlertService,
         private formbuilder: FormBuilder ) {
@@ -31,22 +37,53 @@ export class EditUnitComponent implements OnInit {
     }
 
     ngOnInit() {
-        this.myForm = this.formbuilder.group({
-            address: this.formbuilder.group({
-                street: [''],
-                postcode: [''],
-                unit_no : [''],
-                unit_no_2 : [''],
-                block_no : [''],
-                street_name : [''],
-                postal_code : [''],
-                country : [''],
-                full_address : ['']
-            }),
-            status: [''],
-            created_by: ['583e4e9dd97c97149884fef5']
+        this.developmentId = '585b36585d3cc41224fe518a';
+        this.route.params.subscribe(params => {
+            this.id = params['id'];
         });
-        this.subcribeToFormChanges();
+        if( this.id != null) {
+            this.unitservice
+                .getById(this.id, this.developmentId)
+                .subscribe((unit)=> {
+                setTimeout(()=> {
+                    
+                     this.unit = unit;
+                    // this.dataCircular  = this.data.newsletter.filter(data => data.type === 'circular' ); 
+                   
+                     this.myForm = this.formbuilder.group({
+                        address: this.formbuilder.group({
+                        unit_no : [this.unit.properties[0].address.unit_no],
+                        unit_no_2 : [this.unit.properties[0].address.unit_no_2],
+                        block_no : [this.unit.properties[0].address.block_no],
+                        street_name : [this.unit.properties[0].address.street_name],
+                        postal_code : [this.unit.properties[0].address.postal_code],
+                        country : [this.unit.properties[0].address.country],
+                        full_address : [this.unit.properties[0].address.ful_address]
+                    }),
+                    _id: [this.unit.properties[0]._id],
+                    status: [this.unit.properties[0].status],
+                    created_by: ['583e4e9dd97c97149884fef5']
+                })
+                }, 1000);
+            });
+                // console.log(this.unit);
+               
+        }else{
+            this.myForm = this.formbuilder.group({
+                address: this.formbuilder.group({
+                    unit_no : [''],
+                    unit_no_2 : [''],
+                    block_no : [''],
+                    street_name : [''],
+                    postal_code : [''],
+                    country : [''],
+                    full_address : ['']
+                }),
+                status: [''],
+                created_by: ['583e4e9dd97c97149884fef5']
+            });
+        }
+        // this.subcribeToFormChanges();
     }
     
 
@@ -75,11 +112,24 @@ export class EditUnitComponent implements OnInit {
         .subscribe(
             data => {
                 this.alertService.success('Create Unit successful', true);
-                this.router.navigate(['/newsletter']);
+                this.router.navigate(['/unit']);
             },
             error => {
                 console.log(error);
                 alert(`The Unit could not be save, server Error.`);
+            }
+        );
+    }
+
+     updateUnit(model: Development){
+        this.unitservice.update(model)
+        .then(
+            response => {
+                this.alertService.success('Update development successful', true);
+                this.router.navigate(['/development']);
+            },
+            error => { 
+                this.alertService.error(error);
             }
         );
     }
