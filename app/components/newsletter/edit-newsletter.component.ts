@@ -3,13 +3,11 @@ import { Router } from '@angular/router';
 import { Development } from '../../models/index';
 import { NewsletterService, AlertService } from '../../services/index';
 import { FormBuilder, FormGroup } from '@angular/forms';
+import { FileUploader } from 'ng2-file-upload';
 import '../../rxjs-operators';
 import { User } from '../../models/index';
 
-const TYPES: any[] = [
-  { value: 'agm', name: 'AGM' },
-  { value: 'circular', name: 'Circular' },
-];
+
 
 @Component({
   moduleId: module.id,
@@ -23,8 +21,12 @@ export class EditNewsletterComponent  {
     model: any = {};
     myForm: FormGroup;
     user: User;
-    types = TYPES;
-
+    public uploader:FileUploader = new FileUploader({url:'http://localhost:3001/upload'});
+    types = [
+        { value: 'agm', name: 'AGM' },
+        { value: 'circular', name: 'Circular' }
+    ];
+    selectedType = 'agm';
     constructor(private router: Router,
     	private newsletterService: NewsletterService,
     	private alertService: AlertService,
@@ -61,8 +63,16 @@ export class EditNewsletterComponent  {
             this.model.released_by = null;
             this.model.released_at = null;
         }
+        this.model.type = this.selectedType;
         this.model.created_by = '583e4e9dd97c97149884fef5';
+        this.model.attachment = {
+              "name": this.uploader.queue[0]._file.name,
+              "type": this.uploader.queue[0]._file.type,
+              "information": "Optional",
+              "created_by" : "583e4e9dd97c97149884fef5",
+        }
         // this.model.pinned.rank = 0;
+        console.log(this.uploader.queue[0]);
         console.log(this.model);
         this.newsletterService.create(this.model)
         .subscribe(

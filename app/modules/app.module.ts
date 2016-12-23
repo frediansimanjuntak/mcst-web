@@ -2,6 +2,8 @@ import { NgModule, Directive }          from '@angular/core';
 import { CommonModule }                 from '@angular/common';
 import { BrowserModule }                from '@angular/platform-browser';
 import { FormsModule }  				        from '@angular/forms';
+import { FileSelectDirective }          from 'ng2-file-upload';
+import { FileDropDirective }            from 'ng2-file-upload';
 import { ReactiveFormsModule }			    from '@angular/forms';
 import { HttpModule }                   from '@angular/http';
 import { Ng2TableModule }               from 'ng2-table/ng2-table';
@@ -91,6 +93,7 @@ import {
     DevelopmentComponent,
     EditDevelopmentComponent,
     FacilityComponent,
+    FileSelectDirective,
     HeaderComponent,
     IncidentComponent,
     LoginComponent,

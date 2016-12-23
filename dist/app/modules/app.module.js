@@ -12,6 +12,7 @@ var core_1 = require("@angular/core");
 var common_1 = require("@angular/common");
 var platform_browser_1 = require("@angular/platform-browser");
 var forms_1 = require("@angular/forms");
+var ng2_file_upload_1 = require("ng2-file-upload");
 var forms_2 = require("@angular/forms");
 var http_1 = require("@angular/http");
 var ng2_table_1 = require("ng2-table/ng2-table");
@@ -55,6 +56,7 @@ AppModule = __decorate([
             index_1.DevelopmentComponent,
             index_1.EditDevelopmentComponent,
             index_1.FacilityComponent,
+            ng2_file_upload_1.FileSelectDirective,
             index_1.HeaderComponent,
             index_1.IncidentComponent,
             index_1.LoginComponent,
