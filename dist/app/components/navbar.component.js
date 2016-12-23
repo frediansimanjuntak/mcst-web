@@ -21,7 +21,7 @@ NavbarComponent = __decorate([
         moduleId: module.id,
         selector: 'navbar',
         templateUrl: '/app/templates/navbar.html',
-        styleUrls: ['../../app/templates/styles/navbar.css']
+        styleUrls: ['/app/templates/styles/navbar.css']
     }),
     __metadata("design:paramtypes", [])
 ], NavbarComponent);

@@ -5,7 +5,7 @@ import { MENUS } from '../models/menu';
 	moduleId: module.id,
 	selector: 'navbar',
 	templateUrl: '/app/templates/navbar.html',
-	styleUrls: [ '../../app/templates/styles/navbar.css' ]
+	styleUrls: [ '/app/templates/styles/navbar.css' ]
 })
 
 export class NavbarComponent {
