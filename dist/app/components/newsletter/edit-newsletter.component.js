@@ -12,11 +12,8 @@ var core_1 = require("@angular/core");
 var router_1 = require("@angular/router");
 var index_1 = require("../../services/index");
 var forms_1 = require("@angular/forms");
+var ng2_file_upload_1 = require("ng2-file-upload");
 require("../../rxjs-operators");
-var TYPES = [
-    { value: 'agm', name: 'AGM' },
-    { value: 'circular', name: 'Circular' },
-];
 var EditNewsletterComponent = (function () {
     function EditNewsletterComponent(router, newsletterService, alertService, formbuilder) {
         this.router = router;
@@ -25,7 +22,12 @@ var EditNewsletterComponent = (function () {
         this.formbuilder = formbuilder;
         this.developments = [];
         this.model = {};
-        this.types = TYPES;
+        this.uploader = new ng2_file_upload_1.FileUploader({ url: 'http://localhost:3001/upload' });
+        this.types = [
+            { value: 'agm', name: 'AGM' },
+            { value: 'circular', name: 'Circular' }
+        ];
+        this.selectedType = 'agm';
         // this.user = JSON.parse(localStorage.getItem('user'));
     }
     EditNewsletterComponent.prototype.ngOnInit = function () {
@@ -53,8 +55,16 @@ var EditNewsletterComponent = (function () {
             this.model.released_by = null;
             this.model.released_at = null;
         }
+        this.model.type = this.selectedType;
         this.model.created_by = '583e4e9dd97c97149884fef5';
+        this.model.attachment = {
+            "name": this.uploader.queue[0]._file.name,
+            "type": "image/jpeg",
+            "information": "Optional",
+            "created_by": "w0974u0a4443feaakfef24t",
+        };
         // this.model.pinned.rank = 0;
+        console.log(this.uploader.queue[0]);
         console.log(this.model);
         this.newsletterService.create(this.model)
             .subscribe(function (data) {

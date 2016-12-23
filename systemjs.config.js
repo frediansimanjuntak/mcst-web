@@ -30,6 +30,7 @@
       'ng2-table': 'npm:ng2-table',
       'angular2-datatable': 'npm:angular2-datatable',
       'ng2-bootstrap': 'npm:ng2-bootstrap',
+      'ng2-file-upload' : 'npm:ng2-file-upload',
       'lodash': 'npm:lodash',
       'jquery' : 'npm:jquery/dist/',
       'primeng': 'npm:primeng' 
@@ -44,6 +45,10 @@
       'jquery': { main: 'jquery.js', defaultExtension: 'js' },
       'angular2-datatable': {
         main: 'index.js',
+        defaultExtension: 'js'
+      },
+      'ng2-file-upload' : { 
+        main: './ng2-file-upload.js',
         defaultExtension: 'js'
       },
       'lodash': { main: 'lodash.js', defaultExtension: 'js' },
