@@ -23,7 +23,8 @@ export class UserService {
     }
 
     create(body:any): Promise<User> {
-        return this.http.post(url +  'api/users', body, {headers: this.headers})
+        console.log(body);
+        return this.http.post(url +  'api/users', JSON.stringify(body), {headers: this.headers})
             .toPromise()
             .then(res => res.json().data)
             .catch(this.handleError);

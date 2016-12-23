@@ -29,7 +29,8 @@ var UserService = (function () {
             .catch(function (error) { return Rx_1.Observable.throw(error.json().error || 'Server error'); });
     };
     UserService.prototype.create = function (body) {
-        return this.http.post(global_1.url + 'api/users', body, { headers: this.headers })
+        console.log(body);
+        return this.http.post(global_1.url + 'api/users', JSON.stringify(body), { headers: this.headers })
             .toPromise()
             .then(function (res) { return res.json().data; })
             .catch(this.handleError);

@@ -9,41 +9,104 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 var core_1 = require("@angular/core");
+var forms_1 = require("@angular/forms");
 var router_1 = require("@angular/router");
 var index_1 = require("../../services/index");
+var index_2 = require("../../models/index");
 require("rxjs/add/operator/switchMap");
 require("../../rxjs-operators");
 var EditUserComponent = (function () {
     // developmentID: string;
-    function EditUserComponent(router, userService, route, alertService, developmentService) {
+    function EditUserComponent(router, userService, route, alertService, formbuilder, unitService) {
         this.router = router;
         this.userService = userService;
         this.route = route;
         this.alertService = alertService;
-        this.developmentService = developmentService;
+        this.formbuilder = formbuilder;
+        this.unitService = unitService;
         this.model = {};
         this.developmentID = "585b36585d3cc41224fe518a";
     }
     EditUserComponent.prototype.ngOnInit = function () {
         var _this = this;
+        this.myForm = this.formbuilder.group({
+            username: ['', forms_1.Validators.required],
+            email: ['', forms_1.Validators.required],
+            password: ['', forms_1.Validators.required],
+            confirmpassword: ['', forms_1.Validators.required],
+            phone: ['', forms_1.Validators.required],
+            role: ['', forms_1.Validators.required],
+            default_property: this.formbuilder.group({
+                development: [''],
+                property: [''],
+                role: ['']
+            }),
+            rented_property: this.formbuilder.group({
+                development: [''],
+                property: ['']
+            }),
+            owned_property: this.formbuilder.array([]),
+            authorized_property: this.formbuilder.array([]),
+            active: ['', forms_1.Validators.required],
+            default_development: [''],
+            authorized_development: ['']
+        });
         var self = this;
-        this.developmentService.getById("585b36585d3cc41224fe518a")
-            .subscribe(function (development) {
-            self.development = development;
-            console.log(development);
+        this.unitService.getById("585b36585d3cc41224fe518a")
+            .subscribe(function (unit) {
+            self.unit = unit;
+            console.log(unit);
         });
         this.route.params.subscribe(function (params) {
             _this.id = params['id'];
         });
         if (this.id != null) {
-            this.userService.getById(this.id).subscribe(function (user) { return _this.user = user; });
+            this.userService.getById(this.id).subscribe(function (user) { _this.user = user; console.log(user); });
         }
         ;
         // this.developmentService.getAll().subscribe(developments => { this.developments = developments; });
     };
-    EditUserComponent.prototype.createUser = function () {
+    EditUserComponent.prototype.initOwned = function () {
+        return this.formbuilder.group({
+            development: ['585b36585d3cc41224fe518a'],
+            property: ['']
+        });
+    };
+    EditUserComponent.prototype.initAuthorized = function () {
+        return this.formbuilder.group({
+            development: ['585b36585d3cc41224fe518a'],
+            property: ['']
+        });
+    };
+    EditUserComponent.prototype.addOwned = function () {
+        var control = this.myForm.controls['owned_property'];
+        var ownedCtrl = this.initOwned();
+        control.push(ownedCtrl);
+        /* subscribe to individual address value changes */
+        // addrCtrl.valueChanges.subscribe(x => {
+        //   console.log(x);
+        // })
+    };
+    EditUserComponent.prototype.removeOwned = function (i) {
+        var control = this.myForm.controls['owned_property'];
+        control.removeAt(i);
+    };
+    EditUserComponent.prototype.addAuthorized = function () {
+        var control = this.myForm.controls['authorized_property'];
+        var authCtrl = this.initAuthorized();
+        control.push(authCtrl);
+        /* subscribe to individual address value changes */
+        // addrCtrl.valueChanges.subscribe(x => {
+        //   console.log(x);
+        // })
+    };
+    EditUserComponent.prototype.removeAuthorized = function (i) {
+        var control = this.myForm.controls['authorized_property'];
+        control.removeAt(i);
+    };
+    EditUserComponent.prototype.createUser = function (model) {
         var _this = this;
-        this.userService.create(this.model)
+        this.userService.create(model)
             .then(function (data) {
             _this.alertService.success('Create user successful', true);
             _this.router.navigate(['/user']);
@@ -77,6 +140,10 @@ var EditUserComponent = (function () {
     };
     return EditUserComponent;
 }());
+__decorate([
+    core_1.Input('group'),
+    __metadata("design:type", index_2.User)
+], EditUserComponent.prototype, "user", void 0);
 EditUserComponent = __decorate([
     core_1.Component({
         moduleId: module.id,
@@ -86,7 +153,8 @@ EditUserComponent = __decorate([
         index_1.UserService,
         router_1.ActivatedRoute,
         index_1.AlertService,
-        index_1.DevelopmentService])
+        forms_1.FormBuilder,
+        index_1.UnitService])
 ], EditUserComponent);
 exports.EditUserComponent = EditUserComponent;
 //# sourceMappingURL=edit-user.component.js.map
