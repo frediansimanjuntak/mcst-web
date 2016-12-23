@@ -66,6 +66,7 @@ var NewsletterComponent = (function () {
     };
     NewsletterComponent.prototype.releaseNewsletter = function (newsletter) {
         var _this = this;
+        console.log(newsletter);
         this.newsletterservice.release(newsletter._id, this.developmentId)
             .then(function (response) {
             if (response) {

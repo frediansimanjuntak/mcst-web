@@ -11,13 +11,13 @@ export class UnitService {
     constructor(private http: Http) {}
 
     getAll(){
-        return this.http.get('https://192.168.10.38:3000/api/developments')
+        return this.http.get( url + 'api/developments')
             .map((res:Response) => res.json())
             .catch((error:any) => Observable.throw(error.json().error || 'Server error'));
     }
 
     getById(id:string, idDev:string){
-        return this.http.get('https://192.168.10.38:3000/api/properties/' + idDev + '/' + id)
+        return this.http.get( url + 'api/properties/' + idDev + '/' + id)
             .map((res:Response) => res.json())
             .catch((error:any) => Observable.throw(error.json().error || 'Server error'));
     }
@@ -26,7 +26,7 @@ export class UnitService {
         let options = new RequestOptions({
             headers: new Headers({ 'Content-Type': 'application/json;charset=UTF-8' }) 
         });
-        return this.http.post('https://192.168.10.38:3000/api/properties/' + '585b36585d3cc41224fe518a',body, options)
+        return this.http.post( url + 'api/properties/' + '585b36585d3cc41224fe518a',body, options)
             .map((res:Response) => res.json())
             .catch((error:any) => Observable.throw(error.json().error || 'Server error'));
     }
@@ -48,7 +48,7 @@ export class UnitService {
     }
 
     delete(id: string, id_dev: string): Promise<void> {
-    return this.http.delete('https://192.168.10.38:3000/api/properties/' + id_dev + '/' + id, {headers: this.headers})
+    return this.http.delete( url + 'api/properties/' + id_dev + '/' + id, {headers: this.headers})
       .toPromise()
       .then(() => null)
       .catch(this.handleError);

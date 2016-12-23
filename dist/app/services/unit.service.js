@@ -19,12 +19,12 @@ var UnitService = (function () {
         this.headers = new http_1.Headers({ 'Content-Type': 'application/json' });
     }
     UnitService.prototype.getAll = function () {
-        return this.http.get('https://192.168.10.38:3000/api/developments')
+        return this.http.get(global_1.url + 'api/developments')
             .map(function (res) { return res.json(); })
             .catch(function (error) { return Rx_1.Observable.throw(error.json().error || 'Server error'); });
     };
     UnitService.prototype.getById = function (id, idDev) {
-        return this.http.get('https://192.168.10.38:3000/api/properties/' + idDev + '/' + id)
+        return this.http.get(global_1.url + 'api/properties/' + idDev + '/' + id)
             .map(function (res) { return res.json(); })
             .catch(function (error) { return Rx_1.Observable.throw(error.json().error || 'Server error'); });
     };
@@ -32,7 +32,7 @@ var UnitService = (function () {
         var options = new http_1.RequestOptions({
             headers: new http_1.Headers({ 'Content-Type': 'application/json;charset=UTF-8' })
         });
-        return this.http.post('https://192.168.10.38:3000/api/properties/' + '585b36585d3cc41224fe518a', body, options)
+        return this.http.post(global_1.url + 'api/properties/' + '585b36585d3cc41224fe518a', body, options)
             .map(function (res) { return res.json(); })
             .catch(function (error) { return Rx_1.Observable.throw(error.json().error || 'Server error'); });
     };
@@ -51,7 +51,7 @@ var UnitService = (function () {
             .catch(this.handleError);
     };
     UnitService.prototype.delete = function (id, id_dev) {
-        return this.http.delete('https://192.168.10.38:3000/api/properties/' + id_dev + '/' + id, { headers: this.headers })
+        return this.http.delete(global_1.url + 'api/properties/' + id_dev + '/' + id, { headers: this.headers })
             .toPromise()
             .then(function () { return null; })
             .catch(this.handleError);

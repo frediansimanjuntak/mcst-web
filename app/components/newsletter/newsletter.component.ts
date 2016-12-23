@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import { Development } from '../../models/index';
 import { NewsletterService, AlertService} from '../../services/index';
 import '../../rxjs-operators';
+import { FileUploader } from 'ng2-file-upload';
 import {NG_TABLE_DIRECTIVES}    from 'ng2-table/ng2-table'
 import { Observable} from 'rxjs/Observable';
 
@@ -72,6 +73,7 @@ export class NewsletterComponent implements OnInit {
     }
 
     releaseNewsletter(newsletter: any){
+      console.log(newsletter);
       this.newsletterservice.release(newsletter._id, this.developmentId) 
           .then(
             response => {

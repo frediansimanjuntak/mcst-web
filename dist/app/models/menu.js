@@ -6,7 +6,7 @@ exports.MENUS = [
     },
     {
         name: 'Operations',
-        link: '',
+        link: '#',
         sub: [
             { name: 'Guest, Visitor & Contractors', link: '' },
             { name: 'Incident Reports', link: '' },
