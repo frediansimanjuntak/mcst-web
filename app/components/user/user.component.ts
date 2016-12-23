@@ -39,7 +39,7 @@ export class UserComponent implements OnInit {
 
    
     private loadAllUsers() {
-        this.userService.getAll().subscribe(users => { this.users = users; console.log(users) });
+        this.userService.getAll().subscribe(users => { this.users = users });
     }
 
     add(){

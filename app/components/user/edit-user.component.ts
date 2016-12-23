@@ -1,6 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit ,Input } from '@angular/core';
+import { FormBuilder, FormControl, FormGroup, FormArray, Validators } from '@angular/forms';
 import { Router, Params, ActivatedRoute } from '@angular/router';
-import { AlertService, UserService, DevelopmentService } from '../../services/index';
+import { AlertService, UserService, UnitService } from '../../services/index';
 import { User, Development } from '../../models/index';
 import { EqualValidator } from './equal-validator.directive';
 import 'rxjs/add/operator/switchMap';
@@ -11,44 +12,118 @@ import '../../rxjs-operators';
     templateUrl: '/app/templates/edit-user.html',
 })
  
-export class EditUserComponent {
+export class EditUserComponent implements OnInit {
+     @Input('group')
     user: User;
     model: any = {};
     id: string;
     developmentID = "585b36585d3cc41224fe518a";
-    data: any;
-    units: any;
-    development: Development;
+    unit: Development;
+    myForm: FormGroup;
     // developmentID: string;
  
     constructor(private router: Router,
         private userService: UserService,
         private route: ActivatedRoute,
         private alertService: AlertService,
-        private developmentService: DevelopmentService) {}
+        private formbuilder: FormBuilder,
+        private unitService: UnitService) {}
 
 
 
-    ngOnInit(): void {  
-        let self = this; 
-        this.developmentService.getById("585b36585d3cc41224fe518a")
-            .subscribe(development => {
-                self.development = development; 
-                console.log(development);
-            });
+    ngOnInit(): void {
+        this.myForm = this.formbuilder.group({
+            username : ['', Validators.required],
+            email : ['', Validators.required],
+            password : ['', Validators.required],
+            confirmpassword : ['', Validators.required],
+            phone : ['', Validators.required],
+            role : ['', Validators.required],
+            default_property: this.formbuilder.group({
+                development: [''],
+                property: [''],
+                role : ['']
+            }),
+            rented_property: this.formbuilder.group({
+                development: [''],
+                property: ['']
+            }),
+            owned_property: this.formbuilder.array([]),
+            authorized_property: this.formbuilder.array([]),
+            active: ['', Validators.required],
+            default_development: [''],
+            authorized_development: ['']
             
+        });
+        let self = this; 
+        this.unitService.getById("585b36585d3cc41224fe518a")
+            .subscribe(unit => {
+                self.unit = unit;
+                console.log(unit);
+            });
         this.route.params.subscribe(params => {
             this.id = params['id'];
         });
         
         if( this.id != null) {
-            this.userService.getById(this.id).subscribe(user => this.user = user);
+            this.userService.getById(this.id).subscribe(user => {this.user = user;console.log(user);});
         };
+        
+            
+        
         // this.developmentService.getAll().subscribe(developments => { this.developments = developments; });
     }
 
-    createUser() {
-        this.userService.create(this.model)
+    initOwned() {
+        return this.formbuilder.group({
+            development: ['585b36585d3cc41224fe518a'],
+            property: ['']
+        });
+    }
+
+    initAuthorized() {
+        return this.formbuilder.group({
+            development: ['585b36585d3cc41224fe518a'],
+            property: ['']
+        });
+    }
+
+    addOwned() {
+        const control = <FormArray>this.myForm.controls['owned_property'];
+        const ownedCtrl = this.initOwned();
+        
+        control.push(ownedCtrl);
+        
+        /* subscribe to individual address value changes */
+        // addrCtrl.valueChanges.subscribe(x => {
+        //   console.log(x);
+        // })
+    }
+
+    removeOwned(i: number) {
+        const control = <FormArray>this.myForm.controls['owned_property'];
+        control.removeAt(i);
+    }
+
+    addAuthorized() {
+        const control = <FormArray>this.myForm.controls['authorized_property'];
+        const authCtrl = this.initAuthorized();
+        
+        control.push(authCtrl);
+        
+        /* subscribe to individual address value changes */
+        // addrCtrl.valueChanges.subscribe(x => {
+        //   console.log(x);
+        // })
+    }
+
+    removeAuthorized(i: number) {
+        const control = <FormArray>this.myForm.controls['authorized_property'];
+        control.removeAt(i);
+    }
+
+    createUser(model:User) {
+        this.userService.create(model)
         .then(
             data => {
                 this.alertService.success('Create user successful', true);

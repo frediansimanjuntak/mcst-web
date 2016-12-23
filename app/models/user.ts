@@ -8,8 +8,8 @@ export class User {
   phone : string;
   role : string;
   default_property : {
-    development : Development,
-    property : string,
+    development : Development;
+    property : string;
     role : string
   };
   details : {

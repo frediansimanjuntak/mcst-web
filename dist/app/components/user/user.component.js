@@ -38,7 +38,7 @@ var UserComponent = (function () {
     };
     UserComponent.prototype.loadAllUsers = function () {
         var _this = this;
-        this.userService.getAll().subscribe(function (users) { _this.users = users; console.log(users); });
+        this.userService.getAll().subscribe(function (users) { _this.users = users; });
     };
     UserComponent.prototype.add = function () {
         this.router.navigate(['/user/add', this.developmentID]);
