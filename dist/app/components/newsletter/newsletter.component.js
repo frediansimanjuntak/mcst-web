@@ -105,7 +105,7 @@ NewsletterComponent = __decorate([
         moduleId: module.id,
         selector: 'newsletter',
         templateUrl: '/app/templates/newsletter.html',
-        styleUrls: ['../../templates/styles/newsletter.css']
+        styleUrls: ['/app/templates/styles/newsletter.css']
     }),
     __metadata("design:paramtypes", [index_1.NewsletterService, index_1.AlertService])
 ], NewsletterComponent);

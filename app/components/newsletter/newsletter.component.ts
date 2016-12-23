@@ -10,7 +10,7 @@ import { Observable} from 'rxjs/Observable';
   moduleId: module.id,
   selector: 'newsletter',
   templateUrl: '/app/templates/newsletter.html',
-  styleUrls: [ '../../templates/styles/newsletter.css' ]
+  styleUrls: [ '/app/templates/styles/newsletter.css' ]
 })
 
 export class NewsletterComponent implements OnInit { 

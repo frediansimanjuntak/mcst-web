@@ -17,7 +17,7 @@ export class UnitService {
     }
 
     getById(id:string){
-        return this.http.get('https://192.168.10.73:3333/api/newsletters' + id)
+        return this.http.get('https://192.168.10.38:3000/api/properties/' + id)
             .map((res:Response) => res.json())
             .catch((error:any) => Observable.throw(error.json().error || 'Server error'));
     }

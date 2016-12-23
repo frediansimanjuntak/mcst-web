@@ -23,7 +23,7 @@ var UnitService = (function () {
             .catch(function (error) { return Rx_1.Observable.throw(error.json().error || 'Server error'); });
     };
     UnitService.prototype.getById = function (id) {
-        return this.http.get('https://192.168.10.73:3333/api/newsletters' + id)
+        return this.http.get('https://192.168.10.38:3000/api/properties/' + id)
             .map(function (res) { return res.json(); })
             .catch(function (error) { return Rx_1.Observable.throw(error.json().error || 'Server error'); });
     };
