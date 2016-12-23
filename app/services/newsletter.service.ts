@@ -26,7 +26,7 @@ export class NewsletterService {
         let options = new RequestOptions({
             headers: new Headers({ 'Content-Type': 'application/json;charset=UTF-8' }) 
         });
-        return this.http.post('https://192.168.10.38:3000/api/newsletters/' + '585a07d7870e2713c857b802',body, options)
+        return this.http.post('https://192.168.10.38:3000/api/newsletters/' + '585b36585d3cc41224fe518a',body, options)
             .map((res:Response) => res.json())
             .catch((error:any) => Observable.throw(error.json().error || 'Server error'));
     }
@@ -40,11 +40,18 @@ export class NewsletterService {
             .catch((error:any) => Observable.throw(error.json().error || 'Server error'));
     }
 
+    release(id: string, id_dev: string): Promise<void> {
+        return this.http.post('https://192.168.10.38:3000/api/newsletters/' + id_dev + '/release/' + id, {headers: this.headers})
+          .toPromise()
+          .then(() => null)
+          .catch(this.handleError);
+    }
+
     delete(id: string, id_dev: string): Promise<void> {
-    return this.http.delete('https://192.168.10.38:3000/api/newsletters/' + id_dev + '/' + id, {headers: this.headers})
-      .toPromise()
-      .then(() => null)
-      .catch(this.handleError);
+        return this.http.delete('https://192.168.10.38:3000/api/newsletters/' + id_dev + '/' + id, {headers: this.headers})
+          .toPromise()
+          .then(() => null)
+          .catch(this.handleError);
     }
 
     private handleError(error: any): Promise<any> {

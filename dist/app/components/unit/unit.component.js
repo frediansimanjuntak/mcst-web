@@ -9,10 +9,12 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 var core_1 = require("@angular/core");
+var router_1 = require("@angular/router");
 var index_1 = require("../../services/index");
 require("../../rxjs-operators");
 var UnitComponent = (function () {
-    function UnitComponent(unitservice, alertService) {
+    function UnitComponent(router, unitservice, alertService) {
+        this.router = router;
         this.unitservice = unitservice;
         this.alertService = alertService;
         this.units = [];
@@ -24,81 +26,59 @@ var UnitComponent = (function () {
         this.sortByWordLength = function (a) {
             return a.city.length;
         };
-        this.tabs = [
-            { title: 'Dynamic Title 1', content: '' },
-            { title: 'Dynamic Title 2', content: 'Dynamic content 2', disabled: true },
-            { title: 'Dynamic Title 3', content: 'Dynamic content 3', removable: true },
-            { title: 'Dynamic Title 4', content: 'Dynamic content 4', customClass: 'customClass' }
-        ];
     }
     UnitComponent.prototype.ngOnInit = function () {
-        this.developmentId = '585a07d7870e2713c857b802';
+        this.developmentId = '585b36585d3cc41224fe518a';
         this.loadAllUnits();
         this.cols = [
-            { field: 'date', header: 'Date' },
-            { field: 'title', header: 'Title' },
-            { field: 'uploaded_on', header: 'Uploaded on' },
-            { field: 'uploaded_by', header: 'Uploaded by' },
-            { field: 'attachment', header: 'Attachment' },
+            { field: 'unit_no', header: 'Unit No' },
+            { field: 'unit_no_2', header: 'Unit No 2' },
+            { field: 'block_no', header: 'Block No' },
+            { field: 'street_name', header: 'Street Name' },
+            { field: 'postal_code', header: 'Postal Code' },
+            { field: 'country', header: 'Country' },
+            { field: 'full_address', header: 'Full Address' },
+            { field: 'status', header: 'Status' }
         ];
     };
     UnitComponent.prototype.toInt = function (num) {
         return +num;
     };
-    UnitComponent.prototype.deleteUnit = function (newsletter) {
+    UnitComponent.prototype.deleteUnit = function (unit) {
         var _this = this;
-        this.unitservice.delete(newsletter._id, this.developmentId)
+        console.log(unit);
+        this.unitservice.delete(unit._id, this.developmentId)
             .then(function (response) {
             if (response) {
                 console.log(response);
                 // console.log(response.error());
-                alert("The Newsletter could not be deleted, server Error.");
+                alert("The Unit could not be deleted, server Error.");
             }
             else {
-                _this.alertService.success('Create user successful', true);
-                alert("Delete Newsletter successful");
+                _this.alertService.success('Delete Unit successful', true);
+                alert("Delete Unit successful");
                 _this.ngOnInit();
             }
         }, function (error) {
             console.log(error);
-            alert("The Newsletter could not be deleted, server Error.");
+            alert("The Unit could not be deleted, server Error.");
         });
     };
-    // releaseNewsletter(newsletter: any){
-    //   newsletter.released = 'true';
-    //   console.log(newsletter);
-    //   this.newsletterservice.update(newsletter)
-    //   .subscribe(
-    //     response => {
-    //       if(response.error) { 
-    //                 this.alertService.error(response.error);
-    //             } else {
-    //                 // EmitterService.get(this.userList).emit(response.users);
-    //                    this.alertService.success('Release newsletter successful', true);
-    //                    this.ngOnInit()
-    //             }
-    //           },
-    //           error=> { 
-    //             this.alertService.error(error);
-    //           }
-    //       );
-    // }
     UnitComponent.prototype.loadAllUnits = function () {
         var _this = this;
         this.unitservice.getAll()
             .subscribe(function (data) {
             setTimeout(function () {
                 _this.data = data.find(function (data) { return data._id === _this.developmentId; });
-                // this.dataAgm       = this.data.newsletter.filter(data => data.type === 'agm' ); 
+                _this.dataUnit = _this.data.properties;
                 // this.dataCircular  = this.data.newsletter.filter(data => data.type === 'circular' ); 
-                console.log(_this.dataAgm);
+                console.log(_this.dataUnit);
             }, 1000);
         });
     };
-    UnitComponent.prototype.setActiveTab = function (index) {
-        this.tabs[index].active = true;
+    UnitComponent.prototype.editUnit = function (unit) {
+        this.router.navigate(['/unit/edit', unit._id]);
     };
-    ;
     return UnitComponent;
 }());
 UnitComponent = __decorate([
@@ -107,7 +87,7 @@ UnitComponent = __decorate([
         selector: 'unit',
         templateUrl: '/app/templates/unit.html',
     }),
-    __metadata("design:paramtypes", [index_1.UnitService, index_1.AlertService])
+    __metadata("design:paramtypes", [router_1.Router, index_1.UnitService, index_1.AlertService])
 ], UnitComponent);
 exports.UnitComponent = UnitComponent;
 //# sourceMappingURL=unit.component.js.map

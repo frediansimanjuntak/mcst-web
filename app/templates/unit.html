@@ -1,3 +1,36 @@
 <div class="container">
-	<a class="btn btn-default pull-right" [routerLink]="['/unit/add']">Add Unit</a>
+	<div class="main">
+		<div class="title">
+			Unit
+		</div>
+		Home > Unit
+		<div class="row">
+			<div class="col-md-4 pull-right">
+					  		<a class="btn btn-default pull-right" [routerLink]="['/unit/add']">
+					  		<i class="fa fa-plus" aria-hidden="true"></i>&nbsp;Add Unit</a>
+					  		
+			</div>
+		</div>
+
+				<p-dataTable [value]="dataUnit" [rows]="10" [paginator]="true">
+					<p-column filterPlaceholder="Search Unit No" header="Unit No">
+				        <template let-dataUnit="rowData" pTemplate="body">
+				            <span>#{{dataUnit.address.unit_no}}-{{dataUnit.address.unit_no_2}}</span>
+				        </template>
+				    </p-column>
+				    <p-column field="address.street_name" header="Street Name" sortable="true" [filter]="true" filterPlaceholder="Search Street Name"></p-column>
+				    <p-column field="address.postal_code" header="Postal Code" sortable="true" [filter]="true" filterPlaceholder="Search Postal Code"></p-column>
+				    <p-column field="address.country" header="Country" sortable="true" [filter]="true" filterPlaceholder="Search Country"></p-column>
+				    <p-column field="address.full_address" header="Full Address" sortable="true" [filter]="true" filterPlaceholder="Search Full address"></p-column>
+				    <p-column field="status" header="Status" sortable="true" [filter]="true" filterPlaceholder="Search Status"></p-column>
+				   	<p-column styleClass="col-button">
+				    	<template let-dataUnit="rowData" pTemplate="body">
+				    	<button type="button" (click)="editUnit(dataUnit)">Edit</button>
+				        <button class="pull-right" type="button" (click)="deleteUnit(dataUnit)">Delete</button>
+				    	</template>
+				    </p-column>
+				</p-dataTable>
+				
+	</div>
 </div>
+

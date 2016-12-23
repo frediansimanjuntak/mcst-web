@@ -31,7 +31,7 @@ export class NewsletterComponent implements OnInit {
     }
 
     ngOnInit(): void {
-        this.developmentId = '585a07d7870e2713c857b802';
+        this.developmentId = '585b36585d3cc41224fe518a';
         this.loadAllNewsletters();
          this.cols = [
             {field: 'date', header: 'Date'},
@@ -72,23 +72,24 @@ export class NewsletterComponent implements OnInit {
     }
 
     releaseNewsletter(newsletter: any){
-      newsletter.released = 'true';
-      console.log(newsletter);
-      this.newsletterservice.update(newsletter)
-      .subscribe(
-        response => {
-          if(response.error) { 
-                    this.alertService.error(response.error);
-                } else {
-                    // EmitterService.get(this.userList).emit(response.users);
-                       this.alertService.success('Release newsletter successful', true);
-                       this.ngOnInit()
-                }
-              },
-              error=> { 
-                this.alertService.error(error);
+      this.newsletterservice.release(newsletter._id, this.developmentId) 
+          .then(
+            response => {
+              if(response) { 
+                console.log(response);
+                // console.log(response.error());
+                alert(`The Newsletter could not be release, server Error.`);
+              } else {
+                this.alertService.success('Release Newsletter successful', true);
+                alert(`Release Newsletter successful`);
+                this.ngOnInit()
               }
-          );
+            },
+            error=> { 
+              console.log(error);
+                alert(`The Newsletter could not be release, server Error.`);
+            }
+        );
     }
 
     private loadAllNewsletters() {

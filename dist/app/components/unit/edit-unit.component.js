@@ -13,35 +13,67 @@ var router_1 = require("@angular/router");
 var index_1 = require("../../services/index");
 var forms_1 = require("@angular/forms");
 require("../../rxjs-operators");
+require("rxjs/add/operator/switchMap");
 // import { User } from '../../models/index';
 // import { Unit } from '../../models/unit.interface';
 var EditUnitComponent = (function () {
-    function EditUnitComponent(router, unitservice, alertService, formbuilder) {
+    function EditUnitComponent(router, route, unitservice, alertService, formbuilder) {
         this.router = router;
+        this.route = route;
         this.unitservice = unitservice;
         this.alertService = alertService;
         this.formbuilder = formbuilder;
-        this.developments = [];
+        this.units = [];
+        this.model = {};
         this.events = []; // use later to display form changes
         // this.user = JSON.parse(localStorage.getItem('user'));
     }
     EditUnitComponent.prototype.ngOnInit = function () {
-        this.myForm = this.formbuilder.group({
-            address: this.formbuilder.group({
-                street: [''],
-                postcode: [''],
-                unit_no: [''],
-                unit_no_2: [''],
-                block_no: [''],
-                street_name: [''],
-                postal_code: [''],
-                country: [''],
-                full_address: ['']
-            }),
-            status: [''],
-            created_by: ['583e4e9dd97c97149884fef5']
+        var _this = this;
+        this.developmentId = '585b36585d3cc41224fe518a';
+        this.route.params.subscribe(function (params) {
+            _this.id = params['id'];
         });
-        this.subcribeToFormChanges();
+        if (this.id != null) {
+            this.unitservice
+                .getById(this.id, this.developmentId)
+                .subscribe(function (unit) {
+                setTimeout(function () {
+                    _this.unit = unit;
+                    // this.dataCircular  = this.data.newsletter.filter(data => data.type === 'circular' ); 
+                    _this.myForm = _this.formbuilder.group({
+                        address: _this.formbuilder.group({
+                            unit_no: [_this.unit.properties[0].address.unit_no],
+                            unit_no_2: [_this.unit.properties[0].address.unit_no_2],
+                            block_no: [_this.unit.properties[0].address.block_no],
+                            street_name: [_this.unit.properties[0].address.street_name],
+                            postal_code: [_this.unit.properties[0].address.postal_code],
+                            country: [_this.unit.properties[0].address.country],
+                            full_address: [_this.unit.properties[0].address.ful_address]
+                        }),
+                        _id: [_this.unit.properties[0]._id],
+                        status: [_this.unit.properties[0].status],
+                        created_by: ['583e4e9dd97c97149884fef5']
+                    });
+                }, 1000);
+            });
+        }
+        else {
+            this.myForm = this.formbuilder.group({
+                address: this.formbuilder.group({
+                    unit_no: [''],
+                    unit_no_2: [''],
+                    block_no: [''],
+                    street_name: [''],
+                    postal_code: [''],
+                    country: [''],
+                    full_address: ['']
+                }),
+                status: [''],
+                created_by: ['583e4e9dd97c97149884fef5']
+            });
+        }
+        // this.subcribeToFormChanges();
     };
     EditUnitComponent.prototype.subcribeToFormChanges = function () {
         var _this = this;
@@ -65,10 +97,20 @@ var EditUnitComponent = (function () {
         this.unitservice.create(model)
             .subscribe(function (data) {
             _this.alertService.success('Create Unit successful', true);
-            _this.router.navigate(['/newsletter']);
+            _this.router.navigate(['/unit']);
         }, function (error) {
             console.log(error);
             alert("The Unit could not be save, server Error.");
+        });
+    };
+    EditUnitComponent.prototype.updateUnit = function (model) {
+        var _this = this;
+        this.unitservice.update(model)
+            .then(function (response) {
+            _this.alertService.success('Update development successful', true);
+            _this.router.navigate(['/development']);
+        }, function (error) {
+            _this.alertService.error(error);
         });
     };
     return EditUnitComponent;
@@ -80,6 +122,7 @@ EditUnitComponent = __decorate([
         templateUrl: '/app/templates/edit-unit.html'
     }),
     __metadata("design:paramtypes", [router_1.Router,
+        router_1.ActivatedRoute,
         index_1.UnitService,
         index_1.AlertService,
         forms_1.FormBuilder])

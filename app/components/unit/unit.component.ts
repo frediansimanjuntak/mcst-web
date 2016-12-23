@@ -19,26 +19,28 @@ export class UnitComponent implements OnInit {
     model: any = {};
     cols: any[];
     public developmentId;
-    public data;
-    public dataAgm;
-    public dataCircular;    
+    public data; 
+    public dataUnit; 
     public filterQuery = "";
     public rowsOnPage = 10;
     public sortBy = "email";
     public sortOrder = "asc";
 
-    constructor(private unitservice: UnitService, private alertService: AlertService) {
+    constructor(private router: Router,private unitservice: UnitService, private alertService: AlertService) {
     }
 
     ngOnInit(): void {
-        this.developmentId = '585a07d7870e2713c857b802';
+        this.developmentId = '585b36585d3cc41224fe518a';
         this.loadAllUnits();
          this.cols = [
-            {field: 'date', header: 'Date'},
-            {field: 'title', header: 'Title'},
-            {field: 'uploaded_on', header: 'Uploaded on'},
-            {field: 'uploaded_by', header: 'Uploaded by'},
-            {field: 'attachment', header: 'Attachment'},
+            {field: 'unit_no', header: 'Unit No'},
+            {field: 'unit_no_2', header: 'Unit No 2'},
+            {field: 'block_no', header: 'Block No'},
+            {field: 'street_name', header: 'Street Name'},
+            {field: 'postal_code', header: 'Postal Code'},
+            {field: 'country', header: 'Country'},
+            {field: 'full_address', header: 'Full Address'},
+            {field: 'status', header: 'Status'}
         ];
     }
 
@@ -50,70 +52,44 @@ export class UnitComponent implements OnInit {
         return a.city.length;
     }
 
-    deleteUnit(newsletter: any) {
-        this.unitservice.delete(newsletter._id, this.developmentId) 
+    deleteUnit(unit: any) {
+      console.log(unit);
+        this.unitservice.delete(unit._id, this.developmentId) 
           .then(
             response => {
               if(response) { 
-                console.log(response);
+                console.log(response);  
                 // console.log(response.error());
-                alert(`The Newsletter could not be deleted, server Error.`);
+                alert(`The Unit could not be deleted, server Error.`);
               } else {
-                this.alertService.success('Create user successful', true);
-                alert(`Delete Newsletter successful`);
+                this.alertService.success('Delete Unit successful', true);
+                alert(`Delete Unit successful`);
                 this.ngOnInit()
               }
             },
             error=> { 
               console.log(error);
-                alert(`The Newsletter could not be deleted, server Error.`);
+                alert(`The Unit could not be deleted, server Error.`);
             }
         );
     }
-
-    // releaseNewsletter(newsletter: any){
-    //   newsletter.released = 'true';
-    //   console.log(newsletter);
-    //   this.newsletterservice.update(newsletter)
-    //   .subscribe(
-    //     response => {
-    //       if(response.error) { 
-    //                 this.alertService.error(response.error);
-    //             } else {
-    //                 // EmitterService.get(this.userList).emit(response.users);
-    //                    this.alertService.success('Release newsletter successful', true);
-    //                    this.ngOnInit()
-    //             }
-    //           },
-    //           error=> { 
-    //             this.alertService.error(error);
-    //           }
-    //       );
-    // }
 
     private loadAllUnits() {
         this.unitservice.getAll()
             .subscribe((data)=> {
                 setTimeout(()=> {
-
-                    this.data          = data.find(data => data._id === this.developmentId );
-                    // this.dataAgm       = this.data.newsletter.filter(data => data.type === 'agm' ); 
+                    this.data          =   data.find(data => data._id === this.developmentId );
+                    this.dataUnit       = this.data.properties 
                     // this.dataCircular  = this.data.newsletter.filter(data => data.type === 'circular' ); 
-                    console.log(this.dataAgm);
+                    console.log(this.dataUnit);
                 }, 1000);
             });
     }
 
-    public tabs:Array<any> = [
-        {title: 'Dynamic Title 1', content: ''},
-        {title: 'Dynamic Title 2', content: 'Dynamic content 2', disabled: true},
-        {title: 'Dynamic Title 3', content: 'Dynamic content 3', removable: true},
-        {title: 'Dynamic Title 4', content: 'Dynamic content 4', customClass: 'customClass'}
-    ];
-     
-    public setActiveTab(index:number):void {
-        this.tabs[index].active = true;
-    };
+
+    editUnit(unit: any){
+        this.router.navigate(['/unit/edit', unit._id]);
+    }
 
   //   //Table----------------------
   //   public rows:Array<any> = [];

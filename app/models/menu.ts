@@ -61,6 +61,7 @@ export const MENUS: any[] = [
   		{ name : 'AGM & Circular', link: '/newsletter' },
   		{ name : 'Contact Directory', link: '' },
       { name : 'User', link: '/user' },
+      { name : 'Unit', link: '/unit' },
   	]
   },
 ];
