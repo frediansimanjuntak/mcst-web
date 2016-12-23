@@ -52,7 +52,7 @@ var EditUserComponent = (function () {
             authorized_development: ['']
         });
         var self = this;
-        this.unitService.getById("585b36585d3cc41224fe518a")
+        this.unitService.getAll("585b36585d3cc41224fe518a")
             .subscribe(function (unit) {
             self.unit = unit;
             console.log(unit);

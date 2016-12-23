@@ -11,7 +11,6 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 var core_1 = require("@angular/core");
 var http_1 = require("@angular/http");
 var Rx_1 = require("rxjs/Rx");
-var global_1 = require("../global");
 require("rxjs/add/operator/toPromise");
 var UnitService = (function () {
     function UnitService(http) {
@@ -23,8 +22,8 @@ var UnitService = (function () {
             .map(function (res) { return res.json(); })
             .catch(function (error) { return Rx_1.Observable.throw(error.json().error || 'Server error'); });
     };
-    UnitService.prototype.getById = function (id, idDev) {
-        return this.http.get('https://192.168.10.38:3000/api/properties/' + idDev + '/' + id)
+    UnitService.prototype.getById = function (id) {
+        return this.http.get('https://192.168.10.38:3000/api/properties/' + id)
             .map(function (res) { return res.json(); })
             .catch(function (error) { return Rx_1.Observable.throw(error.json().error || 'Server error'); });
     };
@@ -36,22 +35,16 @@ var UnitService = (function () {
             .map(function (res) { return res.json(); })
             .catch(function (error) { return Rx_1.Observable.throw(error.json().error || 'Server error'); });
     };
-    // update(body:any){
-    //     let options = new RequestOptions({
-    //         headers: new Headers({ 'Content-Type': 'application/json;charset=UTF-8' }) 
-    //     });
-    //     return this.http.put('https://192.168.10.73:3333/api/newsletters' + body._id,body, options)
-    //         .map((res:Response) => res.json())
-    //         .catch((error:any) => Observable.throw(error.json().error || 'Server error'));
-    // }
     UnitService.prototype.update = function (body) {
-        return this.http.post(global_1.url + 'api/properties/update/' + body._id, body, { headers: this.headers })
-            .toPromise()
-            .then(function (res) { return res.json().data; })
-            .catch(this.handleError);
+        var options = new http_1.RequestOptions({
+            headers: new http_1.Headers({ 'Content-Type': 'application/json;charset=UTF-8' })
+        });
+        return this.http.put('https://192.168.10.73:3333/api/newsletters' + body._id, body, options)
+            .map(function (res) { return res.json(); })
+            .catch(function (error) { return Rx_1.Observable.throw(error.json().error || 'Server error'); });
     };
     UnitService.prototype.delete = function (id, id_dev) {
-        return this.http.delete('https://192.168.10.38:3000/api/properties/' + id_dev + '/' + id, { headers: this.headers })
+        return this.http.delete('https://192.168.10.38:3000/api/newsletters/' + id_dev + '/' + id, { headers: this.headers })
             .toPromise()
             .then(function () { return null; })
             .catch(this.handleError);

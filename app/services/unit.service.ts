@@ -16,8 +16,8 @@ export class UnitService {
             .catch((error:any) => Observable.throw(error.json().error || 'Server error'));
     }
 
-    getById(id:string, idDev:string){
-        return this.http.get('https://192.168.10.38:3000/api/properties/' + idDev + '/' + id)
+    getById(id:string){
+        return this.http.get('https://192.168.10.38:3000/api/properties/' + id)
             .map((res:Response) => res.json())
             .catch((error:any) => Observable.throw(error.json().error || 'Server error'));
     }
@@ -31,24 +31,17 @@ export class UnitService {
             .catch((error:any) => Observable.throw(error.json().error || 'Server error'));
     }
 
-    // update(body:any){
-    //     let options = new RequestOptions({
-    //         headers: new Headers({ 'Content-Type': 'application/json;charset=UTF-8' }) 
-    //     });
-    //     return this.http.put('https://192.168.10.73:3333/api/newsletters' + body._id,body, options)
-    //         .map((res:Response) => res.json())
-    //         .catch((error:any) => Observable.throw(error.json().error || 'Server error'));
-    // }
-
-    update(body:any): Promise<Development> {
-        return this.http.post(url + 'api/properties/update/' + body._id,body, {headers: this.headers})
-            .toPromise()
-            .then(res => res.json().data)
-            .catch(this.handleError);
+    update(body:any){
+        let options = new RequestOptions({
+            headers: new Headers({ 'Content-Type': 'application/json;charset=UTF-8' }) 
+        });
+        return this.http.put('https://192.168.10.73:3333/api/newsletters' + body._id,body, options)
+            .map((res:Response) => res.json())
+            .catch((error:any) => Observable.throw(error.json().error || 'Server error'));
     }
 
     delete(id: string, id_dev: string): Promise<void> {
-    return this.http.delete('https://192.168.10.38:3000/api/properties/' + id_dev + '/' + id, {headers: this.headers})
+    return this.http.delete('https://192.168.10.38:3000/api/newsletters/' + id_dev + '/' + id, {headers: this.headers})
       .toPromise()
       .then(() => null)
       .catch(this.handleError);

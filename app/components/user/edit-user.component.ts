@@ -56,7 +56,7 @@ export class EditUserComponent implements OnInit {
             
         });
         let self = this; 
-        this.unitService.getById("585b36585d3cc41224fe518a")
+        this.unitService.getAll("585b36585d3cc41224fe518a")
             .subscribe(unit => {
                 self.unit = unit;
                 console.log(unit);
