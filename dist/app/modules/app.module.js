@@ -63,6 +63,7 @@ AppModule = __decorate([
             ng2_file_upload_1.FileSelectDirective,
             index_1.HeaderComponent,
             index_1.IncidentComponent,
+            index_1.EditIncidentComponent,
             index_1.LoginComponent,
             index_1.NavbarComponent,
             index_1.NewsletterComponent,

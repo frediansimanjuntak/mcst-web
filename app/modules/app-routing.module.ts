@@ -14,6 +14,7 @@ import {
   FacilityComponent,
   HeaderComponent,
   IncidentComponent,
+  EditIncidentComponent,
   LoginComponent,
   RegisterComponent,
   NavbarComponent,
@@ -44,6 +45,9 @@ const routes: Routes = [
   { path: 'newsletter',   component: NewsletterComponent },
   { path: 'newsletter/add',   component: EditNewsletterComponent },
   { path: 'newsletter/edit/:id',   component: EditNewsletterComponent },
+  { path: 'incident',   component: IncidentComponent },
+  { path: 'incident/add',   component: EditIncidentComponent },
+  { path: 'incident/edit/:id',   component: EditIncidentComponent },
   { path: 'setting',     component: SettingComponent },
   { path: 'setting/edit/:id',     component: EditSettingComponent },
   
