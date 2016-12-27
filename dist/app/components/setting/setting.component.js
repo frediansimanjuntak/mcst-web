@@ -27,7 +27,7 @@ var UserComponent = (function () {
     };
     UserComponent.prototype.loadSetting = function () {
         var _this = this;
-        this.userService.getAll().subscribe(function (users) { _this.users = users; console.log(users); });
+        this.userService.getById().subscribe(function (users) { _this.users = users; console.log(users); });
     };
     UserComponent.prototype.edit = function (user) {
         this.router.navigate(['/setting/edit', user._id]);
