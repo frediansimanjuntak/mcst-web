@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, Params, ActivatedRoute } from '@angular/router'; 
 import { FormBuilder, FormControl, FormGroup, FormArray, Validators } from '@angular/forms';
-import { UserGroup, User } from '../../models/index';
+import { UserGroup, User, Users } from '../../models/index';
 import { UserGroupService, UserService, AlertService } from '../../services/index';
 import '../../rxjs-operators';
 
@@ -16,7 +16,7 @@ export class EditUserGroupComponent implements OnInit {
     model: any = {};
     id: string;
     myForm: FormGroup;
-    users: User;
+    users: any =Users;
 
     constructor(private router: Router,
     	private userGroupService: UserGroupService,
@@ -34,18 +34,18 @@ export class EditUserGroupComponent implements OnInit {
 
 
 
-        let self = this; 
-        this.userService.getAll()
-            .subscribe(user => {
-                self.users = user;
-                console.log(user);
-            });
+        // let self = this; 
+        // this.userService.getAll()
+        //     .subscribe(user => {
+        //         self.users = user;
+        //         console.log(user);
+        //     });
 
         
         
-        if( this.id != null) {
-            this.userService.getById(this.id).subscribe(user => {this.users = user;console.log(user);});
-        };
+        // if( this.id != null) {
+        //     this.userService.getById(this.id).subscribe(user => {this.users = user;console.log(user);});
+        // };
         
         this.addUser();
         
@@ -73,7 +73,7 @@ export class EditUserGroupComponent implements OnInit {
         control.removeAt(i);
     }
 
-    save(model: any) {
+    createUserGroup(model: any) {
         // call API to save
         // ...
         console.log(model);

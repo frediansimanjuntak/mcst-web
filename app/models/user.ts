@@ -52,6 +52,19 @@ export var Users: any[] = [
   default_property:{development:'',property:'',role:''},details:{first_name:'asd' , last_name:'asd',identification_type:'asd',identification_no:'asd',
   identification_proof:{front:'', back:''}},rented_property:{development:'',property:''},owned_property:{development:'',property:''},
   authorized_property:{development:'',property:''},active:'',default_development:'',authorized_development:'',user_group:'',created_at:''},
-  
+  {_id: "2", username: 'Mr. Juli', },
+  {_id: "3", username: 'Mr. jola', },
+  {_id: "4", username: 'Mrs. jolaa', },
+  {_id: "5", username: 'Mr. dasd', }, 
+  {_id: "6", username: 'Mr. Nhtrhr', },
+  {_id: "7", username: 'Mr. dasdas', },
+  {_id: "8", username: 'Mr. dadg', },
+  {_id: "9", username: 'Mr. Nice', },
+  {_id: "10", username: 'Mr. tryr', },
+  {_id: "11", username: 'Mr. hjmjh', },
+  {_id: "12", username: 'Mr. ryrt', },
+  {_id: "13", username: 'Mr. wtw', },
+  {_id: "14", username: 'Mr. rwerw', },
+  {_id: "15", username: 'Mr. nvvbnn', }
 ];
     
