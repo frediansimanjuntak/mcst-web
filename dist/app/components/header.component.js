@@ -17,10 +17,10 @@ var HeaderComponent = (function () {
 }());
 HeaderComponent = __decorate([
     core_1.Component({
-        moduleId: module.id,
+        moduleId: module.id.replace("/dist/", "/"),
         selector: 'headers',
         templateUrl: '/app/templates/header.html',
-        styleUrls: ['/app/templates/styles/header.css']
+        styleUrls: ['../templates/styles/header.css']
     }),
     __metadata("design:paramtypes", [])
 ], HeaderComponent);
