@@ -103,15 +103,18 @@ var TestComponent = (function () {
         return index;
     };
     TestComponent.prototype.Save = function () {
-        this.model.attachment = {
-            "name": this.uploader.queue[0]._file.name,
-            "type": this.uploader.queue[0]._file.type,
-            "information": "Optional",
-            "created_by": "583e4e9dd97c97149884fef5",
-        };
-        // this.model.pinned.rank = 0;
-        console.log(this.uploader.queue[0]);
-        console.log(this.model);
+        var a = this.uploader.queue.length;
+        for (var i = 0; i <= a; ++i) {
+            this.model.attachment = [{
+                    "name": this.uploader.queue[i].file.name,
+                    "type": this.uploader.queue[i].file.type,
+                    "information": "Optional",
+                    "created_by": "583e4e9dd97c97149884fef5",
+                }];
+            // this.model.pinned.rank = 0;
+            console.log(this.uploader.queue);
+            console.log(this.model);
+        }
     };
     return TestComponent;
 }());
