@@ -121,18 +121,18 @@ export class EditUnitComponent implements OnInit {
         );
     }
 
-     updateUnit(model: Development){
-        this.unitservice.update(model)
-        .then(
-            response => {
-                this.alertService.success('Update development successful', true);
-                this.router.navigate(['/development']);
-            },
-            error => { 
-                this.alertService.error(error);
-            }
-        );
-    }
+    //  updateUnit(model: Development){
+    //     this.unitservice.update(model)
+    //     .then(
+    //         response => {
+    //             this.alertService.success('Update development successful', true);
+    //             this.router.navigate(['/development']);
+    //         },
+    //         error => { 
+    //             this.alertService.error(error);
+    //         }
+    //     );
+    // }
 
  //    updateNewsletter(){
 	// 	this.unitservice.update(this.model)
