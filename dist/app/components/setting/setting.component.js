@@ -12,8 +12,8 @@ var core_1 = require("@angular/core");
 var router_1 = require("@angular/router");
 var index_1 = require("../../services/index");
 require("../../rxjs-operators");
-var UserComponent = (function () {
-    function UserComponent(router, userService, alertService) {
+var SettingComponent = (function () {
+    function SettingComponent(router, userService, alertService) {
         this.router = router;
         this.userService = userService;
         this.alertService = alertService;
@@ -22,24 +22,24 @@ var UserComponent = (function () {
         // this.user = JSON.parse(localStorage.getItem('user'));
         // console.log(this.user)
     }
-    UserComponent.prototype.ngOnInit = function () {
+    SettingComponent.prototype.ngOnInit = function () {
         this.loadSetting();
     };
-    UserComponent.prototype.loadSetting = function () {
+    SettingComponent.prototype.loadSetting = function () {
         var _this = this;
-        this.userService.getById().subscribe(function (users) { _this.users = users; console.log(users); });
+        this.userService.getUser("1").then(function (user) { _this.user = user; console.log(user); });
     };
-    UserComponent.prototype.edit = function (user) {
+    SettingComponent.prototype.edit = function (user) {
         this.router.navigate(['/setting/edit', user._id]);
     };
-    return UserComponent;
+    return SettingComponent;
 }());
-UserComponent = __decorate([
+SettingComponent = __decorate([
     core_1.Component({
         moduleId: module.id,
         templateUrl: '/app/templates/setting.html',
     }),
     __metadata("design:paramtypes", [router_1.Router, index_1.UserService, index_1.AlertService])
-], UserComponent);
-exports.UserComponent = UserComponent;
+], SettingComponent);
+exports.SettingComponent = SettingComponent;
 //# sourceMappingURL=setting.component.js.map

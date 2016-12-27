@@ -35,6 +35,8 @@ __export(require("./poll/poll.component"));
 __export(require("./poll/edit-poll.component"));
 __export(require("./quotation/quotation.component"));
 __export(require("./quotation/edit-quotation.component"));
+__export(require("./setting/setting.component"));
+__export(require("./setting/edit-setting.component"));
 __export(require("./user-group/user-group.component"));
 __export(require("./user-group/edit-user-group.component"));
 __export(require("./user/user.component"));

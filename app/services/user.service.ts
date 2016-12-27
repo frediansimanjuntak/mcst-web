@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Http, Headers, RequestOptions, Response } from '@angular/http';
 import { Observable } from 'rxjs/Rx';
-import { User } from '../models/index';
+import { User, Users } from '../models/index';
 import { url } from '../global';
 import 'rxjs/add/operator/toPromise';
  
@@ -9,6 +9,15 @@ import 'rxjs/add/operator/toPromise';
 export class UserService {
     private headers = new Headers({'Content-Type': 'application/json'});
     constructor(private http: Http) {}
+
+    getUsers(): Promise<User[]> {
+        return Promise.resolve(Users);
+    }
+
+    getUser(id: string): Promise<User> {
+        return this.getUsers()
+            .then(users => users.find(user => user._id === id));
+    }
 
     getAll(){
         return this.http.get(url + 'api/users')

@@ -46,4 +46,10 @@ export class User {
   user_group : UserGroup; /*one or many?*/
   created_at : string;
 }
+
+export var Users: User[] = [
+  {_id: "1", username: 'Mr. Nice', email: 'lol@lol.com' , password:'uvuvwevwevwe' , phone:'080808' , role:'user' , 
+  details{first_name:'asd' , last_name:'asd',identification_type:'asd',identification_no:'asd',identification_proof{front:'', back:''}},},
+  
+];
     
