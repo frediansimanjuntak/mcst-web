@@ -31,6 +31,8 @@ export * from './poll/poll.component';
 export * from './poll/edit-poll.component';
 export * from './quotation/quotation.component';
 export * from './quotation/edit-quotation.component';
+export * from './setting/setting.component';
+export * from './setting/edit-setting.component';
 export * from './user-group/user-group.component';
 export * from './user-group/edit-user-group.component';
 export * from './user/user.component';

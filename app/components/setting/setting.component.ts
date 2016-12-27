@@ -10,7 +10,7 @@ import { Observable} from 'rxjs/Observable';
     templateUrl: '/app/templates/setting.html',
 })
  
-export class UserComponent implements OnInit {
+export class SettingComponent implements OnInit {
     user: User;
     users: User[] = [];
     model: any = {};
@@ -25,7 +25,7 @@ export class UserComponent implements OnInit {
     }
    
     private loadSetting() {
-        this.userService.getById("jagwdy12132").subscribe(users => { this.users = users; console.log(users) });
+        this.userService.getUser("1").then(user => { this.user = user; console.log(user) });
     }
 
     edit(user: User){

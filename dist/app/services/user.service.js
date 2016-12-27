@@ -11,6 +11,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 var core_1 = require("@angular/core");
 var http_1 = require("@angular/http");
 var Rx_1 = require("rxjs/Rx");
+var index_1 = require("../models/index");
 var global_1 = require("../global");
 require("rxjs/add/operator/toPromise");
 var UserService = (function () {
@@ -18,6 +19,13 @@ var UserService = (function () {
         this.http = http;
         this.headers = new http_1.Headers({ 'Content-Type': 'application/json' });
     }
+    UserService.prototype.getUsers = function () {
+        return Promise.resolve(index_1.Users);
+    };
+    UserService.prototype.getUser = function (id) {
+        return this.getUsers()
+            .then(function (users) { return users.find(function (user) { return user._id === id; }); });
+    };
     UserService.prototype.getAll = function () {
         return this.http.get(global_1.url + 'api/users')
             .map(function (res) { return res.json(); })
