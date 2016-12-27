@@ -19,7 +19,7 @@ EditUserGroupComponent = __decorate([
     core_1.Component({
         moduleId: module.id,
         selector: 'edit-user-group',
-        template: "",
+        template: '/app/templates/edit-user-group.html',
     }),
     __metadata("design:paramtypes", [])
 ], EditUserGroupComponent);
