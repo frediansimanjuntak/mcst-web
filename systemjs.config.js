@@ -34,6 +34,7 @@
       'lodash': 'npm:lodash',
       'jquery' : 'npm:jquery/dist/',
       'primeng': 'npm:primeng',
+      'fullcalendar' : 'npm:fullcalendar/dist/', 
     },
     // packages tells the System loader how to load when no filename and/or no extension
     packages: {
@@ -53,6 +54,7 @@
       },
       'lodash': { main: 'lodash.js', defaultExtension: 'js' },
       primeng: { defaultExtension: 'js' },
+      'fullcalendar': { main: 'fullcalendar.js', defaultExtension: 'js' },
     }
   });
 })(this);
