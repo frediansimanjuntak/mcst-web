@@ -1,0 +1,138 @@
+<div class="container">
+    <div class="main">
+
+<!-- ADD USE-GROUP -->
+
+        <div *ngIf="!user-group">
+            <div class="title">
+                Add User Group
+            </div>
+            <p>Home > User Group > Add </p>
+            <form [formGroup]="myForm" class="form-horizontal col-md-6" name="form" (ngSubmit)="f.form.valid && createUserGroup(myForm.value)" #f="ngForm" novalidate>
+                <div class="form-group">
+                    <label class="control-label col-sm-2" for="description">Description :</label>
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control" name="description" formControlName="description" required placeholder="Input Description here" />
+                        <!-- <small *ngIf="!myForm.controls.username.valid" class="text-danger">
+                        Name is required
+                        </small> -->
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label col-sm-2" for="chief">Chief :</label>
+                    <div class="col-sm-10">
+                        <input type="chief" class="form-control" name="chief" formControlName="chief" placeholder="Input Chief here"/>
+                        <!-- <small *ngIf="!myForm.controls.chief.valid" class="text-danger">
+                        chief is required
+                        </small> -->
+                    </div>
+                </div>
+                <div formArrayName="users">          
+                    <div *ngFor="let user of myForm.controls.users.controls; let i=index" class="panel panel-default">
+                        <div class="panel-heading">
+                            <span>User {{i + 1}}</span>
+                            <span class="glyphicon glyphicon-remove pull-right" *ngIf="myForm.controls.users.controls.length > 1" (click)="removeUser(i)"></span>
+                        </div>
+
+                        <div class="panel-body" [formGroupName]="i">
+                           
+                            <div *ngIf="user">
+                                <div class="form-group col-xs-10">
+                                    <label>User Name :</label>
+                                    <div>
+                                        <select class="form-control" name="user" id="user" formControlName="user" placeholder="Choose User">
+                                            <option *ngFor="let user of users" [ngValue]="user._id">
+                                                 {{user.name}}
+                                            </option>
+                                        </select>
+                                    </div>  
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="margin-20">
+                    <a (click)="addOwned()" style="cursor: default">
+                        Add another User +
+                    </a>
+                </div>
+                
+                 <div formArrayName="addresses">
+                  <div *ngFor="let address of myForm.controls.addresses.controls; let i=index" class="panel panel-default">
+                    <div class="panel-heading">
+                      <span>Address {{i + 1}}</span>
+                      <span class="glyphicon glyphicon-remove pull-right" *ngIf="myForm.controls.addresses.controls.length > 1" (click)="removeAddress(i)"></span>
+                    </div>
+                    <div class="panel-body" [formGroupName]="i">
+                      <address [group]="myForm.controls.addresses.controls[i]"></address>
+                    </div>
+                  </div>
+                </div>
+
+                <div formGroupName="rented_property">
+                    Rented Property : 
+                    <div *ngIf="unit">
+                        <div class="form-group">
+                            <label class="control-label col-sm-2" for="property">Unit No :</label>
+                            <div class="col-sm-10">
+                                <select class="form-control" name="property" id="property" formControlName="property" placeholder="Choose property">
+                                    <option *ngFor="let unit of unit.properties" [ngValue]="unit._id">
+                                        #{{unit.address.unit_no}}-{{unit.address.unit_no_2}}
+                                    </option>
+                                </select>
+                            </div>  
+                        </div>
+                    </div>
+                </div>
+                <div formArrayName="authorized_property">
+                    <div *ngFor="let authorized of myForm.controls.authorized_property.controls; let i=index" class="panel panel-default">
+                        <div class="panel-heading">
+                            <span>Authorized Property {{i + 1}}</span>
+                            <span class="glyphicon glyphicon-remove pull-right" *ngIf="myForm.controls.authorized_property.controls.length > 1" (click)="removeAuthorized(i)"></span>
+                        </div>
+                        <div class="panel-body" [formGroupName]="i">
+                            <!-- <authorized [group]="myForm.controls.authorized.controls[i]"></authorized> -->
+                            <div>   
+                                <div *ngIf="unit">
+                                    <div class="form-group">
+                                        <label class="control-label col-sm-2" for="property">Unit No :</label>
+                                        <div class="col-sm-10">
+                                            <select class="form-control" name="property" id="property" formControlName="property" placeholder="Choose property">
+                                                <option *ngFor="let unit of unit.properties" [ngValue]="unit._id">
+                                                    #{{unit.address.unit_no}}-{{unit.address.unit_no_2}}
+                                                </option>
+                                            </select>
+                                        </div>  
+                                    </div>
+                                </div>
+                            </div>    
+                        </div>    
+                    </div>
+                </div>
+                <div class="margin-20">
+                    <a (click)="addAuthorized()" style="cursor: default">
+                        Add another Authorized Property +
+                    </a>
+                </div>
+                <div class="form-group">
+                    <label class="control-label col-sm-4" for="status">Status :</label>
+                    <div class="col-sm-10">
+                        <select required class="form-control" formControlName="active" name="active" id="active" placeholder="Choose status">
+                            <option value="active" selected>Active</option>
+                            <option value="inactive">Inactive</option>
+                        </select>
+                        <!-- <small *ngIf="!myForm.controls.active.valid" class="text-danger">
+                        Status is required
+                        </small> -->
+                    </div>
+                </div>
+                <div class="form-group pull-right">
+                    <button [disabled]="loading" class="btn btn-primary">Save</button>
+                    <img *ngIf="loading" src="data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA==" />
+                    <a [routerLink]="['/user']" class="btn btn-info">Cancel</a>
+                </div>
+            </form>       
+        </div>
+    </div>
+</div>
+          
