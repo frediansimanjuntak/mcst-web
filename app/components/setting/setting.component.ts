@@ -25,7 +25,7 @@ export class UserComponent implements OnInit {
     }
    
     private loadSetting() {
-        this.userService.getById().subscribe(users => { this.users = users; console.log(users) });
+        this.userService.getById("jagwdy12132").subscribe(users => { this.users = users; console.log(users) });
     }
 
     edit(user: User){
