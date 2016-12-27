@@ -59,9 +59,9 @@ var EditNewsletterComponent = (function () {
         this.model.created_by = '583e4e9dd97c97149884fef5';
         this.model.attachment = {
             "name": this.uploader.queue[0]._file.name,
-            "type": "image/jpeg",
+            "type": this.uploader.queue[0]._file.type,
             "information": "Optional",
-            "created_by": "w0974u0a4443feaakfef24t",
+            "created_by": "583e4e9dd97c97149884fef5",
         };
         // this.model.pinned.rank = 0;
         console.log(this.uploader.queue[0]);
