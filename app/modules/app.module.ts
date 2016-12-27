@@ -11,7 +11,7 @@ import { Ng2BootstrapModule }           from 'ng2-bootstrap/ng2-bootstrap';
 import { PaginationModule }             from 'ng2-bootstrap/ng2-bootstrap';
 import { AppRoutingModule }     		    from './app-routing.module';
 import { url }                          from '../global'
-import { DataTableModule,SharedModule } from 'primeng/primeng';
+import { DataTableModule,SharedModule,ScheduleModule,DialogModule,InputMaskModule,CheckboxModule } from 'primeng/primeng';
 import { EqualValidator }               from '../components/user/equal-validator.directive';
 
 import { 
@@ -44,6 +44,7 @@ import {
   EditUnitComponent,
   UserGroupComponent,
   VisitComponent,
+  TestComponent
 } from '../components/index';
 
 import {
@@ -80,6 +81,10 @@ import {
   	PaginationModule,
   	AppRoutingModule,
     SharedModule,
+    ScheduleModule,
+    DialogModule,
+    InputMaskModule,
+    CheckboxModule,
   ],
   declarations: [ 
     EqualValidator,
@@ -113,6 +118,7 @@ import {
     UnitComponent,
     UserGroupComponent,
     VisitComponent, 
+    TestComponent
   ],
   providers: [ 
     AlertService,

@@ -45,4 +45,5 @@ __export(require("./unit/unit.component"));
 __export(require("./unit/edit-unit.component"));
 __export(require("./visit/visit.component"));
 __export(require("./visit/edit-visit.component"));
+__export(require("./test.component"));
 //# sourceMappingURL=index.js.map

@@ -42,6 +42,10 @@ AppModule = __decorate([
             ng2_bootstrap_2.PaginationModule,
             app_routing_module_1.AppRoutingModule,
             primeng_1.SharedModule,
+            primeng_1.ScheduleModule,
+            primeng_1.DialogModule,
+            primeng_1.InputMaskModule,
+            primeng_1.CheckboxModule,
         ],
         declarations: [
             equal_validator_directive_1.EqualValidator,
@@ -75,6 +79,7 @@ AppModule = __decorate([
             index_1.UnitComponent,
             index_1.UserGroupComponent,
             index_1.VisitComponent,
+            index_1.TestComponent
         ],
         providers: [
             index_2.AlertService,

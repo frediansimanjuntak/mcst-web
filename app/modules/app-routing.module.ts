@@ -30,6 +30,7 @@ import {
   EditUnitComponent,
   UserGroupComponent,
   VisitComponent,
+  TestComponent
 } from '../components/index';
 const routes: Routes = [
   { path: '', redirectTo: '/login', pathMatch: 'full' },
@@ -54,6 +55,7 @@ const routes: Routes = [
   // { path: 'development/edit/:name',   component: EditDevelopmentComponent },
   // { path: 'form',     component: HeroFormComponent },
   // { path: 'table',     component: TableDemoComponent },
+  { path: 'test',     component: TestComponent },
   
 ];
 
