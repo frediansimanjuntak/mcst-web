@@ -24,7 +24,7 @@ export class IncidentComponent implements OnInit {
     public dataResolved;
     public dataUrgent;   
 
-    constructor(private incidentService: IncidentService, private alertService: AlertService) {}  
+    constructor(private router: Router, private incidentService: IncidentService, private alertService: AlertService) {}  
 
     ngOnInit(): void {
         this.loadAllIncident();
@@ -84,4 +84,8 @@ export class IncidentComponent implements OnInit {
     public setActiveTab(index:number):void {
         this.tabs[index].active = true;
     };
+
+    edit(incident: Incident){
+        this.router.navigate(['/incident/edit', incident._id]);
+    }
 }

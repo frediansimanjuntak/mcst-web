@@ -9,10 +9,12 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 var core_1 = require("@angular/core");
+var router_1 = require("@angular/router");
 var index_1 = require("../../services/index");
 require("../../rxjs-operators");
 var IncidentComponent = (function () {
-    function IncidentComponent(incidentService, alertService) {
+    function IncidentComponent(router, incidentService, alertService) {
+        this.router = router;
         this.incidentService = incidentService;
         this.alertService = alertService;
         this.incidents = [];
@@ -73,6 +75,9 @@ var IncidentComponent = (function () {
         this.tabs[index].active = true;
     };
     ;
+    IncidentComponent.prototype.edit = function (incident) {
+        this.router.navigate(['/incident/edit', incident._id]);
+    };
     return IncidentComponent;
 }());
 IncidentComponent = __decorate([
@@ -82,7 +87,7 @@ IncidentComponent = __decorate([
         templateUrl: '/app/templates/incident.html',
         styleUrls: ['/app/templates/styles/newsletter.css']
     }),
-    __metadata("design:paramtypes", [index_1.IncidentService, index_1.AlertService])
+    __metadata("design:paramtypes", [router_1.Router, index_1.IncidentService, index_1.AlertService])
 ], IncidentComponent);
 exports.IncidentComponent = IncidentComponent;
 //# sourceMappingURL=incident.component.js.map
