@@ -11,43 +11,53 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 var core_1 = require("@angular/core");
 var http_1 = require("@angular/http");
 var Rx_1 = require("rxjs/Rx");
+var index_1 = require("../models/index");
+var global_1 = require("../global");
+require("rxjs/add/operator/toPromise");
 var IncidentService = (function () {
     function IncidentService(http) {
         this.http = http;
+        this.headers = new http_1.Headers({ 'Content-Type': 'application/json' });
     }
+    IncidentService.prototype.getIncidents = function () {
+        return Promise.resolve(index_1.Incidents);
+    };
+    IncidentService.prototype.getIncident = function (id) {
+        return this.getIncidents()
+            .then(function (users) { return users.find(function (user) { return user._id === id; }); });
+    };
     IncidentService.prototype.getAll = function () {
-        return this.http.get('https://192.168.10.73:3333/api/incidents')
+        return this.http.get(global_1.url + 'api/incidents')
             .map(function (res) { return res.json(); })
             .catch(function (error) { return Rx_1.Observable.throw(error.json().error || 'Server error'); });
     };
     IncidentService.prototype.getById = function (id) {
-        return this.http.get('https://192.168.10.73:3333/api/incidents' + id)
+        return this.http.get(global_1.url + 'api/incidents' + id)
             .map(function (res) { return res.json(); })
             .catch(function (error) { return Rx_1.Observable.throw(error.json().error || 'Server error'); });
     };
     IncidentService.prototype.create = function (body) {
-        var options = new http_1.RequestOptions({
-            headers: new http_1.Headers({ 'Content-Type': 'application/json;charset=UTF-8' })
-        });
-        return this.http.post('https://192.168.10.73:3333/api/incidents', body, options)
-            .map(function (res) { return res.json(); })
-            .catch(function (error) { return Rx_1.Observable.throw(error.json().error || 'Server error'); });
+        console.log(body);
+        return this.http.post(global_1.url + 'api/incidents', JSON.stringify(body), { headers: this.headers })
+            .toPromise()
+            .then(function (res) { return res.json().data; })
+            .catch(this.handleError);
     };
     IncidentService.prototype.update = function (body) {
-        var options = new http_1.RequestOptions({
-            headers: new http_1.Headers({ 'Content-Type': 'application/json;charset=UTF-8' })
-        });
-        return this.http.put('https://192.168.10.73:3333/api/incidents' + body._id, body, options)
-            .map(function (res) { return res.json(); })
-            .catch(function (error) { return Rx_1.Observable.throw(error.json().error || 'Server error'); });
+        return this.http.post(global_1.url + 'api/incidents/update/' + body._id, body, { headers: this.headers })
+            .toPromise()
+            .then(function (res) { return res.json().data; })
+            .catch(this.handleError);
     };
     IncidentService.prototype.delete = function (id) {
-        var options = new http_1.RequestOptions({
-            headers: new http_1.Headers({ 'Content-Type': 'application/json;charset=UTF-8' })
-        });
-        return this.http.delete('https://192.168.10.73:3333/api/incidents' + id, options)
-            .map(function (res) { return res.json(); })
-            .catch(function (error) { return Rx_1.Observable.throw(error.json().error || 'Server error'); });
+        return this.http.delete(global_1.url + 'api/incidents/' + id, { headers: this.headers })
+            .toPromise()
+            .then(function () { return null; })
+            .catch(this.handleError);
+    };
+    IncidentService.prototype.handleError = function (error) {
+        console.error('An error occurred', error); // for demo purposes only
+        return Promise.reject(error.message || error);
     };
     return IncidentService;
 }());

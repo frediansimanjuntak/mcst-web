@@ -122,19 +122,18 @@ export class TestComponent implements OnInit{
     }
 
 	Save() {
+		this.model.attachment = [];
 		let a = this.uploader.queue.length;
-		for (var i = 0; i <= a; ++i) {
-        this.model.attachment = [{
-        	"name": this.uploader.queue[i].file.name,
-            "type": this.uploader.queue[i].file.type,
-            "information": "Optional",
-            "created_by" : "583e4e9dd97c97149884fef5",
-        }]
+		for (let i = 0; i < a; i++) {
+	        this.model.attachment = [{
+	        	"name": this.uploader.queue[i].file.name,
+	            "type": this.uploader.queue[i].file.type,
+	        }]
+	        console.log(this.uploader.queue[i].file.name)
+	        console.log(this.model);
         // this.model.pinned.rank = 0;
-        console.log(this.uploader.queue);
-        console.log(this.model);
-		}
-		
+		}	
+        
     }
 }
 

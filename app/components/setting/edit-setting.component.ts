@@ -7,7 +7,7 @@ import '../../rxjs-operators';
 
 @Component({
     moduleId: module.id,
-    templateUrl: '/app/templates/edit-user.html',
+    templateUrl: '/app/templates/edit-setting.html',
 })
  
 export class EditSettingComponent {
@@ -26,12 +26,13 @@ export class EditSettingComponent {
             this.id = params['id'];
         });
         if( this.id != null) {
-            this.userService.getById(this.id).subscribe(user => this.user = user);
+            this.userService.getUser(this.id).then(user => this.user = user);
         };
         // this.developmentService.getAll().subscribe(developments => { this.developments = developments; });
     }
 
     updateSetting(){
+            console.log(this.user);
 		    this.userService.update(this.user)
 		    .then(response => {
                   this.alertService.success('Update User successful', true);
