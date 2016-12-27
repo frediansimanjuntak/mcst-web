@@ -57,6 +57,7 @@ export const MENUS: any[] = [
   		{ name : 'Contact Directory', link: '' },
       { name : 'User', link: '/user' },
       { name : 'Unit', link: '/unit' },
-  	]
+      { name : 'User Group', link: '/user_group' }
+    ]
   },
 ];

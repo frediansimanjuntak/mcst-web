@@ -43,6 +43,7 @@ import {
   UnitComponent,
   EditUnitComponent,
   UserGroupComponent,
+  EditUserGroupComponent,
   VisitComponent,
   TestComponent
 } from '../components/index';
@@ -117,6 +118,7 @@ import {
     EditUnitComponent,
     UnitComponent,
     UserGroupComponent,
+    EditUserGroupComponent,
     VisitComponent, 
     TestComponent
   ],

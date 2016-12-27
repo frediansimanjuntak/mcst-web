@@ -78,6 +78,7 @@ AppModule = __decorate([
             index_1.EditUnitComponent,
             index_1.UnitComponent,
             index_1.UserGroupComponent,
+            index_1.EditUserGroupComponent,
             index_1.VisitComponent,
             index_1.TestComponent
         ],

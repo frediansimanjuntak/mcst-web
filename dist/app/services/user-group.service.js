@@ -11,10 +11,14 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 var core_1 = require("@angular/core");
 var http_1 = require("@angular/http");
 var Rx_1 = require("rxjs/Rx");
+var index_1 = require("../models/index");
 var UserGroupService = (function () {
     function UserGroupService(http) {
         this.http = http;
     }
+    UserGroupService.prototype.getUserGroups = function () {
+        return Promise.resolve(index_1.UserGroups);
+    };
     UserGroupService.prototype.getAll = function () {
         return this.http.get('https://192.168.10.73:3333/api/user-groups')
             .map(function (res) { return res.json(); })

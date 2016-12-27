@@ -23,7 +23,7 @@ var EditUserGroupComponent = (function () {
         this.formbuilder = formbuilder;
         this.route = route;
         this.model = {};
-        this.users = index_1.Users;
+        this.users = [];
     }
     EditUserGroupComponent.prototype.ngOnInit = function () {
         this.myForm = this.formbuilder.group({
@@ -40,16 +40,22 @@ var EditUserGroupComponent = (function () {
         // if( this.id != null) {
         //     this.userService.getById(this.id).subscribe(user => {this.users = user;console.log(user);});
         // };
+        this.getUsers();
+        console.log(this.users);
         this.addUser();
         // this.developmentService.getAll().subscribe(developments => { this.developments = developments; });
+    };
+    EditUserGroupComponent.prototype.getUsers = function () {
+        var _this = this;
+        this.userService.getUsers().then(function (users) { return _this.users = users; });
     };
     EditUserGroupComponent.prototype.initUser = function () {
         return this.formbuilder.group({});
     };
     EditUserGroupComponent.prototype.addUser = function () {
         var control = this.myForm.controls['users'];
-        var addrCtrl = this.initUser();
-        control.push(addrCtrl);
+        var userCtrl = this.initUser();
+        control.push(userCtrl);
         /* subscribe to individual address value changes */
         // addrCtrl.valueChanges.subscribe(x => {
         //   console.log(x);
@@ -66,11 +72,15 @@ var EditUserGroupComponent = (function () {
     };
     return EditUserGroupComponent;
 }());
+__decorate([
+    core_1.Input('group'),
+    __metadata("design:type", index_1.UserGroup)
+], EditUserGroupComponent.prototype, "userGroup", void 0);
 EditUserGroupComponent = __decorate([
     core_1.Component({
         moduleId: module.id,
         selector: 'edit-user-group',
-        template: '/app/templates/edit-user-group.html',
+        templateUrl: '/app/templates/edit-user-group.html',
     }),
     __metadata("design:paramtypes", [router_1.Router,
         index_2.UserGroupService,

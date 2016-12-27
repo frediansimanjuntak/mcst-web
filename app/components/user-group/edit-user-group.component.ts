@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { Router, Params, ActivatedRoute } from '@angular/router'; 
 import { FormBuilder, FormControl, FormGroup, FormArray, Validators } from '@angular/forms';
 import { UserGroup, User, Users } from '../../models/index';
@@ -8,15 +8,16 @@ import '../../rxjs-operators';
 @Component({
   moduleId: module.id,
   selector: 'edit-user-group',
-  template: '/app/templates/edit-user-group.html',
+  templateUrl: '/app/templates/edit-user-group.html',
 })
 
 export class EditUserGroupComponent implements OnInit { 
+    @Input('group')
 	userGroup: UserGroup;
     model: any = {};
     id: string;
     myForm: FormGroup;
-    users: any =Users;
+    users: User[] = [];
 
     constructor(private router: Router,
     	private userGroupService: UserGroupService,
@@ -34,6 +35,7 @@ export class EditUserGroupComponent implements OnInit {
 
 
 
+
         // let self = this; 
         // this.userService.getAll()
         //     .subscribe(user => {
@@ -46,21 +48,28 @@ export class EditUserGroupComponent implements OnInit {
         // if( this.id != null) {
         //     this.userService.getById(this.id).subscribe(user => {this.users = user;console.log(user);});
         // };
-        
+        this.getUsers();
+             console.log(this.users);
         this.addUser();
         
         // this.developmentService.getAll().subscribe(developments => { this.developments = developments; });
     }
 
+    getUsers(): void {
+       this.userService.getUsers().then(users => this.users = users);
+    }
+
     initUser() {
-        return this.formbuilder.group({});
+        return this.formbuilder.group({
+
+        });
     }
 
     addUser() {
         const control = <FormArray>this.myForm.controls['users'];
-        const addrCtrl = this.initUser();
+        const userCtrl = this.initUser();
         
-        control.push(addrCtrl);
+        control.push(userCtrl);
         
         /* subscribe to individual address value changes */
         // addrCtrl.valueChanges.subscribe(x => {

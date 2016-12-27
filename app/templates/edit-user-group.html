@@ -3,7 +3,7 @@
 
 <!-- ADD USE-GROUP -->
 
-        <div *ngIf="!user-group">
+        <div *ngIf="!userGroup">
             <div class="title">
                 Add User Group
             </div>
@@ -36,13 +36,13 @@
 
                         <div class="panel-body" [formGroupName]="i">
                            
-                            <div *ngIf="user">
+                            <div *ngIf="users">
                                 <div class="form-group col-xs-10">
                                     <label>User Name :</label>
                                     <div>
                                         <select class="form-control" name="users" id="users" formControlName="users" placeholder="Choose User">
                                             <option *ngFor="let user of users" [ngValue]="user._id">
-                                                 {{user.name}}
+                                                 {{user.username}}
                                             </option>
                                         </select>
                                     </div>  

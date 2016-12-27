@@ -1,11 +1,17 @@
 import { Injectable } from '@angular/core';
 import { Http, Headers, RequestOptions, Response } from '@angular/http';
 import { Observable } from 'rxjs/Rx';
-import { UserGroup } from '../models/index';
+import { UserGroup, UserGroups } from '../models/index';
  
 @Injectable()
 export class UserGroupService {
     constructor(private http: Http) {}
+
+    getUserGroups(): Promise<UserGroup[]> {
+        return Promise.resolve(UserGroups);
+    }
+
+
 
     getAll(){
         return this.http.get('https://192.168.10.73:3333/api/user-groups')

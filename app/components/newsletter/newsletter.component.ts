@@ -34,13 +34,6 @@ export class NewsletterComponent implements OnInit {
     ngOnInit(): void {
         this.developmentId = '585b36585d3cc41224fe518a';
         this.loadAllNewsletters();
-         this.cols = [
-            {field: 'date', header: 'Date'},
-            {field: 'title', header: 'Title'},
-            {field: 'uploaded_on', header: 'Uploaded on'},
-            {field: 'uploaded_by', header: 'Uploaded by'},
-            {field: 'attachment', header: 'Attachment'},
-        ];
     }
 
     public toInt(num: string) {
