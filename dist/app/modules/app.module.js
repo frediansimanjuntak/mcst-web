@@ -73,6 +73,7 @@ AppModule = __decorate([
             index_1.QuotationComponent,
             index_1.RegisterComponent,
             index_1.SettingComponent,
+            index_1.EditSettingComponent,
             index_1.UserComponent,
             index_1.EditUserComponent,
             index_1.EditUnitComponent,

@@ -28,13 +28,14 @@ var EditSettingComponent = (function () {
             _this.id = params['id'];
         });
         if (this.id != null) {
-            this.userService.getById(this.id).subscribe(function (user) { return _this.user = user; });
+            this.userService.getUser(this.id).then(function (user) { return _this.user = user; });
         }
         ;
         // this.developmentService.getAll().subscribe(developments => { this.developments = developments; });
     };
     EditSettingComponent.prototype.updateSetting = function () {
         var _this = this;
+        console.log(this.user);
         this.userService.update(this.user)
             .then(function (response) {
             _this.alertService.success('Update User successful', true);
@@ -62,7 +63,7 @@ var EditSettingComponent = (function () {
 EditSettingComponent = __decorate([
     core_1.Component({
         moduleId: module.id,
-        templateUrl: '/app/templates/edit-user.html',
+        templateUrl: '/app/templates/edit-setting.html',
     }),
     __metadata("design:paramtypes", [router_1.Router,
         index_1.UserService,

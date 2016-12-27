@@ -23,6 +23,7 @@ var routes = [
     { path: 'newsletter/add', component: index_1.EditNewsletterComponent },
     { path: 'newsletter/edit/:id', component: index_1.EditNewsletterComponent },
     { path: 'setting', component: index_1.SettingComponent },
+    { path: 'setting/edit/:id', component: index_1.EditSettingComponent },
     // { path: 'newsletter/edit/:name',   component: EditNewsletterComponent },
     { path: 'development', component: index_1.DevelopmentComponent },
     { path: 'development/add', component: index_1.EditDevelopmentComponent },

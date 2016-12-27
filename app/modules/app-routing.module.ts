@@ -24,6 +24,7 @@ import {
   PollComponent,
   QuotationComponent,
   SettingComponent,
+  EditSettingComponent,
   UserComponent,
   EditUserComponent,
   UnitComponent,
@@ -44,6 +45,8 @@ const routes: Routes = [
   { path: 'newsletter/add',   component: EditNewsletterComponent },
   { path: 'newsletter/edit/:id',   component: EditNewsletterComponent },
   { path: 'setting',     component: SettingComponent },
+  { path: 'setting/edit/:id',     component: EditSettingComponent },
+  
   // { path: 'newsletter/edit/:name',   component: EditNewsletterComponent },
   { path: 'development',   component: DevelopmentComponent },
   { path: 'development/add',   component: EditDevelopmentComponent },
