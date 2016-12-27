@@ -1,9 +1,4 @@
-.fa-bell-o {
-    font-size: 1.8em;
-    color: white !important;
-}
-
-.fa-power-off {
+.fa-bell-o, .fa-power-off {
     font-size: 1.8em;
     color: white !important;
 }
