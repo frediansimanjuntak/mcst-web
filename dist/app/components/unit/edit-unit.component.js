@@ -103,16 +103,6 @@ var EditUnitComponent = (function () {
             alert("The Unit could not be save, server Error.");
         });
     };
-    EditUnitComponent.prototype.updateUnit = function (model) {
-        var _this = this;
-        this.unitservice.update(model)
-            .then(function (response) {
-            _this.alertService.success('Update development successful', true);
-            _this.router.navigate(['/development']);
-        }, function (error) {
-            _this.alertService.error(error);
-        });
-    };
     return EditUnitComponent;
 }());
 EditUnitComponent = __decorate([

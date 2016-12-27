@@ -18,13 +18,13 @@ var UnitService = (function () {
         this.http = http;
         this.headers = new http_1.Headers({ 'Content-Type': 'application/json' });
     }
-    UnitService.prototype.getAll = function () {
-        return this.http.get(global_1.url + 'api/developments')
+    UnitService.prototype.getAll = function (id) {
+        return this.http.get(global_1.url + 'api/properties/' + id)
             .map(function (res) { return res.json(); })
             .catch(function (error) { return Rx_1.Observable.throw(error.json().error || 'Server error'); });
     };
-    UnitService.prototype.getById = function (id) {
-        return this.http.get('https://192.168.10.38:3000/api/properties/' + id)
+    UnitService.prototype.getById = function (id, idDev) {
+        return this.http.get(global_1.url + 'api/properties/' + idDev + '/' + id)
             .map(function (res) { return res.json(); })
             .catch(function (error) { return Rx_1.Observable.throw(error.json().error || 'Server error'); });
     };
@@ -45,7 +45,7 @@ var UnitService = (function () {
             .catch(function (error) { return Rx_1.Observable.throw(error.json().error || 'Server error'); });
     };
     UnitService.prototype.delete = function (id, id_dev) {
-        return this.http.delete('https://192.168.10.38:3000/api/newsletters/' + id_dev + '/' + id, { headers: this.headers })
+        return this.http.delete(global_1.url + 'api/properties/' + id_dev + '/' + id, { headers: this.headers })
             .toPromise()
             .then(function () { return null; })
             .catch(this.handleError);
