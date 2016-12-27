@@ -33,7 +33,7 @@
       'ng2-file-upload' : 'npm:ng2-file-upload',
       'lodash': 'npm:lodash',
       'jquery' : 'npm:jquery/dist/',
-      'primeng': 'npm:primeng' 
+      'primeng': 'npm:primeng',
     },
     // packages tells the System loader how to load when no filename and/or no extension
     packages: {
