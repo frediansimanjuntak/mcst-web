@@ -16,7 +16,7 @@
 		   	<p-column field="phone" header="Phone" sortable="true" [filter]="true" filterPlaceholder="Search phone"></p-column>
 		    <p-column field="role" header="Role" sortable="true" [filter]="true" filterPlaceholder="Search role">>
 		        <template let-col let-data="rowData" pTemplate="body">
-		            <span [style.color]="user[col.field]">{{user[col.field]}}</span>
+		            <span [style.color]="data[col.field]">{{data[col.field]}}</span>
 		        </template>
 		    </p-column>
 		    <p-column styleClass="col-button" header="action">

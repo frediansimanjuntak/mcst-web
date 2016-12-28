@@ -41,7 +41,7 @@ export class User {
     }
   ];
   active : string;
-  default_development : string;
+  default_development : Development;
   authorized_development : string[];
   user_group : UserGroup; /*one or many?*/
   created_at : string;
