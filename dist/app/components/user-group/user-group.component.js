@@ -31,7 +31,6 @@ var UserGroupComponent = (function () {
         this.developmentId = '585b36585d3cc41224fe518a';
         this.loadAllUserGroup();
         this.getUsers();
-        console.log(this.usergroups.length);
         // for (var i = 0; i < this.usergroups.length ; i++) {
         // 	Things[i]
         // }
