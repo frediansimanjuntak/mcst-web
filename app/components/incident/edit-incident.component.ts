@@ -41,7 +41,7 @@ export class EditIncidentComponent implements OnInit {
             this.id = params['id'];
         });
         if( this.id != null) {
-            this.incidentService.getIncident(this.id).then(incident => {this.incident = incident; this.selectedType = incident.incident_type;});
+            this.incidentService.getIncident(this.id).then(incident => {this.incident = incident;});
         }
     }
 
@@ -67,6 +67,7 @@ export class EditIncidentComponent implements OnInit {
     }
 
     updateIncident(){
+    	console.log(this.incident);
 		this.incidentService.update(this.incident)
 		.then(
 			response => {

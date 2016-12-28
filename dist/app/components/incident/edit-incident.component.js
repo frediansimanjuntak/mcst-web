@@ -38,7 +38,7 @@ var EditIncidentComponent = (function () {
             _this.id = params['id'];
         });
         if (this.id != null) {
-            this.incidentService.getIncident(this.id).then(function (incident) { _this.incident = incident; _this.selectedType = incident.incident_type; });
+            this.incidentService.getIncident(this.id).then(function (incident) { _this.incident = incident; });
         }
     };
     EditIncidentComponent.prototype.createIncident = function () {
@@ -61,6 +61,7 @@ var EditIncidentComponent = (function () {
     };
     EditIncidentComponent.prototype.updateIncident = function () {
         var _this = this;
+        console.log(this.incident);
         this.incidentService.update(this.incident)
             .then(function (response) {
             _this.alertService.success('Update development successful', true);
