@@ -13,7 +13,7 @@ import '../../rxjs-operators';
 })
  
 export class EditUserComponent implements OnInit {
-     @Input('group')
+    @Input('group')
     user: User;
     model: any = {};
     id: string;
@@ -28,8 +28,6 @@ export class EditUserComponent implements OnInit {
         private alertService: AlertService,
         private formbuilder: FormBuilder,
         private unitService: UnitService) {}
-
-
 
     ngOnInit(): void {
         this.myForm = this.formbuilder.group({
@@ -66,7 +64,7 @@ export class EditUserComponent implements OnInit {
         });
         
         if( this.id != null) {
-            this.userService.getById(this.id).subscribe(user => {this.user = user;console.log(user);});
+            this.userService.getById(this.id).then(user => {this.user = user;console.log(user);});
         };
         
             
