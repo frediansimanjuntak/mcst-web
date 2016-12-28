@@ -23,7 +23,6 @@ var EditUnitComponent = (function () {
         this.unitservice = unitservice;
         this.alertService = alertService;
         this.formbuilder = formbuilder;
-        this.units = [];
         this.model = {};
         this.events = []; // use later to display form changes
         // this.user = JSON.parse(localStorage.getItem('user'));
@@ -36,26 +35,25 @@ var EditUnitComponent = (function () {
         });
         if (this.id != null) {
             this.unitservice
-                .getById(this.id, this.developmentId)
-                .subscribe(function (unit) {
-                setTimeout(function () {
-                    _this.unit = unit;
-                    // this.dataCircular  = this.data.newsletter.filter(data => data.type === 'circular' ); 
-                    _this.myForm = _this.formbuilder.group({
-                        address: _this.formbuilder.group({
-                            unit_no: [_this.unit.properties[0].address.unit_no],
-                            unit_no_2: [_this.unit.properties[0].address.unit_no_2],
-                            block_no: [_this.unit.properties[0].address.block_no],
-                            street_name: [_this.unit.properties[0].address.street_name],
-                            postal_code: [_this.unit.properties[0].address.postal_code],
-                            country: [_this.unit.properties[0].address.country],
-                            full_address: [_this.unit.properties[0].address.ful_address]
-                        }),
-                        _id: [_this.unit.properties[0]._id],
-                        status: [_this.unit.properties[0].status],
-                        created_by: ['583e4e9dd97c97149884fef5']
-                    });
-                }, 1000);
+                .getDevelopments()
+                .then(function (development) {
+                _this.units = development[0].properties;
+                _this.unit = _this.units.find(function (unit) { return unit._id === _this.id; });
+                console.log(_this.unit);
+                _this.myForm = _this.formbuilder.group({
+                    address: _this.formbuilder.group({
+                        unit_no: [_this.unit.address.unit_no],
+                        unit_no_2: [_this.unit.address.unit_no_2],
+                        block_no: [_this.unit.address.block_no],
+                        street_name: [_this.unit.address.street_name],
+                        postal_code: [_this.unit.address.postal_code],
+                        country: [_this.unit.address.country],
+                        full_address: [_this.unit.address.full_address]
+                    }),
+                    _id: [_this.unit._id],
+                    status: [_this.unit.status],
+                    created_by: ['583e4e9dd97c97149884fef5']
+                });
             });
         }
         else {
@@ -102,6 +100,19 @@ var EditUnitComponent = (function () {
             console.log(error);
             alert("The Unit could not be save, server Error.");
         });
+    };
+    EditUnitComponent.prototype.updateUnit = function (model) {
+        console.log(model);
+        // this.unitservice.update(model)
+        // .then(
+        //     response => {
+        //         this.alertService.success('Update development successful', true);
+        //         this.router.navigate(['/development']);
+        //     },
+        //     error => { 
+        //         this.alertService.error(error);
+        //     }
+        // );
     };
     return EditUnitComponent;
 }());

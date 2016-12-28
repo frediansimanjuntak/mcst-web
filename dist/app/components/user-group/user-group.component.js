@@ -61,7 +61,7 @@ var UserGroupComponent = (function () {
     UserGroupComponent.prototype.add = function () {
         this.router.navigate(['/user_group/add']);
     };
-    UserGroupComponent.prototype.edit = function (usergroup) {
+    UserGroupComponent.prototype.editUserGroup = function (usergroup) {
         this.router.navigate(['/user_group/edit', usergroup._id]);
     };
     return UserGroupComponent;

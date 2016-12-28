@@ -77,7 +77,7 @@ export class UserGroupComponent implements OnInit {
         this.router.navigate(['/user_group/add']);
     }
 
-    edit(usergroup: UserGroup){
+    editUserGroup(usergroup: UserGroup){
         this.router.navigate(['/user_group/edit', usergroup._id]);
     }
 }

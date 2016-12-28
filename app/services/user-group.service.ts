@@ -14,8 +14,8 @@ export class UserGroupService {
     }
 
     getUserGroup(id: string): Promise<any> {
-        return this.getUsers()
-            .then(users => users.find(user => user._id === id));
+        return this.getUserGroups()
+            .then(usergroup => usergroup.find(usergroup => usergroup._id === id));
     }
 
     getAll(){

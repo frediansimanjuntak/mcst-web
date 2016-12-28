@@ -15,7 +15,7 @@ import 'rxjs/add/operator/switchMap';
 
 export class EditUserGroupComponent implements OnInit { 
     @Input('group')
-	userGroup: UserGroup;
+	usergroup: UserGroup;
     model: any = {};
     id: string;
     myForm: FormGroup;
@@ -34,16 +34,12 @@ export class EditUserGroupComponent implements OnInit {
             chief : ['', Validators.required],
             users: this.formbuilder.array([]),
         });
-
-
-
-
-        // let self = this; 
-        // this.userService.getAll()
-        //     .subscribe(user => {
-        //         self.users = user;
-        //         console.log(user);
-        //     });
+        let self = this; 
+        this.userService.getUsers()
+            .then(users => {
+                self.users = users;
+                console.log(users);
+            });
 
         
         
@@ -59,20 +55,21 @@ export class EditUserGroupComponent implements OnInit {
             this.id = params['id'];
         });
 
-        this.getUsers();
-        console.log(this.users);
-        this.addUser();
+        // this.getUsers();
+        // this.userService.getUsers().then(users => this.users = users);
+        // console.log(this.users);
+        // this.addUser();
         
         if( this.id != null) {
-            this.userGroupService.getUserGroup(this.id).then(usergroup => {this.userGroup = usergroup;console.log(userGroup);});
+            this.userGroupService.getUserGroup(this.id).then(usergroup => {this.usergroup = usergroup;console.log(usergroup);});
         };
         
         // this.developmentService.getAll().subscribe(developments => { this.developments = developments; });
     }
 
-    getUsers(): void {
-       this.userService.getUsers().then(users => this.users = users);
-    }
+    // getUsers(): void {
+    //    this.userService.getUsers().then(users => this.users = users);
+    // }
 
     initUser() {
         return this.formbuilder.group({
@@ -113,15 +110,16 @@ export class EditUserGroupComponent implements OnInit {
     }
 
     updateUserGroup(){
-        this.userGroupService.update(this.userGroup)
-        .then(
-            response => {
-                this.alertService.success('Update Usergroup successful', true);
-                this.router.navigate(['/user']);
-            },
-            error=> { 
-                this.alertService.error(error);
-            }
-        );
+         console.log(this.usergroup);
+    //     this.userGroupService.update(this.usergroup)
+    //     .then(
+    //         response => {
+    //             this.alertService.success('Update Usergroup successful', true);
+    //             this.router.navigate(['/user']);
+    //         },
+    //         error=> { 
+    //             this.alertService.error(error);
+    //         }
+    //     );
     }
 }

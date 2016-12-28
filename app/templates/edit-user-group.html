@@ -50,11 +50,11 @@
         </div>
 <!-- ADD USER-GROUP -->
 
-        <div *ngIf="!userGroup">
+        <div *ngIf="!usergroup">
             <div class="title">
                 Add User Group
             </div>
-            <p>Home > User Group > Add </p>
+            <p>Home > User Group > Add > </p>
             <form [formGroup]="myForm" class="form-horizontal col-md-6" name="form" (ngSubmit)="f.form.valid && createUserGroup(myForm.value)" #f="ngForm" novalidate>
                 <div class="form-group">
                     <label class="control-label col-sm-2" for="description">Description :</label>
@@ -88,8 +88,8 @@
                                     <label>User Name :</label>
                                     <div>
                                         <select class="form-control" name="users" id="users" formControlName="users" placeholder="Choose User">
-                                            <option *ngFor="let user of users" [ngValue]="user._id">
-                                                 {{user.username}}
+                                            <option *ngFor="let usert of users" [ngValue]="usert._id">
+                                                 {{usert.username}}
                                             </option>
                                         </select>
                                     </div>  

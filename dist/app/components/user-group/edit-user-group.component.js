@@ -34,12 +34,12 @@ var EditUserGroupComponent = (function () {
             chief: ['', forms_1.Validators.required],
             users: this.formbuilder.array([]),
         });
-        // let self = this; 
-        // this.userService.getAll()
-        //     .subscribe(user => {
-        //         self.users = user;
-        //         console.log(user);
-        //     });
+        var self = this;
+        this.userService.getUsers()
+            .then(function (users) {
+            self.users = users;
+            console.log(users);
+        });
         // if( this.id != null) {
         //     this.userService.getById(this.id).subscribe(user => {this.users = user;console.log(user);});
         // };
@@ -51,19 +51,19 @@ var EditUserGroupComponent = (function () {
         this.route.params.subscribe(function (params) {
             _this.id = params['id'];
         });
-        this.getUsers();
-        console.log(this.users);
-        this.addUser();
+        // this.getUsers();
+        // this.userService.getUsers().then(users => this.users = users);
+        // console.log(this.users);
+        // this.addUser();
         if (this.id != null) {
-            this.userGroupService.getUserGroup(this.id).then(function (usergroup) { _this.userGroup = usergroup; console.log(userGroup); });
+            this.userGroupService.getUserGroup(this.id).then(function (usergroup) { _this.usergroup = usergroup; console.log(usergroup); });
         }
         ;
         // this.developmentService.getAll().subscribe(developments => { this.developments = developments; });
     };
-    EditUserGroupComponent.prototype.getUsers = function () {
-        var _this = this;
-        this.userService.getUsers().then(function (users) { return _this.users = users; });
-    };
+    // getUsers(): void {
+    //    this.userService.getUsers().then(users => this.users = users);
+    // }
     EditUserGroupComponent.prototype.initUser = function () {
         return this.formbuilder.group({});
     };
@@ -96,21 +96,24 @@ var EditUserGroupComponent = (function () {
         // );
     };
     EditUserGroupComponent.prototype.updateUserGroup = function () {
-        var _this = this;
-        this.userGroupService.update(this.userGroup)
-            .then(function (response) {
-            _this.alertService.success('Update Usergroup successful', true);
-            _this.router.navigate(['/user']);
-        }, function (error) {
-            _this.alertService.error(error);
-        });
+        console.log(this.usergroup);
+        //     this.userGroupService.update(this.usergroup)
+        //     .then(
+        //         response => {
+        //             this.alertService.success('Update Usergroup successful', true);
+        //             this.router.navigate(['/user']);
+        //         },
+        //         error=> { 
+        //             this.alertService.error(error);
+        //         }
+        //     );
     };
     return EditUserGroupComponent;
 }());
 __decorate([
     core_1.Input('group'),
     __metadata("design:type", index_1.UserGroup)
-], EditUserGroupComponent.prototype, "userGroup", void 0);
+], EditUserGroupComponent.prototype, "usergroup", void 0);
 EditUserGroupComponent = __decorate([
     core_1.Component({
         moduleId: module.id,

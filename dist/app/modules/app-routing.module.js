@@ -37,6 +37,7 @@ var routes = [
     // { path: 'development/edit/:name',   component: EditDevelopmentComponent },
     { path: 'user_group', component: index_1.UserGroupComponent },
     { path: 'user_group/add', component: index_1.EditUserGroupComponent },
+    { path: 'user_group/edit/:id', component: index_1.EditUserGroupComponent },
     // { path: 'form',     component: HeroFormComponent },
     // { path: 'table',     component: TableDemoComponent },
     { path: 'test', component: index_1.TestComponent },

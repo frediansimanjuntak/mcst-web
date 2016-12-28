@@ -64,7 +64,7 @@ export class EditUserComponent implements OnInit {
         });
         
         if( this.id != null) {
-            this.userService.getById(this.id).then(user => {this.user = user;console.log(user);});
+            this.userService.getUser(this.id).then(user => {this.user = user;console.log(user);});
         };
         
             

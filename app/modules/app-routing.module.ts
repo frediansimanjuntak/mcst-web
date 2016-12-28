@@ -63,6 +63,7 @@ const routes: Routes = [
   // { path: 'development/edit/:name',   component: EditDevelopmentComponent },
   { path: 'user_group',   component: UserGroupComponent },
   { path: 'user_group/add',   component: EditUserGroupComponent },
+  { path: 'user_group/edit/:id',   component: EditUserGroupComponent },
   // { path: 'form',     component: HeroFormComponent },
   // { path: 'table',     component: TableDemoComponent },
   { path: 'test',     component: TestComponent },
