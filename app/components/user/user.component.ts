@@ -14,7 +14,7 @@ export class UserComponent implements OnInit {
     user: User;
     users: User[] = [];
     model: any = {};
-    developmentID = "585a07d7870e2713c857b802";
+    developmentID = "1";
  
     constructor(private router: Router,private userService: UserService,private alertService: AlertService) {
         // this.user = JSON.parse(localStorage.getItem('user'));
@@ -39,7 +39,7 @@ export class UserComponent implements OnInit {
 
    
     private loadAllUsers() {
-        this.userService.getAll().subscribe(users => { this.users = users });
+        this.userService.getUsers().then(users => { this.users = users });
     }
 
     add(){

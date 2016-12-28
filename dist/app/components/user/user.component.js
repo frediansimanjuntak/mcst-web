@@ -19,7 +19,7 @@ var UserComponent = (function () {
         this.alertService = alertService;
         this.users = [];
         this.model = {};
-        this.developmentID = "585a07d7870e2713c857b802";
+        this.developmentID = "1";
         // this.user = JSON.parse(localStorage.getItem('user'));
         // console.log(this.user)
     }
@@ -38,7 +38,7 @@ var UserComponent = (function () {
     };
     UserComponent.prototype.loadAllUsers = function () {
         var _this = this;
-        this.userService.getAll().subscribe(function (users) { _this.users = users; });
+        this.userService.getUsers().then(function (users) { _this.users = users; });
     };
     UserComponent.prototype.add = function () {
         this.router.navigate(['/user/add', this.developmentID]);

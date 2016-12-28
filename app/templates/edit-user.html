@@ -52,7 +52,7 @@
                                     </select>
                                 </div>
                             </div>
-                            <div class="form-group col-xs-10">
+                            <div class="form-group col-xs-12">
                                 <label>Role :</label>
                                 <select required class="form-control" [(ngModel)]="user.default_property.role" #role="ngModel" name="role" id="role" placeholder="Choose role">
                                     <option value="landlord">Landlord</option>
@@ -70,10 +70,10 @@
                         </div>
                         <div class="panel-body">
                             <div *ngIf="unit">
-                                <div class="form-group col-xs-10">
+                                <div class="form-group col-xs-12">
                                     <label>Unit No :</label>
-                                    <select [(ngModel)]="ownprop.property" #property="ngModel" class="form-control" id={{ownprop._id}} name="property"  placeholder="Choose property">
-                                        <option [selected]="unit._id==ownprop.property" *ngFor="let unit of unit.properties" [ngValue]="unit._id">
+                                    <select class="form-control" [(ngModel)]="ownprop.property" #property="ngModel" id={{ownprop._id}} name="property"  placeholder="Choose property">
+                                        <option *ngFor="let unit of unit.properties" [ngValue]="unit._id" [selected]="unit._id==ownprop.property">
                                               #{{unit.address.unit_no}}-{{unit.address.unit_no_2}}
                                         </option>
                                     </select>
@@ -89,7 +89,7 @@
                         </div>
                         <div class="panel-body">
                             <div *ngIf="unit">
-                                <div class="form-group col-xs-10">
+                                <div class="form-group col-xs-12">
                                     <label>Unit No :</label>
                                     <select class="form-control" name="property" id="property" [(ngModel)]="user.rented_property.property" #property="ngModel" placeholder="Choose property">
                                         <option *ngFor="let unit of unit.properties" [ngValue]="unit._id">
@@ -109,7 +109,7 @@
                         </div>
                         <div class="panel-body">
                             <div *ngIf="unit">
-                                <div class="form-group col-xs-10">
+                                <div class="form-group col-xs-12">
                                     <label>Unit No :</label>
                                     <select [(ngModel)]="authprop.property" #property="ngModel" class="form-control" id={{authprop._id}} name="property"  placeholder="Choose property">
                                         <option [selected]="unit._id==authprop.property" *ngFor="let unit of unit.properties" [ngValue]="unit._id">

@@ -52,8 +52,8 @@ var EditUserComponent = (function () {
             authorized_development: ['']
         });
         var self = this;
-        this.unitService.getAll("585b36585d3cc41224fe518a")
-            .subscribe(function (unit) {
+        this.unitService.getDevelopment("1")
+            .then(function (unit) {
             self.unit = unit;
             console.log(unit);
         });
@@ -61,7 +61,7 @@ var EditUserComponent = (function () {
             _this.id = params['id'];
         });
         if (this.id != null) {
-            this.userService.getById(this.id).subscribe(function (user) { _this.user = user; console.log(user); });
+            this.userService.getUser(this.id).then(function (user) { _this.user = user; });
         }
         ;
         // this.developmentService.getAll().subscribe(developments => { this.developments = developments; });
@@ -116,6 +116,7 @@ var EditUserComponent = (function () {
     };
     EditUserComponent.prototype.updateUser = function () {
         var _this = this;
+        console.log(this.user);
         this.userService.update(this.user)
             .then(function (response) {
             _this.alertService.success('Update User successful', true);
