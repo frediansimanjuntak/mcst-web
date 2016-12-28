@@ -24,7 +24,7 @@ var routes = [
     { path: 'newsletter/edit/:id', component: index_1.EditNewsletterComponent },
     { path: 'incident', component: index_1.IncidentComponent },
     { path: 'incident/add', component: index_1.EditIncidentComponent },
-    { path: 'incident/edit/:id', component: index_1.EditIncidentComponent },
+    { path: 'incident/view/:id', component: index_1.IncidentComponent },
     { path: 'setting', component: index_1.SettingComponent },
     { path: 'setting/edit/:id', component: index_1.EditSettingComponent },
     // { path: 'newsletter/edit/:name',   component: EditNewsletterComponent },
