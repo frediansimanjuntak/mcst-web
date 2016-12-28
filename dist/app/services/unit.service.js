@@ -11,6 +11,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 var core_1 = require("@angular/core");
 var http_1 = require("@angular/http");
 var Rx_1 = require("rxjs/Rx");
+var index_1 = require("../models/index");
 var global_1 = require("../global");
 require("rxjs/add/operator/toPromise");
 var UnitService = (function () {
@@ -18,6 +19,13 @@ var UnitService = (function () {
         this.http = http;
         this.headers = new http_1.Headers({ 'Content-Type': 'application/json' });
     }
+    UnitService.prototype.getDevelopments = function () {
+        return Promise.resolve(index_1.Developments);
+    };
+    UnitService.prototype.getDevelopment = function (id) {
+        return this.getDevelopments()
+            .then(function (developments) { return developments.find(function (development) { return development._id == id; }); });
+    };
     UnitService.prototype.getAll = function (id) {
         return this.http.get(global_1.url + 'api/properties/' + id)
             .map(function (res) { return res.json(); })

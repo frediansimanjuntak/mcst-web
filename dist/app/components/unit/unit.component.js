@@ -30,16 +30,6 @@ var UnitComponent = (function () {
     UnitComponent.prototype.ngOnInit = function () {
         this.developmentId = '585b36585d3cc41224fe518a';
         this.loadAllUnits();
-        this.cols = [
-            { field: 'unit_no', header: 'Unit No' },
-            { field: 'unit_no_2', header: 'Unit No 2' },
-            { field: 'block_no', header: 'Block No' },
-            { field: 'street_name', header: 'Street Name' },
-            { field: 'postal_code', header: 'Postal Code' },
-            { field: 'country', header: 'Country' },
-            { field: 'full_address', header: 'Full Address' },
-            { field: 'status', header: 'Status' }
-        ];
     };
     UnitComponent.prototype.toInt = function (num) {
         return +num;
@@ -66,15 +56,19 @@ var UnitComponent = (function () {
     };
     UnitComponent.prototype.loadAllUnits = function () {
         var _this = this;
-        this.unitservice.getAll("585b36585d3cc41224fe518a")
-            .subscribe(function (data) {
-            setTimeout(function () {
-                _this.data = data.find(function (data) { return data._id === _this.developmentId; });
-                _this.dataUnit = _this.data.properties;
-                // this.dataCircular  = this.data.newsletter.filter(data => data.type === 'circular' ); 
-                console.log(_this.dataUnit);
-            }, 1000);
+        this.unitservice.getDevelopments().then(function (development) {
+            _this.dataUnit = development[0].properties;
         });
+        // this.unitservice.getDevelopments()
+        //     .subscribe((data)=> {
+        //         setTimeout(()=> {
+        //             this.data          =   data.find(data => data._id === "1" );
+        //             this.dataUnit       = this.data.properties; 
+        //             console.log(this.dataUnit);
+        //         }, 1000);
+        //     });
+        // .then(development => this.development.dataUnit = development.properties);
+        // console.log(this.development);
     };
     UnitComponent.prototype.editUnit = function (unit) {
         this.router.navigate(['/unit/edit', unit._id]);

@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Http, Headers, RequestOptions, Response } from '@angular/http';
 import { Observable } from 'rxjs/Rx';
-import { Development } from '../models/index';
+import { Development, Developments } from '../models/index';
 import { url } from '../global'
 import 'rxjs/add/operator/toPromise';
  
@@ -9,6 +9,16 @@ import 'rxjs/add/operator/toPromise';
 export class UnitService {
     private headers = new Headers({'Content-Type': 'application/json'});
     constructor(private http: Http) {}
+
+    getDevelopments(): Promise<Development[]> {
+        return Promise.resolve(Developments);
+    }
+
+
+    getDevelopment(id: string): Promise<Development> {
+    return this.getDevelopments()
+               .then(developments => developments.find(development => development._id == id));
+    }
 
     getAll(id:string){
         return this.http.get( url + 'api/properties/' + id)
