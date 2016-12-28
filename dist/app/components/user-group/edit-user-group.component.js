@@ -14,6 +14,7 @@ var forms_1 = require("@angular/forms");
 var index_1 = require("../../models/index");
 var index_2 = require("../../services/index");
 require("../../rxjs-operators");
+require("rxjs/add/operator/switchMap");
 var EditUserGroupComponent = (function () {
     function EditUserGroupComponent(router, userGroupService, userService, alertService, formbuilder, route) {
         this.router = router;

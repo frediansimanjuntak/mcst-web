@@ -91,7 +91,6 @@ export class NewsletterComponent implements OnInit {
         this.newsletterservice.getAll()
             .subscribe((data)=> {
                 setTimeout(()=> {
-
                     this.data          = data.find(data => data._id === this.developmentId );
                     this.dataAgm       = this.data.newsletter.filter(data => data.type === 'agm' ); 
                     this.dataCircular  = this.data.newsletter.filter(data => data.type === 'circular' ); 

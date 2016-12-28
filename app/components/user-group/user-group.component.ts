@@ -14,7 +14,7 @@ import { Observable} from 'rxjs/Observable';
 })
 
 export class UserGroupComponent implements OnInit { 
-	usergroup: UserGroup;
+	usergroup: any;
     usergroups: UserGroup[] = [];
     users: User[] = [];
 	model: any = {};
@@ -28,7 +28,9 @@ export class UserGroupComponent implements OnInit {
     public sortBy = "email";
     public sortOrder = "asc";
 
-    constructor(private userGroupService: UserGroupService,
+    constructor(
+                private router: Router,
+                private userGroupService: UserGroupService,
     			private userService: UserService, 
     			private alertService: AlertService) {
     }
@@ -52,13 +54,30 @@ export class UserGroupComponent implements OnInit {
 
   	}
 
-
-
-    public toInt(num: string) {
-        return +num;
+    deleteUserGroup(usergroup: UserGroup) {
+        console.log(usergroup);
+        this.userGroupService.delete(usergroup._id) 
+        // .subscribe(() => { this.loadAllUsers() });
+        .then(
+            response => {
+                if(response) { 
+                    alert(`The Usergroup could not be deleted, server Error.`);
+                } else {
+                    this.alertService.success('Delete usergroup successful', true);
+                    this.loadAllUserGroup()
+                }
+            },
+            error=> { 
+                alert(`The USergroup could not be deleted, server Error.`);
+            }
+        );
     }
 
-    public sortByWordLength = (a: any) => {
-        return a.city.length;
+    add(){
+        this.router.navigate(['/user_group/add']);
+    }
+
+    edit(usergroup: UserGroup){
+        this.router.navigate(['/user_group/edit', usergroup._id]);
     }
 }

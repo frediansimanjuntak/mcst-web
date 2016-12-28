@@ -4,6 +4,7 @@ import { FormBuilder, FormControl, FormGroup, FormArray, Validators } from '@ang
 import { UserGroup, User, Users } from '../../models/index';
 import { UserGroupService, UserService, AlertService } from '../../services/index';
 import '../../rxjs-operators';
+import 'rxjs/add/operator/switchMap';
 
 @Component({
   moduleId: module.id,
