@@ -13,10 +13,11 @@ var router_1 = require("@angular/router");
 var index_1 = require("../../services/index");
 require("../../rxjs-operators");
 var IncidentComponent = (function () {
-    function IncidentComponent(router, incidentService, alertService) {
+    function IncidentComponent(router, incidentService, alertService, route) {
         this.router = router;
         this.incidentService = incidentService;
         this.alertService = alertService;
+        this.route = route;
         this.incidents = [];
         this.model = {};
         this.tabs = [
@@ -29,7 +30,16 @@ var IncidentComponent = (function () {
         ];
     }
     IncidentComponent.prototype.ngOnInit = function () {
-        this.loadAllIncident();
+        var _this = this;
+        this.route.params.subscribe(function (params) {
+            _this.id = params['id'];
+        });
+        if (this.id == null) {
+            this.loadAllIncident();
+        }
+        else {
+            this.incidentService.getIncident(this.id).then(function (incident) { _this.incident = incident; });
+        }
     };
     IncidentComponent.prototype.deleteIncident = function (incident) {
         var _this = this;
@@ -75,8 +85,11 @@ var IncidentComponent = (function () {
         this.tabs[index].active = true;
     };
     ;
-    IncidentComponent.prototype.edit = function (incident) {
-        this.router.navigate(['/incident/edit', incident._id]);
+    // edit(incident: Incident){
+    //     this.router.navigate(['/incident/edit', incident._id]);
+    // }
+    IncidentComponent.prototype.view = function (incident) {
+        this.router.navigate(['/incident/view', incident._id]);
     };
     return IncidentComponent;
 }());
@@ -87,7 +100,7 @@ IncidentComponent = __decorate([
         templateUrl: '/app/templates/incident.html',
         styleUrls: ['/app/templates/styles/newsletter.css']
     }),
-    __metadata("design:paramtypes", [router_1.Router, index_1.IncidentService, index_1.AlertService])
+    __metadata("design:paramtypes", [router_1.Router, index_1.IncidentService, index_1.AlertService, router_1.ActivatedRoute])
 ], IncidentComponent);
 exports.IncidentComponent = IncidentComponent;
 //# sourceMappingURL=incident.component.js.map

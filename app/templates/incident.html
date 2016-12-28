@@ -1,156 +1,218 @@
 <div class="container">
-	<div class="main">
-		<div class="title">
-			Incident Reports
-		</div>
-		Home > Incident Reports
-		<div class="row">
-			<div class="col-md-4 pull-right">
-				<a class="btn btn-default pull-right" [routerLink]="['/incident/add']">
-				<i class="fa fa-plus" aria-hidden="true"></i>&nbsp;Create Report</a>	  		
+    <div class="main">
+        <div *ngIf="incident">
+            <div class="title">
+                {{incident.reference_no}} {{incident.title}}
+            </div>
+            <p>Home > Incident Reports > {{incident.reference_no}} {{incident.title}}</p>
+            <!-- <div class="row">
+            	<div class="col-lg-6">
+            		
+            	</div>
+            	<div class="col-lg-6">
+            		<strong>{{incident.title}}<br/></strong>
+		            <div class="col-lg-2">
+		                Reported by<br/>
+		                Type of Report<br/>
+		                Report time<br/>
+		                Status<br/>
+		                Order<br/>
+		                Message<br/>
+		            </div>
+		            <div class="col-lg-4">
+		                : {{ incident.created_by }}<br/>
+		                : {{ incident.incident_type }}<br/>
+		                : {{ incident.created_at }}<br/>
+		                : {{ incident.status }}<br/>
+		                : <br/>
+		                : {{ incident.remark }}
+		            </div>
+	            </div>
+	        </div> -->
+	        <div class="row">
+	        	<div class="col-lg-6"></div>
+	        	<div class="col-lg-6">
+	        		<div class="row">
+	        			<div class="col-md-4">Reported by </div>
+	        			<div class="col-md-8"> <p>: {{ incident.created_by }}</p></div>
+	        		</div>
+	        		<div class="row">
+	        			<div class="col-md-4">Type of Report </div>
+	        			<div class="col-md-8"><p>: {{ incident.incident_type }}</p></div>
+	        		</div>
+	        		<div class="row">
+	        			<div class="col-md-4">Report time </div>
+	        			<div class="col-md-8"><p>: {{ incident.created_at }}</p></div>
+	        		</div>
+	        		<div class="row">
+	        			<div class="col-md-4">Status </div>
+	        			<div class="col-md-8"><p>: {{ incident.status }}</p></div>
+	        		</div>
+	        		<div class="row">
+	        			<div class="col-md-4">Order </div>
+	        			<div class="col-md-8">: <!-- <p>{{ incident.orde }}</p> --></div>
+	        		</div>
+	        		<div class="row">
+	        			<div class="col-md-4">Message </div>
+	        			<div class="col-md-8"><p>: {{ incident.remark }}</p></div>
+	        		</div>
+	        	</div>
+	        </div>
+        </div>
+
+        <div *ngIf="!incident">
+            <div class="title">
+				Incident Reports
 			</div>
-		</div>
-		<div (click)="$event.preventDefault()">
-		  <tabset>
-		  <!-- ALL -->
-		    <tab heading="All">
-		    	<p-dataTable [value]="incidents" [rows]="10" [paginator]="true">
-				    <p-column field="reference_no" header="Report No." sortable="true" [filter]="true" filterPlaceholder="Search date"></p-column>
-				    <p-column field="incident_type" header="Type" sortable="true" [filter]="true" filterPlaceholder="Search Title"></p-column>
-				    <p-column field="created_by" header="Reported by" sortable="true" [filter]="true" filterPlaceholder="Search Title"></p-column>
-				    <p-column field="created_at" header="Report time" sortable="true" [filter]="true" filterPlaceholder="Search Title"></p-column>
-				    <p-column field="title" header="Title" sortable="true" [filter]="true" filterPlaceholder="Search Title"></p-column>
-				    <p-column field="remark" header="Message" sortable="true" [filter]="true" filterPlaceholder="Search Title"></p-column>
-				    <p-column field="attachment" header="Photo"></p-column>
-				    <p-column field="status" header="Status" sortable="true" [filter]="true" filterPlaceholder="Search Uploaded on">
-				        <template let-col let-data="rowData" pTemplate="body">
-				            <span [style.color]="data[col.field]">{{data[col.field]}}</span>
-				        </template>
-				    </p-column>
-				    <p-column styleClass="col-button" header="action">
-				    	<template let-data="rowData" pTemplate="body">
-				    		<button type="button" (click)="edit(data)">Edit</button>
-							<button type="button" (click)="deleteIncident(data)">Delete</button>
-				    	</template>
-				    </p-column>
-				</p-dataTable>
-		    </tab>
-		    <!-- NEW -->
-		    <tab heading="New">
-		    	<p-dataTable [value]="dataNew" [rows]="10" [paginator]="true">
-				    <p-column field="reference_no" header="Report No." sortable="true" [filter]="true" filterPlaceholder="Search date"></p-column>
-				    <p-column field="incident_type" header="Type" sortable="true" [filter]="true" filterPlaceholder="Search Title"></p-column>
-				    <p-column field="created_by" header="Reported by" sortable="true" [filter]="true" filterPlaceholder="Search Title"></p-column>
-				    <p-column field="created_at" header="Report time" sortable="true" [filter]="true" filterPlaceholder="Search Title"></p-column>
-				    <p-column field="title" header="Title" sortable="true" [filter]="true" filterPlaceholder="Search Title"></p-column>
-				    <p-column field="remark" header="Message" sortable="true" [filter]="true" filterPlaceholder="Search Title"></p-column>
-				    <p-column field="attachment" header="Photo"></p-column>
-				    <p-column field="status" header="Status" sortable="true" [filter]="true" filterPlaceholder="Search Uploaded on">
-				        <template let-col let-data="rowData" pTemplate="body">
-				            <span [style.color]="data[col.field]">{{data[col.field]}}</span>
-				        </template>
-				    </p-column>
-				    <p-column styleClass="col-button" header="action">
-				    	<template let-data="rowData" pTemplate="body">
-				    		<button type="button" (click)="edit(data)">Edit</button>
-							<button type="button" (click)="deleteIncident(data)">Delete</button>
-				    	</template>
-				    </p-column>
-				</p-dataTable>
-		    </tab>
-		    <!-- REVIEWING -->
-		    <tab heading="Reviewing">
-		    	<p-dataTable [value]="dataReviewing" [rows]="10" [paginator]="true">
-				    <p-column field="reference_no" header="Report No." sortable="true" [filter]="true" filterPlaceholder="Search date"></p-column>
-				    <p-column field="incident_type" header="Type" sortable="true" [filter]="true" filterPlaceholder="Search Title"></p-column>
-				    <p-column field="created_by" header="Reported by" sortable="true" [filter]="true" filterPlaceholder="Search Title"></p-column>
-				    <p-column field="created_at" header="Report time" sortable="true" [filter]="true" filterPlaceholder="Search Title"></p-column>
-				    <p-column field="title" header="Title" sortable="true" [filter]="true" filterPlaceholder="Search Title"></p-column>
-				    <p-column field="remark" header="Message" sortable="true" [filter]="true" filterPlaceholder="Search Title"></p-column>
-				    <p-column field="attachment" header="Photo"></p-column>
-				    <p-column field="status" header="Status" sortable="true" [filter]="true" filterPlaceholder="Search Uploaded on">
-				        <template let-col let-data="rowData" pTemplate="body">
-				            <span [style.color]="data[col.field]">{{data[col.field]}}</span>
-				        </template>
-				    </p-column>
-				    <p-column styleClass="col-button" header="action">
-				    	<template let-data="rowData" pTemplate="body">
-				    		<button type="button" (click)="edit(data)">Edit</button>
-							<button type="button" (click)="deleteIncident(data)">Delete</button>
-				    	</template>
-				    </p-column>
-				</p-dataTable>
-		    </tab>	
-		    <!-- IN PROGRESS -->
-		    <tab heading="In-Progress">
-		    	<p-dataTable [value]="dataInProgress" [rows]="10" [paginator]="true">
-				    <p-column field="reference_no" header="Report No." sortable="true" [filter]="true" filterPlaceholder="Search date"></p-column>
-				    <p-column field="incident_type" header="Type" sortable="true" [filter]="true" filterPlaceholder="Search Title"></p-column>
-				    <p-column field="created_by" header="Reported by" sortable="true" [filter]="true" filterPlaceholder="Search Title"></p-column>
-				    <p-column field="created_at" header="Report time" sortable="true" [filter]="true" filterPlaceholder="Search Title"></p-column>
-				    <p-column field="title" header="Title" sortable="true" [filter]="true" filterPlaceholder="Search Title"></p-column>
-				    <p-column field="remark" header="Message" sortable="true" [filter]="true" filterPlaceholder="Search Title"></p-column>
-				    <p-column field="attachment" header="Photo"></p-column>
-				    <p-column field="status" header="Status" sortable="true" [filter]="true" filterPlaceholder="Search Uploaded on">
-				        <template let-col let-data="rowData" pTemplate="body">
-				            <span [style.color]="data[col.field]">{{data[col.field]}}</span>
-				        </template>
-				    </p-column>
-				    <p-column styleClass="col-button" header="action">
-				    	<template let-data="rowData" pTemplate="body">
-				    		<button type="button" (click)="edit(data)">Edit</button>
-							<button type="button" (click)="deleteIncident(data)">Delete</button>
-				    	</template>
-				    </p-column>
-				</p-dataTable>
-		    </tab>	
-		    <!-- RESOLVED -->
-		    <tab heading="Resolved">
-		    	<p-dataTable [value]="dataResolved" [rows]="10" [paginator]="true">
-				    <p-column field="reference_no" header="Report No." sortable="true" [filter]="true" filterPlaceholder="Search date"></p-column>
-				    <p-column field="incident_type" header="Type" sortable="true" [filter]="true" filterPlaceholder="Search Title"></p-column>
-				    <p-column field="created_by" header="Reported by" sortable="true" [filter]="true" filterPlaceholder="Search Title"></p-column>
-				    <p-column field="created_at" header="Report time" sortable="true" [filter]="true" filterPlaceholder="Search Title"></p-column>
-				    <p-column field="title" header="Title" sortable="true" [filter]="true" filterPlaceholder="Search Title"></p-column>
-				    <p-column field="remark" header="Message" sortable="true" [filter]="true" filterPlaceholder="Search Title"></p-column>
-				    <p-column field="attachment" header="Photo"></p-column>
-				    <p-column field="status" header="Status" sortable="true" [filter]="true" filterPlaceholder="Search Uploaded on">
-				        <template let-col let-data="rowData" pTemplate="body">
-				            <span [style.color]="data[col.field]">{{data[col.field]}}</span>
-				        </template>
-				    </p-column>
-				    <p-column styleClass="col-button" header="action">
-				    	<template let-data="rowData" pTemplate="body">
-				    		<button type="button" (click)="edit(data)">Edit</button>
-							<button type="button" (click)="deleteIncident(data)">Delete</button>
-				    	</template>
-				    </p-column>
-				</p-dataTable>
-		    </tab>	
-		    <!-- URGENT -->
-		    <tab heading="Urgent">
-		    	<p-dataTable [value]="dataUrgent" [rows]="10" [paginator]="true">
-				    <p-column field="reference_no" header="Report No." sortable="true" [filter]="true" filterPlaceholder="Search date"></p-column>
-				    <p-column field="incident_type" header="Type" sortable="true" [filter]="true" filterPlaceholder="Search Title"></p-column>
-				    <p-column field="created_by" header="Reported by" sortable="true" [filter]="true" filterPlaceholder="Search Title"></p-column>
-				    <p-column field="created_at" header="Report time" sortable="true" [filter]="true" filterPlaceholder="Search Title"></p-column>
-				    <p-column field="title" header="Title" sortable="true" [filter]="true" filterPlaceholder="Search Title"></p-column>
-				    <p-column field="remark" header="Message" sortable="true" [filter]="true" filterPlaceholder="Search Title"></p-column>
-				    <p-column field="attachment" header="Photo"></p-column>
-				    <p-column field="status" header="Status" sortable="true" [filter]="true" filterPlaceholder="Search Uploaded on">
-				        <template let-col let-data="rowData" pTemplate="body">
-				            <span [style.color]="data[col.field]">{{data[col.field]}}</span>
-				        </template>
-				    </p-column>
-				    <p-column styleClass="col-button" header="action">
-				    	<template let-data="rowData" pTemplate="body">
-				    		<button type="button" (click)="edit(data)">Edit</button>
-							<button type="button" (click)="deleteIncident(data)">Delete</button>
-				    	</template>
-				    </p-column>
-				</p-dataTable>
-		    </tab>		
-		  </tabset>
-		</div>	
-	</div>
+			Home > Incident Reports
+			<div class="row">
+				<div class="col-md-4 pull-right">
+					<a class="btn btn-default pull-right" [routerLink]="['/incident/add']">
+					<i class="fa fa-plus" aria-hidden="true"></i>&nbsp;Create Report</a>	  		
+				</div>
+			</div>
+			<div (click)="$event.preventDefault()">
+			  <tabset>
+			  <!-- ALL -->
+			    <tab heading="All">
+			    	<p-dataTable [value]="incidents" [rows]="10" [paginator]="true">
+					    <p-column field="reference_no" header="Report No." sortable="true" [filter]="true" filterPlaceholder="Search date"></p-column>
+					    <p-column field="incident_type" header="Type" sortable="true" [filter]="true" filterPlaceholder="Search Title"></p-column>
+					    <p-column field="created_by" header="Reported by" sortable="true" [filter]="true" filterPlaceholder="Search Title"></p-column>
+					    <p-column field="created_at" header="Report time" sortable="true" [filter]="true" filterPlaceholder="Search Title"></p-column>
+					    <p-column field="title" header="Title" sortable="true" [filter]="true" filterPlaceholder="Search Title"></p-column>
+					    <p-column field="remark" header="Message" sortable="true" [filter]="true" filterPlaceholder="Search Title"></p-column>
+					    <p-column field="attachment" header="Photo"></p-column>
+					    <p-column field="status" header="Status" sortable="true" [filter]="true" filterPlaceholder="Search Uploaded on">
+					        <template let-col let-data="rowData" pTemplate="body">
+					            <span [style.color]="data[col.field]">{{data[col.field]}}</span>
+					        </template>
+					    </p-column>
+					    <p-column styleClass="col-button" header="action">
+					    	<template let-data="rowData" pTemplate="body">
+					    		<button type="button" (click)="view(data)">View</button>
+								<button type="button" (click)="deleteIncident(data)">Delete</button>
+					    	</template>
+					    </p-column>
+					</p-dataTable>
+			    </tab>
+			    <!-- NEW -->
+			    <tab heading="New">
+			    	<p-dataTable [value]="dataNew" [rows]="10" [paginator]="true">
+					    <p-column field="reference_no" header="Report No." sortable="true" [filter]="true" filterPlaceholder="Search date"></p-column>
+					    <p-column field="incident_type" header="Type" sortable="true" [filter]="true" filterPlaceholder="Search Title"></p-column>
+					    <p-column field="created_by" header="Reported by" sortable="true" [filter]="true" filterPlaceholder="Search Title"></p-column>
+					    <p-column field="created_at" header="Report time" sortable="true" [filter]="true" filterPlaceholder="Search Title"></p-column>
+					    <p-column field="title" header="Title" sortable="true" [filter]="true" filterPlaceholder="Search Title"></p-column>
+					    <p-column field="remark" header="Message" sortable="true" [filter]="true" filterPlaceholder="Search Title"></p-column>
+					    <p-column field="attachment" header="Photo"></p-column>
+					    <p-column field="status" header="Status" sortable="true" [filter]="true" filterPlaceholder="Search Uploaded on">
+					        <template let-col let-data="rowData" pTemplate="body">
+					            <span [style.color]="data[col.field]">{{data[col.field]}}</span>
+					        </template>
+					    </p-column>
+					    <p-column styleClass="col-button" header="action">
+					    	<template let-data="rowData" pTemplate="body">
+					    		<button type="button" (click)="view(data)">View</button>
+								<button type="button" (click)="deleteIncident(data)">Delete</button>
+					    	</template>
+					    </p-column>
+					</p-dataTable>
+			    </tab>
+			    <!-- REVIEWING -->
+			    <tab heading="Reviewing">
+			    	<p-dataTable [value]="dataReviewing" [rows]="10" [paginator]="true">
+					    <p-column field="reference_no" header="Report No." sortable="true" [filter]="true" filterPlaceholder="Search date"></p-column>
+					    <p-column field="incident_type" header="Type" sortable="true" [filter]="true" filterPlaceholder="Search Title"></p-column>
+					    <p-column field="created_by" header="Reported by" sortable="true" [filter]="true" filterPlaceholder="Search Title"></p-column>
+					    <p-column field="created_at" header="Report time" sortable="true" [filter]="true" filterPlaceholder="Search Title"></p-column>
+					    <p-column field="title" header="Title" sortable="true" [filter]="true" filterPlaceholder="Search Title"></p-column>
+					    <p-column field="remark" header="Message" sortable="true" [filter]="true" filterPlaceholder="Search Title"></p-column>
+					    <p-column field="attachment" header="Photo"></p-column>
+					    <p-column field="status" header="Status" sortable="true" [filter]="true" filterPlaceholder="Search Uploaded on">
+					        <template let-col let-data="rowData" pTemplate="body">
+					            <span [style.color]="data[col.field]">{{data[col.field]}}</span>
+					        </template>
+					    </p-column>
+					    <p-column styleClass="col-button" header="action">
+					    	<template let-data="rowData" pTemplate="body">
+					    		<button type="button" (click)="view(data)">View</button>
+								<button type="button" (click)="deleteIncident(data)">Delete</button>
+					    	</template>
+					    </p-column>
+					</p-dataTable>
+			    </tab>	
+			    <!-- IN PROGRESS -->
+			    <tab heading="In-Progress">
+			    	<p-dataTable [value]="dataInProgress" [rows]="10" [paginator]="true">
+					    <p-column field="reference_no" header="Report No." sortable="true" [filter]="true" filterPlaceholder="Search date"></p-column>
+					    <p-column field="incident_type" header="Type" sortable="true" [filter]="true" filterPlaceholder="Search Title"></p-column>
+					    <p-column field="created_by" header="Reported by" sortable="true" [filter]="true" filterPlaceholder="Search Title"></p-column>
+					    <p-column field="created_at" header="Report time" sortable="true" [filter]="true" filterPlaceholder="Search Title"></p-column>
+					    <p-column field="title" header="Title" sortable="true" [filter]="true" filterPlaceholder="Search Title"></p-column>
+					    <p-column field="remark" header="Message" sortable="true" [filter]="true" filterPlaceholder="Search Title"></p-column>
+					    <p-column field="attachment" header="Photo"></p-column>
+					    <p-column field="status" header="Status" sortable="true" [filter]="true" filterPlaceholder="Search Uploaded on">
+					        <template let-col let-data="rowData" pTemplate="body">
+					            <span [style.color]="data[col.field]">{{data[col.field]}}</span>
+					        </template>
+					    </p-column>
+					    <p-column styleClass="col-button" header="action">
+					    	<template let-data="rowData" pTemplate="body">
+					    		<button type="button" (click)="view(data)">View</button>
+								<button type="button" (click)="deleteIncident(data)">Delete</button>
+					    	</template>
+					    </p-column>
+					</p-dataTable>
+			    </tab>	
+			    <!-- RESOLVED -->
+			    <tab heading="Resolved">
+			    	<p-dataTable [value]="dataResolved" [rows]="10" [paginator]="true">
+					    <p-column field="reference_no" header="Report No." sortable="true" [filter]="true" filterPlaceholder="Search date"></p-column>
+					    <p-column field="incident_type" header="Type" sortable="true" [filter]="true" filterPlaceholder="Search Title"></p-column>
+					    <p-column field="created_by" header="Reported by" sortable="true" [filter]="true" filterPlaceholder="Search Title"></p-column>
+					    <p-column field="created_at" header="Report time" sortable="true" [filter]="true" filterPlaceholder="Search Title"></p-column>
+					    <p-column field="title" header="Title" sortable="true" [filter]="true" filterPlaceholder="Search Title"></p-column>
+					    <p-column field="remark" header="Message" sortable="true" [filter]="true" filterPlaceholder="Search Title"></p-column>
+					    <p-column field="attachment" header="Photo"></p-column>
+					    <p-column field="status" header="Status" sortable="true" [filter]="true" filterPlaceholder="Search Uploaded on">
+					        <template let-col let-data="rowData" pTemplate="body">
+					            <span [style.color]="data[col.field]">{{data[col.field]}}</span>
+					        </template>
+					    </p-column>
+					    <p-column styleClass="col-button" header="action">
+					    	<template let-data="rowData" pTemplate="body">
+					    		<button type="button" (click)="view(data)">View</button>
+								<button type="button" (click)="deleteIncident(data)">Delete</button>
+					    	</template>
+					    </p-column>
+					</p-dataTable>
+			    </tab>	
+			    <!-- URGENT -->
+			    <tab heading="Urgent">
+			    	<p-dataTable [value]="dataUrgent" [rows]="10" [paginator]="true">
+					    <p-column field="reference_no" header="Report No." sortable="true" [filter]="true" filterPlaceholder="Search date"></p-column>
+					    <p-column field="incident_type" header="Type" sortable="true" [filter]="true" filterPlaceholder="Search Title"></p-column>
+					    <p-column field="created_by" header="Reported by" sortable="true" [filter]="true" filterPlaceholder="Search Title"></p-column>
+					    <p-column field="created_at" header="Report time" sortable="true" [filter]="true" filterPlaceholder="Search Title"></p-column>
+					    <p-column field="title" header="Title" sortable="true" [filter]="true" filterPlaceholder="Search Title"></p-column>
+					    <p-column field="remark" header="Message" sortable="true" [filter]="true" filterPlaceholder="Search Title"></p-column>
+					    <p-column field="attachment" header="Photo"></p-column>
+					    <p-column field="status" header="Status" sortable="true" [filter]="true" filterPlaceholder="Search Uploaded on">
+					        <template let-col let-data="rowData" pTemplate="body">
+					            <span [style.color]="data[col.field]">{{data[col.field]}}</span>
+					        </template>
+					    </p-column>
+					    <p-column styleClass="col-button" header="action">
+					    	<template let-data="rowData" pTemplate="body">
+					    		<button type="button" (click)="view(data)">View</button>
+								<button type="button" (click)="deleteIncident(data)">Delete</button>
+					    	</template>
+					    </p-column>
+					</p-dataTable>
+			    </tab>		
+			  </tabset>
+			</div>	
+        </div>
+    </div>
 </div>

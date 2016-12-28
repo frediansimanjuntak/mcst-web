@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router'; 
+import { Router, Params, ActivatedRoute } from '@angular/router'; 
 import { Incident } from '../../models/index';
 import { IncidentService, AlertService } from '../../services/index';
 import '../../rxjs-operators';
@@ -17,6 +17,7 @@ export class IncidentComponent implements OnInit {
 	incident: Incident;
     incidents: Incident[] = [];
     model: any = {};
+    id: string;
     public data;
     public dataNew;
     public dataReviewing; 
@@ -24,10 +25,17 @@ export class IncidentComponent implements OnInit {
     public dataResolved;
     public dataUrgent;   
 
-    constructor(private router: Router, private incidentService: IncidentService, private alertService: AlertService) {}  
+    constructor(private router: Router, private incidentService: IncidentService, private alertService: AlertService,private route: ActivatedRoute) {}  
 
     ngOnInit(): void {
-        this.loadAllIncident();
+        this.route.params.subscribe(params => {
+            this.id = params['id'];
+        });
+        if( this.id == null) {
+            this.loadAllIncident();
+        }else{
+        	this.incidentService.getIncident(this.id).then(incident => {this.incident = incident;});
+        }
     } 
 
     deleteIncident(incident: Incident) {
@@ -85,7 +93,11 @@ export class IncidentComponent implements OnInit {
         this.tabs[index].active = true;
     };
 
-    edit(incident: Incident){
-        this.router.navigate(['/incident/edit', incident._id]);
+    // edit(incident: Incident){
+    //     this.router.navigate(['/incident/edit', incident._id]);
+    // }
+
+    view(incident: Incident){
+        this.router.navigate(['/incident/view', incident._id]);
     }
 }
