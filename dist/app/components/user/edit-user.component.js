@@ -52,8 +52,8 @@ var EditUserComponent = (function () {
             authorized_development: ['']
         });
         var self = this;
-        this.unitService.getAll("585b36585d3cc41224fe518a")
-            .subscribe(function (unit) {
+        this.unitService.getDevelopment("1")
+            .then(function (unit) {
             self.unit = unit;
             console.log(unit);
         });
@@ -116,6 +116,7 @@ var EditUserComponent = (function () {
     };
     EditUserComponent.prototype.updateUser = function () {
         var _this = this;
+        console.log(this.user);
         this.userService.update(this.user)
             .then(function (response) {
             _this.alertService.success('Update User successful', true);

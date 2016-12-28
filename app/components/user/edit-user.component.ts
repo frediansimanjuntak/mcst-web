@@ -54,8 +54,8 @@ export class EditUserComponent implements OnInit {
             
         });
         let self = this; 
-        this.unitService.getAll("585b36585d3cc41224fe518a")
-            .subscribe(unit => {
+        this.unitService.getDevelopment("1")
+            .then(unit => {
                 self.unit = unit;
                 console.log(unit);
             });
@@ -64,7 +64,7 @@ export class EditUserComponent implements OnInit {
         });
         
         if( this.id != null) {
-            this.userService.getUser(this.id).then(user => {this.user = user;console.log(user);});
+            this.userService.getUser(this.id).then(user => {this.user = user});
         };
         
             
@@ -134,6 +134,7 @@ export class EditUserComponent implements OnInit {
     }
 
     updateUser(){
+        console.log(this.user);
 		this.userService.update(this.user)
 		.then(
             response => {
