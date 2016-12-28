@@ -48,7 +48,7 @@ const routes: Routes = [
   { path: 'newsletter/edit/:id',   component: EditNewsletterComponent },
   { path: 'incident',   component: IncidentComponent },
   { path: 'incident/add',   component: EditIncidentComponent },
-  { path: 'incident/edit/:id',   component: EditIncidentComponent },
+  { path: 'incident/view/:id',   component: IncidentComponent },
   { path: 'setting',     component: SettingComponent },
   { path: 'setting/edit/:id',     component: EditSettingComponent },
   
