@@ -1,3 +1,5 @@
+export * from './access-control/access-control.component';
+export * from './access-control/edit-access-control.component';
 export * from './alert.component'
 export * from './app.component';
 export * from './attachment/attachment.component';
