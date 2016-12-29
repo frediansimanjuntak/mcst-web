@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Http, Headers, RequestOptions, Response } from '@angular/http';
 import { Observable } from 'rxjs/Rx';
-import { AccessControl, Users } from '../models/index';
+import { AccessControl, AccessControls } from '../models/index';
 import { url } from '../global';
 import 'rxjs/add/operator/toPromise';
  
@@ -11,12 +11,12 @@ export class AccessControlService {
     constructor(private http: Http) {}
 
     getAccessControls(): Promise<AccessControl[]> {
-        return Promise.resolve(Users);
+        return Promise.resolve(AccessControls);
     }
 
     getAccessControl(id: string): Promise<AccessControl> {
         return this.getAccessControls()
-            .then(users => users.find(user => user._id === id));
+            .then(accesscontrols => accesscontrols.find(accesscontrol => accesscontrol._id === id));
     }
 
     getAll(){
