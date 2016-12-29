@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Http, Headers, RequestOptions, Response } from '@angular/http';
 import { Observable } from 'rxjs/Rx';
-import { User, Users } from '../models/index';
+import { AccessControl, Users } from '../models/index';
 import { url } from '../global';
 import 'rxjs/add/operator/toPromise';
  
@@ -10,12 +10,12 @@ export class AccessControlService {
     private headers = new Headers({'Content-Type': 'application/json'});
     constructor(private http: Http) {}
 
-    getUsers(): Promise<User[]> {
+    getAccessControls(): Promise<AccessControl[]> {
         return Promise.resolve(Users);
     }
 
-    getUser(id: string): Promise<User> {
-        return this.getUsers()
+    getAccessControl(id: string): Promise<AccessControl> {
+        return this.getAccessControls()
             .then(users => users.find(user => user._id === id));
     }
 
@@ -31,7 +31,7 @@ export class AccessControlService {
             .catch((error:any) => Observable.throw(error.json().error || 'Server error'));
     }
 
-    create(body:any): Promise<User> {
+    create(body:any): Promise<AccessControl> {
         console.log(body);
         return this.http.post(url +  'api/accesscontrols', JSON.stringify(body), {headers: this.headers})
             .toPromise()
@@ -39,7 +39,7 @@ export class AccessControlService {
             .catch(this.handleError);
     }
 
-    update(body:User): Promise<User> {
+    update(body:AccessControl): Promise<AccessControl> {
         return this.http.post(url + 'api/accesscontrols/update/' + body._id,body, {headers: this.headers})
             .toPromise()
             .then(res => res.json().data)
