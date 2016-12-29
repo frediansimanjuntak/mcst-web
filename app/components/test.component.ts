@@ -178,15 +178,9 @@ export class TestComponent implements OnInit{
         });
     }
 
-    remove(file: any){
-
-         console.log("delete file:..", file)
-
-          var index = this.files.indexOf(file);
-          console.log(index);
-            this.files.splice(index, 1)
-
-     }
+    remove(i: any){ 
+        this.model.attachment.splice(i, 1)
+    }
 }
 
 export class MyEvent {

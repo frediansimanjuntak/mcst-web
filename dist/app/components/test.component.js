@@ -152,11 +152,8 @@ var TestComponent = (function () {
             xhr.send(formData);
         });
     };
-    TestComponent.prototype.remove = function (file) {
-        console.log("delete file:..", file);
-        var index = this.files.indexOf(file);
-        console.log(index);
-        this.files.splice(index, 1);
+    TestComponent.prototype.remove = function (i) {
+        this.model.attachment.splice(i, 1);
     };
     return TestComponent;
 }());
