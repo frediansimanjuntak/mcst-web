@@ -13,41 +13,47 @@ var router_1 = require("@angular/router");
 var index_1 = require("../../services/index");
 require("../../rxjs-operators");
 var AccessControlComponent = (function () {
-    function AccessControlComponent(router, developmentService, alertService) {
+    function AccessControlComponent(router, accesscontrolService, alertService) {
         this.router = router;
-        this.developmentService = developmentService;
+        this.accesscontrolService = accesscontrolService;
         this.alertService = alertService;
-        this.developments = [];
+        this.accesscontrols = [];
         this.model = {};
     }
     AccessControlComponent.prototype.ngOnInit = function () {
-        this.loadAllDevelopments();
+        this.loadAllAccessControls();
         // this.onChangeTable(this.config);
     };
-    AccessControlComponent.prototype.deleteDevelopment = function (development) {
+    AccessControlComponent.prototype.deleteAccessControl = function (accesscontrol) {
         var _this = this;
-        this.developmentService.delete(development._id)
+        console.log(accesscontrol);
+        this.accesscontrolService.delete(accesscontrol._id)
             .then(function (response) {
             if (response) {
-                alert("The development could not be deleted, server Error.");
+                alert("The access control could not be deleted, server Error.");
             }
             else {
-                _this.alertService.success('Delete development successful', true);
-                _this.loadAllDevelopments();
+                _this.alertService.success('Delete access control successful', true);
+                _this.loadAllAccessControls();
             }
         }, function (error) {
-            alert("The Development could not be deleted, server Error.");
+            alert("The access control could not be deleted, server Error.");
         });
     };
-    AccessControlComponent.prototype.loadAllDevelopments = function () {
+    AccessControlComponent.prototype.loadAllAccessControls = function () {
         var _this = this;
-        this.developmentService.getAll().subscribe(function (developments) { _this.developments = developments; });
+        this.accesscontrolService.getAccessControls()
+            .then(function (accesscontrols) {
+            _this.accesscontrols = accesscontrols;
+            _this.card = _this.accesscontrols.filter(function (accesscontrols) { return accesscontrols.access_type === 'card'; });
+            _this.transponder = _this.accesscontrols.filter(function (accesscontrols) { return accesscontrols.access_type === 'transponder'; });
+        });
     };
     AccessControlComponent.prototype.add = function () {
-        this.router.navigate(['/development/add']);
+        this.router.navigate(['/access_control/add']);
     };
-    AccessControlComponent.prototype.edit = function (development) {
-        this.router.navigate(['/development/edit', development._id]);
+    AccessControlComponent.prototype.edit = function (accesscontrol) {
+        this.router.navigate(['/access_control/edit', accesscontrol._id]);
     };
     return AccessControlComponent;
 }());
@@ -55,9 +61,9 @@ AccessControlComponent = __decorate([
     core_1.Component({
         moduleId: module.id,
         selector: 'development',
-        templateUrl: '/app/templates/development.html',
+        templateUrl: '/app/templates/access-control.html',
     }),
-    __metadata("design:paramtypes", [router_1.Router, index_1.DevelopmentService, index_1.AlertService])
+    __metadata("design:paramtypes", [router_1.Router, index_1.AccessControlService, index_1.AlertService])
 ], AccessControlComponent);
 exports.AccessControlComponent = AccessControlComponent;
 //# sourceMappingURL=access-control.component.js.map

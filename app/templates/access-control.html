@@ -6,7 +6,7 @@
 		Home > Incident Reports
 		<div class="row">
 			<div class="col-md-4 pull-right">
-				<a class="btn btn-default pull-right" [routerLink]="['/incident/add']">
+				<a class="btn btn-default pull-right" (click)="add()">
 				<i class="fa fa-plus" aria-hidden="true"></i>&nbsp;Create Report</a>	  		
 			</div>
 		</div>
@@ -29,7 +29,7 @@
 					    <p-column styleClass="col-button" header="action">
 					    	<template let-data="rowData" pTemplate="body">
 					    		<button type="button" (click)="edit(data)">Edit</button>
-								<button type="button" (click)="deleteIncident(data)">Delete</button>
+								<button type="button" (click)="deleteAccessControl(data)">Delete</button>
 					    	</template>
 					    </p-column>
 					</p-dataTable>
@@ -51,7 +51,7 @@
 					    <p-column styleClass="col-button" header="action">
 					    	<template let-data="rowData" pTemplate="body">
 					    		<button type="button" (click)="edit(data)">Edit</button>
-								<button type="button" (click)="deleteIncident(data)">Delete</button>
+								<button type="button" (click)="deleteAccessControl(data)">Delete</button>
 					    	</template>
 					    </p-column>
 					</p-dataTable>
