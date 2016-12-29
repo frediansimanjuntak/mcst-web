@@ -46,22 +46,15 @@ export class EditIncidentComponent implements OnInit {
     }
 
     createIncident() {
-        console.log(this.model);
-        this.model.attachment = {
-              "name": this.uploader.queue[0]._file.name,
-              "type": this.uploader.queue[0]._file.type,
-              "information": "Optional",
-              "created_by" : "583e4e9dd97c97149884fef5",
-        }
         this.incidentService.create(this.model)
         .then(
             data => {
-                this.alertService.success('Create newsletter successful', true);
-                this.router.navigate(['/newsletter']);
+                this.alertService.success('Create incident successful', true);
+                this.router.navigate(['/incident']);
             },
             error => {
                 console.log(error);
-                alert(`The Newsletter could not be save, server Error.`);
+                alert(`The incident could not be save, server Error.`);
             }
         );
     }
@@ -71,12 +64,21 @@ export class EditIncidentComponent implements OnInit {
 		this.incidentService.update(this.incident)
 		.then(
 			response => {
-                this.alertService.success('Update development successful', true);
-                this.router.navigate(['/development']);
+                this.alertService.success('Update incident successful', true);
+                this.router.navigate(['/incident']);
             },
             error => { 
             	this.alertService.error(error);
             }
         );
 	}
+
+    onChange(event: any) {
+       let files = [].slice.call(event.target.files); 
+       this.model.attachment = files;
+    }
+
+    remove(i: any){ 
+        this.model.attachment.splice(i, 1)
+    }
 }

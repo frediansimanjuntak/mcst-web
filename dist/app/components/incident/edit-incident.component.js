@@ -43,20 +43,13 @@ var EditIncidentComponent = (function () {
     };
     EditIncidentComponent.prototype.createIncident = function () {
         var _this = this;
-        console.log(this.model);
-        this.model.attachment = {
-            "name": this.uploader.queue[0]._file.name,
-            "type": this.uploader.queue[0]._file.type,
-            "information": "Optional",
-            "created_by": "583e4e9dd97c97149884fef5",
-        };
         this.incidentService.create(this.model)
             .then(function (data) {
-            _this.alertService.success('Create newsletter successful', true);
-            _this.router.navigate(['/newsletter']);
+            _this.alertService.success('Create incident successful', true);
+            _this.router.navigate(['/incident']);
         }, function (error) {
             console.log(error);
-            alert("The Newsletter could not be save, server Error.");
+            alert("The incident could not be save, server Error.");
         });
     };
     EditIncidentComponent.prototype.updateIncident = function () {
@@ -64,11 +57,18 @@ var EditIncidentComponent = (function () {
         console.log(this.incident);
         this.incidentService.update(this.incident)
             .then(function (response) {
-            _this.alertService.success('Update development successful', true);
-            _this.router.navigate(['/development']);
+            _this.alertService.success('Update incident successful', true);
+            _this.router.navigate(['/incident']);
         }, function (error) {
             _this.alertService.error(error);
         });
+    };
+    EditIncidentComponent.prototype.onChange = function (event) {
+        var files = [].slice.call(event.target.files);
+        this.model.attachment = files;
+    };
+    EditIncidentComponent.prototype.remove = function (i) {
+        this.model.attachment.splice(i, 1);
     };
     return EditIncidentComponent;
 }());
