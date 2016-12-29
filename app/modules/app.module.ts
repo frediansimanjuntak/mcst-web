@@ -16,6 +16,7 @@ import { EqualValidator }               from '../components/user/equal-validator
 
 import { 
   AccessControlComponent,
+  EditAccessControlComponent,
   AlertComponent,
   AppComponent,
   AttachmentComponent,
@@ -93,6 +94,7 @@ import {
   ],
   declarations: [ 
     AccessControlComponent,
+    EditAccessControlComponent,
     EqualValidator,
     AlertComponent,
   	AppComponent,
