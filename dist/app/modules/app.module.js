@@ -49,6 +49,7 @@ AppModule = __decorate([
         ],
         declarations: [
             index_1.AccessControlComponent,
+            index_1.EditAccessControlComponent,
             equal_validator_directive_1.EqualValidator,
             index_1.AlertComponent,
             index_1.AppComponent,
