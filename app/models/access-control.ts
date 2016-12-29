@@ -1,6 +1,6 @@
 import { User, Development } from './index'
 
-export class Attachment {
+export class AccessControl {
   _id  : string;
   card_no : string;
   issued_to : User;
