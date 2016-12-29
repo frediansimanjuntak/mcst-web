@@ -55,7 +55,8 @@ export class EditNewsletterComponent  {
         })
     }
 
-    createNewsletter() {
+    createNewsletter(event: any) {
+        
         if(this.model.released == true){
             this.model.released_by = '583e4e9dd97c97149884fef5';
             this.model.released_at =  Date.now();
@@ -65,14 +66,8 @@ export class EditNewsletterComponent  {
         }
         this.model.type = this.selectedType;
         this.model.created_by = '583e4e9dd97c97149884fef5';
-        this.model.attachment = {
-              "name": this.uploader.queue[0]._file.name,
-              "type": this.uploader.queue[0]._file.type,
-              "information": "Optional",
-              "created_by" : "583e4e9dd97c97149884fef5",
-        }
+        
         // this.model.pinned.rank = 0;
-        console.log(this.uploader.queue[0]);
         console.log(this.model);
         this.newsletterService.create(this.model)
         .subscribe(
@@ -85,6 +80,11 @@ export class EditNewsletterComponent  {
                 alert(`The Newsletter could not be save, server Error.`);
             }
         );
+    }
+
+    onChange(event: any) {
+       let files = [].slice.call(event.target.files); 
+       this.model.attachment = files;
     }
 
     updateNewsletter(){
