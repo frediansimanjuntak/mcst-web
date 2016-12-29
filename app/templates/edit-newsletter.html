@@ -33,7 +33,7 @@
                         <input type="file" multiple class="upload" name="attachment" (change)="onChange($event)" />
                         <p *ngFor="let item of model.attachment; let i=index ">
                             {{ item.name }}_{{item.size/1024 | number:'1.0-0' }}kb &nbsp;   
-                            <span class="glyphicon glyphicon-trash" style="cursor:pointer" (click)="remove(i)"></span>
+                            <span class="glyphicon glyphicon-remove" style="cursor:pointer" (click)="remove(i)"></span>
                         </p>
                     </div>
                 </div>
