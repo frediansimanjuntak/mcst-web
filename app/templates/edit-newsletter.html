@@ -30,10 +30,11 @@
                 <div class="form-group" >
                     <label class="control-label col-sm-4" for="attachment">Attachment :</label>
                     <div class="col-sm-8">
-                        <!-- <input type="text" class="form-control" name="attachment" [(ngModel)]="model.attachment" #attachment="ngModel" required placeholder="Attachment Here"/> -->
-                        <input type="file" multiple name="attachment" (change)="onChange($event)" />
-                     <!--    <input type="file"  class="form-control" name="attachment" [(ngModel)]="model.attachment" #attachment="ngModel" required placeholder="Attachment Here"/> -->
-                     
+                        <input type="file" multiple class="upload" name="attachment" (change)="onChange($event)" />
+                        <p *ngFor="let item of model.attachment; let i=index ">
+                            {{ item.name }}_{{item.size/1024 | number:'1.0-0' }}kb &nbsp;   
+                            <span class="glyphicon glyphicon-trash" style="cursor:pointer" (click)="remove(i)"></span>
+                        </p>
                     </div>
                 </div>
 

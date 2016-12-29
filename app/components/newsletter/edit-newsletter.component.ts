@@ -82,11 +82,6 @@ export class EditNewsletterComponent  {
         );
     }
 
-    onChange(event: any) {
-       let files = [].slice.call(event.target.files); 
-       this.model.attachment = files;
-    }
-
     updateNewsletter(){
 		this.newsletterService.update(this.model)
 		.subscribe(
@@ -104,4 +99,13 @@ export class EditNewsletterComponent  {
             }
         );
 	}
+
+    onChange(event: any) {
+       let files = [].slice.call(event.target.files); 
+       this.model.attachment = files;
+    }
+
+    remove(i: any){ 
+        this.model.attachment.splice(i, 1)
+    }
 }

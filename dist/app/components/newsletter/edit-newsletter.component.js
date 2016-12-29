@@ -68,10 +68,6 @@ var EditNewsletterComponent = (function () {
             alert("The Newsletter could not be save, server Error.");
         });
     };
-    EditNewsletterComponent.prototype.onChange = function (event) {
-        var files = [].slice.call(event.target.files);
-        this.model.attachment = files;
-    };
     EditNewsletterComponent.prototype.updateNewsletter = function () {
         var _this = this;
         this.newsletterService.update(this.model)
@@ -87,6 +83,13 @@ var EditNewsletterComponent = (function () {
         }, function (error) {
             _this.alertService.error(error);
         });
+    };
+    EditNewsletterComponent.prototype.onChange = function (event) {
+        var files = [].slice.call(event.target.files);
+        this.model.attachment = files;
+    };
+    EditNewsletterComponent.prototype.remove = function (i) {
+        this.model.attachment.splice(i, 1);
     };
     return EditNewsletterComponent;
 }());
