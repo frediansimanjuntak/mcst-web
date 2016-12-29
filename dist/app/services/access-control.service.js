@@ -19,12 +19,12 @@ var AccessControlService = (function () {
         this.http = http;
         this.headers = new http_1.Headers({ 'Content-Type': 'application/json' });
     }
-    AccessControlService.prototype.getUsers = function () {
-        return Promise.resolve(index_1.Users);
+    AccessControlService.prototype.getAccessControls = function () {
+        return Promise.resolve(index_1.AccessControls);
     };
-    AccessControlService.prototype.getUser = function (id) {
-        return this.getUsers()
-            .then(function (users) { return users.find(function (user) { return user._id === id; }); });
+    AccessControlService.prototype.getAccessControl = function (id) {
+        return this.getAccessControls()
+            .then(function (accesscontrols) { return accesscontrols.find(function (accesscontrol) { return accesscontrol._id === id; }); });
     };
     AccessControlService.prototype.getAll = function () {
         return this.http.get(global_1.url + 'api/accesscontrols')
