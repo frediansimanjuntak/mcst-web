@@ -51,6 +51,7 @@ AppModule = __decorate([
             ng2_select_1.SelectModule,
             primeng_1.PanelModule,
             primeng_1.FieldsetModule,
+            primeng_1.GalleriaModule,
         ],
         declarations: [
             index_1.AccessControlComponent,

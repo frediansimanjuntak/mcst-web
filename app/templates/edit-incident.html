@@ -48,12 +48,13 @@
             </div>
             <p>Home > Incident Reports > Create Report</p>
             <form class="form-horizontal col-md-6" name="form" (ngSubmit)="f.form.valid && createIncident()" #f="ngForm" novalidate enctype="multipart/form-data">
-                <div class="form-group">
+                <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !selectedType.valid }">
                   <label class="control-label col-sm-4" for="type">Type of Report :</label>
                   <div class="col-sm-8">
                         <select name="selectedType" [(ngModel)]="selectedType">
                           <option *ngFor="let type of types" [ngValue]="type.value">{{type.name}}</option>
                         </select>
+                        <!-- <span *ngIf="f.submitted && !selectedType.valid" class="help-block">Title is required</span> -->
                   </div>  
                 </div>
                 <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !title.valid }">

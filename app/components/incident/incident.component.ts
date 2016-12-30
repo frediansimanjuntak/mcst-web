@@ -17,6 +17,7 @@ export class IncidentComponent implements OnInit {
 	incident: Incident;
     incidents: Incident[] = [];
     model: any = {};
+    images: any[];
     id: string;
     public data;
     public dataNew;
@@ -28,6 +29,12 @@ export class IncidentComponent implements OnInit {
     constructor(private router: Router, private incidentService: IncidentService, private alertService: AlertService,private route: ActivatedRoute) {}  
 
     ngOnInit(): void {
+        this.images = [];
+        this.images.push({source:'/assets/image/1.png'});
+        this.images.push({source:'/assets/image/2.png'});
+        this.images.push({source:'/assets/image/3.png'});
+        this.images.push({source:'/assets/image/4.png'});
+        this.images.push({source:'/assets/image/5.png'});
         this.route.params.subscribe(params => {
             this.id = params['id'];
         });

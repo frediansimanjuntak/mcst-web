@@ -31,6 +31,12 @@ var IncidentComponent = (function () {
     }
     IncidentComponent.prototype.ngOnInit = function () {
         var _this = this;
+        this.images = [];
+        this.images.push({ source: '/assets/image/1.png' });
+        this.images.push({ source: '/assets/image/2.png' });
+        this.images.push({ source: '/assets/image/3.png' });
+        this.images.push({ source: '/assets/image/4.png' });
+        this.images.push({ source: '/assets/image/5.png' });
         this.route.params.subscribe(function (params) {
             _this.id = params['id'];
         });
