@@ -49,6 +49,8 @@ AppModule = __decorate([
             primeng_1.InputMaskModule,
             primeng_1.CheckboxModule,
             ng2_select_1.SelectModule,
+            primeng_1.PanelModule,
+            primeng_1.FieldsetModule,
         ],
         declarations: [
             index_1.AccessControlComponent,
