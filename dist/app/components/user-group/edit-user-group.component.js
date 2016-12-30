@@ -23,35 +23,103 @@ var EditUserGroupComponent = (function () {
         this.alertService = alertService;
         this.formbuilder = formbuilder;
         this.route = route;
+        this.items = [];
+        this.user = [];
+        this.chief = {};
+        this.userToSave = [];
+        this.chiefToSave = {};
+        this._disabledV = '0';
+        this.disabled = false;
         this.model = {};
-        this.users = [];
+        this.options1 = [];
     }
     EditUserGroupComponent.prototype.ngOnInit = function () {
+        var _this = this;
+        this.getUsers();
         this.myForm = this.formbuilder.group({
             description: ['', forms_1.Validators.required],
-            chief: ['', forms_1.Validators.required],
+            chief: [''],
             users: this.formbuilder.array([]),
         });
-        // let self = this; 
-        // this.userService.getAll()
-        //     .subscribe(user => {
-        //         self.users = user;
-        //         console.log(user);
-        //     });
-        // if( this.id != null) {
-        //     this.userService.getById(this.id).subscribe(user => {this.users = user;console.log(user);});
-        // };
-        this.getUsers();
-        console.log(this.users);
-        this.addUser();
-        // this.developmentService.getAll().subscribe(developments => { this.developments = developments; });
+        this.route.params.subscribe(function (params) {
+            _this.id = params['id'];
+        });
+        if (this.id != null) {
+            this.userGroupService
+                .getUserGroup(this.id)
+                .then(function (usergroup) {
+                _this.usergroup = usergroup;
+                console.log(usergroup);
+                _this.chief.text = _this.users.find(function (myObj) { return myObj._id === _this.usergroup.chief; }).username;
+                _this.chief.id = _this.usergroup.chief;
+                // for (let i = 0; i < this.usergroup.users.length; i++) {
+                //     this.user[i].text = this.users.find(myObj => myObj._id ===  this.usergroup.users[i] ).username;
+                //     this.user[i].id = this.usergroup.users[i];
+                // }
+                var numOptions = _this.usergroup.users.length;
+                var opts = new Array(numOptions);
+                var _loop_1 = function (i) {
+                    opts[i] = {
+                        id: _this.usergroup.users[i],
+                        text: _this.users.find(function (myObj) { return myObj._id === _this.usergroup.users[i]; }).username,
+                    };
+                };
+                for (var i = 0; i < numOptions; i++) {
+                    _loop_1(i);
+                }
+                _this.user = opts.slice(0);
+            });
+        }
+        ;
     };
-    EditUserGroupComponent.prototype.getUsers = function () {
-        var _this = this;
-        this.userService.getUsers().then(function (users) { return _this.users = users; });
+    Object.defineProperty(EditUserGroupComponent.prototype, "disabledV", {
+        get: function () {
+            return this._disabledV;
+        },
+        set: function (value) {
+            this._disabledV = value;
+            this.disabled = this._disabledV === '1';
+        },
+        enumerable: true,
+        configurable: true
+    });
+    EditUserGroupComponent.prototype.selected = function (value) {
+        console.log('Selected value is: ', value);
+    };
+    EditUserGroupComponent.prototype.removed = function (value) {
+        console.log('Removed value is: ', value);
+    };
+    EditUserGroupComponent.prototype.refreshValueUser = function (value) {
+        this.user = value;
+    };
+    EditUserGroupComponent.prototype.refreshValueChief = function (value) {
+        this.chief = value;
+    };
+    EditUserGroupComponent.prototype.itemsToString = function (value) {
+        if (value === void 0) { value = []; }
+        return value
+            .map(function (item) {
+            return item.text;
+        }).join(',');
     };
     EditUserGroupComponent.prototype.initUser = function () {
         return this.formbuilder.group({});
+    };
+    EditUserGroupComponent.prototype.getUsers = function () {
+        var _this = this;
+        this.userService.getUsers().then(function (users) {
+            _this.users = users;
+            var numOptions = _this.users.length;
+            var opts = new Array(numOptions);
+            for (var i = 0; i < numOptions; i++) {
+                opts[i] = {
+                    id: _this.users[i]._id,
+                    text: _this.users[i].username
+                };
+            }
+            _this.myOptions = opts.slice(0);
+            _this.items = _this.myOptions;
+        });
     };
     EditUserGroupComponent.prototype.addUser = function () {
         var control = this.myForm.controls['users'];
@@ -67,21 +135,52 @@ var EditUserGroupComponent = (function () {
         control.removeAt(i);
     };
     EditUserGroupComponent.prototype.createUserGroup = function (model) {
-        // call API to save
-        // ...
+        for (var i = 0; i < this.user.length; i++) {
+            model.users[i] = this.user[i].id;
+        }
+        model.chief = this.chief.id;
         console.log(model);
+        //   this.userGroupService.create(model)
+        // .then(
+        //     data => {
+        //         this.alertService.success('Create usergroup successful', true);
+        //         this.router.navigate(['/user']);
+        //     },
+        //     error => {
+        //         this.alertService.error(error);
+        //     }
+        // );
+    };
+    EditUserGroupComponent.prototype.updateUserGroup = function () {
+        this.usergroup.users = [];
+        for (var i = 0; i < this.user.length; i++) {
+            this.usergroup.users[i] = this.user[i].id;
+        }
+        this.usergroup.chief = this.chief.id;
+        console.log(this.usergroup);
+        //     this.userGroupService.update(this.usergroup)
+        //     .then(
+        //         response => {
+        //             this.alertService.success('Update Usergroup successful', true);
+        //             this.router.navigate(['/user']);
+        //         },
+        //         error=> { 
+        //             this.alertService.error(error);
+        //         }
+        //     );
     };
     return EditUserGroupComponent;
 }());
 __decorate([
     core_1.Input('group'),
     __metadata("design:type", index_1.UserGroup)
-], EditUserGroupComponent.prototype, "userGroup", void 0);
+], EditUserGroupComponent.prototype, "usergroup", void 0);
 EditUserGroupComponent = __decorate([
     core_1.Component({
-        moduleId: module.id,
+        moduleId: module.id.replace("/dist/", "/"),
         selector: 'edit-user-group',
         templateUrl: '/app/templates/edit-user-group.html',
+        styleUrls: ['../../templates/styles/ng2-select.css']
     }),
     __metadata("design:paramtypes", [router_1.Router,
         index_2.UserGroupService,

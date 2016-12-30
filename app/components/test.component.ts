@@ -7,11 +7,12 @@ import '../rxjs-operators';
 import { FileUploader } from 'ng2-file-upload';
 import { Observable} from 'rxjs/Observable';
 
+
 @Component({
   moduleId: module.id,
   selector: 'newsletter',
   templateUrl: '/app/templates/test.html',
-  styleUrls: [ '/app/templates/styles/newsletter.css' ]
+  styleUrls: [ '/app/templates/styles/newsletter.css' ],
 })
 
 export class TestComponent implements OnInit{ 
@@ -25,9 +26,30 @@ export class TestComponent implements OnInit{
     files: any[] = [];
 	public uploader:FileUploader = new FileUploader({url:'http://localhost:3001/upload'});
 
-	constructor(private cd: ChangeDetectorRef) {
-        this.filesToUpload = [];
-     }
+
+    // multiple1: boolean = true;
+    myOptions: Array<any>;
+    options1: Array<any> = [];
+    mySelectValue: Array<string>;
+     selection: Array<string>;
+     // Array of strings for multi select, string for single select.
+
+
+	constructor(private cd: ChangeDetectorRef) { 
+        let numOptions = 100;
+        let opts = new Array(numOptions);
+
+        for (let i = 0; i < numOptions; i++) {
+            opts[i] = {
+                value: i.toString(),
+                label: i.toString()
+            };
+        }
+
+        this.options1 = opts.slice(0);
+         this.filesToUpload = [];
+    }
+
 
 	
 	ngOnInit() {
@@ -55,6 +77,15 @@ export class TestComponent implements OnInit{
                 "end": "2016-01-13"
             }
         ];
+
+
+       
+         this.myOptions = [
+            {value: 'a', label: 'Alpha'},
+            {value: 'b', label: 'Beta'},
+            {value: 'c', label: 'Gamma'},
+        ];
+        this.mySelectValue = ['b', 'c'];
     }
 
     handleDayClick(event) {

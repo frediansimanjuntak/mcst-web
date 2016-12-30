@@ -13,6 +13,7 @@ require("fullcalendar");
 require("../rxjs-operators");
 var ng2_file_upload_1 = require("ng2-file-upload");
 var TestComponent = (function () {
+    // Array of strings for multi select, string for single select.
     function TestComponent(cd) {
         this.cd = cd;
         this.model = {};
@@ -20,6 +21,16 @@ var TestComponent = (function () {
         this.idGen = 100;
         this.files = [];
         this.uploader = new ng2_file_upload_1.FileUploader({ url: 'http://localhost:3001/upload' });
+        this.options1 = [];
+        var numOptions = 100;
+        var opts = new Array(numOptions);
+        for (var i = 0; i < numOptions; i++) {
+            opts[i] = {
+                value: i.toString(),
+                label: i.toString()
+            };
+        }
+        this.options1 = opts.slice(0);
         this.filesToUpload = [];
     }
     TestComponent.prototype.ngOnInit = function () {
@@ -47,6 +58,12 @@ var TestComponent = (function () {
                 "end": "2016-01-13"
             }
         ];
+        this.myOptions = [
+            { value: 'a', label: 'Alpha' },
+            { value: 'b', label: 'Beta' },
+            { value: 'c', label: 'Gamma' },
+        ];
+        this.mySelectValue = ['b', 'c'];
     };
     TestComponent.prototype.handleDayClick = function (event) {
         this.event = new MyEvent();
@@ -162,7 +179,7 @@ TestComponent = __decorate([
         moduleId: module.id,
         selector: 'newsletter',
         templateUrl: '/app/templates/test.html',
-        styleUrls: ['/app/templates/styles/newsletter.css']
+        styleUrls: ['/app/templates/styles/newsletter.css'],
     }),
     __metadata("design:paramtypes", [core_1.ChangeDetectorRef])
 ], TestComponent);

@@ -13,6 +13,11 @@ export class UserGroupService {
         return Promise.resolve(UserGroups);
     }
 
+    getUserGroup(id: string): Promise<any> {
+        return this.getUserGroups()
+            .then(usergroup => usergroup.find(usergroup => usergroup._id === id));
+    }
+
     getAll(){
         return this.http.get('https://192.168.10.73:3333/api/user-groups')
             .map((res:Response) => res.json())

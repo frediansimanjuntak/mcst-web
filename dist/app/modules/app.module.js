@@ -18,6 +18,8 @@ var http_1 = require("@angular/http");
 var ng2_table_1 = require("ng2-table/ng2-table");
 var ng2_bootstrap_1 = require("ng2-bootstrap/ng2-bootstrap");
 var ng2_bootstrap_2 = require("ng2-bootstrap/ng2-bootstrap");
+var ng2_select_1 = require("ng2-select/ng2-select");
+// import { SELECT_DIRECTIVES }            from 'ng2-select';
 var app_routing_module_1 = require("./app-routing.module");
 var primeng_1 = require("primeng/primeng");
 var equal_validator_directive_1 = require("../components/user/equal-validator.directive");
@@ -46,6 +48,7 @@ AppModule = __decorate([
             primeng_1.DialogModule,
             primeng_1.InputMaskModule,
             primeng_1.CheckboxModule,
+            ng2_select_1.SelectModule,
         ],
         declarations: [
             index_1.AccessControlComponent,

@@ -21,6 +21,10 @@ var UserGroupService = (function () {
     UserGroupService.prototype.getUserGroups = function () {
         return Promise.resolve(index_1.UserGroups);
     };
+    UserGroupService.prototype.getUserGroup = function (id) {
+        return this.getUserGroups()
+            .then(function (usergroup) { return usergroup.find(function (usergroup) { return usergroup._id === id; }); });
+    };
     UserGroupService.prototype.getAll = function () {
         return this.http.get('https://192.168.10.73:3333/api/user-groups')
             .map(function (res) { return res.json(); })

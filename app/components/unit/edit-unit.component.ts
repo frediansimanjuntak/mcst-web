@@ -16,7 +16,7 @@ import 'rxjs/add/operator/switchMap';
 
 export class EditUnitComponent implements OnInit { 
 	unit: any;
-    units: Development[] = [];
+    units: any;
     
     model: any = {};
     id: string;
@@ -43,29 +43,53 @@ export class EditUnitComponent implements OnInit {
         });
         if( this.id != null) {
             this.unitservice
-                .getById(this.id, this.developmentId)
-                .subscribe((unit)=> {
-                setTimeout(()=> {
-                    
-                     this.unit = unit;
-                    // this.dataCircular  = this.data.newsletter.filter(data => data.type === 'circular' ); 
-                   
-                     this.myForm = this.formbuilder.group({
+                .getDevelopments()
+                   .then(development => {
+                       this.units = development[0].properties
+                       this.unit = this.units.find(unit => unit._id === this.id);
+                       console.log(this.unit);
+
+                       this.myForm = this.formbuilder.group({
                         address: this.formbuilder.group({
-                        unit_no : [this.unit.properties[0].address.unit_no],
-                        unit_no_2 : [this.unit.properties[0].address.unit_no_2],
-                        block_no : [this.unit.properties[0].address.block_no],
-                        street_name : [this.unit.properties[0].address.street_name],
-                        postal_code : [this.unit.properties[0].address.postal_code],
-                        country : [this.unit.properties[0].address.country],
-                        full_address : [this.unit.properties[0].address.ful_address]
-                    }),
-                    _id: [this.unit.properties[0]._id],
-                    status: [this.unit.properties[0].status],
-                    created_by: ['583e4e9dd97c97149884fef5']
-                })
-                }, 1000);
-            });
+                            unit_no : [this.unit.address.unit_no],
+                            unit_no_2 : [this.unit.address.unit_no_2],
+                            block_no : [this.unit.address.block_no],
+                            street_name : [this.unit.address.street_name],
+                            postal_code : [this.unit.address.postal_code],
+                            country : [this.unit.address.country],
+                            full_address : [this.unit.address.full_address]
+                        }),
+                        _id: [this.unit._id],
+                        status: [this.unit.status],
+                        created_by: ['583e4e9dd97c97149884fef5']
+                    })
+                   });
+
+            // this.unitservice
+            //     .getById(this.id, this.developmentId)
+
+            //     .subscribe((unit)=> {
+            //     setTimeout(()=> {
+                    
+            //          this.unit = unit;
+            //         // this.dataCircular  = this.data.newsletter.filter(data => data.type === 'circular' ); 
+                   
+            //          this.myForm = this.formbuilder.group({
+            //             address: this.formbuilder.group({
+            //                 unit_no : [this.unit.properties[0].address.unit_no],
+            //                 unit_no_2 : [this.unit.properties[0].address.unit_no_2],
+            //                 block_no : [this.unit.properties[0].address.block_no],
+            //                 street_name : [this.unit.properties[0].address.street_name],
+            //                 postal_code : [this.unit.properties[0].address.postal_code],
+            //                 country : [this.unit.properties[0].address.country],
+            //                 full_address : [this.unit.properties[0].address.ful_address]
+            //             }),
+            //             _id: [this.unit.properties[0]._id],
+            //             status: [this.unit.properties[0].status],
+            //             created_by: ['583e4e9dd97c97149884fef5']
+            //         })
+            //     }, 1000);
+            // });
                 // console.log(this.unit);
                
         }else{
@@ -121,18 +145,19 @@ export class EditUnitComponent implements OnInit {
         );
     }
 
-    //  updateUnit(model: Development){
-    //     this.unitservice.update(model)
-    //     .then(
-    //         response => {
-    //             this.alertService.success('Update development successful', true);
-    //             this.router.navigate(['/development']);
-    //         },
-    //         error => { 
-    //             this.alertService.error(error);
-    //         }
-    //     );
-    // }
+     updateUnit(model: Development){
+         console.log(model);
+        // this.unitservice.update(model)
+        // .then(
+        //     response => {
+        //         this.alertService.success('Update development successful', true);
+        //         this.router.navigate(['/development']);
+        //     },
+        //     error => { 
+        //         this.alertService.error(error);
+        //     }
+        // );
+    }
 
  //    updateNewsletter(){
 	// 	this.unitservice.update(this.model)
