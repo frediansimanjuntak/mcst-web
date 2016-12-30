@@ -3,78 +3,148 @@ import { Router, Params, ActivatedRoute } from '@angular/router';
 import { FormBuilder, FormControl, FormGroup, FormArray, Validators } from '@angular/forms';
 import { UserGroup, User, Users } from '../../models/index';
 import { UserGroupService, UserService, AlertService } from '../../services/index';
-// import { EqualValidator } from './equal-validator.directive';
 import '../../rxjs-operators';
 import 'rxjs/add/operator/switchMap';
 
 @Component({
-  moduleId: module.id,
+  moduleId: module.id.replace("/dist/", "/"),
   selector: 'edit-user-group',
   templateUrl: '/app/templates/edit-user-group.html',
+  styleUrls: [ '../../templates/styles/ng2-select.css' ]
 })
 
 export class EditUserGroupComponent implements OnInit { 
+    public items:Array<any> = [];
+
+    private user:any = [];
+    private chief :any = {};
+    private userToSave:any = [];
+    private chiefToSave :any = {};
+    private _disabledV:string = '0';
+    private disabled:boolean = false;
+
     @Input('group')
 	usergroup: UserGroup;
     model: any = {};
     id: string;
     myForm: FormGroup;
-    users: User[] = [];
+    users: any;
+    myOptions: Array<any>;
+    options1: Array<any> = [];
+    mySelectUsers: Array<string>;
+    selection: Array<string>;
 
     constructor(private router: Router,
     	private userGroupService: UserGroupService,
     	private userService: UserService,
     	private alertService: AlertService,
     	private formbuilder: FormBuilder,
-        private route: ActivatedRoute,) {}
+        private route: ActivatedRoute,) {
+    }
 
     ngOnInit(): void {
+        this.getUsers();
         this.myForm = this.formbuilder.group({
             description : ['', Validators.required],
-            chief : ['', Validators.required],
+            chief : [''],
             users: this.formbuilder.array([]),
         });
-        let self = this; 
-        this.userService.getUsers()
-            .then(users => {
-                self.users = users;
-                console.log(users);
-            });
 
-        
-        
-        // if( this.id != null) {
-        //     this.userService.getById(this.id).subscribe(user => {this.users = user;console.log(user);});
-        // };
-        // this.unitService.getAll("585b36585d3cc41224fe518a")
-        //     .subscribe(unit => {
-        //         self.unit = unit;
-        //         console.log(unit);
-        //     });
         this.route.params.subscribe(params => {
             this.id = params['id'];
         });
 
-        // this.getUsers();
-        // this.userService.getUsers().then(users => this.users = users);
-        // console.log(this.users);
-        // this.addUser();
-        
         if( this.id != null) {
-            this.userGroupService.getUserGroup(this.id).then(usergroup => {this.usergroup = usergroup;console.log(usergroup);});
+            this.userGroupService
+                    .getUserGroup(this.id)
+                    .then(usergroup => {
+                        this.usergroup = usergroup;
+                        console.log(usergroup);
+
+                        this.chief.text = this.users.find(myObj => myObj._id ===  this.usergroup.chief ).username;
+                        this.chief.id = this.usergroup.chief;
+
+                        // for (let i = 0; i < this.usergroup.users.length; i++) {
+                        //     this.user[i].text = this.users.find(myObj => myObj._id ===  this.usergroup.users[i] ).username;
+                        //     this.user[i].id = this.usergroup.users[i];
+                        // }
+
+                        let numOptions =  this.usergroup.users.length;
+                        let opts = new Array(numOptions);
+
+                        for (let i = 0; i < numOptions; i++) {
+                            opts[i] = {
+                                id: this.usergroup.users[i], 
+                                text: this.users.find(myObj => myObj._id ===  this.usergroup.users[i] ).username,
+                            };
+                        }
+
+                        this.user = opts.slice(0);
+                       
+                    });
         };
         
-        // this.developmentService.getAll().subscribe(developments => { this.developments = developments; });
+        
     }
 
-    // getUsers(): void {
-    //    this.userService.getUsers().then(users => this.users = users);
-    // }
+
+
+    
+  private get disabledV():string {
+    return this._disabledV;
+  }
+
+  private set disabledV(value:string) {
+    this._disabledV = value;
+    this.disabled = this._disabledV === '1';
+  }
+
+  public selected(value:any):void {
+    console.log('Selected value is: ', value);
+  }
+
+  public removed(value:any):void {
+    console.log('Removed value is: ', value);
+  }
+
+  public refreshValueUser(value:any):void {
+    this.user = value;
+  }
+
+  public refreshValueChief(value:any):void {
+    this.chief = value;
+  }
+
+  public itemsToString(value:Array<any> = []):string {
+    return value
+      .map((item:any) => {
+        return item.text;
+      }).join(',');
+  }
 
     initUser() {
         return this.formbuilder.group({
         });
     }
+
+    getUsers(): void {
+        this.userService.getUsers().then(users => {
+            this.users = users;
+            let numOptions =  this.users.length;
+            let opts = new Array(numOptions);
+
+            for (let i = 0; i < numOptions; i++) {
+                opts[i] = {
+                    id: this.users[i]._id, 
+                    text: this.users[i].username
+                };
+            }
+
+            this.myOptions = opts.slice(0);
+            this.items = this.myOptions; 
+        });
+    }
+
 
     addUser() {
         const control = <FormArray>this.myForm.controls['users'];
@@ -94,8 +164,10 @@ export class EditUserGroupComponent implements OnInit {
     }
 
     createUserGroup(model: any) {
-        // call API to save
-        // ...
+        for (let i = 0; i < this.user.length; i++) {
+            model.users[i] =this.user[i].id ;
+        }
+        model.chief = this.chief.id;
         console.log(model);
         //   this.userGroupService.create(model)
         // .then(
@@ -110,6 +182,11 @@ export class EditUserGroupComponent implements OnInit {
     }
 
     updateUserGroup(){
+        this.usergroup.users = [];
+        for (let i = 0; i < this.user.length; i++) {
+            this.usergroup.users[i] =this.user[i].id ;
+        }
+        this.usergroup.chief = this.chief.id;
          console.log(this.usergroup);
     //     this.userGroupService.update(this.usergroup)
     //     .then(

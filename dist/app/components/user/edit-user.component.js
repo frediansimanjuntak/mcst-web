@@ -61,7 +61,7 @@ var EditUserComponent = (function () {
             _this.id = params['id'];
         });
         if (this.id != null) {
-            this.userService.getUser(this.id).then(function (user) { _this.user = user; console.log(user); });
+            this.userService.getUser(this.id).then(function (user) { _this.user = user; });
         }
         ;
         // this.developmentService.getAll().subscribe(developments => { this.developments = developments; });

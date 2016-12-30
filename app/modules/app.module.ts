@@ -9,6 +9,8 @@ import { HttpModule }                   from '@angular/http';
 import { Ng2TableModule }               from 'ng2-table/ng2-table';
 import { Ng2BootstrapModule }           from 'ng2-bootstrap/ng2-bootstrap';
 import { PaginationModule }             from 'ng2-bootstrap/ng2-bootstrap';
+import { SelectModule }                 from 'ng2-select/ng2-select';
+// import { SELECT_DIRECTIVES }            from 'ng2-select';
 import { AppRoutingModule }     		    from './app-routing.module';
 import { url }                          from '../global'
 import { DataTableModule,SharedModule,ScheduleModule,DialogModule,InputMaskModule,CheckboxModule } from 'primeng/primeng';
@@ -88,6 +90,7 @@ import {
     DialogModule,
     InputMaskModule,
     CheckboxModule,
+    SelectModule,
   ],
   declarations: [ 
     EqualValidator,
