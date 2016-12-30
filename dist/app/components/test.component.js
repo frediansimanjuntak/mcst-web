@@ -21,10 +21,6 @@ var TestComponent = (function () {
         this.idGen = 100;
         this.files = [];
         this.uploader = new ng2_file_upload_1.FileUploader({ url: 'http://localhost:3001/upload' });
-<<<<<<< HEAD
-=======
-<<<<<<< HEAD
->>>>>>> dev
         this.options1 = [];
         var numOptions = 100;
         var opts = new Array(numOptions);
@@ -35,12 +31,7 @@ var TestComponent = (function () {
             };
         }
         this.options1 = opts.slice(0);
-<<<<<<< HEAD
-=======
-=======
->>>>>>> dev
         this.filesToUpload = [];
->>>>>>> dev
     }
     TestComponent.prototype.ngOnInit = function () {
         this.events = [
