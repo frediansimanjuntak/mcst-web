@@ -1,0 +1,51 @@
+<div class="container">
+	<div class="main">
+		<div class="title">
+			Manage Annoncement
+		</div>
+		Home > Manage Annoncement
+		<div class="row">
+			<div class="col-md-4 pull-right">
+					  		<a class="btn btn-default pull-right" [routerLink]="['/announcement/add']">
+					  		<i class="fa fa-plus" aria-hidden="true"></i>&nbsp;Make an Announcement</a>
+					  		
+			</div>
+		</div>
+		<div (click)="$event.preventDefault()">
+		  <tabset>
+		    <tab heading="Draft">
+		    	<p-dataTable [value]="announcementsDrafted" [rows]="10" [paginator]="true">
+				    <p-column field="title" header="Date" sortable="true" [filter]="true" filterPlaceholder="Search title"></p-column>
+				    <p-column field="message" header="Message" sortable="true" [filter]="true" filterPlaceholder="Search Message"></p-column>
+				    <p-column field="sticky" header="Sticky?" sortable="true" [filter]="true"></p-column>
+				    <p-column field="auto_post_on" header="Auto pot on" sortable="true" [filter]="true" filterPlaceholder="Search Date "></p-column>
+				    <p-column field="valid_till" header="Valid till" sortable="true" [filter]="true" filterPlaceholder="Search Date "></p-column>
+				    <p-column field="created_at" header="Created on" sortable="true" [filter]="true" filterPlaceholder="Search Date "></p-column>
+				    <p-column styleClass="col-button">
+				    	<template let-announcementsDrafted="rowData" pTemplate="body">
+				    	<button type="button" (click)="editAnnouncement(announcementsDrafted)">Publish</button>
+				    	<button type="button" (click)="publishAnnouncement(announcementsDrafted)">Publish</button>
+				        <button class="pull-right" type="button" (click)="deleteAnnouncement(announcementsDrafted)">Delete</button>
+				    	</template>
+				    </p-column>
+				</p-dataTable>
+		    </tab>
+		    <tab heading="Published">
+		    	<p-dataTable [value]="announcementsPublished" [rows]="10" [paginator]="true">
+				    <p-column field="title" header="Date" sortable="true" [filter]="true" filterPlaceholder="Search title"></p-column>
+				    <p-column field="message" header="Message" sortable="true" [filter]="true" filterPlaceholder="Search Message"></p-column>
+				    <p-column field="sticky" header="Sticky?" sortable="true" [filter]="true"></p-column>
+				    <p-column field="valid_till" header="Valid till" sortable="true" [filter]="true" filterPlaceholder="Search Date "></p-column>
+				    <p-column field="created_at" header="Created on" sortable="true" [filter]="true" filterPlaceholder="Search Date "></p-column>
+				    <p-column field="created_by" header="Created by" sortable="true" [filter]="true" filterPlaceholder="Search Date "></p-column>
+				    <p-column styleClass="col-button">
+				    	<template let-announcementsPublished="rowData" pTemplate="body">
+				        <button class="pull-right" type="button" (click)="deleteAnnouncement(announcementsPublished)">Delete</button>
+				    	</template>
+				    </p-column>
+				</p-dataTable>
+		    </tab>	
+		  </tabset>
+		</div>	
+	</div>
+</div>

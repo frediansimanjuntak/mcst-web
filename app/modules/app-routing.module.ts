@@ -35,6 +35,8 @@ import {
   UserGroupComponent,
   EditUserGroupComponent,
   VisitComponent,
+  AnnouncementComponent,
+  EditAnnouncementComponent,
   TestComponent
 } from '../components/index';
 const routes: Routes = [
@@ -69,6 +71,10 @@ const routes: Routes = [
   { path: 'user_group',   component: UserGroupComponent },
   { path: 'user_group/add',   component: EditUserGroupComponent },
   { path: 'user_group/edit/:id',   component: EditUserGroupComponent },
+
+  { path: 'announcement',   component: AnnouncementComponent },
+  { path: 'announcement/add',   component: EditAnnouncementComponent },
+  { path: 'announcement/edit/:id',   component: EditAnnouncementComponent },
   // { path: 'form',     component: HeroFormComponent },
   // { path: 'table',     component: TableDemoComponent },
   { path: 'test',     component: TestComponent },

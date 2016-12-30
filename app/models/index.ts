@@ -14,3 +14,4 @@ export * from './quotation';
 export * from './user';
 export * from './user-group';
 export * from './visit';
+export * from './announcement';
