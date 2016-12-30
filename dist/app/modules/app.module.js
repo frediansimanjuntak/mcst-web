@@ -51,6 +51,8 @@ AppModule = __decorate([
             ng2_select_1.SelectModule,
         ],
         declarations: [
+            index_1.AccessControlComponent,
+            index_1.EditAccessControlComponent,
             equal_validator_directive_1.EqualValidator,
             index_1.AlertComponent,
             index_1.AppComponent,
@@ -88,6 +90,7 @@ AppModule = __decorate([
             index_1.TestComponent
         ],
         providers: [
+            index_2.AccessControlService,
             index_2.AlertService,
             index_2.AttachmentService,
             index_2.AuthenticationService,

@@ -37,7 +37,7 @@ export const MENUS: any[] = [
   	sub : [
   		{ name : 'Browse Database', link: '' },
   		{ name : 'Add Resident', link: '' },
-  		{ name : 'Manage Access control', link: '' }
+  		{ name : 'Manage Access control', link: '/access_control' }
   	]
   },
   { 

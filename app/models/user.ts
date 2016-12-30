@@ -1,4 +1,4 @@
-import { Development, UserGroup } from './index';
+import { Development, UserGroup, Attachment } from './index';
 
 export class User {
   _id : string;
@@ -18,8 +18,8 @@ export class User {
     identification_type : string,
     identification_no : string,
     identification_proof : {
-      front : string,
-      back : string
+      front : Attachment,
+      back : Attachment
     }
   };
   rented_property : [

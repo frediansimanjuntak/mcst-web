@@ -58,6 +58,20 @@ var EditSettingComponent = (function () {
             event.preventDefault();
         }
     };
+    EditSettingComponent.prototype.onChange = function (event) {
+        var files = [].slice.call(event.target.files);
+        this.user.details.identification_proof.front = files;
+    };
+    EditSettingComponent.prototype.onChange1 = function (event) {
+        var files = [].slice.call(event.target.files);
+        this.user.details.identification_proof.back = files;
+    };
+    EditSettingComponent.prototype.remove = function (i) {
+        this.user.details.identification_proof.front.splice(i, 1);
+    };
+    EditSettingComponent.prototype.remove1 = function (i) {
+        this.user.details.identification_proof.back.splice(i, 1);
+    };
     return EditSettingComponent;
 }());
 EditSettingComponent = __decorate([

@@ -17,6 +17,8 @@ import { DataTableModule,SharedModule,ScheduleModule,DialogModule,InputMaskModul
 import { EqualValidator }               from '../components/user/equal-validator.directive';
 
 import { 
+  AccessControlComponent,
+  EditAccessControlComponent,
   AlertComponent,
   AppComponent,
   AttachmentComponent,
@@ -53,6 +55,7 @@ import {
 } from '../components/index';
 
 import {
+  AccessControlService,
   AlertService,
   AttachmentService,
   AuthenticationService,
@@ -93,6 +96,8 @@ import {
     SelectModule,
   ],
   declarations: [ 
+    AccessControlComponent,
+    EditAccessControlComponent,
     EqualValidator,
     AlertComponent,
   	AppComponent,
@@ -130,6 +135,7 @@ import {
     TestComponent
   ],
   providers: [ 
+    AccessControlService,
     AlertService,
     AttachmentService,
     AuthenticationService,

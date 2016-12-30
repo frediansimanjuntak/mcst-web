@@ -45,7 +45,7 @@ var EditNewsletterComponent = (function () {
             })
         });
     };
-    EditNewsletterComponent.prototype.createNewsletter = function () {
+    EditNewsletterComponent.prototype.createNewsletter = function (event) {
         var _this = this;
         if (this.model.released == true) {
             this.model.released_by = '583e4e9dd97c97149884fef5';
@@ -57,14 +57,7 @@ var EditNewsletterComponent = (function () {
         }
         this.model.type = this.selectedType;
         this.model.created_by = '583e4e9dd97c97149884fef5';
-        this.model.attachment = {
-            "name": this.uploader.queue[0]._file.name,
-            "type": this.uploader.queue[0]._file.type,
-            "information": "Optional",
-            "created_by": "583e4e9dd97c97149884fef5",
-        };
         // this.model.pinned.rank = 0;
-        console.log(this.uploader.queue[0]);
         console.log(this.model);
         this.newsletterService.create(this.model)
             .subscribe(function (data) {
@@ -90,6 +83,13 @@ var EditNewsletterComponent = (function () {
         }, function (error) {
             _this.alertService.error(error);
         });
+    };
+    EditNewsletterComponent.prototype.onChange = function (event) {
+        var files = [].slice.call(event.target.files);
+        this.model.attachment = files;
+    };
+    EditNewsletterComponent.prototype.remove = function (i) {
+        this.model.attachment.splice(i, 1);
     };
     return EditNewsletterComponent;
 }());

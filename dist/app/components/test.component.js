@@ -19,7 +19,9 @@ var TestComponent = (function () {
         this.model = {};
         this.dialogVisible = false;
         this.idGen = 100;
+        this.files = [];
         this.uploader = new ng2_file_upload_1.FileUploader({ url: 'http://localhost:3001/upload' });
+<<<<<<< HEAD
         this.options1 = [];
         var numOptions = 100;
         var opts = new Array(numOptions);
@@ -30,6 +32,9 @@ var TestComponent = (function () {
             };
         }
         this.options1 = opts.slice(0);
+=======
+        this.filesToUpload = [];
+>>>>>>> dev
     }
     TestComponent.prototype.ngOnInit = function () {
         this.events = [
@@ -120,16 +125,55 @@ var TestComponent = (function () {
         return index;
     };
     TestComponent.prototype.Save = function () {
-        this.model.attachment = [];
-        var a = this.uploader.queue.length;
-        for (var i = 0; i < a; i++) {
-            this.model.attachment = [{
-                    "name": this.uploader.queue[i].file.name,
-                    "type": this.uploader.queue[i].file.type,
-                }];
-            console.log(this.uploader.queue[i].file.name);
-            console.log(this.model);
-        }
+        // let a = this.filesToUpload.length;
+        // for (let i = 0; i < a; i++) {
+        //           this.model.attachment = this.filesToUpload[i]	       
+        // }	
+        this.model.attachment = this.filesToUpload;
+        console.log(this.makeFileRequest);
+        console.log(this.filesToUpload);
+        console.log(this.model);
+    };
+    TestComponent.prototype.onChange = function (event, input, a) {
+        var files = [].slice.call(event.target.files);
+        this.model.attachment = files;
+        console.log(this.model);
+    };
+    TestComponent.prototype.upload = function () {
+        console.log(this.model);
+        this.makeFileRequest("http://localhost:3000/upload", [], this.model).then(function (result) {
+            console.log(result);
+        }, function (error) {
+            console.error(error);
+        });
+    };
+    TestComponent.prototype.fileChangeEvent = function (fileInput) {
+        this.filesToUpload = fileInput.target.files;
+        this.model.attachment = this.filesToUpload;
+    };
+    TestComponent.prototype.makeFileRequest = function (url, params, files) {
+        return new Promise(function (resolve, reject) {
+            var formData = new FormData();
+            var xhr = new XMLHttpRequest();
+            for (var i = 0; i < files.length; i++) {
+                formData.append("uploads[]", files[i], files[i].name);
+            }
+            xhr.onreadystatechange = function () {
+                if (xhr.readyState == 4) {
+                    if (xhr.status == 200) {
+                        resolve(JSON.parse(xhr.response));
+                    }
+                    else {
+                        reject(xhr.response);
+                    }
+                }
+            };
+            xhr.open("POST", url, true);
+            xhr.send(formData);
+        });
+    };
+    TestComponent.prototype.remove = function (i) {
+        this.model.attachment.splice(i, 1);
     };
     return TestComponent;
 }());

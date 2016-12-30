@@ -59,4 +59,22 @@ export class EditSettingComponent {
             event.preventDefault();
         }
     }
+
+    onChange(event: any) {
+        let files = [].slice.call(event.target.files);
+        this.user.details.identification_proof.front =  files;
+    }
+
+    onChange1(event: any) {
+       let files = [].slice.call(event.target.files); 
+       this.user.details.identification_proof.back =  files;
+    }
+
+    remove(i: any){ 
+        this.user.details.identification_proof.front.splice(i, 1)
+    }
+
+    remove1(i: any){ 
+        this.user.details.identification_proof.back.splice(i, 1)
+    }
 }

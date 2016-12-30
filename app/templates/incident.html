@@ -5,30 +5,6 @@
                 {{incident.reference_no}} {{incident.title}}
             </div>
             <p>Home > Incident Reports > {{incident.reference_no}} {{incident.title}}</p>
-            <!-- <div class="row">
-            	<div class="col-lg-6">
-            		
-            	</div>
-            	<div class="col-lg-6">
-            		<strong>{{incident.title}}<br/></strong>
-		            <div class="col-lg-2">
-		                Reported by<br/>
-		                Type of Report<br/>
-		                Report time<br/>
-		                Status<br/>
-		                Order<br/>
-		                Message<br/>
-		            </div>
-		            <div class="col-lg-4">
-		                : {{ incident.created_by }}<br/>
-		                : {{ incident.incident_type }}<br/>
-		                : {{ incident.created_at }}<br/>
-		                : {{ incident.status }}<br/>
-		                : <br/>
-		                : {{ incident.remark }}
-		            </div>
-	            </div>
-	        </div> -->
 	        <div class="row">
 	        	<div class="col-lg-6"></div>
 	        	<div class="col-lg-6">
@@ -76,14 +52,14 @@
 			  <!-- ALL -->
 			    <tab heading="All">
 			    	<p-dataTable [value]="incidents" [rows]="10" [paginator]="true">
-					    <p-column field="reference_no" header="Report No." sortable="true" [filter]="true" filterPlaceholder="Search date"></p-column>
-					    <p-column field="incident_type" header="Type" sortable="true" [filter]="true" filterPlaceholder="Search Title"></p-column>
-					    <p-column field="created_by" header="Reported by" sortable="true" [filter]="true" filterPlaceholder="Search Title"></p-column>
-					    <p-column field="created_at" header="Report time" sortable="true" [filter]="true" filterPlaceholder="Search Title"></p-column>
+					    <p-column field="reference_no" header="Report No." sortable="true" [filter]="true" filterPlaceholder="Search Report No."></p-column>
+					    <p-column field="incident_type" header="Type" sortable="true" [filter]="true" filterPlaceholder="Search Type"></p-column>
+					    <p-column field="created_by" header="Reported by" sortable="true" [filter]="true" filterPlaceholder="Search Reported by"></p-column>
+					    <p-column field="created_at" header="Report time" sortable="true" [filter]="true" filterPlaceholder="Search Report time"></p-column>
 					    <p-column field="title" header="Title" sortable="true" [filter]="true" filterPlaceholder="Search Title"></p-column>
-					    <p-column field="remark" header="Message" sortable="true" [filter]="true" filterPlaceholder="Search Title"></p-column>
+					    <p-column field="remark" header="Message" sortable="true" [filter]="true" filterPlaceholder="Search Message"></p-column>
 					    <p-column field="attachment" header="Photo"></p-column>
-					    <p-column field="status" header="Status" sortable="true" [filter]="true" filterPlaceholder="Search Uploaded on">
+					    <p-column field="status" header="Status" sortable="true" [filter]="true" filterPlaceholder="Search Status">
 					        <template let-col let-data="rowData" pTemplate="body">
 					            <span [style.color]="data[col.field]">{{data[col.field]}}</span>
 					        </template>
@@ -99,14 +75,14 @@
 			    <!-- NEW -->
 			    <tab heading="New">
 			    	<p-dataTable [value]="dataNew" [rows]="10" [paginator]="true">
-					    <p-column field="reference_no" header="Report No." sortable="true" [filter]="true" filterPlaceholder="Search date"></p-column>
-					    <p-column field="incident_type" header="Type" sortable="true" [filter]="true" filterPlaceholder="Search Title"></p-column>
-					    <p-column field="created_by" header="Reported by" sortable="true" [filter]="true" filterPlaceholder="Search Title"></p-column>
-					    <p-column field="created_at" header="Report time" sortable="true" [filter]="true" filterPlaceholder="Search Title"></p-column>
+					    <p-column field="reference_no" header="Report No." sortable="true" [filter]="true" filterPlaceholder="Search Report No."></p-column>
+					    <p-column field="incident_type" header="Type" sortable="true" [filter]="true" filterPlaceholder="Search Type"></p-column>
+					    <p-column field="created_by" header="Reported by" sortable="true" [filter]="true" filterPlaceholder="Search Reported by"></p-column>
+					    <p-column field="created_at" header="Report time" sortable="true" [filter]="true" filterPlaceholder="Search Report time"></p-column>
 					    <p-column field="title" header="Title" sortable="true" [filter]="true" filterPlaceholder="Search Title"></p-column>
-					    <p-column field="remark" header="Message" sortable="true" [filter]="true" filterPlaceholder="Search Title"></p-column>
+					    <p-column field="remark" header="Message" sortable="true" [filter]="true" filterPlaceholder="Search Message"></p-column>
 					    <p-column field="attachment" header="Photo"></p-column>
-					    <p-column field="status" header="Status" sortable="true" [filter]="true" filterPlaceholder="Search Uploaded on">
+					    <p-column field="status" header="Status" sortable="true" [filter]="true" filterPlaceholder="Search Status">
 					        <template let-col let-data="rowData" pTemplate="body">
 					            <span [style.color]="data[col.field]">{{data[col.field]}}</span>
 					        </template>
@@ -122,14 +98,14 @@
 			    <!-- REVIEWING -->
 			    <tab heading="Reviewing">
 			    	<p-dataTable [value]="dataReviewing" [rows]="10" [paginator]="true">
-					    <p-column field="reference_no" header="Report No." sortable="true" [filter]="true" filterPlaceholder="Search date"></p-column>
-					    <p-column field="incident_type" header="Type" sortable="true" [filter]="true" filterPlaceholder="Search Title"></p-column>
-					    <p-column field="created_by" header="Reported by" sortable="true" [filter]="true" filterPlaceholder="Search Title"></p-column>
-					    <p-column field="created_at" header="Report time" sortable="true" [filter]="true" filterPlaceholder="Search Title"></p-column>
+					    <p-column field="reference_no" header="Report No." sortable="true" [filter]="true" filterPlaceholder="Search Report No."></p-column>
+					    <p-column field="incident_type" header="Type" sortable="true" [filter]="true" filterPlaceholder="Search Type"></p-column>
+					    <p-column field="created_by" header="Reported by" sortable="true" [filter]="true" filterPlaceholder="Search Reported by"></p-column>
+					    <p-column field="created_at" header="Report time" sortable="true" [filter]="true" filterPlaceholder="Search Report time"></p-column>
 					    <p-column field="title" header="Title" sortable="true" [filter]="true" filterPlaceholder="Search Title"></p-column>
-					    <p-column field="remark" header="Message" sortable="true" [filter]="true" filterPlaceholder="Search Title"></p-column>
+					    <p-column field="remark" header="Message" sortable="true" [filter]="true" filterPlaceholder="Search Message"></p-column>
 					    <p-column field="attachment" header="Photo"></p-column>
-					    <p-column field="status" header="Status" sortable="true" [filter]="true" filterPlaceholder="Search Uploaded on">
+					    <p-column field="status" header="Status" sortable="true" [filter]="true" filterPlaceholder="Search Status">
 					        <template let-col let-data="rowData" pTemplate="body">
 					            <span [style.color]="data[col.field]">{{data[col.field]}}</span>
 					        </template>
@@ -145,14 +121,14 @@
 			    <!-- IN PROGRESS -->
 			    <tab heading="In-Progress">
 			    	<p-dataTable [value]="dataInProgress" [rows]="10" [paginator]="true">
-					    <p-column field="reference_no" header="Report No." sortable="true" [filter]="true" filterPlaceholder="Search date"></p-column>
-					    <p-column field="incident_type" header="Type" sortable="true" [filter]="true" filterPlaceholder="Search Title"></p-column>
-					    <p-column field="created_by" header="Reported by" sortable="true" [filter]="true" filterPlaceholder="Search Title"></p-column>
-					    <p-column field="created_at" header="Report time" sortable="true" [filter]="true" filterPlaceholder="Search Title"></p-column>
+					    <p-column field="reference_no" header="Report No." sortable="true" [filter]="true" filterPlaceholder="Search Report No."></p-column>
+					    <p-column field="incident_type" header="Type" sortable="true" [filter]="true" filterPlaceholder="Search Type"></p-column>
+					    <p-column field="created_by" header="Reported by" sortable="true" [filter]="true" filterPlaceholder="Search Reported by"></p-column>
+					    <p-column field="created_at" header="Report time" sortable="true" [filter]="true" filterPlaceholder="Search Report time"></p-column>
 					    <p-column field="title" header="Title" sortable="true" [filter]="true" filterPlaceholder="Search Title"></p-column>
-					    <p-column field="remark" header="Message" sortable="true" [filter]="true" filterPlaceholder="Search Title"></p-column>
+					    <p-column field="remark" header="Message" sortable="true" [filter]="true" filterPlaceholder="Search Message"></p-column>
 					    <p-column field="attachment" header="Photo"></p-column>
-					    <p-column field="status" header="Status" sortable="true" [filter]="true" filterPlaceholder="Search Uploaded on">
+					    <p-column field="status" header="Status" sortable="true" [filter]="true" filterPlaceholder="Search Status">
 					        <template let-col let-data="rowData" pTemplate="body">
 					            <span [style.color]="data[col.field]">{{data[col.field]}}</span>
 					        </template>
@@ -168,14 +144,14 @@
 			    <!-- RESOLVED -->
 			    <tab heading="Resolved">
 			    	<p-dataTable [value]="dataResolved" [rows]="10" [paginator]="true">
-					    <p-column field="reference_no" header="Report No." sortable="true" [filter]="true" filterPlaceholder="Search date"></p-column>
-					    <p-column field="incident_type" header="Type" sortable="true" [filter]="true" filterPlaceholder="Search Title"></p-column>
-					    <p-column field="created_by" header="Reported by" sortable="true" [filter]="true" filterPlaceholder="Search Title"></p-column>
-					    <p-column field="created_at" header="Report time" sortable="true" [filter]="true" filterPlaceholder="Search Title"></p-column>
+					    <p-column field="reference_no" header="Report No." sortable="true" [filter]="true" filterPlaceholder="Search Report No."></p-column>
+					    <p-column field="incident_type" header="Type" sortable="true" [filter]="true" filterPlaceholder="Search Type"></p-column>
+					    <p-column field="created_by" header="Reported by" sortable="true" [filter]="true" filterPlaceholder="Search Reported by"></p-column>
+					    <p-column field="created_at" header="Report time" sortable="true" [filter]="true" filterPlaceholder="Search Report time"></p-column>
 					    <p-column field="title" header="Title" sortable="true" [filter]="true" filterPlaceholder="Search Title"></p-column>
-					    <p-column field="remark" header="Message" sortable="true" [filter]="true" filterPlaceholder="Search Title"></p-column>
+					    <p-column field="remark" header="Message" sortable="true" [filter]="true" filterPlaceholder="Search Message"></p-column>
 					    <p-column field="attachment" header="Photo"></p-column>
-					    <p-column field="status" header="Status" sortable="true" [filter]="true" filterPlaceholder="Search Uploaded on">
+					    <p-column field="status" header="Status" sortable="true" [filter]="true" filterPlaceholder="Search Status">
 					        <template let-col let-data="rowData" pTemplate="body">
 					            <span [style.color]="data[col.field]">{{data[col.field]}}</span>
 					        </template>
@@ -191,14 +167,14 @@
 			    <!-- URGENT -->
 			    <tab heading="Urgent">
 			    	<p-dataTable [value]="dataUrgent" [rows]="10" [paginator]="true">
-					    <p-column field="reference_no" header="Report No." sortable="true" [filter]="true" filterPlaceholder="Search date"></p-column>
-					    <p-column field="incident_type" header="Type" sortable="true" [filter]="true" filterPlaceholder="Search Title"></p-column>
-					    <p-column field="created_by" header="Reported by" sortable="true" [filter]="true" filterPlaceholder="Search Title"></p-column>
-					    <p-column field="created_at" header="Report time" sortable="true" [filter]="true" filterPlaceholder="Search Title"></p-column>
+					    <p-column field="reference_no" header="Report No." sortable="true" [filter]="true" filterPlaceholder="Search Report No."></p-column>
+					    <p-column field="incident_type" header="Type" sortable="true" [filter]="true" filterPlaceholder="Search Type"></p-column>
+					    <p-column field="created_by" header="Reported by" sortable="true" [filter]="true" filterPlaceholder="Search Reported by"></p-column>
+					    <p-column field="created_at" header="Report time" sortable="true" [filter]="true" filterPlaceholder="Search Report time"></p-column>
 					    <p-column field="title" header="Title" sortable="true" [filter]="true" filterPlaceholder="Search Title"></p-column>
-					    <p-column field="remark" header="Message" sortable="true" [filter]="true" filterPlaceholder="Search Title"></p-column>
+					    <p-column field="remark" header="Message" sortable="true" [filter]="true" filterPlaceholder="Search Message"></p-column>
 					    <p-column field="attachment" header="Photo"></p-column>
-					    <p-column field="status" header="Status" sortable="true" [filter]="true" filterPlaceholder="Search Uploaded on">
+					    <p-column field="status" header="Status" sortable="true" [filter]="true" filterPlaceholder="Search Status">
 					        <template let-col let-data="rowData" pTemplate="body">
 					            <span [style.color]="data[col.field]">{{data[col.field]}}</span>
 					        </template>

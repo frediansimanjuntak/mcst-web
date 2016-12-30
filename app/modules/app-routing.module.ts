@@ -2,6 +2,8 @@ import { NgModule }             from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
 import { 
+  AccessControlComponent,
+  EditAccessControlComponent,
   AppComponent,
   AttachmentComponent,
   BookingComponent,
@@ -51,6 +53,9 @@ const routes: Routes = [
   { path: 'incident/view/:id',   component: IncidentComponent },
   { path: 'setting',     component: SettingComponent },
   { path: 'setting/edit/:id',     component: EditSettingComponent },
+  { path: 'access_control',   component: AccessControlComponent },
+  { path: 'access_control/add',   component: EditAccessControlComponent },
+  { path: 'access_control/edit/:id',   component: EditAccessControlComponent },
   
   // { path: 'newsletter/edit/:name',   component: EditNewsletterComponent },
   { path: 'development',   component: DevelopmentComponent },

@@ -2,6 +2,8 @@
 function __export(m) {
     for (var p in m) if (!exports.hasOwnProperty(p)) exports[p] = m[p];
 }
+__export(require("./access-control/access-control.component"));
+__export(require("./access-control/edit-access-control.component"));
 __export(require("./alert.component"));
 __export(require("./app.component"));
 __export(require("./attachment/attachment.component"));

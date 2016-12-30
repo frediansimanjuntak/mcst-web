@@ -22,7 +22,10 @@ export class TestComponent implements OnInit{
 	event: MyEvent;
 	dialogVisible: boolean = false;
 	idGen: number = 100;
+    filesToUpload: Array<File>;
+    files: any[] = [];
 	public uploader:FileUploader = new FileUploader({url:'http://localhost:3001/upload'});
+
 
     // multiple1: boolean = true;
     myOptions: Array<any>;
@@ -44,7 +47,9 @@ export class TestComponent implements OnInit{
         }
 
         this.options1 = opts.slice(0);
+         this.filesToUpload = [];
     }
+
 
 	
 	ngOnInit() {
@@ -152,21 +157,65 @@ export class TestComponent implements OnInit{
     }
 
 	Save() {
-		this.model.attachment = [];
-		let a = this.uploader.queue.length;
-		for (let i = 0; i < a; i++) {
-	        this.model.attachment = [{
-	        	"name": this.uploader.queue[i].file.name,
-	            "type": this.uploader.queue[i].file.type,
-	        }]
-	        console.log(this.uploader.queue[i].file.name)
-	        console.log(this.model);
-        // this.model.pinned.rank = 0;
-		}	
+		// let a = this.filesToUpload.length;
+		// for (let i = 0; i < a; i++) {
+  //           this.model.attachment = this.filesToUpload[i]	       
+		// }	
+        this.model.attachment = this.filesToUpload;
+        console.log(this.makeFileRequest);
+        console.log(this.filesToUpload);
+        console.log(this.model);
         
     }
 
+<<<<<<< HEAD
     
+=======
+    onChange(event: any, input: any, a:any) {
+        let files = [].slice.call(event.target.files);
+        this.model.attachment = files
+        console.log(this.model);
+    }
+
+    upload() {
+        console.log(this.model);
+        this.makeFileRequest("http://localhost:3000/upload", [], this.model).then((result) => {
+            console.log(result);
+        }, (error) => {
+            console.error(error);
+        });
+    }
+ 
+    fileChangeEvent(fileInput: any){
+        this.filesToUpload = <Array<File>> fileInput.target.files;
+        this.model.attachment = this.filesToUpload;
+    }
+
+    makeFileRequest(url: string, params: Array<string>, files: Array<File>) {
+        return new Promise((resolve, reject) => {
+            var formData: any = new FormData();
+            var xhr = new XMLHttpRequest();
+            for(var i = 0; i < files.length; i++) {
+                formData.append("uploads[]", files[i], files[i].name);
+            }
+            xhr.onreadystatechange = function () {
+                if (xhr.readyState == 4) {
+                    if (xhr.status == 200) {
+                        resolve(JSON.parse(xhr.response));
+                    } else {
+                        reject(xhr.response);
+                    }
+                }
+            }
+            xhr.open("POST", url, true);
+            xhr.send(formData);
+        });
+    }
+
+    remove(i: any){ 
+        this.model.attachment.splice(i, 1)
+    }
+>>>>>>> dev
 }
 
 export class MyEvent {

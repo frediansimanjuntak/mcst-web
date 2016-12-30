@@ -1,3 +1,4 @@
+export * from './access-control';
 export * from './attachment';
 export * from './booking';
 export * from './company';
