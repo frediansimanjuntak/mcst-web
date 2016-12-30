@@ -13,7 +13,7 @@ import '../../rxjs-operators';
 })
  
 export class EditUserComponent implements OnInit {
-    @Input('group')
+     @Input('group')
     user: User;
     model: any = {};
     id: string;
@@ -29,6 +29,8 @@ export class EditUserComponent implements OnInit {
         private formbuilder: FormBuilder,
         private unitService: UnitService) {}
 
+
+
     ngOnInit(): void {
         this.myForm = this.formbuilder.group({
             username : ['', Validators.required],
@@ -38,9 +40,9 @@ export class EditUserComponent implements OnInit {
             phone : ['', Validators.required],
             role : ['', Validators.required],
             default_property: this.formbuilder.group({
-                development: [''],
-                property: [''],
-                role : ['']
+                development: ['', Validators.required],
+                property: ['', Validators.required],
+                role : ['', Validators.required]
             }),
             rented_property: this.formbuilder.group({
                 development: [''],
@@ -57,7 +59,6 @@ export class EditUserComponent implements OnInit {
         this.unitService.getDevelopment("1")
             .then(unit => {
                 self.unit = unit;
-                console.log(unit);
             });
         this.route.params.subscribe(params => {
             this.id = params['id'];
@@ -133,18 +134,18 @@ export class EditUserComponent implements OnInit {
         );
     }
 
-    updateUser(){
-        console.log(this.user);
-		this.userService.update(this.user)
-		.then(
-            response => {
-                this.alertService.success('Update User successful', true);
-                this.router.navigate(['/user']);
-	        },
-            error=> { 
-            	this.alertService.error(error);
-            }
-        );
+    updateUser(user:User){
+        console.log(user);
+		// this.userService.update(this.user)
+		// .then(
+        //     response => {
+        //         this.alertService.success('Update User successful', true);
+        //         this.router.navigate(['/user']);
+	       //  },
+        //     error=> { 
+        //     	this.alertService.error(error);
+        //     }
+        // );
 	}
 
     number(event: any) {

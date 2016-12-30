@@ -168,7 +168,6 @@ export class TestComponent implements OnInit{
         
     }
 
-
     onChange(event: any, input: any, a:any) {
         let files = [].slice.call(event.target.files);
         this.model.attachment = files
@@ -213,7 +212,6 @@ export class TestComponent implements OnInit{
     remove(i: any){ 
         this.model.attachment.splice(i, 1)
     }
-
 }
 
 export class MyEvent {

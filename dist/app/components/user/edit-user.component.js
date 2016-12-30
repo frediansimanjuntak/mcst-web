@@ -37,9 +37,9 @@ var EditUserComponent = (function () {
             phone: ['', forms_1.Validators.required],
             role: ['', forms_1.Validators.required],
             default_property: this.formbuilder.group({
-                development: [''],
-                property: [''],
-                role: ['']
+                development: ['', forms_1.Validators.required],
+                property: ['', forms_1.Validators.required],
+                role: ['', forms_1.Validators.required]
             }),
             rented_property: this.formbuilder.group({
                 development: [''],
@@ -55,7 +55,6 @@ var EditUserComponent = (function () {
         this.unitService.getDevelopment("1")
             .then(function (unit) {
             self.unit = unit;
-            console.log(unit);
         });
         this.route.params.subscribe(function (params) {
             _this.id = params['id'];
@@ -114,16 +113,18 @@ var EditUserComponent = (function () {
             _this.alertService.error(error);
         });
     };
-    EditUserComponent.prototype.updateUser = function () {
-        var _this = this;
-        console.log(this.user);
-        this.userService.update(this.user)
-            .then(function (response) {
-            _this.alertService.success('Update User successful', true);
-            _this.router.navigate(['/user']);
-        }, function (error) {
-            _this.alertService.error(error);
-        });
+    EditUserComponent.prototype.updateUser = function (user) {
+        console.log(user);
+        // this.userService.update(this.user)
+        // .then(
+        //     response => {
+        //         this.alertService.success('Update User successful', true);
+        //         this.router.navigate(['/user']);
+        //  },
+        //     error=> { 
+        //     	this.alertService.error(error);
+        //     }
+        // );
     };
     EditUserComponent.prototype.number = function (event) {
         var pattern = /[0-9\+\ ]/;

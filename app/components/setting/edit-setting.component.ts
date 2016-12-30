@@ -32,6 +32,9 @@ export class EditSettingComponent {
     }
 
     updateSetting(){
+        this.user.details.identification_proof.front = this.model.front;
+        this.user.details.identification_proof.back = this.model.back;
+
             console.log(this.user);
 		    this.userService.update(this.user)
 		    .then(response => {
@@ -62,19 +65,19 @@ export class EditSettingComponent {
 
     onChange(event: any) {
         let files = [].slice.call(event.target.files);
-        this.user.details.identification_proof.front =  files;
+        this.model.front =  files;
     }
 
     onChange1(event: any) {
        let files = [].slice.call(event.target.files); 
-       this.user.details.identification_proof.back =  files;
+       this.model.back =  files;
     }
 
     remove(i: any){ 
-        this.user.details.identification_proof.front.splice(i, 1)
+        this.model.front.splice(i, 1)
     }
 
     remove1(i: any){ 
-        this.user.details.identification_proof.back.splice(i, 1)
+        this.model.back.splice(i, 1)
     }
 }
