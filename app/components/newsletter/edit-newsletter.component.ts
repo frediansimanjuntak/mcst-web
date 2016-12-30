@@ -11,7 +11,7 @@ import { User } from '../../models/index';
 
 @Component({
   moduleId: module.id,
-  selector: 'edit-development',
+  selector: 'edit-newsletter',
   templateUrl: '/app/templates/edit-newsletter.html'
 })
 

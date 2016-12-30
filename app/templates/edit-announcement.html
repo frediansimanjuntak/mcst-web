@@ -1,0 +1,139 @@
+<div class="container">
+    <div class="main">
+<!-- Edit Announcment -->
+        <div *ngIf="announcement">
+            <div class="title">
+                Edit An Announcement
+            </div>
+            <p>Home > Manage Announcement > Edit</p>
+            <form class="form-horizontal col-md-6" name="form" #f="ngForm" novalidate>
+                <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !title.valid }">
+                    <label class="control-label col-sm-4" for="title">Title :</label>
+                    <div class="col-sm-8">
+                        <input type="text" class="form-control" name="title" [(ngModel)]="announcement.title" #title="ngModel" required placeholder="Input title here" />
+                        <span *ngIf="f.submitted && !title.valid" class="help-block">Title is required</span>
+                    </div>
+                </div>
+                <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !message.valid }">
+                    <label class="control-label col-sm-4" for="message">Message :</label>
+                    <div class="col-sm-8">
+                        <textarea type="text" class="form-control" name="message" [(ngModel)]="announcement.message" #message="ngModel" required placeholder="Input message here"></textarea>
+                        <span *ngIf="f.submitted && !message.valid" class="help-block">Message is required</span>
+                    </div>
+                </div>
+                <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !sticky.valid }">
+                    <label class="control-label col-sm-4" for="sticky">Make Sticky :</label>
+                    <div class="col-sm-8">
+                        <select class="form-control" name="sticky" [(ngModel)]="announcement.sticky" #sticky="ngModel" required>
+                          <option value="no">No</option>
+                          <option value="yes">Yes</option>
+                        </select>
+                        <span *ngIf="f.submitted && !message.valid" class="help-block">Message is required</span>
+                    </div>
+                </div>
+                <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !publish.valid }">
+                    <label class="control-label col-sm-4" for="publish">Publish :</label>
+                    <div class="col-sm-8">
+                        <label><input type="radio" name="publish" [(ngModel)]="announcement.publish" [value]=true>Yes</label>publish
+                        <label><input type="radio" name="publish" [(ngModel)]="announcement.publish" checked [value]=false>No</label>     
+                    </div>
+                </div>
+                <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !auto_post_on.valid }">
+                    <label class="control-label col-sm-4" for="auto_post_on">Auto post on :</label>
+                    <div class="col-sm-8">
+                         <input type="text" class="form-control" name="title" [(ngModel)]="announcement.auto_post_on" #auto_post_on="ngModel" required />
+                        <span *ngIf="f.submitted && !auto_post_on.valid" class="help-block">auto_post_on is required</span>
+                   
+                         <!--   <ng2-datepicker [(ngModel)]="announcement.auto_post_on"></ng2-datepicker> -->
+                    </div>
+                </div>
+                <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !valid_till.valid }">
+                    <label class="control-label col-sm-4" for="valid_till">Valid till :</label>
+                    <div class="col-sm-8">
+                        <input type="text" class="form-control" name="valid_till" [(ngModel)]="announcement.valid_till" #valid_till="ngModel" required />
+                        <span *ngIf="f.submitted && !valid_till.valid" class="help-block">valid_till is required</span>
+                         <!--   <ng2-datepicker [(ngModel)]="announcement.valid_till"></ng2-datepicker> -->
+                    </div>
+                </div>
+
+             
+
+            
+                <div class="form-group pull-right">
+                    <button [disabled]="loading" (click)="createAnnouncement()" class="btn btn-primary">Create</button>
+                    <img *ngIf="loading" src="data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA==" />
+                    <a [routerLink]="['/announcement']" class="btn btn-info">Cancel</a>
+                </div>
+            </form>     
+        </div>
+<!-- ADD Announcement -->
+
+        <div *ngIf="!announcement">
+            <div class="title">
+                Make An Announcement
+            </div>
+            <p>Home > Manage Announcement > Make An Announcement </p>
+            
+            <form class="form-horizontal col-md-6" name="form" #f="ngForm" novalidate>
+                <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !title.valid }">
+                    <label class="control-label col-sm-4" for="title">Title :</label>
+                    <div class="col-sm-8">
+                        <input type="text" class="form-control" name="title" [(ngModel)]="announcement.title" #title="ngModel" required placeholder="Input title here" />
+                        <span *ngIf="f.submitted && !title.valid" class="help-block">Title is required</span>
+                    </div>
+                </div>
+                <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !message.valid }">
+                    <label class="control-label col-sm-4" for="message">Message :</label>
+                    <div class="col-sm-8">
+                        <textarea type="text" class="form-control" name="message" [(ngModel)]="announcement.message" #message="ngModel" required placeholder="Input message here"></textarea>
+                        <span *ngIf="f.submitted && !message.valid" class="help-block">Message is required</span>
+                    </div>
+                </div>
+                <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !sticky.valid }">
+                    <label class="control-label col-sm-4" for="sticky">Make Sticky :</label>
+                    <div class="col-sm-8">
+                        <select class="form-control" name="sticky" [(ngModel)]="announcement.sticky" #sticky="ngModel" required>
+                          <option value="no">No</option>
+                          <option value="yes">Yes</option>
+                        </select>
+                        <span *ngIf="f.submitted && !message.valid" class="help-block">Message is required</span>
+                    </div>
+                </div>
+                <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !publish.valid }">
+                    <label class="control-label col-sm-4" for="publish">Publish :</label>
+                    <div class="col-sm-8">
+                        <label><input type="radio" name="publish" [(ngModel)]="announcement.publish" [value]=true>Yes</label>publish
+                        <label><input type="radio" name="publish" [(ngModel)]="announcement.publish" checked [value]=false>No</label>     
+                    </div>
+                </div>
+                <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !auto_post_on.valid }">
+                    <label class="control-label col-sm-4" for="auto_post_on">Auto post on :</label>
+                    <div class="col-sm-8">
+                         <input type="text" class="form-control" name="title" [(ngModel)]="announcement.auto_post_on" #auto_post_on="ngModel" required />
+                        <span *ngIf="f.submitted && !auto_post_on.valid" class="help-block">auto_post_on is required</span>
+                   
+                         <!--   <ng2-datepicker [(ngModel)]="announcement.auto_post_on"></ng2-datepicker> -->
+                    </div>
+                </div>
+                <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !valid_till.valid }">
+                    <label class="control-label col-sm-4" for="valid_till">Valid till :</label>
+                    <div class="col-sm-8">
+                        <input type="text" class="form-control" name="valid_till" [(ngModel)]="announcement.valid_till" #valid_till="ngModel" required />
+                        <span *ngIf="f.submitted && !valid_till.valid" class="help-block">valid_till is required</span>
+                         <!--   <ng2-datepicker [(ngModel)]="announcement.valid_till"></ng2-datepicker> -->
+                    </div>
+                </div>
+
+             
+
+            
+                <div class="form-group pull-right">
+                    <button [disabled]="loading" (click)="createAnnouncement()" class="btn btn-primary">Create</button>
+                    <img *ngIf="loading" src="data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA==" />
+                    <a [routerLink]="['/announcement']" class="btn btn-info">Cancel</a>
+                </div>
+            </form>     
+        </div>
+    </div>
+</div>
+          

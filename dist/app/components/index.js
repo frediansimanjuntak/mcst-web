@@ -8,6 +8,8 @@ __export(require("./alert.component"));
 __export(require("./app.component"));
 __export(require("./attachment/attachment.component"));
 __export(require("./attachment/edit-attachment.component"));
+__export(require("./announcement/announcement.component"));
+__export(require("./announcement/edit-announcement.component"));
 __export(require("./booking/booking.component"));
 __export(require("./booking/edit-booking.component"));
 __export(require("./company/company.component"));

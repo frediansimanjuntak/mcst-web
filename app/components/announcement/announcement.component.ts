@@ -8,7 +8,7 @@ import { Observable} from 'rxjs/Observable';
 
 @Component({
   moduleId: module.id,
-  selector: 'newsletter',
+  selector: 'announcement',
   templateUrl: '/app/templates/announcement.html',
 })
 

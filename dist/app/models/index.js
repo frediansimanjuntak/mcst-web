@@ -18,4 +18,5 @@ __export(require("./quotation"));
 __export(require("./user"));
 __export(require("./user-group"));
 __export(require("./visit"));
+__export(require("./announcement"));
 //# sourceMappingURL=index.js.map

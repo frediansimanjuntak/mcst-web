@@ -87,12 +87,15 @@ AppModule = __decorate([
             index_1.UserGroupComponent,
             index_1.EditUserGroupComponent,
             index_1.VisitComponent,
+            index_1.AnnouncementComponent,
+            index_1.EditAnnouncementComponent,
             index_1.TestComponent
         ],
         providers: [
             index_2.AccessControlService,
             index_2.AlertService,
             index_2.AttachmentService,
+            index_2.AnnouncementService,
             index_2.AuthenticationService,
             index_2.CompanyService,
             index_2.ContractService,

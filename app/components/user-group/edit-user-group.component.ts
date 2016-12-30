@@ -18,8 +18,6 @@ export class EditUserGroupComponent implements OnInit {
 
     private user:any = [];
     private chief :any = {};
-    private userToSave:any = [];
-    private chiefToSave :any = {};
     private _disabledV:string = '0';
     private disabled:boolean = false;
 

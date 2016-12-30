@@ -10,6 +10,7 @@ import { Ng2TableModule }               from 'ng2-table/ng2-table';
 import { Ng2BootstrapModule }           from 'ng2-bootstrap/ng2-bootstrap';
 import { PaginationModule }             from 'ng2-bootstrap/ng2-bootstrap';
 import { SelectModule }                 from 'ng2-select/ng2-select';
+// import { DatePickerModule }             from 'ng2-datepicker';
 // import { SELECT_DIRECTIVES }            from 'ng2-select';
 import { AppRoutingModule }     		    from './app-routing.module';
 import { url }                          from '../global'
@@ -97,6 +98,7 @@ import {
     InputMaskModule,
     CheckboxModule,
     SelectModule,
+    // DatePickerModule,
   ],
   declarations: [ 
     AccessControlComponent,
