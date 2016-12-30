@@ -35,6 +35,8 @@ var EditSettingComponent = (function () {
     };
     EditSettingComponent.prototype.updateSetting = function () {
         var _this = this;
+        this.user.details.identification_proof.front = this.model.front;
+        this.user.details.identification_proof.back = this.model.back;
         console.log(this.user);
         this.userService.update(this.user)
             .then(function (response) {
@@ -60,17 +62,17 @@ var EditSettingComponent = (function () {
     };
     EditSettingComponent.prototype.onChange = function (event) {
         var files = [].slice.call(event.target.files);
-        this.user.details.identification_proof.front = files;
+        this.model.front = files;
     };
     EditSettingComponent.prototype.onChange1 = function (event) {
         var files = [].slice.call(event.target.files);
-        this.user.details.identification_proof.back = files;
+        this.model.back = files;
     };
     EditSettingComponent.prototype.remove = function (i) {
-        this.user.details.identification_proof.front.splice(i, 1);
+        this.model.front.splice(i, 1);
     };
     EditSettingComponent.prototype.remove1 = function (i) {
-        this.user.details.identification_proof.back.splice(i, 1);
+        this.model.back.splice(i, 1);
     };
     return EditSettingComponent;
 }());
