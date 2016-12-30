@@ -31,10 +31,12 @@
       'angular2-datatable': 'npm:angular2-datatable',
       'ng2-bootstrap': 'npm:ng2-bootstrap',
       'ng2-file-upload' : 'npm:ng2-file-upload',
+      'ng2-select' : 'npm:ng2-select',
       'lodash': 'npm:lodash',
       'jquery' : 'npm:jquery/dist/',
       'primeng': 'npm:primeng',
       'fullcalendar' : 'npm:fullcalendar/dist/', 
+      'angular2-select': 'npm:angular2-select',
     },
     // packages tells the System loader how to load when no filename and/or no extension
     packages: {
@@ -43,15 +45,11 @@
       'moment': { main: 'moment.js', defaultExtension: 'js' },
       'ng2-table': { main: 'ng2-table.js', defaultExtension: 'js' },
       'ng2-bootstrap': { main: 'ng2-bootstrap.js', defaultExtension: 'js' },
+      'ng2-file-upload' : { main: './ng2-file-upload.js', defaultExtension: 'js' },
+      'ng2-select' : { main: './ng2-select.js', defaultExtension: 'js' },
       'jquery': { main: 'jquery.js', defaultExtension: 'js' },
-      'angular2-datatable': {
-        main: 'index.js',
-        defaultExtension: 'js'
-      },
-      'ng2-file-upload' : { 
-        main: './ng2-file-upload.js',
-        defaultExtension: 'js'
-      },
+      'angular2-datatable': { main: 'index.js', defaultExtension: 'js' },
+       'angular2-select': { main: 'index.js', defaultExtension: 'js' },
       'lodash': { main: 'lodash.js', defaultExtension: 'js' },
       primeng: { defaultExtension: 'js' },
       'fullcalendar': { main: 'fullcalendar.js', defaultExtension: 'js' },
