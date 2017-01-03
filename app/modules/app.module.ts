@@ -20,6 +20,7 @@ import { EqualValidator }               from '../components/user/equal-validator
 import { ImageUploadModule }            from 'ng2-imageupload';
 import { ModalModule }                  from "ng2-modal";
 import { BootstrapModalModule } from 'angular2-modal/plugins/bootstrap';
+import {SlimLoadingBarModule} from 'ng2-slim-loading-bar';
 
 import { 
   AccessControlComponent,
@@ -111,6 +112,7 @@ import {
     MyDatePickerModule,
     GalleriaModule,
     ImageUploadModule,
+    SlimLoadingBarModule.forRoot(),
   ],
   declarations: [ 
     AccessControlComponent,

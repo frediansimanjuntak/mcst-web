@@ -13,22 +13,18 @@ import { Observable} from 'rxjs/Observable';
 })
 
 export class DevelopmentComponent implements OnInit { 
-	  development: Development;
+	development: Development;
     developments: Development[] = [];
     model: any = {};
-     cols: any[];
 
     constructor(private router: Router,private developmentService: DevelopmentService,private alertService: AlertService) {}
 
     ngOnInit() {
-        this.loadAllDevelopments();
-        // this.onChangeTable(this.config);
-        
+        this.loadAllDevelopments();      
     }
  
     deleteDevelopment(development: Development) {
         this.developmentService.delete(development._id) 
-        // .subscribe(() => { this.loadAllUsers() });
         .then(
 			response => {
 				if(response) { 
