@@ -20,7 +20,7 @@ export class Facility {
   created_at : string 
 }
 
-export var Announcements: any[] = [
+export var Facilities: any[] = [
   {
     _id : '1',
     name : 'BBQ',
