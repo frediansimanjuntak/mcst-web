@@ -37,6 +37,7 @@
       'primeng': 'npm:primeng',
       'fullcalendar' : 'npm:fullcalendar/dist/', 
       'angular2-select': 'npm:angular2-select',
+      'ng2-imageupload': 'node_modules/ng2-imageupload'
     },
     // packages tells the System loader how to load when no filename and/or no extension
     packages: {
@@ -53,6 +54,7 @@
       'lodash': { main: 'lodash.js', defaultExtension: 'js' },
       primeng: { defaultExtension: 'js' },
       'fullcalendar': { main: 'fullcalendar.js', defaultExtension: 'js' },
+      'ng2-imageupload': { main: 'index.js', defaultExtension: 'js'},
     }
   });
 })(this);

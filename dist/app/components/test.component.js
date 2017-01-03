@@ -20,6 +20,11 @@ var TestComponent = (function () {
         this.dialogVisible = false;
         this.idGen = 100;
         this.files = [];
+        this.src = "";
+        this.resizeOptions = {
+            resizeMaxHeight: 250,
+            resizeMaxWidth: 250
+        };
         this.uploader = new ng2_file_upload_1.FileUploader({ url: 'http://localhost:3001/upload' });
         this.options1 = [];
         var numOptions = 100;
@@ -33,6 +38,11 @@ var TestComponent = (function () {
         this.options1 = opts.slice(0);
         this.filesToUpload = [];
     }
+    TestComponent.prototype.selected = function (imageResult) {
+        this.src = imageResult.resized
+            && imageResult.resized.dataURL
+            || imageResult.dataURL;
+    };
     TestComponent.prototype.ngOnInit = function () {
         this.events = [
             {
@@ -133,7 +143,7 @@ var TestComponent = (function () {
     };
     TestComponent.prototype.onChange = function (event, input, a) {
         var files = [].slice.call(event.target.files);
-        this.model.attachment = files;
+        this.model.attachment = this.src;
         console.log(this.model);
     };
     TestComponent.prototype.upload = function () {

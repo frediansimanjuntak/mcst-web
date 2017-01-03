@@ -15,6 +15,7 @@ import { AppRoutingModule }     		    from './app-routing.module';
 import { url }                          from '../global'
 import { DataTableModule,SharedModule,ScheduleModule,DialogModule,InputMaskModule,CheckboxModule,PanelModule,FieldsetModule,GalleriaModule } from 'primeng/primeng';
 import { EqualValidator }               from '../components/user/equal-validator.directive';
+import { ImageUploadModule }            from 'ng2-imageupload';
 
 import { 
   AccessControlComponent,
@@ -97,6 +98,7 @@ import {
     PanelModule,
     FieldsetModule,
     GalleriaModule,
+    ImageUploadModule,
   ],
   declarations: [ 
     AccessControlComponent,

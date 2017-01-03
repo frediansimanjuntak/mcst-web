@@ -6,6 +6,7 @@ import { Router } from '@angular/router';
 import '../rxjs-operators';
 import { FileUploader } from 'ng2-file-upload';
 import { Observable} from 'rxjs/Observable';
+import { ImageResult, ResizeOptions } from 'ng2-imageupload';
 
 
 @Component({
@@ -24,6 +25,11 @@ export class TestComponent implements OnInit{
 	idGen: number = 100;
     filesToUpload: Array<File>;
     files: any[] = [];
+    src: string = "";
+    resizeOptions: ResizeOptions = {
+        resizeMaxHeight: 250,
+        resizeMaxWidth: 250
+    };
 	public uploader:FileUploader = new FileUploader({url:'http://localhost:3001/upload'});
 
 
@@ -48,6 +54,14 @@ export class TestComponent implements OnInit{
 
         this.options1 = opts.slice(0);
          this.filesToUpload = [];
+    }
+
+    
+
+    selected(imageResult: ImageResult) {
+        this.src = imageResult.resized
+            && imageResult.resized.dataURL
+            || imageResult.dataURL;
     }
 
 
@@ -170,7 +184,7 @@ export class TestComponent implements OnInit{
 
     onChange(event: any, input: any, a:any) {
         let files = [].slice.call(event.target.files);
-        this.model.attachment = files
+        this.model.attachment = this.src;
         console.log(this.model);
     }
 
