@@ -71,11 +71,11 @@
 		                    <label class="control-label col-sm-4" for="valid_till">Valid till :</label>
 		                    <div class="col-sm-8">
 		                    <my-date-picker [options]="validTillDateOptions"
-                            [selDate]="announcement.valid_tillStatus" (dateChanged)="validTillDateChanged($event)"></my-date-picker>
+                            [selDate]="valid_tillStatus" (dateChanged)="validTillDateChanged($event)"></my-date-picker>
 		                       
 		                    </div>
 		                </div>
-		                <div class="form-group pull-right">
+		                <div>
 		                    <button  class="btn btn-primary" (click)="publishAnnouncement()">Announce</button>
 		                    <button class="btn btn-default" (click)="firstModal.close()">Cancel</button>
 		                </div>
