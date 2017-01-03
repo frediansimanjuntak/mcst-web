@@ -5,6 +5,7 @@ function __export(m) {
 __export(require("./access-control.service"));
 __export(require("./alert.service"));
 __export(require("./attachment.service"));
+__export(require("./announcement.service"));
 __export(require("./authentication.service"));
 __export(require("./booking.service"));
 __export(require("./company.service"));

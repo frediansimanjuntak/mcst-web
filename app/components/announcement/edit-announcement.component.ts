@@ -18,8 +18,11 @@ export class EditAnnouncementComponent  {
     model: any = {};
     myForm: FormGroup;
     id: string;
+    autoPostOnDateOptions: any = {};
+    validTillDateOptions: any = {};
+    
 
-    selectedType = 'agm';
+   
     constructor(private router: Router,
     	private anouncementService: AnnouncementService,
     	private alertService: AlertService,
@@ -30,6 +33,36 @@ export class EditAnnouncementComponent  {
     }
 
     ngOnInit() {
+        this.autoPostOnDateOptions = {
+            todayBtnTxt: 'Today',
+            dateFormat: 'yyyy-mm-dd',
+            firstDayOfWeek: 'mo',
+            sunHighlight: true,
+            height: '34px',
+            width: '260px',
+            inline: false,
+            customPlaceholderTxt: 'No auto post (default)',
+            // disableUntil: {year: 2016, month: 8, day: 10},
+            selectionTxtFontSize: '16px'
+        };
+
+        this.validTillDateOptions = {
+            todayBtnTxt: 'Today',
+            dateFormat: 'yyyy-mm-dd',
+            firstDayOfWeek: 'mo',
+            sunHighlight: true,
+            height: '34px',
+            width: '260px',
+            inline: false,
+            customPlaceholderTxt: 'Forever (default)',
+            // disableUntil: {year: 2016, month: 8, day: 10},
+            selectionTxtFontSize: '16px'
+        };
+
+        this.model.auto_post_on = "no"
+        this.model.valid_till = "forever"
+        this.model.publish = false;
+        this.model.sticky = 'no';
         this.route.params.subscribe(params => {
             this.id = params['id'];
         });
@@ -39,14 +72,29 @@ export class EditAnnouncementComponent  {
                     .getAnnouncement(this.id)
                     .then(announcement => {
                         this.announcement = announcement;
-                        console.log(announcement);
+                        if(this.announcement.auto_post_on != "no"){
+                           this.model.auto_post_on = this.announcement.auto_post_on;
+                        }else{
+                            this.model.auto_post_on = "";
+                        }
+                        if(this.announcement.valid_till != "forever"){
+                           this.model.valid_till = this.announcement.valid_till;
+                        }else{
+                            this.model.valid_till = "";
+                        }
+                        
                     });
         };
     }
 
     createAnnouncement(event: any) {
-
-        console.log(this.announcement);
+        if(this.model.auto_post_on == ""){
+            this.model.auto_post_on = "no"
+        }
+        if(this.model.valid_till == ""){
+            this.model.valid_till = "forever"
+        }
+        console.log(this.model);
         // this.anouncementService.create(this.model)
         // .subscribe(
         //     data => {
@@ -60,7 +108,28 @@ export class EditAnnouncementComponent  {
         // );
     }
 
-    updateNewsletter(){
+    autoPostOnDateChanged(event:any) {
+      // console.log('onDateChanged(): ', event.date, ' - jsdate: ', new Date(event.jsdate).toLocaleDateString(), ' - formatted: ', event.formatted, ' - epoc timestamp: ', event.epoc);
+      this.model.auto_post_on = event.formatted.replace(/-/g, "/");;
+    }
+
+    validTillDateChanged(event:any) {
+      // console.log('onDateChanged(): ', event.date, ' - jsdate: ', new Date(event.jsdate).toLocaleDateString(), ' - formatted: ', event.formatted, ' - epoc timestamp: ', event.epoc);
+      this.model.valid_till = event.formatted.replace(/-/g, "/");;
+    }
+
+    updateAnnouncement(){
+        if(this.model.auto_post_on == ""){
+             this.announcement.auto_post_on  = "no";
+        }else{
+             this.announcement.auto_post_on  = this.model.auto_post_on;
+        }
+
+        if(this.model.valid_till == ""){
+            this.announcement.valid_till = "forever";
+        }else{
+            this.announcement.valid_till = this.model.valid_till;
+        }
         console.log(this.announcement);
 
 		// this.anouncementService.update(this.model)
@@ -79,5 +148,10 @@ export class EditAnnouncementComponent  {
   //           }
   //       );
 	}
+
+    toAnnouncement(){
+         this.router.navigate(['/announcement']);
+    }
+
 
 }
