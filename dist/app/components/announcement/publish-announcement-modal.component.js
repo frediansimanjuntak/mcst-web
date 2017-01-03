@@ -57,8 +57,8 @@ PublishAnnouncementModalComponent = __decorate([
         // Remove when solved.
         /* tslint:disable */ template: "\n        <div class=\"container-fluid custom-modal-container\">\n            <div class=\"row custom-modal-header\">\n                <div class=\"col-sm-12\">\n                    <h1>Publish {{ context.announcement.title}}</h1>\n                </div>\n            </div>\n            <div class=\"row\" [ngClass]=\"{'myclass' : shouldUseMyClass}\">\n                <div class=\"col-xs-12\">\n                    <div class=\"jumbotron\">\n                        <h1>Do the math to quit:</h1>\n                        <p class=\"lead\">I received an injection of the number <strong>{{context.num1}}</strong> and the number <strong>{{context.num2}}</strong></p>\n                        <span>What is the sum?</span>\n                         <input class=\"form-control\" type=\"text\" #answer (keyup)=\"onKeyUp(answer.value)\" autofocus>\n                    </div>\n                </div>\n            </div>\n        </div>"
     }),
-    __metadata("design:paramtypes", [angular2_modal_1.DialogRef,
-        index_1.AnnouncementService])
+    __metadata("design:paramtypes", [typeof (_a = typeof angular2_modal_1.DialogRef !== "undefined" && angular2_modal_1.DialogRef) === "function" && _a || Object, index_1.AnnouncementService])
 ], PublishAnnouncementModalComponent);
 exports.PublishAnnouncementModalComponent = PublishAnnouncementModalComponent;
+var _a;
 //# sourceMappingURL=publish-announcement-modal.component.js.map

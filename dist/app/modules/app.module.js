@@ -25,9 +25,9 @@ var my_date_picker_module_1 = require("mydatepicker/dist/my-date-picker.module")
 var app_routing_module_1 = require("./app-routing.module");
 var primeng_1 = require("primeng/primeng");
 var equal_validator_directive_1 = require("../components/user/equal-validator.directive");
+var ng2_imageupload_1 = require("ng2-imageupload");
 var angular2_modal_1 = require("angular2-modal");
 var bootstrap_1 = require("angular2-modal/plugins/bootstrap");
-var ng2_imageupload_1 = require("ng2-imageupload");
 var index_1 = require("../components/index");
 var index_2 = require("../services/index");
 var AppModule = (function () {
@@ -58,7 +58,7 @@ AppModule = __decorate([
             primeng_1.FieldsetModule,
             angular2_modal_1.ModalModule.forRoot(),
             bootstrap_1.BootstrapModalModule,
-            my_date_picker_module_1.MyDatePickerModule
+            my_date_picker_module_1.MyDatePickerModule,
             primeng_1.GalleriaModule,
             ng2_imageupload_1.ImageUploadModule,
         ],

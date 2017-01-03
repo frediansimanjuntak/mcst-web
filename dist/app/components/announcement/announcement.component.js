@@ -133,10 +133,8 @@ AnnouncementComponent = __decorate([
     }),
     __metadata("design:paramtypes", [router_1.Router,
         index_1.AnnouncementService,
-        index_1.AlertService,
-        angular2_modal_1.Overlay,
-        core_1.ViewContainerRef,
-        bootstrap_1.Modal])
+        index_1.AlertService, typeof (_a = typeof angular2_modal_1.Overlay !== "undefined" && angular2_modal_1.Overlay) === "function" && _a || Object, core_1.ViewContainerRef, typeof (_b = typeof bootstrap_1.Modal !== "undefined" && bootstrap_1.Modal) === "function" && _b || Object])
 ], AnnouncementComponent);
 exports.AnnouncementComponent = AnnouncementComponent;
+var _a, _b;
 //# sourceMappingURL=announcement.component.js.map
