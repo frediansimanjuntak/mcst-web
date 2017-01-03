@@ -30,7 +30,9 @@ export class FacilityComponent implements OnInit {
         }      
     }
  
-    deleteFacilities(facility: Facility) {
+    deleteFacility(facility: Facility) {
+        console.log(facility);
+        
         this.facilityService.delete(facility._id) 
         .then(
 			response => {

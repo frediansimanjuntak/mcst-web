@@ -33,8 +33,9 @@ var FacilityComponent = (function () {
             this.facilityService.getFacility(this.id).then(function (facility) { _this.facility = facility; });
         }
     };
-    FacilityComponent.prototype.deleteFacilities = function (facility) {
+    FacilityComponent.prototype.deleteFacility = function (facility) {
         var _this = this;
+        console.log(facility);
         this.facilityService.delete(facility._id)
             .then(function (response) {
             if (response) {
