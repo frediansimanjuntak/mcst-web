@@ -24,7 +24,7 @@ AlertComponent = __decorate([
     core_1.Component({
         moduleId: module.id,
         selector: 'alert',
-        templateUrl: '../templates/alert.html'
+        templateUrl: '/app/templates/alert.html'
     }),
     __metadata("design:paramtypes", [index_1.AlertService])
 ], AlertComponent);

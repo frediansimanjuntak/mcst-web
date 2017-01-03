@@ -22,9 +22,9 @@ var HeaderComponent = (function () {
 }());
 HeaderComponent = __decorate([
     core_1.Component({
-        moduleId: module.id,
-        selector: 'header',
-        templateUrl: '../templates/header.html',
+        moduleId: module.id.replace("/dist/", "/"),
+        selector: 'headers',
+        templateUrl: '/app/templates/header.html',
         styleUrls: ['../templates/styles/header.css']
     }),
     __metadata("design:paramtypes", [user_service_1.UserService])

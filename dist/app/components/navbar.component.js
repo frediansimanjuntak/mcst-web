@@ -18,9 +18,9 @@ var NavbarComponent = (function () {
 }());
 NavbarComponent = __decorate([
     core_1.Component({
-        moduleId: module.id,
+        moduleId: module.id.replace("/dist/", "/"),
         selector: 'navbar',
-        templateUrl: '../templates/navbar.html',
+        templateUrl: '/app/templates/navbar.html',
         styleUrls: ['../templates/styles/navbar.css']
     }),
     __metadata("design:paramtypes", [])

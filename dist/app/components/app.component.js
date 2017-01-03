@@ -10,18 +10,43 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 var core_1 = require("@angular/core");
 require("../rxjs-operators");
+var router_1 = require("@angular/router");
 var AppComponent = (function () {
-    function AppComponent() {
+    function AppComponent(router) {
+        var _this = this;
+        this.router = router;
+        this.loading = true;
+        router.events.subscribe(function (event) {
+            _this.navigationInterceptor(event);
+        });
     }
+    // Shows and hides the loading spinner during RouterEvent changes
+    AppComponent.prototype.navigationInterceptor = function (event) {
+        var _this = this;
+        if (event instanceof router_1.NavigationStart) {
+            this.loading = true;
+        }
+        if (event instanceof router_1.NavigationEnd) {
+            setTimeout(function () { return _this.loading = false; }, 2000);
+        }
+        // Set loading state to false in both of the below events to hide the spinner in case a request fails
+        if (event instanceof router_1.NavigationCancel) {
+            this.loading = false;
+        }
+        if (event instanceof router_1.NavigationError) {
+            this.loading = false;
+        }
+    };
     return AppComponent;
 }());
 AppComponent = __decorate([
     core_1.Component({
         moduleId: module.id,
         selector: 'my-app',
-        template: "\n  \t<header></header>\n  \t<navbar></navbar>\n  \t<router-outlet></router-outlet>\n\t",
+        template: "\n  \t<headers></headers>\n  \t<navbar></navbar>\n  \t<div class=\"loading-overlay\" *ngIf=\"loading\">\n    \tloading\n\t</div>\n   \t<router-outlet></router-outlet>\n\n  \t\n  \t\n\t",
+        styles: ["\n\t.gif {\n\t    display: inline-block;\n\t    margin-left: auto;\n\t    margin-right: auto;\n\t    height: 30px; \n\t}\n\n\t.loading {\n\t    opacity: 0;\n\t    transition: opacity .8s ease-in-out;\n\t    position: fixed;\n\t    height: 100%;\n\t    width: 100%;\n\t    top: 0;\n\t    left: 0;\n\t    background: #000;\n\t    z-index: -1;\n\t}\n\n\t.images{\n\t    text-align:center;\n\t}\n\t"]
     }),
-    __metadata("design:paramtypes", [])
+    __metadata("design:paramtypes", [router_1.Router])
 ], AppComponent);
 exports.AppComponent = AppComponent;
 //# sourceMappingURL=app.component.js.map

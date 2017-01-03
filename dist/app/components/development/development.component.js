@@ -9,10 +9,12 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 var core_1 = require("@angular/core");
+var router_1 = require("@angular/router");
 var index_1 = require("../../services/index");
 require("../../rxjs-operators");
 var DevelopmentComponent = (function () {
-    function DevelopmentComponent(developmentService, alertService) {
+    function DevelopmentComponent(router, developmentService, alertService) {
+        this.router = router;
         this.developmentService = developmentService;
         this.alertService = alertService;
         this.developments = [];
@@ -21,11 +23,11 @@ var DevelopmentComponent = (function () {
     DevelopmentComponent.prototype.ngOnInit = function () {
         this.loadAllDevelopments();
     };
-    DevelopmentComponent.prototype.deleteUser = function (id) {
+    DevelopmentComponent.prototype.deleteDevelopment = function (development) {
         var _this = this;
-        this.developmentService.delete(id)
-            .subscribe(function (response) {
-            if (response.error) {
+        this.developmentService.delete(development._id)
+            .then(function (response) {
+            if (response) {
                 alert("The development could not be deleted, server Error.");
             }
             else {
@@ -38,7 +40,13 @@ var DevelopmentComponent = (function () {
     };
     DevelopmentComponent.prototype.loadAllDevelopments = function () {
         var _this = this;
-        this.developmentService.getAll().subscribe(function (developments) { _this.developments = developments; console.log(developments); });
+        this.developmentService.getAll().subscribe(function (developments) { _this.developments = developments; });
+    };
+    DevelopmentComponent.prototype.add = function () {
+        this.router.navigate(['/development/add']);
+    };
+    DevelopmentComponent.prototype.edit = function (development) {
+        this.router.navigate(['/development/edit', development._id]);
     };
     return DevelopmentComponent;
 }());
@@ -46,9 +54,9 @@ DevelopmentComponent = __decorate([
     core_1.Component({
         moduleId: module.id,
         selector: 'development',
-        template: "",
+        templateUrl: '/app/templates/development.html',
     }),
-    __metadata("design:paramtypes", [index_1.DevelopmentService, index_1.AlertService])
+    __metadata("design:paramtypes", [router_1.Router, index_1.DevelopmentService, index_1.AlertService])
 ], DevelopmentComponent);
 exports.DevelopmentComponent = DevelopmentComponent;
 //# sourceMappingURL=development.component.js.map

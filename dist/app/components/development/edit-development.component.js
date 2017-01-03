@@ -12,37 +12,54 @@ var core_1 = require("@angular/core");
 var router_1 = require("@angular/router");
 var index_1 = require("../../services/index");
 require("../../rxjs-operators");
+require("rxjs/add/operator/switchMap");
 var EditDevelopmentComponent = (function () {
-    function EditDevelopmentComponent(router, developmentService, alertService) {
+    function EditDevelopmentComponent(router, developmentService, alertService, route) {
         this.router = router;
         this.developmentService = developmentService;
         this.alertService = alertService;
-        this.developments = [];
+        this.route = route;
         this.model = {};
     }
-    EditDevelopmentComponent.prototype.createUser = function () {
+    // ngOnInit(): void {
+    //     this.route.params
+    //   .switchMap((params: Params) => this.developmentService.getById(params['name']))
+    //   .subscribe(development => this.development = development);
+    //   console.log(this.route.params);
+    //    // this.developmentService.getById(name).then(development => { this.development = development; console.log(development) });
+    //     // this.onChangeTable(this.config);
+    // }
+    // ngOnInit() {
+    // this.route.params.subscribe((params: Params) => {
+    // this.developmentService.getById(params['id'])
+    // .subscribe(development => {this.development = development; console.log(development);});
+    // });
+    // }
+    EditDevelopmentComponent.prototype.ngOnInit = function () {
         var _this = this;
-        console.log(this.model);
+        this.route.params.subscribe(function (params) {
+            _this.id = params['id'];
+        });
+        if (this.id != null) {
+            this.developmentService.getById(this.id).subscribe(function (development) { return _this.development = development; });
+        }
+    };
+    EditDevelopmentComponent.prototype.createDevelopment = function () {
+        var _this = this;
         this.developmentService.create(this.model)
-            .subscribe(function (data) {
-            _this.alertService.success('Create development successful', true);
+            .then(function (response) {
+            _this.alertService.success('Update development successful', true);
             _this.router.navigate(['/development']);
         }, function (error) {
             _this.alertService.error(error);
         });
     };
-    EditDevelopmentComponent.prototype.updateUser = function () {
+    EditDevelopmentComponent.prototype.updateDevelopment = function () {
         var _this = this;
-        this.developmentService.update(this.model)
-            .subscribe(function (response) {
-            if (response.error) {
-                _this.alertService.error(response.error);
-            }
-            else {
-                // EmitterService.get(this.userList).emit(response.users);
-                _this.alertService.success('Update development successful', true);
-                _this.router.navigate(['/development']);
-            }
+        this.developmentService.update(this.development)
+            .then(function (response) {
+            _this.alertService.success('Update development successful', true);
+            _this.router.navigate(['/development']);
         }, function (error) {
             _this.alertService.error(error);
         });
@@ -53,11 +70,12 @@ EditDevelopmentComponent = __decorate([
     core_1.Component({
         moduleId: module.id,
         selector: 'edit-development',
-        template: "",
+        templateUrl: '/app/templates/edit-development.html',
     }),
     __metadata("design:paramtypes", [router_1.Router,
         index_1.DevelopmentService,
-        index_1.AlertService])
+        index_1.AlertService,
+        router_1.ActivatedRoute])
 ], EditDevelopmentComponent);
 exports.EditDevelopmentComponent = EditDevelopmentComponent;
 //# sourceMappingURL=edit-development.component.js.map

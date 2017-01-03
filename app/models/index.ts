@@ -1,3 +1,4 @@
+export * from './access-control';
 export * from './attachment';
 export * from './booking';
 export * from './company';
@@ -13,3 +14,4 @@ export * from './quotation';
 export * from './user';
 export * from './user-group';
 export * from './visit';
+export * from './announcement';

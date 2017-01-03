@@ -2,6 +2,7 @@
 function __export(m) {
     for (var p in m) if (!exports.hasOwnProperty(p)) exports[p] = m[p];
 }
+__export(require("./access-control"));
 __export(require("./attachment"));
 __export(require("./booking"));
 __export(require("./company"));
@@ -17,4 +18,5 @@ __export(require("./quotation"));
 __export(require("./user"));
 __export(require("./user-group"));
 __export(require("./visit"));
+__export(require("./announcement"));
 //# sourceMappingURL=index.js.map

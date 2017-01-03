@@ -8,9 +8,14 @@ export class Facility {
   facility_type : string;
   payment_type : string;
   booking_type : string;
-  schedule : {
-    /*wow*/
-  };
+  maintaince_start : string;
+  maintaince_end : string;
+  schedule : [{
+    day : string[],
+    start_time : string,
+    end_time : string
+  }];
+  status : string;
   created_by : User;
   created_at : string 
 }

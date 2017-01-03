@@ -23,7 +23,7 @@ var RegisterComponent = (function () {
         var _this = this;
         this.loading = true;
         this.userService.create(this.model)
-            .subscribe(function (data) {
+            .then(function (data) {
             _this.alertService.success('Registration successful', true);
             _this.router.navigate(['/login']);
         }, function (error) {
@@ -31,12 +31,26 @@ var RegisterComponent = (function () {
             _this.loading = false;
         });
     };
+    RegisterComponent.prototype.number = function (event) {
+        var pattern = /[0-9\+\ ]/;
+        var inputChar = String.fromCharCode(event.charCode);
+        if (!pattern.test(inputChar)) {
+            event.preventDefault();
+        }
+    };
+    RegisterComponent.prototype.text = function (event) {
+        var pattern = /[a-z\ ]/;
+        var inputChar = String.fromCharCode(event.charCode);
+        if (!pattern.test(inputChar)) {
+            event.preventDefault();
+        }
+    };
     return RegisterComponent;
 }());
 RegisterComponent = __decorate([
     core_1.Component({
         moduleId: module.id,
-        templateUrl: '../../templates/register.html'
+        templateUrl: '/app/templates/register.html'
     }),
     __metadata("design:paramtypes", [router_1.Router,
         index_1.UserService,

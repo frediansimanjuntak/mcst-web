@@ -11,10 +11,20 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 var core_1 = require("@angular/core");
 var http_1 = require("@angular/http");
 var Rx_1 = require("rxjs/Rx");
+var global_1 = require("../global");
+var index_1 = require("../models/index");
 var UserGroupService = (function () {
     function UserGroupService(http) {
         this.http = http;
+        this.headers = new http_1.Headers({ 'Content-Type': 'application/json' });
     }
+    UserGroupService.prototype.getUserGroups = function () {
+        return Promise.resolve(index_1.UserGroups);
+    };
+    UserGroupService.prototype.getUserGroup = function (id) {
+        return this.getUserGroups()
+            .then(function (usergroup) { return usergroup.find(function (usergroup) { return usergroup._id === id; }); });
+    };
     UserGroupService.prototype.getAll = function () {
         return this.http.get('https://192.168.10.73:3333/api/user-groups')
             .map(function (res) { return res.json(); })
@@ -41,13 +51,23 @@ var UserGroupService = (function () {
             .map(function (res) { return res.json(); })
             .catch(function (error) { return Rx_1.Observable.throw(error.json().error || 'Server error'); });
     };
+    // delete(id:string){
+    //     let options = new RequestOptions({
+    //         headers: new Headers({ 'Content-Type': 'application/json;charset=UTF-8' }) 
+    //     });
+    //     return this.http.delete('https://192.168.10.73:3333/api/user-groups' + id, options)
+    //         .map((res:Response) => res.json())
+    //         .catch((error:any) => Observable.throw(error.json().error || 'Server error'));
+    // }
     UserGroupService.prototype.delete = function (id) {
-        var options = new http_1.RequestOptions({
-            headers: new http_1.Headers({ 'Content-Type': 'application/json;charset=UTF-8' })
-        });
-        return this.http.delete('https://192.168.10.73:3333/api/user-groups' + id, options)
-            .map(function (res) { return res.json(); })
-            .catch(function (error) { return Rx_1.Observable.throw(error.json().error || 'Server error'); });
+        return this.http.delete(global_1.url + 'api/usergroup/' + id, { headers: this.headers })
+            .toPromise()
+            .then(function () { return null; })
+            .catch(this.handleError);
+    };
+    UserGroupService.prototype.handleError = function (error) {
+        console.error('An error occurred', error); // for demo purposes only
+        return Promise.reject(error.message || error);
     };
     return UserGroupService;
 }());

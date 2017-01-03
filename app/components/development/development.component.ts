@@ -3,11 +3,13 @@ import { Router } from '@angular/router';
 import { Development } from '../../models/index';
 import { DevelopmentService, AlertService } from '../../services/index';
 import '../../rxjs-operators';
+import { Observable} from 'rxjs/Observable';
+
 
 @Component({
   moduleId: module.id,
   selector: 'development',
-  template: ``,
+  templateUrl: '/app/templates/development.html',
 })
 
 export class DevelopmentComponent implements OnInit { 
@@ -15,18 +17,17 @@ export class DevelopmentComponent implements OnInit {
     developments: Development[] = [];
     model: any = {};
 
-    constructor(private developmentService: DevelopmentService,private alertService: AlertService) {}
+    constructor(private router: Router,private developmentService: DevelopmentService,private alertService: AlertService) {}
 
     ngOnInit() {
-        this.loadAllDevelopments();
+        this.loadAllDevelopments();      
     }
  
-    deleteUser(id: string) {
-        this.developmentService.delete(id) 
-        // .subscribe(() => { this.loadAllUsers() });
-        .subscribe(
+    deleteDevelopment(development: Development) {
+        this.developmentService.delete(development._id) 
+        .then(
 			response => {
-				if(response.error) { 
+				if(response) { 
 	                alert(`The development could not be deleted, server Error.`);
 	            } else {
                     this.alertService.success('Delete development successful', true);
@@ -38,9 +39,16 @@ export class DevelopmentComponent implements OnInit {
             }
         );
     }
-
    
     private loadAllDevelopments() {
-        this.developmentService.getAll().subscribe(developments => { this.developments = developments; console.log(developments) });
+        this.developmentService.getAll().subscribe(developments => { this.developments = developments; });
+    }
+
+    add(){
+        this.router.navigate(['/development/add']);
+    }
+
+    edit(development: Development){
+        this.router.navigate(['/development/edit', development._id]);
     }
 }

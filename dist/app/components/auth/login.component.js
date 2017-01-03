@@ -46,7 +46,7 @@ LoginComponent = __decorate([
         moduleId: module.id,
         selector: 'login-form',
         providers: [index_1.AuthenticationService],
-        templateUrl: '../../templates/login.html',
+        templateUrl: '/app/templates/login.html',
     }),
     __metadata("design:paramtypes", [router_1.Router,
         index_1.AuthenticationService])

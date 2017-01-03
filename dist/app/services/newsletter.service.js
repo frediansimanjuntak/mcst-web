@@ -10,11 +10,56 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 var core_1 = require("@angular/core");
 var http_1 = require("@angular/http");
-// import { User } from '../models/index';
+var Rx_1 = require("rxjs/Rx");
+var global_1 = require("../global");
+require("rxjs/add/operator/toPromise");
 var NewsletterService = (function () {
     function NewsletterService(http) {
         this.http = http;
+        this.headers = new http_1.Headers({ 'Content-Type': 'application/json' });
     }
+    NewsletterService.prototype.getAll = function () {
+        return this.http.get(global_1.url + 'api/developments')
+            .map(function (res) { return res.json(); })
+            .catch(function (error) { return Rx_1.Observable.throw(error.json().error || 'Server error'); });
+    };
+    NewsletterService.prototype.getById = function (id) {
+        return this.http.get(global_1.url + 'api/newsletters' + id)
+            .map(function (res) { return res.json(); })
+            .catch(function (error) { return Rx_1.Observable.throw(error.json().error || 'Server error'); });
+    };
+    NewsletterService.prototype.create = function (body) {
+        var options = new http_1.RequestOptions({
+            headers: new http_1.Headers({ 'Content-Type': 'application/json;charset=UTF-8' })
+        });
+        return this.http.post(global_1.url + 'api/newsletters/' + '585b36585d3cc41224fe518a', body, options)
+            .map(function (res) { return res.json(); })
+            .catch(function (error) { return Rx_1.Observable.throw(error.json().error || 'Server error'); });
+    };
+    NewsletterService.prototype.update = function (body) {
+        var options = new http_1.RequestOptions({
+            headers: new http_1.Headers({ 'Content-Type': 'application/json;charset=UTF-8' })
+        });
+        return this.http.put(global_1.url + 'api/newsletters' + body._id, body, options)
+            .map(function (res) { return res.json(); })
+            .catch(function (error) { return Rx_1.Observable.throw(error.json().error || 'Server error'); });
+    };
+    NewsletterService.prototype.release = function (id, id_dev) {
+        return this.http.post(global_1.url + 'api/newsletters/' + id_dev + '/release/' + id, { headers: this.headers })
+            .toPromise()
+            .then(function () { return null; })
+            .catch(this.handleError);
+    };
+    NewsletterService.prototype.delete = function (id, id_dev) {
+        return this.http.delete(global_1.url + 'api/newsletters/' + id_dev + '/' + id, { headers: this.headers })
+            .toPromise()
+            .then(function () { return null; })
+            .catch(this.handleError);
+    };
+    NewsletterService.prototype.handleError = function (error) {
+        console.error('An error occurred', error); // for demo purposes only
+        return Promise.reject(error.message || error);
+    };
     return NewsletterService;
 }());
 NewsletterService = __decorate([

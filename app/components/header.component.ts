@@ -3,9 +3,9 @@ import { User } from '../models/user';
 import { UserService } from '../services/user.service';
 
 @Component({
-	moduleId: module.id,
-	selector: 'header',
-	templateUrl: '../templates/header.html',
+	moduleId: module.id.replace("/dist/", "/"),
+	selector: 'headers',
+	templateUrl: '/app/templates/header.html',
 	styleUrls: [ '../templates/styles/header.css' ]
 })
 

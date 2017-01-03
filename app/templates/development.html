@@ -1,0 +1,32 @@
+<div class="container">
+	<div class="main">
+		<div class="title">
+			Development
+		</div>
+		Home > Development
+		<div class="row">
+			<div class="col-md-4 pull-right">
+					  		<a class="btn btn-default pull-right" (click)="add()">
+					  		<i class="fa fa-plus" aria-hidden="true"></i>&nbsp;Add Development</a>
+			</div>
+		</div>
+		<p-dataTable [value]="developments" [rows]="10" [paginator]="true">
+		    <p-column field="name" header="Name" sortable="true" [filter]="true" filterPlaceholder="Search name"></p-column>
+		    <p-column field="owner" header="Owner" sortable="true" [filter]="true" filterPlaceholder="Search owner"></p-column>
+		    <!-- <p-column field="description" header="Description" sortable="true" [filter]="true" filterPlaceholder="Search"> -->
+		    <p-column field="description" header="Description" sortable="true" [filter]="true" filterPlaceholder="Search description">>
+		        <template let-col let-development="rowData" pTemplate="body">
+		            <span [style.color]="development[col.field]">{{development[col.field]}}</span>
+		        </template>
+		    </p-column>
+		    <!-- </p-column> -->
+		    <p-column header="Action" styleClass="col-button">
+		    	<template let-development="rowData" pTemplate="body">
+		        	<button type="button" (click)="edit(development)">Edit</button>
+		        	<button type="button" (click)="deleteDevelopment(development)">Delete</button>
+		    	</template>
+		    </p-column>
+		</p-dataTable>
+	</div>
+</div>
+

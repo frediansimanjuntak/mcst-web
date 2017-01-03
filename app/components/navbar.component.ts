@@ -2,9 +2,9 @@ import { Component } from '@angular/core';
 import { MENUS } from '../models/menu';
 
 @Component({
-	moduleId: module.id,
+	moduleId: module.id.replace("/dist/", "/"),
 	selector: 'navbar',
-	templateUrl: '../templates/navbar.html',
+	templateUrl: '/app/templates/navbar.html',
 	styleUrls: [ '../templates/styles/navbar.css' ]
 })
 

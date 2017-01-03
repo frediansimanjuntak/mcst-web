@@ -1,0 +1,26 @@
+<div class="container">
+    <div class="main">
+        <div class="title">
+            Setting
+        </div>
+        Home > Setting
+        <div class="col-lg-12">
+            <div class="col-lg-3">
+                First Name<br/>
+                Last Name<br/>
+                Identification Type<br/>
+                Identification No<br/>
+                Identification Proof
+            </div>
+            <div class="col-lg-9">
+                : {{ user?.details.first_name }}<br/>
+                : {{ user?.details.last_name }}<br/>
+                : {{ user?.details.identification_type }}<br/>
+                : {{ user?.details.identification_no }}<br/>
+                : 
+            </div>
+        </div>
+        <button type="button" (click)="edit(user)">Edit</button>
+    </div>
+</div>
+

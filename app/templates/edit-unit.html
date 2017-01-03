@@ -1,0 +1,153 @@
+<div class="container">
+    <div class="main">
+        <!-- EDIT UNIT -->
+        <div *ngIf="unit">
+            <div class="title">
+                Edit Unit
+            </div>
+                <p>Home > Unit > Edit > {{unit._id}}</p>
+                <form class="form-horizontal col-md-6" (ngSubmit)="f.form.valid && updateUnit()" name="form" #f="ngForm" novalidate>
+                    <div class="form-group" [ngClass]="{ 'has-error': !unit_no.valid }">
+                        <label class="control-label col-sm-4" for="unit_no">Unit No :</label>
+                        <div class="col-sm-8">
+                            <input type="text" class="form-control" name="unit_no" [(ngModel)]="unit.address.unit_no" #unit_no="ngModel" required />
+                            <span *ngIf="!unit_no.valid" class="help-block">Unit No is required</span>
+                        </div>
+                    </div>
+                    <div class="form-group" [ngClass]="{ 'has-error': !unit_no_2.valid }">
+                        <label class="control-label col-sm-4" for="unit_no_2">Unit No :</label>
+                        <div class="col-sm-8">
+                            <input type="text" class="form-control" name="unit_no_2" [(ngModel)]="unit.address.unit_no_2" #unit_no_2="ngModel" required />
+                            <span *ngIf="!unit_no_2.valid" class="help-block">Unit No 2 is required</span>
+                        </div>
+                    </div>
+                    <div class="form-group" [ngClass]="{ 'has-error': !block_no.valid }">
+                        <label class="control-label col-sm-4" for="block_no">Block No :</label>
+                        <div class="col-sm-8">
+                            <input type="text" class="form-control" name="block_no" [(ngModel)]="unit.address.block_no" #block_no="ngModel" required />
+                            <span *ngIf="!block_no.valid" class="help-block">Block no required</span>
+                        </div>
+                    </div>
+                    <div class="form-group" [ngClass]="{ 'has-error': !street_name.valid }">
+                        <label class="control-label col-sm-4" for="street_name">Street Name :</label>
+                        <div class="col-sm-8">
+                            <input type="text" class="form-control" name="street_name" [(ngModel)]="unit.address.street_name" #street_name="ngModel" required />
+                            <span *ngIf="!street_name.valid" class="help-block">Street name required</span>
+                        </div>
+                    </div>
+                    <div class="form-group" [ngClass]="{ 'has-error': !postal_code.valid }">
+                        <label class="control-label col-sm-4" for="postal_code">Postal code :</label>
+                        <div class="col-sm-8">
+                            <input type="text" class="form-control" name="postal_code" [(ngModel)]="unit.address.postal_code" #postal_code="ngModel" required />
+                            <span *ngIf="!postal_code.valid" class="help-block">Postal code required</span>
+                        </div>
+                    </div>
+                    <div class="form-group" [ngClass]="{ 'has-error': !country.valid }">
+                        <label class="control-label col-sm-4" for="country">Country :</label>
+                        <div class="col-sm-8">
+                            <input type="text" class="form-control" name="country" [(ngModel)]="unit.address.country" #country="ngModel" required />
+                            <span *ngIf="!country.valid" class="help-block">Country required</span>
+                        </div>
+                    </div>
+                    <div class="form-group" [ngClass]="{ 'has-error': !full_address.valid }">
+                        <label class="control-label col-sm-4" for="full_address">Full address :</label>
+                        <div class="col-sm-8">
+                            <textarea type="text" class="form-control" name="full_address" [(ngModel)]="unit.address.full_address" #full_address="ngModel" required ></textarea>
+                            <span *ngIf="!full_address.valid" class="help-block">Full Address required</span>
+                        </div>
+                    </div>
+                    <div class="form-group" [ngClass]="{ 'has-error': !status.valid }">
+                        <label class="control-label col-sm-4" for="status">Status :</label>
+                        <div class="col-sm-8">
+                            <select class="form-control" [(ngModel)]="unit.status" #status="ngModel" name="status">
+                                    <option [selected]="unit.status == 'active' " value="active">Active</option>
+                                    <option [selected]="unit.status == 'inactive' " value="inactive">Inactive</option>
+                            </select>
+                            <span *ngIf="!status.valid" class="help-block">Status required</span>
+                        </div>
+                    </div>
+                    <div class="form-group pull-right">
+                        <button [disabled]="loading" class="btn btn-primary">Save</button>
+                        <img *ngIf="loading" src="data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA==" />
+                        <a [routerLink]="['/unit']" class="btn btn-info">Cancel</a>
+                    </div>
+                </form>    
+            </div>
+
+            <!-- CREATE UNIT -->
+            <div *ngIf="!unit">
+                <div class="title">
+                    Add Unit
+                </div>
+                    <p>Home > AGM / Circular > Create</p>
+                    <form  class="form-horizontal col-md-6" [formGroup]="myForm" novalidate (ngSubmit)="createUnit(myForm.value, myForm.valid)">
+                        <div class="form-group" [ngClass]="{ 'has-error': submitted && !myForm.controls.address.controls.unit_no.valid }" formGroupName="address">
+                            <label  class="control-label col-sm-4" for="unit_no">Unit No :</label>
+                            <div class="col-sm-8">
+                                <input type="text" class="form-control" name="unit_no" formControlName="unit_no">
+                                <small style="color: red" [hidden]="myForm.controls.address.controls.unit_no.valid || (myForm.controls.address.controls.unit_no.pristine && !submitted)">Unit No is required</small>
+                            </div>
+                        </div>
+                        <div class="form-group" [ngClass]="{ 'has-error': submitted && !myForm.controls.address.controls.unit_no_2.valid }" formGroupName="address">
+                            <label class="control-label col-sm-4" for="unit_no_2">Unit No 2</label>
+                            <div class="col-sm-8">
+                                <input type="text" class="form-control" name="unit_no_2" formControlName="unit_no_2">
+                                <small style="color: red" [hidden]="myForm.controls.address.controls.unit_no_2.valid || (myForm.controls.address.controls.unit_no_2.pristine && !submitted)">Unit No 2 is required</small>
+                            </div>
+                        </div>
+                        <div class="form-group" formGroupName="address" [ngClass]="{ 'has-error': submitted && !myForm.controls.address.controls.block_no.valid }">
+                            <label class="control-label col-sm-4" for="block_no">Block Number</label>
+                            <div class="col-sm-8">
+                                <input type="text" class="form-control" name="block_no" formControlName="block_no">
+                                <small style="color: red" [hidden]="myForm.controls.address.controls.block_no.valid || (myForm.controls.address.controls.block_no.pristine && !submitted)">Block No is required</small>
+                            </div>
+                        </div>
+                        <div class="form-group" formGroupName="address" [ngClass]="{ 'has-error': submitted && !myForm.controls.address.controls.street_name.valid }">
+                            <label class="control-label col-sm-4" for="street_name">Street Name</label>
+                            <div class="col-sm-8">
+                                <input type="text"  class="form-control" name="street_name" formControlName="street_name">
+                                <small style="color: red" [hidden]="myForm.controls.address.controls.street_name.valid || (myForm.controls.address.controls.street_name.pristine && !submitted)">Street name is required</small>
+                            </div>
+                        </div>
+                        <div class="form-group" formGroupName="address" [ngClass]="{ 'has-error': submitted && !myForm.controls.address.controls.postal_code.valid }">
+                            <label class="control-label col-sm-4" for="postal_code">Postal Code</label>
+                            <div class="col-sm-8">
+                                <input type="text" class="form-control" name="postal_code" formControlName="postal_code">
+                                <small style="color: red" [hidden]="myForm.controls.address.controls.postal_code.valid || (myForm.controls.address.controls.postal_code.pristine && !submitted)">Postal code is required</small>
+                            </div>
+                        </div>
+                        <div class="form-group" formGroupName="address" [ngClass]="{ 'has-error': submitted && !myForm.controls.address.controls.country.valid }">
+                            <label class="control-label col-sm-4" for="country">Country</label>
+                            <div class="col-sm-8">
+                                <input type="text" class="form-control" formControlName="country" name="country">
+                                <small style="color: red" [hidden]="myForm.controls.address.controls.country.valid || (myForm.controls.address.controls.country.pristine && !submitted)">Country is required</small>
+                            </div>
+                        </div>
+                        <div class="form-group" formGroupName="address" [ngClass]="{ 'has-error': submitted && !myForm.controls.address.controls.full_address.valid }">
+                            <label class="control-label col-sm-4" for="full_address">Full Address</label>
+                            <div class="col-sm-8">
+                                <textarea  type="text" class="form-control" name="full_address" formControlName="full_address"></textarea>
+                                <small style="color: red" [hidden]="myForm.controls.address.controls.full_address.valid || (myForm.controls.address.controls.full_address.pristine && !submitted)">Full address No is required</small>
+                            </div>
+                        </div>
+                        <div class="form-group" [ngClass]="{ 'has-error': submitted && !myForm.controls.status.valid }">
+                            <label class="control-label col-sm-4" for="status">Status</label>
+                            <div class="col-sm-8">
+                                <select class="form-control" formControlName="status" name="status">
+                                     <option selected="" disabled>--Choose Status--</option>
+                                    <option value="active">Active</option>
+                                    <option value="inactive">Inactive</option>
+                                </select>
+                                <small style="color: red" [hidden]="myForm.controls.status.valid || (myForm.controls.status.pristine && !submitted)">Status is required</small>
+                            </div>
+                        </div>
+                        
+                        
+
+                        <button type="submit" class="btn btn-primary">Submit</button>
+                        <a [routerLink]="['/unit']" class="btn btn-info">Cancel</a>
+
+                    </form>
+                </div>
+    </div>
+</div>
