@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router'; 
+import { Router, Params, ActivatedRoute } from '@angular/router'; 
 import { Facility } from '../../models/index';
 import { FacilityService, AlertService } from '../../services/index';
 import '../../rxjs-operators';
@@ -15,14 +15,24 @@ export class FacilityComponent implements OnInit {
 	facility: Facility;
     facilities: Facility[] = [];
     model: any = {};
+    id: string;
 
-    constructor(private router: Router,private facilityService: FacilityService,private alertService: AlertService) {}
+    constructor(private router: Router,private facilityService: FacilityService,private alertService: AlertService,private route: ActivatedRoute) {}
 
     ngOnInit() {
-        this.loadAllFacilities();      
+        this.route.params.subscribe(params => {
+            this.id = params['id'];
+        });
+        if( this.id == null) {
+            this.loadAllFacilities();
+        }else{
+            this.facilityService.getFacility(this.id).then(facility => {this.facility = facility;});
+        }      
     }
  
-    deleteFacilities(facility: Facility) {
+    deleteFacility(facility: Facility) {
+        console.log(facility);
+        
         this.facilityService.delete(facility._id) 
         .then(
 			response => {
@@ -40,7 +50,7 @@ export class FacilityComponent implements OnInit {
     }
    
     private loadAllFacilities() {
-        this.facilityService.getAll().subscribe(facilities => { this.facilities = facilities; });
+        this.facilityService.getFacilities().then(facilities => { this.facilities = facilities; });
     }
 
     add(){

@@ -5,7 +5,7 @@ var Facility = (function () {
     return Facility;
 }());
 exports.Facility = Facility;
-exports.Announcements = [
+exports.Facilities = [
     {
         _id: '1',
         name: 'BBQ',

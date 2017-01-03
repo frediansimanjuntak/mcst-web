@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Http, Headers, RequestOptions, Response } from '@angular/http';
 import { Observable } from 'rxjs/Rx';
-import { Facility } from '../models/index';
+import { Facility, Facilities } from '../models/index';
 import { url } from '../global';
 import 'rxjs/add/operator/toPromise';
  
@@ -9,6 +9,15 @@ import 'rxjs/add/operator/toPromise';
 export class FacilityService {
     private headers = new Headers({'Content-Type': 'application/json'});
     constructor(private http: Http) {}
+
+    getFacilities(): Promise<Facility[]> {
+        return Promise.resolve(Facilities);
+    }
+
+    getFacility(id: string): Promise<Facility> {
+        return this.getFacilities()
+            .then(facilities => facilities.find(facilities => facilities._id === id));
+    }
 
     getAll(){
         return this.http.get(url + 'api/facilities')

@@ -1,52 +1,29 @@
 <div class="container">
     <div class="main">
-        <div *ngIf="incident">
+        <div *ngIf="facility">
             <div class="title">
-                {{incident.reference_no}} {{incident.title}}
+                {{facility.name}}
             </div>
-            <p>Home > Incident Reports > {{incident.reference_no}} {{incident.title}}</p>
+            <p>Home > Facility > {{facility.name}}</p>
 	        <div class="row">
-	        	<div class="col-lg-6">
-	        		<p-galleria [images]="images" panelWidth="500" panelHeight="313"></p-galleria>
-	        	</div>
-	        	<div class="col-lg-6">
-	        		<div class="row">
-	        			<div class="col-md-4">Reported by </div>
-	        			<div class="col-md-8"> <p>: {{ incident.created_by }}</p></div>
-	        		</div>
-	        		<div class="row">
-	        			<div class="col-md-4">Type of Report </div>
-	        			<div class="col-md-8"><p>: {{ incident.incident_type }}</p></div>
-	        		</div>
-	        		<div class="row">
-	        			<div class="col-md-4">Report time </div>
-	        			<div class="col-md-8"><p>: {{ incident.created_at }}</p></div>
-	        		</div>
-	        		<div class="row">
-	        			<div class="col-md-4">Status </div>
-	        			<div class="col-md-8"><p>: {{ incident.status }}</p></div>
-	        		</div>
-	        		<div class="row">
-	        			<div class="col-md-4">Order </div>
-	        			<div class="col-md-8">: <!-- <p>{{ incident.orde }}</p> --></div>
-	        		</div>
-	        		<div class="row">
-	        			<div class="col-md-4">Message </div>
-	        			<div class="col-md-8"><p>: {{ incident.remark }}</p></div>
+	        	<div class="col-lg-12">
+	        		<div *ngFor="let schedule of facility.schedule" class="row">
+	        			<div class="col-md-4">time</div>
+	        			<div class="col-md-8"> <p>: {{ schedule.day }} {{ schedule.start_time }}-{{ schedule.end_time }}</p></div>
 	        		</div>
 	        	</div>
 	        </div>
-        </div>
+        </div> 
 
-        <div *ngIf="!incident">
+        <div *ngIf="!facility">
             <div class="title">
-				Incident Reports
+				Facilities
 			</div>
-			Home > Incident Reports
+			Home > Facilities
 			<div class="row">
 				<div class="col-md-4 pull-right">
 					<a class="btn btn-default pull-right" (click)="add()">
-					<i class="fa fa-plus" aria-hidden="true"></i>&nbsp;Create Report</a>	  		
+					<i class="fa fa-plus" aria-hidden="true"></i>&nbsp;Create Facility</a>	  		
 				</div>
 			</div>
 			<div (click)="$event.preventDefault()">
@@ -65,7 +42,7 @@
 				    	<template let-data="rowData" pTemplate="body">
 				    		<button type="button" (click)="view(data)">View</button>
 				    		<button type="button" (click)="edit(data)">Edit</button>
-							<button type="button" (click)="deleteIncident(data)"><i class="fa fa-trash" aria-hidden="true"></i></button>
+							<button type="button" (click)="deleteFacility(data)"><i class="fa fa-trash" aria-hidden="true"></i></button>
 				    	</template>
 				    </p-column>
 				</p-dataTable>
