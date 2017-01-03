@@ -50,8 +50,6 @@ var AnnouncementComponent = (function () {
             // disableUntil: {year: 2016, month: 8, day: 10},
             selectionTxtFontSize: '16px'
         };
-        this.model.valid_till = "forever";
-        this.model.sticky = 'no';
         this.developmentId = '585b36585d3cc41224fe518a';
         this.loadAllAnnouncements();
     };
@@ -81,20 +79,28 @@ var AnnouncementComponent = (function () {
     };
     AnnouncementComponent.prototype.openModal = function (announcement) {
         this.announcement = announcement;
-        if (this.announcement.valid_till = "forever") {
-            this.announcement.valid_till = "";
+        this.valid_tillStatus = announcement.valid_till;
+        this.stickyStatus = announcement.sticky;
+        if (this.valid_tillStatus == "forever") {
+            this.valid_tillStatus = "";
         }
+        console.log(this.announcement);
     };
     AnnouncementComponent.prototype.publishAnnouncement = function () {
-        if (this.announcement.valid_till == "") {
+        if (this.valid_tillStatus == "") {
             this.announcement.valid_till = "forever";
         }
+        else {
+            this.announcement.valid_till = this.valid_tillStatus;
+        }
+        this.announcement.sticky = this.stickyStatus;
         this.announcement.publish = true;
         console.log(this.announcement);
+        this.ngOnInit();
     };
     AnnouncementComponent.prototype.validTillDateChanged = function (event) {
         // console.log('onDateChanged(): ', event.date, ' - jsdate: ', new Date(event.jsdate).toLocaleDateString(), ' - formatted: ', event.formatted, ' - epoc timestamp: ', event.epoc);
-        this.announcement.valid_till = event.formatted.replace(/-/g, "/");
+        this.valid_tillStatus = event.formatted.replace(/-/g, "/");
         ;
     };
     AnnouncementComponent.prototype.loadAllAnnouncements = function () {
