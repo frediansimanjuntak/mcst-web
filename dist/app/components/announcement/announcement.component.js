@@ -12,16 +12,16 @@ var core_1 = require("@angular/core");
 var router_1 = require("@angular/router");
 var index_1 = require("../../services/index");
 require("../../rxjs-operators");
-var angular2_modal_1 = require("angular2-modal");
-var bootstrap_1 = require("angular2-modal/plugins/bootstrap");
+// import { Overlay } from 'angular2-modal';
+// import { Modal } from 'angular2-modal/plugins/bootstrap';
 // import { PublishAnnouncementModalComponent, PublishAnnouncementModalData } from './publish-announcement-modal.component';
 var AnnouncementComponent = (function () {
-    function AnnouncementComponent(router, announcementService, alertService, overlay, vcRef, modal) {
+    function AnnouncementComponent(router, announcementService, alertService) {
         this.router = router;
         this.announcementService = announcementService;
         this.alertService = alertService;
-        this.modal = modal;
         this.announcements = [];
+        this.validTillDateOptions = {};
         this.model = {};
         this.filterQuery = "";
         this.rowsOnPage = 10;
@@ -36,9 +36,22 @@ var AnnouncementComponent = (function () {
             { title: 'Dynamic Title 3', content: 'Dynamic content 3', removable: true },
             { title: 'Dynamic Title 4', content: 'Dynamic content 4', customClass: 'customClass' }
         ];
-        overlay.defaultViewContainer = vcRef;
     }
     AnnouncementComponent.prototype.ngOnInit = function () {
+        this.validTillDateOptions = {
+            todayBtnTxt: 'Today',
+            dateFormat: 'yyyy-mm-dd',
+            firstDayOfWeek: 'mo',
+            sunHighlight: true,
+            height: '34px',
+            width: '260px',
+            inline: false,
+            customPlaceholderTxt: 'Forever (default)',
+            // disableUntil: {year: 2016, month: 8, day: 10},
+            selectionTxtFontSize: '16px'
+        };
+        this.model.valid_till = "forever";
+        this.model.sticky = 'no';
         this.developmentId = '585b36585d3cc41224fe518a';
         this.loadAllAnnouncements();
     };
@@ -66,37 +79,23 @@ var AnnouncementComponent = (function () {
         //     }
         // );
     };
-    AnnouncementComponent.prototype.openCustom = function (announcement) {
-        // this.modal.open(PublishAnnouncementModalComponent, new PublishAnnouncementModalData(announcement));
-    };
     AnnouncementComponent.prototype.openModal = function (announcement) {
-        console.log(announcement);
-        this.modal.alert()
-            .size('lg')
-            .showClose(true)
-            .title('Publish Announcement')
-            .body("\n          {{  announcement.valid_till }}\n             <form class=\"form-horizontal col-md-6\" name=\"form\" #f=\"ngForm\" novalidate>\n                <div class=\"form-group\" >\n                    <label class=\"control-label col-sm-4\" for=\"sticky\">Sticky?:</label>\n                    <div class=\"col-sm-8\">\n                         <label><input type=\"radio\" name=\"sticky\" [checked]=\"model.sticky === 'true'\" [(ngModel)]=\"announcement.publish\" [value]=true>Yes</label>\n                        <label><input type=\"radio\" name=\"sticky\" [checked]=\"model.sticky === false\" [(ngModel)]=\"announcement.publish\" [value]=false>No</label>     \n                    </div>\n                </div>\n                <div class=\"form-group\" [ngClass]=\"{ 'has-error': f.submitted && !valid_till.valid }\">\n                    <label class=\"control-label col-sm-4\" for=\"valid_till\">Valid till :</label>\n                    <div class=\"col-sm-8\">\n                        <input type=\"text\" class=\"form-control\" name=\"valid_till\" [(ngModel)]=\"announcement.valid_till\" #valid_till=\"ngModel\" required />\n                        <span *ngIf=\"f.submitted && !valid_till.valid\" class=\"help-block\">valid_till is required</span>\n                         <!--   <ng2-datepicker [(ngModel)]=\"announcement.valid_till\"></ng2-datepicker> -->\n                    </div>\n                </div>\n                <div class=\"form-group pull-right\">\n                    <button [disabled]=\"loading\" (click)=\"publishAnnouncement()\" class=\"btn btn-primary\">Create</button>\n                    <img *ngIf=\"loading\" src=\"data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA==\" />\n                    <a [routerLink]=\"['/announcement']\" class=\"btn btn-info\">Cancel</a>\n                </div>\n            </form>     \n\n           ")
-            .open();
-        // this.announcementService.publish(announcement._id, this.developmentId) 
-        //     .then(
-        //       response => {
-        //         if(response) { 
-        //           console.log(response);
-        //           // console.log(response.error());
-        //           alert(`The Newsletter could not be release, server Error.`);
-        //         } else {
-        //           this.alertService.success('Release Newsletter successful', true);
-        //           alert(`Release Newsletter successful`);
-        //           this.ngOnInit()
-        //         }
-        //       },
-        //       error=> { 
-        //         console.log(error);
-        //           alert(`The Newsletter could not be release, server Error.`);
-        //       }
-        //   );
+        this.announcement = announcement;
+        if (this.announcement.valid_till = "forever") {
+            this.announcement.valid_till = "";
+        }
     };
     AnnouncementComponent.prototype.publishAnnouncement = function () {
+        if (this.announcement.valid_till == "") {
+            this.announcement.valid_till = "forever";
+        }
+        this.announcement.publish = true;
+        console.log(this.announcement);
+    };
+    AnnouncementComponent.prototype.validTillDateChanged = function (event) {
+        // console.log('onDateChanged(): ', event.date, ' - jsdate: ', new Date(event.jsdate).toLocaleDateString(), ' - formatted: ', event.formatted, ' - epoc timestamp: ', event.epoc);
+        this.announcement.valid_till = event.formatted.replace(/-/g, "/");
+        ;
     };
     AnnouncementComponent.prototype.loadAllAnnouncements = function () {
         //---------------------------Call To Api-------------- //
@@ -133,10 +132,7 @@ AnnouncementComponent = __decorate([
     }),
     __metadata("design:paramtypes", [router_1.Router,
         index_1.AnnouncementService,
-        index_1.AlertService,
-        angular2_modal_1.Overlay,
-        core_1.ViewContainerRef,
-        bootstrap_1.Modal])
+        index_1.AlertService])
 ], AnnouncementComponent);
 exports.AnnouncementComponent = AnnouncementComponent;
 //# sourceMappingURL=announcement.component.js.map

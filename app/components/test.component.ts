@@ -7,6 +7,7 @@ import '../rxjs-operators';
 import { FileUploader } from 'ng2-file-upload';
 import { Observable} from 'rxjs/Observable';
 import { ImageResult, ResizeOptions } from 'ng2-imageupload';
+// import {ModalModule} from "ng2-modal";
 
 
 @Component({

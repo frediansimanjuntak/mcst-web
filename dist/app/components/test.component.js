@@ -12,6 +12,7 @@ var core_1 = require("@angular/core");
 require("fullcalendar");
 require("../rxjs-operators");
 var ng2_file_upload_1 = require("ng2-file-upload");
+// import {ModalModule} from "ng2-modal";
 var TestComponent = (function () {
     // Array of strings for multi select, string for single select.
     function TestComponent(cd) {

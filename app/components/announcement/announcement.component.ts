@@ -6,8 +6,8 @@ import '../../rxjs-operators';
 import { NG_TABLE_DIRECTIVES }    from 'ng2-table/ng2-table'
 import { Observable} from 'rxjs/Observable';
 import * as $ from "jquery";
-import { Overlay } from 'angular2-modal';
-import { Modal } from 'angular2-modal/plugins/bootstrap';
+// import { Overlay } from 'angular2-modal';
+// import { Modal } from 'angular2-modal/plugins/bootstrap';
 // import { PublishAnnouncementModalComponent, PublishAnnouncementModalData } from './publish-announcement-modal.component';
 
 
@@ -20,6 +20,7 @@ import { Modal } from 'angular2-modal/plugins/bootstrap';
 export class AnnouncementComponent implements OnInit { 
 	  announcement: Announcement;
     announcements: Announcement[] = [];
+    validTillDateOptions: any = {};
     model: any = {};
     cols: any[];
     public developmentId;
@@ -35,13 +36,27 @@ export class AnnouncementComponent implements OnInit {
                 private router: Router,
                 private announcementService: AnnouncementService, 
                 private alertService: AlertService,
-                overlay: Overlay, 
-                vcRef: ViewContainerRef, 
-                 public modal: Modal) {
-          overlay.defaultViewContainer = vcRef;
+                ) {
+         
     }
 
     ngOnInit(): void {
+
+        this.validTillDateOptions = {
+            todayBtnTxt: 'Today',
+            dateFormat: 'yyyy-mm-dd',
+            firstDayOfWeek: 'mo',
+            sunHighlight: true,
+            height: '34px',
+            width: '260px',
+            inline: false,
+            customPlaceholderTxt: 'Forever (default)',
+            // disableUntil: {year: 2016, month: 8, day: 10},
+            selectionTxtFontSize: '16px'
+        };
+        this.model.valid_till = "forever"
+        this.model.sticky = 'no';
+
         this.developmentId = '585b36585d3cc41224fe518a';
         this.loadAllAnnouncements();
     }
@@ -76,68 +91,28 @@ export class AnnouncementComponent implements OnInit {
         // );
     }
 
-    openCustom(announcement) {
-      // this.modal.open(PublishAnnouncementModalComponent, new PublishAnnouncementModalData(announcement));
-    }
+    
 
     openModal(announcement){
-      console.log(announcement);
-      this.modal.alert()
-        .size('lg')
-        .showClose(true)
-        .title('Publish Announcement')
-        .body(`
-          {{  announcement.valid_till }}
-             <form class="form-horizontal col-md-6" name="form" #f="ngForm" novalidate>
-                <div class="form-group" >
-                    <label class="control-label col-sm-4" for="sticky">Sticky?:</label>
-                    <div class="col-sm-8">
-                         <label><input type="radio" name="sticky" [checked]="model.sticky === 'true'" [(ngModel)]="announcement.publish" [value]=true>Yes</label>
-                        <label><input type="radio" name="sticky" [checked]="model.sticky === false" [(ngModel)]="announcement.publish" [value]=false>No</label>     
-                    </div>
-                </div>
-                <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !valid_till.valid }">
-                    <label class="control-label col-sm-4" for="valid_till">Valid till :</label>
-                    <div class="col-sm-8">
-                        <input type="text" class="form-control" name="valid_till" [(ngModel)]="announcement.valid_till" #valid_till="ngModel" required />
-                        <span *ngIf="f.submitted && !valid_till.valid" class="help-block">valid_till is required</span>
-                         <!--   <ng2-datepicker [(ngModel)]="announcement.valid_till"></ng2-datepicker> -->
-                    </div>
-                </div>
-                <div class="form-group pull-right">
-                    <button [disabled]="loading" (click)="publishAnnouncement()" class="btn btn-primary">Create</button>
-                    <img *ngIf="loading" src="data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA==" />
-                    <a [routerLink]="['/announcement']" class="btn btn-info">Cancel</a>
-                </div>
-            </form>     
-
-           `)
-        .open();
-
-
-      // this.announcementService.publish(announcement._id, this.developmentId) 
-      //     .then(
-      //       response => {
-      //         if(response) { 
-      //           console.log(response);
-      //           // console.log(response.error());
-      //           alert(`The Newsletter could not be release, server Error.`);
-      //         } else {
-      //           this.alertService.success('Release Newsletter successful', true);
-      //           alert(`Release Newsletter successful`);
-      //           this.ngOnInit()
-      //         }
-      //       },
-      //       error=> { 
-      //         console.log(error);
-      //           alert(`The Newsletter could not be release, server Error.`);
-      //       }
-      //   );
+        this.announcement = announcement;
+        if(this.announcement.valid_till = "forever"){
+              this.announcement.valid_till = "";
+        }
     }
 
     publishAnnouncement(){
-
+        if ( this.announcement.valid_till == ""){
+            this.announcement.valid_till = "forever";
+        }
+        this.announcement.publish = true;
+        console.log(this.announcement);
     }
+
+    validTillDateChanged(event:any) {
+      // console.log('onDateChanged(): ', event.date, ' - jsdate: ', new Date(event.jsdate).toLocaleDateString(), ' - formatted: ', event.formatted, ' - epoc timestamp: ', event.epoc);
+       this.announcement.valid_till = event.formatted.replace(/-/g, "/");;
+    }
+
     private loadAllAnnouncements() {
         //---------------------------Call To Api-------------- //
         // this.announcementService.getAll()
