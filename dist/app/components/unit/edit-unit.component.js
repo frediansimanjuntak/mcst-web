@@ -25,11 +25,28 @@ var EditUnitComponent = (function () {
         this.formbuilder = formbuilder;
         this.model = {};
         this.events = []; // use later to display form changes
+        this.status = [
+            { value: 'inactive', name: 'Inactive' },
+            { value: 'active', name: 'Active' }
+        ];
         // this.user = JSON.parse(localStorage.getItem('user'));
     }
     EditUnitComponent.prototype.ngOnInit = function () {
         var _this = this;
         this.developmentId = '585b36585d3cc41224fe518a';
+        this.myForm = this.formbuilder.group({
+            address: this.formbuilder.group({
+                unit_no: ['', forms_1.Validators.required],
+                unit_no_2: ['', forms_1.Validators.required],
+                block_no: ['', forms_1.Validators.required],
+                street_name: ['', forms_1.Validators.required],
+                postal_code: ['', forms_1.Validators.required],
+                country: ['', forms_1.Validators.required],
+                full_address: ['', forms_1.Validators.required]
+            }),
+            status: ['', forms_1.Validators.required],
+            created_by: ['583e4e9dd97c97149884fef5']
+        });
         this.route.params.subscribe(function (params) {
             _this.id = params['id'];
         });
@@ -39,70 +56,28 @@ var EditUnitComponent = (function () {
                 .then(function (development) {
                 _this.units = development[0].properties;
                 _this.unit = _this.units.find(function (unit) { return unit._id === _this.id; });
-                console.log(_this.unit);
-                _this.myForm = _this.formbuilder.group({
-                    address: _this.formbuilder.group({
-                        unit_no: [_this.unit.address.unit_no],
-                        unit_no_2: [_this.unit.address.unit_no_2],
-                        block_no: [_this.unit.address.block_no],
-                        street_name: [_this.unit.address.street_name],
-                        postal_code: [_this.unit.address.postal_code],
-                        country: [_this.unit.address.country],
-                        full_address: [_this.unit.address.full_address]
-                    }),
-                    _id: [_this.unit._id],
-                    status: [_this.unit.status],
-                    created_by: ['583e4e9dd97c97149884fef5']
-                });
             });
         }
-        else {
-            this.myForm = this.formbuilder.group({
-                address: this.formbuilder.group({
-                    unit_no: [''],
-                    unit_no_2: [''],
-                    block_no: [''],
-                    street_name: [''],
-                    postal_code: [''],
-                    country: [''],
-                    full_address: ['']
-                }),
-                status: [''],
-                created_by: ['583e4e9dd97c97149884fef5']
-            });
-        }
-        // this.subcribeToFormChanges();
     };
-    EditUnitComponent.prototype.subcribeToFormChanges = function () {
-        var _this = this;
-        var myFormStatusChanges$ = this.myForm.statusChanges;
-        var myFormValueChanges$ = this.myForm.valueChanges;
-        myFormStatusChanges$.subscribe(function (x) { return _this.events.push({ event: 'STATUS_CHANGED', object: x }); });
-        myFormValueChanges$.subscribe(function (x) { return _this.events.push({ event: 'VALUE_CHANGED', object: x }); });
-    };
-    // save(model: Unit, isValid: boolean) {
-    //     this.submitted = true; // set form submit to true
-    //     // check if model is valid
-    //     // if valid, call API to save customer
-    //     console.log(model, isValid);
-    // }
-    EditUnitComponent.prototype.createUnit = function (model) {
+    EditUnitComponent.prototype.createUnit = function (model, isValid) {
         var _this = this;
         this.submitted = true;
         // model.properties.created_by = '583e4e9dd97c97149884fef5';
         // this.model.pinned.rank = 0;
-        console.log(model);
-        this.unitservice.create(model)
-            .subscribe(function (data) {
-            _this.alertService.success('Create Unit successful', true);
-            _this.router.navigate(['/unit']);
-        }, function (error) {
-            console.log(error);
-            alert("The Unit could not be save, server Error.");
-        });
+        if (isValid == true) {
+            console.log(model);
+            this.unitservice.create(model)
+                .subscribe(function (data) {
+                _this.alertService.success('Create Unit successful', true);
+                _this.router.navigate(['/unit']);
+            }, function (error) {
+                console.log(error);
+                alert("The Unit could not be save, server Error.");
+            });
+        }
     };
-    EditUnitComponent.prototype.updateUnit = function (model) {
-        console.log(model);
+    EditUnitComponent.prototype.updateUnit = function () {
+        console.log(this.unit);
         // this.unitservice.update(model)
         // .then(
         //     response => {
