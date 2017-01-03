@@ -22,7 +22,6 @@ var DevelopmentComponent = (function () {
     }
     DevelopmentComponent.prototype.ngOnInit = function () {
         this.loadAllDevelopments();
-        // this.onChangeTable(this.config);
     };
     DevelopmentComponent.prototype.deleteDevelopment = function (development) {
         var _this = this;
