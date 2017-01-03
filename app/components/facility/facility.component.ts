@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router'; 
+import { Router, Params, ActivatedRoute } from '@angular/router'; 
 import { Facility } from '../../models/index';
 import { FacilityService, AlertService } from '../../services/index';
 import '../../rxjs-operators';
@@ -15,14 +15,22 @@ export class FacilityComponent implements OnInit {
 	facility: Facility;
     facilities: Facility[] = [];
     model: any = {};
+    id: string;
 
-    constructor(private router: Router,private facilityService: FacilityService,private alertService: AlertService) {}
+    constructor(private router: Router,private facilityService: FacilityService,private alertService: AlertService,private route: ActivatedRoute) {}
 
     ngOnInit() {
-        this.loadAllDevelopments();      
+        this.route.params.subscribe(params => {
+            this.id = params['id'];
+        });
+        if( this.id == null) {
+            this.loadAllFacilities();
+        }else{
+            this.facilityService.getFacility(this.id).then(facility => {this.facility = facility;});
+        }      
     }
  
-    deleteDevelopment(facility: Facility) {
+    deleteFacilities(facility: Facility) {
         this.facilityService.delete(facility._id) 
         .then(
 			response => {
@@ -30,7 +38,7 @@ export class FacilityComponent implements OnInit {
 	                alert(`The facility could not be deleted, server Error.`);
 	            } else {
                     this.alertService.success('Delete facility successful', true);
-	                this.loadAllDevelopments()
+	                this.loadAllFacilities()
 	            }
             },
             error=> { 
@@ -39,8 +47,8 @@ export class FacilityComponent implements OnInit {
         );
     }
    
-    private loadAllDevelopments() {
-        this.facilityService.getAll().subscribe(facilities => { this.facilities = facilities; });
+    private loadAllFacilities() {
+        this.facilityService.getFacilities().then(facilities => { this.facilities = facilities; });
     }
 
     add(){
@@ -49,5 +57,9 @@ export class FacilityComponent implements OnInit {
 
     edit(facility: Facility){
         this.router.navigate(['/facility/edit', facility._id]);
+    }
+
+    view(facility: Facility){
+        this.router.navigate(['/facility/view', facility._id]);
     }
 }

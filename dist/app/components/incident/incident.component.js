@@ -20,14 +20,6 @@ var IncidentComponent = (function () {
         this.route = route;
         this.incidents = [];
         this.model = {};
-        this.tabs = [
-            { title: 'All', content: '' },
-            { title: 'New', content: '' },
-            { title: 'Reviewing', content: '' },
-            { title: 'In-Progress', content: '' },
-            { title: 'Resolved', content: '' },
-            { title: 'Urgent', content: '' }
-        ];
     }
     IncidentComponent.prototype.ngOnInit = function () {
         var _this = this;
@@ -77,25 +69,15 @@ var IncidentComponent = (function () {
             _this.dataResolved = _this.incidents.filter(function (incidents) { return incidents.status === 'resolved'; });
             _this.dataUrgent = _this.incidents.filter(function (incidents) { return incidents.status === 'urgent'; });
         });
-        // this.incidentService.getIncidents()
-        //     .then((){
-        //             this.data           = ( incidents => this.incidents = incidents );
-        //             this.dataNew        = this.incidents.filter(incidents => incidents.status === 'new' ); 
-        //             this.dataReviewing  = this.incidents.filter(incidents => incidents.status === 'reviewing' ); 
-        //             this.dataInProgress = this.incidents.filter(incidents => incidents.status === 'inprogress' ); 
-        //             this.dataResolved   = this.incidents.filter(incidents => incidents.status === 'resolved' ); 
-        //             this.dataUrgent     = this.incidents.filter(incidents => incidents.status === 'urgent' );
-        //     });
     };
-    IncidentComponent.prototype.setActiveTab = function (index) {
-        this.tabs[index].active = true;
-    };
-    ;
     // edit(incident: Incident){
     //     this.router.navigate(['/incident/edit', incident._id]);
     // }
     IncidentComponent.prototype.view = function (incident) {
         this.router.navigate(['/incident/view', incident._id]);
+    };
+    IncidentComponent.prototype.add = function () {
+        this.router.navigate(['/incident/add']);
     };
     return IncidentComponent;
 }());

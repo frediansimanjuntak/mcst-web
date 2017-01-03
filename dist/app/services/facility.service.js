@@ -11,6 +11,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 var core_1 = require("@angular/core");
 var http_1 = require("@angular/http");
 var Rx_1 = require("rxjs/Rx");
+var index_1 = require("../models/index");
 var global_1 = require("../global");
 require("rxjs/add/operator/toPromise");
 var FacilityService = (function () {
@@ -18,6 +19,13 @@ var FacilityService = (function () {
         this.http = http;
         this.headers = new http_1.Headers({ 'Content-Type': 'application/json' });
     }
+    FacilityService.prototype.getFacilities = function () {
+        return Promise.resolve(index_1.Facilities);
+    };
+    FacilityService.prototype.getFacility = function (id) {
+        return this.getFacilities()
+            .then(function (facilities) { return facilities.find(function (facilities) { return facilities._id === id; }); });
+    };
     FacilityService.prototype.getAll = function () {
         return this.http.get(global_1.url + 'api/facilities')
             .map(function (res) { return res.json(); })
