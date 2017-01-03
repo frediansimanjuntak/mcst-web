@@ -40,7 +40,7 @@
       'angular2-modal': 'npm:angular2-modal',
       'mydatepicker': 'npm:mydatepicker',
       "ng2-modal": "node_modules/ng2-modal",
-      'angular2-modal/plugins/bootstrap': 'npm:angular2-modal/bundles/angular2-modal.bootstrap.umd.js'
+      'angular2-modal/plugins/bootstrap': 'npm:angular2-modal/bundles/angular2-modal.bootstrap.umd.js',
       'ng2-imageupload': 'node_modules/ng2-imageupload'
     },
     // packages tells the System loader how to load when no filename and/or no extension
@@ -60,6 +60,7 @@
       primeng: { defaultExtension: 'js' },
       'fullcalendar': { main: 'fullcalendar.js', defaultExtension: 'js' },
       "ng2-modal": { "main": "index.js", "defaultExtension": "js" },
+      'ng2-imageupload': { main: 'index.js', defaultExtension: 'js'},
       'angular2-modal': { defaultExtension: 'js', main: '/bundles/angular2-modal.umd.js' }
     }
   });
