@@ -19,10 +19,14 @@ var ng2_table_1 = require("ng2-table/ng2-table");
 var ng2_bootstrap_1 = require("ng2-bootstrap/ng2-bootstrap");
 var ng2_bootstrap_2 = require("ng2-bootstrap/ng2-bootstrap");
 var ng2_select_1 = require("ng2-select/ng2-select");
+var my_date_picker_module_1 = require("mydatepicker/dist/my-date-picker.module");
+// import { DatePickerModule }             from 'ng2-datepicker';
 // import { SELECT_DIRECTIVES }            from 'ng2-select';
 var app_routing_module_1 = require("./app-routing.module");
 var primeng_1 = require("primeng/primeng");
 var equal_validator_directive_1 = require("../components/user/equal-validator.directive");
+var angular2_modal_1 = require("angular2-modal");
+var bootstrap_1 = require("angular2-modal/plugins/bootstrap");
 var ng2_imageupload_1 = require("ng2-imageupload");
 var index_1 = require("../components/index");
 var index_2 = require("../services/index");
@@ -52,6 +56,9 @@ AppModule = __decorate([
             ng2_select_1.SelectModule,
             primeng_1.PanelModule,
             primeng_1.FieldsetModule,
+            angular2_modal_1.ModalModule.forRoot(),
+            bootstrap_1.BootstrapModalModule,
+            my_date_picker_module_1.MyDatePickerModule
             primeng_1.GalleriaModule,
             ng2_imageupload_1.ImageUploadModule,
         ],
@@ -92,12 +99,15 @@ AppModule = __decorate([
             index_1.UserGroupComponent,
             index_1.EditUserGroupComponent,
             index_1.VisitComponent,
+            index_1.AnnouncementComponent,
+            index_1.EditAnnouncementComponent,
             index_1.TestComponent
         ],
         providers: [
             index_2.AccessControlService,
             index_2.AlertService,
             index_2.AttachmentService,
+            index_2.AnnouncementService,
             index_2.AuthenticationService,
             index_2.CompanyService,
             index_2.ContractService,
@@ -115,7 +125,7 @@ AppModule = __decorate([
             index_2.UserGroupService,
             index_2.VisitService,
         ],
-        bootstrap: [index_1.AppComponent]
+        bootstrap: [index_1.AppComponent],
     }),
     __metadata("design:paramtypes", [])
 ], AppModule);

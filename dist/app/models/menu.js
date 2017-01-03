@@ -45,7 +45,7 @@ exports.MENUS = [
         name: 'Manage Community',
         description: 'Manage event and announcement, E-voting and feedbacks',
         sub: [
-            { name: 'Manage Announcement', link: '' },
+            { name: 'Manage Announcement', link: '/announcement' },
             { name: 'E-voting', link: '' },
             { name: 'Manage Feedbacks', link: '' },
             { name: 'Lost & Found', link: '' },

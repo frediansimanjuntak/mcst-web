@@ -26,8 +26,6 @@ var EditUserGroupComponent = (function () {
         this.items = [];
         this.user = [];
         this.chief = {};
-        this.userToSave = [];
-        this.chiefToSave = {};
         this._disabledV = '0';
         this.disabled = false;
         this.model = {};
@@ -49,9 +47,9 @@ var EditUserGroupComponent = (function () {
                 .getUserGroup(this.id)
                 .then(function (usergroup) {
                 _this.usergroup = usergroup;
-                console.log(usergroup);
                 _this.chief.text = _this.users.find(function (myObj) { return myObj._id === _this.usergroup.chief; }).username;
                 _this.chief.id = _this.usergroup.chief;
+                _this.chiefField = true;
                 // for (let i = 0; i < this.usergroup.users.length; i++) {
                 //     this.user[i].text = this.users.find(myObj => myObj._id ===  this.usergroup.users[i] ).username;
                 //     this.user[i].id = this.usergroup.users[i];
@@ -84,16 +82,22 @@ var EditUserGroupComponent = (function () {
         configurable: true
     });
     EditUserGroupComponent.prototype.selected = function (value) {
-        console.log('Selected value is: ', value);
+        // console.log('Selected value is: ', value);
     };
     EditUserGroupComponent.prototype.removed = function (value) {
-        console.log('Removed value is: ', value);
+        // console.log('Removed value is: ', value);
     };
     EditUserGroupComponent.prototype.refreshValueUser = function (value) {
         this.user = value;
     };
     EditUserGroupComponent.prototype.refreshValueChief = function (value) {
         this.chief = value;
+        if (this.chief.length == 0) {
+            this.chiefField = false;
+        }
+        else {
+            this.chiefField = true;
+        }
     };
     EditUserGroupComponent.prototype.itemsToString = function (value) {
         if (value === void 0) { value = []; }
@@ -134,12 +138,13 @@ var EditUserGroupComponent = (function () {
         var control = this.myForm.controls['users'];
         control.removeAt(i);
     };
-    EditUserGroupComponent.prototype.createUserGroup = function (model) {
+    EditUserGroupComponent.prototype.createUserGroup = function () {
+        this.model.users = [];
         for (var i = 0; i < this.user.length; i++) {
-            model.users[i] = this.user[i].id;
+            this.model.users[i] = this.user[i].id;
         }
-        model.chief = this.chief.id;
-        console.log(model);
+        this.model.chief = this.chief.id;
+        console.log(this.model);
         //   this.userGroupService.create(model)
         // .then(
         //     data => {
@@ -152,12 +157,14 @@ var EditUserGroupComponent = (function () {
         // );
     };
     EditUserGroupComponent.prototype.updateUserGroup = function () {
-        this.usergroup.users = [];
-        for (var i = 0; i < this.user.length; i++) {
-            this.usergroup.users[i] = this.user[i].id;
+        if (this.chiefField && this.usergroup.description != '') {
+            this.usergroup.users = [];
+            for (var i = 0; i < this.user.length; i++) {
+                this.usergroup.users[i] = this.user[i].id;
+            }
+            this.usergroup.chief = this.chief.id;
+            console.log(this.usergroup);
         }
-        this.usergroup.chief = this.chief.id;
-        console.log(this.usergroup);
         //     this.userGroupService.update(this.usergroup)
         //     .then(
         //         response => {

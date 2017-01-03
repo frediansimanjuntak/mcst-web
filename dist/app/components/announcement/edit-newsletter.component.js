@@ -23,11 +23,14 @@ var EditNewsletterComponent = (function () {
         this.developments = [];
         this.model = {};
         this.uploader = new ng2_file_upload_1.FileUploader({ url: 'http://localhost:3001/upload' });
+        this.types = [
+            { value: 'agm', name: 'AGM' },
+            { value: 'circular', name: 'Circular' }
+        ];
+        this.selectedType = 'agm';
         // this.user = JSON.parse(localStorage.getItem('user'));
     }
     EditNewsletterComponent.prototype.ngOnInit = function () {
-        this.model.released = false;
-        this.model.type = 'agm';
         this.myForm = this.formbuilder.group({
             newsletter: this.formbuilder.group({
                 title: [''],
@@ -42,7 +45,7 @@ var EditNewsletterComponent = (function () {
             })
         });
     };
-    EditNewsletterComponent.prototype.createNewsletter = function () {
+    EditNewsletterComponent.prototype.createNewsletter = function (event) {
         var _this = this;
         if (this.model.released == true) {
             this.model.released_by = '583e4e9dd97c97149884fef5';
@@ -52,6 +55,7 @@ var EditNewsletterComponent = (function () {
             this.model.released_by = null;
             this.model.released_at = null;
         }
+        this.model.type = this.selectedType;
         this.model.created_by = '583e4e9dd97c97149884fef5';
         // this.model.pinned.rank = 0;
         console.log(this.model);
@@ -92,7 +96,7 @@ var EditNewsletterComponent = (function () {
 EditNewsletterComponent = __decorate([
     core_1.Component({
         moduleId: module.id,
-        selector: 'edit-newsletter',
+        selector: 'edit-development',
         templateUrl: '/app/templates/edit-newsletter.html'
     }),
     __metadata("design:paramtypes", [router_1.Router,

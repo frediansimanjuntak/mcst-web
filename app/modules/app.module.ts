@@ -10,6 +10,8 @@ import { Ng2TableModule }               from 'ng2-table/ng2-table';
 import { Ng2BootstrapModule }           from 'ng2-bootstrap/ng2-bootstrap';
 import { PaginationModule }             from 'ng2-bootstrap/ng2-bootstrap';
 import { SelectModule }                 from 'ng2-select/ng2-select';
+import { MyDatePickerModule }           from 'mydatepicker/dist/my-date-picker.module';
+// import { DatePickerModule }             from 'ng2-datepicker';
 // import { SELECT_DIRECTIVES }            from 'ng2-select';
 import { AppRoutingModule }     		    from './app-routing.module';
 import { url }                          from '../global'
@@ -17,12 +19,18 @@ import { DataTableModule,SharedModule,ScheduleModule,DialogModule,InputMaskModul
 import { EqualValidator }               from '../components/user/equal-validator.directive';
 import { ImageUploadModule }            from 'ng2-imageupload';
 
+import { ModalModule } from 'angular2-modal';
+import { BootstrapModalModule } from 'angular2-modal/plugins/bootstrap';
+
 import { 
   AccessControlComponent,
   EditAccessControlComponent,
   AlertComponent,
   AppComponent,
   AttachmentComponent,
+  AnnouncementComponent,
+  EditAnnouncementComponent,
+  // PublishAnnouncementModalComponent,
   BookingComponent,
   CompanyComponent,
   ContractComponent,
@@ -59,6 +67,7 @@ import {
   AccessControlService,
   AlertService,
   AttachmentService,
+  AnnouncementService,
   AuthenticationService,
   CompanyService,
   ContractService,
@@ -97,6 +106,10 @@ import {
     SelectModule,
     PanelModule,
     FieldsetModule,
+    ModalModule.forRoot(),
+    BootstrapModalModule,
+    MyDatePickerModule 
+
     GalleriaModule,
     ImageUploadModule,
   ],
@@ -137,12 +150,15 @@ import {
     UserGroupComponent,
     EditUserGroupComponent,
     VisitComponent, 
+    AnnouncementComponent,
+    EditAnnouncementComponent,
     TestComponent
   ],
   providers: [ 
     AccessControlService,
     AlertService,
     AttachmentService,
+    AnnouncementService,
     AuthenticationService,
     CompanyService,
     ContractService,
@@ -160,6 +176,7 @@ import {
     UserGroupService,
     VisitService,
   ],
-  bootstrap:    [ AppComponent ] 
+  bootstrap:    [ AppComponent ],
+  // entryComponents: [ PublishAnnouncementModalComponent ] 
 })
 export class AppModule { }

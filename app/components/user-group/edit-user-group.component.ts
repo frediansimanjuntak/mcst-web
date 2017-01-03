@@ -18,13 +18,12 @@ export class EditUserGroupComponent implements OnInit {
 
     private user:any = [];
     private chief :any = {};
-    private userToSave:any = [];
-    private chiefToSave :any = {};
+    public chiefField: boolean; 
     private _disabledV:string = '0';
     private disabled:boolean = false;
 
     @Input('group')
-	usergroup: UserGroup;
+	usergroup : UserGroup;
     model: any = {};
     id: string;
     myForm: FormGroup;
@@ -59,11 +58,12 @@ export class EditUserGroupComponent implements OnInit {
                     .getUserGroup(this.id)
                     .then(usergroup => {
                         this.usergroup = usergroup;
-                        console.log(usergroup);
+                        
 
                         this.chief.text = this.users.find(myObj => myObj._id ===  this.usergroup.chief ).username;
                         this.chief.id = this.usergroup.chief;
-
+                        this.chiefField = true;
+                        
                         // for (let i = 0; i < this.usergroup.users.length; i++) {
                         //     this.user[i].text = this.users.find(myObj => myObj._id ===  this.usergroup.users[i] ).username;
                         //     this.user[i].id = this.usergroup.users[i];
@@ -84,43 +84,45 @@ export class EditUserGroupComponent implements OnInit {
                     });
         };
         
-        
     }
 
 
+    private get disabledV():string {
+        return this._disabledV;
+    }
 
-    
-  private get disabledV():string {
-    return this._disabledV;
-  }
+    private set disabledV(value:string) {
+        this._disabledV = value;
+        this.disabled = this._disabledV === '1';
+    }
 
-  private set disabledV(value:string) {
-    this._disabledV = value;
-    this.disabled = this._disabledV === '1';
-  }
+    public selected(value:any):void {
+        // console.log('Selected value is: ', value);
+    }
 
-  public selected(value:any):void {
-    console.log('Selected value is: ', value);
-  }
+    public removed(value:any):void {
+        // console.log('Removed value is: ', value);
+    }
 
-  public removed(value:any):void {
-    console.log('Removed value is: ', value);
-  }
+    public refreshValueUser(value:any):void {
+        this.user = value;
+    }
 
-  public refreshValueUser(value:any):void {
-    this.user = value;
-  }
+    public refreshValueChief(value:any):void {
+        this.chief = value;
+        if (this.chief.length == 0){
+            this.chiefField = false;
+        }else{
+            this.chiefField = true;
+        }
+    }
 
-  public refreshValueChief(value:any):void {
-    this.chief = value;
-  }
-
-  public itemsToString(value:Array<any> = []):string {
-    return value
-      .map((item:any) => {
-        return item.text;
-      }).join(',');
-  }
+    public itemsToString(value:Array<any> = []):string {
+        return value
+          .map((item:any) => {
+            return item.text;
+           }).join(',');
+    }
 
     initUser() {
         return this.formbuilder.group({
@@ -163,12 +165,13 @@ export class EditUserGroupComponent implements OnInit {
         control.removeAt(i);
     }
 
-    createUserGroup(model: any) {
+    createUserGroup() {
+        this.model.users = [];
         for (let i = 0; i < this.user.length; i++) {
-            model.users[i] =this.user[i].id ;
+            this.model.users[i] = this.user[i].id ;
         }
-        model.chief = this.chief.id;
-        console.log(model);
+        this.model.chief = this.chief.id;
+        console.log(this.model);
         //   this.userGroupService.create(model)
         // .then(
         //     data => {
@@ -182,12 +185,14 @@ export class EditUserGroupComponent implements OnInit {
     }
 
     updateUserGroup(){
-        this.usergroup.users = [];
-        for (let i = 0; i < this.user.length; i++) {
-            this.usergroup.users[i] =this.user[i].id ;
+        if(this.chiefField && this.usergroup.description != ''){
+            this.usergroup.users = [];
+            for (let i = 0; i < this.user.length; i++) {
+                this.usergroup.users[i] =this.user[i].id ;
+            }
+            this.usergroup.chief = this.chief.id;
+             console.log(this.usergroup);
         }
-        this.usergroup.chief = this.chief.id;
-         console.log(this.usergroup);
     //     this.userGroupService.update(this.usergroup)
     //     .then(
     //         response => {
