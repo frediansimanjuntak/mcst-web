@@ -19,10 +19,10 @@ export class FacilityComponent implements OnInit {
     constructor(private router: Router,private facilityService: FacilityService,private alertService: AlertService) {}
 
     ngOnInit() {
-        this.loadAllDevelopments();      
+        this.loadAllFacilities();      
     }
  
-    deleteDevelopment(facility: Facility) {
+    deleteFacilities(facility: Facility) {
         this.facilityService.delete(facility._id) 
         .then(
 			response => {
@@ -30,7 +30,7 @@ export class FacilityComponent implements OnInit {
 	                alert(`The facility could not be deleted, server Error.`);
 	            } else {
                     this.alertService.success('Delete facility successful', true);
-	                this.loadAllDevelopments()
+	                this.loadAllFacilities()
 	            }
             },
             error=> { 
@@ -39,7 +39,7 @@ export class FacilityComponent implements OnInit {
         );
     }
    
-    private loadAllDevelopments() {
+    private loadAllFacilities() {
         this.facilityService.getAll().subscribe(facilities => { this.facilities = facilities; });
     }
 
@@ -49,5 +49,9 @@ export class FacilityComponent implements OnInit {
 
     edit(facility: Facility){
         this.router.navigate(['/facility/edit', facility._id]);
+    }
+
+    view(facility: Facility){
+        this.router.navigate(['/facility/view', facility._id]);
     }
 }

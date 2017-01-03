@@ -97,6 +97,9 @@ var IncidentComponent = (function () {
     IncidentComponent.prototype.view = function (incident) {
         this.router.navigate(['/incident/view', incident._id]);
     };
+    IncidentComponent.prototype.add = function () {
+        this.router.navigate(['/incident/add']);
+    };
     return IncidentComponent;
 }());
 IncidentComponent = __decorate([

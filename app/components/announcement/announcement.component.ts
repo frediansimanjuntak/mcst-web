@@ -31,7 +31,8 @@ export class AnnouncementComponent implements OnInit {
     public rowsOnPage = 10;
     public sortBy = "email";
     public sortOrder = "asc";
-
+    valid_tillStatus: string;
+    stickyStatus: string;
     constructor(
                 private router: Router,
                 private announcementService: AnnouncementService, 
@@ -54,8 +55,7 @@ export class AnnouncementComponent implements OnInit {
             // disableUntil: {year: 2016, month: 8, day: 10},
             selectionTxtFontSize: '16px'
         };
-        this.model.valid_till = "forever"
-        this.model.sticky = 'no';
+        
 
         this.developmentId = '585b36585d3cc41224fe518a';
         this.loadAllAnnouncements();
@@ -95,22 +95,31 @@ export class AnnouncementComponent implements OnInit {
 
     openModal(announcement){
         this.announcement = announcement;
-        if(this.announcement.valid_till = "forever"){
-              this.announcement.valid_till = "";
+        this.valid_tillStatus = announcement.valid_till;
+        this.stickyStatus = announcement.sticky;
+
+        if(this.valid_tillStatus == "forever"){
+              this.valid_tillStatus = "";
         }
+        console.log(this.announcement);
     }
 
     publishAnnouncement(){
-        if ( this.announcement.valid_till == ""){
+        if ( this.valid_tillStatus == ""){
             this.announcement.valid_till = "forever";
+        }else{
+             this.announcement.valid_till = this.valid_tillStatus;
         }
+
+        this.announcement.sticky = this.stickyStatus;
         this.announcement.publish = true;
         console.log(this.announcement);
+        this.ngOnInit();
     }
 
     validTillDateChanged(event:any) {
       // console.log('onDateChanged(): ', event.date, ' - jsdate: ', new Date(event.jsdate).toLocaleDateString(), ' - formatted: ', event.formatted, ' - epoc timestamp: ', event.epoc);
-       this.announcement.valid_till = event.formatted.replace(/-/g, "/");;
+       this.valid_tillStatus = event.formatted.replace(/-/g, "/");;
     }
 
     private loadAllAnnouncements() {
