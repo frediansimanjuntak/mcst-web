@@ -10,12 +10,16 @@ import { Ng2TableModule }               from 'ng2-table/ng2-table';
 import { Ng2BootstrapModule }           from 'ng2-bootstrap/ng2-bootstrap';
 import { PaginationModule }             from 'ng2-bootstrap/ng2-bootstrap';
 import { SelectModule }                 from 'ng2-select/ng2-select';
+import { MyDatePickerModule }           from 'mydatepicker/dist/my-date-picker.module';
 // import { DatePickerModule }             from 'ng2-datepicker';
 // import { SELECT_DIRECTIVES }            from 'ng2-select';
 import { AppRoutingModule }     		    from './app-routing.module';
 import { url }                          from '../global'
 import { DataTableModule,SharedModule,ScheduleModule,DialogModule,InputMaskModule,CheckboxModule,PanelModule,FieldsetModule } from 'primeng/primeng';
 import { EqualValidator }               from '../components/user/equal-validator.directive';
+
+import { ModalModule } from 'angular2-modal';
+import { BootstrapModalModule } from 'angular2-modal/plugins/bootstrap';
 
 import { 
   AccessControlComponent,
@@ -25,6 +29,7 @@ import {
   AttachmentComponent,
   AnnouncementComponent,
   EditAnnouncementComponent,
+  // PublishAnnouncementModalComponent,
   BookingComponent,
   CompanyComponent,
   ContractComponent,
@@ -100,6 +105,10 @@ import {
     SelectModule,
     PanelModule,
     FieldsetModule,
+    ModalModule.forRoot(),
+    BootstrapModalModule,
+    MyDatePickerModule 
+
   ],
   declarations: [ 
     AccessControlComponent,
@@ -164,6 +173,7 @@ import {
     UserGroupService,
     VisitService,
   ],
-  bootstrap:    [ AppComponent ] 
+  bootstrap:    [ AppComponent ],
+  // entryComponents: [ PublishAnnouncementModalComponent ] 
 })
 export class AppModule { }

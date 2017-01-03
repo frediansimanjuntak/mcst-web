@@ -14,34 +14,34 @@
 		<div (click)="$event.preventDefault()">
 		  <tabset>
 		    <tab heading="Draft">
-		    	<p-dataTable [value]="announcementsDrafted" [rows]="10" [paginator]="true">
-				    <p-column field="title" header="Date" sortable="true" [filter]="true" filterPlaceholder="Search title"></p-column>
+		    	<p-dataTable [value]="announcementsDrafted" [rows]="10"  resizableColumns="true" [paginator]="true">
+				    <p-column field="title" header="Title" sortable="true" [filter]="true" filterPlaceholder="Search title"></p-column>
 				    <p-column field="message" header="Message" sortable="true" [filter]="true" filterPlaceholder="Search Message"></p-column>
 				    <p-column field="sticky" header="Sticky?" sortable="true" [filter]="true"></p-column>
 				    <p-column field="auto_post_on" header="Auto pot on" sortable="true" [filter]="true" filterPlaceholder="Search Date "></p-column>
 				    <p-column field="valid_till" header="Valid till" sortable="true" [filter]="true" filterPlaceholder="Search Date "></p-column>
 				    <p-column field="created_at" header="Created on" sortable="true" [filter]="true" filterPlaceholder="Search Date "></p-column>
-				    <p-column styleClass="col-button">
-				    	<template let-announcementsDrafted="rowData" pTemplate="body">
-				    	<button type="button" (click)="editAnnouncement(announcementsDrafted)">Publish</button>
-				    	<button type="button" (click)="publishAnnouncement(announcementsDrafted)">Publish</button>
-				        <button class="pull-right" type="button" (click)="deleteAnnouncement(announcementsDrafted)">Delete</button>
+				    <p-column>
+				    	<template class="pull-right" let-announcementsDrafted="rowData" pTemplate="body">
+				    	<a type="button" style="cursor:pointer" (click)="editAnnouncement(announcementsDrafted)"><i class="fa fa-edit" aria-hidden="true"></i>&nbsp;Edit</a>
+				    	<button type="button" class="btn btn-primary btn-xs" (click)="openCustom(announcementsDrafted)">Publish</button>
+				        <button  type="button" (click)="deleteAnnouncement(announcementsDrafted)"><i class="fa fa-trash" aria-hidden="true"></i></button>
 				    	</template>
 				    </p-column>
 				</p-dataTable>
-		    </tab>
+		    </tab>	
 		    <tab heading="Published">
-		    	<p-dataTable [value]="announcementsPublished" [rows]="10" [paginator]="true">
-				    <p-column field="title" header="Date" sortable="true" [filter]="true" filterPlaceholder="Search title"></p-column>
+		    	<p-dataTable [value]="announcementsPublished" [rows]="10"  resizableColumns="true" [paginator]="true">
+				    <p-column field="title" header="Title" sortable="true" [filter]="true" filterPlaceholder="Search title"></p-column>
 				    <p-column field="message" header="Message" sortable="true" [filter]="true" filterPlaceholder="Search Message"></p-column>
 				    <p-column field="sticky" header="Sticky?" sortable="true" [filter]="true"></p-column>
 				    <p-column field="valid_till" header="Valid till" sortable="true" [filter]="true" filterPlaceholder="Search Date "></p-column>
 				    <p-column field="created_at" header="Created on" sortable="true" [filter]="true" filterPlaceholder="Search Date "></p-column>
 				    <p-column field="created_by" header="Created by" sortable="true" [filter]="true" filterPlaceholder="Search Date "></p-column>
 				    <p-column styleClass="col-button">
-				    	<template let-announcementsPublished="rowData" pTemplate="body">
-				        <button class="pull-right" type="button" (click)="deleteAnnouncement(announcementsPublished)">Delete</button>
-				    	</template>
+				    	<template class="pull-right" let-announcementsPublished="rowData" pTemplate="body">
+				        <button  type="button" (click)="deleteAnnouncement(announcementsPublished)"><i class="fa fa-trash" aria-hidden="true"></i></button>
+				        </template>
 				    </p-column>
 				</p-dataTable>
 		    </tab>	

@@ -10,6 +10,7 @@ __export(require("./attachment/attachment.component"));
 __export(require("./attachment/edit-attachment.component"));
 __export(require("./announcement/announcement.component"));
 __export(require("./announcement/edit-announcement.component"));
+// export * from './announcement/publish-announcement-modal.component';
 __export(require("./booking/booking.component"));
 __export(require("./booking/edit-booking.component"));
 __export(require("./company/company.component"));

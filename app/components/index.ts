@@ -6,6 +6,7 @@ export * from './attachment/attachment.component';
 export * from './attachment/edit-attachment.component';
 export * from './announcement/announcement.component';
 export * from './announcement/edit-announcement.component';
+// export * from './announcement/publish-announcement-modal.component';
 export * from './booking/booking.component';
 export * from './booking/edit-booking.component';
 export * from './company/company.component';
