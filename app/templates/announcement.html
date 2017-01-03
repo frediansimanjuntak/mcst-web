@@ -59,7 +59,7 @@
 		           <div *ngIf="announcement">
 		              
 		           		
-		              <form class="form-horizontal col-md-6" name="form">
+		              <form class="form-horizontal" name="form">
 		                <div class="form-group">
 		                    <label class="control-label col-sm-4" for="sticky">Sticky? :</label>
 		                    <div class="col-sm-8">
@@ -75,7 +75,7 @@
 		                       
 		                    </div>
 		                </div>
-		                <div>
+		                <div class="pull-right">
 		                    <button  class="btn btn-primary" (click)="publishAnnouncement()">Announce</button>
 		                    <button class="btn btn-default" (click)="firstModal.close()">Cancel</button>
 		                </div>
