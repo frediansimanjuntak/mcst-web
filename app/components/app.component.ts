@@ -16,8 +16,7 @@ import {
   	<headers></headers>
   	<navbar></navbar>
   	<div class="loading-overlay" *ngIf="loading">
-    	aaa
-	    <md-progress-bar mode="indeterminate"></md-progress-bar>
+    	loading
 	</div>
    	<router-outlet></router-outlet>
 
