@@ -22,11 +22,8 @@ export class EditNewsletterComponent  {
     myForm: FormGroup;
     user: User;
     public uploader:FileUploader = new FileUploader({url:'http://localhost:3001/upload'});
-    types = [
-        { value: 'agm', name: 'AGM' },
-        { value: 'circular', name: 'Circular' }
-    ];
-    selectedType = 'agm';
+    
+    
     constructor(private router: Router,
     	private newsletterService: NewsletterService,
     	private alertService: AlertService,
@@ -36,6 +33,8 @@ export class EditNewsletterComponent  {
     }
 
     ngOnInit() {
+        this.model.released = false;
+        this.model.type = 'agm';
         this.myForm = this.formbuilder.group({
             newsletter: this.formbuilder.group({
                 title: [''],
@@ -55,7 +54,7 @@ export class EditNewsletterComponent  {
         })
     }
 
-    createNewsletter(event: any) {
+    createNewsletter() {
         
         if(this.model.released == true){
             this.model.released_by = '583e4e9dd97c97149884fef5';
@@ -64,7 +63,6 @@ export class EditNewsletterComponent  {
             this.model.released_by = null;
             this.model.released_at = null;
         }
-        this.model.type = this.selectedType;
         this.model.created_by = '583e4e9dd97c97149884fef5';
         
         // this.model.pinned.rank = 0;
