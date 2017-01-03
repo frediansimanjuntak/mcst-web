@@ -1,0 +1,75 @@
+<div class="container">
+    <div class="main">
+        <div *ngIf="incident">
+            <div class="title">
+                {{incident.reference_no}} {{incident.title}}
+            </div>
+            <p>Home > Incident Reports > {{incident.reference_no}} {{incident.title}}</p>
+	        <div class="row">
+	        	<div class="col-lg-6">
+	        		<p-galleria [images]="images" panelWidth="500" panelHeight="313"></p-galleria>
+	        	</div>
+	        	<div class="col-lg-6">
+	        		<div class="row">
+	        			<div class="col-md-4">Reported by </div>
+	        			<div class="col-md-8"> <p>: {{ incident.created_by }}</p></div>
+	        		</div>
+	        		<div class="row">
+	        			<div class="col-md-4">Type of Report </div>
+	        			<div class="col-md-8"><p>: {{ incident.incident_type }}</p></div>
+	        		</div>
+	        		<div class="row">
+	        			<div class="col-md-4">Report time </div>
+	        			<div class="col-md-8"><p>: {{ incident.created_at }}</p></div>
+	        		</div>
+	        		<div class="row">
+	        			<div class="col-md-4">Status </div>
+	        			<div class="col-md-8"><p>: {{ incident.status }}</p></div>
+	        		</div>
+	        		<div class="row">
+	        			<div class="col-md-4">Order </div>
+	        			<div class="col-md-8">: <!-- <p>{{ incident.orde }}</p> --></div>
+	        		</div>
+	        		<div class="row">
+	        			<div class="col-md-4">Message </div>
+	        			<div class="col-md-8"><p>: {{ incident.remark }}</p></div>
+	        		</div>
+	        	</div>
+	        </div>
+        </div>
+
+        <div *ngIf="!incident">
+            <div class="title">
+				Incident Reports
+			</div>
+			Home > Incident Reports
+			<div class="row">
+				<div class="col-md-4 pull-right">
+					<a class="btn btn-default pull-right" (click)="add()">
+					<i class="fa fa-plus" aria-hidden="true"></i>&nbsp;Create Report</a>	  		
+				</div>
+			</div>
+			<div (click)="$event.preventDefault()">
+			    <p-dataTable [value]="facilities" [rows]="10" [paginator]="true">
+				    <p-column field="name" header="Name" sortable="true" [filter]="true" filterPlaceholder="Search Name"></p-column>
+				    <p-column field="description" header="Description" sortable="true" [filter]="true" filterPlaceholder="Search Description"></p-column>
+				    <p-column field="facility_type" header="Facility Type" sortable="true" [filter]="true" filterPlaceholder="Search Facility Type"></p-column>
+				    <p-column field="payment_type" header="Payment Type" sortable="true" [filter]="true" filterPlaceholder="Search Payment Type"></p-column>
+					<p-column field="booking_type" header="Booking Type" sortable="true" [filter]="true" filterPlaceholder="Search Booking Type"></p-column>
+				    <p-column field="status" header="Status" sortable="true" [filter]="true" filterPlaceholder="Search Status">
+				        <template let-col let-data="rowData" pTemplate="body">
+				            <span [style.color]="data[col.field]">{{data[col.field]}}</span>
+				        </template>
+				    </p-column>
+				    <p-column styleClass="col-button" header="action">
+				    	<template let-data="rowData" pTemplate="body">
+				    		<button type="button" (click)="view(data)">View</button>
+				    		<button type="button" (click)="edit(data)">Edit</button>
+							<button type="button" (click)="deleteIncident(data)"><i class="fa fa-trash" aria-hidden="true"></i></button>
+				    	</template>
+				    </p-column>
+				</p-dataTable>
+			</div>	
+        </div>
+    </div>
+</div>

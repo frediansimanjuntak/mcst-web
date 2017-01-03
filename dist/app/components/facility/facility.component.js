@@ -21,9 +21,9 @@ var FacilityComponent = (function () {
         this.model = {};
     }
     FacilityComponent.prototype.ngOnInit = function () {
-        this.loadAllDevelopments();
+        this.loadAllFacilities();
     };
-    FacilityComponent.prototype.deleteDevelopment = function (facility) {
+    FacilityComponent.prototype.deleteFacilities = function (facility) {
         var _this = this;
         this.facilityService.delete(facility._id)
             .then(function (response) {
@@ -32,13 +32,13 @@ var FacilityComponent = (function () {
             }
             else {
                 _this.alertService.success('Delete facility successful', true);
-                _this.loadAllDevelopments();
+                _this.loadAllFacilities();
             }
         }, function (error) {
             alert("The Development could not be deleted, server Error.");
         });
     };
-    FacilityComponent.prototype.loadAllDevelopments = function () {
+    FacilityComponent.prototype.loadAllFacilities = function () {
         var _this = this;
         this.facilityService.getAll().subscribe(function (facilities) { _this.facilities = facilities; });
     };
@@ -47,6 +47,9 @@ var FacilityComponent = (function () {
     };
     FacilityComponent.prototype.edit = function (facility) {
         this.router.navigate(['/facility/edit', facility._id]);
+    };
+    FacilityComponent.prototype.view = function (facility) {
+        this.router.navigate(['/facility/view', facility._id]);
     };
     return FacilityComponent;
 }());

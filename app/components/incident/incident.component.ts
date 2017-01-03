@@ -107,4 +107,8 @@ export class IncidentComponent implements OnInit {
     view(incident: Incident){
         this.router.navigate(['/incident/view', incident._id]);
     }
+
+    add(){
+        this.router.navigate(['/incident/add']);
+    }
 }
