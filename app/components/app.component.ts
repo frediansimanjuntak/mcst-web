@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import '../rxjs-operators';
+import {SlimLoadingBarService} from 'ng2-slim-loading-bar';
 import {
     Event as RouterEvent,
     NavigationStart,
@@ -15,9 +16,10 @@ import {
   template: `
   	<headers></headers>
   	<navbar></navbar>
-  	<div class="loading-overlay" *ngIf="loading">
-    	loading
-	</div>
+  	
+    
+    <ng2-slim-loading-bar></ng2-slim-loading-bar>
+	  
    	<router-outlet></router-outlet>
 
   	
@@ -52,10 +54,20 @@ import {
 export class AppComponent  { 
 	loading: boolean = true;
 
-    constructor(private router: Router) {
+    constructor(
+        private slimLoadingBarService: SlimLoadingBarService,private router: Router) {
         router.events.subscribe((event: RouterEvent) => {
             this.navigationInterceptor(event);
         });
+    }
+
+    
+
+  start() {
+        this.slimLoadingBarService.start(() => {
+            console.log('Loading complete');
+        });
+        console.log('aaa')
     }
 
 
@@ -65,7 +77,7 @@ export class AppComponent  {
             this.loading = true;
         }
         if (event instanceof NavigationEnd) {
-           setTimeout(() => this.loading = false, 2000);
+           setTimeout(() => this.loading = false, 5000);
         }
 
         // Set loading state to false in both of the below events to hide the spinner in case a request fails

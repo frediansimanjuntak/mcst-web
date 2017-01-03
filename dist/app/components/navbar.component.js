@@ -10,10 +10,17 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 var core_1 = require("@angular/core");
 var menu_1 = require("../models/menu");
+var ng2_slim_loading_bar_1 = require("ng2-slim-loading-bar");
 var NavbarComponent = (function () {
-    function NavbarComponent() {
+    function NavbarComponent(slimLoadingBarService) {
+        this.slimLoadingBarService = slimLoadingBarService;
         this.menus = menu_1.MENUS;
     }
+    NavbarComponent.prototype.start = function () {
+        this.slimLoadingBarService.start(function () {
+            console.log('Loading complete');
+        });
+    };
     return NavbarComponent;
 }());
 NavbarComponent = __decorate([
@@ -23,7 +30,7 @@ NavbarComponent = __decorate([
         templateUrl: '/app/templates/navbar.html',
         styleUrls: ['../templates/styles/navbar.css']
     }),
-    __metadata("design:paramtypes", [])
+    __metadata("design:paramtypes", [ng2_slim_loading_bar_1.SlimLoadingBarService])
 ], NavbarComponent);
 exports.NavbarComponent = NavbarComponent;
 //# sourceMappingURL=navbar.component.js.map

@@ -28,6 +28,7 @@ var equal_validator_directive_1 = require("../components/user/equal-validator.di
 var ng2_imageupload_1 = require("ng2-imageupload");
 var ng2_modal_1 = require("ng2-modal");
 var bootstrap_1 = require("angular2-modal/plugins/bootstrap");
+var ng2_slim_loading_bar_1 = require("ng2-slim-loading-bar");
 var index_1 = require("../components/index");
 var index_2 = require("../services/index");
 var AppModule = (function () {
@@ -62,6 +63,7 @@ AppModule = __decorate([
             my_date_picker_module_1.MyDatePickerModule,
             primeng_1.GalleriaModule,
             ng2_imageupload_1.ImageUploadModule,
+            ng2_slim_loading_bar_1.SlimLoadingBarModule.forRoot(),
         ],
         declarations: [
             index_1.AccessControlComponent,

@@ -41,7 +41,8 @@
       'mydatepicker': 'npm:mydatepicker',
       "ng2-modal": "node_modules/ng2-modal",
       'angular2-modal/plugins/bootstrap': 'npm:angular2-modal/bundles/angular2-modal.bootstrap.umd.js',
-      'ng2-imageupload': 'node_modules/ng2-imageupload'
+      'ng2-imageupload': 'node_modules/ng2-imageupload',
+      'ng2-slim-loading-bar': 'node_modules/ng2-slim-loading-bar/bundles/index.umd.js'
     },
     // packages tells the System loader how to load when no filename and/or no extension
     packages: {
