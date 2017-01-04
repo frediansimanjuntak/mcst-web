@@ -10,5 +10,10 @@
     "noImplicitAny": false,
     "suppressImplicitAnyIndexErrors": true,
      "outDir": "dist"
-  }
+  },
+  "exclude": [
+    "typings/main.d.ts",
+    "typings/main",
+    "node_modules"
+  ]
 }

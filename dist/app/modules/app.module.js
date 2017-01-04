@@ -61,7 +61,6 @@ AppModule = __decorate([
             ng2_modal_1.ModalModule,
             bootstrap_1.BootstrapModalModule,
             my_date_picker_module_1.MyDatePickerModule,
-            primeng_1.GalleriaModule,
             ng2_imageupload_1.ImageUploadModule,
             ng2_slim_loading_bar_1.SlimLoadingBarModule.forRoot(),
         ],
@@ -104,7 +103,8 @@ AppModule = __decorate([
             index_1.VisitComponent,
             index_1.AnnouncementComponent,
             index_1.EditAnnouncementComponent,
-            index_1.TestComponent
+            index_1.TestComponent,
+            index_1.Galleria,
         ],
         providers: [
             index_2.AccessControlService,

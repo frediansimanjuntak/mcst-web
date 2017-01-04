@@ -12,6 +12,8 @@ export class Incident {
   contract : Contract;
   remark : string;
   status : string;
+  starred_by : User[];
+  archive : boolean;
   created_by : User;
   updated_at : string;
   created_at : string; 

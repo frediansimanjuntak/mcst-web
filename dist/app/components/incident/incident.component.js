@@ -20,6 +20,8 @@ var IncidentComponent = (function () {
         this.route = route;
         this.incidents = [];
         this.model = {};
+        this.isFavorite = false;
+        this.change = new core_1.EventEmitter();
     }
     IncidentComponent.prototype.ngOnInit = function () {
         var _this = this;
@@ -79,6 +81,12 @@ var IncidentComponent = (function () {
     IncidentComponent.prototype.add = function () {
         this.router.navigate(['/incident/add']);
     };
+    IncidentComponent.prototype.onClick = function (incident) {
+        this.isFavorite = !this.isFavorite;
+        this.change.emit({
+            newValue: this.isFavorite
+        });
+    };
     return IncidentComponent;
 }());
 IncidentComponent = __decorate([
@@ -86,7 +94,8 @@ IncidentComponent = __decorate([
         moduleId: module.id,
         selector: 'incident',
         templateUrl: '/app/templates/incident.html',
-        styleUrls: ['/app/templates/styles/newsletter.css']
+        inputs: ['isFavorite :is-favorite'],
+        outputs: ['change']
     }),
     __metadata("design:paramtypes", [router_1.Router, index_1.IncidentService, index_1.AlertService, router_1.ActivatedRoute])
 ], IncidentComponent);
