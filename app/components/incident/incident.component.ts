@@ -10,14 +10,6 @@ import { FileUploader } from 'ng2-file-upload';
     moduleId: module.id,
     selector: 'incident',
     templateUrl: '/app/templates/incident.html',
-    styles:[`
-        .glyphicon-star {
-            color: orange
-        }
-        .glyphicon-star-empty {
-            color: grey
-        }
-    `],
     inputs: ['isFavorite :is-favorite'],
     outputs: ['change'] 
 })
