@@ -1,20 +1,25 @@
 import { Injectable } from '@angular/core';
 import { Http, Headers, RequestOptions, Response } from '@angular/http';
 import { Observable } from 'rxjs/Rx';
-import { Petition } from '../models/index';
+import { url } from '../global';
+import { Petition, Petitions } from '../models/index';
  
 @Injectable()
 export class PetitionService {
+    private headers = new Headers({'Content-Type': 'application/json'});
     constructor(private http: Http) {}
+
+    getPetitions(): Promise<Petition[]> {
+        return Promise.resolve(Petitions);
+    }
+
+    getPetition(id: string): Promise<any> {
+        return this.getPetitions()
+            .then(petition => petition.find(petition => petition._id === id));
+    }
 
     getAll(){
         return this.http.get('https://192.168.10.73:3333/api/petitions')
-            .map((res:Response) => res.json())
-            .catch((error:any) => Observable.throw(error.json().error || 'Server error'));
-    }
-
-    getById(id:string){
-        return this.http.get('https://192.168.10.73:3333/api/petitions' + id)
             .map((res:Response) => res.json())
             .catch((error:any) => Observable.throw(error.json().error || 'Server error'));
     }

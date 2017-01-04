@@ -64,6 +64,7 @@
   border-bottom-width: 4px !important;
   border-bottom-style: solid;
   font-weight: bold !important;
+  display: inline !important;
 }
 
 .form-control {
@@ -91,6 +92,16 @@
   border-color: rgb(222,222,222) !important;
 }
 
+.btn-underline {
+  text-decoration: underline;
+  cursor:pointer;
+}
+
 .upload{
   color: white;
+}
+
+.img-btn{
+  width: 15px;
+  height: 15px;
 }

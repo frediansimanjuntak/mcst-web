@@ -16,8 +16,8 @@ export const MENUS: any[] = [
   	name: 'Manage Request', 
     description: 'Track request for permits such as renovation, move-in, move-out and bulk delivery',
   	sub : [
-  		{ name : 'Browse Request', link: ''},
-  		{ name : 'Add Request', link: ''},
+  		{ name : 'Browse Request', link: '/petition'},
+  		{ name : 'Add Request', link: '/petition/add'},
   		{ name : 'Search Reference.no', link: ''}
   	]
   },
@@ -57,7 +57,7 @@ export const MENUS: any[] = [
   		{ name : 'Contact Directory', link: '' },
       { name : 'User', link: '/user' },
       { name : 'Unit', link: '/unit' },
-      { name : 'User Group', link: '/user_group' }
+      { name : 'User Group', link: '/user_group' },
     ]
   },
 ];

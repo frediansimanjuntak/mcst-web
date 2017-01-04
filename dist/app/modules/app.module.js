@@ -91,6 +91,7 @@ AppModule = __decorate([
             index_1.EditNewsletterComponent,
             index_1.PaymentComponent,
             index_1.PetitionComponent,
+            index_1.EditPetitionComponent,
             index_1.PollComponent,
             index_1.QuotationComponent,
             index_1.RegisterComponent,
