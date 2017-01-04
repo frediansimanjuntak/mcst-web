@@ -11,17 +11,21 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 var core_1 = require("@angular/core");
 var http_1 = require("@angular/http");
 var Rx_1 = require("rxjs/Rx");
+var index_1 = require("../models/index");
 var PetitionService = (function () {
     function PetitionService(http) {
         this.http = http;
+        this.headers = new http_1.Headers({ 'Content-Type': 'application/json' });
     }
+    PetitionService.prototype.getPetitions = function () {
+        return Promise.resolve(index_1.Petitions);
+    };
+    PetitionService.prototype.getPetition = function (id) {
+        return this.getPetitions()
+            .then(function (petition) { return petition.find(function (petition) { return petition._id === id; }); });
+    };
     PetitionService.prototype.getAll = function () {
         return this.http.get('https://192.168.10.73:3333/api/petitions')
-            .map(function (res) { return res.json(); })
-            .catch(function (error) { return Rx_1.Observable.throw(error.json().error || 'Server error'); });
-    };
-    PetitionService.prototype.getById = function (id) {
-        return this.http.get('https://192.168.10.73:3333/api/petitions' + id)
             .map(function (res) { return res.json(); })
             .catch(function (error) { return Rx_1.Observable.throw(error.json().error || 'Server error'); });
     };

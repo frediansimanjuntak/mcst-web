@@ -23,7 +23,6 @@ import {
   NewsletterComponent,
   EditNewsletterComponent,
   PaymentComponent,
-  PetitionComponent,
   PollComponent,
   QuotationComponent,
   SettingComponent,
@@ -37,6 +36,7 @@ import {
   VisitComponent,
   AnnouncementComponent,
   EditAnnouncementComponent,
+  PetitionComponent,
   TestComponent
 } from '../components/index';
 const routes: Routes = [
@@ -78,6 +78,11 @@ const routes: Routes = [
   { path: 'announcement',   component: AnnouncementComponent },
   { path: 'announcement/add',   component: EditAnnouncementComponent },
   { path: 'announcement/edit/:id',   component: EditAnnouncementComponent },
+
+  { path: 'petition', component: PetitionComponent },
+  { path: 'petition/view/:id', component: PetitionComponent },
+  // { path: 'petition/add',   component: EditAnnouncementComponent },
+  // { path: 'petition/edit/:id',   component: EditAnnouncementComponent },
   // { path: 'form',     component: HeroFormComponent },
   // { path: 'table',     component: TableDemoComponent },
   { path: 'test',     component: TestComponent },
