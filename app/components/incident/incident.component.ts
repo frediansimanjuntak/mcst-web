@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, EventEmitter } from '@angular/core';
 import { Router, Params, ActivatedRoute } from '@angular/router'; 
 import { Incident } from '../../models/index';
 import { IncidentService, AlertService } from '../../services/index';
@@ -7,10 +7,19 @@ import { Observable} from 'rxjs/Observable';
 import { FileUploader } from 'ng2-file-upload';
 
 @Component({
-  moduleId: module.id,
-  selector: 'incident',
-  templateUrl: '/app/templates/incident.html',
-  styleUrls: [ '/app/templates/styles/newsletter.css' ]
+    moduleId: module.id,
+    selector: 'incident',
+    templateUrl: '/app/templates/incident.html',
+    styles:[`
+        .glyphicon-star {
+            color: orange
+        }
+        .glyphicon-star-empty {
+            color: grey
+        }
+    `],
+    inputs: ['isFavorite :is-favorite'],
+    outputs: ['change'] 
 })
 
 export class IncidentComponent implements OnInit {
@@ -19,6 +28,8 @@ export class IncidentComponent implements OnInit {
     model: any = {};
     images: any[];
     id: string;
+    isFavorite = false;
+    change = new EventEmitter();
     public data;
     public dataNew;
     public dataReviewing; 
@@ -88,5 +99,12 @@ export class IncidentComponent implements OnInit {
 
     add(){
         this.router.navigate(['/incident/add']);
+    }
+
+    onClick(incident:Incident) {
+        this.isFavorite = !this.isFavorite;
+        this.change.emit({
+            newValue: this.isFavorite
+        });
     }
 }
