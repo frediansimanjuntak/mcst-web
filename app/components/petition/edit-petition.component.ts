@@ -4,6 +4,7 @@ import { Petition } from '../../models/index';
 import { PetitionService, AlertService } from '../../services/index';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { FileUploader } from 'ng2-file-upload';
+
 import '../../rxjs-operators';
 import 'rxjs/add/operator/switchMap';
 
@@ -28,6 +29,7 @@ export class EditPetitionComponent implements OnInit {
         
     ];
     selectedType = '';
+    
 
     constructor(private router: Router,
     	private petitionService: PetitionService,
@@ -84,4 +86,6 @@ export class EditPetitionComponent implements OnInit {
     remove(i: any){ 
         this.model.attachment.splice(i, 1)
     }
+
+   
 }

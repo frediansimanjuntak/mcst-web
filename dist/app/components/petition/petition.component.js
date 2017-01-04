@@ -26,6 +26,9 @@ var PetitionComponent = (function () {
         this.petitions = [];
         this.validTillDateOptions = {};
         this.model = {};
+        this.checked = [];
+        this.selectedValues = [];
+        this.btnArchive = false;
         this.filterQuery = "";
         this.rowsOnPage = 10;
         this.sortBy = "email";
@@ -111,8 +114,18 @@ var PetitionComponent = (function () {
     PetitionComponent.prototype.editPetition = function (petition) {
         this.router.navigate(['/petition/edit', petition._id]);
     };
+    PetitionComponent.prototype.checkSelected = function () {
+        this.btnArchive = this.selectedValues.length > 0 ? true : false;
+    };
     PetitionComponent.prototype.goBack = function () {
         this.location.back();
+    };
+    PetitionComponent.prototype.archieveSelected = function () {
+        console.log(this.selectedValues);
+    };
+    PetitionComponent.prototype.clearSelected = function () {
+        this.selectedValues = [];
+        this.checkSelected();
     };
     return PetitionComponent;
 }());

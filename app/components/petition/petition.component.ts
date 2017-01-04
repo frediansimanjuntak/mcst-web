@@ -25,6 +25,9 @@ export class PetitionComponent implements OnInit {
     model: any = {};
     id: string;
     cols: any[];
+    checked: string[] = [];
+    selectedValues: string[] = [];
+    btnArchive: boolean = false;
     public developmentId;
     public data;
     public petitionPending;
@@ -137,7 +140,19 @@ export class PetitionComponent implements OnInit {
         this.router.navigate(['/petition/edit', petition._id]);
     }
 
+    checkSelected(){
+        this.btnArchive = this.selectedValues.length > 0 ? true : false;
+    }
   	goBack(): void {
     	this.location.back();
   	}
+
+    archieveSelected(){
+        console.log(this.selectedValues);
+    }
+
+    clearSelected(){
+        this.selectedValues = [];
+        this.checkSelected();
+    }
 }

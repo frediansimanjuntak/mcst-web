@@ -57,14 +57,14 @@
 			Home > Manage Request
 			<div class="row">
 				<div class="col-md-4 pull-right">
-								<a class="btn btn-default" [routerLink]="['/petition/add']">
-						  		<i class="fa fa-plus" aria-hidden="true"></i>&nbsp;Add Request</a>
-						  		<a class="btn btn-default" (click)="archieveSelected(petitionPending)">&nbsp;Archieve Selected</a>
+								<a class="btn btn-default" [routerLink]="['/petition/add']"><img class="img-btn" src="../../assets/image/icon_add.png" (click)="viewPdf(petitionPending)" />&nbsp;Add Request</a>
+						  		<button class="btn btn-default" [disabled]="!btnArchive" (click)="archieveSelected()"><img class="img-btn" src="../../assets/image/icon_archived.png" (click)="viewPdf(petitionPending)" />&nbsp;Archieve Selected</button>
 				</div>
 			</div>
+			
 			<div (click)="$event.preventDefault()">
 			  <tabset>
-			    <tab heading="Request">
+			    <tab heading="Request" (select)="clearSelected()">
 			    	<p-dataTable [value]="petitionPending" [rows]="10"  resizableColumns="true" [paginator]="true">
 					    <p-column header="Ticket Number" sortable="true" [filter]="true" filterPlaceholder="Search Ticket Number">
 					    	  <template let-petitionPending="rowData" pTemplate="body">
@@ -72,54 +72,66 @@
 					        </template>
 						</p-column>
 					    <p-column field="petition_type" header="Type" sortable="true" [filter]="true" filterPlaceholder="Search Type"></p-column>
-					    <p-column field="created_by" header="Requested by" sortable="true" [filter]="true"></p-column>
+					    <p-column header="Requested by" sortable="true" [filter]="true" filterPlaceholder="Search Requested By">
+					    	<template let-petitionPending="rowData" pTemplate="body">
+					            <span class="btn-underline">{{petitionPending.created_by}}</span>
+					        </template>
+						</p-column>
 					    <p-column field="created_at" header="Since" sortable="true" [filter]="true" ></p-column>
 					    <p-column field="" header="Action Required" sortable="true" [filter]="true" ></p-column>
 					    <p-column field="remark" header="Remarks" sortable="true" [filter]="true" ></p-column>
 					    <p-column field="updated_at" header="Last Updated on" sortable="true" [filter]="true" ></p-column>
 						<p-column [style]="{'width':'300px'}" styleClass="col-button" header="action">
 					    	<template class="pull-right" let-petitionPending="rowData" pTemplate="body">
-					    	<a type="button" style="cursor:pointer" (click)="viewPetition(petitionPending)">View</a>
-					    	<a type="button" style="cursor:pointer" (click)="viewPdf(petitionPending)">pdf</a>
-					    	<input #{{petitionPending._id}} type="checkbox" [checked]="petitionPending._id" (change)="logCheckbox(petitionPending._id)">
+					    	<a type="button" class="btn-underline" (click)="viewPetition(petitionPending)">View</a>
+					    	<a (click)="viewPdf(petitionPending)" class="btn-underline"><img src="../../assets/image/icon_pdf.png" class="img-btn"/>Pdf</a>
+					    	<p-checkbox name="archive" (click)="checkSelected()" value="{{petitionPending._id}}" [(ngModel)]="selectedValues"></p-checkbox>
 					    	</template>
 					    </p-column>
 					</p-dataTable>
 			    </tab>	
 
-			    <tab heading="In-proress">
+			    <tab heading="In-proress" (select)="clearSelected()">
 			    	<p-dataTable [value]="petitionProgress" [rows]="10"  resizableColumns="true" [paginator]="true">
 					    <p-column field="reference_no" header="Ticket Number" sortable="true" [filter]="true" filterPlaceholder="Search Ticket Number"></p-column>
 					    <p-column field="petition_type" header="Type" sortable="true" [filter]="true" filterPlaceholder="Search Type"></p-column>
-					    <p-column field="created_by" header="Requested by" sortable="true" [filter]="true"></p-column>
+					    <p-column header="Requested by" sortable="true" [filter]="true" filterPlaceholder="Search Requested By">
+					    	<template let-petitionProgress="rowData" pTemplate="body">
+					            <span class="btn-underline">{{petitionProgress.created_by}}</span>
+					        </template>
+						</p-column>
 					    <p-column field="created_at" header="Since" sortable="true" [filter]="true" ></p-column>
 					    <p-column field="" header="Action Required" sortable="true" [filter]="true" ></p-column>
 					    <p-column field="remark" header="Remarks" sortable="true" [filter]="true" ></p-column>
 					    <p-column field="updated_at" header="Last Updated on" sortable="true" [filter]="true" ></p-column>
 						<p-column [style]="{'width':'300px'}" styleClass="col-button" header="action">
 					    	<template class="pull-right" let-petitionProgress="rowData" pTemplate="body">
-					    	<a type="button" style="cursor:pointer" (click)="viewPetition(petitionProgress)">View</a>
-					    	<a type="button" style="cursor:pointer" (click)="viewPdf(petitionProgress)">pdf</a>
-					    	<input type="checkbox" name="archive" value="{{petitionProgress._id}}">
+					    	<a type="button" class="btn-underline" (click)="viewPetition(petitionProgress)">View</a>
+					    	<a (click)="viewPdf(petitionProgress)" class="btn-underline"><img src="../../assets/image/icon_pdf.png" class="img-btn"/>Pdf</a>
+					    	<p-checkbox (click)="checkSelected()" name="archive" value="{{petitionProgress._id}}" [(ngModel)]="selectedValues"></p-checkbox>
 					    	</template>
 					    </p-column>
 					</p-dataTable>
 			    </tab>	
 
-			    <tab heading="Approved">
+			    <tab heading="Approved" (select)="clearSelected()">
 			    	<p-dataTable [value]="petitionApproved" [rows]="10"  resizableColumns="true" [paginator]="true">
 					    <p-column field="reference_no" header="Ticket Number" sortable="true" [filter]="true" filterPlaceholder="Search Ticket Number"></p-column>
 					    <p-column field="petition_type" header="Type" sortable="true" [filter]="true" filterPlaceholder="Search Type"></p-column>
-					    <p-column field="created_by" header="Requested by" sortable="true" [filter]="true"></p-column>
+					    <p-column header="Requested by" sortable="true" [filter]="true" filterPlaceholder="Search Requested By">
+					    	<template let-petitionApproved="rowData" pTemplate="body">
+					            <span class="btn-underline">{{petitionApproved.created_by}}</span>
+					        </template>
+						</p-column>
 					    <p-column field="created_at" header="Since" sortable="true" [filter]="true" ></p-column>
 					    <p-column field="" header="Action Required" sortable="true" [filter]="true" ></p-column>
 					    <p-column field="remark" header="Remarks" sortable="true" [filter]="true" ></p-column>
 					    <p-column field="updated_at" header="Last Updated on" sortable="true" [filter]="true" ></p-column>
 						<p-column [style]="{'width':'300px'}" styleClass="col-button" header="action">
 					    	<template class="pull-right" let-petitionApproved="rowData" pTemplate="body">
-					    	<a type="button" style="cursor:pointer" (click)="viewPetition(petitionApproved)">View</a>
-					    	<a type="button" style="cursor:pointer" (click)="viewPdf(petitionApproved)">pdf</a>
-					    	 <input type="checkbox" name="archive" value="{{petitionApproved._id}}">
+					    	<a type="button" class="btn-underline" (click)="viewPetition(petitionApproved)">View</a>
+					    	<a (click)="viewPdf(petitionApproved)" class="btn-underline"><img src="../../assets/image/icon_pdf.png" class="img-btn"/>Pdf</a>
+					    	<p-checkbox (click)="checkSelected()" name="archive" value="{{petitionApproved._id}}" [(ngModel)]="selectedValues"></p-checkbox>
 					    	</template>
 					    </p-column>
 					</p-dataTable>
