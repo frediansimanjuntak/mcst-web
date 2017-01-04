@@ -37,6 +37,7 @@ import {
   AnnouncementComponent,
   EditAnnouncementComponent,
   PetitionComponent,
+  EditPetitionComponent,
   TestComponent
 } from '../components/index';
 const routes: Routes = [
@@ -81,7 +82,7 @@ const routes: Routes = [
 
   { path: 'petition', component: PetitionComponent },
   { path: 'petition/view/:id', component: PetitionComponent },
-  // { path: 'petition/add',   component: EditAnnouncementComponent },
+  { path: 'petition/add',   component: EditPetitionComponent },
   // { path: 'petition/edit/:id',   component: EditAnnouncementComponent },
   // { path: 'form',     component: HeroFormComponent },
   // { path: 'table',     component: TableDemoComponent },
