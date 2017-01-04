@@ -1,9 +1,9 @@
 export const MENUS: any[] = [
-  { 
+  {
   	name: 'Dashboard',
-  	link: '/dashboard' 
+  	link: '/dashboard'
   },
-  { 
+  {
   	name: 'Operations',
   	sub : [
   		{ name: 'Guest, Visitor & Contractors', link: '' },
@@ -12,8 +12,8 @@ export const MENUS: any[] = [
   		{ name: 'Manage Project', link: '' },
   	]
   },
-  { 
-  	name: 'Manage Request', 
+  {
+  	name: 'Manage Request',
     description: 'Track request for permits such as renovation, move-in, move-out and bulk delivery',
   	sub : [
   		{ name : 'Browse Request', link: '#'},
@@ -21,17 +21,17 @@ export const MENUS: any[] = [
   		{ name : 'Search Reference.no', link: '#'}
   	]
   },
-  { 
-  	name: 'Facilities Booking', 
+  {
+  	name: 'Facilities Booking',
   	link: '#',
-    description: 'Manage booking of facilities', 
+    description: 'Manage booking of facilities',
   },
-  { 
-  	name: 'Payment System', 
+  {
+  	name: 'Payment System',
   	link: '#',
-    description: 'Manage monthly MCST, deposits and other payments', 
+    description: 'Manage monthly MCST, deposits and other payments',
   },
-  { 
+  {
   	name: 'Resident Database',
     description: 'Track issuance of access cards, car decal, transponder',
   	sub : [
@@ -40,7 +40,7 @@ export const MENUS: any[] = [
   		{ name : 'Manage Access control', link: '/access_control' }
   	]
   },
-  { 
+  {
   	name: 'Manage Community',
     description: 'Manage event and announcement, E-voting and feedbacks',
   	sub : [
@@ -50,8 +50,8 @@ export const MENUS: any[] = [
   		{ name : 'Lost & Found', link: '' },
   	]
   },
-  { 
-  	name: 'Useful Information', 
+  {
+  	name: 'Useful Information',
   	sub : [
   		{ name : 'AGM & Circular', link: '/newsletter' },
   		{ name : 'Contact Directory', link: '' },
