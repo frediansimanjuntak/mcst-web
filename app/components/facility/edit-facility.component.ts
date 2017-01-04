@@ -1,5 +1,6 @@
-import { Component, OnInit } from '@angular/core';
-import { Router, Params, ActivatedRoute } from '@angular/router'; 
+import { Component, OnInit, Input } from '@angular/core';
+import { Router, Params, ActivatedRoute } from '@angular/router';  
+import { FormBuilder, FormControl, FormGroup, FormArray, Validators } from '@angular/forms';
 import { Facility } from '../../models/index';
 import { FacilityService, AlertService } from '../../services/index';
 import '../../rxjs-operators';
@@ -15,13 +16,37 @@ export class EditFacilityComponent  {
 	facility: Facility;
     model: any = {};
     id: string;
+    myForm: FormGroup;
+    start_time:any;
+    
+    days = [
+        { value: 'Monday', name: 'Monday' },
+        { value: 'Tuesday', name: 'Tuesday' },
+        { value: 'Wednesday', name: 'Wednesday' },
+        { value: 'Thursday', name: 'Thursday' },
+        { value: 'Friday', name: 'Friday' },
+        { value: 'Saturday', name: 'Saturday' },
+        { value: 'Sunday', name: 'Sunday' },
+    ];
 
     constructor(private router: Router,
     	private facilityService: FacilityService,
     	private alertService: AlertService,
+        private formbuilder: FormBuilder,
         private route: ActivatedRoute,) {}
 
-    ngOnInit(): void {   
+    ngOnInit(): void { 
+        this.myForm = this.formbuilder.group({
+            name : ['', Validators.required],
+            development : ['123123', Validators.required],
+            description : ['', Validators.required],
+            facility_type : ['', Validators.required],
+            payment_type : ['', Validators.required],
+            booking_type : ['', Validators.required],
+            schedule: this.formbuilder.array([]),
+            status: ['', Validators.required]
+            
+        });  
         this.route.params.subscribe(params => {
             this.id = params['id'];
         });
@@ -30,8 +55,28 @@ export class EditFacilityComponent  {
         }
     }
 
-    createFacility() {
-        this.facilityService.create(this.model)
+    initSchedule() {
+        return this.formbuilder.group({
+            day : [''],
+            start_time : [this.start_time],
+            end_time : ['']
+        });
+    }
+
+    addSchedule() {
+        const control = <FormArray>this.myForm.controls['schedule'];
+        const scheduleCtrl = this.initSchedule();    
+        control.push(scheduleCtrl);
+    }
+
+    removeSchedule(i: number) {
+        const control = <FormArray>this.myForm.controls['schedule'];
+        control.removeAt(i);
+    }
+
+    createFacility(model:Facility) {
+        console.log(model)
+        this.facilityService.create(model)
         .then(
             response => {
                 this.alertService.success('Update facility successful', true);
@@ -43,8 +88,10 @@ export class EditFacilityComponent  {
         );
     }
 
-    updateFacility(){
-		this.facilityService.update(this.facility)
+
+    updateFacility(facility:Facility){
+        console.log(facility)
+		this.facilityService.update(facility)
 		.then(
 			response => {
                 this.alertService.success('Update development successful', true);

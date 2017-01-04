@@ -25,19 +25,19 @@ export var Facilities: any[] = [
     _id : '1',
     name : 'BBQ',
     description : 'colorjdn nkdn ajknkj asnjkn ajsnksjk ankj kan kjan kjan kjan akj nkajnkj ankj an kjn',
-    facility_type : 'a',
+    facility_type : 'daily',
     payment_type : 'cash',
     booking_type : 'hourly',
     schedule : [{
-      day: ['monday','tuesday','wednesday','thursday','friday'],
+      day: ['Monday'],
       start_time: '08.00',
       end_time: '18.00',
     },{
-      day: ['saturday'],
+      day: ['Saturday'],
       start_time: '10.00',
       end_time: '17.00',
     },{
-      day: ['sunday'],
+      day: ['Sunday'],
       start_time: '10.00',
       end_time: '16.00',
     }],
