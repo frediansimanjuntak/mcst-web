@@ -26,7 +26,7 @@ export class Model {
 
 export class TestComponent implements OnInit{ 
 
-	// .\model: any = {};
+	model: any = {};
     models: Model[];
 	events: any[];
 	event: MyEvent;
