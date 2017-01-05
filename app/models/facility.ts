@@ -24,22 +24,23 @@ export var Facilities: any[] = [
   {
     _id : '1',
     name : 'BBQ',
+    development : '1',
     description : 'colorjdn nkdn ajknkj asnjkn ajsnksjk ankj kan kjan kjan kjan akj nkajnkj ankj an kjn',
     facility_type : 'daily',
     payment_type : 'cash',
     booking_type : 'hourly',
     schedule : [{
-      day: ['Monday'],
-      start_time: '08.00',
-      end_time: '18.00',
+      day: 'monday',
+      start_time: '08:00',
+      end_time: '18:00',
     },{
-      day: ['Saturday'],
-      start_time: '10.00',
-      end_time: '17.00',
+      day: 'saturday',
+      start_time: '10:00',
+      end_time: '17:00',
     },{
-      day: ['Sunday'],
-      start_time: '10.00',
-      end_time: '16.00',
+      day: 'sunday',
+      start_time: '10:00',
+      end_time: '16:00',
     }],
     status : 'available'
   },
@@ -51,13 +52,13 @@ export var Facilities: any[] = [
     payment_type : 'cash',
     booking_type : 'daily',
     schedule : [{
-      day: ['monday','tuesday','wednesday','thursday','friday'],
-      start_time: '08.00',
-      end_time: '18.00',
+      day: 'monday',
+      start_time: '08:00',
+      end_time: '18:00',
     },{
-      day: ['saturday'],
-      start_time: '10.00',
-      end_time: '17.00',
+      day: 'saturday',
+      start_time: '10:00',
+      end_time: '17:00',
     }],
     status : 'available'
   },
@@ -69,13 +70,13 @@ export var Facilities: any[] = [
     payment_type : 'cash',
     booking_type : 'daily',
     schedule : [{
-      day: ['monday','tuesday','wednesday','thursday'],
-      start_time: '08.00',
-      end_time: '18.00',
+      day: 'thursday',
+      start_time: '08:00',
+      end_time: '18:00',
     },{
-      day: ['friday','saturday','sunday'],
-      start_time: '10.00',
-      end_time: '17.00',
+      day: 'friday',
+      start_time: '10:00',
+      end_time: '17:00',
     }],
     status : 'available'
   },
@@ -87,13 +88,13 @@ export var Facilities: any[] = [
     payment_type : 'cash',
     booking_type : 'daily',
     schedule : [{
-      day: ['monday','tuesday','wednesday','thursday','friday'],
-      start_time: '08.00',
-      end_time: '18.00',
+      day: 'wednesday',
+      start_time: '08:00',
+      end_time: '18:00',
     },{
-      day: ['saturday','sunday'],
-      start_time: '10.00',
-      end_time: '17.00',
+      day: 'sunday',
+      start_time: '10:00',
+      end_time: '17:00',
     }],
     status : 'available'
   },

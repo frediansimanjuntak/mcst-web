@@ -1,6 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { Router, Params, ActivatedRoute } from '@angular/router';  
-import { FormBuilder, FormControl, FormGroup, FormArray, Validators } from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup, FormArray, Validators, ReactiveFormsModule  } from '@angular/forms';
 import { Facility } from '../../models/index';
 import { FacilityService, AlertService } from '../../services/index';
 import '../../rxjs-operators';
@@ -20,13 +20,13 @@ export class EditFacilityComponent  {
     start_time:any;
     
     days = [
-        { value: 'Monday', name: 'Monday' },
-        { value: 'Tuesday', name: 'Tuesday' },
-        { value: 'Wednesday', name: 'Wednesday' },
-        { value: 'Thursday', name: 'Thursday' },
-        { value: 'Friday', name: 'Friday' },
-        { value: 'Saturday', name: 'Saturday' },
-        { value: 'Sunday', name: 'Sunday' },
+        { value: 'monday', name: 'Monday' },
+        { value: 'tuesday', name: 'Tuesday' },
+        { value: 'wednesday', name: 'Wednesday' },
+        { value: 'thursday', name: 'Thursday' },
+        { value: 'friday', name: 'Friday' },
+        { value: 'saturday', name: 'Saturday' },
+        { value: 'sunday', name: 'Sunday' },
     ];
 
     constructor(private router: Router,
@@ -37,6 +37,7 @@ export class EditFacilityComponent  {
 
     ngOnInit(): void { 
         this.myForm = this.formbuilder.group({
+            _id : [''],
             name : ['', Validators.required],
             development : ['123123', Validators.required],
             description : ['', Validators.required],
@@ -51,7 +52,16 @@ export class EditFacilityComponent  {
             this.id = params['id'];
         });
         if( this.id != null) {
-            this.facilityService.getFacility(this.id).then(facility => this.facility = facility);
+            this.facilityService.getFacility(this.id)
+            .then(facility => {
+                this.facility = facility;
+                for (let entry of this.facility.schedule) {
+                    const control = <FormArray>this.myForm.controls['schedule'];
+                    control.push(this.initSchedule());
+                }
+                console.log(this.myForm.setValue(this.facility));
+                this.myForm.setValue(this.facility); 
+            });
         }
     }
 

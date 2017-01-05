@@ -23,18 +23,19 @@ var EditFacilityComponent = (function () {
         this.route = route;
         this.model = {};
         this.days = [
-            { value: 'Monday', name: 'Monday' },
-            { value: 'Tuesday', name: 'Tuesday' },
-            { value: 'Wednesday', name: 'Wednesday' },
-            { value: 'Thursday', name: 'Thursday' },
-            { value: 'Friday', name: 'Friday' },
-            { value: 'Saturday', name: 'Saturday' },
-            { value: 'Sunday', name: 'Sunday' },
+            { value: 'monday', name: 'Monday' },
+            { value: 'tuesday', name: 'Tuesday' },
+            { value: 'wednesday', name: 'Wednesday' },
+            { value: 'thursday', name: 'Thursday' },
+            { value: 'friday', name: 'Friday' },
+            { value: 'saturday', name: 'Saturday' },
+            { value: 'sunday', name: 'Sunday' },
         ];
     }
     EditFacilityComponent.prototype.ngOnInit = function () {
         var _this = this;
         this.myForm = this.formbuilder.group({
+            _id: [''],
             name: ['', forms_1.Validators.required],
             development: ['123123', forms_1.Validators.required],
             description: ['', forms_1.Validators.required],
@@ -48,7 +49,17 @@ var EditFacilityComponent = (function () {
             _this.id = params['id'];
         });
         if (this.id != null) {
-            this.facilityService.getFacility(this.id).then(function (facility) { return _this.facility = facility; });
+            this.facilityService.getFacility(this.id)
+                .then(function (facility) {
+                _this.facility = facility;
+                for (var _i = 0, _a = _this.facility.schedule; _i < _a.length; _i++) {
+                    var entry = _a[_i];
+                    var control = _this.myForm.controls['schedule'];
+                    control.push(_this.initSchedule());
+                }
+                console.log(_this.myForm.setValue(_this.facility));
+                _this.myForm.setValue(_this.facility);
+            });
         }
     };
     EditFacilityComponent.prototype.initSchedule = function () {
