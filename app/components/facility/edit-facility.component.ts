@@ -45,8 +45,11 @@ export class EditFacilityComponent  {
             payment_type : ['', Validators.required],
             booking_type : ['', Validators.required],
             schedule: this.formbuilder.array([]),
-            status: ['', Validators.required]
-            
+            status: ['', Validators.required],
+            maintenance_start : [''],
+            maintenance_end : [''],
+            created_by : [''],
+            created_at : ['']   
         });  
         this.route.params.subscribe(params => {
             this.id = params['id'];
@@ -59,7 +62,6 @@ export class EditFacilityComponent  {
                     const control = <FormArray>this.myForm.controls['schedule'];
                     control.push(this.initSchedule());
                 }
-                console.log(this.myForm.setValue(this.facility));
                 this.myForm.setValue(this.facility); 
             });
         }

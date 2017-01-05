@@ -8,8 +8,8 @@ export class Facility {
   facility_type : string;
   payment_type : string;
   booking_type : string;
-  maintaince_start : string;
-  maintaince_end : string;
+  maintenance_start : string;
+  maintenance_end : string;
   schedule : [{
     day : string[],
     start_time : string,
@@ -29,6 +29,8 @@ export var Facilities: any[] = [
     facility_type : 'daily',
     payment_type : 'cash',
     booking_type : 'hourly',
+    maintenance_start : '',
+    maintenance_end : '',
     schedule : [{
       day: 'monday',
       start_time: '08:00',
@@ -42,7 +44,9 @@ export var Facilities: any[] = [
       start_time: '10:00',
       end_time: '16:00',
     }],
-    status : 'available'
+    status : 'available',
+    created_by : '',
+    created_at : '',
   },
   {
     _id : '2',

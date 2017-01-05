@@ -43,7 +43,11 @@ var EditFacilityComponent = (function () {
             payment_type: ['', forms_1.Validators.required],
             booking_type: ['', forms_1.Validators.required],
             schedule: this.formbuilder.array([]),
-            status: ['', forms_1.Validators.required]
+            status: ['', forms_1.Validators.required],
+            maintenance_start: [''],
+            maintenance_end: [''],
+            created_by: [''],
+            created_at: ['']
         });
         this.route.params.subscribe(function (params) {
             _this.id = params['id'];
@@ -57,7 +61,6 @@ var EditFacilityComponent = (function () {
                     var control = _this.myForm.controls['schedule'];
                     control.push(_this.initSchedule());
                 }
-                console.log(_this.myForm.setValue(_this.facility));
                 _this.myForm.setValue(_this.facility);
             });
         }

@@ -14,6 +14,8 @@ exports.Facilities = [
         facility_type: 'daily',
         payment_type: 'cash',
         booking_type: 'hourly',
+        maintenance_start: '',
+        maintenance_end: '',
         schedule: [{
                 day: 'monday',
                 start_time: '08:00',
@@ -27,7 +29,9 @@ exports.Facilities = [
                 start_time: '10:00',
                 end_time: '16:00',
             }],
-        status: 'available'
+        status: 'available',
+        created_by: '',
+        created_at: '',
     },
     {
         _id: '2',
