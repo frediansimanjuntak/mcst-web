@@ -27,6 +27,7 @@ var TestComponent = (function () {
         this.cd = cd;
         this.http = http;
         this.testService = testService;
+        this.model = {};
         this.dialogVisible = false;
         this.idGen = 100;
         this.files = [];
