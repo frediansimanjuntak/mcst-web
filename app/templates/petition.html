@@ -1,0 +1,183 @@
+<div class="container">
+	<div class="main">
+		 <div *ngIf="petition">
+            <div class="title">
+                Request #{{petition.reference_no}}
+            </div>
+            <p>Home > Manage Request >  #{{petition.reference_no}}</p>
+            <a style="cursor:pointer"(click)="goBack()">Back to last page</a>
+	        		<div class="row">
+	        			<div class="col-md-4">Reference Number</div>
+	        			<div class="col-md-8"> <p>:  #{{petition.reference_no}}</p></div>
+	        		</div>
+	        		<div class="row">
+	        			<div class="col-md-4">Development Id</div>
+	        			<div class="col-md-8"><p>: {{ petition.development }}</p></div>
+	        		</div>
+	        		<div class="row">
+	        			<div class="col-md-4">Property Id </div>
+	        			<div class="col-md-8"><p>: {{ petition.property }}</p></div>
+	        		</div>
+	        		<div class="row">
+	        			<div class="col-md-4">Attachment </div>
+	        			<div class="col-md-8">
+	        				:<a href="#" *ngFor="let a of petition.attachment"> {{a}}&nbsp; </a>
+	        			</div>
+	        		</div>
+	        		<div class="row">
+	        			<div class="col-md-4">Contract </div>
+	        			<div class="col-md-8"><p>: {{ petition.contract }}</p></div>
+	        		</div>
+	        		<div class="row">
+	        			<div class="col-md-4">Remark </div>
+	        			<div class="col-md-8"><p>: {{ petition.remark }}</p></div>
+	        		</div>
+	        		<div class="row">
+	        			<div class="col-md-4">Status </div>
+	        			<div class="col-md-8"><p>: {{ petition.status }}</p></div>
+	        		</div>
+	        		<div class="row">
+	        			<div class="col-md-4">Requested By </div>
+	        			<div class="col-md-8"><p>: {{ petition.created_by }}</p></div>
+	        		</div>
+	        		<div class="row">
+	        			<div class="col-md-4">Since </div>
+	        			<div class="col-md-8"><p>: {{ petition.created_at }}</p></div>
+	        		</div>
+	        		<div class="row">
+	        			<div class="col-md-4">Last Updated on </div>
+	        			<div class="col-md-8"><p>: {{ petition.updated_at }}</p></div>
+	        		</div>
+        </div>
+
+        <div  *ngIf="!petition">
+        	<div class="title">
+			Manage Request
+			</div>
+			Home > Manage Request
+			<div class="row">
+				<div class="col-md-4 pull-right">
+								<a class="btn btn-default" [routerLink]="['/petition/add']"><img class="img-btn" src="../../assets/image/icon_add.png" (click)="viewPdf(petitionPending)" />&nbsp;Add Request</a>
+						  		<button class="btn btn-default" [disabled]="!btnArchive" (click)="archieveSelected()"><img class="img-btn" src="../../assets/image/icon_archived.png" (click)="viewPdf(petitionPending)" />&nbsp;Archieve Selected</button>
+				</div>
+			</div>
+			
+			<div (click)="$event.preventDefault()">
+			  <tabset>
+			    <tab heading="Request" (select)="clearSelected()">
+			    	<p-dataTable [value]="petitionPending" [rows]="10"  resizableColumns="true" [paginator]="true">
+					    <p-column header="Ticket Number" sortable="true" [filter]="true" filterPlaceholder="Search Ticket Number">
+					    	  <template let-petitionPending="rowData" pTemplate="body">
+					            <span>#{{petitionPending.reference_no}}</span>
+					        </template>
+						</p-column>
+					    <p-column field="petition_type" header="Type" sortable="true" [filter]="true" filterPlaceholder="Search Type"></p-column>
+					    <p-column header="Requested by" sortable="true" [filter]="true" filterPlaceholder="Search Requested By">
+					    	<template let-petitionPending="rowData" pTemplate="body">
+					            <span class="btn-underline">{{petitionPending.created_by}}</span>
+					        </template>
+						</p-column>
+					    <p-column field="created_at" header="Since" sortable="true" [filter]="true" ></p-column>
+					    <p-column field="" header="Action Required" sortable="true" [filter]="true" ></p-column>
+					    <p-column field="remark" header="Remarks" sortable="true" [filter]="true" ></p-column>
+					    <p-column field="updated_at" header="Last Updated on" sortable="true" [filter]="true" ></p-column>
+						<p-column [style]="{'width':'300px'}" styleClass="col-button" header="action">
+					    	<template class="pull-right" let-petitionPending="rowData" pTemplate="body">
+					    	<a type="button" class="btn-underline" (click)="viewPetition(petitionPending)">View</a>
+					    	<a (click)="viewPdf(petitionPending)" class="btn-underline"><img src="../../assets/image/icon_pdf.png" class="img-btn"/>Pdf</a>
+					    	<p-checkbox name="archive" (click)="checkSelected()" value="{{petitionPending._id}}" [(ngModel)]="selectedValues"></p-checkbox>
+					    	</template>
+					    </p-column>
+					</p-dataTable>
+			    </tab>	
+
+			    <tab heading="In-proress" (select)="clearSelected()">
+			    	<p-dataTable [value]="petitionProgress" [rows]="10"  resizableColumns="true" [paginator]="true">
+					    <p-column field="reference_no" header="Ticket Number" sortable="true" [filter]="true" filterPlaceholder="Search Ticket Number"></p-column>
+					    <p-column field="petition_type" header="Type" sortable="true" [filter]="true" filterPlaceholder="Search Type"></p-column>
+					    <p-column header="Requested by" sortable="true" [filter]="true" filterPlaceholder="Search Requested By">
+					    	<template let-petitionProgress="rowData" pTemplate="body">
+					            <span class="btn-underline">{{petitionProgress.created_by}}</span>
+					        </template>
+						</p-column>
+					    <p-column field="created_at" header="Since" sortable="true" [filter]="true" ></p-column>
+					    <p-column field="" header="Action Required" sortable="true" [filter]="true" ></p-column>
+					    <p-column field="remark" header="Remarks" sortable="true" [filter]="true" ></p-column>
+					    <p-column field="updated_at" header="Last Updated on" sortable="true" [filter]="true" ></p-column>
+						<p-column [style]="{'width':'300px'}" styleClass="col-button" header="action">
+					    	<template class="pull-right" let-petitionProgress="rowData" pTemplate="body">
+					    	<a type="button" class="btn-underline" (click)="viewPetition(petitionProgress)">View</a>
+					    	<a (click)="viewPdf(petitionProgress)" class="btn-underline"><img src="../../assets/image/icon_pdf.png" class="img-btn"/>Pdf</a>
+					    	<p-checkbox (click)="checkSelected()" name="archive" value="{{petitionProgress._id}}" [(ngModel)]="selectedValues"></p-checkbox>
+					    	</template>
+					    </p-column>
+					</p-dataTable>
+			    </tab>	
+
+			    <tab heading="Approved" (select)="clearSelected()">
+			    	<p-dataTable [value]="petitionApproved" [rows]="10"  resizableColumns="true" [paginator]="true">
+					    <p-column field="reference_no" header="Ticket Number" sortable="true" [filter]="true" filterPlaceholder="Search Ticket Number"></p-column>
+					    <p-column field="petition_type" header="Type" sortable="true" [filter]="true" filterPlaceholder="Search Type"></p-column>
+					    <p-column header="Requested by" sortable="true" [filter]="true" filterPlaceholder="Search Requested By">
+					    	<template let-petitionApproved="rowData" pTemplate="body">
+					            <span class="btn-underline">{{petitionApproved.created_by}}</span>
+					        </template>
+						</p-column>
+					    <p-column field="created_at" header="Since" sortable="true" [filter]="true" ></p-column>
+					    <p-column field="" header="Action Required" sortable="true" [filter]="true" ></p-column>
+					    <p-column field="remark" header="Remarks" sortable="true" [filter]="true" ></p-column>
+					    <p-column field="updated_at" header="Last Updated on" sortable="true" [filter]="true" ></p-column>
+						<p-column [style]="{'width':'300px'}" styleClass="col-button" header="action">
+					    	<template class="pull-right" let-petitionApproved="rowData" pTemplate="body">
+					    	<a type="button" class="btn-underline" (click)="viewPetition(petitionApproved)">View</a>
+					    	<a (click)="viewPdf(petitionApproved)" class="btn-underline"><img src="../../assets/image/icon_pdf.png" class="img-btn"/>Pdf</a>
+					    	<p-checkbox (click)="checkSelected()" name="archive" value="{{petitionApproved._id}}" [(ngModel)]="selectedValues"></p-checkbox>
+					    	</template>
+					    </p-column>
+					</p-dataTable>
+			    </tab>	
+			    
+			  </tabset>
+			</div>
+        </div>
+		
+
+		<!-- <div class="row">
+		    
+		    <modal #firstModal>
+		        <modal-header>
+		            <h5>Publish Announcement</h5>
+		        </modal-header>
+		        <modal-content>
+
+		           <div *ngIf="announcement">
+		              
+		           		
+		              <form class="form-horizontal" name="form">
+		                <div class="form-group">
+		                    <label class="control-label col-sm-4" for="sticky">Sticky? :</label>
+		                    <div class="col-sm-8">
+		                        <label><input type="radio" name="sticky" [checked]="stickyStatus == 'yes'" [(ngModel)]="stickyStatus" value='yes'>Yes</label>
+		                        <label><input type="radio" name="sticky" [checked]="stickyStatus == 'no'" [(ngModel)]="stickyStatus" value='no'>No</label>     
+		                    </div>
+		                </div>
+		                <div class="form-group" >
+		                    <label class="control-label col-sm-4" for="valid_till">Valid till :</label>
+		                    <div class="col-sm-8">
+		                    <my-date-picker [options]="validTillDateOptions"
+                            [selDate]="valid_tillStatus" (dateChanged)="validTillDateChanged($event)"></my-date-picker>
+		                       
+		                    </div>
+		                </div>
+		                <div class="pull-right">
+		                    <button  class="btn btn-primary" (click)="publishAnnouncement()">Announce</button>
+		                    <button class="btn btn-default" (click)="firstModal.close()">Cancel</button>
+		                </div>
+		            </form>   
+		           </div>
+		        </modal-content>
+		        
+		    </modal>
+		</div> -->	
+	</div>
+</div>

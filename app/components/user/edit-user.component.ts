@@ -65,7 +65,53 @@ export class EditUserComponent implements OnInit {
         });
         
         if( this.id != null) {
-            this.userService.getUser(this.id).then(user => {this.user = user});
+            this.userService.getUser(this.id)
+            .then(user => {
+                this.user = user;
+                this.myForm = this.formbuilder.group({
+                    _id : [''],
+                    username : ['', Validators.required],
+                    email : ['', Validators.required],
+                    password : ['', Validators.required],
+                    phone : ['', Validators.required],
+                    role : ['', Validators.required],
+                    default_property: this.formbuilder.group({
+                        development: ['', Validators.required],
+                        property: ['', Validators.required],
+                        role : ['', Validators.required]
+                    }),
+                    details : this.formbuilder.group({
+                        first_name : [''],
+                        last_name : [''],
+                        identification_type : [''],
+                        identification_no : [''],
+                        identification_proof : this.formbuilder.group({
+                          front : [''],
+                          back : ['']
+                        })
+                    }),
+                    rented_property: this.formbuilder.group({
+                        development: [''],
+                        property: ['']
+                    }),
+                    owned_property: this.formbuilder.array([]),
+                    authorized_property: this.formbuilder.array([]),
+                    active: ['', Validators.required],
+                    default_development: [''],
+                    authorized_development: [''],
+                    user_group : [''],
+                    created_at : [''],      
+                });
+                for (let entry of this.user.owned_property) {
+                    const control = <FormArray>this.myForm.controls['owned_property'];
+                    control.push(this.initOwned());
+                }
+                for (let entry of this.user.authorized_property) {
+                    const control = <FormArray>this.myForm.controls['authorized_property'];
+                    control.push(this.initAuthorized());
+                }
+                this.myForm.setValue(this.user); 
+            });
         };
         
             

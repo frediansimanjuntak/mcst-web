@@ -15,7 +15,7 @@ import { MyDatePickerModule }           from 'mydatepicker/dist/my-date-picker.m
 // import { SELECT_DIRECTIVES }            from 'ng2-select';
 import { AppRoutingModule }     		    from './app-routing.module';
 import { url }                          from '../global'
-import { DataTableModule,SharedModule,ScheduleModule,DialogModule,InputMaskModule,CheckboxModule,PanelModule,FieldsetModule } from 'primeng/primeng';
+import { DataTableModule,SharedModule,ScheduleModule,DialogModule,InputMaskModule,CheckboxModule,PanelModule,FieldsetModule,CalendarModule } from 'primeng/primeng';
 import { EqualValidator }               from '../components/user/equal-validator.directive';
 import { ImageUploadModule }            from 'ng2-imageupload';
 import { ModalModule }                  from "ng2-modal";
@@ -39,6 +39,7 @@ import {
   DevelopmentComponent,
   EditDevelopmentComponent, 
   FacilityComponent,
+  EditFacilityComponent,
   HeaderComponent,
   IncidentComponent,
   EditIncidentComponent,
@@ -48,6 +49,7 @@ import {
   EditNewsletterComponent,
   PaymentComponent,
   PetitionComponent,
+  EditPetitionComponent,
   PollComponent,
   QuotationComponent,
   RegisterComponent,
@@ -85,6 +87,7 @@ import {
   UserGroupService,
   UnitService,
   VisitService,
+  TestService,
 } from '../services/index';
 
 @NgModule({
@@ -111,7 +114,7 @@ import {
     ModalModule,
     BootstrapModalModule,
     MyDatePickerModule,
-    
+    CalendarModule,
     ImageUploadModule,
     SlimLoadingBarModule.forRoot(),
   ],
@@ -130,6 +133,7 @@ import {
     DevelopmentComponent,
     EditDevelopmentComponent,
     FacilityComponent,
+    EditFacilityComponent,
     FileSelectDirective,
     HeaderComponent,
     IncidentComponent,
@@ -140,6 +144,7 @@ import {
     EditNewsletterComponent,
     PaymentComponent,
     PetitionComponent,
+    EditPetitionComponent,
     PollComponent,
     QuotationComponent,
     RegisterComponent,
@@ -179,6 +184,7 @@ import {
     UnitService,
     UserGroupService,
     VisitService,
+    TestService,
   ],
   bootstrap:    [ AppComponent ],
   // entryComponents: [ PublishAnnouncementModalComponent ] 

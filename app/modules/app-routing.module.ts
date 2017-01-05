@@ -14,6 +14,7 @@ import {
   EditDevelopmentComponent,
   DashboardComponent,
   FacilityComponent,
+  EditFacilityComponent,
   HeaderComponent,
   IncidentComponent,
   EditIncidentComponent,
@@ -23,7 +24,6 @@ import {
   NewsletterComponent,
   EditNewsletterComponent,
   PaymentComponent,
-  PetitionComponent,
   PollComponent,
   QuotationComponent,
   SettingComponent,
@@ -37,6 +37,8 @@ import {
   VisitComponent,
   AnnouncementComponent,
   EditAnnouncementComponent,
+  PetitionComponent,
+  EditPetitionComponent,
   TestComponent
 } from '../components/index';
 const routes: Routes = [
@@ -54,8 +56,9 @@ const routes: Routes = [
   { path: 'incident/add',   component: EditIncidentComponent },
   { path: 'incident/view/:id',   component: IncidentComponent },
   { path: 'facility',   component: FacilityComponent },
-  { path: 'facility/add',   component: FacilityComponent },
+  { path: 'facility/add',   component: EditFacilityComponent },
   { path: 'facility/view/:id',   component: FacilityComponent },
+  { path: 'facility/edit/:id',   component: EditFacilityComponent },
   { path: 'setting',     component: SettingComponent },
   { path: 'setting/edit/:id',     component: EditSettingComponent },
   { path: 'access_control',   component: AccessControlComponent },
@@ -78,6 +81,11 @@ const routes: Routes = [
   { path: 'announcement',   component: AnnouncementComponent },
   { path: 'announcement/add',   component: EditAnnouncementComponent },
   { path: 'announcement/edit/:id',   component: EditAnnouncementComponent },
+
+  { path: 'petition', component: PetitionComponent },
+  { path: 'petition/view/:id', component: PetitionComponent },
+  { path: 'petition/add',   component: EditPetitionComponent },
+  // { path: 'petition/edit/:id',   component: EditAnnouncementComponent },
   // { path: 'form',     component: HeroFormComponent },
   // { path: 'table',     component: TableDemoComponent },
   { path: 'test',     component: TestComponent },
