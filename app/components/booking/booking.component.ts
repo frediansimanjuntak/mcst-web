@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router'; 
+import { Router, Params, ActivatedRoute } from '@angular/router'; 
 import { Booking } from '../../models/index';
 import { BookingService, AlertService } from '../../services/index';
 import '../../rxjs-operators';
@@ -16,10 +16,18 @@ export class BookingComponent implements OnInit {
     bookings: Booking[] = [];
     model: any = {}; 
 	
-	constructor(private router: Router,private bookingService: BookingService,private alertService: AlertService) {}
+	constructor(private router: Router,private bookingService: BookingService,private alertService: AlertService,,private route: ActivatedRoute) {}
 
 	ngOnInit() {
-        this.loadAllDevelopments();      
+		this.route.params.subscribe(params => {
+            this.id = params['id'];
+        });
+        if( this.id == null) {
+            this.loadAllBookings();
+        }else{
+        	this.bookingService.getBooking(this.id).then(booking => {this.booking = booking;});
+        }
+             
     }
  
     deleteBooking(booking: Booking) {
@@ -30,7 +38,7 @@ export class BookingComponent implements OnInit {
 	                alert(`The booking could not be deleted, server Error.`);
 	            } else {
                     this.alertService.success('Delete booking successful', true);
-	                this.loadAllDevelopments()
+	                this.loadAllBookings()
 	            }
             },
             error=> { 
@@ -39,7 +47,7 @@ export class BookingComponent implements OnInit {
         );
     }
    
-    private loadAllDevelopments() {
+    private loadAllBookings() {
         this.bookingService.getBookings().then(bookings => { this.bookings = bookings; });
     }
 

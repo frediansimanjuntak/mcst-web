@@ -23,7 +23,7 @@ export const MENUS: any[] = [
   },
   { 
   	name: 'Facilities Booking', 
-  	link: '#',
+  	link: '/booking',
     description: 'Manage booking of facilities', 
   },
   { 

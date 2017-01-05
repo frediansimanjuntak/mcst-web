@@ -5,7 +5,7 @@ var Booking = (function () {
     return Booking;
 }());
 exports.Booking = Booking;
-exports.Incidents = [{
+exports.Bookings = [{
         _id: '1',
         reference_no: 'A1',
         development: '1',
