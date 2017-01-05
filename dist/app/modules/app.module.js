@@ -130,6 +130,7 @@ AppModule = __decorate([
             index_2.UnitService,
             index_2.UserGroupService,
             index_2.VisitService,
+            index_2.TestService,
         ],
         bootstrap: [index_1.AppComponent],
     }),

@@ -87,6 +87,7 @@ import {
   UserGroupService,
   UnitService,
   VisitService,
+  TestService,
 } from '../services/index';
 
 @NgModule({
@@ -183,6 +184,7 @@ import {
     UnitService,
     UserGroupService,
     VisitService,
+    TestService,
   ],
   bootstrap:    [ AppComponent ],
   // entryComponents: [ PublishAnnouncementModalComponent ] 

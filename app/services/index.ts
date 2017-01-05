@@ -19,3 +19,4 @@ export * from './user.service';
 export * from './unit.service';
 export * from './user-group.service';
 export * from './visit.service';
+export * from './test.service';

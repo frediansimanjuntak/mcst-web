@@ -23,4 +23,5 @@ __export(require("./user.service"));
 __export(require("./unit.service"));
 __export(require("./user-group.service"));
 __export(require("./visit.service"));
+__export(require("./test.service"));
 //# sourceMappingURL=index.js.map
