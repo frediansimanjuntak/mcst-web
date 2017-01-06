@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, Params, ActivatedRoute } from '@angular/router'; 
-import { Development } from '../../models/index';
+import { Development, Developments } from '../../models/index';
 import { UnitService, AlertService } from '../../services/index';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import '../../rxjs-operators';
@@ -73,6 +73,10 @@ export class EditUnitComponent implements OnInit {
     
     createUnit(model: Development, isValid: boolean) {
         this.submitted = true;
+        console.log(Developments[0]);
+        Developments[0].properties.push(model);
+        console.log(Developments[0].properties);
+        this.router.navigate(['/unit']);
         // model.properties.created_by = '583e4e9dd97c97149884fef5';
         // this.model.pinned.rank = 0;
         if(isValid == true){
