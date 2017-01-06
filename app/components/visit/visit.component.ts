@@ -146,10 +146,11 @@ export class VisitComponent implements OnInit {
 
     
 
-    openModal(announcement){
-       
+   
+    checkIn(visit){
+   		this.visit = visit;
+    	console.log(visit);
     }
-
 	private loadVisits() {
         //---------------------------Call To Api-------------- //
         // this.announcementService.getAll()
