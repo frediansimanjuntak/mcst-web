@@ -32,7 +32,6 @@ var routes = [
     { path: 'booking', component: index_1.BookingComponent },
     { path: 'booking/add', component: index_1.EditBookingComponent },
     { path: 'booking/view/:id', component: index_1.BookingComponent },
-    { path: 'booking/edit/:id', component: index_1.EditBookingComponent },
     { path: 'setting', component: index_1.SettingComponent },
     { path: 'setting/edit/:id', component: index_1.EditSettingComponent },
     { path: 'access_control', component: index_1.AccessControlComponent },

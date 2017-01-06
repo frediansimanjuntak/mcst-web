@@ -47,41 +47,48 @@
 	        	<div class="col-lg-4">
 	        		<p-calendar [style]="{'width':'1000px'}" [inline]="true"></p-calendar> 
 	        		<form name="form" (ngSubmit)="f.form.valid && updateUser(myForm.value)" #f="ngForm" novalidate>
-	        			<div class="form-group">
-	        				<div class="col-sm-12">
-			                    <label for="username">Facility&nbsp; :</label>
-			                    <select class="form-control" style="width: 75px">
-			                    	<option>a</option>
-			                    	<option>b</option>
-			                    </select>
-			                    <select class="form-control" style="width: 75px">
-			                    	<option>a</option>
-			                    	<option>b</option>
-			                    </select>
-			                </div>
-		                </div>
-		                <div class="form-group">
-		                    <div class="col-sm-12">
-			                    <label for="username">Status&nbsp;&nbsp; :</label>
-			                    <select class="form-control" style="width: 152px">
-			                    	<option>a</option>
-			                    	<option>b</option>
-			                    </select>
-			                </div>
-		                </div>
-		                <div class="form-group">
-		                    <div class="col-sm-12">
-			                    <label for="username">Period&nbsp;&nbsp;  :</label>
-			                    <select class="form-control" style="width: 75px">
-			                    	<option>a</option>
-			                    	<option>b</option>
-			                    </select>
-			                    <select class="form-control" style="width: 75px">
-			                    	<option>a</option>
-			                    	<option>b</option>
-			                    </select>
-			                </div>
-		                </div>
+			        		<div class="row">
+			        			<div class="col-md-4">Facility :</div>
+			        			<div class="col-md-8">
+			        				<p>
+			        					<select class="form-control" style="width: 75px">
+					                    	<option>a</option>
+					                    	<option>b</option>
+					                    </select>
+					                    <select class="form-control" style="width: 75px">
+					                    	<option>a</option>
+					                    	<option>b</option>
+					                    </select>
+			        				</p>
+			        			</div>
+			        		</div>
+			        		<div class="row">
+			        			<div class="col-md-4">Status :</div>
+			        			<div class="col-md-8">
+			        				<p>
+			        					<select class="form-control" style="width: 152px">
+					                    	<option>a</option>
+					                    	<option>b</option>
+					                    </select>	
+			        				</p>
+			        			</div>
+			        		</div>
+			        		<div class="row">
+			        			<div class="col-md-4">Period :</div>
+			        			<div class="col-md-8">
+			        				<p>
+			        					<select class="form-control" style="width: 75px">
+					                    	<option>a</option>
+					                    	<option>b</option>
+					                    </select>
+					                    <select class="form-control" style="width: 75px">
+					                    	<option>a</option>
+					                    	<option>b</option>
+					                    </select>
+			        				</p>
+			        			</div>
+			        		</div>
+	        			
 		                <div class="form-group">
 		                    <button style="width: 250px" class="btn btn-primary">Filter</button>
 		                </div>
