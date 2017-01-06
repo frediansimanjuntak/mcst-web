@@ -59,8 +59,9 @@
 
 .btn {
   border-radius: 0 !important;
-  min-width: 45px !important;
- /* border-bottom-width: 4px !important;*/
+  /*min-width: 150px ;*/
+  height: 35px;
+  border-bottom-width: 4px !important;
   border-bottom-style: solid;
   /*font-weight: bold !important;*/
   display: inline !important;
@@ -90,11 +91,12 @@
   color: rgb(109,110,114) !important;
   border-color: rgb(222,222,222) !important;
 }
+*/
 
 .btn-underline {
   text-decoration: underline;
   cursor:pointer;
-}*/
+}
 
 .upload{
   color: white;

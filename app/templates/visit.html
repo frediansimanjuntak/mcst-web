@@ -23,26 +23,32 @@
 			</div>
 			<div class="row">
 			    	<p-dataTable [value]="visitActive" scrollable="true" scrollHeight="380px">
-					    <p-column header="No" field="">
+					    <p-column header="No" [style]="{'width':'42px'}" field="i">
 						</p-column>
 						<p-column header="Visitor/Guest" field="" filterPlaceholder="Search Name">
 					    	<template let-visitActive="rowData" pTemplate="body">
 					            <span>{{visitActive.visitor.prefix}} {{visitActive.visitor.full_name}}</span>
 					        </template>
 						</p-column>
-						<p-column field="purpose" header="Purpose of visit" ></p-column>
 						<p-column header="Vehicle" field="" filterPlaceholder="Search vehicle">
 					    	<template let-visitActive="rowData" pTemplate="body">
+                                <span *ngIf="visitActive.visitor.vehicle==''">N/A</span>
 					            <span>{{visitActive.visitor.vehicle}}</span>
 					        </template>
 						</p-column>
 						<p-column header="Visiting" field="" filterPlaceholder="Search unit no">
 					    	<template let-visitActive="rowData" pTemplate="body">
-					            <span>{{visitActive.property}}</span>
+					            <span *ngIf="visitActive.property==''">N/A</span>
+                                <span>{{visitActive.property}}</span>
 					        </template>
 						</p-column>
 						<p-column field="purpose" header="Purpose of visit" ></p-column>
-						<p-column field="remarks" header="Remarks" ></p-column>
+                        <p-column header="remarks" field="">
+                            <template let-visitActive="rowData" pTemplate="body">
+                                <span *ngIf="visitActive.remarks==''">No remarks</span>
+                                <span>{{visitActive.remarks}}</span>
+                            </template>
+                        </p-column>
 					    <p-column header="Added by" field="" sortable="true">visitActive
 					    	<template let-visitActive="rowData" pTemplate="body">
 					            <span class="btn-underline">{{visitActive.created_by}}</span><br>
@@ -51,14 +57,23 @@
 						</p-column>
 						<p-column header="Card no" field="" sortable="true">
 					    	<template let-visitActive="rowData" pTemplate="body">
+                                <span *ngIf="visitActive.visitor.pass==''">-</span>
 					            <span class="btn-underline">{{visitActive.visitor.pass}}</span>
 					        </template>
 						</p-column>
-					    <p-column styleClass="col-button" field="" header="Check in/out">
+					    <p-column [style]="{'width':'300px'}" styleClass="col-button" field="" header="Check in/out">
 					    	<template let-visitActive="rowData" pTemplate="body">
-					    	<a *ngIf="visitActive.check_in == '' && visitActive.check_out == ''" type="button" class="btn btn-default" (click)="checkIn(visitActive) || checkInModal.open()">IN</a>
-					    	<a *ngIf="visitActive.check_in != '' && visitActive.check_out == ''" type="button" class="btn btn-primary" (click)="checkOut(visitActive)">OUT</a>
-					    	<!-- <a (click)="viewPdf(petitionPending)" class="btn-underline"><img src="../../assets/image/icon_pdf.png" class="img-btn"/>Pdf</a> -->
+                                <div class="row">
+                                    <div class="col-md-4">
+                                        <button *ngIf="(visitActive.check_in == '' && visitActive.check_out == '') || (visitActive.check_in != '' && visitActive.check_out != '')" [disabled]="visitActive.check_in != '' && visitActive.check_out != '' " type="button" class="btn btn-default" (click)="preCheckIn(visitActive) || checkInModal.open()">IN</button>
+                                        <button *ngIf="visitActive.check_in != '' && visitActive.check_out == ''" type="button" class="btn btn-primary" (click)="checkOut(visitActive)">OUT</button>
+                                    </div>
+                                    <div class="col-md-8">
+                                        <small *ngIf="visitActive.check_in != ''">in {{ visitActive.check_in | date:'mediumTime' }}&nbsp;{{ visitActive.check_in | date:'shortDate' }}</small><br>
+                                        <small *ngIf="visitActive.check_out != ''">out {{ visitActive.check_out | date:'mediumTime' }}&nbsp;{{ visitActive.check_out | date:'shortDate' }}</small>
+                                    </div>
+                                </div>
+					    	
 					    	</template>
 					    </p-column>
 					</p-dataTable>
@@ -70,12 +85,12 @@
 		            <h5>Adding Guest/Visitor</h5>
 		        </modal-header>
 		        <modal-content>
-					<form class="form-horizontal" name="form" [formGroup]="myForm" novalidate (ngSubmit)="registerGuest(myForm.value, myForm.valid)">
-						<div class="form-group" [ngClass]="{ 'has-error': submitted && !myForm.controls.visitor.controls.full_name.valid }" formGroupName="visitor">
+					<form name="form" [formGroup]="myForm" novalidate (ngSubmit)="addGuest(myForm.value, myForm.valid)">
+						<div class="form-group" [ngClass]="{ 'has-error': addSubmitted && !myForm.controls.visitor.controls.full_name.valid }" formGroupName="visitor">
                             <label  class="control-label col-sm-4" for="full_name">Name of Guest/visitor :</label>
                             <div class="col-sm-8">
                                 <input type="text" class="form-control" name="full_name" formControlName="full_name">
-                                <small style="color: red" [hidden]="myForm.controls.visitor.controls.full_name.valid || (myForm.controls.visitor.controls.full_name.pristine && !submitted)">Name is required</small>
+                                <small style="color: red" [hidden]="myForm.controls.visitor.controls.full_name.valid || (myForm.controls.visitor.controls.full_name.pristine && !addSubmitted)">Name is required</small>
                             </div>
                         </div>
                         <div class="form-group" formGroupName="visitor">
@@ -93,11 +108,11 @@
                                 </select>
                             </div>
                         </div>
-                        <div class="form-group" [ngClass]="{ 'has-error': submitted && !myForm.controls.property.valid }">
+                        <div class="form-group" [ngClass]="{ 'has-error': addSubmitted && !myForm.controls.property.valid }">
                             <label  class="control-label col-sm-4" for="full_name">Visiting :</label>
                             <div class="col-sm-8">
                                 <input type="text" class="form-control" name="property" formControlName="property">
-                                <small style="color: red" [hidden]="myForm.controls.property.valid || (myForm.controls.property.pristine && !submitted)">Unit no is required</small>
+                                <small style="color: red" [hidden]="myForm.controls.property.valid || (myForm.controls.property.pristine && !addSubmitted)">Unit no is required</small>
                             </div>
                         </div>
                         <div class="form-group">
@@ -118,6 +133,9 @@
                             <div class="col-sm-8">
                                 <input type="text" class="form-control" placeholder="Enter Pass serial" name="pass" formControlName="pass">
                             </div>
+                        </div><div class="pull-right">
+                            <button  class="btn btn-primary">Add</button>
+                            <button class="btn btn-default" (click)="firstModal.close()">Cancel</button>
                         </div>
 		            </form>   
 		        </modal-content>
@@ -126,16 +144,15 @@
 
 		<div class="row">
 		    <modal #checkInModal>
-		        <modal-header>
-		            <h5>Check-in </h5>
-		        </modal-header>
-		        <modal-content>
-					<form class="form-horizontal" name="form" [formGroup]="myForm" novalidate (ngSubmit)="registerGuest(myForm.value, myForm.valid)">
-						<div class="form-group" [ngClass]="{ 'has-error': submitted && !myForm.controls.visitor.controls.full_name.valid }" formGroupName="visitor">
+                <modal-header *ngIf="visit">
+                    <h5>Check-in {{ visit.visitor.prefix }}&nbsp;{{ visit.visitor.full_name }}</h5>
+                </modal-header>
+                <modal-content *ngIf="visit">
+                    <form name="form" [formGroup]="checkInForm" novalidate (ngSubmit)="checkIn(checkInForm.value)">
+                        <div class="form-group" formGroupName="visitor">
                             <label  class="control-label col-sm-4" for="full_name">Name of Guest/visitor :</label>
                             <div class="col-sm-8">
                                 <input type="text" class="form-control" name="full_name" formControlName="full_name">
-                                <small style="color: red" [hidden]="myForm.controls.visitor.controls.full_name.valid || (myForm.controls.visitor.controls.full_name.pristine && !submitted)">Name is required</small>
                             </div>
                         </div>
                         <div class="form-group" formGroupName="visitor">
@@ -148,16 +165,15 @@
                             <label class="control-label col-sm-4" for="purpose">Purpose of visit :</label>
                             <div class="col-sm-8">
                                 <select class="form-control" formControlName="purpose" name="purpose">
-                                    <option selected="" value="house_visit">House Visit</option>
-                                    <option value="maintenance_work">Maintenance Work</option>
+                                    <option [selected]="visit.purpose=='house_visit'" value="house_visit">House Visit</option>
+                                    <option [selected]="visit.purpose=='maintenance_work'" value="maintenance_work">Maintenance Work</option>
                                 </select>
                             </div>
                         </div>
-                        <div class="form-group" [ngClass]="{ 'has-error': submitted && !myForm.controls.property.valid }">
+                        <div class="form-group" >
                             <label  class="control-label col-sm-4" for="full_name">Visiting :</label>
                             <div class="col-sm-8">
                                 <input type="text" class="form-control" name="property" formControlName="property">
-                                <small style="color: red" [hidden]="myForm.controls.property.valid || (myForm.controls.property.pristine && !submitted)">Unit no is required</small>
                             </div>
                         </div>
                         <div class="form-group">
@@ -172,8 +188,12 @@
                                 <input type="text" class="form-control" placeholder="Enter Pass serial" name="pass" formControlName="pass">
                             </div>
                         </div>
-		            </form>   
-		        </modal-content>
+                        <div class="pull-right">
+                            <button  class="btn btn-primary">Check-In</button>
+                            <button class="btn btn-default" (click)="checkInModal.close()">Cancel</button>
+                        </div>
+                    </form>   
+                </modal-content>
 		    </modal>
 		</div>	
 	</div>
