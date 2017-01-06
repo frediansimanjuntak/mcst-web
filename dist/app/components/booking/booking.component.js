@@ -54,6 +54,7 @@ var BookingComponent = (function () {
     };
     BookingComponent.prototype.deleteBooking = function (booking) {
         var _this = this;
+        console.log(booking);
         this.bookingService.delete(booking._id)
             .then(function (response) {
             if (response) {
@@ -64,7 +65,7 @@ var BookingComponent = (function () {
                 _this.loadAllBookings();
             }
         }, function (error) {
-            alert("The Development could not be deleted, server Error.");
+            alert("The Booking could not be deleted, server Error.");
         });
     };
     BookingComponent.prototype.loadAllBookings = function () {

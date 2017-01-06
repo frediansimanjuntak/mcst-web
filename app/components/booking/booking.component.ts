@@ -72,6 +72,7 @@ export class BookingComponent implements OnInit {
     }
  
     deleteBooking(booking: Booking) {
+    	console.log(booking)
         this.bookingService.delete(booking._id) 
         .then(
 			response => {
@@ -83,7 +84,7 @@ export class BookingComponent implements OnInit {
 	            }
             },
             error=> { 
-                alert(`The Development could not be deleted, server Error.`);
+                alert(`The Booking could not be deleted, server Error.`);
             }
         );
     }

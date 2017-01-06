@@ -36,6 +36,10 @@ var VisitComponent = (function () {
         this.rowsOnPage = 10;
         this.sortBy = "email";
         this.sortOrder = "asc";
+        this.check_in = [
+            { value: 'F', display: 'Female' },
+            { value: 'M', display: 'Male' }
+        ];
         this.sortByWordLength = function (a) {
             return a.city.length;
         };
@@ -110,7 +114,9 @@ var VisitComponent = (function () {
         //     }
         // );
     };
-    VisitComponent.prototype.openModal = function (announcement) {
+    VisitComponent.prototype.checkIn = function (visit) {
+        this.visit = visit;
+        console.log(visit);
     };
     VisitComponent.prototype.loadVisits = function () {
         //---------------------------Call To Api-------------- //
