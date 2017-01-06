@@ -61,12 +61,21 @@ var VisitComponent = (function () {
             property: ['', forms_1.Validators.required],
             visitor: this.formbuilder.group({
                 full_name: ['', forms_1.Validators.required],
+<<<<<<< Updated upstream
                 vehicle: ['', forms_1.Validators.required],
                 pass: ['', forms_1.Validators.required],
             }),
             purpose: ['', forms_1.Validators.required],
             remarks: ['', forms_1.Validators.required],
             check_in: [forms_1.Validators.required],
+=======
+                vehicle: [''],
+                pass: [''],
+            }),
+            purpose: [''],
+            remarks: [''],
+            check_in: ['', forms_1.Validators.required],
+>>>>>>> Stashed changes
         });
         this.DateOptions = {
             todayBtnTxt: 'Today',
@@ -114,10 +123,73 @@ var VisitComponent = (function () {
         //     }
         // );
     };
+<<<<<<< Updated upstream
     VisitComponent.prototype.checkIn = function (visit) {
         this.visit = visit;
         console.log(visit);
     };
+=======
+    VisitComponent.prototype.preCheckIn = function (visit) {
+        this.visit = visit;
+        this.checkInForm = this.formbuilder.group({
+            property: [{ value: visit.property, disabled: true }, forms_1.Validators.required],
+            visitor: this.formbuilder.group({
+                full_name: [{ value: visit.visitor.full_name, disabled: true }, forms_1.Validators.required],
+                vehicle: [{ value: visit.visitor.vehicle, disabled: true }],
+                pass: [visit.visitor.pass],
+            }),
+            purpose: [{ value: visit.purpose, disabled: true }],
+            remarks: [{ value: visit.remarks, disabled: true }],
+            check_in: [''],
+        });
+        // this.myForm.setValue(this.user); 
+    };
+    VisitComponent.prototype.checkOut = function (visit) {
+        visit.check_out = new Date();
+        console.log(visit);
+    };
+    VisitComponent.prototype.checkIn = function (model, isValid) {
+        var _this = this;
+        this.checkInSsubmitted = true;
+        // model.properties.created_by = '583e4e9dd97c97149884fef5';
+        // this.model.pinned.rank = 0;
+        model.check_in = new Date();
+        if (isValid == true) {
+            console.log(model);
+            this.visitService.create(model)
+                .subscribe(function (data) {
+                _this.alertService.success('Add guest successful', true);
+                _this.router.navigate(['/unit']);
+            }, function (error) {
+                console.log(error);
+                alert("Guest register could not be save, server Error.");
+            });
+        }
+    };
+    VisitComponent.prototype.addGuest = function (model, isValid) {
+        var _this = this;
+        this.addSubmitted = true;
+        // model.properties.created_by = '583e4e9dd97c97149884fef5';
+        // this.model.pinned.rank = 0;
+        if (model.check_in == true) {
+            model.check_in = new Date();
+        }
+        else {
+            model.check_in = '';
+        }
+        if (isValid == true) {
+            console.log(model);
+            this.visitService.create(model)
+                .subscribe(function (data) {
+                _this.alertService.success('Add guest successful', true);
+                _this.router.navigate(['/unit']);
+            }, function (error) {
+                console.log(error);
+                alert("Guest register could not be save, server Error.");
+            });
+        }
+    };
+>>>>>>> Stashed changes
     VisitComponent.prototype.loadVisits = function () {
         //---------------------------Call To Api-------------- //
         // this.announcementService.getAll()
@@ -134,6 +206,12 @@ var VisitComponent = (function () {
             _this.visits = data;
             _this.visitActive = _this.visits.filter(function (data) { return data.visit_date.slice(0, 10) == _this.activeDate; });
             console.log(_this.visitActive);
+<<<<<<< Updated upstream
+=======
+            for (var i = 0; i < _this.visitActive.length; i++) {
+                _this.visitActive[i].i = i + 1;
+            }
+>>>>>>> Stashed changes
         });
     };
     VisitComponent.prototype.setActiveTab = function (index) {
