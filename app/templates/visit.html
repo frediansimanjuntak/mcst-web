@@ -65,7 +65,6 @@
 			</div>
        
 		<div class="row">
-		    
 		    <modal #firstModal>
 		        <modal-header>
 		            <h5>Adding Guest/Visitor</h5>
@@ -79,51 +78,109 @@
                                 <small style="color: red" [hidden]="myForm.controls.visitor.controls.full_name.valid || (myForm.controls.visitor.controls.full_name.pristine && !submitted)">Name is required</small>
                             </div>
                         </div>
-		                <!-- <div class="form-group" [ngClass]="{ 'has-error':   !vehicle.valid }">
-		                    <label class="control-label col-sm-4" for="vehicle">Vehicle :</label>
-		                    <div class="col-sm-8">
-		                        <input type="text" class="form-control" placeholder="If any" name="vehicle" [(ngModel)]="visit.visitor.vehicle" #vehicle="ngModel" required />
-		                        <span *ngIf= " !name.valid" class="help-block">Name is required</span>
-		                    </div>
-		                </div>
-		                <div class="form-group">
-		                    <label class="control-label col-sm-4" for="sticky">Purpose of visit :</label>
-		                    <div class="col-sm-8">
-		                        <select class="form-control" name="sticky" [(ngModel)]="visit.purpose">
-		                          <option selected value="house_visit">House Visit</option>
-		                          <option value="maintenance_work">Maintenance Work</option>
-		                        </select>
-		                    </div>
-		                </div>
-		                <div class="form-group" [ngClass]="{ 'has-error':   !vehicle.valid }">
-		                    <label class="control-label col-sm-4" for="vehicle">Visiting :</label>
-		                    <div class="col-sm-8">
-		                        <input type="text" class="form-control" placeholder="If any" name="vehicle" [(ngModel)]="visit.visitor.vehicle" #vehicle="ngModel" required />
-		                        <span *ngIf= " !name.valid" class="help-block">Name is required</span>
-		                    </div>
-		                </div>
-		                <div class="form-group">
-		                    <label class="control-label col-sm-4" for="sticky">Sticky? :</label>
-		                    <div class="col-sm-8">
-		                        <label><input type="radio" name="sticky" [checked]="stickyStatus == 'yes'" [(ngModel)]="stickyStatus" value='yes'>Yes</label>
-		                        <label><input type="radio" name="sticky" [checked]="stickyStatus == 'no'" [(ngModel)]="stickyStatus" value='no'>No</label>     
-		                    </div>
-		                </div>
-		                <div class="form-group" >
-		                    <label class="control-label col-sm-4" for="valid_till">Valid till :</label>
-		                    <div class="col-sm-8">
-		                    <my-date-picker [options]="validTillDateOptions"
-                            [selDate]="valid_tillStatus" (dateChanged)="validTillDateChanged($event)"></my-date-picker>
-		                       
-		                    </div>
-		                </div>
-		                <div class="pull-right">
-		                    <button  class="btn btn-primary" (click)="publishAnnouncement()">Announce</button>
-		                    <button class="btn btn-default" (click)="firstModal.close()">Cancel</button>
-		                </div> -->
+                        <div class="form-group" formGroupName="visitor">
+                            <label  class="control-label col-sm-4" for="vehicle">Vehicle :</label>
+                            <div class="col-sm-8">
+                                <input type="text" class="form-control" placeholder="If any" name="vehicle" formControlName="vehicle">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-sm-4" for="purpose">Purpose of visit :</label>
+                            <div class="col-sm-8">
+                                <select class="form-control" formControlName="purpose" name="purpose">
+                                    <option selected="" value="house_visit">House Visit</option>
+                                    <option value="maintenance_work">Maintenance Work</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group" [ngClass]="{ 'has-error': submitted && !myForm.controls.property.valid }">
+                            <label  class="control-label col-sm-4" for="full_name">Visiting :</label>
+                            <div class="col-sm-8">
+                                <input type="text" class="form-control" name="property" formControlName="property">
+                                <small style="color: red" [hidden]="myForm.controls.property.valid || (myForm.controls.property.pristine && !submitted)">Unit no is required</small>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label  class="control-label col-sm-4" for="full_name">Remarks :</label>
+                            <div class="col-sm-8">
+                                <textarea  type="text" class="form-control" name="remarks" formControlName="remarks" placeholder="Remarks here if any"></textarea>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label  class="control-label col-sm-4" for="full_name">Check-in: :</label>
+                            <div class="col-sm-8">
+                              	<label><input type="radio" formControlName="check_in" name="check_in" [value]=true>Yes</label>
+                        		<label><input type="radio" formControlName="check_in" checked name="check_in" [value]=false>No</label>
+                        	</div>
+                        </div>
+                       	<div class="form-group" formGroupName="visitor">
+                            <label  class="control-label col-sm-4" for="pass">Visitor Pass :</label>
+                            <div class="col-sm-8">
+                                <input type="text" class="form-control" placeholder="Enter Pass serial" name="pass" formControlName="pass">
+                            </div>
+                        </div>
 		            </form>   
 		        </modal-content>
-		        
+		    </modal>
+		</div>	
+
+		<div class="row">
+		    <modal #check-in>
+		        <modal-header>
+		            <h5>Check-in </h5>
+		        </modal-header>
+		        <modal-content>
+					<form class="form-horizontal" name="form" [formGroup]="myForm" novalidate (ngSubmit)="registerGuest(myForm.value, myForm.valid)">
+						<div class="form-group" [ngClass]="{ 'has-error': submitted && !myForm.controls.visitor.controls.full_name.valid }" formGroupName="visitor">
+                            <label  class="control-label col-sm-4" for="full_name">Name of Guest/visitor :</label>
+                            <div class="col-sm-8">
+                                <input type="text" class="form-control" name="full_name" formControlName="full_name">
+                                <small style="color: red" [hidden]="myForm.controls.visitor.controls.full_name.valid || (myForm.controls.visitor.controls.full_name.pristine && !submitted)">Name is required</small>
+                            </div>
+                        </div>
+                        <div class="form-group" formGroupName="visitor">
+                            <label  class="control-label col-sm-4" for="vehicle">Vehicle :</label>
+                            <div class="col-sm-8">
+                                <input type="text" class="form-control" placeholder="If any" name="vehicle" formControlName="vehicle">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-sm-4" for="purpose">Purpose of visit :</label>
+                            <div class="col-sm-8">
+                                <select class="form-control" formControlName="purpose" name="purpose">
+                                    <option selected="" value="house_visit">House Visit</option>
+                                    <option value="maintenance_work">Maintenance Work</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group" [ngClass]="{ 'has-error': submitted && !myForm.controls.property.valid }">
+                            <label  class="control-label col-sm-4" for="full_name">Visiting :</label>
+                            <div class="col-sm-8">
+                                <input type="text" class="form-control" name="property" formControlName="property">
+                                <small style="color: red" [hidden]="myForm.controls.property.valid || (myForm.controls.property.pristine && !submitted)">Unit no is required</small>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label  class="control-label col-sm-4" for="full_name">Remarks :</label>
+                            <div class="col-sm-8">
+                                <textarea  type="text" class="form-control" name="remarks" formControlName="remarks" placeholder="Remarks here if any"></textarea>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label  class="control-label col-sm-4" for="full_name">Check-in: :</label>
+                            <div class="col-sm-8">
+                              	<label><input type="radio" formControlName="check_in" name="check_in" [value]=true>Yes</label>
+                        		<label><input type="radio" formControlName="check_in" checked name="check_in" [value]=false>No</label>
+                        	</div>
+                        </div>
+                       	<div class="form-group" formGroupName="visitor">
+                            <label  class="control-label col-sm-4" for="pass">Visitor Pass :</label>
+                            <div class="col-sm-8">
+                                <input type="text" class="form-control" placeholder="Enter Pass serial" name="pass" formControlName="pass">
+                            </div>
+                        </div>
+		            </form>   
+		        </modal-content>
 		    </modal>
 		</div>	
 	</div>
