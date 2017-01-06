@@ -60,7 +60,55 @@ var EditUserComponent = (function () {
             _this.id = params['id'];
         });
         if (this.id != null) {
-            this.userService.getUser(this.id).then(function (user) { _this.user = user; });
+            this.userService.getUser(this.id)
+                .then(function (user) {
+                _this.user = user;
+                _this.myForm = _this.formbuilder.group({
+                    _id: [''],
+                    username: ['', forms_1.Validators.required],
+                    email: ['', forms_1.Validators.required],
+                    password: ['', forms_1.Validators.required],
+                    phone: ['', forms_1.Validators.required],
+                    role: ['', forms_1.Validators.required],
+                    default_property: _this.formbuilder.group({
+                        development: ['', forms_1.Validators.required],
+                        property: ['', forms_1.Validators.required],
+                        role: ['', forms_1.Validators.required]
+                    }),
+                    details: _this.formbuilder.group({
+                        first_name: [''],
+                        last_name: [''],
+                        identification_type: [''],
+                        identification_no: [''],
+                        identification_proof: _this.formbuilder.group({
+                            front: [''],
+                            back: ['']
+                        })
+                    }),
+                    rented_property: _this.formbuilder.group({
+                        development: [''],
+                        property: ['']
+                    }),
+                    owned_property: _this.formbuilder.array([]),
+                    authorized_property: _this.formbuilder.array([]),
+                    active: ['', forms_1.Validators.required],
+                    default_development: [''],
+                    authorized_development: [''],
+                    user_group: [''],
+                    created_at: [''],
+                });
+                for (var _i = 0, _a = _this.user.owned_property; _i < _a.length; _i++) {
+                    var entry = _a[_i];
+                    var control = _this.myForm.controls['owned_property'];
+                    control.push(_this.initOwned());
+                }
+                for (var _b = 0, _c = _this.user.authorized_property; _b < _c.length; _b++) {
+                    var entry = _c[_b];
+                    var control = _this.myForm.controls['authorized_property'];
+                    control.push(_this.initAuthorized());
+                }
+                _this.myForm.setValue(_this.user);
+            });
         }
         ;
         // this.developmentService.getAll().subscribe(developments => { this.developments = developments; });

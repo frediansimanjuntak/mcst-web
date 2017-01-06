@@ -5,38 +5,59 @@
                 Edit User
             </div>
             <p>Home > User > Edit > {{user.username}}</p>
-            <form class="form-horizontal col-md-6" name="form" #f="ngForm" novalidate>
-                <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !username.valid }">
+            <form [formGroup]="myForm" class="form-horizontal col-md-6" name="form" (ngSubmit)="f.form.valid && updateUser(myForm.value)" #f="ngForm" novalidate>
+                <div class="form-group">
                     <label class="control-label col-sm-2" for="username">Username :</label>
                     <div class="col-sm-10">
-                        <input type="text" class="form-control" name="username" [(ngModel)]="user.username" #username="ngModel" required placeholder="Input username here" />
-                        <span *ngIf="f.submitted && !username.valid" class="help-block">Username is required</span>
+                        <input type="text" class="form-control" name="username" formControlName="username" required placeholder="Input username here" />
+                        <small *ngIf="f.submitted && !myForm.controls.username.valid" class="text-danger">
+                        Name is required
+                        </small>
                     </div>
                 </div>
-                <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !email.valid }">
+                <div class="form-group">
                     <label class="control-label col-sm-2" for="email">Email :</label>
                     <div class="col-sm-10">
-                        <input type="email" class="form-control" name="email" [(ngModel)]="user.email" #email="ngModel" required placeholder="Input email here"/>
-                        <span *ngIf="f.submitted && !email.valid" class="help-block">Email is required</span>
+                        <input type="email" class="form-control" name="email" formControlName="email" placeholder="Input email here"/>
+                        <small *ngIf="f.submitted && !myForm.controls.email.valid" class="text-danger">
+                        Email is required
+                        </small>
                     </div>
                 </div>
-                <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !phone.valid }">
+                <div class="form-group">
                     <label class="control-label col-sm-2" for="phone">Phone :</label>
                     <div class="col-sm-10">
-                        <input type="text" class="form-control" name="phone" [(ngModel)]="user.phone" #phone="ngModel" required placeholder="Input phone number here"/>
-                        <span *ngIf="f.submitted && !phone.valid" class="help-block">Phone is required</span>
+                        <input (keypress)="number($event)" type="text" class="form-control" name="phone" formControlName="phone" required placeholder="Input phone number here"/>
+                        <small *ngIf="f.submitted && !myForm.controls.phone.valid" class="text-danger">
+                            Phone is required
+                        </small>                    
                     </div>
                 </div>
-                <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !role.valid }">
+                <div class="form-group">
                   <label class="control-label col-sm-2" for="role">Role :</label>
                   <div class="col-sm-10">
-                      <select class="form-control" name="role" id="role" [(ngModel)]="user.role" #role="ngModel" required>
-                        <option value="admin">Admin</option>
-                        <option value="user">User</option>
-                      </select>
+                        <select class="form-control" name="role" id="role" formControlName="role" placeholder="Choose role">
+                            <option value="admin">Admin</option>
+                            <option value="user" selected>User</option>
+                        </select>
+                        <small *ngIf="f.submitted && !myForm.controls.role.valid" class="text-danger">
+                            Role is required
+                        </small> 
                   </div>  
                 </div>
-                <div ngModelGroup="default_property"> 
+                <div class="form-group">
+                    <label class="control-label col-sm-2" for="status">Status :</label>
+                    <div class="col-sm-10">
+                        <select required class="form-control" formControlName="active" name="active" id="active" placeholder="Choose status">
+                            <option value="active" selected>Active</option>
+                            <option value="inactive">Inactive</option>
+                        </select>
+                        <small *ngIf="f.submitted && !myForm.controls.active.valid" class="text-danger">
+                        Status is required
+                        </small>
+                    </div>
+                </div>
+                <div formGroupName="default_property"> 
                     <div class="panel panel-default">
                         <div class="panel-heading">
                             <span>Default Property</span>
@@ -45,16 +66,16 @@
                             <div *ngIf="unit">
                                 <div class="form-group col-xs-10">
                                     <label>Unit No :</label>
-                                    <select class="form-control" name="property" id="property" [(ngModel)]="user.default_property.property" #property="ngModel" placeholder="Choose property">
+                                    <select class="form-control" name="property" id="property" formControlName="property" placeholder="Choose property">
                                         <option *ngFor="let unit of unit.properties" [ngValue]="unit._id">
                                             #{{unit.address.unit_no}}-{{unit.address.unit_no_2}}
                                         </option>
                                     </select>
                                 </div>
                             </div>
-                            <div class="form-group col-xs-12">
+                            <div class="form-group col-xs-10">
                                 <label>Role :</label>
-                                <select required class="form-control" [(ngModel)]="user.default_property.role" #role="ngModel" name="role" id="role" placeholder="Choose role">
+                                <select required class="form-control" formControlName="role" name="role" id="role" placeholder="Choose role">
                                     <option value="landlord">Landlord</option>
                                     <option value="tenant" selected>Tenant</option>
                                 </select>
@@ -62,36 +83,16 @@
                         </div>
                     </div>
                 </div>
-                <div ngModelGroup="owned_property"> 
-                    <div *ngFor="let ownprop of user.owned_property; let i=index" class="panel panel-default">
-                        <div class="panel-heading">
-                            <span>Owned Property {{i + 1}} </span>
-                            <span class="glyphicon glyphicon-remove pull-right" *ngIf="ownprop.length > 1" (click)="removeOwned(i)"></span>
-                        </div>
-                        <div class="panel-body">
-                            <div *ngIf="unit">
-                                <div class="form-group col-xs-12">
-                                    <label>Unit No : {{user.owned_property[i].property}}</label>
-                                    <select class="form-control" id={{ownprop._id}} name="property[i]"  placeholder="Choose property">
-                                        <option *ngFor="let unit of unit.properties" [ngValue]="unit._id" [selected]="unit._id==ownprop.property">
-                                              #{{unit.address.unit_no}}-{{unit.address.unit_no_2}}
-                                        </option>
-                                    </select>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div ngModelGroup="rented_property"> 
+                <div formGroupName="rented_property"> 
                     <div class="panel panel-default">
                         <div class="panel-heading">
                             <span>Rented Property</span>
                         </div>
                         <div class="panel-body">
                             <div *ngIf="unit">
-                                <div class="form-group col-xs-12">
+                                <div class="form-group col-xs-10">
                                     <label>Unit No :</label>
-                                    <select class="form-control" name="property" id="property" [(ngModel)]="user.rented_property.property" #property="ngModel" placeholder="Choose property">
+                                    <select class="form-control" name="property" id="property" formControlName="property" placeholder="Choose property">
                                         <option *ngFor="let unit of unit.properties" [ngValue]="unit._id">
                                             #{{unit.address.unit_no}}-{{unit.address.unit_no_2}}
                                         </option>
@@ -101,38 +102,67 @@
                         </div>
                     </div>
                 </div>
-                <div ngModelGroup="authorized_property"> 
-                    <div *ngFor="let authprop of user.authorized_property; let i=index" class="panel panel-default">
+                <!--owned-->
+                <div formArrayName="owned_property">          
+                    <div *ngFor="let owned of myForm.controls.owned_property.controls; let i=index" class="panel panel-default">
                         <div class="panel-heading">
-                            <span>Authorized Property {{i + 1}}</span>
-                            <span class="glyphicon glyphicon-remove pull-right" *ngIf="authprop.length > 1" (click)="removeOwned(i)"></span>
+                            <span>Owned Property {{i + 1}}</span>
+                            <span class="glyphicon glyphicon-remove pull-right" *ngIf="myForm.controls.owned_property.controls.length > 1" (click)="removeOwned(i)"></span>
                         </div>
-                        <div class="panel-body">
+
+                        <div class="panel-body" [formGroupName]="i">
+                           
                             <div *ngIf="unit">
-                                <div class="form-group col-xs-12">
+                                <div class="form-group col-xs-10">
                                     <label>Unit No :</label>
-                                    <select class="form-control" id={{authprop._id}} name="property"  placeholder="Choose property">
-                                        <option [selected]="unit._id==authprop.property" *ngFor="let unit of unit.properties" [ngValue]="unit._id">
-                                             #{{unit.address.unit_no}}-{{unit.address.unit_no_2}}
-                                        </option>
-                                    </select>
+                                    <div>
+                                        <select class="form-control" name="property" id="property" formControlName="property" placeholder="Choose property">
+                                            <option *ngFor="let unit of unit.properties" [ngValue]="unit._id">
+                                                 #{{unit.address.unit_no}}-{{unit.address.unit_no_2}}
+                                            </option>
+                                        </select>
+                                    </div>  
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
-                <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !active.valid }">
-                    <label class="control-label col-sm-2" for="status">Status :</label>
-                    <div class="col-sm-10">
-                        <select required class="form-control" [(ngModel)]="user.active" #active="ngModel" name="active" id="active" placeholder="Choose status">
-                            <option value="active" selected>Active</option>
-                            <option value="inactive">Inactive</option>
-                        </select>
-                        <span *ngIf="f.submitted && !active.valid" class="help-block">Status is required</span>
+                <div class="margin-20">
+                    <a (click)="addOwned()" style="cursor: default">
+                        <p>Add another Owned Property +</p>
+                        <br/>
+                    </a>
+                </div>           
+                <div formArrayName="authorized_property">
+                    <div *ngFor="let authorized of myForm.controls.authorized_property.controls; let i=index" class="panel panel-default">
+                        <div class="panel-heading">
+                            <span>Authorized Property {{i + 1}}</span>
+                            <span class="glyphicon glyphicon-remove pull-right" *ngIf="myForm.controls.authorized_property.controls.length > 1" (click)="removeAuthorized(i)"></span>
+                        </div>
+                        <div class="panel-body" [formGroupName]="i">
+                            <!-- <authorized [group]="myForm.controls.authorized.controls[i]"></authorized> -->
+                            <div>   
+                                <div *ngIf="unit">
+                                    <div class="form-group col-xs-10">
+                                        <label for="property">Unit No :</label>
+                                        <select class="form-control" name="property" id="property" formControlName="property" placeholder="Choose property">
+                                            <option *ngFor="let unit of unit.properties" [ngValue]="unit._id">
+                                                #{{unit.address.unit_no}}-{{unit.address.unit_no_2}}
+                                            </option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>    
+                        </div>    
                     </div>
                 </div>
+                <div class="margin-20">
+                    <a (click)="addAuthorized()" style="cursor: default">
+                        Add another Authorized Property +
+                    </a>
+                </div>
                 <div class="form-group pull-right">
-                    <button [disabled]="loading" (click)="updateUser(f.value)" class="btn btn-primary">Save</button>
+                    <button [disabled]="loading" class="btn btn-primary">Save</button>
                     <img *ngIf="loading" src="data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA==" />
                     <a [routerLink]="['/user']" class="btn btn-info">Cancel</a>
                 </div>

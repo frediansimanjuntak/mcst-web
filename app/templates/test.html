@@ -1,5 +1,12 @@
 <div class="container">
-    <div class="main">		
+    <div class="main">	
+    	<div *ngIf="models">
+    		<div *ngFor="let a of models">
+    			<ul>
+    				<li>{{a.todoMessage}}</li>
+    			</ul>
+    		</div>
+    	</div>
 		<p-schedule [events]="events" [editable]="true" (onDayClick)="handleDayClick($event)" (onEventClick)="handleEventClick($event)"></p-schedule>
 		<p-dialog header="Event Details" [(visible)]="dialogVisible" [responsive]="true" showEffect="fade" [modal]="false">
 		    <div class="ui-grid ui-grid-responsive ui-fluid" *ngIf="event">
@@ -28,7 +35,7 @@
 		    </footer>
 		</p-dialog>
 
-		<form class="form-horizontal col-md-6" name="form" (ngSubmit)="f.form.valid && uploader.uploadAll() || upload()" #f="ngForm" novalidate enctype="multipart/form-data">
+		<!-- <form class="form-horizontal col-md-6" name="form" (ngSubmit)="f.form.valid && uploader.uploadAll() || upload()" #f="ngForm" novalidate enctype="multipart/form-data">
 			<div class="form-group" >
 			    <label class="control-label col-sm-4" for="attachment">Attachment :</label>
 			    <div class="col-sm-8">
@@ -76,7 +83,7 @@
 		<img [src]="src" [hidden]="!src"><br>
       	<input multiple type="file" (change)="onChange($event)" image-upload
         (imageSelected)="selected($event)"
-        [resizeOptions]="resizeOptions">
+        [resizeOptions]="resizeOptions"> -->
 
 
 		<!-- Gunama -->
@@ -123,9 +130,9 @@
 		  [(ngModel)]="mySelectValue">
 		</ng-select> -->
 
-		<div style="margin:10px 0 20px 0;color:#666;font-size:11pt;font-style:italic;">
+		<!-- <div style="margin:10px 0 20px 0;color:#666;font-size:11pt;font-style:italic;">
 			Selected option id: {{mySelectValue}}
-		</div>
+		</div> -->
 		<!--********************************************-->
 
 		<!-- <modal  title="Modal title"

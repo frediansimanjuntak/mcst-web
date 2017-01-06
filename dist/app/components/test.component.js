@@ -9,14 +9,24 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 var core_1 = require("@angular/core");
+var http_1 = require("@angular/http");
 require("fullcalendar");
+var index_1 = require("../services/index");
 require("../rxjs-operators");
 var ng2_file_upload_1 = require("ng2-file-upload");
 // import {ModalModule} from "ng2-modal";
+var Model = (function () {
+    function Model() {
+    }
+    return Model;
+}());
+exports.Model = Model;
 var TestComponent = (function () {
     // Array of strings for multi select, string for single select.
-    function TestComponent(cd) {
+    function TestComponent(cd, http, testService) {
         this.cd = cd;
+        this.http = http;
+        this.testService = testService;
         this.model = {};
         this.dialogVisible = false;
         this.idGen = 100;
@@ -45,6 +55,7 @@ var TestComponent = (function () {
             || imageResult.dataURL;
     };
     TestComponent.prototype.ngOnInit = function () {
+        this.loadAllUsers();
         this.events = [
             {
                 "title": "All Day Event",
@@ -75,6 +86,10 @@ var TestComponent = (function () {
             { value: 'c', label: 'Gamma' },
         ];
         this.mySelectValue = ['b', 'c'];
+    };
+    TestComponent.prototype.loadAllUsers = function () {
+        var _this = this;
+        this.testService.getAll().subscribe(function (models) { _this.models = models; console.log(models); });
     };
     TestComponent.prototype.handleDayClick = function (event) {
         this.event = new MyEvent();
@@ -192,7 +207,7 @@ TestComponent = __decorate([
         templateUrl: '/app/templates/test.html',
         styleUrls: ['/app/templates/styles/newsletter.css'],
     }),
-    __metadata("design:paramtypes", [core_1.ChangeDetectorRef])
+    __metadata("design:paramtypes", [core_1.ChangeDetectorRef, http_1.Http, index_1.TestService])
 ], TestComponent);
 exports.TestComponent = TestComponent;
 var MyEvent = (function () {

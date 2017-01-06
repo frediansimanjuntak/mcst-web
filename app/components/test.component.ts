@@ -1,15 +1,22 @@
 import {Component, OnInit, ChangeDetectorRef} from '@angular/core';
+import { Http, Headers, RequestOptions, Response } from '@angular/http';
 import * as $ from 'jquery';
 import 'fullcalendar';
 import {Options} from "fullcalendar";
 import { Router } from '@angular/router';
+
+import { TestService, AlertService } from '../services/index';
 import '../rxjs-operators';
 import { FileUploader } from 'ng2-file-upload';
 import { Observable} from 'rxjs/Observable';
 import { ImageResult, ResizeOptions } from 'ng2-imageupload';
 // import {ModalModule} from "ng2-modal";
 
-
+export class Model {
+    _id: string;
+    todoMessage : string;
+    createdAt : string
+}
 @Component({
   moduleId: module.id,
   selector: 'newsletter',
@@ -20,6 +27,7 @@ import { ImageResult, ResizeOptions } from 'ng2-imageupload';
 export class TestComponent implements OnInit{ 
 
 	model: any = {};
+    models: Model[];
 	events: any[];
 	event: MyEvent;
 	dialogVisible: boolean = false;
@@ -42,7 +50,7 @@ export class TestComponent implements OnInit{
      // Array of strings for multi select, string for single select.
 
 
-	constructor(private cd: ChangeDetectorRef) { 
+	constructor(private cd: ChangeDetectorRef, private http: Http, private testService:TestService) { 
         let numOptions = 100;
         let opts = new Array(numOptions);
 
@@ -68,6 +76,7 @@ export class TestComponent implements OnInit{
 
 	
 	ngOnInit() {
+        this.loadAllUsers()
         this.events = [
             {
                 "title": "All Day Event",
@@ -93,6 +102,8 @@ export class TestComponent implements OnInit{
             }
         ];
 
+        
+
 
        
          this.myOptions = [
@@ -102,6 +113,12 @@ export class TestComponent implements OnInit{
         ];
         this.mySelectValue = ['b', 'c'];
     }
+
+    
+
+    private loadAllUsers() {
+        this.testService.getAll().subscribe(models => { this.models = models; console.log(models) });
+    }    
 
     handleDayClick(event) {
         this.event = new MyEvent();

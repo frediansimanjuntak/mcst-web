@@ -10,29 +10,81 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 var core_1 = require("@angular/core");
 var router_1 = require("@angular/router");
+var forms_1 = require("@angular/forms");
 var index_1 = require("../../services/index");
 require("../../rxjs-operators");
 require("rxjs/add/operator/switchMap");
 var EditFacilityComponent = (function () {
-    function EditFacilityComponent(router, facilityService, alertService, route) {
+    function EditFacilityComponent(router, facilityService, alertService, formbuilder, route) {
         this.router = router;
         this.facilityService = facilityService;
         this.alertService = alertService;
+        this.formbuilder = formbuilder;
         this.route = route;
         this.model = {};
+        this.days = [
+            { value: 'monday', name: 'Monday' },
+            { value: 'tuesday', name: 'Tuesday' },
+            { value: 'wednesday', name: 'Wednesday' },
+            { value: 'thursday', name: 'Thursday' },
+            { value: 'friday', name: 'Friday' },
+            { value: 'saturday', name: 'Saturday' },
+            { value: 'sunday', name: 'Sunday' },
+        ];
     }
     EditFacilityComponent.prototype.ngOnInit = function () {
         var _this = this;
+        this.myForm = this.formbuilder.group({
+            _id: [''],
+            name: ['', forms_1.Validators.required],
+            development: ['123123', forms_1.Validators.required],
+            description: ['', forms_1.Validators.required],
+            facility_type: ['', forms_1.Validators.required],
+            payment_type: ['', forms_1.Validators.required],
+            booking_type: ['', forms_1.Validators.required],
+            schedule: this.formbuilder.array([]),
+            status: ['', forms_1.Validators.required],
+            maintenance_start: [''],
+            maintenance_end: [''],
+            created_by: [''],
+            created_at: ['']
+        });
         this.route.params.subscribe(function (params) {
             _this.id = params['id'];
         });
         if (this.id != null) {
-            this.facilityService.getFacility(this.id).then(function (facility) { return _this.facility = facility; });
+            this.facilityService.getFacility(this.id)
+                .then(function (facility) {
+                _this.facility = facility;
+                for (var _i = 0, _a = _this.facility.schedule; _i < _a.length; _i++) {
+                    var entry = _a[_i];
+                    var control = _this.myForm.controls['schedule'];
+                    control.push(_this.initSchedule());
+                }
+                _this.myForm.setValue(_this.facility);
+            });
         }
     };
-    EditFacilityComponent.prototype.createFacility = function () {
+    EditFacilityComponent.prototype.initSchedule = function () {
+        return this.formbuilder.group({
+            day: [''],
+            start_time: [this.start_time],
+            end_time: ['']
+        });
+    };
+    EditFacilityComponent.prototype.addSchedule = function () {
+        var control = this.myForm.controls['schedule'];
+        var scheduleCtrl = this.initSchedule();
+        control.push(scheduleCtrl);
+    };
+    EditFacilityComponent.prototype.removeSchedule = function (i) {
+        var control = this.myForm.controls['schedule'];
+        control.removeAt(i);
+    };
+    EditFacilityComponent.prototype.createFacility = function (model) {
         var _this = this;
-        this.facilityService.create(this.model)
+        console.log(model);
+        this.facilityService.create(model)
             .then(function (response) {
             _this.alertService.success('Update facility successful', true);
             _this.router.navigate(['/facility']);
@@ -40,9 +92,10 @@ var EditFacilityComponent = (function () {
             _this.alertService.error(error);
         });
     };
-    EditFacilityComponent.prototype.updateFacility = function () {
+    EditFacilityComponent.prototype.updateFacility = function (facility) {
         var _this = this;
-        this.facilityService.update(this.facility)
+        console.log(facility);
+        this.facilityService.update(facility)
             .then(function (response) {
             _this.alertService.success('Update development successful', true);
             _this.router.navigate(['/development']);
@@ -61,6 +114,7 @@ EditFacilityComponent = __decorate([
     __metadata("design:paramtypes", [router_1.Router,
         index_1.FacilityService,
         index_1.AlertService,
+        forms_1.FormBuilder,
         router_1.ActivatedRoute])
 ], EditFacilityComponent);
 exports.EditFacilityComponent = EditFacilityComponent;
