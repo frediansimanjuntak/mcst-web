@@ -45,6 +45,10 @@ export class VisitComponent implements OnInit {
     public activeDateFull: any;
     public tomorrow: Date;
     public afterTomorrow: Date;
+    public check_in = [
+	    { value: 'F', display: 'Female' },
+	    { value: 'M', display: 'Male' }
+	];
     constructor(
                 private router: Router,
                 private visitService: VisitService, 
@@ -142,10 +146,11 @@ export class VisitComponent implements OnInit {
 
     
 
-    openModal(announcement){
-       
+   
+    checkIn(visit){
+   		this.visit = visit;
+    	console.log(visit);
     }
-
 	private loadVisits() {
         //---------------------------Call To Api-------------- //
         // this.announcementService.getAll()
