@@ -105,3 +105,12 @@
   width: 15px;
   height: 15px;
 }
+
+.bg-dark {
+  background-color: #2f3034 ;
+  color: #ffffff ;
+}
+
+.nav {
+  height: 44px;
+}

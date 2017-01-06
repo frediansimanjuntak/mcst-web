@@ -1,11 +1,22 @@
 import { Injectable } from '@angular/core';
 import { Http, Headers, RequestOptions, Response } from '@angular/http';
 import { Observable } from 'rxjs/Rx';
-import { Visit } from '../models/index';
+import { url } from '../global';
+import { Visit, Visits } from '../models/index';
  
 @Injectable()
 export class VisitService {
+    private headers = new Headers({'Content-Type': 'application/json'});
     constructor(private http: Http) {}
+
+    getVisits(): Promise<Visit[]> {
+        return Promise.resolve(Visits);
+    }
+
+    getVisit(id: string): Promise<any> {
+        return this.getVisits()
+            .then(visit => visit.find(visit => visit._id === id));
+    }
 
     getAll(){
         return this.http.get('https://192.168.10.73:3333/api/visits')
