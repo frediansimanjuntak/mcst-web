@@ -22,7 +22,7 @@ import * as $ from "jquery";
 export class VisitComponent implements OnInit { 
 	visit: Visit;
     visits: Visit[] = [];
-    visitActive: Visit[] = [];
+    visitActive: any[] = [];
     DateOptions: any = {};
     model: any = {};
     id: string;
@@ -32,6 +32,7 @@ export class VisitComponent implements OnInit {
     selectedValues: string[] = [];
     btnArchive: boolean = false;
     myForm: FormGroup;
+    checkInForm: FormGroup;
     public developmentId;
     public data;
     public petitionPending;
@@ -45,6 +46,8 @@ export class VisitComponent implements OnInit {
     public activeDateFull: any;
     public tomorrow: Date;
     public afterTomorrow: Date;
+    public addSubmitted: boolean;
+    public checkInSsubmitted: boolean;
     public check_in = [
 	    { value: 'F', display: 'Female' },
 	    { value: 'M', display: 'Male' }
@@ -74,12 +77,12 @@ export class VisitComponent implements OnInit {
 			 	property: ['', <any>Validators.required],
                 visitor: this.formbuilder.group({
                     full_name : ['',  <any>Validators.required],
-                    vehicle : ['', <any>Validators.required],
-                    pass : ['', <any>Validators.required],
+                    vehicle : [''],
+                    pass : [''],
                 }),
-                purpose: ['', <any>Validators.required],
-                remarks : ['', <any>Validators.required],
-                check_in: [<any>Validators.required],
+                purpose: [''],
+                remarks : [''],
+                check_in: ['',<any>Validators.required],
         });
 
         this.DateOptions = {
@@ -147,10 +150,74 @@ export class VisitComponent implements OnInit {
     
 
    
-    checkIn(visit){
+    preCheckIn(visit){
    		this.visit = visit;
+
+    	this.checkInForm = this.formbuilder.group({
+			 	property: [{value: visit.property, disabled: true}, <any>Validators.required],
+                visitor: this.formbuilder.group({
+                    full_name : [{value: visit.visitor.full_name, disabled: true},  <any>Validators.required],
+                    vehicle : [{ value: visit.visitor.vehicle, disabled: true}],
+                    pass : [visit.visitor.pass],
+                }),
+                purpose: [{ value: visit.purpose, disabled: true}],
+                remarks : [{ value: visit.remarks, disabled: true}],
+                check_in: [''],
+        });
+         // this.myForm.setValue(this.user); 
+    }
+
+    checkOut(visit){
+    	visit.check_out = new Date();
     	console.log(visit);
     }
+
+    checkIn(model: any, isValid: boolean) {
+        this.checkInSsubmitted = true;
+        // model.properties.created_by = '583e4e9dd97c97149884fef5';
+        // this.model.pinned.rank = 0;
+        model.check_in = new Date();
+        if(isValid == true){
+            console.log(model);
+            this.visitService.create(model)
+            .subscribe(
+                data => {
+                    this.alertService.success('Add guest successful', true);
+                    this.router.navigate(['/unit']);
+                },
+                error => {
+                    console.log(error);
+                    alert(`Guest register could not be save, server Error.`);
+                }
+            );
+        }
+    }
+
+    addGuest(model: any, isValid: boolean) {
+        this.addSubmitted = true;
+        // model.properties.created_by = '583e4e9dd97c97149884fef5';
+        // this.model.pinned.rank = 0;
+        if(model.check_in == true){
+        	model.check_in = new Date();
+        }else{
+        	model.check_in = '';
+         }
+        if(isValid == true){
+            console.log(model);
+            this.visitService.create(model)
+            .subscribe(
+                data => {
+                    this.alertService.success('Add guest successful', true);
+                    this.router.navigate(['/unit']);
+                },
+                error => {
+                    console.log(error);
+                    alert(`Guest register could not be save, server Error.`);
+                }
+            );
+        }
+    }
+
 	private loadVisits() {
         //---------------------------Call To Api-------------- //
         // this.announcementService.getAll()
@@ -167,6 +234,10 @@ export class VisitComponent implements OnInit {
             this.visits      = data;
             this.visitActive = this.visits.filter(data => data.visit_date.slice(0, 10)  == this.activeDate );
             console.log(this.visitActive);
+            for (var i = 0; i < this.visitActive.length; i++) {
+            	this.visitActive[i].i = i+1;
+            }
+           
 		});
     }
 
