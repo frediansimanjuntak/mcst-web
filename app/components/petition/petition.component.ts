@@ -37,6 +37,8 @@ export class PetitionComponent implements OnInit {
     public rowsOnPage = 10;
     public sortBy = "email";
     public sortOrder = "asc";
+    public tomorrow: Date;
+    public afterTomorrow: Date;
     constructor(
                 private router: Router,
                 private petitionService: PetitionService, 
@@ -44,6 +46,8 @@ export class PetitionComponent implements OnInit {
                 private route: ActivatedRoute,
                 private location: Location
                 ) {
+    (this.tomorrow = new Date()).setDate(this.tomorrow.getDate() - 7);
+    (this.afterTomorrow = new Date()).setDate(this.tomorrow.getDate() + 2);
          
     }
 
