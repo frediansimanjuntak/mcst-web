@@ -83,6 +83,8 @@ const routes: Routes = [
   { path: 'petition', component: PetitionComponent },
   { path: 'petition/view/:id', component: PetitionComponent },
   { path: 'petition/add',   component: EditPetitionComponent },
+
+   { path: 'visit', component: VisitComponent },
   // { path: 'petition/edit/:id',   component: EditAnnouncementComponent },
   // { path: 'form',     component: HeroFormComponent },
   // { path: 'table',     component: TableDemoComponent },
