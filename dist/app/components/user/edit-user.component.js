@@ -24,6 +24,7 @@ var EditUserComponent = (function () {
         this.alertService = alertService;
         this.formbuilder = formbuilder;
         this.unitService = unitService;
+        this.users = [];
         this.model = {};
         this.developmentID = "585b36585d3cc41224fe518a";
     }
@@ -37,9 +38,9 @@ var EditUserComponent = (function () {
             phone: ['', forms_1.Validators.required],
             role: ['', forms_1.Validators.required],
             default_property: this.formbuilder.group({
-                development: ['', forms_1.Validators.required],
-                property: ['', forms_1.Validators.required],
-                role: ['', forms_1.Validators.required]
+                development: [''],
+                property: [''],
+                role: ['']
             }),
             rented_property: this.formbuilder.group({
                 development: [''],
@@ -151,15 +152,21 @@ var EditUserComponent = (function () {
         var control = this.myForm.controls['authorized_property'];
         control.removeAt(i);
     };
-    EditUserComponent.prototype.createUser = function (model) {
-        var _this = this;
-        this.userService.create(model)
-            .then(function (data) {
-            _this.alertService.success('Create user successful', true);
-            _this.router.navigate(['/user']);
-        }, function (error) {
-            _this.alertService.error(error);
-        });
+    EditUserComponent.prototype.createUser = function (model, isValid) {
+        this.submitted = true;
+        console.log(model);
+        index_2.Users.push(model);
+        this.router.navigate(['/user']);
+        // this.userService.create(model)
+        // .then(
+        //     data => {
+        //         this.alertService.success('Create user successful', true);
+        //         this.router.navigate(['/user']);
+        //     },
+        //     error => {
+        //         this.alertService.error(error);
+        //     }
+        // );
     };
     EditUserComponent.prototype.updateUser = function (user) {
         console.log(user);

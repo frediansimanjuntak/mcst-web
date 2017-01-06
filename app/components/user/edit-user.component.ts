@@ -2,7 +2,7 @@ import { Component, OnInit ,Input } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, FormArray, Validators } from '@angular/forms';
 import { Router, Params, ActivatedRoute } from '@angular/router';
 import { AlertService, UserService, UnitService } from '../../services/index';
-import { User, Development } from '../../models/index';
+import { User, Development, Users } from '../../models/index';
 import { EqualValidator } from './equal-validator.directive';
 import 'rxjs/add/operator/switchMap';
 import '../../rxjs-operators';
@@ -15,11 +15,13 @@ import '../../rxjs-operators';
 export class EditUserComponent implements OnInit {
      @Input('group')
     user: User;
+    users: User[] = [];
     model: any = {};
     id: string;
     developmentID = "585b36585d3cc41224fe518a";
     unit: Development;
     myForm: FormGroup;
+    public submitted: boolean;
     // developmentID: string;
  
     constructor(private router: Router,
@@ -40,9 +42,9 @@ export class EditUserComponent implements OnInit {
             phone : ['', Validators.required],
             role : ['', Validators.required],
             default_property: this.formbuilder.group({
-                development: ['', Validators.required],
-                property: ['', Validators.required],
-                role : ['', Validators.required]
+                development: [''],
+                property: [''],
+                role : ['']
             }),
             rented_property: this.formbuilder.group({
                 development: [''],
@@ -166,18 +168,22 @@ export class EditUserComponent implements OnInit {
         const control = <FormArray>this.myForm.controls['authorized_property'];
         control.removeAt(i);
     }
-
-    createUser(model:User) {
-        this.userService.create(model)
-        .then(
-            data => {
-                this.alertService.success('Create user successful', true);
-                this.router.navigate(['/user']);
-            },
-            error => {
-                this.alertService.error(error);
-            }
-        );
+        
+    createUser(model:User , isValid: boolean) {
+        this.submitted = true;
+        console.log(model)
+        Users.push(model);
+        this.router.navigate(['/user']);
+        // this.userService.create(model)
+        // .then(
+        //     data => {
+        //         this.alertService.success('Create user successful', true);
+        //         this.router.navigate(['/user']);
+        //     },
+        //     error => {
+        //         this.alertService.error(error);
+        //     }
+        // );
     }
 
     updateUser(user:User){
