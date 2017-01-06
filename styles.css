@@ -59,11 +59,10 @@
 
 .btn {
   border-radius: 0 !important;
-  min-width: 150px ;
-  height: 35px;
-  border-bottom-width: 4px !important;
+  min-width: 45px !important;
+ /* border-bottom-width: 4px !important;*/
   border-bottom-style: solid;
-  font-weight: bold !important;
+  /*font-weight: bold !important;*/
   display: inline !important;
 }
 
@@ -71,22 +70,22 @@
   display: inline !important;
 }
 
-.btn-primary {
+/*.btn-primary {
   background-color: rgb(181,173,150) !important;
   color: white;
   border-right-color: rgb(181,173,150) !important;
   border-top-color: rgb(181,173,150) !important;
   border-left-color: rgb(181,173,150) !important;
   border-bottom-color: rgb(154,141,107) !important;
-}
+}*/
 
-.btn-default {
+/*.btn-default {
   background-color: rgb(240,240,240) !important;
   color: rgb(109,110,114) !important;
   border-bottom-color: rgb(222,222,222);
-}
+}*/
 
-.btn-info {
+/*.btn-info {
   background-color: white !important;
   color: rgb(109,110,114) !important;
   border-color: rgb(222,222,222) !important;
@@ -95,7 +94,7 @@
 .btn-underline {
   text-decoration: underline;
   cursor:pointer;
-}
+}*/
 
 .upload{
   color: white;

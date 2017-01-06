@@ -9,19 +9,176 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 var core_1 = require("@angular/core");
+var router_1 = require("@angular/router");
+var index_1 = require("../../services/index");
 require("../../rxjs-operators");
+var common_1 = require("@angular/common");
+var forms_1 = require("@angular/forms");
+// import { Overlay } from 'angular2-modal';
+// import { Modal } from 'angular2-modal/plugins/bootstrap';
+// import { PublishAnnouncementModalComponent, PublishAnnouncementModalData } from './publish-announcement-modal.component';
 var VisitComponent = (function () {
-    function VisitComponent() {
+    function VisitComponent(router, visitService, alertService, route, location, formbuilder) {
+        this.router = router;
+        this.visitService = visitService;
+        this.alertService = alertService;
+        this.route = route;
+        this.location = location;
+        this.formbuilder = formbuilder;
+        this.visits = [];
+        this.visitActive = [];
+        this.DateOptions = {};
+        this.model = {};
+        this.checked = [];
+        this.selectedValues = [];
+        this.btnArchive = false;
+        this.filterQuery = "";
+        this.rowsOnPage = 10;
+        this.sortBy = "email";
+        this.sortOrder = "asc";
+        this.check_in = [
+            { value: 'F', display: 'Female' },
+            { value: 'M', display: 'Male' }
+        ];
+        this.sortByWordLength = function (a) {
+            return a.city.length;
+        };
+        this.tabs = [
+            { title: 'Dynamic Title 1', content: '' },
+            { title: 'Dynamic Title 2', content: 'Dynamic content 2', disabled: true },
+            { title: 'Dynamic Title 3', content: 'Dynamic content 3', removable: true },
+            { title: 'Dynamic Title 4', content: 'Dynamic content 4', customClass: 'customClass' }
+        ];
+        this.activeDate = this.activeDateFull = new Date();
     }
+    VisitComponent.prototype.ngOnInit = function () {
+        this.developmentId = '585b36585d3cc41224fe518a';
+        if (typeof this.activeDate !== "string") {
+            this.activeDate = this.convertDate(this.activeDate);
+        }
+        this.loadVisits();
+        this.myForm = this.formbuilder.group({
+            property: ['', forms_1.Validators.required],
+            visitor: this.formbuilder.group({
+                full_name: ['', forms_1.Validators.required],
+                vehicle: ['', forms_1.Validators.required],
+                pass: ['', forms_1.Validators.required],
+            }),
+            purpose: ['', forms_1.Validators.required],
+            remarks: ['', forms_1.Validators.required],
+            check_in: [forms_1.Validators.required],
+        });
+        this.DateOptions = {
+            todayBtnTxt: 'Today',
+            dateFormat: 'yyyy-mm-dd',
+            firstDayOfWeek: 'mo',
+            sunHighlight: true,
+            height: '34px',
+            width: '260px',
+            inline: false,
+            editableDateField: false,
+            // customPlaceholderTxt: 'No auto post (default)',
+            // disableUntil: {year: 2016, month: 8, day: 10},
+            selectionTxtFontSize: '16px'
+        };
+    };
+    VisitComponent.prototype.convertDate = function (date) {
+        var yyyy = date.getFullYear().toString();
+        var mm = (date.getMonth() + 1).toString();
+        var dd = date.getDate().toString();
+        var mmChars = mm.split('');
+        var ddChars = dd.split('');
+        return yyyy + '-' + (mmChars[1] ? mm : "0" + mmChars[0]) + '-' + (ddChars[1] ? dd : "0" + ddChars[0]);
+    };
+    VisitComponent.prototype.toInt = function (num) {
+        return +num;
+    };
+    VisitComponent.prototype.deletePetition = function (petition) {
+        console.log(petition);
+        // this.announcementService.delete(announcement._id) 
+        //   .then(
+        //     response => {
+        //       if(response) { 
+        //         console.log(response);
+        //         // console.log(response.error());
+        //         alert(`The Newsletter could not be deleted, server Error.`);
+        //       } else {
+        //         this.alertService.success('Create user successful', true);
+        //         alert(`Delete Newsletter successful`);
+        //         this.ngOnInit()
+        //       }
+        //     },
+        //     error=> { 
+        //       console.log(error);
+        //         alert(`The Newsletter could not be deleted, server Error.`);
+        //     }
+        // );
+    };
+    VisitComponent.prototype.checkIn = function (visit) {
+        this.visit = visit;
+        console.log(visit);
+    };
+    VisitComponent.prototype.loadVisits = function () {
+        //---------------------------Call To Api-------------- //
+        // this.announcementService.getAll()
+        //     .subscribe((data)=> {
+        //         setTimeout(()=> {
+        //             this.data          = data.find(data => data._id === this.developmentId );
+        //             this.dataAgm       = this.data.newsletter.filter(data => data.type === 'agm' ); 
+        //             this.dataCircular  = this.data.newsletter.filter(data => data.type === 'circular' ); 
+        //             console.log(this.dataAgm);
+        //         }, 1000);
+        //     });
+        var _this = this;
+        this.visitService.getVisits().then(function (data) {
+            _this.visits = data;
+            _this.visitActive = _this.visits.filter(function (data) { return data.visit_date.slice(0, 10) == _this.activeDate; });
+            console.log(_this.visitActive);
+        });
+    };
+    VisitComponent.prototype.setActiveTab = function (index) {
+        this.tabs[index].active = true;
+    };
+    ;
+    VisitComponent.prototype.viewPetition = function (visit) {
+        this.router.navigate(['/petition/view', visit._id]);
+    };
+    VisitComponent.prototype.editPetition = function (visit) {
+        this.router.navigate(['/petition/edit', visit._id]);
+    };
+    VisitComponent.prototype.onPickerClick = function (event) {
+        this.activeDate = event.formatted;
+        this.loadVisits();
+        // this.dateToShow = ;
+    };
+    VisitComponent.prototype.previousDay = function () {
+        (this.activeDate = new Date()).setDate(this.activeDateFull.getDate() - 1);
+        this.activeDateFull = this.activeDate;
+        this.ngOnInit();
+    };
+    VisitComponent.prototype.nextDay = function () {
+        (this.activeDate = new Date()).setDate(this.activeDateFull.getDate() + 1);
+        this.activeDateFull = this.activeDate;
+        console.log(this.activeDateFull);
+        this.ngOnInit();
+    };
+    VisitComponent.prototype.goBack = function () {
+        this.location.back();
+    };
     return VisitComponent;
 }());
 VisitComponent = __decorate([
     core_1.Component({
         moduleId: module.id,
         selector: 'visit',
-        template: "",
+        templateUrl: '/app/templates/visit.html',
     }),
-    __metadata("design:paramtypes", [])
+    __metadata("design:paramtypes", [router_1.Router,
+        index_1.VisitService,
+        index_1.AlertService,
+        router_1.ActivatedRoute,
+        common_1.Location,
+        forms_1.FormBuilder])
 ], VisitComponent);
 exports.VisitComponent = VisitComponent;
 //# sourceMappingURL=visit.component.js.map

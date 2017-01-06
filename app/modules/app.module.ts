@@ -8,7 +8,7 @@ import { ReactiveFormsModule }			    from '@angular/forms';
 import { HttpModule }                   from '@angular/http';
 import { Ng2TableModule }               from 'ng2-table/ng2-table';
 import { Ng2BootstrapModule }           from 'ng2-bootstrap/ng2-bootstrap';
-import { PaginationModule }             from 'ng2-bootstrap/ng2-bootstrap';
+import { PaginationModule,DatepickerModule }             from 'ng2-bootstrap/ng2-bootstrap';
 import { SelectModule }                 from 'ng2-select/ng2-select';
 import { MyDatePickerModule }           from 'mydatepicker/dist/my-date-picker.module';
 // import { DatePickerModule }             from 'ng2-datepicker';
@@ -112,6 +112,7 @@ import {
     SelectModule,
     PanelModule,
     FieldsetModule,
+    DatepickerModule,
     // ModalModule.forRoot(),
     ModalModule,
     BootstrapModalModule,

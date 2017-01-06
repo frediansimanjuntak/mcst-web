@@ -54,6 +54,7 @@ var routes = [
     { path: 'petition', component: index_1.PetitionComponent },
     { path: 'petition/view/:id', component: index_1.PetitionComponent },
     { path: 'petition/add', component: index_1.EditPetitionComponent },
+    { path: 'visit', component: index_1.VisitComponent },
     // { path: 'petition/edit/:id',   component: EditAnnouncementComponent },
     // { path: 'form',     component: HeroFormComponent },
     // { path: 'table',     component: TableDemoComponent },
