@@ -11,7 +11,8 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 var core_1 = require("@angular/core");
 var router_1 = require("@angular/router");
 var forms_1 = require("@angular/forms");
-var index_1 = require("../../services/index");
+var index_1 = require("../../models/index");
+var index_2 = require("../../services/index");
 require("../../rxjs-operators");
 require("rxjs/add/operator/switchMap");
 var EditFacilityComponent = (function () {
@@ -82,15 +83,21 @@ var EditFacilityComponent = (function () {
         control.removeAt(i);
     };
     EditFacilityComponent.prototype.createFacility = function (model) {
-        var _this = this;
-        console.log(model);
-        this.facilityService.create(model)
-            .then(function (response) {
-            _this.alertService.success('Update facility successful', true);
-            _this.router.navigate(['/facility']);
-        }, function (error) {
-            _this.alertService.error(error);
-        });
+        console.log('model=', this.model);
+        index_1.Facilities.push(this.model);
+        console.log('facilities=', index_1.Facilities);
+        this.router.navigate(['/facility']);
+        // console.log(model)
+        // this.facilityService.create(model)
+        // .then(
+        //     response => {
+        //         this.alertService.success('Update facility successful', true);
+        //         this.router.navigate(['/facility']);
+        //     },
+        //     error => { 
+        //         this.alertService.error(error);
+        //     }
+        // );
     };
     EditFacilityComponent.prototype.updateFacility = function (facility) {
         var _this = this;
@@ -112,8 +119,8 @@ EditFacilityComponent = __decorate([
         templateUrl: '/app/templates/edit-facility.html',
     }),
     __metadata("design:paramtypes", [router_1.Router,
-        index_1.FacilityService,
-        index_1.AlertService,
+        index_2.FacilityService,
+        index_2.AlertService,
         forms_1.FormBuilder,
         router_1.ActivatedRoute])
 ], EditFacilityComponent);
