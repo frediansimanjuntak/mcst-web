@@ -1,6 +1,6 @@
 import { Component, OnInit, Input }from '@angular/core';
 import { Router, Params, ActivatedRoute } from '@angular/router'; 
-import { Announcement } from '../../models/index';
+import { Announcement, Announcements } from '../../models/index';
 import { AnnouncementService, AlertService } from '../../services/index';
 import { FormBuilder, FormGroup, FormControl, FormArray, Validators } from '@angular/forms';
 import '../../rxjs-operators';
@@ -95,6 +95,8 @@ export class EditAnnouncementComponent  {
             this.model.valid_till = "forever"
         }
         console.log(this.model);
+        Announcements.push(this.model);
+        this.router.navigate(['/announcement']);
         // this.anouncementService.create(this.model)
         // .subscribe(
         //     data => {

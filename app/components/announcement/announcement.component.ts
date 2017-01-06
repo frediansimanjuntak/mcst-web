@@ -1,6 +1,6 @@
 import { Component, OnInit, ViewContainerRef, ViewEncapsulation } from '@angular/core';
 import { Router } from '@angular/router'; 
-import { Announcement } from '../../models/index';
+import { Announcement, } from '../../models/index';
 import { AnnouncementService, AlertService} from '../../services/index';
 import '../../rxjs-operators';
 import { NG_TABLE_DIRECTIVES }    from 'ng2-table/ng2-table'
