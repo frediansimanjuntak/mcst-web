@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, Params, ActivatedRoute } from '@angular/router'; 
-import { Incident } from '../../models/index';
+import { Incident, Incidents } from '../../models/index';
 import { IncidentService, AlertService } from '../../services/index';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { FileUploader } from 'ng2-file-upload';
@@ -46,17 +46,21 @@ export class EditIncidentComponent implements OnInit {
     }
 
     createIncident() {
-        this.incidentService.create(this.model)
-        .then(
-            data => {
-                this.alertService.success('Create incident successful', true);
-                this.router.navigate(['/incident']);
-            },
-            error => {
-                console.log(error);
-                alert(`The incident could not be save, server Error.`);
-            }
-        );
+        console.log('model=',this.model)
+        Incidents.push(this.model);
+        console.log('incidents=',Incidents);
+        this.router.navigate(['/incident']);
+        // this.incidentService.create(this.model)
+        // .then(
+        //     data => {
+        //         this.alertService.success('Create incident successful', true);
+        //         this.router.navigate(['/incident']);
+        //     },
+        //     error => {
+        //         console.log(error);
+        //         alert(`The incident could not be save, server Error.`);
+        //     }
+        // );
     }
 
     updateIncident(){

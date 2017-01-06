@@ -10,7 +10,8 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 var core_1 = require("@angular/core");
 var router_1 = require("@angular/router");
-var index_1 = require("../../services/index");
+var index_1 = require("../../models/index");
+var index_2 = require("../../services/index");
 var ng2_file_upload_1 = require("ng2-file-upload");
 require("../../rxjs-operators");
 require("rxjs/add/operator/switchMap");
@@ -42,15 +43,21 @@ var EditIncidentComponent = (function () {
         }
     };
     EditIncidentComponent.prototype.createIncident = function () {
-        var _this = this;
-        this.incidentService.create(this.model)
-            .then(function (data) {
-            _this.alertService.success('Create incident successful', true);
-            _this.router.navigate(['/incident']);
-        }, function (error) {
-            console.log(error);
-            alert("The incident could not be save, server Error.");
-        });
+        console.log('model=', this.model);
+        index_1.Incidents.push(this.model);
+        console.log('incidents=', index_1.Incidents);
+        this.router.navigate(['/incident']);
+        // this.incidentService.create(this.model)
+        // .then(
+        //     data => {
+        //         this.alertService.success('Create incident successful', true);
+        //         this.router.navigate(['/incident']);
+        //     },
+        //     error => {
+        //         console.log(error);
+        //         alert(`The incident could not be save, server Error.`);
+        //     }
+        // );
     };
     EditIncidentComponent.prototype.updateIncident = function () {
         var _this = this;
@@ -79,8 +86,8 @@ EditIncidentComponent = __decorate([
         templateUrl: '/app/templates/edit-incident.html'
     }),
     __metadata("design:paramtypes", [router_1.Router,
-        index_1.IncidentService,
-        index_1.AlertService,
+        index_2.IncidentService,
+        index_2.AlertService,
         router_1.ActivatedRoute])
 ], EditIncidentComponent);
 exports.EditIncidentComponent = EditIncidentComponent;
