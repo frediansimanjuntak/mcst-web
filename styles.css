@@ -91,11 +91,12 @@
   color: rgb(109,110,114) !important;
   border-color: rgb(222,222,222) !important;
 }
+*/
 
 .btn-underline {
   text-decoration: underline;
   cursor:pointer;
-}*/
+}
 
 .upload{
   color: white;

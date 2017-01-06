@@ -46,8 +46,8 @@ export class VisitComponent implements OnInit {
     public activeDateFull: any;
     public tomorrow: Date;
     public afterTomorrow: Date;
-    public addSubmitted: boolean;
-    public checkInSsubmitted: boolean;
+    public addSubmitted: boolean= false;
+    public checkInSsubmitted: boolean= false;
     public check_in = [
 	    { value: 'F', display: 'Female' },
 	    { value: 'M', display: 'Male' }
@@ -151,12 +151,11 @@ export class VisitComponent implements OnInit {
 
    
     preCheckIn(visit){
-   		this.visit = visit;
-
-    	this.checkInForm = this.formbuilder.group({
-			 	property: [{value: visit.property, disabled: true}, <any>Validators.required],
+    	this.visit = visit; 
+   		this.checkInForm = this.formbuilder.group({
+			 	property: [{value: visit.property, disabled: true}],
                 visitor: this.formbuilder.group({
-                    full_name : [{value: visit.visitor.full_name, disabled: true},  <any>Validators.required],
+                    full_name : [{value: visit.visitor.full_name, disabled: true}],
                     vehicle : [{ value: visit.visitor.vehicle, disabled: true}],
                     pass : [visit.visitor.pass],
                 }),
@@ -172,12 +171,10 @@ export class VisitComponent implements OnInit {
     	console.log(visit);
     }
 
-    checkIn(model: any, isValid: boolean) {
-        this.checkInSsubmitted = true;
+    checkIn(model: any) {
         // model.properties.created_by = '583e4e9dd97c97149884fef5';
         // this.model.pinned.rank = 0;
         model.check_in = new Date();
-        if(isValid == true){
             console.log(model);
             this.visitService.create(model)
             .subscribe(
@@ -190,7 +187,7 @@ export class VisitComponent implements OnInit {
                     alert(`Guest register could not be save, server Error.`);
                 }
             );
-        }
+        
     }
 
     addGuest(model: any, isValid: boolean) {
@@ -203,7 +200,8 @@ export class VisitComponent implements OnInit {
         	model.check_in = '';
          }
         if(isValid == true){
-            console.log(model);
+            this.visitActive.push(model);
+            console.log(this.visitActive.length);
             this.visitService.create(model)
             .subscribe(
                 data => {
@@ -215,6 +213,7 @@ export class VisitComponent implements OnInit {
                     alert(`Guest register could not be save, server Error.`);
                 }
             );
+            this.addSubmitted = false;
         }
     }
 
@@ -233,7 +232,7 @@ export class VisitComponent implements OnInit {
         this.visitService.getVisits().then(data => {
             this.visits      = data;
             this.visitActive = this.visits.filter(data => data.visit_date.slice(0, 10)  == this.activeDate );
-            console.log(this.visitActive);
+            console.log(this.visitActive.length);
             for (var i = 0; i < this.visitActive.length; i++) {
             	this.visitActive[i].i = i+1;
             }
