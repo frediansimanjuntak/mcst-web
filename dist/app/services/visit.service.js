@@ -11,10 +11,19 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 var core_1 = require("@angular/core");
 var http_1 = require("@angular/http");
 var Rx_1 = require("rxjs/Rx");
+var index_1 = require("../models/index");
 var VisitService = (function () {
     function VisitService(http) {
         this.http = http;
+        this.headers = new http_1.Headers({ 'Content-Type': 'application/json' });
     }
+    VisitService.prototype.getVisits = function () {
+        return Promise.resolve(index_1.Visits);
+    };
+    VisitService.prototype.getVisit = function (id) {
+        return this.getVisits()
+            .then(function (visit) { return visit.find(function (visit) { return visit._id === id; }); });
+    };
     VisitService.prototype.getAll = function () {
         return this.http.get('https://192.168.10.73:3333/api/visits')
             .map(function (res) { return res.json(); })

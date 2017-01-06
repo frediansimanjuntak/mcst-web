@@ -42,6 +42,8 @@ var PetitionComponent = (function () {
             { title: 'Dynamic Title 3', content: 'Dynamic content 3', removable: true },
             { title: 'Dynamic Title 4', content: 'Dynamic content 4', customClass: 'customClass' }
         ];
+        (this.tomorrow = new Date()).setDate(this.tomorrow.getDate() - 7);
+        (this.afterTomorrow = new Date()).setDate(this.tomorrow.getDate() + 2);
     }
     PetitionComponent.prototype.ngOnInit = function () {
         var _this = this;

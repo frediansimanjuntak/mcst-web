@@ -57,6 +57,7 @@ AppModule = __decorate([
             ng2_select_1.SelectModule,
             primeng_1.PanelModule,
             primeng_1.FieldsetModule,
+            ng2_bootstrap_2.DatepickerModule,
             // ModalModule.forRoot(),
             ng2_modal_1.ModalModule,
             bootstrap_1.BootstrapModalModule,
