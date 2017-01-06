@@ -46,8 +46,8 @@ export class VisitComponent implements OnInit {
     public activeDateFull: any;
     public tomorrow: Date;
     public afterTomorrow: Date;
-    public addSubmitted: boolean= false;
-    public checkInSsubmitted: boolean= false;
+    public addSubmitted: boolean;
+    public checkInSsubmitted: boolean;
     public check_in = [
 	    { value: 'F', display: 'Female' },
 	    { value: 'M', display: 'Male' }
@@ -65,6 +65,8 @@ export class VisitComponent implements OnInit {
     }
 
     ngOnInit(): void {
+    	this.addSubmitted = false;
+    	this.checkInSsubmitted = false;
 		this.developmentId = '585b36585d3cc41224fe518a';
 
 		if(typeof this.activeDate !== "string"){
