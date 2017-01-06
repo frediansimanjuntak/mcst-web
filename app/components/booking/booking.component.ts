@@ -16,7 +16,7 @@ export class BookingComponent implements OnInit {
     bookings: Booking[] = [];
     model: any = {}; 
 	
-	constructor(private router: Router,private bookingService: BookingService,private alertService: AlertService,,private route: ActivatedRoute) {}
+	constructor(private router: Router,private bookingService: BookingService,private alertService: AlertService,private route: ActivatedRoute) {}
 
 	ngOnInit() {
 		this.route.params.subscribe(params => {
