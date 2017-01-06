@@ -15,6 +15,7 @@ export class BookingComponent implements OnInit {
 	booking: Booking;
     bookings: Booking[] = [];
     model: any = {}; 
+    id: string;
 	
 	constructor(private router: Router,private bookingService: BookingService,private alertService: AlertService,private route: ActivatedRoute) {}
 
