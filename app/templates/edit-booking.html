@@ -40,9 +40,14 @@
 
         <div *ngIf="!booking">
             <div class="title">
-                FACILITIES BOOKING
+                ADD BOOKING
             </div>
-            <p>Home > Facilities System</p>
+            <p>Home > Booking System > Add Booking</p>
+            <ul class="steps steps-5">
+			    <li><em>Step 1: XXXXXXXX</em><span>Et nequ a quam turpis duisi</span></li>
+			    <div class="abc">asdad</div>
+			</ul>
+
 	        <div class="row">
 	        	<div class="col-lg-4">
 	        		<div>
@@ -100,25 +105,21 @@
 	        		</form>
 	        	</div>
 	        	<div class="col-lg-8">
-	        		<div class="row">
-						<div class="col-md-4 pull-right">
-							<p><a class="btn btn-default pull-right" (click)="add()">
-							<img src="../../assets/image/icon_addbooking.png" width="15px" height="15px" />&nbsp;Add Booking</a></p>
-							<br/>
-						</div>
-					</div>
-	        		<p-dataTable [value]="bookings" [rows]="10" [paginator]="true">
+					<table class="tableSection table-striped">
+					    <tbody>
+					        <tr *ngFor="let tstart of times_start; let i=index ; let tend of times_end">
+								<td>{{times_start[i]}}{{min}} - {{times_end[i]}}{{min}}</td>
+								<td>BBQ pit</td>
+								<td>available</td>
+								<p-checkbox name="archive" (click)="checkSelected()" [(ngModel)]="selectedValues"></p-checkbox>
+							</tr>
+					    </tbody>
+					</table>
+					<p-dataTable [value]="schedule" [rows]="10" [paginator]="true">
 					    <p-column field="start_time" header="Time" sortable="true" [filter]="true" filterPlaceholder="Search time"></p-column>
-					    <p-column field="reference_no" header="Ref." sortable="true" [filter]="true" filterPlaceholder="Search ref."></p-column>
-					    <p-column field="facility" header="Facility" sortable="true" [filter]="true" filterPlaceholder="Search facility"></p-column>
-					    <p-column field="property" header="Booked by" sortable="true" [filter]="true" filterPlaceholder="Search booked by"></p-column>
-					    <p-column field="booking_date" header="On" sortable="true" [filter]="true" filterPlaceholder="Search date"></p-column>
-					    <p-column field="status" header="Status" sortable="true" [filter]="true" filterPlaceholder="Search status"></p-column>
-					    <p-column field="remark" header="Remark" sortable="true" [filter]="true" filterPlaceholder="Search remark">
-					        <template let-col let-booking="rowData" pTemplate="body">
-					            <span [style.color]="booking[col.field]">{{booking[col.field]}}</span>
-					        </template>
-					    </p-column>
+					    <p-column field="end_time" header="Ref." sortable="true" [filter]="true" filterPlaceholder="Search ref."></p-column>
+					    <p-column field="facility_name" header="Facility" sortable="true" [filter]="true" filterPlaceholder="Search facility"></p-column>
+					    <p-column field="status" header="Facility" sortable="true" [filter]="true" filterPlaceholder="Search facility"></p-column>
 					    <!-- </p-column> -->
 					    <p-column header="Action" styleClass="col-button">
 					    	<template let-booking="rowData" pTemplate="body">
@@ -127,6 +128,14 @@
 					    	</template>
 					    </p-column>
 					</p-dataTable>
+					<div class="row">
+						<div class="col-md-4 pull-right">
+							<a class="btn btn-default pull-right" (click)="add()">
+							Next</a>
+							<a class="btn btn-default pull-right" (click)="add()">
+							Cancel</a>
+						</div>
+					</div>
 	        	</div>
 	        </div>
         </div>
