@@ -8,6 +8,7 @@ import {
   AttachmentComponent,
   BookingComponent,
   EditBookingComponent,
+  EditCompanyComponent,
   CompanyComponent,
   ContractComponent,
   ContractorComponent,
@@ -91,6 +92,12 @@ const routes: Routes = [
   { path: 'petition/add',   component: EditPetitionComponent },
 
    { path: 'visit', component: VisitComponent },
+
+
+  { path: 'company', component: CompanyComponent },
+  { path: 'company/edit/:id',   component: EditCompanyComponent },
+  { path: 'company/add',   component: EditCompanyComponent },
+
   // { path: 'petition/edit/:id',   component: EditAnnouncementComponent },
   // { path: 'form',     component: HeroFormComponent },
   // { path: 'table',     component: TableDemoComponent },
