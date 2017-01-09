@@ -1,7 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { Router, Params, ActivatedRoute } from '@angular/router'; 
 import { FormBuilder, FormControl, FormGroup, FormArray, Validators } from '@angular/forms';
-import { UserGroup, User, Users } from '../../models/index';
+import { UserGroup, UserGroups, User, Users } from '../../models/index';
 import { UserGroupService, UserService, AlertService } from '../../services/index';
 import '../../rxjs-operators';
 import 'rxjs/add/operator/switchMap';
@@ -171,7 +171,10 @@ export class EditUserGroupComponent implements OnInit {
             this.model.users[i] = this.user[i].id ;
         }
         this.model.chief = this.chief.id;
-        console.log(this.model);
+
+        UserGroups.push(this.model);
+        console.log(this.model)
+        this.router.navigate(['/user_group']);
         //   this.userGroupService.create(model)
         // .then(
         //     data => {

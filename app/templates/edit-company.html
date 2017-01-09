@@ -1,0 +1,328 @@
+<div class="container">
+    <div class="main">
+<!-- Edit USER-GROUP -->
+        <div *ngIf="company">
+            <div class="title">
+                Edit Company
+            </div>
+            <p>Home > Company > Edit</p>
+             <form class="form-horizontal col-md-6" (ngSubmit)="f.form.valid && updateCompany()" name="form" #f="ngForm" novalidate enctype="multipart/form-data">
+                    <div class="form-group" [ngClass]="{ 'has-error': !name.valid }">
+                        <label class="control-label col-sm-4" for="name">Name :</label>
+                        <div class="col-sm-8">
+                            <input type="text" class="form-control" name="name" [(ngModel)]="company.name" #name="ngModel" required />
+                            <span *ngIf="!name.valid" class="help-block">Name is required</span>
+                        </div>
+                    </div>
+                    <div class="form-group" [ngClass]="{ 'has-error': !category.valid }">
+                        <label class="control-label col-sm-4" for="category">Category :</label>
+                        <div class="col-sm-8">
+                            <input type="text" class="form-control" name="category" [(ngModel)]="company.category" #category="ngModel" required />
+                            <span *ngIf="!category.valid" class="help-block">Category is required</span>
+                        </div>
+                    </div>
+                    <div class="form-group" [ngClass]="{ 'has-error': !phone.valid }">
+                        <label class="control-label col-sm-4" for="phone">Phone Number :</label>
+                        <div class="col-sm-8">
+                            <input type="text" class="form-control" name="phone" [(ngModel)]="company.phone" #phone="ngModel" required />
+                            <span *ngIf="!phone.valid" class="help-block">Phone no is required</span>
+                        </div>
+                    </div>
+                    <div class="form-group" [ngClass]="{ 'has-error': !email.valid }">
+                        <label class="control-label col-sm-4" for="email">Email Number :</label>
+                        <div class="col-sm-8">
+                            <input type="text" class="form-control" name="email" [(ngModel)]="company.email" #email="ngModel" required />
+                            <span *ngIf="!email.valid" class="help-block">Email is required</span>
+                        </div>
+                    </div>
+                    <div class="form-group" [ngClass]="{ 'has-error': !street_name.valid }">
+                        <label class="control-label col-sm-4" for="street_name">Street Name :</label>
+                        <div class="col-sm-8">
+                            <input type="text" class="form-control" name="street_name" [(ngModel)]="company.address.street_name" #street_name="ngModel" required />
+                            <span *ngIf="!street_name.valid" class="help-block">Street name required</span>
+                        </div>
+                    </div>
+                    <div class="form-group" [ngClass]="{ 'has-error': !block_no.valid }">
+                        <label class="control-label col-sm-4" for="block_no">Block No :</label>
+                        <div class="col-sm-8">
+                            <input type="text" class="form-control" name="block_no" [(ngModel)]="company.address.block_no" #block_no="ngModel" required />
+                            <span *ngIf="!block_no.valid" class="help-block">Block no is required</span>
+                        </div>
+                    </div>
+                    <div class="form-group" [ngClass]="{ 'has-error': !postal_code.valid }">
+                        <label class="control-label col-sm-4" for="postal_code">Postal code :</label>
+                        <div class="col-sm-8">
+                            <input type="text" class="form-control" name="postal_code" [(ngModel)]="company.address.postal_code" #postal_code="ngModel" required />
+                            <span *ngIf="!postal_code.valid" class="help-block">Postal code required</span>
+                        </div>
+                    </div>
+                    <div class="form-group" [ngClass]="{ 'has-error': !country.valid }">
+                        <label class="control-label col-sm-4" for="country">Country :</label>
+                        <div class="col-sm-8">
+                            <input type="text" class="form-control" name="country" [(ngModel)]="company.address.country" #country="ngModel" required />
+                            <span *ngIf="!country.valid" class="help-block">Country required</span>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-sm-4" for="Latitude">Latitude :</label>
+                        <div class="col-sm-8">
+                            <input type="text" class="form-control" name="latitude" [(ngModel)]="company.address.coordinates[0]"  required placeholder="Latitude Here" #latitude="ngModel"/>
+                            <span style="color: red" *ngIf="submitted && (!latitude.valid && longitude.valid)" class="help-block">Latitude is required</span>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-sm-4" for="longitude">Longitude :</label>
+                        <div class="col-sm-8">
+                            <input type="text" class="form-control" name="longitude" [(ngModel)]="company.address.coordinates[1]" required placeholder="Longitude Here" #longitude="ngModel" />
+                            <span style="color: red" *ngIf="submitted && (!longitude.valid && latitude.valid)" class="help-block">Longitude is required</span>
+                        </div>
+                    </div>
+                    <div class="form-group" [ngClass]="{ 'has-error': !type.valid }">
+                        <label class="control-label col-sm-4" for="type">Full address :</label>
+                        <div class="col-sm-8">
+                            <textarea type="text" class="form-control" name="type" [(ngModel)]="company.address.type" #type="ngModel" required ></textarea>
+                            <span *ngIf="!type.valid" class="help-block">Type is required</span>
+                        </div>
+                    </div>
+                    <div class="form-group" [ngClass]="{ 'has-error': !full_address.valid }">
+                        <label class="control-label col-sm-4" for="full_address">Full address :</label>
+                        <div class="col-sm-8">
+                            <textarea type="text" class="form-control" name="full_address" [(ngModel)]="company.address.full_address" #full_address="ngModel" required ></textarea>
+                            <span *ngIf="!full_address.valid" class="help-block">Full Address is required</span>
+                        </div>
+                    </div>
+                    <div class="form-group" [ngClass]="{ 'has-error': !description.valid }">
+                        <label class="control-label col-sm-4" for="description">Full address :</label>
+                        <div class="col-sm-8">
+                            <textarea type="text" class="form-control" name="description" [(ngModel)]="company.description" #description="ngModel" required ></textarea>
+                            <span *ngIf="!description.valid" class="help-block">Description is required</span>
+                        </div>
+                    </div>
+                    <div class="form-group" >
+                        <label class="control-label col-sm-4" for="company_logo">Company Logo :</label>
+                        <div class="col-sm-8">
+                            <input type="file" multiple class="upload" name="company_logo" (change)="onChange($event)" />
+                            <p *ngFor="let item of company.company_logo; let i=index ">
+                                {{ item.name }}_{{item.size/1024 | number:'1.0-0' }}kb &nbsp;   
+                                <span class="glyphicon glyphicon-remove" style="cursor:pointer" (click)="remove(i)"></span>
+                            </p>
+                        </div>
+                    </div>
+                    <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !chiefField }">
+                        <label class="control-label col-sm-4" for="chief">Chief :</label>
+                        <div class="col-sm-8">
+                              <div style="width: 300px; margin-bottom: 20px;">
+                                <ng-select 
+                                          [allowClear]="true"
+                                          [items]="items"
+                                          [disabled]="disabled"
+                                          (data)="refreshValueChief($event)"
+                                          (selected)="selected($event)"
+                                          (removed)="removed($event)"
+                                          (typed)="typed($event)"
+                                          [active] = "[chief]"
+                                          placeholder="No chief selected">
+                                </ng-select>
+                                <span *ngIf="f.submitted && !chiefField" class="help-block">Chief is required</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group" >
+                        <label class="control-label col-sm-4" for="chief">Employee :</label>
+                        <div class="col-sm-8">
+                            <div style="width: 300px; margin-bottom: 20px;">
+                                <ng-select 
+                                          
+                                          [multiple]="true"
+                                          [items]="items"
+                                          [disabled]="disabled"
+                                          (data)="refreshValueUser($event)"
+                                          (selected)="selected($event)"
+                                          (removed)="removed($event)"
+                                          [active] = "user"
+                                          placeholder="No user selected">
+                                </ng-select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                            <label class="control-label col-sm-4" for="active">Active</label>
+                            <div class="col-sm-8">
+                                  <label><input type="radio" [checked]="company.active==true" name="active" [(ngModel)]="company.active" [value]=true>Yes</label>
+                                  <label><input type="radio" [checked]="company.active==false" name="active" [(ngModel)]="model.active" [value]=false [ngModelOptions]="{standalone: true}">No</label>
+                        
+                            </div>
+                    </div>
+                    <div class="form-group pull-right">
+                        <button [disabled]="loading" class="btn btn-primary">Save</button>
+                        <img *ngIf="loading" src="data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA==" />
+                        <a [routerLink]="['/unit']" class="btn btn-info">Cancel</a>
+                    </div>
+                </form>  
+        </div>
+<!-- ADD USER-GROUP -->
+
+        <div *ngIf="!company">
+            <div class="title">
+                Add a Company
+            </div>
+            <p>Home > Company > Add > </p>
+
+            <form class="form-horizontal col-md-6" name="form" [formGroup]="myForm" (ngSubmit)="createCompany(myForm.value, myForm.valid)" #f="ngForm" novalidate enctype="multipart/form-data">
+                <div class="form-group" [ngClass]="{ 'has-error': submitted && !myForm.controls.name.valid }">
+                            <label class="control-label col-sm-4" for="name">Name</label>
+                            <div class="col-sm-8">
+                                 <input type="text"  class="form-control" name="name" formControlName="name">
+                                <small style="color: red" [hidden]="myForm.controls.name.valid || (myForm.controls.name.pristine && !submitted)">Name is required</small>
+                            </div>
+                </div>
+                <div class="form-group" [ngClass]="{'has-error': submitted && !myForm.controls.category.valid}">
+                            <label class="control-label col-sm-4" for="category">Category</label>
+                            <div class="col-sm-8">
+                                 <input type="text"  class="form-control" name="category" formControlName="category">
+                                <small style="color: red" [hidden]="myForm.controls.category.valid || (myForm.controls.category.pristine && !submitted)">Category is required</small>
+                            </div>
+                </div>
+                <div class="form-group" [ngClass]="{'has-error': submitted && !myForm.controls.phone.valid}">
+                            <label class="control-label col-sm-4" for="phone">Phone number</label>
+                            <div class="col-sm-8">
+                                 <input type="number"  class="form-control" name="phone" formControlName="phone">
+                                <small style="color: red" [hidden]="myForm.controls.phone.valid || (myForm.controls.phone.pristine && !submitted)">Phone number is required</small>
+                            </div>
+                </div>
+                <div class="form-group" [ngClass]="{'has-error': submitted && !myForm.controls.email.valid}">
+                            <label class="control-label col-sm-4" for="email">Email</label>
+                            <div class="col-sm-8">
+                                 <input type="text"  class="form-control" name="email" formControlName="email">
+                                <small style="color: red" [hidden]="myForm.controls.email.valid || (myForm.controls.email.pristine && !submitted)">Email is required</small>
+                            </div>
+                </div>
+                <div class="form-group" formGroupName="address" [ngClass]="{ 'has-error': submitted && !myForm.controls.address.controls.street_name.valid }">
+                    <label class="control-label col-sm-4" for="street_name">Street Name</label>
+                      <div class="col-sm-8">
+                          <input type="text"  class="form-control" name="street_name" formControlName="street_name">
+                            <small style="color: red" [hidden]="myForm.controls.address.controls.street_name.valid || (myForm.controls.address.controls.street_name.pristine && !submitted)">Street name is required</small>
+                      </div>
+                </div>
+                <div class="form-group" formGroupName="address" [ngClass]="{ 'has-error': submitted && !myForm.controls.address.controls.block_no.valid }">
+                    <label class="control-label col-sm-4" for="block_no">Block Number</label>
+                        <div class="col-sm-8">
+                          <input type="text" class="form-control" name="block_no" formControlName="block_no">
+                              <small style="color: red" [hidden]="myForm.controls.address.controls.block_no.valid || (myForm.controls.address.controls.block_no.pristine && !submitted)">Block No is required</small>
+                        </div>
+                </div>
+                <div class="form-group" formGroupName="address" [ngClass]="{ 'has-error': submitted && !myForm.controls.address.controls.postal_code.valid }">
+                            <label class="control-label col-sm-4" for="postal_code">Postal Code</label>
+                            <div class="col-sm-8">
+                                <input type="text" class="form-control" name="postal_code" formControlName="postal_code">
+                                <small style="color: red" [hidden]="myForm.controls.address.controls.postal_code.valid || (myForm.controls.address.controls.postal_code.pristine && !submitted)">Postal code is required</small>
+                            </div>
+                </div>
+                <div class="form-group" formGroupName="address" [ngClass]="{ 'has-error': submitted && !myForm.controls.address.controls.country.valid }">
+                            <label class="control-label col-sm-4" for="country">Country</label>
+                            <div class="col-sm-8">
+                                <input type="text" class="form-control" formControlName="country" name="country">
+                                <small style="color: red" [hidden]="myForm.controls.address.controls.country.valid || (myForm.controls.address.controls.country.pristine && !submitted)">Country is required</small>
+                            </div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label col-sm-4" for="Latitude">Latitude :</label>
+                    <div class="col-sm-8">
+                        <input type="text" class="form-control" name="latitude" [(ngModel)]="model.latitude"  required placeholder="Latitude Here" #latitude="ngModel" [ngModelOptions]="{standalone: true}"/>
+                        <span style="color: red" *ngIf="submitted && (!latitude.valid && longitude.valid)" class="help-block">Latitude is required</span>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label col-sm-4" for="longitude">Longitude :</label>
+                    <div class="col-sm-8">
+                        <input type="text" class="form-control" name="longitude" [(ngModel)]="model.longitude"  required placeholder="Longitude Here" #longitude="ngModel" [ngModelOptions]="{standalone: true}" />
+                        <span style="color: red" *ngIf="submitted && (!longitude.valid && latitude.valid)" class="help-block">Longitude is required</span>
+                    </div>
+                </div>
+                
+                <div class="form-group" [ngClass]="{ 'has-error': submitted && !myForm.controls.address.controls.type.valid }" formGroupName="address">
+                    <label  class="control-label col-sm-4" for="type">Type :</label>
+                      <div class="col-sm-8">
+                          <input type="text" class="form-control" name="type" formControlName="type">
+                            <small style="color: red" [hidden]="myForm.controls.address.controls.type.valid || (myForm.controls.address.controls.type.pristine && !submitted)">Type is required</small>
+                      </div>
+                </div>
+                <div class="form-group" formGroupName="address" [ngClass]="{ 'has-error': submitted && !myForm.controls.address.controls.full_address.valid }">
+                            <label class="control-label col-sm-4" for="full_address">Full Address</label>
+                            <div class="col-sm-8">
+                                <textarea  type="text" class="form-control" name="full_address" formControlName="full_address"></textarea>
+                                <small style="color: red" [hidden]="myForm.controls.address.controls.full_address.valid || (myForm.controls.address.controls.full_address.pristine && !submitted)">Full address No is required</small>
+                            </div>
+                </div> 
+                <div class="form-group" [ngClass]="{ 'has-error': submitted && !myForm.controls.description.valid }">
+                            <label class="control-label col-sm-4" for="description">Description</label>
+                            <div class="col-sm-8">
+                              <textarea  type="text" class="form-control" name="description" formControlName="description"></textarea>
+                                <small style="color: red" [hidden]="myForm.controls.description.valid || (myForm.controls.description.pristine && !submitted)">Desciption is required</small>
+                            </div>
+                </div>   
+                <div class="form-group" >
+                    <label class="control-label col-sm-4" for="company_logo">Company Logo :</label>
+                    <div class="col-sm-8">
+                        <input type="file" multiple class="upload" name="company_logo" (change)="onChange($event)" />
+                        <p *ngFor="let item of model.company_logo; let i=index ">
+                            {{ item.name }}_{{item.size/1024 | number:'1.0-0' }}kb &nbsp;   
+                            <span class="glyphicon glyphicon-remove" style="cursor:pointer" (click)="remove(i)"></span>
+                        </p>
+                    </div>
+                </div>
+                <div class="form-group" [ngClass]="{ 'has-error': submitted && !chiefField }">
+                    <label class="control-label col-sm-4" for="chief">Chief :</label>
+                    <div class="col-sm-8">
+                        <div style="width: 300px; margin-bottom: 20px;">
+                            <ng-select 
+                                    
+                                      [allowClear]="true"
+                                      [items]="items"
+                                      [disabled]="disabled"
+                                      (data)="refreshValueChief($event)"
+                                      (selected)="selected($event)"
+                                      (removed)="removed($event)"
+                                      (typed)="typed($event)"
+                                      placeholder="No chief selected">
+                            </ng-select>
+                            <span *ngIf="submitted && !chiefField" class="help-block">Chief is required</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label col-sm-4" for="employee">Employee :</label>
+                    <div class="col-sm-8">
+                        <div style="width: 300px; margin-bottom: 20px;">
+                            <ng-select 
+                                      
+                                      [multiple]="true"
+                                      [items]="items"
+                                      [disabled]="disabled"
+                                      (data)="refreshValueUser($event)"
+                                      (selected)="selected($event)"
+                                      (removed)="removed($event)"
+                                      placeholder="No user selected">
+                            </ng-select>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                            <label class="control-label col-sm-4" for="active">Active</label>
+                            <div class="col-sm-8">
+                                  <label><input type="radio" [checked]="model.active==true" checked name="active" [(ngModel)]="model.active" [value]=true [ngModelOptions]="{standalone: true}">Yes</label>
+                                  <label><input type="radio" name="active" [(ngModel)]="model.active" [value]=false [ngModelOptions]="{standalone: true}">No</label>
+                        
+                            </div>
+                </div>
+              
+                <div class="form-group pull-right">
+                    <button [disabled]="loading" class="btn btn-primary">Save</button>
+                    <img *ngIf="loading" src="data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA==" />
+                    <a [routerLink]="['/company']" class="btn btn-info">Cancel</a>
+                </div>
+            </form>       
+        </div>
+    </div>
+</div>
+          
