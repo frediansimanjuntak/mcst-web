@@ -1,11 +1,21 @@
 import { Injectable } from '@angular/core';
 import { Http, Headers, RequestOptions, Response } from '@angular/http';
 import { Observable } from 'rxjs/Rx';
-import { Company } from '../models/index';
+import { Company, Companies } from '../models/index';
  
 @Injectable()
 export class CompanyService {
+    private headers = new Headers({'Content-Type': 'application/json'});
     constructor(private http: Http) {}
+
+     getCompanies(): Promise<Company[]> {
+        return Promise.resolve(Companies);
+    }
+
+    getCompany(id: string): Promise<any> {
+        return this.getCompanies()
+            .then(company => company.find(company => company._id === id));
+    }
 
     getAll(){
         return this.http.get('https://192.168.10.73:3333/api/companies')
@@ -44,5 +54,10 @@ export class CompanyService {
         return this.http.delete('https://192.168.10.73:3333/api/companies' + id, options)
             .map((res:Response) => res.json())
             .catch((error:any) => Observable.throw(error.json().error || 'Server error'));
+    }
+
+    private handleError(error: any): Promise<any> {
+        console.error('An error occurred', error); // for demo purposes only
+        return Promise.reject(error.message || error);
     }
 }

@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, Params, ActivatedRoute } from '@angular/router'; 
-import { Petition } from '../../models/index';
+import { Petition, Petitions } from '../../models/index';
 import { PetitionService, AlertService } from '../../services/index';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { FileUploader } from 'ng2-file-upload';
@@ -50,7 +50,10 @@ export class EditPetitionComponent implements OnInit {
 
     createPetition() {
     	this.model.petition_type = this.selectedType;
-    	console.log(this.model)
+        Petitions.push(this.model);
+        console.log(this.model)
+        this.router.navigate(['/petition']);
+    	
         // this.petitionService.create(this.model)
         // .then(
         //     data => {
