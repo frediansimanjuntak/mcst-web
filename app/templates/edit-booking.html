@@ -115,19 +115,18 @@
 							</tr>
 					    </tbody>
 					</table>
-					<p-dataTable [value]="schedule" [rows]="10" [paginator]="true">
+					<!-- <p-dataTable [value]="schedule" [rows]="10" [paginator]="true">
 					    <p-column field="start_time" header="Time" sortable="true" [filter]="true" filterPlaceholder="Search time"></p-column>
 					    <p-column field="end_time" header="Ref." sortable="true" [filter]="true" filterPlaceholder="Search ref."></p-column>
 					    <p-column field="facility_name" header="Facility" sortable="true" [filter]="true" filterPlaceholder="Search facility"></p-column>
 					    <p-column field="status" header="Facility" sortable="true" [filter]="true" filterPlaceholder="Search facility"></p-column>
-					    <!-- </p-column> -->
 					    <p-column header="Action" styleClass="col-button">
 					    	<template let-booking="rowData" pTemplate="body">
 					        	<button type="button" (click)="view(booking)">View</button>
 					        	<button type="button" (click)="deleteBooking(booking)"><i class="fa fa-trash" aria-hidden="true"></i></button>
 					    	</template>
 					    </p-column>
-					</p-dataTable>
+					</p-dataTable> -->
 					<div class="row">
 						<div class="col-md-4 pull-right">
 							<a class="btn btn-default pull-right" (click)="add()">
