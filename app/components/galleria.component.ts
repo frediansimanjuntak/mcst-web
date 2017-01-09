@@ -3,7 +3,6 @@ import {CommonModule} from '@angular/common';
 import {DomHandler} from './domhandler.component';
 
 @Component({
-    moduleId: module.id.replace("/dist/", "/"),
     selector: 'p-galleria',
     template: `
         <div [ngClass]="{'ui-galleria ui-widget ui-widget-content ui-corner-all':true}" [ngStyle]="style" [class]="styleClass" [style.width.px]="panelWidth">
@@ -24,7 +23,7 @@ import {DomHandler} from './domhandler.component';
                         </div>
                     </li>
                 </ul>
-            </div>
+            </div> 
             <div class="ui-galleria-nav-prev fa fa-fw fa-chevron-circle-left" (click)="clickNavLeft()" [style.bottom.px]="frameHeight/2" *ngIf="activeIndex !== 0"></div>
             <div class="ui-galleria-nav-next fa fa-fw fa-chevron-circle-right" (click)="clickNavRight()" [style.bottom.px]="frameHeight/2"></div>
             <div class="ui-galleria-caption" *ngIf="showCaption&&images" style="display:block">
@@ -33,7 +32,7 @@ import {DomHandler} from './domhandler.component';
         </div>
     `,
     providers: [DomHandler],
-    styleUrls: [ '../templates/styles/galleria.css' ]
+    styleUrls: [ '/app/templates/styles/galleria.css' ]
 })
 export class Galleria implements AfterViewChecked,AfterViewInit,OnDestroy {
     
