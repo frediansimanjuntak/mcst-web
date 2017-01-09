@@ -3,7 +3,6 @@ import {CommonModule} from '@angular/common';
 import {DomHandler} from './domhandler.component';
 
 @Component({
-    moduleId: module.id.replace("/dist/", "/"),
     selector: 'p-galleria',
     template: `
         <div [ngClass]="{'ui-galleria ui-widget ui-widget-content ui-corner-all':true}" [ngStyle]="style" [class]="styleClass" [style.width.px]="panelWidth">
@@ -33,7 +32,7 @@ import {DomHandler} from './domhandler.component';
         </div>
     `,
     providers: [DomHandler],
-    styleUrls: [ '../templates/styles/galleria.css' ]
+    styleUrls: [ '/app/templates/styles/galleria.css' ]
 })
 export class Galleria implements AfterViewChecked,AfterViewInit,OnDestroy {
     
