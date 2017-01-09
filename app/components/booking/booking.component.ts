@@ -31,13 +31,12 @@ export class BookingComponent implements OnInit {
     public minDate: Date = void 0;
     public afterTomorrow: Date;
     public dateDisabled: {date: Date, mode: string}[];
-    public formats: string[] = ['DD-MM-YYYY', 'YYYY/MM/DD', 'DD.MM.YYYY',
-    'shortDate'];
+    public formats: string[] = ['DD-MM-YYYY', 'YYYY/MM/DD', 'DD.MM.YYYY', 'shortDate'];
     public format: string = this.formats[0];
     public dateOptions: any = {
-    formatYear: 'YY',
-    startingDay: 1
-  };
+        formatYear: 'YY',
+        startingDay: 1
+    };
     private opened: boolean = false;
 	booking: Booking;
     bookings: Booking[] = [];
