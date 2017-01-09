@@ -24,7 +24,7 @@ import {DomHandler} from './domhandler.component';
                         </div>
                     </li>
                 </ul>
-            </div>
+            </div> 
             <div class="ui-galleria-nav-prev fa fa-fw fa-chevron-circle-left" (click)="clickNavLeft()" [style.bottom.px]="frameHeight/2" *ngIf="activeIndex !== 0"></div>
             <div class="ui-galleria-nav-next fa fa-fw fa-chevron-circle-right" (click)="clickNavRight()" [style.bottom.px]="frameHeight/2"></div>
             <div class="ui-galleria-caption" *ngIf="showCaption&&images" style="display:block">
