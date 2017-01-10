@@ -10,8 +10,7 @@ export class Schedule {
 	start_time: string[];
 	end_time: string[];
 	facility_name: string;
-	status:string
-    
+	status:string  
 }
 
 @Component({
@@ -66,6 +65,8 @@ export class EditBookingComponent  {
     selectedValues: string[] = [];
     times_start : any[] = [];
     times_end : any[] = [];
+    tstart : any[] = [];
+    tend : any[] = [];
     end : any; 
     min : any;
     id: string;
@@ -134,7 +135,14 @@ export class EditBookingComponent  {
 
 	
 
-    public archieveSelected(){
+    public archieveSelected(start:any[],end:any[],min:any){
+        this.tstart.push(start)
+        this.tend.push(end)
+        var time_start = Math.min.apply(null,this.tstart);
+        var time_end = Math.max.apply(Math,this.tend);
+        this.model.start_time = time_start+min
+        this.model.end_time = time_end+min
+        console.log(this.model);
         console.log(this.selectedValues);
     }
 

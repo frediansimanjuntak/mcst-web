@@ -60,7 +60,7 @@
 			        		<div class="col-md-3">Facility :</div>
 			       			<div class="col-md-9">
 			       				<p>
-			       					<select name="name" [(ngModel)]="model._id" (change)="onChange(model._id)" #model="ngModel" class="form-control" style="width: 237px">
+			       					<select name="name" [(ngModel)]="model._id" #model="ngModel" class="form-control" style="width: 237px">
 				                    	<option *ngFor="let facility of facilities" (change)="onChange(facility)" [ngValue]="facility._id">{{facility.name}}</option>
 				                    </select>
 			        			</p>
@@ -103,7 +103,7 @@
 								<td>{{times_start[i]}}{{min}} - {{times_end[i]}}{{min}}</td>
 								<td>BBQ pit</td>
 								<td>available</td>
-								<p-checkbox name="archive" (click)="checkSelected()" [(ngModel)]="selectedValues"></p-checkbox>
+								<p-checkbox name="archive" (click)="archieveSelected(times_start[i],times_end[i],min)" value="{{times_start[i]}}{{min}} - {{times_end[i]}}{{min}}" [(ngModel)]="selectedValues"></p-checkbox>
 							</tr>
 					    </tbody>
 					</table>
