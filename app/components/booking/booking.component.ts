@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, PipeTransform, Pipe } from '@angular/core';
+import { DatePipe  } from '@angular/common';
 import { Router, Params, ActivatedRoute } from '@angular/router'; 
 import { Booking } from '../../models/index';
 import { BookingService, AlertService } from '../../services/index';
@@ -42,6 +43,9 @@ export class BookingComponent implements OnInit {
     bookings: Booking[] = [];
     model: any = {}; 
     id: string;
+    day : any;
+    selectedDay : any;
+    days : any[] = ["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"];
 	
 	constructor(
 		private router: Router,
@@ -69,6 +73,12 @@ export class BookingComponent implements OnInit {
         }
              
     }
+
+    transform(date: any, args?: any): any {
+        let d = new Date(date)
+        
+
+    }
  
     deleteBooking(booking: Booking) {
     	console.log(booking)
@@ -89,7 +99,11 @@ export class BookingComponent implements OnInit {
     }
    
     private loadAllBookings() {
-        this.bookingService.getBookings().then(bookings => { this.bookings = bookings; });
+        this.bookingService.getBookings()
+        .then(bookings => { 
+            this.bookings = bookings;
+            this.selectedDay = this.bookings.filter(data => data.booking_date == this.day ); 
+        });
     }
 
     add(){
@@ -100,9 +114,27 @@ export class BookingComponent implements OnInit {
         this.router.navigate(['/booking/edit', booking._id]);
     }
 
-    public getDate(): number {
-	    return this.dt && this.dt.getTime() || new Date().getTime();
+    convertDate(date) {
+      var yyyy = date.getFullYear().toString();
+      var mm = (date.getMonth()+1).toString();
+      var dd  = date.getDate().toString();
+
+      var mmChars = mm.split('');
+      var ddChars = dd.split('');
+
+      return yyyy + '-' + (mmChars[1]?mm:"0"+mmChars[0]) + '-' + (ddChars[1]?dd:"0"+ddChars[0]);
+    }
+
+    public getDate() {  
+        this.day     = new Date(this.dt.getTime());
+        this.day = this.convertDate(this.day);
+	    // return this.dt && this.days[this.dt.getDay()] || new Date().getDay();
+        this.ngOnInit();
 	}
+
+    public getDay(): number {
+        return this.dt && this.dt.getDay() || new Date().getDay();
+    }
  
   	public today(): void {
     	this.dt = new Date();
