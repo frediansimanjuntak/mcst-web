@@ -20,7 +20,7 @@ export class Company {
   company_logo : Attachment[]; /*choosen first index*/
   chief : User;
   employee : User[];
-  active : true;
+  active : boolean;
   created_by : User;
   created_at : string
 }

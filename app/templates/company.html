@@ -11,7 +11,7 @@
 					  		
 			</div>
 		</div>
-		<div (click)="$event.preventDefault()">
+		<div class="row">
 		  		<p-dataTable [value]="companies" [rows]="10"  resizableColumns="true" [paginator]="true">
 				    <p-column field="name" header="Name" sortable="true" [filter]="true" filterPlaceholder="Search name"></p-column>
 				    <p-column field="registration_no" header="Reg. No" sortable="true" [filter]="true" filterPlaceholder="Search reg. no"></p-column>
@@ -32,15 +32,17 @@
 					<p-column field="chief" header="Chief" sortable="true" [filter]="true" filterPlaceholder="Search Chief"></p-column>
 					<p-column header="Active">
 					    	<template let-companies="rowData" pTemplate="body">
-					            <button *ngIf="companies.active" type="button" class="btn btn-primary btn-xs" (click)="preActive(companies) || activeModal.open()">Activate</button>
-					            <button *ngIf="!companies.active" type="button" class="btn btn-default btn-xs" (click)="preDeative(companies) || deactiveModal.open()">Deactivate</button>
+					        	<span *ngIf="companies.active" class="label label-success">Yes</span>
+					        	<span *ngIf="!companies.active" class="label label-danger">No</span>
 					        </template>
 					</p-column>
-					<p-column [style]="{'width':c'262px'}" styleClass="col-button" header="action">
+					<p-column [style]="{'width':'218px'}" styleClass="col-button" header="action">
 				    	<template class="pull-right" let-companies="rowData" pTemplate="body">
-				    	<button type="button" class="btn btn-primary btn-xs" (click)="openModal(companies) || firstModal.open()">View</button>
-				    	<a type="button" style="cursor:pointer" (click)="editCompany(companies)"><i class="fa fa-edit" aria-hidden="true"></i>&nbsp;Edit</a>
-				        <button  type="button" (click)="deleteCompany(companies)"><i class="fa fa-trash" aria-hidden="true"></i></button>
+					    	<button type="button" class="btn btn-primary btn-xs" (click)="openModal(companies) || firstModal.open()">View</button>
+					    	<button *ngIf="!companies.active" type="button" class="btn btn-primary btn-xs" (click)="openModal(companies) || activeModal.open()">Activate</button>
+						    <button *ngIf="companies.active" type="button" class="btn btn-default btn-xs" (click)="openModal(companies) || deactiveModal.open()">Deactivate</button>
+					    	<a type="button" style="cursor:pointer" (click)="editCompany(companies)"><i class="fa fa-edit" aria-hidden="true"></i>&nbsp;Edit</a>
+					        <button  type="button" (click)="deleteCompany(companies)"><i class="fa fa-trash" aria-hidden="true"></i></button>
 				    	</template>
 				    </p-column>
 				</p-dataTable>
@@ -129,9 +131,44 @@
 	        		</div>
 	        	</modal-content>
 	        	<modal-footer>
-	        		  <button class="btn btn-default" (click)="checkInModal.close()">Close</button>
+	        		  <button class="btn btn-default" (click)="firstModal.close()">Close</button>
 	        	</modal-footer>
 		    </modal>
 		</div>	
+
+		<div class="row">
+		    <modal #activeModal>
+		        <modal-header *ngIf="company">
+		            <h5>Activate company {{ company.name }}</h5>
+		        </modal-header>
+		        <modal-content  *ngIf="company">
+					<div>
+		            	Are you sure want to activate company {{ company.name }}
+		        	</div>
+		        </modal-content>
+		        <modal-footer>
+		            <button  class="btn btn-primary" (click)="activate()">Activate</button>
+		            <button class="btn btn-default" (click)="activeModal.close()">Cancel</button>
+		        </modal-footer>
+		    </modal>
+		</div>	
+
+		<div class="row">
+		    <modal #deactiveModal>
+		        <modal-header *ngIf="company">
+		            <h5>Deactive company {{ company.name }}</h5>
+		        </modal-header>
+		        <modal-content  *ngIf="company">
+					<div>
+		             	Are you sure want to deactivate company {{ company.name }}
+		        	</div>
+		        </modal-content>
+		        <modal-footer>
+		                <button  class="btn btn-primary" (click)="deactivate()">Deactivate</button>
+		                <button class="btn btn-default" (click)="deactiveModal.close()">Cancel</button>
+		        </modal-footer>
+		     </modal>
+		</div>
+		
 	</div>
 </div>

@@ -16,7 +16,8 @@ export class Visit {
   created_by : User;
   check_in : string;
   check_out : string;
-  checked_by : User;
+  checkin_by : any;
+  checkout_by : any;
   created_at : string; 
 }
 
@@ -38,7 +39,8 @@ export var Visits: any[] = [
     created_by : "583r3ddd97c97149884fe333",
     check_in : "2017-01-03T03:31:07",
     check_out : "2017-01-04T03:31:07",
-    checked_by : "w0974u0a4443feaakfef24t",
+    checkin_by : "w0974u0a4443feaakfef24t",
+    checkout_by : "w0974u0a4443feaakfef24t",
     created_at : "2016-12-08T03:31:07"
   },
   {
@@ -57,7 +59,7 @@ export var Visits: any[] = [
     created_by : "583r3ddd97c97149884fe333",
     check_in : "2016-01-05T03:31:07",
     check_out : "",
-    checked_by : "w0974u0a4443feaakfef24t",
+    checkin_by : "w0974u0a4443feaakfef24t",
     created_at : "2016-12-08T03:31:07"
   },
   {
@@ -76,7 +78,6 @@ export var Visits: any[] = [
     created_by : "583r3ddd97c97149884fe333",
     check_in : "",
     check_out : "",
-    checked_by : "w0974u0a4443feaakfef24t",
     created_at : "2016-12-08T03:31:07"
   },
   {
@@ -95,7 +96,7 @@ export var Visits: any[] = [
     created_by : "583r3ddd97c97149884fe333",
     check_in : "2017-01-02T03:31:07",
     check_out : "",
-    checked_by : "w0974u0a4443feaakfef24t",
+    checkin_by : "w0974u0a4443feaakfef24t",
     created_at : "2016-12-08T03:31:07"
   },
   {
@@ -114,7 +115,6 @@ export var Visits: any[] = [
     created_by : "583r3ddd97c97149884fe333",
     check_in : "",
     check_out : "",
-    checked_by : "w0974u0a4443feaakfef24t",
     created_at : "2016-12-08T03:31:07"
   },
   {
@@ -133,7 +133,6 @@ export var Visits: any[] = [
     created_by : "583r3ddd97c97149884fe333",
     check_in : "",
     check_out : "",
-    checked_by : "w0974u0a4443feaakfef24t",
     created_at : "2016-12-08T03:31:07"
   },
    {
@@ -152,7 +151,8 @@ export var Visits: any[] = [
     created_by : "583r3ddd97c97149884fe333",
     check_in : "2017-01-02T03:31:07",
     check_out : "2017-01-02T03:31:07",
-    checked_by : "w0974u0a4443feaakfef24t",
+    checkin_by : "w0974u0a4443feaakfef24t",
+    checkout_by : "w0974u0a4443feaakfef24t",
     created_at : "2016-12-08T03:31:07"
   },
   {
@@ -171,7 +171,7 @@ export var Visits: any[] = [
     created_by : "583r3ddd97c97149884fe333",
     check_in : "2017-01-05T03:31:07",
     check_out : "",
-    checked_by : "w0974u0a4443feaakfef24t",
+    checkin_by : "w0974u0a4443feaakfef24t",
     created_at : "2016-12-08T03:31:07"
   },
   {
@@ -190,7 +190,6 @@ export var Visits: any[] = [
     created_by : "583r3ddd97c97149884fe333",
     check_in : "",
     check_out : "",
-    checked_by : "w0974u0a4443feaakfef24t",
     created_at : "2016-12-08T03:31:07"
   },
 ]
