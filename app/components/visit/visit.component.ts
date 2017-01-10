@@ -1,6 +1,6 @@
-import { Component, OnInit, ViewContainerRef, ViewEncapsulation } from '@angular/core';
+import { Component, OnInit, ViewContainerRef, ViewEncapsulation, ViewChild } from '@angular/core';
 import { Router, Params, ActivatedRoute } from '@angular/router'; 
-import { Visit } from '../../models/index';
+import { Visit, Visits } from '../../models/index';
 import { VisitService, AlertService} from '../../services/index';
 import '../../rxjs-operators';
 import { NG_TABLE_DIRECTIVES }    from 'ng2-table/ng2-table'
@@ -20,7 +20,11 @@ import * as $ from "jquery";
 })
 
 export class VisitComponent implements OnInit { 
+    @ViewChild('checkInModal') checkInModal;
+    @ViewChild('checkOutModal') checkOutModal;
+    @ViewChild('firstModal') firstModal;
 	visit: Visit;
+    visitOut: Visit;
     visits: Visit[] = [];
     visitActive: any[] = [];
     DateOptions: any = {};
@@ -33,6 +37,7 @@ export class VisitComponent implements OnInit {
     btnArchive: boolean = false;
     myForm: FormGroup;
     checkInForm: FormGroup;
+    checkOutForm: FormGroup;
     public developmentId;
     public data;
     public petitionPending;
@@ -48,10 +53,8 @@ export class VisitComponent implements OnInit {
     public afterTomorrow: Date;
     public addSubmitted: boolean;
     public checkInSsubmitted: boolean;
-    public check_in = [
-	    { value: 'F', display: 'Female' },
-	    { value: 'M', display: 'Male' }
-	];
+    public checkOutSsubmitted: boolean;
+  
     constructor(
                 private router: Router,
                 private visitService: VisitService, 
@@ -67,6 +70,7 @@ export class VisitComponent implements OnInit {
     ngOnInit(): void {
     	this.addSubmitted = false;
     	this.checkInSsubmitted = false;
+        this.checkOutSsubmitted = false;
 		this.developmentId = '585b36585d3cc41224fe518a';
 
 		if(typeof this.activeDate !== "string"){
@@ -159,7 +163,7 @@ export class VisitComponent implements OnInit {
                 visitor: this.formbuilder.group({
                     full_name : [{value: visit.visitor.full_name, disabled: true}],
                     vehicle : [{ value: visit.visitor.vehicle, disabled: true}],
-                    pass : [visit.visitor.pass],
+                    pass : [visit.visitor.pass, <any>Validators.required],
                 }),
                 purpose: [{ value: visit.purpose, disabled: true}],
                 remarks : [{ value: visit.remarks, disabled: true}],
@@ -168,27 +172,73 @@ export class VisitComponent implements OnInit {
          // this.myForm.setValue(this.user); 
     }
 
-    checkOut(visit){
-    	visit.check_out = new Date();
-    	console.log(visit);
+
+    preCheckOut(visit){
+        this.visitOut = visit; 
+           this.checkOutForm = this.formbuilder.group({
+                 property: [{value: visit.property, disabled: true}],
+                visitor: this.formbuilder.group({
+                    full_name : [{value: visit.visitor.full_name, disabled: true}],
+                    vehicle : [{ value: visit.visitor.vehicle, disabled: true}],
+                    pass : [visit.visitor.pass, <any>Validators.required],
+                }),
+                purpose: [{ value: visit.purpose, disabled: true}],
+                remarks : [{ value: visit.remarks, disabled: true}],
+                check_in: [''],
+        });
+         // this.myForm.setValue(this.user); 
     }
 
-    checkIn(model: any) {
-        // model.properties.created_by = '583e4e9dd97c97149884fef5';
-        // this.model.pinned.rank = 0;
-        model.check_in = new Date();
+    checkOut(model: any, isValid: boolean){
+        this.checkOutSsubmitted = true;
+
+        if(isValid == true){
+            model.check_out = new Date();
             console.log(model);
-            this.visitService.create(model)
-            .subscribe(
-                data => {
-                    this.alertService.success('Add guest successful', true);
-                    this.router.navigate(['/unit']);
-                },
-                error => {
-                    console.log(error);
-                    alert(`Guest register could not be save, server Error.`);
-                }
-            );
+            this.visit.check_out =  model.check_out;
+            this.visit.checkout_by = "123n1kj2b31kb31b23k21j";
+            this.checkOutModal.close();
+
+                this.visitService.create(model)
+                .subscribe(
+                    data => {
+                        this.alertService.success('Add guest successful', true);
+                        this.router.navigate(['/unit']);
+                        this.checkInSsubmitted = false;
+                    },
+                    error => {
+                        console.log(error);
+                        alert(`Guest register could not be save, server Error.`);
+                        this.checkInSsubmitted = false;
+                    }
+                );
+        }
+    }
+
+    checkIn(model: any, isValid: boolean) {
+        this.checkInSsubmitted = true;
+
+        if(isValid == true){
+            model.check_in = new Date();
+            console.log(model);
+            this.visit.check_in =  model.check_in;
+            this.visit.checkin_by = "123n1kj2b31kb31b23k21j";
+            this.checkInModal.close();
+
+                this.visitService.create(model)
+                .subscribe(
+                    data => {
+                        this.alertService.success('Add guest successful', true);
+                        this.router.navigate(['/unit']);
+                        this.checkInSsubmitted = false;
+                    },
+                    error => {
+                        console.log(error);
+                        alert(`Guest register could not be save, server Error.`);
+                        this.checkInSsubmitted = false;
+                    }
+                );
+        }
         
     }
 
@@ -197,13 +247,16 @@ export class VisitComponent implements OnInit {
         // model.properties.created_by = '583e4e9dd97c97149884fef5';
         // this.model.pinned.rank = 0;
         if(model.check_in == true){
-        	model.check_in = new Date();
+        	model.check_in = this.convertDate(new Date());
+            model.checkin_by = "123n1kj2b31kb31b23k21j";
         }else{
         	model.check_in = '';
-         }
+        }
+        model.visit_date =  this.convertDate(new Date());
         if(isValid == true){
-            this.visitActive.push(model);
-            console.log(this.visitActive.length);
+            this.visits.push(model);
+            this.firstModal.close();
+            console.log(model);
             this.visitService.create(model)
             .subscribe(
                 data => {

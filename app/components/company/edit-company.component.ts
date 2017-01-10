@@ -193,7 +193,7 @@ export class EditCompanyComponent implements OnInit {
 
     createCompany(model: Company, isValid: boolean) {
     	this.submitted = true;
-
+        console.log(name);
     	if(isValid || this.chiefField){
     		for (let i = 0; i < this.user.length; i++) {
             model.employee[i] = this.user[i].id ;
@@ -221,15 +221,15 @@ export class EditCompanyComponent implements OnInit {
 	}
 
     updateCompany(){
-        // if(this.chiefField && this.usergroup.description != ''){
-        //     this.usergroup.users = [];
-        //     for (let i = 0; i < this.user.length; i++) {
-        //         this.usergroup.users[i] =this.user[i].id ;
-        //     }
-        //     this.usergroup.chief = this.chief.id;
-        //      console.log(this.usergroup);
-        // }
-    //     this.userGroupService.update(this.usergroup)
+        if(this.chiefField){
+            this.company.employee = [];
+            for (let i = 0; i < this.user.length; i++) {
+                this.company.employee[i] =this.user[i].id ;
+            }
+            this.company.chief = this.chief.id;
+             console.log(this.company);
+        }
+    //     this.companyService.update(this.usergroup)
     //     .then(
     //         response => {
     //             this.alertService.success('Update Usergroup successful', true);
