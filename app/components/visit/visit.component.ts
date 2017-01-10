@@ -86,9 +86,9 @@ export class VisitComponent implements OnInit {
                     vehicle : [''],
                     pass : [''],
                 }),
-                purpose: [''],
+                purpose: ['house_visit'],
                 remarks : [''],
-                check_in: ['',<any>Validators.required],
+                check_in: [false,<any>Validators.required],
         });
 
         this.DateOptions = {
@@ -195,8 +195,8 @@ export class VisitComponent implements OnInit {
         if(isValid == true){
             model.check_out = new Date();
             console.log(model);
-            this.visit.check_out =  model.check_out;
-            this.visit.checkout_by = "123n1kj2b31kb31b23k21j";
+            this.visitOut.check_out =  model.check_out;
+            this.visitOut.checkout_by = "123n1kj2b31kb31b23k21j";
             this.checkOutModal.close();
 
                 this.visitService.create(model)
