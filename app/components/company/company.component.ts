@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewContainerRef, ViewEncapsulation } from '@angular/core';
+import { Component, OnInit, ViewContainerRef, ViewEncapsulation, ViewChild } from '@angular/core';
 import { Router } from '@angular/router'; 
 import { Company, Companies } from '../../models/index';
 import { CompanyService, AlertService} from '../../services/index';
@@ -18,6 +18,8 @@ import * as $ from "jquery";
 })
 
 export class CompanyComponent implements OnInit { 
+	@ViewChild('deactiveModal') deactiveModal;
+	@ViewChild('activeModal') activeModal;
 	company: Company;
     companies: Company[] = [];
     validTillDateOptions: any = {};
@@ -78,7 +80,16 @@ export class CompanyComponent implements OnInit {
 
     openModal(company: Company){
         this.company = company;
-        console.log(this.company);
+    }
+
+    activate(){
+    	this.company.active = true;
+    	this.activeModal.close();
+    }
+
+    deactivate(){
+    	this.company.active = false;
+    	this.deactiveModal.close();
     }
 
     private loadAllCompanies() {
