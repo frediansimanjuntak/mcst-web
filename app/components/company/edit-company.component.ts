@@ -227,7 +227,8 @@ export class EditCompanyComponent implements OnInit {
                 this.company.employee[i] =this.user[i].id ;
             }
             this.company.chief = this.chief.id;
-             console.log(this.company);
+            console.log(this.company);
+            this.router.navigate(['/company']);
         }
     //     this.companyService.update(this.usergroup)
     //     .then(
