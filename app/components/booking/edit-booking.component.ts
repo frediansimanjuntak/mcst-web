@@ -89,19 +89,8 @@ export class EditBookingComponent  {
 		this.facilityService.getFacilities()
 		.then(facilities => { 
 			this.facilities = facilities;
-            console.log(this.facilities.length);
-            let a = 0;
-            while(a < this.facilities.length ){
-                a++
-                // this.selectedDay = this.facilities[this.facility_id].schedule[i].day.filter(data => data == this.day);
-                // console.log(this.facilities[0].schedule[i]);
-            }
-            console.log(this.facilities[0].schedule);
-            // console.log(this.selectedDay)
-            
             this.selectedDay = this.facilities[this.facility_id].schedule.filter(data => data.day == this.day); 
             if (this.selectedDay.length > 0) {  
-                console.log(this.selectedDay);
     			this.start = this.selectedDay[0].start_time.slice(0,2);
         			let start = +this.start
                     console.log(start);
@@ -142,8 +131,6 @@ export class EditBookingComponent  {
         var time_end = Math.max.apply(Math,this.tend);
         this.model.start_time = time_start+min
         this.model.end_time = time_end+min
-        console.log(this.model);
-        console.log(this.selectedValues);
     }
 
     public test() {  
