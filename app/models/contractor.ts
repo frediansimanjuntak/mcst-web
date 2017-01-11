@@ -18,7 +18,7 @@ export class Contractor {
   company : Company;
   position : string; /*just information*/
   role : string;
-  active : string;
+  active : boolean;
   created_by : User;
   created_at : string
 }
@@ -30,7 +30,7 @@ export var Contractors: any[] = [
     password: "NMe3DAea343c34fde3",
     phone: "NaX5P48b32d34fde3",
     email: 4500,
-    addres: {
+    address: {
       street_name: "Jalan jalan street way road 29120",
       block_no: "232123",
       postal_code: "12312",
@@ -52,7 +52,7 @@ export var Contractors: any[] = [
     password: "NMe3DAea343c34fde3",
     phone: "NaX5P48b32d34fde3",
     email: 4500,
-    addres: {
+    address: {
       street_name: "Lorem i[sum dolr sit amet",
       block_no: "232134",
       postal_code: "200012",
@@ -64,7 +64,7 @@ export var Contractors: any[] = [
     company: "1",
     position: "security",
     role: "admin",
-    active: true,
+    active: false,
     created_by : "w0974u0a4443feaakfef24t",
     created_at : "2016-12-08T03:31:07"
   },
@@ -74,7 +74,7 @@ export var Contractors: any[] = [
     password: "NMe3DAea343c34fde3",
     phone: "NaX5P48b32d34fde3",
     email: 4500,
-    addres: {
+    address: {
       street_name: "Orchard road 0092",
       block_no: "312234",
       postal_code: "865464",
@@ -96,7 +96,7 @@ export var Contractors: any[] = [
     password: "NMe3DAea343c34fde3",
     phone: "NaX5P48b32d34fde3",
     email: 4500,
-    addres: {
+    address: {
       street_name: "Angular 2",
       block_no: "232123",
       postal_code: "12312",

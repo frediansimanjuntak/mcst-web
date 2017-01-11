@@ -52,7 +52,7 @@ export var Companies: any[] = [
   },
   {
     _id : "2",
-    name: "NaX5P5gG4aefadXN34fde3",
+    name: "ertetert",
     registration_no: "NMe3DAea343c34fde3",
     category: "pipe",
     phone: "NaX5P48b32d34fde3",
@@ -76,7 +76,7 @@ export var Companies: any[] = [
   },
   {
    _id : "3",
-    name: "NaX5P5gG4aefadXN34fde3",
+    name: "kukyuuykyku",
     registration_no: "NMe3DAea343c34fde3",
     category: "pipe",
     phone: "NaX5P48b32d34fde3",
@@ -100,7 +100,7 @@ export var Companies: any[] = [
   },
   {
    _id : "4",
-    name: "NaX5P5gG4aefadXN34fde3",
+    name: "werwer",
     registration_no: "NMe3DAea343c34fde3",
     category: "pipe",
     phone: "NaX5P48b32d34fde3",

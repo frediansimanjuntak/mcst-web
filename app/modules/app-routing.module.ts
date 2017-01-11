@@ -12,6 +12,7 @@ import {
   CompanyComponent,
   ContractComponent,
   ContractorComponent,
+  EditContractorComponent,
   DevelopmentComponent,
   EditDevelopmentComponent,
   DashboardComponent,
@@ -98,6 +99,10 @@ const routes: Routes = [
   { path: 'company', component: CompanyComponent },
   { path: 'company/edit/:id',   component: EditCompanyComponent },
   { path: 'company/add',   component: EditCompanyComponent },
+
+  { path: 'contractor', component: ContractorComponent },
+  { path: 'contractor/edit/:id', component: EditContractorComponent },
+  { path: 'contractor/add',   component: EditContractorComponent },
 
   // { path: 'petition/edit/:id',   component: EditAnnouncementComponent },
   // { path: 'form',     component: HeroFormComponent },

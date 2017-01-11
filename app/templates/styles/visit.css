@@ -1,0 +1,7 @@
+.mydp .btnclear, .mydp .btnpicker, .mydp .headerbtn, .mydp .headermonthtxt, .mydp .headertodaybtn, .mydp .headeryeartxt, .mydp .selection {
+    color: #fff;
+}
+
+.mydp .btnclear, .mydp .btnpicker, .mydp .headertodaybtn {
+    background: #2f3034;
+}
