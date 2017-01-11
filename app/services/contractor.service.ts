@@ -1,11 +1,21 @@
 import { Injectable } from '@angular/core';
 import { Http, Headers, RequestOptions, Response } from '@angular/http';
 import { Observable } from 'rxjs/Rx';
-import { Contractor } from '../models/index';
+import { Contractor, Contractors } from '../models/index';
  
 @Injectable()
 export class ContractorService {
+      private headers = new Headers({'Content-Type': 'application/json'});
     constructor(private http: Http) {}
+
+    getContractors(): Promise<Contractor[]> {
+        return Promise.resolve(Contractors);
+    }
+
+    getContractor(id: string): Promise<any> {
+        return this.getContractors()
+            .then(contractor => contractor.find(contractor => contractor._id === id));
+    }
 
     getAll(){
         return this.http.get('https://192.168.10.73:3333/api/contractors')

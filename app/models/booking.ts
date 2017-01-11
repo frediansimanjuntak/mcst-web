@@ -29,7 +29,7 @@ export var Bookings: any[] = [{
   end_time : '10:00',
   payment : '1',
   remark: 'tolong di perbaiki dong',
-  status: 'new',
+  status: 'paid',
   created_by: 'akh',
   created_at: '2017-01-10T03:00:00',
 },{ 
@@ -44,7 +44,7 @@ export var Bookings: any[] = [{
   end_time : '20:00',
   payment : '1',
   remark: 'tolong di perbaiki dong',
-  status: 'new',
+  status: 'unpaid',
   created_by: 'akh',
   created_at: 'mungkin aja',
 },{ 
@@ -59,7 +59,7 @@ export var Bookings: any[] = [{
   end_time : '20:00',
   payment : '1',
   remark: 'tolong di perbaiki dong',
-  status: 'new',
+  status: 'unpaid',
   created_by: 'akh',
   created_at: 'mungkin aja',
 }]

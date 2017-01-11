@@ -1,8 +1,8 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { Router, Params, ActivatedRoute } from '@angular/router';
 import { FormBuilder, FormControl, FormGroup, FormArray, Validators } from '@angular/forms';
-import { Company, Companies, User, Users } from '../../models/index';
-import { CompanyService, UserService, AlertService } from '../../services/index';
+import { Company, Companies, Contractor, Contractors } from '../../models/index';
+import { CompanyService, UserService, ContractorService, AlertService } from '../../services/index';
 import '../../rxjs-operators';
 import 'rxjs/add/operator/switchMap';
 
@@ -16,7 +16,7 @@ import 'rxjs/add/operator/switchMap';
 export class EditCompanyComponent implements OnInit {
     public items:Array<any> = [];
 
-    private user:any = [];
+    private contractor:any = [];
     private chief :any = {};
     public chiefField: boolean;
     private _disabledV:string = '0';
@@ -27,7 +27,7 @@ export class EditCompanyComponent implements OnInit {
     model: any = {};
     id: string;
     myForm: FormGroup;
-    users: any;
+    contractors: any;
     myOptions: Array<any>;
     options1: Array<any> = [];
     mySelectUsers: Array<string>;
@@ -38,14 +38,14 @@ export class EditCompanyComponent implements OnInit {
 
     constructor(private router: Router,
     	private companyService: CompanyService,
-    	private userService: UserService,
+    	private contractorService: ContractorService,
     	private alertService: AlertService,
     	private formbuilder: FormBuilder,
         private route: ActivatedRoute,) {
     }
 
     ngOnInit(): void {
-        this.getUsers();
+        this.getContractors();
         this.myForm = this.formbuilder.group({
         	name : ['', Validators.required],
         	category : ['', Validators.required],
@@ -76,8 +76,8 @@ export class EditCompanyComponent implements OnInit {
                     .getCompany(this.id)
                     .then(company => {
                         this.company = company;
-
-						this.chief.text = this.users.find(myObj => myObj._id ===  this.company.chief ).username;
+                        
+						this.chief.text = this.contractors.find(myObj => myObj._id ===  this.company.chief ).username;
                         this.chief.id = this.company.chief;
                         this.chiefField = true;
 
@@ -91,13 +91,13 @@ export class EditCompanyComponent implements OnInit {
 
                         for (let i = 0; i < numOptions; i++) {
                             opts[i] = {
-                                id: this.company.employee[i],
-                                text: this.users.find(myObj => myObj._id ===  this.company.employee[i] ).username,
+                                id: this.company.employee[i], 
+                                text: this.contractors.find(myObj => myObj._id ===  this.company.employee[i] ).username,
                             };
                         }
 
-                        this.user = opts.slice(0);
-
+                        this.contractor = opts.slice(0);
+                       
                     });
         };
 
@@ -121,8 +121,8 @@ export class EditCompanyComponent implements OnInit {
         // console.log('Removed value is: ', value);
     }
 
-    public refreshValueUser(value:any):void {
-        this.user = value;
+    public refreshValueEmployee(value:any):void {
+        this.contractor = value;
     }
 
     public refreshValueChief(value:any):void {
@@ -146,16 +146,16 @@ export class EditCompanyComponent implements OnInit {
         });
     }
 
-    getUsers(): void {
-        this.userService.getUsers().then(users => {
-            this.users = users;
-            let numOptions =  this.users.length;
+    getContractors(): void {
+        this.contractorService.getContractors().then(contractors => {
+            this.contractors = contractors;
+            let numOptions =  this.contractors.length;
             let opts = new Array(numOptions);
 
             for (let i = 0; i < numOptions; i++) {
                 opts[i] = {
-                    id: this.users[i]._id,
-                    text: this.users[i].username
+                    id: this.contractors[i]._id, 
+                    text: this.contractors[i].username
                 };
             }
 
@@ -187,16 +187,24 @@ export class EditCompanyComponent implements OnInit {
        this.model.company_logo = files;
     }
 
-    remove(i: any){
+    onEditChange(event: any) {
+       let files = [].slice.call(event.target.files); 
+       this.company.company_logo = files;
+    }
+
+    remove(i: any){ 
         this.model.company_logo.splice(i, 1)
+    }
+
+    removeEdit(i: any){
+        this.company.company_logo.splice(i, 1)
     }
 
     createCompany(model: Company, isValid: boolean) {
     	this.submitted = true;
-        console.log(name);
     	if(isValid || this.chiefField){
-    		for (let i = 0; i < this.user.length; i++) {
-            model.employee[i] = this.user[i].id ;
+    		for (let i = 0; i < this.contractor.length; i++) {
+            model.employee[i] = this.contractor[i].id ;
 	        }
 			model.chief = this.chief.id;
 			model.company_logo = this.model.company_logo;
@@ -204,7 +212,6 @@ export class EditCompanyComponent implements OnInit {
 			model.address.coordinates[1] = this.model.longitude;
 			model.active = this.model.active;
 			Companies.push(model);
-    		console.log(model);
 
 	        this.router.navigate(['/company']);
 	        //   this.userGroupService.create(model)
@@ -223,8 +230,8 @@ export class EditCompanyComponent implements OnInit {
     updateCompany(){
         if(this.chiefField){
             this.company.employee = [];
-            for (let i = 0; i < this.user.length; i++) {
-                this.company.employee[i] =this.user[i].id ;
+            for (let i = 0; i < this.contractor.length; i++) {
+                this.company.employee[i] =this.contractor[i].id ;
             }
             this.company.chief = this.chief.id;
             console.log(this.company);

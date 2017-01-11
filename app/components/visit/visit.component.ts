@@ -14,9 +14,10 @@ import * as $ from "jquery";
 
 
 @Component({
-  moduleId: module.id,
+  moduleId: module.id.replace("/dist/", "/"),
   selector: 'visit',
   templateUrl: '/app/templates/visit.html',
+  styleUrls: [ '../../templates/styles/visit.css' ]
 })
 
 export class VisitComponent implements OnInit { 
@@ -27,30 +28,18 @@ export class VisitComponent implements OnInit {
     visitOut: Visit;
     visits: Visit[] = [];
     visitActive: any[] = [];
+    visitDateCreateOptions: any = {};
     DateOptions: any = {};
     model: any = {};
     id: string;
-    dateToShow: string;
-    cols: any[];
-    checked: string[] = [];
-    selectedValues: string[] = [];
-    btnArchive: boolean = false;
+    visitDateCreate: any;
     myForm: FormGroup;
     checkInForm: FormGroup;
     checkOutForm: FormGroup;
     public developmentId;
     public data;
-    public petitionPending;
-    public petitionProgress; 
-    public petitionApproved; 
-    public filterQuery = "";
-    public rowsOnPage = 10;
-    public sortBy = "email";
-    public sortOrder = "asc";
     public activeDate: any;
     public activeDateFull: any;
-    public tomorrow: Date;
-    public afterTomorrow: Date;
     public addSubmitted: boolean;
     public checkInSsubmitted: boolean;
     public checkOutSsubmitted: boolean;
@@ -63,7 +52,7 @@ export class VisitComponent implements OnInit {
                 private location: Location,
                 private formbuilder: FormBuilder
                 ) {
- 
+     this.visitDateCreate = new Date();
      this.activeDate = this.activeDateFull = new Date();
     }
 
@@ -72,6 +61,10 @@ export class VisitComponent implements OnInit {
     	this.checkInSsubmitted = false;
         this.checkOutSsubmitted = false;
 		this.developmentId = '585b36585d3cc41224fe518a';
+
+        if(typeof this.visitDateCreate !== "string"){
+            this.visitDateCreate = this.convertDate(this.visitDateCreate);
+        }
 
 		if(typeof this.activeDate !== "string"){
 		this.activeDate = this.convertDate(this.activeDate);
@@ -91,6 +84,22 @@ export class VisitComponent implements OnInit {
                 check_in: [false,<any>Validators.required],
         });
 
+        this.visitDateCreateOptions = {
+            todayBtnTxt: 'Today',
+            dateFormat: 'yyyy-mm-dd',
+            firstDayOfWeek: 'mo',
+            sunHighlight: true,
+            editableDateField: false,
+            height: '34px',
+            width: '260px',
+            inline: false,
+            showClearDateBtn: false,
+            // disableUntil: {year: 2017, month: 1, day: 10},
+            customPlaceholderTxt: 'Today (default)',
+            // disableUntil: {year: 2016, month: 8, day: 10},
+            selectionTxtFontSize: '16px'
+        };
+
         this.DateOptions = {
             todayBtnTxt: 'Today',
             dateFormat: 'yyyy-mm-dd',
@@ -100,6 +109,8 @@ export class VisitComponent implements OnInit {
             width: '260px',
             inline: false,
             editableDateField: false,
+            showInputField: false,
+            showClearDateBtn: false,
             // customPlaceholderTxt: 'No auto post (default)',
             // disableUntil: {year: 2016, month: 8, day: 10},
             selectionTxtFontSize: '16px'
@@ -120,42 +131,6 @@ export class VisitComponent implements OnInit {
 	  return yyyy + '-' + (mmChars[1]?mm:"0"+mmChars[0]) + '-' + (ddChars[1]?dd:"0"+ddChars[0]);
 	}
 
-    public toInt(num: string) {
-        return +num;
-    }
-
-    public sortByWordLength = (a: any) => {
-        return a.city.length;
-    }
-
-
-
-
-    deletePetition(petition) {
-      console.log(petition);
-        // this.announcementService.delete(announcement._id) 
-        //   .then(
-        //     response => {
-        //       if(response) { 
-        //         console.log(response);
-        //         // console.log(response.error());
-        //         alert(`The Newsletter could not be deleted, server Error.`);
-        //       } else {
-        //         this.alertService.success('Create user successful', true);
-        //         alert(`Delete Newsletter successful`);
-        //         this.ngOnInit()
-        //       }
-        //     },
-        //     error=> { 
-        //       console.log(error);
-        //         alert(`The Newsletter could not be deleted, server Error.`);
-        //     }
-        // );
-    }
-
-    
-
-   
     preCheckIn(visit){
     	this.visit = visit; 
    		this.checkInForm = this.formbuilder.group({
@@ -171,7 +146,6 @@ export class VisitComponent implements OnInit {
         });
          // this.myForm.setValue(this.user); 
     }
-
 
     preCheckOut(visit){
         this.visitOut = visit; 
@@ -252,8 +226,9 @@ export class VisitComponent implements OnInit {
         }else{
         	model.check_in = '';
         }
-        model.visit_date =  this.convertDate(new Date());
+        model.visit_date =  this.visitDateCreate;
         if(isValid == true){
+
             this.visits.push(model);
             this.firstModal.close();
             console.log(model);
@@ -295,29 +270,14 @@ export class VisitComponent implements OnInit {
 		});
     }
 
-    public tabs:Array<any> = [
-        {title: 'Dynamic Title 1', content: ''},
-        {title: 'Dynamic Title 2', content: 'Dynamic content 2', disabled: true},
-        {title: 'Dynamic Title 3', content: 'Dynamic content 3', removable: true},
-        {title: 'Dynamic Title 4', content: 'Dynamic content 4', customClass: 'customClass'}
-    ];
-     
-    public setActiveTab(index:number):void {
-        this.tabs[index].active = true;
-    };
-
-    viewPetition(visit: Visit){
-        this.router.navigate(['/petition/view', visit._id]);
-    }
-
-    editPetition(visit: Visit){
-        this.router.navigate(['/petition/edit', visit._id]);
-    }
-
     onPickerClick(event:any) {
       this.activeDate = event.formatted;
+      this.activeDateFull = event.jsdate;
       this.loadVisits();
-      // this.dateToShow = ;
+    }
+
+    visitDateCreateChanged(event:any) {
+        this.visitDateCreate = event.formatted;
     }
 
     previousDay(){
