@@ -46,54 +46,50 @@
 	        <div class="row">
 	        	<div class="col-lg-4">
 	        		<div>
-					    <pre class="card card-block card-header">Selected date is: <em *ngIf="dt">{{ getDate()}}</em></pre>
+					    <!-- <pre class="card card-block card-header">Selected date is: <em *ngIf="dt">{{ getDate()}}</em></pre> -->
 					    <div style="width:335px;">
-					    	<datepicker [style]="{'width':'300px'}" [(ngModel)]="dt" [minDate]="minDate" [showWeeks]="false" ></datepicker>
+					    	<datepicker (click)="test()" [style]="{'width':'300px'}" [(ngModel)]="dt" [minDate]="minDate" [showWeeks]="false" ></datepicker>
 					    </div> 
 					</div>
-	        		<form name="form" (ngSubmit)="f.form.valid && updateUser(myForm.value)" #f="ngForm" novalidate>
-			        		<div class="row">
-			        			<div class="col-md-3">Facility :</div>
-			        			<div class="col-md-9">
-			        				<p>
-			        					<select class="form-control" style="width: 116.5px">
-					                    	<option>a</option>
-					                    	<option>b</option>
-					                    </select>
-					                    <select class="form-control" style="width: 116.5px">
-					                    	<option>a</option>
-					                    	<option>b</option>
-					                    </select>
-			        				</p>
-			        			</div>
+	        		<form name="form" (ngSubmit)="f.form.valid" #f="ngForm" novalidate>
+			        	<div class="row">
+			        		<div class="col-md-3">Facility :</div>
+			       			<div class="col-md-9">
+			       				<p>
+			       					<select name="name" [(ngModel)]="model._id" (change)="onChange(model._id)" #model="ngModel" class="form-control" style="width: 116.5px">
+				                    	<option *ngFor="let facility of facilities" (change)="onChange(facility)" [ngValue]="facility._id">{{facility.name}}</option>
+				                    </select>
+					                <select class="form-control" style="width: 116.5px">
+					                	<option>All</option>
+					                   	<option *ngFor="let facility of facilities" [ngValue]="facility.facility_type" >{{facility.facility_type}}</option>
+					                </select>
+			        			</p>
 			        		</div>
-			        		<div class="row">
-			        			<div class="col-md-3">Status :</div>
-			        			<div class="col-md-9">
-			        				<p>
-			        					<select class="form-control" style="width: 237px">
-					                    	<option>a</option>
-					                    	<option>b</option>
-					                    </select>	
-			        				</p>
-			        			</div>
-			        		</div>
-			        		<div class="row">
-			        			<div class="col-md-3">Period :</div>
-			        			<div class="col-md-9">
-			        				<p>
-			        					<select class="form-control" style="width: 116.5px">
-					                    	<option>a</option>
-					                    	<option>b</option>
-					                    </select>
-					                    <select class="form-control" style="width: 116.5px">
-					                    	<option>a</option>
-					                    	<option>b</option>
-					                    </select>
-			        				</p>
-			        			</div>
-			        		</div>
-	        			
+			        	</div>
+			        	<div class="row">
+			        		<div class="col-md-3">Status :</div>
+			        		<div class="col-md-9">
+			       				<p>
+			       					<select class="form-control" style="width: 237px">
+					                   	<option>All</option>
+					                   	<option *ngFor="let booking of bookings" [ngValue]="booking.status">{{booking.status}}</option>
+				                    </select>	
+			       				</p>
+			       			</div>
+			       		</div>
+			       		<div class="row">
+			       			<div class="col-md-3">Period :</div>
+			       			<div class="col-md-9">
+			       				<p>
+			       					<select class="form-control" style="width: 116.5px">
+				                    	<option *ngFor="let start of times_start" [ngValue]="start">{{start}}{{min}}</option>
+				                    </select>
+				                    <select class="form-control" style="width: 116.5px">
+				                    	<option *ngFor="let end of times_end" [ngValue]="end">{{end}}{{min}}</option>
+				                    </select>
+		        				</p>
+		        			</div>
+		        		</div>
 		                <div class="form-group">
 		                    <button style="width: 327px" class="btn btn-primary">Filter</button>
 		                </div>

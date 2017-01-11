@@ -10,7 +10,7 @@ export class Schedule {
 	start_time: string[];
 	end_time: string[];
 	facility_name: string;
-	status:string
+	status:string  
 }
 
 @Component({
@@ -56,17 +56,6 @@ export class Schedule {
 
 export class EditBookingComponent  { 
 	public dt: Date = new Date();
-    public events: any[];
-    public tomorrow: Date;
-    public minDate: Date = void 0;
-    public afterTomorrow: Date;
-    public dateDisabled: {date: Date, mode: string}[];
-    public formats: string[] = ['DD-MM-YYYY', 'YYYY/MM/DD', 'DD.MM.YYYY', 'shortDate'];
-    public format: string = this.formats[0];
-    public dateOptions: any = {
-        formatYear: 'YY',
-        startingDay: 1
-    };
     private opened: boolean = false;
 	booking: Booking;
     bookings: Booking[] = [];
@@ -76,43 +65,47 @@ export class EditBookingComponent  {
     selectedValues: string[] = [];
     times_start : any[] = [];
     times_end : any[] = [];
+    tstart : any[] = [];
+    tend : any[] = [];
     end : any; 
     min : any;
     id: string;
+    facility_id: number = 0;
     schedule : Schedule;
+    selectedDay: any;
+    day : any;
+    days : any[] = ["sunday","monday","tuesday","wednesday","thursday","friday","saturday"];
 
     constructor(
 		private router: Router,
 		private bookingService: BookingService,
 		private facilityService: FacilityService,
 		private alertService: AlertService,
-		private route: ActivatedRoute){
-		(this.tomorrow = new Date()).setDate(this.tomorrow.getDate() + 1);
-	    (this.afterTomorrow = new Date()).setDate(this.tomorrow.getDate() + 2);
-	    (this.minDate = new Date()).setDate(this.minDate.getDate() - 1000);
-	    (this.dateDisabled = []);
-	    this.events = [
-	      {date: this.tomorrow, status: 'full'},
-	      {date: this.afterTomorrow, status: 'partially'}
-	    ];
-	}
+		private route: ActivatedRoute){}
 
 	ngOnInit() {
+        this.day = this.days[this.dt.getDay()];
+        console.log(this.day)
 		this.facilityService.getFacilities()
 		.then(facilities => { 
 			this.facilities = facilities;
-			this.start = facilities[0].schedule[0].start_time.slice(0,2);
-			let start = +this.start
-			this.end = facilities[0].schedule[0].end_time.slice(0,2);
-			let end = +this.end	
-			this.min =	facilities[0].schedule[0].start_time.slice(2,5);
-			for (var i = start; i < end; ++i) {
-					this.times_start.push(i)
-			}
-    		while(start < end){       
-       			start += 1;
-       			this.times_end.push(start)
-    		}
+            this.selectedDay = this.facilities[this.facility_id].schedule.filter(data => data.day == this.day); 
+            if (this.selectedDay.length > 0) {  
+    			this.start = this.selectedDay[0].start_time.slice(0,2);
+        			let start = +this.start
+                    console.log(start);
+        			this.end = this.selectedDay[0].end_time.slice(0,2);
+        			let end = +this.end
+                    console.log(end);	
+        			this.min =	this.selectedDay[0].start_time.slice(2,5);
+        			for (var i = start; i < end; ++i) {
+        					this.times_start.push(i)
+        			}
+            		while(start < end){       
+               			start += 1;
+               			this.times_end.push(start)
+            		}
+            }
 		});
 		this.route.params.subscribe(params => {
             this.id = params['id'];
@@ -129,59 +122,22 @@ export class EditBookingComponent  {
         this.bookingService.getBookings().then(bookings => { this.bookings = bookings; });
     }
 
-	 public getDate(): number {
-	    return this.dt && this.dt.getTime() || new Date().getTime();
-	}
- 
-  	public today(): void {
-    	this.dt = new Date();
-  	}
- 
-	public d20090824(): void {
-	    this.dt = moment('2009-08-24', 'YYYY-MM-DD')
-	      .toDate();
-	}
- 
-	public disableTomorrow(): void {
-	    this.dateDisabled = [{date: this.tomorrow, mode: 'day'}];
-    }
- 
-  // todo: implement custom class cases
-    public getDayClass(date: any, mode: string): string {
-	    if (mode === 'day') {
-	      let dayToCheck = new Date(date).setHours(0, 0, 0, 0);
-	 
-	      for (let event of this.events) {
-	        let currentDay = new Date(event.date).setHours(0, 0, 0, 0);
-	 
-	        if (dayToCheck === currentDay) {
-	          return event.status;
-	        }
-	      }
-	    }
-	 
-	    return '';
-    }
- 
-    public disabled(date: Date, mode: string): boolean {
-    	return ( mode === 'day' && ( date.getDay() === 0 || date.getDay() === 6 ) );
-    }
- 
-    public open(): void {
-    	this.opened = !this.opened;
-    }
- 
-    public clear(): void {
-    	this.dt = void 0;
-    	this.dateDisabled = undefined;
-    }
- 
-    public toggleMin(): void {
-    	this.dt = new Date(this.minDate.valueOf());
+	
+
+    public archieveSelected(start:any[],end:any[],min:any){
+        this.tstart.push(start)
+        this.tend.push(end)
+        var time_start = Math.min.apply(null,this.tstart);
+        var time_end = Math.max.apply(Math,this.tend);
+        this.model.start_time = time_start+min
+        this.model.end_time = time_end+min
     }
 
-    archieveSelected(){
-        console.log(this.selectedValues);
+    public test() {  
+        this.day = this.days[this.dt.getDay()];
+        this.times_start = [];
+        this.times_end   = [];
+        this.ngOnInit();
     }
 	
 }
