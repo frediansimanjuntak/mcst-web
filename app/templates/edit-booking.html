@@ -43,7 +43,7 @@
                 ADD BOOKING
             </div>
             <p>Home > Booking System > Add Booking</p>
-            <div *ngIf="step == 2">
+            <div *ngIf="step == 1">
 	            <div class="abc">
 	            	<ul class="steps steps-5">
 				    	<li><em>1. Select Date and Facility Type</em></li>
@@ -123,44 +123,108 @@
 		        	</div>
 		        </div>
 		    </div>
-		    <div *ngIf="step == 1">
+		    <div *ngIf="step == 2">
 	            <div class="abc">
 	            	<ul class="steps steps-5">
 				    	<li><em>3. Booking Information</em></li>
 					</ul>
 					<font style="padding: 30px;">4. User & Payment Information</font>
 				</div>
+				<div><br/></div>
 		        <div class="row">
 		        	<div class="col-lg-6">
 			        	<div class="bookinginformation">
-			        		<div class="col-sm-6 information">
-			        			<div class="row">
-	        						<div class="col-md-8"><label>Date :</label></div>
-	        						<div class="col-md-4"> <p>asdasd</p></div>
-	        					</div>
-	        					<div class="row">
-	        						<div class="col-md-8"><label>Facility :</label></div>
-	        						<div class="col-md-4"> <p>asdasd</p></div>
-	        					</div>
-	        					<div class="row">
-	        						<div class="col-md-8"><label>Facility Type :</label></div>
-	        						<div class="col-md-4"> <p>asdasd</p></div>
-	        					</div>
-	        					<div class="row">
-	        						<div class="col-md-8"><label>Time Slot :</label></div>
-	        						<div class="col-md-4"> <p>asdasd</p></div>
-	        					</div>
-			        		</div>
-			        	</div>
+			        		<div class="row" style="margin-left: 5px; margin-top: 10px">
+	        					<div class="col-md-6"><label>Date :</label></div>
+	        					<div class="col-md-5" style="text-align: right;border-right: 5px">{{model.date}}</div>
+	        				</div>
+	        				<div class="row" style="margin-left: 5px; margin-top: 10px">
+	        					<div class="col-md-6"><label>Facility :</label></div>
+	        					<div class="col-md-5" style="text-align: right;border-right: 5px">{{model.name}}</div>
+	        				</div>
+	        				<div class="row" style="margin-left: 5px; margin-top: 10px">
+	        					<div class="col-md-6"><label>Facility Type :</label></div>
+	        					<div class="col-md-5" style="text-align: right;border-right: 5px">{{model.facility_type}}</div>
+	        				</div>
+	        				<div class="row" style="margin-left: 5px; margin-top: 10px">
+	        					<div class="col-md-6"><label>Time Slot :</label></div>
+	        					<div class="col-md-5" style="text-align: right;border-right: 5px">{{model.start_time}} - {{model.end_time}}</div>
+	        				</div>
+	        				<div class="form-group">
+	        					<br/>
+		                    	<button style="width: 320px; margin-left: 20px" class="btn btn-primary">Change Booking</button>
+		                    	<br/>
+		                    	<hr style="width: 320px; margin-left: 20px; border-color: black;">
+		                	</div>
+		                	<div class="row" style="margin-left: 5px; margin-top: 10px">
+	        					<div class="col-md-6"><label>Deposit Fee* :</label></div>
+	        					<div class="col-md-5" style="text-align: right;border-right: 5px">{{model.fees[0].deposit_fee}}.00 SGD</div>
+	        				</div>
+	        				<div class="row" style="margin-left: 5px; margin-top: 10px">
+	        					<div class="col-md-6"><label>Booking Fee :</label></div>
+	        					<div class="col-md-5" style="text-align: right;border-right: 5px">{{model.fees[0].booking_fee}}.00 SGD</div>
+	        				</div>
+	        				<div class="row" style="margin-left: 5px; margin-top: 10px">
+	        					<div class="col-md-6"><label>Admin Fee :</label></div>
+	        					<div class="col-md-5" style="text-align: right;border-right: 5px">{{model.fees[0].admin_fee}}.00 SGD</div>
+	        				</div>
+	        				<div class="row" style="margin-left: 5px; margin-top: 10px">
+	        					<div class="col-md-5"><label><h4>TOTAL :</h4></label></div>
+	        					<div class="col-md-6" style="text-align: right;border-right: 5px"><h4>{{model.total_amount}}.00 SGD</h4></div>
+	        				</div>
+	        				<div class="row" style="margin-left: 5px; margin-top: 20px">
+	        					<div class="col-md-12 deposit"><p>*Deposit Fee will only be incurred in the case of user infringed the <a>terms of usage</a> and <a>houserule</a></p></div>
+	        					
+	        				</div>
+	        			</div>
 		        	</div>
 		        	<div class="col-lg-6">
-						<div class="row">
-							<div class="col-md-4 pull-right">
-								<a class="btn btn-default pull-right" (click)="next()">
-								Next</a>
-								<a [routerLink]="['/booking']" class="btn btn-info">Cancel</a>
-							</div>
-						</div>
+						<form class="form-horizontal" name="form" (ngSubmit)="f.form.valid && createBooking()" #f="ngForm" novalidate>
+						    <div class="form-group">
+						        <label class="control-label col-sm-4" for="serial_no">Booking Ref.no :</label>
+						        <div class="col-sm-8">
+						            <input disabled type="text" class="form-control" name="serial_no" [(ngModel)]="model.serial_no" #serial_no="ngModel" />
+						        </div>
+						    </div>
+						    <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !property.valid }">
+						        <label class="control-label col-sm-4" for="property">Unit no :</label>
+						        <div class="col-sm-8">
+						            <input type="text" class="form-control" name="property" [(ngModel)]="model.property" #property="ngModel" required placeholder="Input property here"/>
+						            <span *ngIf="f.submitted && !property.valid" class="help-block">Property is required</span>
+						        </div>
+						    </div>
+						    <div class="form-group">
+						        <label class="control-label col-sm-4" for="sender">Resident :</label>
+						        <div class="col-sm-8">
+						        	<input disabled type="text" class="form-control" name="sender" [(ngModel)]="model.sender" #sender="ngModel" />
+						        </div>
+						    </div>
+						    <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !payment_type.valid }">
+						        <label class="control-label col-sm-4" for="payment_type">Mode of payment :</label>
+						        <div class="col-sm-8">
+						            <select class="form-control" name="payment_type" [(ngModel)]="model.payment_type" #payment_type="ngModel" required placeholder="Input payment mode here">
+						            	<option value="cash">Cash At Management Office</option>
+						            	<option value="transfer">Bank Transfer</option>
+						            </select>
+						            <span *ngIf="f.submitted && !payment_type.valid" class="help-block">Payment mode is required</span>
+						        </div>
+						    </div>
+						    <div class="form-group" >
+						        <label class="control-label col-sm-4" for="payment_proof">Payment Reference :</label>
+						        <div class="col-sm-8">
+						            <input type="file" multiple class="upload" name="payment_proof" (change)="onChange($event)" />
+						            <p *ngFor="let item of model.payment_proof; let i=index ">
+						                {{ item.name }}_{{item.size/1024 | number:'1.0-0' }}kb &nbsp;   
+						                <span class="glyphicon glyphicon-remove" style="cursor:pointer" (click)="remove(i)"></span>
+						            </p>
+						        </div>
+						    </div>
+						    <div class="form-group pull-right">
+				                <button [disabled]="loading" class="btn btn-primary">Confirm</button>
+				                <img *ngIf="loading" src="data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA==" />
+				                <a [routerLink]="['/booking']" class="btn btn-info">Cancel</a>
+				            </div>
+						</form>		
 		        	</div>
 		        </div>
 		    </div>

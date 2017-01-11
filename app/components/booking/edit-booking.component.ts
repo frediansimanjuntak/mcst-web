@@ -6,6 +6,8 @@ import '../../rxjs-operators';
 import { Observable} from 'rxjs/Observable';
 import * as moment from 'moment';
 
+export var Binformation: any[] = []
+
 @Component({
   moduleId: module.id,
   selector: 'edit-booking',
@@ -55,6 +57,7 @@ export class EditBookingComponent implements OnInit  {
     facilities: Facility[] = [];
     model: any = {}; 
     start : any;
+    loading = false;
     selectedValues: string[] = [];
     times_start : any[] = [];
     times_end : any[] = [];
@@ -63,6 +66,7 @@ export class EditBookingComponent implements OnInit  {
     end : any; 
     min : any;
     id: string;
+    ref_no: string;
     facility_id: number = 0;
     selectedDay: any;
     step: number;
@@ -116,6 +120,21 @@ export class EditBookingComponent implements OnInit  {
         this.bookingService.getBookings().then(bookings => { this.bookings = bookings; });
     }
 
+    createBooking() {
+        console.log(this.model);
+        // this.anouncementService.create(this.model)
+        // .subscribe(
+        //     data => {
+        //         this.alertService.success('Create newsletter successful', true);
+        //         this.router.navigate(['/newsletter']);
+        //     },
+        //     error => {
+        //         console.log(error);
+        //         alert(`The Newsletter could not be save, server Error.`);
+        //     }
+        // );
+    }
+
     convertDate(date) {
         var yyyy = date.getFullYear().toString();
         var mm = (date.getMonth()+1).toString();
@@ -142,8 +161,9 @@ export class EditBookingComponent implements OnInit  {
         var time_end = Math.max.apply(Math,this.tend);
         this.model.start_time = time_start+min;
         this.model.end_time = time_end+min;
-        this.model.facility = name;
+        this.model.name = name;
         this.model.facility_type = type;
+        
         console.log(this.model)
     }
 
@@ -151,7 +171,7 @@ export class EditBookingComponent implements OnInit  {
         let date;
         date     = new Date(this.dt.getTime());
         date     = this.convertDate(date);
-        this.model.booking_date = date
+        this.model.date = date
         this.day = this.days[this.dt.getDay()];
         this.times_start = [];
         this.times_end   = [];
@@ -159,9 +179,42 @@ export class EditBookingComponent implements OnInit  {
     }
 
     next(){
-        this.step = 2
-        this.model;
-        console.log(this.model)
+        this.generate()
+        this.model.serial_no = this.ref_no.toString();
+        this.model.sender = "Mr. Nice";
+        this.model.fees = [{
+            deposit_fee : "80",
+            booking_fee : "30",
+            admin_fee : "0"
+        }]
+        var deposit = +this.model.fees[0].deposit_fee;
+        var booking = +this.model.fees[0].booking_fee;
+        var admin_fee = +this.model.fees[0].admin_fee;
+        console.log(deposit+booking+admin_fee);
+        this.model.total_amount = deposit + booking + admin_fee;
+        console.log(this.model.total_amount)
+        this.step = 2;
+    }
+
+    cancel(){
+        this.step = 1
+    }
+
+    onChange(event: any) {
+       let files = [].slice.call(event.target.files); 
+       this.model.payment_proof = files;
+    }
+
+    remove(i: any){ 
+        this.model.payment_proof.splice(i, 1)
+    }
+
+    getRandomInt(min, max) {
+        return Math.floor(Math.random() * (max - min + 1)) + min;
+    }
+
+    generate(){
+        this.ref_no = this.getRandomInt(1, 9999999);
     }
 	
 }
