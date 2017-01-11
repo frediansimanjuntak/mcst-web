@@ -204,7 +204,6 @@ export class EditCompanyComponent implements OnInit {
 			model.address.coordinates[1] = this.model.longitude;
 			model.active = this.model.active;
 			Companies.push(model);
-    		console.log(model);
 
 	        this.router.navigate(['/company']);
 	        //   this.userGroupService.create(model)
