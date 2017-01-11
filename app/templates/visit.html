@@ -16,8 +16,7 @@
 			<div class="row bg-dark">
 				 <div class="col-md-4 col-md-offset-4">
 				 <span class="btn-underline"><img src="../../assets/image/icon_arrowleft_white.png" (click)="previousDay()"></span>
-				  <my-date-picker [options]="DateOptions"
-                            [selDate]="activeDate" (dateChanged)="onPickerClick($event)"></my-date-picker>
+				  <my-date-picker class="bg-dark" [options]="DateOptions" [selDate]="activeDate" (dateChanged)="onPickerClick($event)"></my-date-picker>{{ activeDate | date:'fullDate'}}
 				 <span class="btn-underline"><img src="../../assets/image/icon_arrowright_white.png" (click)="nextDay()"></span>
 				 </div>
 			</div>

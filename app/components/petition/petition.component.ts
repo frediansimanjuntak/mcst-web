@@ -147,6 +147,7 @@ export class PetitionComponent implements OnInit {
     checkSelected(){
         this.btnArchive = this.selectedValues.length > 0 ? true : false;
     }
+    
   	goBack(): void {
     	this.location.back();
   	}

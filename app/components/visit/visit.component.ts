@@ -14,9 +14,10 @@ import * as $ from "jquery";
 
 
 @Component({
-  moduleId: module.id,
+  moduleId: module.id.replace("/dist/", "/"),
   selector: 'visit',
   templateUrl: '/app/templates/visit.html',
+  styleUrls: [ '../../templates/styles/visit.css' ]
 })
 
 export class VisitComponent implements OnInit { 
@@ -100,6 +101,8 @@ export class VisitComponent implements OnInit {
             width: '260px',
             inline: false,
             editableDateField: false,
+            showInputField: false,
+            showClearDateBtn: false,
             // customPlaceholderTxt: 'No auto post (default)',
             // disableUntil: {year: 2016, month: 8, day: 10},
             selectionTxtFontSize: '16px'

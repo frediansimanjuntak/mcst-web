@@ -63,18 +63,18 @@
                             <span *ngIf="!country.valid" class="help-block">Country required</span>
                         </div>
                     </div>
-                    <div class="form-group">
+                    <div class="form-group" [ngClass]="{ 'has-error': !latitude.valid && longitude.valid }">
                         <label class="control-label col-sm-4" for="Latitude">Latitude :</label>
                         <div class="col-sm-8">
                             <input type="text" class="form-control" name="latitude" [(ngModel)]="company.address.coordinates[0]"  required placeholder="Latitude Here" #latitude="ngModel"/>
-                            <span style="color: red" *ngIf="submitted && (!latitude.valid && longitude.valid)" class="help-block">Latitude is required</span>
+                            <span style="color: red" *ngIf="!latitude.valid && longitude.valid" class="help-block">Latitude is required</span>
                         </div>
                     </div>
-                    <div class="form-group">
+                    <div class="form-group" [ngClass]="{ 'has-error': !longitude.valid && latitude.valid }">
                         <label class="control-label col-sm-4" for="longitude">Longitude :</label>
                         <div class="col-sm-8">
                             <input type="text" class="form-control" name="longitude" [(ngModel)]="company.address.coordinates[1]" required placeholder="Longitude Here" #longitude="ngModel" />
-                            <span style="color: red" *ngIf="submitted && (!longitude.valid && latitude.valid)" class="help-block">Longitude is required</span>
+                            <span style="color: red" *ngIf="!longitude.valid && latitude.valid" class="help-block">Longitude is required</span>
                         </div>
                     </div>
                     <div class="form-group" [ngClass]="{ 'has-error': !type.valid }">
@@ -225,14 +225,14 @@
                                 <small style="color: red" [hidden]="myForm.controls.address.controls.country.valid || (myForm.controls.address.controls.country.pristine && !submitted)">Country is required</small>
                             </div>
                 </div>
-                <div class="form-group">
+                <div class="form-group" [ngClass]="{ 'has-error': submitted &&  (!latitude.valid && longitude.valid) }">
                     <label class="control-label col-sm-4" for="Latitude">Latitude :</label>
                     <div class="col-sm-8">
                         <input type="text" class="form-control" name="latitude" [(ngModel)]="model.latitude"  required placeholder="Latitude Here" #latitude="ngModel" [ngModelOptions]="{standalone: true}"/>
                         <span style="color: red" *ngIf="submitted && (!latitude.valid && longitude.valid)" class="help-block">Latitude is required</span>
                     </div>
                 </div>
-                <div class="form-group">
+                <div class="form-group" [ngClass]="{ 'has-error': submitted &&  (!longitude.valid && latitude.valid) }">
                     <label class="control-label col-sm-4" for="longitude">Longitude :</label>
                     <div class="col-sm-8">
                         <input type="text" class="form-control" name="longitude" [(ngModel)]="model.longitude"  required placeholder="Longitude Here" #longitude="ngModel" [ngModelOptions]="{standalone: true}" />
