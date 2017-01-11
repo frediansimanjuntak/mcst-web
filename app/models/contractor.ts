@@ -63,7 +63,7 @@ export var Contractors: any[] = [
     description: "Wohohooooo iam the contractor",
     company: "1",
     position: "security",
-    role: "admin",
+    role: "employee",
     active: false,
     created_by : "w0974u0a4443feaakfef24t",
     created_at : "2016-12-08T03:31:07"
@@ -105,11 +105,78 @@ export var Contractors: any[] = [
     },
     profile_picture: "NaX5P48b32d34fde3",
     description: "Wohohooooo iam the contractor",
-    company: "2",
+    company: "4",
+    position: "security",
+    role: "employee",
+    active: true,
+    created_by : "w0974u0a4443feaakfef24t",
+    created_at : "2016-12-08T03:31:07"
+  },
+  {
+    _id : "5",
+    username: "Deeeweqw",
+    password: "NMe3DAea343c34fde3",
+    phone: "NaX5P48b32d34fde3",
+    email: 4500,
+    address: {
+      street_name: "Angular 2",
+      block_no: "232123",
+      postal_code: "12312",
+      country: "Singapore",
+      full_address: "Lorem ipsum dolor sit atmet"
+    },
+    profile_picture: "NaX5P48b32d34fde3",
+    description: "Wohohooooo iam the contractor",
+    company: "",
+    position: "security",
+    role: "",
+    active: true,
+    created_by : "w0974u0a4443feaakfef24t",
+    created_at : "2016-12-08T03:31:07"
+  },
+  {
+    _id : "6",
+    username: "sfsdfds",
+    password: "NMe3DAea343c34fde3",
+    phone: "NaX5P48b32d34fde3",
+    email: 4500,
+    address: {
+      street_name: "Angular 2",
+      block_no: "232123",
+      postal_code: "12312",
+      country: "Singapore",
+      full_address: "Lorem ipsum dolor sit atmet"
+    },
+    profile_picture: "NaX5P48b32d34fde3",
+    description: "Wohohooooo iam the contractor",
+    company: "4",
     position: "security",
     role: "admin",
     active: true,
     created_by : "w0974u0a4443feaakfef24t",
     created_at : "2016-12-08T03:31:07"
+  },
+  {
+    _id : "7",
+    username: "jfj",
+    password: "NMe3DAea343c34fde3",
+    phone: "NaX5P48b32d34fde3",
+    email: 4500,
+    address: {
+      street_name: "Angular 2",
+      block_no: "232123",
+      postal_code: "12312",
+      country: "Singapore",
+      full_address: "Lorem ipsum dolor sit atmet"
+    },
+    profile_picture: "NaX5P48b32d34fde3",
+    description: "Wohohooooo iam the contractor",
+    company: "4",
+    position: "security",
+    role: "employee",
+    active: true,
+    created_by : "w0974u0a4443feaakfef24t",
+    created_at : "2016-12-08T03:31:07"
   }
+
 ]

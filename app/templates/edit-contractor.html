@@ -97,7 +97,6 @@
                                           (data)="refreshValueCompany($event)"
                                           (selected)="selected($event)"
                                           (removed)="removed($event)"
-                                          (typed)="typed($event)"
                                           [active] = "[company]"
                                           placeholder="No company selected">
                                 </ng-select>
@@ -119,8 +118,8 @@
                     <div class="form-group">
                             <label class="control-label col-sm-4" for="active">Active</label>
                             <div class="col-sm-8">
-                                  <label><input type="radio" [checked]="company.active" name="active" [(ngModel)]="company.active" [value]=true>Yes</label>
-                                  <label><input type="radio" [checked]="!company.active" name="active" [(ngModel)]="company.active" [value]=false>No</label>
+                                  <label><input type="radio" [checked]="contractor.active" name="active" [(ngModel)]="contractor.active" [value]=true>Yes</label>
+                                  <label><input type="radio" [checked]="!contractor.active" name="active" [(ngModel)]="contractor.active" [value]=false>No</label>
                         
                             </div>
                     </div>
@@ -231,7 +230,6 @@
                                       (data)="refreshValueCompany($event)"
                                       (selected)="selected($event)"
                                       (removed)="removed($event)"
-                                      (typed)="typed($event)"
                                       placeholder="No Company selected">
                             </ng-select>
                         </div>
