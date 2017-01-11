@@ -25,6 +25,7 @@ export * from './incident/incident.component';
 export * from './incident/edit-incident.component';
 export * from './auth/login.component';
 export * from './auth/register.component';
+export * from './auth/auth.guard';
 export * from './navbar.component';
 export * from './galleria.component';
 export * from './domhandler.component';
