@@ -1,17 +1,17 @@
 import { Component, OnInit } from '@angular/core';
-import { Router, Params, ActivatedRoute } from '@angular/router'; 
+import { Router, Params, ActivatedRoute } from '@angular/router';
 import { Development } from '../../models/index';
 import { DevelopmentService, AlertService } from '../../services/index';
 import '../../rxjs-operators';
 import 'rxjs/add/operator/switchMap';
 
 @Component({
-  moduleId: module.id,
+  // moduleId: module.id,
   selector: 'edit-development',
-  templateUrl: '/app/templates/edit-development.html',
+  templateUrl: 'app/templates/edit-development.html',
 })
 
-export class EditDevelopmentComponent implements OnInit { 
+export class EditDevelopmentComponent implements OnInit {
 	development: Development;
     model: any = {};
     id: string;
@@ -20,7 +20,7 @@ export class EditDevelopmentComponent implements OnInit {
     	private developmentService: DevelopmentService,
     	private alertService: AlertService,
         private route: ActivatedRoute,) {}
-    
+
 
     // ngOnInit(): void {
     //     this.route.params
@@ -38,7 +38,7 @@ export class EditDevelopmentComponent implements OnInit {
         // });
     // }
 
-    ngOnInit(): void {   
+    ngOnInit(): void {
         this.route.params.subscribe(params => {
             this.id = params['id'];
         });
@@ -54,7 +54,7 @@ export class EditDevelopmentComponent implements OnInit {
                 this.alertService.success('Update development successful', true);
                 this.router.navigate(['/development']);
             },
-            error => { 
+            error => {
                 this.alertService.error(error);
             }
         );
@@ -67,7 +67,7 @@ export class EditDevelopmentComponent implements OnInit {
                 this.alertService.success('Update development successful', true);
                 this.router.navigate(['/development']);
             },
-            error => { 
+            error => {
             	this.alertService.error(error);
             }
         );

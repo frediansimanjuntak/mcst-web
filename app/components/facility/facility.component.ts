@@ -1,17 +1,17 @@
 import { Component, OnInit } from '@angular/core';
-import { Router, Params, ActivatedRoute } from '@angular/router'; 
+import { Router, Params, ActivatedRoute } from '@angular/router';
 import { Facility } from '../../models/index';
 import { FacilityService, AlertService } from '../../services/index';
 import '../../rxjs-operators';
 import { Observable} from 'rxjs/Observable';
 
 @Component({
-  moduleId: module.id,
+  // moduleId: module.id,
   selector: 'facility',
-  templateUrl: '/app/templates/facility.html',
+  templateUrl: 'app/templates/facility.html',
 })
 
-export class FacilityComponent implements OnInit { 
+export class FacilityComponent implements OnInit {
 	facility: Facility;
     facilities: Facility[] = [];
     model: any = {};
@@ -27,28 +27,28 @@ export class FacilityComponent implements OnInit {
             this.loadAllFacilities();
         }else{
             this.facilityService.getFacility(this.id).then(facility => {this.facility = facility;});
-        }      
+        }
     }
- 
+
     deleteFacility(facility: Facility) {
         console.log(facility);
-        
-        this.facilityService.delete(facility._id) 
+
+        this.facilityService.delete(facility._id)
         .then(
 			response => {
-				if(response) { 
+				if(response) {
 	                alert(`The facility could not be deleted, server Error.`);
 	            } else {
                     this.alertService.success('Delete facility successful', true);
 	                this.loadAllFacilities()
 	            }
             },
-            error=> { 
+            error=> {
                 alert(`The Development could not be deleted, server Error.`);
             }
         );
     }
-   
+
     private loadAllFacilities() {
         this.facilityService.getFacilities().then(facilities => { this.facilities = facilities; });
     }

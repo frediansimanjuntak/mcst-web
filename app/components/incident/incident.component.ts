@@ -1,5 +1,5 @@
 import { Component, OnInit, EventEmitter } from '@angular/core';
-import { Router, Params, ActivatedRoute } from '@angular/router'; 
+import { Router, Params, ActivatedRoute } from '@angular/router';
 import { Incident } from '../../models/index';
 import { IncidentService, AlertService } from '../../services/index';
 import '../../rxjs-operators';
@@ -7,11 +7,11 @@ import { Observable} from 'rxjs/Observable';
 import { FileUploader } from 'ng2-file-upload';
 
 @Component({
-    moduleId: module.id,
+    // moduleId: module.id,
     selector: 'incident',
-    templateUrl: '/app/templates/incident.html',
+    templateUrl: 'app/templates/incident.html',
     inputs: ['isFavorite :is-favorite'],
-    outputs: ['change'] 
+    outputs: ['change']
 })
 
 export class IncidentComponent implements OnInit {
@@ -24,12 +24,12 @@ export class IncidentComponent implements OnInit {
     change = new EventEmitter();
     public data;
     public dataNew;
-    public dataReviewing; 
+    public dataReviewing;
     public dataInProgress;
     public dataResolved;
-    public dataUrgent;   
+    public dataUrgent;
 
-    constructor(private router: Router, private incidentService: IncidentService, private alertService: AlertService,private route: ActivatedRoute) {}  
+    constructor(private router: Router, private incidentService: IncidentService, private alertService: AlertService,private route: ActivatedRoute) {}
 
     ngOnInit(): void {
         this.images = [];
@@ -46,14 +46,14 @@ export class IncidentComponent implements OnInit {
         }else{
         	this.incidentService.getIncident(this.id).then(incident => {this.incident = incident;});
         }
-    } 
+    }
 
     deleteIncident(incident: Incident) {
     	console.log(incident._id)
-        this.incidentService.delete(incident._id) 
+        this.incidentService.delete(incident._id)
           .then(
             response => {
-              if(response) { 
+              if(response) {
                 console.log(response);
                 // console.log(response.error());
                 alert(`The Newsletter could not be deleted, server Error.`);
@@ -63,20 +63,20 @@ export class IncidentComponent implements OnInit {
                 this.ngOnInit()
               }
             },
-            error=> { 
+            error=> {
               console.log(error);
                 alert(`The Newsletter could not be deleted, server Error.`);
             }
         );
     }
-	
+
 	private loadAllIncident() {
-		this.incidentService.getIncidents().then(incidents => { 
+		this.incidentService.getIncidents().then(incidents => {
 					this.incidents = incidents ;
-                    this.dataNew        = this.incidents.filter(incidents => incidents.status === 'new' ); 
-                    this.dataReviewing  = this.incidents.filter(incidents => incidents.status === 'reviewing' ); 
-                    this.dataInProgress = this.incidents.filter(incidents => incidents.status === 'inprogress' ); 
-                    this.dataResolved   = this.incidents.filter(incidents => incidents.status === 'resolved' ); 
+                    this.dataNew        = this.incidents.filter(incidents => incidents.status === 'new' );
+                    this.dataReviewing  = this.incidents.filter(incidents => incidents.status === 'reviewing' );
+                    this.dataInProgress = this.incidents.filter(incidents => incidents.status === 'inprogress' );
+                    this.dataResolved   = this.incidents.filter(incidents => incidents.status === 'resolved' );
                     this.dataUrgent     = this.incidents.filter(incidents => incidents.status === 'urgent' );
 		});
     }

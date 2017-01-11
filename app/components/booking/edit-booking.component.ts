@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Router, Params, ActivatedRoute } from '@angular/router'; 
+import { Router, Params, ActivatedRoute } from '@angular/router';
 import { Booking,Facility } from '../../models/index';
 import { BookingService, AlertService, FacilityService } from '../../services/index';
 import '../../rxjs-operators';
@@ -14,9 +14,9 @@ export class Schedule {
 }
 
 @Component({
-  moduleId: module.id,
+  // moduleId: module.id,
   selector: 'edit-booking',
-  templateUrl: '/app/templates/edit-booking.html',
+  templateUrl: 'app/templates/edit-booking.html',
   styles: [`
   	.full button span {
 	    background-color: limegreen;
@@ -54,7 +54,7 @@ export class Schedule {
   `]
 })
 
-export class EditBookingComponent  { 
+export class EditBookingComponent  {
 	public dt: Date = new Date();
     public events: any[];
     public tomorrow: Date;
@@ -71,12 +71,12 @@ export class EditBookingComponent  {
 	booking: Booking;
     bookings: Booking[] = [];
     facilities: Facility[] = [];
-    model: any = {}; 
+    model: any = {};
     start : any;
     selectedValues: string[] = [];
     times_start : any[] = [];
     times_end : any[] = [];
-    end : any; 
+    end : any;
     min : any;
     id: string;
     schedule : Schedule;
@@ -99,17 +99,17 @@ export class EditBookingComponent  {
 
 	ngOnInit() {
 		this.facilityService.getFacilities()
-		.then(facilities => { 
+		.then(facilities => {
 			this.facilities = facilities;
 			this.start = facilities[0].schedule[0].start_time.slice(0,2);
 			let start = +this.start
 			this.end = facilities[0].schedule[0].end_time.slice(0,2);
-			let end = +this.end	
+			let end = +this.end
 			this.min =	facilities[0].schedule[0].start_time.slice(2,5);
 			for (var i = start; i < end; ++i) {
 					this.times_start.push(i)
 			}
-    		while(start < end){       
+    		while(start < end){
        			start += 1;
        			this.times_end.push(start)
     		}
@@ -122,7 +122,7 @@ export class EditBookingComponent  {
         }else{
         	this.bookingService.getBooking(this.id).then(booking => {this.booking = booking;});
         }
-             
+
     }
 
     private loadAllBookings() {
@@ -132,50 +132,50 @@ export class EditBookingComponent  {
 	 public getDate(): number {
 	    return this.dt && this.dt.getTime() || new Date().getTime();
 	}
- 
+
   	public today(): void {
     	this.dt = new Date();
   	}
- 
+
 	public d20090824(): void {
 	    this.dt = moment('2009-08-24', 'YYYY-MM-DD')
 	      .toDate();
 	}
- 
+
 	public disableTomorrow(): void {
 	    this.dateDisabled = [{date: this.tomorrow, mode: 'day'}];
     }
- 
+
   // todo: implement custom class cases
     public getDayClass(date: any, mode: string): string {
 	    if (mode === 'day') {
 	      let dayToCheck = new Date(date).setHours(0, 0, 0, 0);
-	 
+
 	      for (let event of this.events) {
 	        let currentDay = new Date(event.date).setHours(0, 0, 0, 0);
-	 
+
 	        if (dayToCheck === currentDay) {
 	          return event.status;
 	        }
 	      }
 	    }
-	 
+
 	    return '';
     }
- 
+
     public disabled(date: Date, mode: string): boolean {
     	return ( mode === 'day' && ( date.getDay() === 0 || date.getDay() === 6 ) );
     }
- 
+
     public open(): void {
     	this.opened = !this.opened;
     }
- 
+
     public clear(): void {
     	this.dt = void 0;
     	this.dateDisabled = undefined;
     }
- 
+
     public toggleMin(): void {
     	this.dt = new Date(this.minDate.valueOf());
     }
@@ -183,5 +183,5 @@ export class EditBookingComponent  {
     archieveSelected(){
         console.log(this.selectedValues);
     }
-	
+
 }

@@ -1,6 +1,6 @@
 import { Component, OnInit, PipeTransform, Pipe } from '@angular/core';
 import { DatePipe  } from '@angular/common';
-import { Router, Params, ActivatedRoute } from '@angular/router'; 
+import { Router, Params, ActivatedRoute } from '@angular/router';
 import { Booking } from '../../models/index';
 import { BookingService, AlertService } from '../../services/index';
 import '../../rxjs-operators';
@@ -8,9 +8,9 @@ import { Observable} from 'rxjs/Observable';
 import * as moment from 'moment';
 
 @Component({
-  moduleId: module.id,
+  // moduleId: module.id,
   selector: 'development',
-  templateUrl: '/app/templates/booking.html',
+  templateUrl: 'app/templates/booking.html',
   styles: [`
   	.full button span {
 	    background-color: limegreen;
@@ -30,12 +30,12 @@ export class BookingComponent implements OnInit {
     private opened: boolean = false;
 	booking: Booking;
     bookings: Booking[] = [];
-    model: any = {}; 
+    model: any = {};
     id: string;
     day : any;
     selectedDay : any;
     days : any[] = ["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"];
-	
+
 	constructor(
 		private router: Router,
 		private bookingService: BookingService,
@@ -52,40 +52,40 @@ export class BookingComponent implements OnInit {
         }else{
         	this.bookingService.getBooking(this.id).then(booking => {this.booking = booking;});
         }
-             
+
     }
 
     transform(date: any, args?: any): any {
         let d = new Date(date)
-        
+
 
     }
- 
+
     deleteBooking(booking: Booking) {
     	console.log(booking)
-        this.bookingService.delete(booking._id) 
+        this.bookingService.delete(booking._id)
         .then(
 			response => {
-				if(response) { 
+				if(response) {
 	                alert(`The booking could not be deleted, server Error.`);
 	            } else {
                     this.alertService.success('Delete booking successful', true);
 	                this.loadAllBookings()
 	            }
             },
-            error=> { 
+            error=> {
                 alert(`The Booking could not be deleted, server Error.`);
             }
         );
     }
-   
+
     private loadAllBookings() {
         this.day     = new Date(this.dt.getTime());
         this.day     = this.convertDate(this.day);
         this.bookingService.getBookings()
-        .then(bookings => { 
+        .then(bookings => {
             this.bookings = bookings;
-            this.selectedDay = this.bookings.filter(data => data.booking_date == this.day ); 
+            this.selectedDay = this.bookings.filter(data => data.booking_date == this.day );
         });
     }
 
@@ -108,7 +108,7 @@ export class BookingComponent implements OnInit {
       return yyyy + '-' + (mmChars[1]?mm:"0"+mmChars[0]) + '-' + (ddChars[1]?dd:"0"+ddChars[0]);
     }
 
-    public test() {  
+    public test() {
         this.day     = new Date(this.dt.getTime());
         this.day     = this.convertDate(this.day);
         this.ngOnInit();
