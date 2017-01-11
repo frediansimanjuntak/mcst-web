@@ -117,27 +117,30 @@
 }
 
 .steps {
-  margin: 40px;
+  /*margin: 40px;*/
   padding: 0;
-  overflow: hidden;
+  overflow: hidden
+  color: #FFF;
 }
 .steps a {
-  color: white;
+  color: #FFF;
   text-decoration: none;
 }
 .steps em {
   display: block;
-  font-size: 1.1em;
+  font-size: 13px;
   font-weight: bold;
+  color: #FFF;
+  font-family: Arial, Helvetica, sans-serif;
 }
 .steps li {
   float: left;
   margin-left: 0;
-  width: 200px; /* 100 / number of steps */
-  height: 50px; /* total height */
+  width: 384px; /* 100 / number of steps */
+  height: 44px; /* total height */
   list-style-type: none;
   padding: 5px 5px 5px 30px; /* padding around text, last should include arrow width */
-  border-right: 3px solid white; /* width: gap between arrows, color: background of document */
+  border-right: 3px; /* width: gap between arrows, color: background of document */
   position: relative;
 }
 /* remove extra padding on the first object since it doesn't have an arrow to the left */
@@ -145,27 +148,27 @@
   padding-left: 5px;
 }
 /* white arrow to the left to "erase" background (starting from the 2nd object) */
-.steps li:nth-child(n+1)::before {
+/*.steps li:nth-child(n+1)::before {
   position: absolute;
   top:0;
-  left:0;
-  display: block; /* width: arrow width, color: background of document */
-  border-top: 40px solid transparent; /* width: half height */
-  border-bottom: 40px solid transparent; /* width: half height */
-  width: 0;
+  left:0;*/
+  /*display: block;  width: arrow width, color: background of document */
+  /*border-top: 22px solid transparent; /* width: half height */
+  /*border-bottom: 22px solid transparent; /* width: half height */
+  /*width: 0;
   height: 0;
   content: " ";
-}
+}*/
 /* colored arrow to the right */
 .steps li::after {
   z-index: 1; /* need to bring this above the next item */
   position: absolute;
   top: 0;
-  right: -25px; /* arrow width (negated) */
+  right: -20px; /* arrow width (negated) */
   display: block;
-  border-left: 25px solid #000000; /* width: arrow width */
-  border-top: 25px solid transparent; /* width: half height */
-  border-bottom: 25px solid transparent; /* width: half height */
+  border-left: 20px solid #2F3033; /* width: arrow width */
+  border-top: 20px solid transparent; /* width: half height */
+  border-bottom: 20px solid transparent; /* width: half height */
   width:0;
   height:0;
   content: " ";
@@ -174,23 +177,34 @@
 /* Setup colors (both the background and the arrow) */
 
 /* Completed */
-.steps li { background-color: #000000; }
-.steps li::after { border-left-color: #000000; }
-
-/* Current */
-.steps li.current { background-color: #C36615; }
-.steps li.current::after { border-left-color: #C36615; }
-
-/* Following */
-.steps li.current ~ li { background-color: #EBEBEB; }
-.steps li.current ~ li::after { border-left-color: #EBEBEB; }
-
-/* Hover for completed and current */
-.steps li:hover {background-color: #696}
-.steps li:hover::after {border-left-color: #696}
+.steps li { background-color: #2F3033; }
+.steps li::after { border-left-color: #2F3033; }
 
 .abc{
-  background-color: #b5ad96;
-  width: : 300px;
-  height: 50px;
+  background-color: #404248;
+  color: #FFF;
+  width: : 780px;
+  height: 44px;
+  font-size: 13px;
+  font-weight: bold;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+.bookinginformation{
+  width: 360px;
+  height: 522px;
+  background-color: #F4F4F4;
+}
+
+.fee{
+  font-size: 13px;
+  font-weight: bold;
+  font-family: Arial, Helvetica, sans-serif;
+  color: #4a4a4a;
+}
+
+.information{
+  font-size: 13px !important;
+  font-family: Arial, Helvetica, sans-serif !important;
+  color: #4a4a4a !important;
 }

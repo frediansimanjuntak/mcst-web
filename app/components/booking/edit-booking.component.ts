@@ -6,13 +6,6 @@ import '../../rxjs-operators';
 import { Observable} from 'rxjs/Observable';
 import * as moment from 'moment';
 
-export class Schedule {
-	start_time: string[];
-	end_time: string[];
-	facility_name: string;
-	status:string  
-}
-
 @Component({
   moduleId: module.id,
   selector: 'edit-booking',
@@ -54,7 +47,7 @@ export class Schedule {
   `]
 })
 
-export class EditBookingComponent  { 
+export class EditBookingComponent implements OnInit  { 
 	public dt: Date = new Date();
     private opened: boolean = false;
 	booking: Booking;
@@ -71,8 +64,8 @@ export class EditBookingComponent  {
     min : any;
     id: string;
     facility_id: number = 0;
-    schedule : Schedule;
     selectedDay: any;
+    step: number;
     day : any;
     days : any[] = ["sunday","monday","tuesday","wednesday","thursday","friday","saturday"];
 
@@ -84,13 +77,14 @@ export class EditBookingComponent  {
 		private route: ActivatedRoute){}
 
 	ngOnInit() {
+        this.step = 1;
         this.day = this.days[this.dt.getDay()];
         console.log(this.day)
 		this.facilityService.getFacilities()
 		.then(facilities => { 
 			this.facilities = facilities;
             this.selectedDay = this.facilities[this.facility_id].schedule.filter(data => data.day == this.day); 
-            if (this.selectedDay.length > 0) {  
+            if (this.selectedDay.length > 0) { 
     			this.start = this.selectedDay[0].start_time.slice(0,2);
         			let start = +this.start
                     console.log(start);
@@ -122,22 +116,52 @@ export class EditBookingComponent  {
         this.bookingService.getBookings().then(bookings => { this.bookings = bookings; });
     }
 
+    convertDate(date) {
+        var yyyy = date.getFullYear().toString();
+        var mm = (date.getMonth()+1).toString();
+        var dd  = date.getDate().toString();
+        var mmChars = mm.split('');
+        var ddChars = dd.split('');
+        return (ddChars[1]?dd:"0"+ddChars[0]) + '/' + (mmChars[1]?mm:"0"+mmChars[0]) + '/' + yyyy;
+    }
+
 	
 
-    public archieveSelected(start:any[],end:any[],min:any){
+    public archieveSelected(start:any[],end:any[],min:any,name:any,type:any){
+        // this.facilityService.getFacilities()
+        // .then(facilities => { 
+        //     this.facilities = facilities;
+        //     let selected = this.facilities.filter(data => data.name == name); 
+        //     let id = selected[0]._id;
+        //     console.log(id)
+        //     console.log(selected)
+        // });
         this.tstart.push(start)
         this.tend.push(end)
         var time_start = Math.min.apply(null,this.tstart);
         var time_end = Math.max.apply(Math,this.tend);
-        this.model.start_time = time_start+min
-        this.model.end_time = time_end+min
+        this.model.start_time = time_start+min;
+        this.model.end_time = time_end+min;
+        this.model.facility = name;
+        this.model.facility_type = type;
+        console.log(this.model)
     }
 
     public test() {  
+        let date;
+        date     = new Date(this.dt.getTime());
+        date     = this.convertDate(date);
+        this.model.booking_date = date
         this.day = this.days[this.dt.getDay()];
         this.times_start = [];
         this.times_end   = [];
         this.ngOnInit();
+    }
+
+    next(){
+        this.step = 2
+        this.model;
+        console.log(this.model)
     }
 	
 }

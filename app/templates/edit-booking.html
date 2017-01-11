@@ -43,95 +43,127 @@
                 ADD BOOKING
             </div>
             <p>Home > Booking System > Add Booking</p>
-            <ul class="steps steps-5">
-			    <li><em>Step 1: XXXXXXXX</em><span>Et nequ a quam turpis duisi</span></li>
-			    <div class="abc">asdad</div>
-			</ul>
-
-	        <div class="row">
-	        	<div class="col-lg-4">
-	        		<div>
-					    <div style="width:335px;">
-					    	<datepicker (click)="test()" [style]="{'width':'300px'}" [(ngModel)]="dt" [minDate]="minDate" [showWeeks]="false" ></datepicker>
-					    </div>  
-					</div>
-	        		<form name="form" (ngSubmit)="f.form.valid" #f="ngForm" novalidate>
-			        	<div class="row">
-			        		<div class="col-md-3">Facility :</div>
-			       			<div class="col-md-9">
-			       				<p>
-			       					<select name="name" [(ngModel)]="model._id" #model="ngModel" class="form-control" style="width: 237px">
-				                    	<option *ngFor="let facility of facilities" (change)="onChange(facility)" [ngValue]="facility._id">{{facility.name}}</option>
-				                    </select>
-			        			</p>
+            <div *ngIf="step == 2">
+	            <div class="abc">
+	            	<ul class="steps steps-5">
+				    	<li><em>1. Select Date and Facility Type</em></li>
+					</ul>
+					<font style="padding: 30px;">2. Select Time Slots</font>
+				</div>
+		        <div class="row">
+		        	<div class="col-lg-4">
+		        		<div>
+						    <div style="width:335px;">
+						    	<datepicker (click)="test()" [style]="{'width':'300px'}" [(ngModel)]="dt" [minDate]="minDate" [showWeeks]="false" ></datepicker>
+						    </div>  
+						</div>
+		        		<form name="form" (ngSubmit)="f.form.valid" #f="ngForm" novalidate>
+				        	<div class="row">
+				        		<div class="col-md-3">Facility :</div>
+				       			<div class="col-md-9">
+				       				<p>
+				       					<select name="name" [(ngModel)]="model._id" #model="ngModel" class="form-control" style="width: 237px">
+					                    	<option *ngFor="let facility of facilities" (change)="onChange(facility)" [ngValue]="facility._id">{{facility.name}}</option>
+					                    </select>
+				        			</p>
+				        		</div>
+				        	</div>
+				        	<div class="row">
+				        		<div class="col-md-3">Choice :</div>
+				        		<div class="col-md-9">
+				       				<p>
+				       					<select class="form-control" style="width: 237px">
+						                   	<option>All</option>
+						                   	<option *ngFor="let booking of bookings" [ngValue]="booking.status">{{booking.status}}</option>
+					                    </select>	
+				       				</p>
+				       			</div>
+				       		</div>
+				       		<div class="row">
+				       			<div class="col-md-3">Period :</div>
+				       			<div class="col-md-9">
+				       				<p>
+				       					<select class="form-control" style="width: 116.5px">
+					                    	<option *ngFor="let start of times_start" [ngValue]="start">{{start}}{{min}}</option>
+					                    </select>
+					                    <select class="form-control" style="width: 116.5px">
+					                    	<option *ngFor="let end of times_end" [ngValue]="end">{{end}}{{min}}</option>
+					                    </select>
+			        				</p>
+			        			</div>
+			        		</div>
+			                <div class="form-group">
+			                    <button style="width: 327px" class="btn btn-primary">Filter</button>
+			                </div>
+		        		</form>
+		        	</div>
+		        	<div class="col-lg-8">
+		        		<div *ngIf="start">
+						<table class="tableSection table-striped">
+						    <tbody>
+						        <tr *ngFor="let tstart of times_start; let i=index ; let tend of times_end">
+									<td>{{times_start[i]}}{{min}} - {{times_end[i]}}{{min}}</td>
+									<td>BBQ Pit A</td>
+									<td>available</td>
+									<p-checkbox name="archive" (click)="archieveSelected(times_start[i],times_end[i],min,'BBQ pit','A')" value="{{tstart[i]}}{{min}} - {{tend[i]}}{{min}}" [(ngModel)]="selectedValues"></p-checkbox>
+								</tr>
+						    </tbody>
+						</table>
+						</div>
+						<div *ngIf="!start">
+						Data not found
+						</div>
+						<div class="row">
+							<div class="col-md-4 pull-right">
+								<a class="btn btn-default pull-right" (click)="next()">
+								Next</a>
+								<a [routerLink]="['/booking']" class="btn btn-info">Cancel</a>
+							</div>
+						</div>
+		        	</div>
+		        </div>
+		    </div>
+		    <div *ngIf="step == 1">
+	            <div class="abc">
+	            	<ul class="steps steps-5">
+				    	<li><em>3. Booking Information</em></li>
+					</ul>
+					<font style="padding: 30px;">4. User & Payment Information</font>
+				</div>
+		        <div class="row">
+		        	<div class="col-lg-6">
+			        	<div class="bookinginformation">
+			        		<div class="col-sm-6 information">
+			        			<div class="row">
+	        						<div class="col-md-8"><label>Date :</label></div>
+	        						<div class="col-md-4"> <p>asdasd</p></div>
+	        					</div>
+	        					<div class="row">
+	        						<div class="col-md-8"><label>Facility :</label></div>
+	        						<div class="col-md-4"> <p>asdasd</p></div>
+	        					</div>
+	        					<div class="row">
+	        						<div class="col-md-8"><label>Facility Type :</label></div>
+	        						<div class="col-md-4"> <p>asdasd</p></div>
+	        					</div>
+	        					<div class="row">
+	        						<div class="col-md-8"><label>Time Slot :</label></div>
+	        						<div class="col-md-4"> <p>asdasd</p></div>
+	        					</div>
 			        		</div>
 			        	</div>
-			        	<div class="row">
-			        		<div class="col-md-3">Choice :</div>
-			        		<div class="col-md-9">
-			       				<p>
-			       					<select class="form-control" style="width: 237px">
-					                   	<option>All</option>
-					                   	<option *ngFor="let booking of bookings" [ngValue]="booking.status">{{booking.status}}</option>
-				                    </select>	
-			       				</p>
-			       			</div>
-			       		</div>
-			       		<div class="row">
-			       			<div class="col-md-3">Period :</div>
-			       			<div class="col-md-9">
-			       				<p>
-			       					<select class="form-control" style="width: 116.5px">
-				                    	<option *ngFor="let start of times_start" [ngValue]="start">{{start}}{{min}}</option>
-				                    </select>
-				                    <select class="form-control" style="width: 116.5px">
-				                    	<option *ngFor="let end of times_end" [ngValue]="end">{{end}}{{min}}</option>
-				                    </select>
-		        				</p>
-		        			</div>
-		        		</div>
-		                <div class="form-group">
-		                    <button style="width: 327px" class="btn btn-primary">Filter</button>
-		                </div>
-	        		</form>
-	        	</div>
-	        	<div class="col-lg-8">
-	        		<div *ngIf="start">
-					<table class="tableSection table-striped">
-					    <tbody>
-					        <tr *ngFor="let tstart of times_start; let i=index ; let tend of times_end">
-								<td>{{times_start[i]}}{{min}} - {{times_end[i]}}{{min}}</td>
-								<td>BBQ pit</td>
-								<td>available</td>
-								<p-checkbox name="archive" (click)="archieveSelected(times_start[i],times_end[i],min)" value="{{times_start[i]}}{{min}} - {{times_end[i]}}{{min}}" [(ngModel)]="selectedValues"></p-checkbox>
-							</tr>
-					    </tbody>
-					</table>
-					</div>
-					<div *ngIf="!start">
-					Data not found
-					</div>
-					<!-- <p-dataTable [value]="schedule" [rows]="10" [paginator]="true">
-					    <p-column field="start_time" header="Time" sortable="true" [filter]="true" filterPlaceholder="Search time"></p-column>
-					    <p-column field="end_time" header="Ref." sortable="true" [filter]="true" filterPlaceholder="Search ref."></p-column>
-					    <p-column field="facility_name" header="Facility" sortable="true" [filter]="true" filterPlaceholder="Search facility"></p-column>
-					    <p-column field="status" header="Facility" sortable="true" [filter]="true" filterPlaceholder="Search facility"></p-column>
-					    <p-column header="Action" styleClass="col-button">
-					    	<template let-booking="rowData" pTemplate="body">
-					        	<button type="button" (click)="view(booking)">View</button>
-					        	<button type="button" (click)="deleteBooking(booking)"><i class="fa fa-trash" aria-hidden="true"></i></button>
-					    	</template>
-					    </p-column>
-					</p-dataTable> -->
-					<div class="row">
-						<div class="col-md-4 pull-right">
-							<a class="btn btn-default pull-right" (click)="add()">
-							Next</a>
-							<a [routerLink]="['/booking']" class="btn btn-info">Cancel</a>
+		        	</div>
+		        	<div class="col-lg-6">
+						<div class="row">
+							<div class="col-md-4 pull-right">
+								<a class="btn btn-default pull-right" (click)="next()">
+								Next</a>
+								<a [routerLink]="['/booking']" class="btn btn-info">Cancel</a>
+							</div>
 						</div>
-					</div>
-	        	</div>
-	        </div>
+		        	</div>
+		        </div>
+		    </div>
         </div>
     </div>
 </div>
