@@ -8,8 +8,7 @@ export const MENUS: any[] = [
   	sub : [
   		{ name: 'Guest, Visitor & Contractors', link: '/visit'  },
   		{ name: 'Incident Reports', link: '/incident' },
-  		{ name: 'Manage Orders', link: '' },
-  		{ name: 'Manage Project', link: '' },
+  		{ name: 'Manage Project', link: '/contract' },
   	]
   },
   { 
