@@ -1,0 +1,278 @@
+<div class="container">
+    <div class="main">
+            <div class="title">
+                Unit #{{unit.address.unit_no}}-{{unit.address.unit_no_2}}
+            </div>
+            <p>Home > Resident's Database > #{{unit.address.unit_no}}-{{unit.address.unit_no_2}}</p>
+            <a style="cursor:pointer"(click)="goBack()">Back to last page</a>
+
+
+                <div class="row bg-dark">
+                    <div class="col-md-6">
+                        <h5>General Details</h5>
+                    </div>
+                    <div class="col-md-6">
+                        <a class="btn btn-default pull-right" ><img class="img-btn" src="../../assets/image/icon_add.png" (click)="generateCode(unit)" />&nbsp;Generate Code</a>
+                    </div>
+                </div>
+                <div class="row" style="border: 1px solid grey; padding: 5px;">
+                    <div class="row">
+                        <div class="col-md-4">
+                                <b>Unit No :</b>#{{unit.address.unit_no}}-{{unit.address.unit_no_2}}<br>
+                                <b>Block :</b>{{unit.address.block_no}}
+                            </div>
+                            <div class="col-md-4">
+                                <b>Owner :</b>{{unit.landlord}}<br>
+                                <b>Status :</b>{{unit.status}}
+                            </div>
+                            <div class="col-md-4">
+                                <b>No of Tenant :</b>{{ unit.tenant.length }}<br>
+                                <b>Vehicle :</b> <!-- {{unit.vehicle.length}} -->
+                            </div>
+                    </div>
+                </div><br>
+
+                <div class="row bg-dark">
+                    <div class="col-md-6">
+                        <h5>Resident/Tenant</h5>
+                    </div>
+                    <div class="col-md-6">
+                        <a class="btn btn-default pull-right" ><img class="img-btn" src="../../assets/image/icon_addresident.png"  (click)="firstModal.open()" />&nbsp;Add Resident</a>
+                    </div>
+                </div>
+                <div class="row">
+                   <p-dataTable [value]="unit.tenant">
+                        <p-column header="no" [style]="{'width':'42px'}" field="i">
+                        </p-column>
+                        <p-column header="Resident" field="username">
+                        </p-column>
+                        <p-column header="Type">
+                            <template let-visitActive="rowData" pTemplate="body">
+                                <span>Tenant</span>
+                            </template>
+                        </p-column>
+                        <p-column header="Added on" >
+                            <template let-unit.tenant="rowData" pTemplate="body">
+                                <span></span>
+                            </template>
+                        </p-column>
+                        <p-column header="Social page" >
+                            <template let-unit.tenant="rowData" pTemplate="body">
+                                <span></span>
+                            </template>
+                        </p-column>
+                        <p-column header="Social page" >
+                            <template let-unit.tenant="rowData" pTemplate="body">
+                                <span></span>
+                            </template>
+                        </p-column>
+                        <p-column header="Contact No" >
+                            <template let-unit.tenant="rowData" pTemplate="body">
+                                <span *ngIf="unit.tenant.phone">{{unit.tenant.phone}}<br></span>
+                                <span *ngIf="unit.tenant.email">{{unit.tenant.email}}<br></span>
+                            </template>
+                        </p-column>
+                        <p-column header="Remarks">
+                            <template let-unit.tenant="rowData" pTemplate="body">
+                                <span></span>
+                            </template>
+                        </p-column>
+                        <p-column [style]="{'width':'160px'}" styleClass="col-button" >
+                            <template let-unit.tenant="rowData" pTemplate="body">
+                                    <a type="button" class="btn-underline"  (click)="openResidentDetail(unit.tenant) || residentDetail.open()">View details</a>
+                                    <button  type="button" (click)="deleteResident(unit.tenant)"><i class="fa fa-trash" aria-hidden="true"></i></button>
+                            </template>
+                        </p-column>
+                    </p-dataTable>
+                </div><br>
+
+
+                <div class="row bg-dark">
+                    <div class="col-md-6">
+                        <h5>Registered Vehicle</h5>
+                    </div>
+                    <div class="col-md-6">
+                        <a class="btn btn-default pull-right" ><img class="img-btn" src="../../assets/image/icon_addresident.png" (click)="registerVehicle(unit)" />&nbsp;Register Vehicle</a>
+                    </div>
+                </div>
+                <div class="row">
+                   <p-dataTable [value]="unit.registerd_vehicle">
+                        <p-column header="No" [style]="{'width':'42px'}" field="i">
+                        </p-column>
+                        <p-column header="License Plate" field="license_plate">
+                        </p-column>
+                        <p-column header="License Plate" sortable="true" field="owner">
+                        </p-column>
+                        <p-column header="Transponder" field="transponder">
+                        </p-column>
+                        <p-column header="Document" field="document">
+                        </p-column>
+                        <p-column header="Registered On" field="registered_on">
+                        </p-column>
+                        <p-column header="Remarks" field="remarks">
+                        </p-column>
+                        <p-column styleClass="col-button" >
+                            <template let-unit.unit.registerd_vehicle="rowData" pTemplate="body">
+                                    <a type="button" class="btn-underline" (click)="vehicleDetail(unit.unit.registerd_vehicle)">View details</a>
+                                    <button  type="button" (click)="deleteVehicle(unit.registerd_vehicle)"><i class="fa fa-trash" aria-hidden="true"></i></button>
+                            </template>
+                        </p-column>
+                    </p-dataTable>
+                </div><br>
+
+        <div class="row">
+            <modal #firstModal>
+                <modal-header>
+                    <h5>Adding a Resident</h5>
+                </modal-header>
+                <modal-content>
+                    <form name="form" [formGroup]="myForm" novalidate>
+                        <div class="form-group" [ngClass]="{ 'has-error': addSubmitted && !resident }">
+                            <label class="control-label col-sm-4" for="chief">Resident :</label>
+                            <div class="col-sm-8">
+                                <div style="width: 300px; margin-bottom: 20px;">
+                                    <ng-select 
+                                            
+                                              [allowClear]="true"
+                                              [items]="items"
+                                              [disabled]="disabled"
+                                              (data)="refreshValueResident($event)"
+                                              (selected)="selected($event)"
+                                              (removed)="removed($event)"
+                                              placeholder="No Resident selected">
+                                    </ng-select>
+                                    <span *ngIf="addSubmitted && !resident" class="help-block">Resident is required</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group" [ngClass]="{ 'has-error': addSubmitted && !myForm.controls.type.valid }">
+                            <label  class="control-label col-sm-4" for="type">Type :</label>
+                            <div class="col-sm-8">
+                                <input type="text" class="form-control" name="type" formControlName="type">
+                                <small style="color: red" [hidden]="myForm.controls.type.valid || (myForm.controls.type.pristine && !addSubmitted)">Type is required</small>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label  class="control-label col-sm-4" for="full_name">Social Page :</label>
+                            <div class="col-sm-8">
+                                <label><input type="radio" formControlName="social_page" name="social_page" [value]='yes'>Yes</label>
+                                <label><input type="radio" formControlName="social_page" [checked]=true name="social_page" [value]='no'>No</label>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label  class="control-label col-sm-4" for="full_name">Remarks :</label>
+                            <div class="col-sm-8">
+                                <textarea  type="text" class="form-control" name="remarks" formControlName="remarks" placeholder="Remarks here if any"></textarea>
+                            </div>
+                        </div>
+                        <div class="pull-right">
+                            <button  class="btn btn-primary" (click)="addResident(myForm.value, myForm.valid)">Add</button>
+                            <button class="btn btn-default" (click)="firstModal.close()">Cancel</button>
+                        </div>
+                    </form>   
+                </modal-content>
+            </modal>
+        </div>  
+<!-- 
+        <div class="row">
+            <modal #residentDetail>
+                <modal-header *ngIf="resident">
+                    <h5>Resident/Tenant {{ resident.resident }}</h5>
+                </modal-header>
+                <modal-content *ngIf="resident">
+                    <div class="row">
+                        <div class="col-md-4">Resident</div>
+                        <div class="col-md-8"> <p>: {{ resident.Resident }}</p></div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-4">Type</div>
+                        <div class="col-md-8"><p>: {{ resident.type }}</p></div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-4">Added on </div>
+                        <div class="col-md-8"><p>: {{ resident.added_on }}</p></div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-4">Social Page </div>
+                        <div class="col-md-8"><p>: {{ resident.social_page }}</p></div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-4">Remarks </div>
+                        <div class="col-md-8"><p>: {{ resident.remarks }}</p></div>
+                    </div>
+                </modal-content>
+                <modal-footer>
+                      <button class="btn btn-default" (click)="residentDetail.close()">Close</button>
+                </modal-footer>
+            </modal>
+        </div>  
+                  -->
+
+               <!--  <form class="form-horizontal col-md-6" (ngSubmit)="f.form.valid && updateUnit()" name="form" #f="ngForm" novalidate>
+                    <div class="form-group" [ngClass]="{ 'has-error': !unit_no.valid }">
+                        <label class="control-label col-sm-4" for="unit_no">Unit No :</label>
+                        <div class="col-sm-8">
+                            <input type="text" class="form-control" name="unit_no" [(ngModel)]="unit.address.unit_no" #unit_no="ngModel" required />
+                            <span *ngIf="!unit_no.valid" class="help-block">Unit No is required</span>
+                        </div>
+                    </div>
+                    <div class="form-group" [ngClass]="{ 'has-error': !unit_no_2.valid }">
+                        <label class="control-label col-sm-4" for="unit_no_2">Unit No :</label>
+                        <div class="col-sm-8">
+                            <input type="text" class="form-control" name="unit_no_2" [(ngModel)]="unit.address.unit_no_2" #unit_no_2="ngModel" required />
+                            <span *ngIf="!unit_no_2.valid" class="help-block">Unit No 2 is required</span>
+                        </div>
+                    </div>
+                    <div class="form-group" [ngClass]="{ 'has-error': !block_no.valid }">
+                        <label class="control-label col-sm-4" for="block_no">Block No :</label>
+                        <div class="col-sm-8">
+                            <input type="text" class="form-control" name="block_no" [(ngModel)]="unit.address.block_no" #block_no="ngModel" required />
+                            <span *ngIf="!block_no.valid" class="help-block">Block no required</span>
+                        </div>
+                    </div>
+                    <div class="form-group" [ngClass]="{ 'has-error': !street_name.valid }">
+                        <label class="control-label col-sm-4" for="street_name">Street Name :</label>
+                        <div class="col-sm-8">
+                            <input type="text" class="form-control" name="street_name" [(ngModel)]="unit.address.street_name" #street_name="ngModel" required />
+                            <span *ngIf="!street_name.valid" class="help-block">Street name required</span>
+                        </div>
+                    </div>
+                    <div class="form-group" [ngClass]="{ 'has-error': !postal_code.valid }">
+                        <label class="control-label col-sm-4" for="postal_code">Postal code :</label>
+                        <div class="col-sm-8">
+                            <input type="text" class="form-control" name="postal_code" [(ngModel)]="unit.address.postal_code" #postal_code="ngModel" required />
+                            <span *ngIf="!postal_code.valid" class="help-block">Postal code required</span>
+                        </div>
+                    </div>
+                    <div class="form-group" [ngClass]="{ 'has-error': !country.valid }">
+                        <label class="control-label col-sm-4" for="country">Country :</label>
+                        <div class="col-sm-8">
+                            <input type="text" class="form-control" name="country" [(ngModel)]="unit.address.country" #country="ngModel" required />
+                            <span *ngIf="!country.valid" class="help-block">Country required</span>
+                        </div>
+                    </div>
+                    <div class="form-group" [ngClass]="{ 'has-error': !full_address.valid }">
+                        <label class="control-label col-sm-4" for="full_address">Full address :</label>
+                        <div class="col-sm-8">
+                            <textarea type="text" class="form-control" name="full_address" [(ngModel)]="unit.address.full_address" #full_address="ngModel" required ></textarea>
+                            <span *ngIf="!full_address.valid" class="help-block">Full Address required</span>
+                        </div>
+                    </div>
+                    <div class="form-group" [ngClass]="{ 'has-error': !status.valid }">
+                        <label class="control-label col-sm-4" for="status">Status :</label>
+                        <div class="col-sm-8">
+                            <select class="form-control" [(ngModel)]="unit.status" #status="ngModel" name="status">
+                                    <option [selected]="unit.status == 'active' " value="active">Active</option>
+                                    <option [selected]="unit.status == 'inactive' " value="inactive">Inactive</option>
+                            </select>
+                            <span *ngIf="!status.valid" class="help-block">Status required</span>
+                        </div>
+                    </div>
+                    <div class="form-group pull-right">
+                        <button [disabled]="loading" class="btn btn-primary">Save</button>
+                        <img *ngIf="loading" src="data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA==" />
+                        <a [routerLink]="['/unit']" class="btn btn-info">Cancel</a>
+                    </div>
+                </form>    --> 
+    </div>
+</div>

@@ -34,8 +34,8 @@ export const MENUS: any[] = [
   	name: 'Resident Database',
     description: 'Track issuance of access cards, car decal, transponder',
   	sub : [
-  		{ name : 'Browse Database', link: '' },
-  		{ name : 'Add Resident', link: '' },
+  		{ name : 'Browse Database', link :'/unit' },
+  		{ name : 'Add Resident', link: '/unit/add' },
   		{ name : 'Manage Access control', link: '/access_control' }
   	]
   },
@@ -55,7 +55,6 @@ export const MENUS: any[] = [
   		{ name : 'AGM & Circular', link: '/newsletter' },
   		{ name : 'Contact Directory', link: '' },
       { name : 'User', link: '/user' },
-      { name : 'Unit', link: '/unit' },
       { name : 'User Group', link: '/user_group' },
       { name : 'Development', link: '/development' },
       { name : 'Facility', link: '/facility' },
