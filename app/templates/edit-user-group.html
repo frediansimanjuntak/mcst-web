@@ -26,7 +26,6 @@
                                       (data)="refreshValueChief($event)"
                                       (selected)="selected($event)"
                                       (removed)="removed($event)"
-                                      (typed)="typed($event)"
                                       [active] = "[chief]"
                                       placeholder="No chief selected">
                             </ng-select>
@@ -87,7 +86,6 @@
                                       (data)="refreshValueChief($event)"
                                       (selected)="selected($event)"
                                       (removed)="removed($event)"
-                                      (typed)="typed($event)"
                                       placeholder="No chief selected">
                             </ng-select>
                             <span *ngIf="f.submitted && !chiefField" class="help-block">Chef is required</span>

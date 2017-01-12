@@ -194,6 +194,7 @@ export class EditContractorComponent implements OnInit {
 
     updateContractor(){
         if(this.companyField){
+            this.contractor.profile_picture = this.model.profile_picture;
             this.contractor.company = this.company.id;
             console.log(this.company);
             this.router.navigate(['/contractor']);

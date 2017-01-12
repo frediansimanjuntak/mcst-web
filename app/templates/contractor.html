@@ -25,7 +25,7 @@
 					</p-column>
 					<p-column header="Profile Picture">
 					    	<template let-contractors="rowData" pTemplate="body">
-					            <span>{{contractors.profile_picture.name}}</span>
+					            <span *ngIf="contractors.profile_picture">{{contractors.profile_picture.name}}</span>
 					        </template>
 					</p-column>
 					<p-column field="description" header="Description" sortable="true" ></p-column>
@@ -94,7 +94,7 @@
 	        		</div>
 	        		<div class="row">
 	        			<div class="col-md-4">Company Logo </div>
-	        			<div class="col-md-8"><p>: {{ contractor.profile_picture[0] }}</p></div>
+	        			<div class="col-md-8"><p>: {{ contractor.profile_picture.name }}</p></div>
 	        		</div>
 	        		<div class="row">
 	        			<div class="col-md-4">Description </div>

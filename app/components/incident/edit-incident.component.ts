@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Router, Params, ActivatedRoute } from '@angular/router'; 
+import { Router, Params, ActivatedRoute } from '@angular/router';
 import { Incident, Incidents } from '../../models/index';
 import { IncidentService, AlertService } from '../../services/index';
 import { FormBuilder, FormGroup } from '@angular/forms';
@@ -8,12 +8,12 @@ import '../../rxjs-operators';
 import 'rxjs/add/operator/switchMap';
 
 @Component({
-  moduleId: module.id,
+  // moduleId: module.id,
   selector: 'edit-incident',
- templateUrl: '/app/templates/edit-incident.html'
+ templateUrl: 'app/templates/edit-incident.html'
 })
 
-export class EditIncidentComponent implements OnInit { 
+export class EditIncidentComponent implements OnInit {
 	incident: Incident;
     incidents: Incident[] = [];
     model: any = {};
@@ -24,18 +24,18 @@ export class EditIncidentComponent implements OnInit {
         { value: 'general', name: 'General' },
         { value: 'hygiene', name: 'Hygiene' },
         { value: 'damage', name: 'Damage' },
-        
+
     ];
     selectedType = '';
 
     constructor(private router: Router,
     	private incidentService: IncidentService,
     	private alertService: AlertService,
-        private route: ActivatedRoute) {      
+        private route: ActivatedRoute) {
         // this.user = JSON.parse(localStorage.getItem('user'));
     }
 
-    ngOnInit(): void {   
+    ngOnInit(): void {
     	this.selectedType = 'general';
         this.route.params.subscribe(params => {
             this.id = params['id'];
@@ -71,18 +71,18 @@ export class EditIncidentComponent implements OnInit {
                 this.alertService.success('Update incident successful', true);
                 this.router.navigate(['/incident']);
             },
-            error => { 
+            error => {
             	this.alertService.error(error);
             }
         );
 	}
 
     onChange(event: any) {
-       let files = [].slice.call(event.target.files); 
+       let files = [].slice.call(event.target.files);
        this.model.attachment = files;
     }
 
-    remove(i: any){ 
+    remove(i: any){
         this.model.attachment.splice(i, 1)
     }
 }

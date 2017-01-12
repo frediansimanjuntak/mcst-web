@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Router, Params, ActivatedRoute } from '@angular/router'; 
+import { Router, Params, ActivatedRoute } from '@angular/router';
 import { Booking,Facility } from '../../models/index';
 import { BookingService, AlertService, FacilityService } from '../../services/index';
 import '../../rxjs-operators';
@@ -9,9 +9,9 @@ import * as moment from 'moment';
 export var Binformation: any[] = []
 
 @Component({
-  moduleId: module.id,
+  // moduleId: module.id,
   selector: 'edit-booking',
-  templateUrl: '/app/templates/edit-booking.html',
+  templateUrl: 'app/templates/edit-booking.html',
   styles: [`
   	.full button span {
 	    background-color: limegreen;
@@ -55,7 +55,7 @@ export class EditBookingComponent implements OnInit  {
 	booking: Booking;
     bookings: Booking[] = [];
     facilities: Facility[] = [];
-    model: any = {}; 
+    model: any = {};
     start : any;
     loading = false;
     selectedValues: string[] = [];
@@ -85,7 +85,7 @@ export class EditBookingComponent implements OnInit  {
         this.day = this.days[this.dt.getDay()];
         console.log(this.day)
 		this.facilityService.getFacilities()
-		.then(facilities => { 
+		.then(facilities => {
 			this.facilities = facilities;
             this.selectedDay = this.facilities[this.facility_id].schedule.filter(data => data.day == this.day); 
             if (this.selectedDay.length > 0) { 
@@ -113,7 +113,7 @@ export class EditBookingComponent implements OnInit  {
         }else{
         	this.bookingService.getBooking(this.id).then(booking => {this.booking = booking;});
         }
-             
+
     }
 
     private loadAllBookings() {

@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router'; 
+import { Router } from '@angular/router';
 import { Development } from '../../models/index';
 import { UnitService, AlertService} from '../../services/index';
 import '../../rxjs-operators';
@@ -7,21 +7,21 @@ import {NG_TABLE_DIRECTIVES}    from 'ng2-table/ng2-table'
 import { Observable} from 'rxjs/Observable';
 
 @Component({
-  moduleId: module.id,
+  // moduleId: module.id,
   selector: 'unit',
-  templateUrl: '/app/templates/unit.html',
+  templateUrl: 'app/templates/unit.html',
   // styleUrls: [ '../../templates/styles/un.css' ]
 })
 
-export class UnitComponent implements OnInit { 
+export class UnitComponent implements OnInit {
 	  unit: Development;
     development: any;
     units: Development[] = [];
     model: any = {};
     cols: any[];
     public developmentId;
-    public data; 
-    public dataUnit; 
+    public data;
+    public dataUnit;
     public filterQuery = "";
     public rowsOnPage = 10;
     public sortBy = "email";
@@ -45,11 +45,11 @@ export class UnitComponent implements OnInit {
 
     deleteUnit(unit: any) {
       console.log(unit);
-        this.unitservice.delete(unit._id, this.developmentId) 
+        this.unitservice.delete(unit._id, this.developmentId)
           .then(
             response => {
-              if(response) { 
-                console.log(response);  
+              if(response) {
+                console.log(response);
                 // console.log(response.error());
                 alert(`The Unit could not be deleted, server Error.`);
               } else {
@@ -58,7 +58,7 @@ export class UnitComponent implements OnInit {
                 this.ngOnInit()
               }
             },
-            error=> { 
+            error=> {
               console.log(error);
                 alert(`The Unit could not be deleted, server Error.`);
             }
@@ -71,12 +71,12 @@ export class UnitComponent implements OnInit {
         this.dataUnit = development[0].properties
 
       });
-     
+
         // this.unitservice.getDevelopments()
         //     .subscribe((data)=> {
         //         setTimeout(()=> {
         //             this.data          =   data.find(data => data._id === "1" );
-        //             this.dataUnit       = this.data.properties; 
+        //             this.dataUnit       = this.data.properties;
         //             console.log(this.dataUnit);
         //         }, 1000);
         //     });
@@ -89,5 +89,5 @@ export class UnitComponent implements OnInit {
         this.router.navigate(['/unit/edit', unit._id]);
     }
 
- 
+
 }

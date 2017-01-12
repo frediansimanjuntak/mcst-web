@@ -8,10 +8,10 @@ import 'rxjs/add/operator/switchMap';
 import '../../rxjs-operators';
 
 @Component({
-    moduleId: module.id,
-    templateUrl: '/app/templates/edit-user.html',
+    // moduleId: module.id,
+    templateUrl: 'app/templates/edit-user.html',
 })
- 
+
 export class EditUserComponent implements OnInit {
      @Input('group')
     user: User;
@@ -23,7 +23,7 @@ export class EditUserComponent implements OnInit {
     myForm: FormGroup;
     public submitted: boolean;
     // developmentID: string;
- 
+
     constructor(private router: Router,
         private userService: UserService,
         private route: ActivatedRoute,
@@ -55,9 +55,9 @@ export class EditUserComponent implements OnInit {
             active: ['', Validators.required],
             default_development: [''],
             authorized_development: ['']
-            
+
         });
-        let self = this; 
+        let self = this;
         this.unitService.getDevelopment("1")
             .then(unit => {
                 self.unit = unit;
@@ -65,7 +65,7 @@ export class EditUserComponent implements OnInit {
         this.route.params.subscribe(params => {
             this.id = params['id'];
         });
-        
+
         if( this.id != null) {
             this.userService.getUser(this.id)
             .then(user => {
@@ -102,7 +102,7 @@ export class EditUserComponent implements OnInit {
                     default_development: [''],
                     authorized_development: [''],
                     user_group : [''],
-                    created_at : [''],      
+                    created_at : [''],
                 });
                 for (let entry of this.user.owned_property) {
                     const control = <FormArray>this.myForm.controls['owned_property'];
@@ -112,12 +112,12 @@ export class EditUserComponent implements OnInit {
                     const control = <FormArray>this.myForm.controls['authorized_property'];
                     control.push(this.initAuthorized());
                 }
-                this.myForm.setValue(this.user); 
+                this.myForm.setValue(this.user);
             });
         };
-        
-            
-        
+
+
+
         // this.developmentService.getAll().subscribe(developments => { this.developments = developments; });
     }
 
@@ -138,9 +138,9 @@ export class EditUserComponent implements OnInit {
     addOwned() {
         const control = <FormArray>this.myForm.controls['owned_property'];
         const ownedCtrl = this.initOwned();
-        
+
         control.push(ownedCtrl);
-        
+
         /* subscribe to individual address value changes */
         // addrCtrl.valueChanges.subscribe(x => {
         //   console.log(x);
@@ -155,9 +155,9 @@ export class EditUserComponent implements OnInit {
     addAuthorized() {
         const control = <FormArray>this.myForm.controls['authorized_property'];
         const authCtrl = this.initAuthorized();
-        
+
         control.push(authCtrl);
-        
+
         /* subscribe to individual address value changes */
         // addrCtrl.valueChanges.subscribe(x => {
         //   console.log(x);
@@ -168,7 +168,7 @@ export class EditUserComponent implements OnInit {
         const control = <FormArray>this.myForm.controls['authorized_property'];
         control.removeAt(i);
     }
-        
+
     createUser(model:User , isValid: boolean) {
         this.submitted = true;
         console.log(model)
@@ -194,7 +194,7 @@ export class EditUserComponent implements OnInit {
         //         this.alertService.success('Update User successful', true);
         //         this.router.navigate(['/user']);
 	       //  },
-        //     error=> { 
+        //     error=> {
         //     	this.alertService.error(error);
         //     }
         // );

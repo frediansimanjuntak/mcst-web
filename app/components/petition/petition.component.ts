@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewContainerRef, ViewEncapsulation } from '@angular/core';
-import { Router, Params, ActivatedRoute } from '@angular/router'; 
+import { Router, Params, ActivatedRoute } from '@angular/router';
 import { Petition } from '../../models/index';
 import { PetitionService, AlertService} from '../../services/index';
 import '../../rxjs-operators';
@@ -13,12 +13,12 @@ import * as $ from "jquery";
 
 
 @Component({
-  moduleId: module.id,
+  // moduleId: module.id,
   selector: 'petition',
-  templateUrl: '/app/templates/petition.html',
+  templateUrl: 'app/templates/petition.html',
 })
 
-export class PetitionComponent implements OnInit { 
+export class PetitionComponent implements OnInit {
 	petition: Petition;
     petitions: Petition[] = [];
     validTillDateOptions: any = {};
@@ -31,8 +31,8 @@ export class PetitionComponent implements OnInit {
     public developmentId;
     public data;
     public petitionPending;
-    public petitionProgress; 
-    public petitionApproved; 
+    public petitionProgress;
+    public petitionApproved;
     public filterQuery = "";
     public rowsOnPage = 10;
     public sortBy = "email";
@@ -41,14 +41,14 @@ export class PetitionComponent implements OnInit {
     public afterTomorrow: Date;
     constructor(
                 private router: Router,
-                private petitionService: PetitionService, 
+                private petitionService: PetitionService,
                 private alertService: AlertService,
                 private route: ActivatedRoute,
                 private location: Location
                 ) {
     (this.tomorrow = new Date()).setDate(this.tomorrow.getDate() - 7);
     (this.afterTomorrow = new Date()).setDate(this.tomorrow.getDate() + 2);
-         
+
     }
 
     ngOnInit(): void {
@@ -79,10 +79,10 @@ export class PetitionComponent implements OnInit {
 
     deletePetition(petition) {
       console.log(petition);
-        // this.announcementService.delete(announcement._id) 
+        // this.announcementService.delete(announcement._id)
         //   .then(
         //     response => {
-        //       if(response) { 
+        //       if(response) {
         //         console.log(response);
         //         // console.log(response.error());
         //         alert(`The Newsletter could not be deleted, server Error.`);
@@ -92,17 +92,17 @@ export class PetitionComponent implements OnInit {
         //         this.ngOnInit()
         //       }
         //     },
-        //     error=> { 
+        //     error=> {
         //       console.log(error);
         //         alert(`The Newsletter could not be deleted, server Error.`);
         //     }
         // );
     }
 
-    
+
 
     openModal(announcement){
-       
+
     }
 
 	private loadAllPetitions() {
@@ -111,15 +111,15 @@ export class PetitionComponent implements OnInit {
         //     .subscribe((data)=> {
         //         setTimeout(()=> {
         //             this.data          = data.find(data => data._id === this.developmentId );
-        //             this.dataAgm       = this.data.newsletter.filter(data => data.type === 'agm' ); 
-        //             this.dataCircular  = this.data.newsletter.filter(data => data.type === 'circular' ); 
+        //             this.dataAgm       = this.data.newsletter.filter(data => data.type === 'agm' );
+        //             this.dataCircular  = this.data.newsletter.filter(data => data.type === 'circular' );
         //             console.log(this.dataAgm);
         //         }, 1000);
         //     });
 
         this.petitionService.getPetitions().then(data => {
             this.petitions         = data;
-            this.petitionPending   = this.petitions.filter(data => data.status === 'pending' ); 
+            this.petitionPending   = this.petitions.filter(data => data.status === 'pending' );
             this.petitionProgress  = this.petitions.filter(data => data.status === 'progress' );
             this.petitionApproved  = this.petitions.filter(data => data.status === 'approved' );
 		});
@@ -131,7 +131,7 @@ export class PetitionComponent implements OnInit {
         {title: 'Dynamic Title 3', content: 'Dynamic content 3', removable: true},
         {title: 'Dynamic Title 4', content: 'Dynamic content 4', customClass: 'customClass'}
     ];
-     
+
     public setActiveTab(index:number):void {
         this.tabs[index].active = true;
     };

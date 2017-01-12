@@ -1,5 +1,5 @@
 import { Component, OnInit, Input }from '@angular/core';
-import { Router, Params, ActivatedRoute } from '@angular/router'; 
+import { Router, Params, ActivatedRoute } from '@angular/router';
 import { Announcement, Announcements } from '../../models/index';
 import { AnnouncementService, AlertService } from '../../services/index';
 import { FormBuilder, FormGroup, FormControl, FormArray, Validators } from '@angular/forms';
@@ -7,12 +7,12 @@ import '../../rxjs-operators';
 import 'rxjs/add/operator/switchMap';
 
 @Component({
-  moduleId: module.id,
+  // moduleId: module.id,
   selector: 'edit-announcement',
-  templateUrl: '/app/templates/edit-announcement.html'
+  templateUrl: 'app/templates/edit-announcement.html'
 })
 
-export class EditAnnouncementComponent  { 
+export class EditAnnouncementComponent  {
     @Input('group')
 	announcement: Announcement;
     model: any = {};
@@ -20,15 +20,15 @@ export class EditAnnouncementComponent  {
     id: string;
     autoPostOnDateOptions: any = {};
     validTillDateOptions: any = {};
-    
 
-   
+
+
     constructor(private router: Router,
     	private anouncementService: AnnouncementService,
     	private alertService: AlertService,
         private formbuilder: FormBuilder,
         private route: ActivatedRoute ) {
-        
+
         // this.user = JSON.parse(localStorage.getItem('user'));
     }
 
@@ -82,7 +82,7 @@ export class EditAnnouncementComponent  {
                         }else{
                             this.model.valid_till = "";
                         }
-                        
+
                     });
         };
     }
@@ -137,7 +137,7 @@ export class EditAnnouncementComponent  {
 		// this.anouncementService.update(this.model)
 		// .subscribe(
 		// 	response => {
-		// 		if(response.error) { 
+		// 		if(response.error) {
 	 //                this.alertService.error(response.error);
 	 //            } else {
 	 //                // EmitterService.get(this.userList).emit(response.users);
@@ -145,7 +145,7 @@ export class EditAnnouncementComponent  {
   //                    this.router.navigate(['/newsletter']);
 	 //            }
   //           },
-  //           error=> { 
+  //           error=> {
   //           	this.alertService.error(error);
   //           }
   //       );
