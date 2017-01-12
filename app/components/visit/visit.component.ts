@@ -16,7 +16,7 @@ import * as $ from "jquery";
 @Component({
   moduleId: module.id.replace("/dist/", "/"),
   selector: 'visit',
-  templateUrl: '/app/templates/visit.html',
+  templateUrl: 'app/templates/visit.html',
   
 })
 

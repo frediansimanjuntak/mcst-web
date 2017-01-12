@@ -10,7 +10,7 @@ import { Observable} from 'rxjs/Observable';
   // moduleId: module.id,
   selector: 'unit',
   templateUrl: 'app/templates/unit.html',
-  // styleUrls: [ '../../templates/styles/un.css' ]
+  // styleUrls: [ 'app/templates/styles/un.css' ]
 })
 
 export class UnitComponent implements OnInit {
