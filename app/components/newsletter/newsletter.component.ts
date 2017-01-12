@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router'; 
+import { Router } from '@angular/router';
 import { Development } from '../../models/index';
 import { NewsletterService, AlertService} from '../../services/index';
 import '../../rxjs-operators';
@@ -8,13 +8,13 @@ import {NG_TABLE_DIRECTIVES}    from 'ng2-table/ng2-table'
 import { Observable} from 'rxjs/Observable';
 
 @Component({
-  moduleId: module.id,
+  // moduleId: module.id,
   selector: 'newsletter',
-  templateUrl: '/app/templates/newsletter.html',
-  styleUrls: [ '/app/templates/styles/newsletter.css' ]
+  templateUrl: 'app/templates/newsletter.html',
+  styleUrls: [ 'app/templates/styles/newsletter.css' ]
 })
 
-export class NewsletterComponent implements OnInit { 
+export class NewsletterComponent implements OnInit {
 	  newsletter: Development;
     newsletters: Development[] = [];
     model: any = {};
@@ -22,7 +22,7 @@ export class NewsletterComponent implements OnInit {
     public developmentId;
     public data;
     public dataAgm;
-    public dataCircular;    
+    public dataCircular;
     public filterQuery = "";
     public rowsOnPage = 10;
     public sortBy = "email";
@@ -45,10 +45,10 @@ export class NewsletterComponent implements OnInit {
     }
 
     deleteNewsletter(newsletter: any) {
-        this.newsletterservice.delete(newsletter._id, this.developmentId) 
+        this.newsletterservice.delete(newsletter._id, this.developmentId)
           .then(
             response => {
-              if(response) { 
+              if(response) {
                 console.log(response);
                 // console.log(response.error());
                 alert(`The Newsletter could not be deleted, server Error.`);
@@ -58,7 +58,7 @@ export class NewsletterComponent implements OnInit {
                 this.ngOnInit()
               }
             },
-            error=> { 
+            error=> {
               console.log(error);
                 alert(`The Newsletter could not be deleted, server Error.`);
             }
@@ -67,10 +67,10 @@ export class NewsletterComponent implements OnInit {
 
     releaseNewsletter(newsletter: any){
       console.log(newsletter);
-      this.newsletterservice.release(newsletter._id, this.developmentId) 
+      this.newsletterservice.release(newsletter._id, this.developmentId)
           .then(
             response => {
-              if(response) { 
+              if(response) {
                 console.log(response);
                 // console.log(response.error());
                 alert(`The Newsletter could not be release, server Error.`);
@@ -80,7 +80,7 @@ export class NewsletterComponent implements OnInit {
                 this.ngOnInit()
               }
             },
-            error=> { 
+            error=> {
               console.log(error);
                 alert(`The Newsletter could not be release, server Error.`);
             }
@@ -92,8 +92,8 @@ export class NewsletterComponent implements OnInit {
             .subscribe((data)=> {
                 setTimeout(()=> {
                     this.data          = data.find(data => data._id === this.developmentId );
-                    this.dataAgm       = this.data.newsletter.filter(data => data.type === 'agm' ); 
-                    this.dataCircular  = this.data.newsletter.filter(data => data.type === 'circular' ); 
+                    this.dataAgm       = this.data.newsletter.filter(data => data.type === 'agm' );
+                    this.dataCircular  = this.data.newsletter.filter(data => data.type === 'circular' );
                     console.log(this.dataAgm);
                 }, 1000);
             });
@@ -105,7 +105,7 @@ export class NewsletterComponent implements OnInit {
         {title: 'Dynamic Title 3', content: 'Dynamic content 3', removable: true},
         {title: 'Dynamic Title 4', content: 'Dynamic content 4', customClass: 'customClass'}
     ];
-     
+
     public setActiveTab(index:number):void {
         this.tabs[index].active = true;
     };
@@ -231,7 +231,7 @@ export class NewsletterComponent implements OnInit {
   //           this.length = sortedData.length;
   //       })
 
-  
+
   // }
 
   // public onCellClick(data: any): any {

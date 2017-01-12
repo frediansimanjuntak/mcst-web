@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router'; 
+import { Router } from '@angular/router';
 import { UserGroup, User } from '../../models/index';
 import { UserGroupService, UserService, AlertService} from '../../services/index';
 import '../../rxjs-operators';
@@ -8,12 +8,12 @@ import {NG_TABLE_DIRECTIVES}    from 'ng2-table/ng2-table'
 import { Observable} from 'rxjs/Observable';
 
 @Component({
-  moduleId: module.id,
+  // moduleId: module.id,
   selector: 'user-group',
-  templateUrl: '/app/templates/user-group.html',
+  templateUrl: 'app/templates/user-group.html',
 })
 
-export class UserGroupComponent implements OnInit { 
+export class UserGroupComponent implements OnInit {
 	usergroup: any;
     usergroups: UserGroup[] = [];
     users: User[] = [];
@@ -22,7 +22,7 @@ export class UserGroupComponent implements OnInit {
     public developmentId;
     public data;
     public dataAgm;
-    public dataCircular;    
+    public dataCircular;
     public filterQuery = "";
     public rowsOnPage = 10;
     public sortBy = "email";
@@ -31,7 +31,7 @@ export class UserGroupComponent implements OnInit {
     constructor(
                 private router: Router,
                 private userGroupService: UserGroupService,
-    			private userService: UserService, 
+    			private userService: UserService,
     			private alertService: AlertService) {
     }
 
@@ -39,7 +39,7 @@ export class UserGroupComponent implements OnInit {
         this.developmentId = '585b36585d3cc41224fe518a';
         this.loadAllUserGroup();
         this.getUsers();
-        	
+
         // for (var i = 0; i < this.usergroups.length ; i++) {
         // 	Things[i]
         // }
@@ -56,18 +56,18 @@ export class UserGroupComponent implements OnInit {
 
     deleteUserGroup(usergroup: UserGroup) {
         console.log(usergroup);
-        this.userGroupService.delete(usergroup._id) 
+        this.userGroupService.delete(usergroup._id)
         // .subscribe(() => { this.loadAllUsers() });
         .then(
             response => {
-                if(response) { 
+                if(response) {
                     alert(`The Usergroup could not be deleted, server Error.`);
                 } else {
                     this.alertService.success('Delete usergroup successful', true);
                     this.loadAllUserGroup()
                 }
             },
-            error=> { 
+            error=> {
                 alert(`The USergroup could not be deleted, server Error.`);
             }
         );

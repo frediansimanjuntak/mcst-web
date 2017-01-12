@@ -1,5 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { Router, Params, ActivatedRoute } from '@angular/router'; 
+import { Router, Params, ActivatedRoute } from '@angular/router';
 import { FormBuilder, FormControl, FormGroup, FormArray, Validators } from '@angular/forms';
 import { Company, Companies, Contractor, Contractors } from '../../models/index';
 import { CompanyService, UserService, ContractorService, AlertService } from '../../services/index';
@@ -7,18 +7,18 @@ import '../../rxjs-operators';
 import 'rxjs/add/operator/switchMap';
 
 @Component({
-  moduleId: module.id.replace("/dist/", "/"),
+  // moduleId: module.id,
   selector: 'edit-company',
-  templateUrl: '/app/templates/edit-company.html',
-  styleUrls: [ '../../templates/styles/ng2-select.css' ]
+  templateUrl: 'app/templates/edit-company.html',
+  styleUrls: [ 'app/templates/styles/ng2-select.css' ]
 })
 
-export class EditCompanyComponent implements OnInit { 
+export class EditCompanyComponent implements OnInit {
     public items:Array<any> = [];
 
     private contractor:any = [];
     private chief :any = {};
-    public chiefField: boolean; 
+    public chiefField: boolean;
     private _disabledV:string = '0';
     private disabled:boolean = false;
 
@@ -35,7 +35,7 @@ export class EditCompanyComponent implements OnInit {
 
     public submitted: boolean; // keep track on whether form is submitted
     public events: any[] = []; // use later to display form changes
-    
+
     constructor(private router: Router,
     	private companyService: CompanyService,
     	private contractorService: ContractorService,
@@ -80,7 +80,7 @@ export class EditCompanyComponent implements OnInit {
 						this.chief.text = this.contractors.find(myObj => myObj._id ===  this.company.chief ).username;
                         this.chief.id = this.company.chief;
                         this.chiefField = true;
-                        
+
                         // for (let i = 0; i < this.usergroup.users.length; i++) {
                         //     this.user[i].text = this.users.find(myObj => myObj._id ===  this.usergroup.users[i] ).username;
                         //     this.user[i].id = this.usergroup.users[i];
@@ -100,7 +100,7 @@ export class EditCompanyComponent implements OnInit {
                        
                     });
         };
-        
+
     }
 
 
@@ -160,7 +160,7 @@ export class EditCompanyComponent implements OnInit {
             }
 
             this.myOptions = opts.slice(0);
-            this.items = this.myOptions; 
+            this.items = this.myOptions;
         });
     }
 
@@ -168,9 +168,9 @@ export class EditCompanyComponent implements OnInit {
     addUser() {
         const control = <FormArray>this.myForm.controls['users'];
         const userCtrl = this.initUser();
-        
+
         control.push(userCtrl);
-        
+
         /* subscribe to individual address value changes */
         // addrCtrl.valueChanges.subscribe(x => {
         //   console.log(x);
@@ -183,7 +183,7 @@ export class EditCompanyComponent implements OnInit {
     }
 
     onChange(event: any) {
-       let files = [].slice.call(event.target.files); 
+       let files = [].slice.call(event.target.files);
        this.model.company_logo = files;
     }
 
@@ -243,7 +243,7 @@ export class EditCompanyComponent implements OnInit {
     //             this.alertService.success('Update Usergroup successful', true);
     //             this.router.navigate(['/user']);
     //         },
-    //         error=> { 
+    //         error=> {
     //             this.alertService.error(error);
     //         }
     //     );

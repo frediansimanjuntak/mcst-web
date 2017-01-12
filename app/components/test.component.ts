@@ -18,13 +18,13 @@ export class Model {
     createdAt : string
 }
 @Component({
-  moduleId: module.id,
+  // moduleId: module.id,
   selector: 'newsletter',
-  templateUrl: '/app/templates/test.html',
-  styleUrls: [ '/app/templates/styles/newsletter.css' ],
+  templateUrl: 'app/templates/test.html',
+  styleUrls: [ 'app/templates/styles/newsletter.css' ],
 })
 
-export class TestComponent implements OnInit{ 
+export class TestComponent implements OnInit{
 
 	model: any = {};
     models: Model[];
@@ -50,7 +50,7 @@ export class TestComponent implements OnInit{
      // Array of strings for multi select, string for single select.
 
 
-	constructor(private cd: ChangeDetectorRef, private http: Http, private testService:TestService) { 
+	constructor(private cd: ChangeDetectorRef, private http: Http, private testService:TestService) {
         let numOptions = 100;
         let opts = new Array(numOptions);
 
@@ -65,7 +65,7 @@ export class TestComponent implements OnInit{
          this.filesToUpload = [];
     }
 
-    
+
 
     selected(imageResult: ImageResult) {
         this.src = imageResult.resized
@@ -74,7 +74,7 @@ export class TestComponent implements OnInit{
     }
 
 
-	
+
 	ngOnInit() {
         this.loadAllUsers()
         this.events = [
@@ -102,10 +102,10 @@ export class TestComponent implements OnInit{
             }
         ];
 
-        
 
 
-       
+
+
          this.myOptions = [
             {value: 'a', label: 'Alpha'},
             {value: 'b', label: 'Beta'},
@@ -114,31 +114,31 @@ export class TestComponent implements OnInit{
         this.mySelectValue = ['b', 'c'];
     }
 
-    
+
 
     private loadAllUsers() {
         this.testService.getAll().subscribe(models => { this.models = models; console.log(models) });
-    }    
+    }
 
     handleDayClick(event) {
         this.event = new MyEvent();
         this.event.start = event.date.format();
         this.dialogVisible = true;
-        
+
         //trigger detection manually as somehow only moving the mouse quickly after click triggers the automatic detection
         this.cd.detectChanges();
     }
-    
+
     handleEventClick(e) {
         this.event = new MyEvent();
         this.event.title = e.calEvent.title;
-        
+
         let start = e.calEvent.start;
         let end = e.calEvent.end;
         if(e.view.name === 'month') {
             start.stripTime();
         }
-        
+
         if(end) {
             end.stripTime();
             this.event.end = end.format();
@@ -149,7 +149,7 @@ export class TestComponent implements OnInit{
         this.event.allDay = e.calEvent.allDay;
         this.dialogVisible = true;
     }
-    
+
     saveEvent() {
         //update
         if(this.event.id) {
@@ -164,10 +164,10 @@ export class TestComponent implements OnInit{
             this.events.push(this.event);
             this.event = null;
         }
-        
+
         this.dialogVisible = false;
     }
-    
+
     deleteEvent() {
         let index: number = this.findEventIndexById(this.event.id);
         if(index >= 0) {
@@ -175,7 +175,7 @@ export class TestComponent implements OnInit{
         }
         this.dialogVisible = false;
     }
-    
+
     findEventIndexById(id: number) {
         let index = -1;
         for(let i = 0; i < this.events.length; i++) {
@@ -184,20 +184,20 @@ export class TestComponent implements OnInit{
                 break;
             }
         }
-        
+
         return index;
     }
 
 	Save() {
 		// let a = this.filesToUpload.length;
 		// for (let i = 0; i < a; i++) {
-  //           this.model.attachment = this.filesToUpload[i]	       
-		// }	
+  //           this.model.attachment = this.filesToUpload[i]
+		// }
         this.model.attachment = this.filesToUpload;
         console.log(this.makeFileRequest);
         console.log(this.filesToUpload);
         console.log(this.model);
-        
+
     }
 
     onChange(event: any, input: any, a:any) {
@@ -214,7 +214,7 @@ export class TestComponent implements OnInit{
             console.error(error);
         });
     }
- 
+
     fileChangeEvent(fileInput: any){
         this.filesToUpload = <Array<File>> fileInput.target.files;
         this.model.attachment = this.filesToUpload;
@@ -241,7 +241,7 @@ export class TestComponent implements OnInit{
         });
     }
 
-    remove(i: any){ 
+    remove(i: any){
         this.model.attachment.splice(i, 1)
     }
 }

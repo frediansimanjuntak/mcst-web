@@ -1,0 +1,84 @@
+<div class="container">
+    <div class="main">
+    	<div class="title">
+			MANAGE PROJECTS
+		</div>
+		Home > Manage Projects
+		<div class="row">
+			<div class="col-md-4 pull-right">
+				<a class="btn btn-default pull-right" (click)="add()">
+				<i class="fa fa-plus" aria-hidden="true"></i>&nbsp;Add Projects</a>	  		
+			</div>
+		</div>
+		<div (click)="$event.preventDefault()">
+		  	<tabset>
+			  	<!-- ALL -->
+			    <tab heading="All">
+			    	<p-dataTable [value]="contracts" [rows]="10" [paginator]="true">
+					    <p-column field="title" header="Project Title" sortable="true" [filter]="true" filterPlaceholder="Search Project Title"></p-column>
+					    <p-column field="start_time" header="Commence on" sortable="true" [filter]="true" filterPlaceholder="Search Commence on"></p-column>
+					    <p-column field="end_time" header="Estimated Completion" sortable="true" [filter]="true" filterPlaceholder="Search Estimated Completion"></p-column>
+					    <p-column field="remark" header="Remarks" sortable="true" [filter]="true" filterPlaceholder="Search Remark"></p-column>
+					    <p-column field="status" header="Status" sortable="true" [filter]="true" filterPlaceholder="Search Status"></p-column>
+					    <p-column field="" header="Created/Update" sortable="true" [filter]="true" filterPlaceholder="Search Issued on">
+					    	<template let-contacts="rowData" pTemplate="body">
+					            <span>Created:{{contracts.created_at}}</span>
+					            <span>Latest:{{contracts.updated_at}}</span>
+					        </template>
+					    </p-column>
+					    <p-column styleClass="col-button" header="action">
+					    	<template let-contacts="rowData" pTemplate="body">
+					    		<a type="button" style="cursor:pointer" (click)="edit(contracts)">See Details</a>
+								<button type="button" (click)="deleteContract(contracts)">Remove</button>
+					    	</template>
+					    </p-column>
+					</p-dataTable>
+			    </tab>
+			    <!-- OPEN -->
+			    <tab heading="Open">
+			    	<p-dataTable [value]="open" [rows]="10" [paginator]="true">
+					    <p-column field="title" header="Project Title" sortable="true" [filter]="true" filterPlaceholder="Search Project Title"></p-column>
+					    <p-column field="start_time" header="Commence on" sortable="true" [filter]="true" filterPlaceholder="Search Commence on"></p-column>
+					    <p-column field="end_time" header="Estimated Completion" sortable="true" [filter]="true" filterPlaceholder="Search Estimated Completion"></p-column>
+					    <p-column field="remark" header="Remarks" sortable="true" [filter]="true" filterPlaceholder="Search Remark"></p-column>
+					    <p-column field="status" header="Status" sortable="true" [filter]="true" filterPlaceholder="Search Status"></p-column>
+					    <p-column field="" header="Created/Update" sortable="true" [filter]="true" filterPlaceholder="Search Issued on">
+					    	<template let-open="rowData" pTemplate="body">
+					            <span>Created:{{open.created_at}}</span>
+					            <span>Latest:{{open.updated_at}}</span>
+					        </template>
+					    </p-column>
+					    <p-column styleClass="col-button" header="action">
+					    	<template let-open="rowData" pTemplate="body">
+					    		<a type="button" style="cursor:pointer" (click)="edit(open)">See Details</a>
+								<button type="button" (click)="deleteContract(open)">Remove</button>
+					    	</template>
+					    </p-column>
+					</p-dataTable>
+			    </tab>
+			    <!-- CLOSE -->
+			    <tab heading="Close">
+			    	<p-dataTable [value]="close" [rows]="10" [paginator]="true">
+					    <p-column field="title" header="Project Title" sortable="true" [filter]="true" filterPlaceholder="Search Project Title"></p-column>
+					    <p-column field="start_time" header="Commence on" sortable="true" [filter]="true" filterPlaceholder="Search Commence on"></p-column>
+					    <p-column field="end_time" header="Estimated Completion" sortable="true" [filter]="true" filterPlaceholder="Search Estimated Completion"></p-column>
+					    <p-column field="remark" header="Remarks" sortable="true" [filter]="true" filterPlaceholder="Search Remark"></p-column>
+					    <p-column field="status" header="Status" sortable="true" [filter]="true" filterPlaceholder="Search Status"></p-column>
+					    <p-column field="" header="Created/Update" sortable="true" [filter]="true" filterPlaceholder="Search Issued on">
+					    	<template let-close="rowData" pTemplate="body">
+					            <span>Created:{{close.created_at}}</span>
+					            <span>Latest:{{close.updated_at}}</span>
+					        </template>
+					    </p-column>
+					    <p-column styleClass="col-button" header="action">
+					    	<template let-close="rowData" pTemplate="body">
+					    		<a type="button" style="cursor:pointer" (click)="edit(close)">See Details</a>
+								<button type="button" (click)="deleteContract(close)">Remove</button>
+					    	</template>
+					    </p-column>
+					</p-dataTable>
+			    </tab>
+		  	</tabset>
+		</div>
+    </div>
+</div>

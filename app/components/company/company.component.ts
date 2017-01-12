@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewContainerRef, ViewEncapsulation, ViewChild } from '@angular/core';
-import { Router } from '@angular/router'; 
+import { Router } from '@angular/router';
 import { Company, Companies } from '../../models/index';
 import { CompanyService, AlertService} from '../../services/index';
 import '../../rxjs-operators';
@@ -12,12 +12,12 @@ import * as $ from "jquery";
 
 
 @Component({
-  moduleId: module.id,
+  // moduleId: module.id,
   selector: 'company',
-  templateUrl: '/app/templates/company.html',
+  templateUrl: 'app/templates/company.html',
 })
 
-export class CompanyComponent implements OnInit { 
+export class CompanyComponent implements OnInit {
 	@ViewChild('deactiveModal') deactiveModal;
 	@ViewChild('activeModal') activeModal;
 	company: Company;
@@ -26,7 +26,7 @@ export class CompanyComponent implements OnInit {
     model: any = {};
     cols: any[];
     public developmentId;
-    public data; 
+    public data;
     public filterQuery = "";
     public rowsOnPage = 10;
     public sortBy = "email";
@@ -35,10 +35,10 @@ export class CompanyComponent implements OnInit {
     stickyStatus: string;
     constructor(
                 private router: Router,
-                private companyService: CompanyService, 
+                private companyService: CompanyService,
                 private alertService: AlertService,
                 ) {
-         
+
     }
 
     ngOnInit(): void {
@@ -56,10 +56,10 @@ export class CompanyComponent implements OnInit {
 
     deleteCompany(company) {
       console.log(company);
-        // this.announcementService.delete(announcement._id) 
+        // this.announcementService.delete(announcement._id)
         //   .then(
         //     response => {
-        //       if(response) { 
+        //       if(response) {
         //         console.log(response);
         //         // console.log(response.error());
         //         alert(`The Newsletter could not be deleted, server Error.`);
@@ -69,14 +69,14 @@ export class CompanyComponent implements OnInit {
         //         this.ngOnInit()
         //       }
         //     },
-        //     error=> { 
+        //     error=> {
         //       console.log(error);
         //         alert(`The Newsletter could not be deleted, server Error.`);
         //     }
         // );
     }
 
-    
+
 
     openModal(company: Company){
         this.company = company;
@@ -98,8 +98,8 @@ export class CompanyComponent implements OnInit {
         //     .subscribe((data)=> {
         //         setTimeout(()=> {
         //             this.data          = data.find(data => data._id === this.developmentId );
-        //             this.dataAgm       = this.data.newsletter.filter(data => data.type === 'agm' ); 
-        //             this.dataCircular  = this.data.newsletter.filter(data => data.type === 'circular' ); 
+        //             this.dataAgm       = this.data.newsletter.filter(data => data.type === 'agm' );
+        //             this.dataCircular  = this.data.newsletter.filter(data => data.type === 'circular' );
         //             console.log(this.dataAgm);
         //         }, 1000);
         //     });
