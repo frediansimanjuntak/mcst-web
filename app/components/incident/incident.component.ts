@@ -3,7 +3,7 @@ import { Router, Params, ActivatedRoute } from '@angular/router';
 import { Incident } from '../../models/index';
 import { IncidentService, AlertService } from '../../services/index';
 import '../../rxjs-operators';
-import { Observable} from 'rxjs/Observable';
+import { Observable } from 'rxjs/Observable';
 import { FileUploader } from 'ng2-file-upload';
 
 @Component({
@@ -91,6 +91,14 @@ export class IncidentComponent implements OnInit {
 
     add(){
         this.router.navigate(['/incident/add']);
+    }
+
+    add_project(reference_no:any){
+        this.router.navigate(['/contract/add',reference_no]);
+    }
+
+    archive(id:any){
+        console.log(id)
     }
 
     onClick(incident:Incident) {

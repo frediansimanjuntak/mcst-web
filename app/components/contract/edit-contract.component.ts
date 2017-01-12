@@ -6,7 +6,7 @@ import '../../rxjs-operators';
 import 'rxjs/add/operator/switchMap';
 
 @Component({
-  moduleId: module.id,
+  // moduleId: module.id,
   selector: 'edit-contract',
   templateUrl: 'app/templates/edit-contract.html',
 })
@@ -26,6 +26,7 @@ export class EditContractComponent  implements OnInit {
         this.route.params.subscribe(params => {
             this.id = params['id'];
         });
+        this.model.reference_no = this.id;
         if( this.id != null) {
             this.contractService.getById(this.id).subscribe(contract => this.contract = contract);
         }
