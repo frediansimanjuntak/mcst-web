@@ -28,7 +28,7 @@ export class Contract {
   updated_at : string;
   created_at : string;
 }
-export var Contractors: any[] = [{
+export var Contracts: any[] = [{
   _id : "1",
   reference_no : "B123",
   development : "1",
