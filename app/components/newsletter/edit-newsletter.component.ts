@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { Router } from '@angular/router'; 
+import { Router } from '@angular/router';
 import { Development } from '../../models/index';
 import { NewsletterService, AlertService } from '../../services/index';
 import { FormBuilder, FormGroup } from '@angular/forms';
@@ -10,25 +10,25 @@ import { User } from '../../models/index';
 
 
 @Component({
-  moduleId: module.id,
+  // moduleId: module.id,
   selector: 'edit-newsletter',
-  templateUrl: '/app/templates/edit-newsletter.html'
+  templateUrl: 'app/templates/edit-newsletter.html'
 })
 
-export class EditNewsletterComponent  { 
+export class EditNewsletterComponent  {
 	development: Development;
     developments: Development[] = [];
     model: any = {};
     myForm: FormGroup;
     user: User;
     public uploader:FileUploader = new FileUploader({url:'http://localhost:3001/upload'});
-    
-    
+
+
     constructor(private router: Router,
     	private newsletterService: NewsletterService,
     	private alertService: AlertService,
         private formbuilder: FormBuilder ) {
-        
+
         // this.user = JSON.parse(localStorage.getItem('user'));
     }
 
@@ -55,7 +55,7 @@ export class EditNewsletterComponent  {
     }
 
     createNewsletter() {
-        
+
         if(this.model.released == true){
             this.model.released_by = '583e4e9dd97c97149884fef5';
             this.model.released_at =  Date.now();
@@ -64,7 +64,7 @@ export class EditNewsletterComponent  {
             this.model.released_at = null;
         }
         this.model.created_by = '583e4e9dd97c97149884fef5';
-        
+
         // this.model.pinned.rank = 0;
         console.log(this.model);
         this.newsletterService.create(this.model)
@@ -84,7 +84,7 @@ export class EditNewsletterComponent  {
 		this.newsletterService.update(this.model)
 		.subscribe(
 			response => {
-				if(response.error) { 
+				if(response.error) {
 	                this.alertService.error(response.error);
 	            } else {
 	                // EmitterService.get(this.userList).emit(response.users);
@@ -92,18 +92,18 @@ export class EditNewsletterComponent  {
                      this.router.navigate(['/newsletter']);
 	            }
             },
-            error=> { 
+            error=> {
             	this.alertService.error(error);
             }
         );
 	}
 
     onChange(event: any) {
-       let files = [].slice.call(event.target.files); 
+       let files = [].slice.call(event.target.files);
        this.model.attachment = files;
     }
 
-    remove(i: any){ 
+    remove(i: any){
         this.model.attachment.splice(i, 1)
     }
 }

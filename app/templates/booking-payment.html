@@ -1,0 +1,41 @@
+<form class="form-horizontal col-md-6" name="form" (ngSubmit)="f.form.valid && createDevelopment()" #f="ngForm" novalidate>
+    <div class="form-group">
+        <label class="control-label col-sm-4" for="serial_no">Booking Ref.no :</label>
+        <div class="col-sm-8">
+            <input disabled type="text" class="form-control" name="serial_no" [(ngModel)]="model.serial_no" #serial_no="ngModel" />
+        </div>
+    </div>
+    <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !property.valid }">
+        <label class="control-label col-sm-4" for="property">Unit no :</label>
+        <div class="col-sm-8">
+            <input type="text" class="form-control" name="property" [(ngModel)]="model.property" #property="ngModel" required placeholder="Input property here"/>
+            <span *ngIf="f.submitted && !property.valid" class="help-block">Property is required</span>
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="control-label col-sm-4" for="sender">Resident :</label>
+        <div class="col-sm-8">
+            <input disabled type="text" class="form-control" name="sender" [(ngModel)]="model.sender" #description="ngModel />
+        </div>
+    </div>
+    <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !payment_type.valid }">
+        <label class="control-label col-sm-4" for="payment_type">Mode of payment :</label>
+        <div class="col-sm-8">
+            <select class="form-control" name="payment_type" [(ngModel)]="model.payment_type" #payment_type="ngModel" required placeholder="Input payment mode here">
+            	<option value="cash">Cash At Management Office</option>
+            	<option value="transfer">Bank Transfer</option>
+            </select>
+            <span *ngIf="f.submitted && !payment_type.valid" class="help-block">Payment mode is required</span>
+        </div>
+    </div>
+    <div class="form-group" >
+        <label class="control-label col-sm-4" for="attachment">Payment Reference :</label>
+        <div class="col-sm-8">
+            <input type="file" multiple class="upload" name="attachment" (change)="onChange($event)" />
+            <p *ngFor="let item of model.attachment; let i=index ">
+                {{ item.name }}_{{item.size/1024 | number:'1.0-0' }}kb &nbsp;   
+                <span class="glyphicon glyphicon-remove" style="cursor:pointer" (click)="remove(i)"></span>
+            </p>
+        </div>
+    </div>
+</form>

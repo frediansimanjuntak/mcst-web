@@ -59,10 +59,10 @@ export class DevelopmentService {
     }
 
     delete(id: string): Promise<void> {
-    return this.http.delete(url + 'api/developments/' + id, {headers: this.headers})
-      .toPromise()
-      .then(() => null)
-      .catch(this.handleError);
+        return this.http.delete(url + 'api/developments/' + id, {headers: this.headers})
+          .toPromise()
+          .then(() => null)
+          .catch(this.handleError);
     }
 
     private handleError(error: any): Promise<any> {

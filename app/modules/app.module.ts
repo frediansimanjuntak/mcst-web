@@ -8,7 +8,7 @@ import { ReactiveFormsModule }			    from '@angular/forms';
 import { HttpModule }                   from '@angular/http';
 import { Ng2TableModule }               from 'ng2-table/ng2-table';
 import { Ng2BootstrapModule }           from 'ng2-bootstrap/ng2-bootstrap';
-import { PaginationModule }             from 'ng2-bootstrap/ng2-bootstrap';
+import { PaginationModule,DatepickerModule }             from 'ng2-bootstrap/ng2-bootstrap';
 import { SelectModule }                 from 'ng2-select/ng2-select';
 import { MyDatePickerModule }           from 'mydatepicker/dist/my-date-picker.module';
 // import { DatePickerModule }             from 'ng2-datepicker';
@@ -32,9 +32,13 @@ import {
   EditAnnouncementComponent,
   // PublishAnnouncementModalComponent,
   BookingComponent,
+  EditBookingComponent,
   CompanyComponent,
+  EditCompanyComponent,
   ContractComponent,
+  EditContractComponent,
   ContractorComponent,
+  EditContractorComponent,
   DashboardComponent,
   DevelopmentComponent,
   EditDevelopmentComponent, 
@@ -44,6 +48,7 @@ import {
   IncidentComponent,
   EditIncidentComponent,
   LoginComponent,
+  AuthGuard,
   NavbarComponent,
   NewsletterComponent,
   EditNewsletterComponent,
@@ -72,6 +77,7 @@ import {
   AttachmentService,
   AnnouncementService,
   AuthenticationService,
+  BookingService,
   CompanyService,
   ContractService,
   ContractorService,
@@ -110,6 +116,7 @@ import {
     SelectModule,
     PanelModule,
     FieldsetModule,
+    DatepickerModule,
     // ModalModule.forRoot(),
     ModalModule,
     BootstrapModalModule,
@@ -126,9 +133,13 @@ import {
   	AppComponent,
     AttachmentComponent,
     BookingComponent,
+    EditBookingComponent,
     CompanyComponent,
+    EditCompanyComponent,
     ContractComponent,
+    EditContractComponent,
     ContractorComponent,
+    EditContractorComponent,
     DashboardComponent,
     DevelopmentComponent,
     EditDevelopmentComponent,
@@ -169,6 +180,8 @@ import {
     AttachmentService,
     AnnouncementService,
     AuthenticationService,
+    AuthGuard,
+    BookingService,
     CompanyService,
     ContractService,
     ContractorService,

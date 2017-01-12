@@ -1,6 +1,6 @@
 import { Component, OnInit, ViewContainerRef, ViewEncapsulation } from '@angular/core';
-import { Router } from '@angular/router'; 
-import { Announcement } from '../../models/index';
+import { Router } from '@angular/router';
+import { Announcement, } from '../../models/index';
 import { AnnouncementService, AlertService} from '../../services/index';
 import '../../rxjs-operators';
 import { NG_TABLE_DIRECTIVES }    from 'ng2-table/ng2-table'
@@ -12,12 +12,12 @@ import * as $ from "jquery";
 
 
 @Component({
-  moduleId: module.id,
+  // moduleId: module.id,
   selector: 'announcement',
-  templateUrl: '/app/templates/announcement.html',
+  templateUrl: 'app/templates/announcement.html',
 })
 
-export class AnnouncementComponent implements OnInit { 
+export class AnnouncementComponent implements OnInit {
 	  announcement: Announcement;
     announcements: Announcement[] = [];
     validTillDateOptions: any = {};
@@ -26,7 +26,7 @@ export class AnnouncementComponent implements OnInit {
     public developmentId;
     public data;
     public announcementsDrafted;
-    public announcementsPublished;    
+    public announcementsPublished;
     public filterQuery = "";
     public rowsOnPage = 10;
     public sortBy = "email";
@@ -35,10 +35,10 @@ export class AnnouncementComponent implements OnInit {
     stickyStatus: string;
     constructor(
                 private router: Router,
-                private announcementService: AnnouncementService, 
+                private announcementService: AnnouncementService,
                 private alertService: AlertService,
                 ) {
-         
+
     }
 
     ngOnInit(): void {
@@ -55,7 +55,7 @@ export class AnnouncementComponent implements OnInit {
             // disableUntil: {year: 2016, month: 8, day: 10},
             selectionTxtFontSize: '16px'
         };
-        
+
 
         this.developmentId = '585b36585d3cc41224fe518a';
         this.loadAllAnnouncements();
@@ -71,10 +71,10 @@ export class AnnouncementComponent implements OnInit {
 
     deleteAnnouncement(announcement) {
       console.log(announcement);
-        // this.announcementService.delete(announcement._id) 
+        // this.announcementService.delete(announcement._id)
         //   .then(
         //     response => {
-        //       if(response) { 
+        //       if(response) {
         //         console.log(response);
         //         // console.log(response.error());
         //         alert(`The Newsletter could not be deleted, server Error.`);
@@ -84,14 +84,14 @@ export class AnnouncementComponent implements OnInit {
         //         this.ngOnInit()
         //       }
         //     },
-        //     error=> { 
+        //     error=> {
         //       console.log(error);
         //         alert(`The Newsletter could not be deleted, server Error.`);
         //     }
         // );
     }
 
-    
+
 
     openModal(announcement){
         this.announcement = announcement;
@@ -128,15 +128,15 @@ export class AnnouncementComponent implements OnInit {
         //     .subscribe((data)=> {
         //         setTimeout(()=> {
         //             this.data          = data.find(data => data._id === this.developmentId );
-        //             this.dataAgm       = this.data.newsletter.filter(data => data.type === 'agm' ); 
-        //             this.dataCircular  = this.data.newsletter.filter(data => data.type === 'circular' ); 
+        //             this.dataAgm       = this.data.newsletter.filter(data => data.type === 'agm' );
+        //             this.dataCircular  = this.data.newsletter.filter(data => data.type === 'circular' );
         //             console.log(this.dataAgm);
         //         }, 1000);
         //     });
 
         this.announcementService.getAnnouncements().then(data => {
             this.announcements            = data;
-            this.announcementsDrafted     = this.announcements.filter(data => data.publish === false ); 
+            this.announcementsDrafted     = this.announcements.filter(data => data.publish === false );
             this.announcementsPublished   = this.announcements.filter(data => data.publish === true );
         });
     }
@@ -147,7 +147,7 @@ export class AnnouncementComponent implements OnInit {
         {title: 'Dynamic Title 3', content: 'Dynamic content 3', removable: true},
         {title: 'Dynamic Title 4', content: 'Dynamic content 4', customClass: 'customClass'}
     ];
-     
+
     public setActiveTab(index:number):void {
         this.tabs[index].active = true;
     };

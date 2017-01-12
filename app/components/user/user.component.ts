@@ -6,8 +6,8 @@ import '../../rxjs-operators';
 import { Observable} from 'rxjs/Observable';
 
 @Component({
-    moduleId: module.id,
-    templateUrl: '/app/templates/user.html',
+    // moduleId: module.id,
+    templateUrl: 'app/templates/user.html',
 })
 
 export class UserComponent implements OnInit {

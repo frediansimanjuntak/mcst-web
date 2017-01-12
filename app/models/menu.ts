@@ -6,10 +6,9 @@ export const MENUS: any[] = [
   {
   	name: 'Operations',
   	sub : [
-  		{ name: 'Guest, Visitor & Contractors', link: '' },
+  		{ name: 'Guest, Visitor & Contractors', link: '/visit'  },
   		{ name: 'Incident Reports', link: '/incident' },
-  		{ name: 'Manage Orders', link: '' },
-  		{ name: 'Manage Project', link: '' },
+  		{ name: 'Manage Project', link: '/contract' },
   	]
   },
   {
@@ -21,10 +20,10 @@ export const MENUS: any[] = [
   		{ name : 'Search Reference.no', link: ''}
   	]
   },
-  {
-  	name: 'Facilities Booking',
-  	link: '#',
-    description: 'Manage booking of facilities',
+  { 
+  	name: 'Facilities Booking', 
+  	link: '/booking',
+    description: 'Manage booking of facilities', 
   },
   {
   	name: 'Payment System',
@@ -58,6 +57,10 @@ export const MENUS: any[] = [
       { name : 'User', link: '/user' },
       { name : 'Unit', link: '/unit' },
       { name : 'User Group', link: '/user_group' },
+      { name : 'Development', link: '/development' },
+      { name : 'Facility', link: '/facility' },
+      { name : 'Company', link: '/company' },
+      { name : 'Contractor', link: '/contractor' },
     ]
   },
 ];

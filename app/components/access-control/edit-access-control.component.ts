@@ -1,17 +1,17 @@
 import { Component, OnInit } from '@angular/core';
-import { Router, Params, ActivatedRoute } from '@angular/router'; 
+import { Router, Params, ActivatedRoute } from '@angular/router';
 import { AccessControl, Development, User  } from '../../models/index';
 import { AccessControlService, AlertService, UserService, UnitService } from '../../services/index';
 import '../../rxjs-operators';
 import 'rxjs/add/operator/switchMap';
 
 @Component({
-  moduleId: module.id,
+  // moduleId: module.id,
   selector: 'edit-development',
-  templateUrl: '/app/templates/edit-access-control.html',
+  templateUrl: 'app/templates/edit-access-control.html',
 })
 
-export class EditAccessControlComponent implements OnInit { 
+export class EditAccessControlComponent implements OnInit {
 	accesscontrol: AccessControl;
     model: any = {};
     unit: Development;
@@ -25,7 +25,7 @@ export class EditAccessControlComponent implements OnInit {
     	private alertService: AlertService,
         private route: ActivatedRoute,) {}
 
-    ngOnInit(): void {   
+    ngOnInit(): void {
         this.unitService.getDevelopment("1")
             .then(unit => {
                 this.unit = unit;
@@ -52,7 +52,7 @@ export class EditAccessControlComponent implements OnInit {
                 this.alertService.success('Create access control successful', true);
                 this.router.navigate(['/access_control']);
             },
-            error => { 
+            error => {
                 this.alertService.error(error);
             }
         );
@@ -66,7 +66,7 @@ export class EditAccessControlComponent implements OnInit {
                 this.alertService.success('Update access control successful', true);
                 this.router.navigate(['/access_control']);
             },
-            error => { 
+            error => {
             	this.alertService.error(error);
             }
         );

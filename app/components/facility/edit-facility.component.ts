@@ -1,24 +1,24 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { Router, Params, ActivatedRoute } from '@angular/router';  
+import { Router, Params, ActivatedRoute } from '@angular/router';
 import { FormBuilder, FormControl, FormGroup, FormArray, Validators, ReactiveFormsModule  } from '@angular/forms';
-import { Facility } from '../../models/index';
+import { Facility,Facilities } from '../../models/index';
 import { FacilityService, AlertService } from '../../services/index';
 import '../../rxjs-operators';
 import 'rxjs/add/operator/switchMap';
 
 @Component({
-  moduleId: module.id,
+  // moduleId: module.id,
   selector: 'edit-facility',
-  templateUrl: '/app/templates/edit-facility.html',
+  templateUrl: 'app/templates/edit-facility.html',
 })
 
-export class EditFacilityComponent  { 
+export class EditFacilityComponent  {
 	facility: Facility;
     model: any = {};
     id: string;
     myForm: FormGroup;
     start_time:any;
-    
+
     days = [
         { value: 'monday', name: 'Monday' },
         { value: 'tuesday', name: 'Tuesday' },
@@ -35,7 +35,7 @@ export class EditFacilityComponent  {
         private formbuilder: FormBuilder,
         private route: ActivatedRoute,) {}
 
-    ngOnInit(): void { 
+    ngOnInit(): void {
         this.myForm = this.formbuilder.group({
             _id : [''],
             name : ['', Validators.required],
@@ -49,8 +49,8 @@ export class EditFacilityComponent  {
             maintenance_start : [''],
             maintenance_end : [''],
             created_by : [''],
-            created_at : ['']   
-        });  
+            created_at : ['']
+        });
         this.route.params.subscribe(params => {
             this.id = params['id'];
         });
@@ -62,7 +62,7 @@ export class EditFacilityComponent  {
                     const control = <FormArray>this.myForm.controls['schedule'];
                     control.push(this.initSchedule());
                 }
-                this.myForm.setValue(this.facility); 
+                this.myForm.setValue(this.facility);
             });
         }
     }
@@ -77,7 +77,7 @@ export class EditFacilityComponent  {
 
     addSchedule() {
         const control = <FormArray>this.myForm.controls['schedule'];
-        const scheduleCtrl = this.initSchedule();    
+        const scheduleCtrl = this.initSchedule();
         control.push(scheduleCtrl);
     }
 
@@ -87,17 +87,21 @@ export class EditFacilityComponent  {
     }
 
     createFacility(model:Facility) {
-        console.log(model)
-        this.facilityService.create(model)
-        .then(
-            response => {
-                this.alertService.success('Update facility successful', true);
-                this.router.navigate(['/facility']);
-            },
-            error => { 
-                this.alertService.error(error);
-            }
-        );
+        console.log('model=',this.model)
+        Facilities.push(this.model);
+        console.log('facilities=',Facilities);
+        this.router.navigate(['/facility']);
+        // console.log(model)
+        // this.facilityService.create(model)
+        // .then(
+        //     response => {
+        //         this.alertService.success('Update facility successful', true);
+        //         this.router.navigate(['/facility']);
+        //     },
+        //     error => {
+        //         this.alertService.error(error);
+        //     }
+        // );
     }
 
 
@@ -109,7 +113,7 @@ export class EditFacilityComponent  {
                 this.alertService.success('Update development successful', true);
                 this.router.navigate(['/development']);
             },
-            error => { 
+            error => {
             	this.alertService.error(error);
             }
         );

@@ -11,7 +11,7 @@
 					  		
 			</div>
 		</div>
-		<div (click)="$event.preventDefault()">
+		<div class="row">
 		  <tabset>
 		    <tab heading="Draft">
 		    	<p-dataTable [value]="announcementsDrafted" [rows]="10"  resizableColumns="true" [paginator]="true">
@@ -59,7 +59,7 @@
 		           <div *ngIf="announcement">
 		              
 		           		
-		              <form class="form-horizontal" name="form">
+		              <form name="form">
 		                <div class="form-group">
 		                    <label class="control-label col-sm-4" for="sticky">Sticky? :</label>
 		                    <div class="col-sm-8">

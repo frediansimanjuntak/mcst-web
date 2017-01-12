@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { Router, Params, ActivatedRoute } from '@angular/router'; 
-import { Development } from '../../models/index';
+import { Router, Params, ActivatedRoute } from '@angular/router';
+import { Development, Developments } from '../../models/index';
 import { UnitService, AlertService } from '../../services/index';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import '../../rxjs-operators';
@@ -9,22 +9,22 @@ import 'rxjs/add/operator/switchMap';
 // import { Unit } from '../../models/unit.interface';
 
 @Component({
-  moduleId: module.id,
+  // moduleId: module.id,
   selector: 'edit-unit',
-  templateUrl: '/app/templates/edit-unit.html'
+  templateUrl: 'app/templates/edit-unit.html'
 })
 
-export class EditUnitComponent implements OnInit { 
+export class EditUnitComponent implements OnInit {
 	unit: any;
     units: any;
-    
+
     model: any = {};
     id: string;
     public developmentId;
     myForm: FormGroup;
     public submitted: boolean; // keep track on whether form is submitted
     public events: any[] = []; // use later to display form changes
-    
+
     status = [
         { value: 'inactive', name: 'Inactive' },
         { value: 'active', name: 'Active' }
@@ -36,7 +36,7 @@ export class EditUnitComponent implements OnInit {
     	private unitservice: UnitService,
     	private alertService: AlertService,
         private formbuilder: FormBuilder ) {
-        
+
         // this.user = JSON.parse(localStorage.getItem('user'));
     }
 
@@ -70,9 +70,13 @@ export class EditUnitComponent implements OnInit {
                     });
         }
     }
-    
+
     createUnit(model: Development, isValid: boolean) {
         this.submitted = true;
+        console.log(Developments[0]);
+        Developments[0].properties.push(model);
+        console.log(Developments[0].properties);
+        this.router.navigate(['/unit']);
         // model.properties.created_by = '583e4e9dd97c97149884fef5';
         // this.model.pinned.rank = 0;
         if(isValid == true){
@@ -99,7 +103,7 @@ export class EditUnitComponent implements OnInit {
         //         this.alertService.success('Update development successful', true);
         //         this.router.navigate(['/development']);
         //     },
-        //     error => { 
+        //     error => {
         //         this.alertService.error(error);
         //     }
         // );
@@ -109,7 +113,7 @@ export class EditUnitComponent implements OnInit {
 	// 	this.unitservice.update(this.model)
 	// 	.subscribe(
 	// 		response => {
-	// 			if(response.error) { 
+	// 			if(response.error) {
 	//                 this.alertService.error(response.error);
 	//             } else {
 	//                 // EmitterService.get(this.userList).emit(response.users);
@@ -117,7 +121,7 @@ export class EditUnitComponent implements OnInit {
  //                     this.router.navigate(['/newsletter']);
 	//             }
  //            },
- //            error=> { 
+ //            error=> {
  //            	this.alertService.error(error);
  //            }
  //        );

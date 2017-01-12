@@ -1,0 +1,174 @@
+<div class="container">
+	<div class="main">
+		<div class="title">
+			Manage Company
+		</div>
+		Home > Manage Company
+		<div class="row">
+			<div class="col-md-4 pull-right">
+					  		<a class="btn btn-default pull-right" [routerLink]="['/company/add']">
+					  		<i class="fa fa-plus" aria-hidden="true"></i>&nbsp;Create a Company</a>
+					  		
+			</div>
+		</div>
+		<div class="row">
+		  		<p-dataTable [value]="companies" [rows]="10"  resizableColumns="true" [paginator]="true">
+				    <p-column field="name" header="Name" sortable="true" [filter]="true" filterPlaceholder="Search name"></p-column>
+				    <p-column field="registration_no" header="Reg. No" sortable="true" [filter]="true" filterPlaceholder="Search reg. no"></p-column>
+				    <p-column field="category" header="Category" sortable="true" [filter]="true" filterPlaceholder="Search Category"></p-column>
+				    <p-column field="phone" header="Phone" sortable="true" ></p-column>
+				    <p-column field="email" header="Email" sortable="true" ></p-column>
+				    <p-column header="Country" sortable="true" [filter]="true" filterPlaceholder="Search Country">
+					    	<template let-companies="rowData" pTemplate="body">
+					            <span>{{companies.address.country}}</span>
+					        </template>
+					</p-column>
+					<p-column field="description" header="Description" sortable="true" ></p-column>
+					<p-column header="Company Logo">
+					    	<template let-companies="rowData" pTemplate="body">
+					            <span>{{companies.company_logo[0]}}</span>
+					        </template>
+					</p-column>
+					<p-column field="chief" header="Chief" sortable="true" [filter]="true" filterPlaceholder="Search Chief"></p-column>
+					<p-column header="Active">
+					    	<template let-companies="rowData" pTemplate="body">
+					        	<span *ngIf="companies.active" class="label label-success">Yes</span>
+					        	<span *ngIf="!companies.active" class="label label-danger">No</span>
+					        </template>
+					</p-column>
+					<p-column [style]="{'width':'218px'}" styleClass="col-button" header="action">
+				    	<template class="pull-right" let-companies="rowData" pTemplate="body">
+					    	<button type="button" class="btn btn-primary btn-xs" (click)="openModal(companies) || firstModal.open()">View</button>
+					    	<button *ngIf="!companies.active" type="button" class="btn btn-primary btn-xs" (click)="openModal(companies) || activeModal.open()">Activate</button>
+						    <button *ngIf="companies.active" type="button" class="btn btn-default btn-xs" (click)="openModal(companies) || deactiveModal.open()">Deactivate</button>
+					    	<a type="button" style="cursor:pointer" (click)="editCompany(companies)"><i class="fa fa-edit" aria-hidden="true"></i>&nbsp;Edit</a>
+					        <button  type="button" (click)="deleteCompany(companies)"><i class="fa fa-trash" aria-hidden="true"></i></button>
+				    	</template>
+				    </p-column>
+				</p-dataTable>
+		</div> 
+
+		<div class="row">
+		    <modal #firstModal>
+                <modal-header *ngIf="company">
+                    <h5>Company {{ company.name }}</h5>
+                </modal-header>
+                <modal-content *ngIf="company">
+                   	<div class="row">
+	        			<div class="col-md-4">Name</div>
+	        			<div class="col-md-8"> <p>: {{ company.name }}</p></div>
+	        		</div>
+	        		<div class="row">
+	        			<div class="col-md-4">Registration No</div>
+	        			<div class="col-md-8"><p>: {{ company.registration_no }}</p></div>
+	        		</div>
+	        		<div class="row">
+	        			<div class="col-md-4">Category </div>
+	        			<div class="col-md-8"><p>: {{ company.category }}</p></div>
+	        		</div>
+	        		<div class="row">
+	        			<div class="col-md-4">Phone </div>
+	        			<div class="col-md-8"><p>: {{ company.phone }}</p></div>
+	        		</div>
+	        		<div class="row">
+	        			<div class="col-md-4">Email </div>
+	        			<div class="col-md-8"><p>: {{ company.email }}</p></div>
+	        		</div>
+	        		<div class="row">
+	        			<div class="col-md-4">Street Name </div>
+	        			<div class="col-md-8"><p>: {{ company.address.street_name }}</p></div>
+	        		</div>
+	        		<div class="row">
+	        			<div class="col-md-4">Block No </div>
+	        			<div class="col-md-8"><p>: {{ company.address.block_no }}</p></div>
+	        		</div>
+	        		<div class="row">
+	        			<div class="col-md-4">Postal Code </div>
+	        			<div class="col-md-8"><p>: {{ company.address.postal_code }}</p></div>
+	        		</div>
+	        		<div class="row">
+	        			<div class="col-md-4">Country </div>
+	        			<div class="col-md-8"><p>: {{ company.address.country }}</p></div>
+	        		</div>
+	        		<div class="row">
+	        			<div class="col-md-4">Coordinates </div>
+	        			<div class="col-md-8">
+	        				:<span *ngFor="let c of company.coordinates"> {{c}}&nbsp; </span>
+	        			</div>
+	        		</div>
+	        		<div class="row">
+	        			<div class="col-md-4">Type </div>
+	        			<div class="col-md-8"><p>: {{ company.address.type }}</p></div>
+	        		</div>
+	        		<div class="row">
+	        			<div class="col-md-4">Full Address </div>
+	        			<div class="col-md-8"><p>: {{ company.address.full_address }}</p></div>
+	        		</div>
+	        		<div class="row">
+	        			<div class="col-md-4">Description </div>
+	        			<div class="col-md-8"><p>: {{ company.description }}</p></div>
+	        		</div>
+	        		<div class="row">
+	        			<div class="col-md-4">Company Logo </div>
+	        			<div class="col-md-8"><p>: {{ company.company_logo[0] }}</p></div>
+	        		</div>
+	        		<div class="row">
+	        			<div class="col-md-4">Chief </div>
+	        			<div class="col-md-8"><p>: {{ company.chief }}</p></div>
+	        		</div>
+					<div class="row">
+	        			<div class="col-md-4">Employee </div>
+	        			<div class="col-md-8">
+	        				:<span href="#" *ngFor="let e of company.employee"> {{e}}&nbsp; </span>
+	        			</div>
+	        		</div>
+	        		<div class="row">
+	        			<div class="col-md-4">Active </div>
+	        			<div class="col-md-8">
+	        				<p *ngIf="company.active==true">: Yes</p>
+	        				<p *ngIf="company.active==false">: No</p>
+	        			</div>
+	        		</div>
+	        	</modal-content>
+	        	<modal-footer>
+	        		  <button class="btn btn-default" (click)="firstModal.close()">Close</button>
+	        	</modal-footer>
+		    </modal>
+		</div>	
+
+		<div class="row">
+		    <modal #activeModal>
+		        <modal-header *ngIf="company">
+		            <h5>Activate company {{ company.name }}</h5>
+		        </modal-header>
+		        <modal-content  *ngIf="company">
+					<div>
+		            	Are you sure want to activate company {{ company.name }}
+		        	</div>
+		        </modal-content>
+		        <modal-footer>
+		            <button  class="btn btn-primary" (click)="activate()">Activate</button>
+		            <button class="btn btn-default" (click)="activeModal.close()">Cancel</button>
+		        </modal-footer>
+		    </modal>
+		</div>	
+
+		<div class="row">
+		    <modal #deactiveModal>
+		        <modal-header *ngIf="company">
+		            <h5>Deactive company {{ company.name }}</h5>
+		        </modal-header>
+		        <modal-content  *ngIf="company">
+					<div>
+		             	Are you sure want to deactivate company {{ company.name }}
+		        	</div>
+		        </modal-content>
+		        <modal-footer>
+		                <button  class="btn btn-primary" (click)="deactivate()">Deactivate</button>
+		                <button class="btn btn-default" (click)="deactiveModal.close()">Cancel</button>
+		        </modal-footer>
+		     </modal>
+		</div>
+		
+	</div>
+</div>

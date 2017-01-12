@@ -8,6 +8,7 @@ export class Facility {
   facility_type : string;
   payment_type : string;
   booking_type : string;
+  booking_fee : string;
   maintenance_start : string;
   maintenance_end : string;
   schedule : [{

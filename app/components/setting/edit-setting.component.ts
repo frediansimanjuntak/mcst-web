@@ -6,22 +6,22 @@ import 'rxjs/add/operator/switchMap';
 import '../../rxjs-operators';
 
 @Component({
-    moduleId: module.id,
-    templateUrl: '/app/templates/edit-setting.html',
+    // moduleId: module.id,
+    templateUrl: 'app/templates/edit-setting.html',
 })
- 
+
 export class EditSettingComponent {
     user: User;
     model: any = {};
     id: string;
- 
+
     constructor(private router: Router,
         private userService: UserService,
         private route: ActivatedRoute,
         private alertService: AlertService,
         private developmentService: DevelopmentService) {}
 
-    ngOnInit(): void {   
+    ngOnInit(): void {
         this.route.params.subscribe(params => {
             this.id = params['id'];
         });
@@ -41,7 +41,7 @@ export class EditSettingComponent {
                   this.alertService.success('Update User successful', true);
                   this.router.navigate(['/user']);
 	            },
-              error=> { 
+              error=> {
             	    this.alertService.error(error);
               }
         );
@@ -69,15 +69,15 @@ export class EditSettingComponent {
     }
 
     onChange1(event: any) {
-       let files = [].slice.call(event.target.files); 
+       let files = [].slice.call(event.target.files);
        this.model.back =  files;
     }
 
-    remove(i: any){ 
+    remove(i: any){
         this.model.front.splice(i, 1)
     }
 
-    remove1(i: any){ 
+    remove1(i: any){
         this.model.back.splice(i, 1)
     }
 }
