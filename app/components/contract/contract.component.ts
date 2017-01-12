@@ -9,7 +9,7 @@ import { FileUploader } from 'ng2-file-upload';
 @Component({
   moduleId: module.id,
   selector: 'contract',
-  templateUrl: '/app/templates/booking.html',
+  templateUrl: '/app/templates/contract.html',
 })
 
 export class ContractComponent implements OnInit  { 
@@ -57,9 +57,9 @@ export class ContractComponent implements OnInit  {
 	
 	private loadAllIncident() {
 		this.contractService.getContracts().then(contracts => { 
-					this.contracts = contracts ;
-                    this.open        = this.contracts.filter(contracts => contracts.status === 'open' ); 
-                    this.close  = this.contracts.filter(contracts => contracts.status === 'close' ); 
+			this.contracts = contracts ;
+            this.open      = this.contracts.filter(contracts => contracts.status === 'open' ); 
+            this.close     = this.contracts.filter(contracts => contracts.status === 'closed' ); 
 		});
     }
 
