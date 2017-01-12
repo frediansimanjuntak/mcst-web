@@ -27,7 +27,7 @@ export class ContractService {
     }
 
     getById(id:string){
-        return this.http.get( url + 'api/contracts' + id)
+        return this.http.get( url + 'api/contracts/' + id)
             .map((res:Response) => res.json())
             .catch((error:any) => Observable.throw(error.json().error || 'Server error'));
     }

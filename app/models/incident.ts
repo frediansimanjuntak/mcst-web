@@ -39,7 +39,7 @@ export var Incidents: any[] = [{
   development: '',
   property:'mungkin itu',
   incident_type:'general',
-  contract: '',
+  contract: 'asd',
   remark: 'tolong di perbaiki dong',
   status: 'reviewing',
   created_by: 'akh sial',

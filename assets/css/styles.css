@@ -108,8 +108,15 @@
 }
 
 .bg-dark {
-  background-color: #2f3034 ;
-  color: #ffffff ;
+  background-color: #2f3034;
+  color: #ffffff;
+}
+
+.bg-grey {
+  background-color: #F4F4F4;
+  color: black;
+  font-size: 13px;
+  font-weight: bold;
 }
 
 .nav {

@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewContainerRef, ViewEncapsulation, ViewChild } from '@angular/core';
-import { Router, Params, ActivatedRoute } from '@angular/router'; 
+import { Router, Params, ActivatedRoute } from '@angular/router';
 import { Visit, Visits } from '../../models/index';
 import { VisitService, AlertService} from '../../services/index';
 import '../../rxjs-operators';
@@ -14,13 +14,13 @@ import * as $ from "jquery";
 
 
 @Component({
-  moduleId: module.id.replace("/dist/", "/"),
+  // moduleId: module.id,
   selector: 'visit',
-  templateUrl: '/app/templates/visit.html',
-  
+  templateUrl: 'app/templates/visit.html',
+
 })
 
-export class VisitComponent implements OnInit { 
+export class VisitComponent implements OnInit {
     @ViewChild('checkInModal') checkInModal;
     @ViewChild('checkOutModal') checkOutModal;
     @ViewChild('firstModal') firstModal;
@@ -43,10 +43,10 @@ export class VisitComponent implements OnInit {
     public addSubmitted: boolean;
     public checkInSsubmitted: boolean;
     public checkOutSsubmitted: boolean;
-  
+
     constructor(
                 private router: Router,
-                private visitService: VisitService, 
+                private visitService: VisitService,
                 private alertService: AlertService,
                 private route: ActivatedRoute,
                 private location: Location,
@@ -69,7 +69,7 @@ export class VisitComponent implements OnInit {
 		if(typeof this.activeDate !== "string"){
 		this.activeDate = this.convertDate(this.activeDate);
 		}
-		
+
        	this.loadVisits();
 
 		this.myForm = this.formbuilder.group({
@@ -116,8 +116,8 @@ export class VisitComponent implements OnInit {
             selectionTxtFontSize: '16px'
         };
 
-       
-        
+
+
     }
 
     convertDate(date) {
@@ -132,7 +132,7 @@ export class VisitComponent implements OnInit {
 	}
 
     preCheckIn(visit){
-    	this.visit = visit; 
+    	this.visit = visit;
    		this.checkInForm = this.formbuilder.group({
 			 	property: [{value: visit.property, disabled: true}],
                 visitor: this.formbuilder.group({
@@ -144,11 +144,11 @@ export class VisitComponent implements OnInit {
                 remarks : [{ value: visit.remarks, disabled: true}],
                 check_in: [''],
         });
-         // this.myForm.setValue(this.user); 
+         // this.myForm.setValue(this.user);
     }
 
     preCheckOut(visit){
-        this.visitOut = visit; 
+        this.visitOut = visit;
            this.checkOutForm = this.formbuilder.group({
                  property: [{value: visit.property, disabled: true}],
                 visitor: this.formbuilder.group({
@@ -160,7 +160,7 @@ export class VisitComponent implements OnInit {
                 remarks : [{ value: visit.remarks, disabled: true}],
                 check_in: [''],
         });
-         // this.myForm.setValue(this.user); 
+         // this.myForm.setValue(this.user);
     }
 
     checkOut(model: any, isValid: boolean){
@@ -213,7 +213,7 @@ export class VisitComponent implements OnInit {
                     }
                 );
         }
-        
+
     }
 
     addGuest(model: any, isValid: boolean) {
@@ -253,8 +253,8 @@ export class VisitComponent implements OnInit {
         //     .subscribe((data)=> {
         //         setTimeout(()=> {
         //             this.data          = data.find(data => data._id === this.developmentId );
-        //             this.dataAgm       = this.data.newsletter.filter(data => data.type === 'agm' ); 
-        //             this.dataCircular  = this.data.newsletter.filter(data => data.type === 'circular' ); 
+        //             this.dataAgm       = this.data.newsletter.filter(data => data.type === 'agm' );
+        //             this.dataCircular  = this.data.newsletter.filter(data => data.type === 'circular' );
         //             console.log(this.dataAgm);
         //         }, 1000);
         //     });
@@ -266,7 +266,7 @@ export class VisitComponent implements OnInit {
             for (var i = 0; i < this.visitActive.length; i++) {
             	this.visitActive[i].i = i+1;
             }
-           
+
 		});
     }
 

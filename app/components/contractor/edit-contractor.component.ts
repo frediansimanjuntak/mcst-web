@@ -1,5 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { Router, Params, ActivatedRoute } from '@angular/router'; 
+import { Router, Params, ActivatedRoute } from '@angular/router';
 import { FormBuilder, FormControl, FormGroup, FormArray, Validators } from '@angular/forms';
 import { Company, Companies, Contractor, Contractors } from '../../models/index';
 import { CompanyService, ContractorService, AlertService } from '../../services/index';
@@ -7,18 +7,18 @@ import '../../rxjs-operators';
 import 'rxjs/add/operator/switchMap';
 
 @Component({
-  moduleId: module.id.replace("/dist/", "/"),
+  // moduleId: module.id,
   selector: 'edit-contractor',
-  templateUrl: '/app/templates/edit-contractor.html',
-  styleUrls: [ '../../templates/styles/ng2-select.css' ]
+  templateUrl: 'app/templates/edit-contractor.html',
+  styleUrls: [ 'app/templates/styles/ng2-select.css' ]
 })
 
-export class EditContractorComponent implements OnInit { 
+export class EditContractorComponent implements OnInit {
     public items:Array<any> = [];
 
     private companyList:any = [];
     private company :any = {};
-    public companyField: boolean; 
+    public companyField: boolean;
     private _disabledV:string = '0';
     private disabled:boolean = false;
 
@@ -35,7 +35,7 @@ export class EditContractorComponent implements OnInit {
 
     public submitted: boolean; // keep track on whether form is submitted
     public events: any[] = []; // use later to display form changes
-    
+
     constructor(private router: Router,
     	private companyService: CompanyService,
     	private contractorService: ContractorService,
@@ -75,15 +75,15 @@ export class EditContractorComponent implements OnInit {
                     .getContractor(this.id)
                     .then(contractor => {
                         this.contractor = contractor;
-                        
+
 						this.company.text = this.companyList.find(myObj => myObj._id ===  this.contractor.company ).name;
                         this.company.id = this.contractor.company;
                         this.companyField = true;
                         this.model.profile_picture = this.contractor.profile_picture;
-                      
+
                     });
         };
-        
+
     }
 
 
@@ -133,13 +133,13 @@ export class EditContractorComponent implements OnInit {
 
             for (let i = 0; i < numOptions; i++) {
                 opts[i] = {
-                    id: this.companyList[i]._id, 
+                    id: this.companyList[i]._id,
                     text: this.companyList[i].name
                 };
             }
 
             this.myOptions = opts.slice(0);
-            this.items = this.myOptions; 
+            this.items = this.myOptions;
         });
     }
 
@@ -147,9 +147,9 @@ export class EditContractorComponent implements OnInit {
     addUser() {
         const control = <FormArray>this.myForm.controls['users'];
         const userCtrl = this.initUser();
-        
+
         control.push(userCtrl);
-        
+
         /* subscribe to individual address value changes */
         // addrCtrl.valueChanges.subscribe(x => {
         //   console.log(x);
@@ -165,7 +165,7 @@ export class EditContractorComponent implements OnInit {
        this.model.profile_picture = event.target.files[0];
     }
 
-    remove(i: any){ 
+    remove(i: any){
         this.model.profile_picture = "";
     }
 
@@ -205,7 +205,7 @@ export class EditContractorComponent implements OnInit {
     //             this.alertService.success('Update Usergroup successful', true);
     //             this.router.navigate(['/user']);
     //         },
-    //         error=> { 
+    //         error=> {
     //             this.alertService.error(error);
     //         }
     //     );

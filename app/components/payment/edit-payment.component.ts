@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router'; 
+import { Router } from '@angular/router';
 import { Payment, User, Development } from '../../models/index';
 import { PaymentService, DevelopmentService, UserService, AlertService } from '../../services/index';
 import { FormBuilder, FormGroup } from '@angular/forms';
@@ -7,12 +7,12 @@ import '../../rxjs-operators';
 
 
 @Component({
-  moduleId: module.id,
+  // moduleId: module.id,
   selector: 'edit-payment',
   template: ``,
 })
 
-export class EditPaymentComponent implements OnInit { 
+export class EditPaymentComponent implements OnInit {
 	payment: Payment;
     payments: Payment[] = [];
     model: any = {};
@@ -26,12 +26,12 @@ export class EditPaymentComponent implements OnInit {
     	private userService: UserService,
     	private alertService: AlertService,
         private formbuilder: FormBuilder ) {
-        
+
         // this.user = JSON.parse(localStorage.getItem('user'));
     }
 
     ngOnInit() {
-        
+
     }
 
     createPayment() {
@@ -50,11 +50,11 @@ export class EditPaymentComponent implements OnInit {
     }
 
     onChange(event: any) {
-       let files = [].slice.call(event.target.files); 
+       let files = [].slice.call(event.target.files);
        this.model.attachment = files;
     }
 
-    remove(i: any){ 
+    remove(i: any){
         this.model.attachment.splice(i, 1)
     }
 }
