@@ -27,6 +27,7 @@ export class UnitComponent implements OnInit {
     public sortBy = "email";
     public sortOrder = "asc";
 
+
     constructor(private router: Router,private unitservice: UnitService, private alertService: AlertService) {
     }
 
@@ -85,8 +86,12 @@ export class UnitComponent implements OnInit {
 
     }
 
-    editUnit(unit: any){
-        this.router.navigate(['/unit/edit', unit._id]);
+    // editUnit(unit: any){
+    //     this.router.navigate(['/unit/edit', unit._id]);
+    // }
+
+    viewUnit(unit: any){
+        this.router.navigate(['/unit/view', unit._id]);
     }
 
 

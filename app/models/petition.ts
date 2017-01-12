@@ -12,6 +12,7 @@ export class Petition {
   status : string;
   created_by : User;
   updated_at : string;
+  archieved  : boolean;
   created_at : string
 }
 
@@ -29,6 +30,7 @@ export var Petitions: any[] = [
     status: 'pending',
     created_by : '1',
     updated_at : '2016-12-08T03:31:07',
+    archieved : false,
     created_at : '2016-12-08T03:31:07'
   },
   {
@@ -42,6 +44,7 @@ export var Petitions: any[] = [
     remark: 'Wohohooooo',
     status: 'pending',
     created_by : '4',
+    archieved : false,
     updated_at : '2016-12-08T03:31:07',
     created_at : '2016-12-08T03:31:07'
   },
@@ -55,6 +58,7 @@ export var Petitions: any[] = [
     contract: 'NP5gGdzh8bgyXN34fde3',
     remark: 'Wohohooooo',
     status: 'approved',
+    archieved : false,
     created_by : 'w0974u0a4443feaakfef24t',
     updated_at : '2016-12-08T03:31:07',
     created_at : '2016-12-08T03:31:07'
@@ -69,6 +73,7 @@ export var Petitions: any[] = [
     contract: 'NP5gGdzh8bgyXN34fde3',
     remark: 'Wohohooooo',
     status: 'approved',
+    archieved : false,
     created_by : 'w0974u0a4443feaakfef24t',
     updated_at : '2016-12-08T03:31:07',
     created_at : '2016-12-08T03:31:07'
@@ -83,6 +88,7 @@ export var Petitions: any[] = [
     contract: 'NP5gGdzh8bgyXN34fde3',
     remark: 'Wohohooooo',
     status: 'pending',
+    archieved : false,
     created_by : 'w0974u0a4443feaakfef24t',
     updated_at : '2016-12-08T03:31:07',
     created_at : '2016-12-08T03:31:07'
@@ -97,6 +103,7 @@ export var Petitions: any[] = [
     contract: 'NP5gGdzh8bgyXN34fde3',
     remark: 'Wohohooooo',
     status: 'pending',
+    archieved : false,
     created_by : 'w0974u0a4443feaakfef24t',
     updated_at : '2016-12-08T03:31:07',
     created_at : '2016-12-08T03:31:07'
@@ -111,6 +118,7 @@ export var Petitions: any[] = [
     contract: 'NP5gGdzh8bgyXN34fde3',
     remark: 'Wohohooooo',
     status: 'progress',
+    archieved : false,
     created_by : 'w0974u0a4443feaakfef24t',
     updated_at : '2016-12-08T03:31:07',
     created_at : '2016-12-08T03:31:07'
@@ -125,6 +133,7 @@ export var Petitions: any[] = [
     contract: 'NP5gGdzh8bgyXN34fde3',
     remark: 'Wohohooooo',
     status: 'pending',
+    archieved : false,
     created_by : 'w0974u0a4443feaakfef24t',
     updated_at : '2016-12-08T03:31:07',
     created_at : '2016-12-08T03:31:07'
@@ -139,6 +148,7 @@ export var Petitions: any[] = [
     contract: 'NP5gGdzh8bgyXN34fde3',
     remark: 'Wohohooooo',
     status: 'approved',
+    archieved : false,
     created_by : 'w0974u0a4443feaakfef24t',
     updated_at : '2016-12-08T03:31:07',
     created_at : '2016-12-08T03:31:07'
@@ -153,6 +163,7 @@ export var Petitions: any[] = [
     contract: 'NP5gGdzh8bgyXN34fde3',
     remark: 'Wohohooooo',
     status: 'progress',
+    archieved : false,
     created_by : 'w0974u0a4443feaakfef24t',
     updated_at : '2016-12-08T03:31:07',
     created_at : '2016-12-08T03:31:07'
@@ -167,6 +178,7 @@ export var Petitions: any[] = [
     contract: 'NP5gGdzh8bgyXN34fde3',
     remark: 'Wohohooooo',
     status: 'progress',
+    archieved : true,
     created_by : 'w0974u0a4443feaakfef24t',
     updated_at : '2016-12-08T03:31:07',
     created_at : '2016-12-08T03:31:07'

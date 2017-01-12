@@ -3,6 +3,7 @@ import { Router, Params, ActivatedRoute } from '@angular/router';
 import { Development, Developments } from '../../models/index';
 import { UnitService, AlertService } from '../../services/index';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { Location }               from '@angular/common';
 import '../../rxjs-operators';
 import 'rxjs/add/operator/switchMap';
 // import { User } from '../../models/index';
@@ -35,7 +36,8 @@ export class EditUnitComponent implements OnInit {
         private route: ActivatedRoute,
     	private unitservice: UnitService,
     	private alertService: AlertService,
-        private formbuilder: FormBuilder ) {
+        private formbuilder: FormBuilder,
+        private location: Location ) {
 
         // this.user = JSON.parse(localStorage.getItem('user'));
     }
@@ -109,6 +111,9 @@ export class EditUnitComponent implements OnInit {
         // );
     }
 
+    goBack(): void {
+        this.location.back();
+    }
  //    updateNewsletter(){
 	// 	this.unitservice.update(this.model)
 	// 	.subscribe(
