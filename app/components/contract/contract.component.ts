@@ -16,6 +16,7 @@ export class ContractComponent implements OnInit  {
 	contract: Contract;
     contracts: Contract[] = [];
     model: any = {};
+    images: any[];
     id: string;
     public open;
     public close;
@@ -23,6 +24,12 @@ export class ContractComponent implements OnInit  {
     constructor(private router: Router, private contractService: ContractService, private alertService: AlertService,private route: ActivatedRoute) {}
 
     ngOnInit(): void {
+        this.images = [];
+        this.images.push({source:'/assets/image/1.png'});
+        this.images.push({source:'/assets/image/2.png'});
+        this.images.push({source:'/assets/image/3.png'});
+        this.images.push({source:'/assets/image/4.png'});
+        this.images.push({source:'/assets/image/5.png'});
         this.route.params.subscribe(params => {
             this.id = params['id'];
         });
@@ -64,6 +71,7 @@ export class ContractComponent implements OnInit  {
     }
 
     view(contract: Contract){
+        console.log(contract)
         this.router.navigate(['/contract/view', contract._id]);
     }
 
