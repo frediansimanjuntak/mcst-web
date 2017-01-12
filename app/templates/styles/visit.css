@@ -1,7 +1,12 @@
-.mydp .btnclear, .mydp .btnpicker, .mydp .headerbtn, .mydp .headermonthtxt, .mydp .headertodaybtn, .mydp .headeryeartxt, .mydp .selection {
-    color: #fff;
+.mydp .btnclear, .mydp .btnpicker {
+    color: #fff !important;
 }
 
-.mydp .btnclear, .mydp .btnpicker, .mydp .headertodaybtn {
-    background: #2f3034;
+.mydp .btnclear, .mydp .btnpicker {
+    background: #2f3034 !important;
 }
+
+.mydp, .mydp .headertodaybtn, .mydp .monthinput, .mydp .yearinput {
+    border: none !important;
+}
+
