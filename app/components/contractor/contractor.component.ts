@@ -14,7 +14,7 @@ import * as $ from "jquery";
 @Component({
   moduleId: module.id,
   selector: 'contractor',
-  templateUrl: '/app/templates/contractor.html',
+  templateUrl: 'app/templates/contractor.html',
 })
 
 export class ContractorComponent implements OnInit { 
