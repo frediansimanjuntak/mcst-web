@@ -17,7 +17,7 @@ import * as $ from "jquery";
   moduleId: module.id.replace("/dist/", "/"),
   selector: 'visit',
   templateUrl: '/app/templates/visit.html',
-  styleUrls: [ '../../templates/styles/visit.css' ]
+  
 })
 
 export class VisitComponent implements OnInit { 
