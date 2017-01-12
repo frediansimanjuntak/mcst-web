@@ -75,7 +75,16 @@ export class ContractComponent implements OnInit  {
         this.router.navigate(['/contract/view', contract._id]);
     }
 
+    edit(id: any){
+        console.log(id)
+        this.router.navigate(['/contract/edit', id]);
+    }
+
     add(){
         this.router.navigate(['/contract/add']);
+    }
+
+    back(){
+        this.router.navigate(['/contract']);
     }
 }

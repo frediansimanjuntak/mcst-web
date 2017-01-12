@@ -28,7 +28,7 @@ export class EditContractComponent  implements OnInit {
         });
         this.model.reference_no = this.id;
         if( this.id != null) {
-            this.contractService.getById(this.id).subscribe(contract => this.contract = contract);
+            this.contractService.getContract(this.id).then(contract => this.contract = contract);
         }
     }
 
@@ -55,16 +55,18 @@ export class EditContractComponent  implements OnInit {
         this.model.attachment.splice(i, 1)
     }
 
- //    updateDevelopment(){
-	// 	this.contractService.update(this.contract)
-	// 	.then(
-	// 		response => {
- //                this.alertService.success('Update development successful', true);
- //                this.router.navigate(['/development']);
- //            },
- //            error => {
- //            	this.alertService.error(error);
- //            }
- //        );
-	// }
+    updateContract(){
+        this.contract.attachment = this.model.attachment
+        console.log(this.contract)
+		this.contractService.update(this.contract)
+		.then(
+			response => {
+                this.alertService.success('Update development successful', true);
+                this.router.navigate(['/development']);
+            },
+            error => {
+            	this.alertService.error(error);
+            }
+        );
+	}
 }

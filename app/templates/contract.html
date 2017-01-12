@@ -7,7 +7,7 @@
 			Home > Manage Projects > {{contract.title}}
 			<div class="row">
 				<div class="col-md-4">
-					<a style="text-decoration: underline;" (click)="add()">Back to last page</a>	  		
+					<a style="text-decoration: underline;cursor: pointer;" (click)="back()">Back to last page</a>	  		
 				</div>
 			</div><br/>
 			<!--PROJECT DETAIL -->
@@ -17,7 +17,7 @@
 	                    <h5>Project Details</h5>
 	                </div>
 	                <div class="col-md-6">
-	                    <a class="btn btn-default pull-right"><img class="img-btn" src="../../assets/image/icon_edit_black.png" (click)="generateCode(unit)" />&nbsp;Edit Project</a>
+	                    <a class="btn btn-default pull-right" (click)="edit(contract._id)"><img class="img-btn" src="../../assets/image/icon_edit_black.png" />&nbsp;Edit Project</a>
 	                </div>
 	            </div>
 	            <div class="row bg-grey">

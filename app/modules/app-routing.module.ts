@@ -64,6 +64,7 @@ const routes: Routes = [
   { path: 'contract/add',   component: EditContractComponent },
   { path: 'contract/add/:id',   component: EditContractComponent },
   { path: 'contract/view/:id',   component: ContractComponent },
+  { path: 'contract/edit/:id',   component: EditContractComponent },
   { path: 'facility',   component: FacilityComponent },
   { path: 'facility/add',   component: EditFacilityComponent },
   { path: 'facility/view/:id',   component: FacilityComponent },
