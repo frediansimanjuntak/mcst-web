@@ -7,7 +7,7 @@ import '../../rxjs-operators';
 import 'rxjs/add/operator/switchMap';
 
 @Component({
-  moduleId: module.id.replace("/dist/", "/"),
+  // moduleId: module.id,
   selector: 'edit-contractor',
   templateUrl: 'app/templates/edit-contractor.html',
   styleUrls: [ 'app/templates/styles/ng2-select.css' ]

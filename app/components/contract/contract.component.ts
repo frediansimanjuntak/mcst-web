@@ -7,7 +7,7 @@ import { Observable} from 'rxjs/Observable';
 import { FileUploader } from 'ng2-file-upload';
 
 @Component({
-  moduleId: module.id,
+  // moduleId: module.id,
   selector: 'contract',
   templateUrl: 'app/templates/contract.html',
 })
