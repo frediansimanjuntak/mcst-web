@@ -1,9 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewContainerRef, ViewEncapsulation, ViewChild } from '@angular/core';
 import { Router, Params, ActivatedRoute } from '@angular/router';
 import { Development, Developments } from '../../models/index';
-import { UnitService, AlertService } from '../../services/index';
+import { UnitService, AlertService, UserService } from '../../services/index';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Location }               from '@angular/common';
+import { Observable} from 'rxjs/Observable';
 import '../../rxjs-operators';
 import 'rxjs/add/operator/switchMap';
 // import { User } from '../../models/index';
@@ -18,7 +19,10 @@ import 'rxjs/add/operator/switchMap';
 export class EditUnitComponent implements OnInit {
 	unit: any;
     units: any;
-
+    users: any;
+    selectedLanlord: any = {};
+    public items:Array<any> = [];
+    myOptions: Array<any>;
     model: any = {};
     id: string;
     public developmentId;
@@ -27,14 +31,15 @@ export class EditUnitComponent implements OnInit {
     public events: any[] = []; // use later to display form changes
 
     status = [
-        { value: 'inactive', name: 'Inactive' },
-        { value: 'active', name: 'Active' }
+        { value: 'tenanted', name: 'Tenanted' },
+        { value: 'own_stay', name: 'Own Stay' }
     ];
 
     constructor(
         private router: Router,
         private route: ActivatedRoute,
     	private unitservice: UnitService,
+        private userService: UserService,
     	private alertService: AlertService,
         private formbuilder: FormBuilder,
         private location: Location ) {
@@ -44,7 +49,7 @@ export class EditUnitComponent implements OnInit {
 
     ngOnInit() {
         this.developmentId = '585b36585d3cc41224fe518a';
-
+        this.getUsers();
         this.myForm = this.formbuilder.group({
                 address: this.formbuilder.group({
                     unit_no : ['',  <any>Validators.required],
@@ -55,6 +60,9 @@ export class EditUnitComponent implements OnInit {
                     country : ['', <any>Validators.required],
                     full_address : ['', <any>Validators.required]
                 }),
+                landlord: [''],
+                tenant: this.formbuilder.array([]),
+                registered_vehicle: this.formbuilder.array([]),
                 status: ['', <any>Validators.required],
                 created_by: ['583e4e9dd97c97149884fef5']
         });
@@ -73,15 +81,31 @@ export class EditUnitComponent implements OnInit {
         }
     }
 
-    createUnit(model: Development, isValid: boolean) {
+    getUsers(): void {
+        this.userService.getUsers().then(users => {
+            this.users = users;
+            let numOptions =  this.users.length;
+            let opts = new Array(numOptions);
+
+            for (let i = 0; i < numOptions; i++) {
+                opts[i] = {
+                    id: this.users[i]._id,
+                    text: this.users[i].username
+                };
+            }
+
+            this.myOptions = opts.slice(0);
+            this.items = this.myOptions;
+        });
+    }
+
+    createUnit(model: any, isValid: boolean) {
         this.submitted = true;
-        console.log(Developments[0]);
-        Developments[0].properties.push(model);
-        console.log(Developments[0].properties);
-        this.router.navigate(['/unit']);
-        // model.properties.created_by = '583e4e9dd97c97149884fef5';
-        // this.model.pinned.rank = 0;
-        if(isValid == true){
+        
+        if(isValid && this.selectedLanlord){
+            model.landlord = this.selectedLanlord.id;
+            Developments[0].properties.push(model);
+            this.router.navigate(['/unit']);    
             console.log(model);
             this.unitservice.create(model)
             .subscribe(
@@ -97,7 +121,15 @@ export class EditUnitComponent implements OnInit {
         }
     }
 
-     updateUnit(){
+    public refreshValueLanlord(value:any):void {
+        this.selectedLanlord = value;
+    }
+
+    public selected(value:any):void {
+        // console.log('Selected value is: ', value);
+    }
+
+    updateUnit(){
          console.log(this.unit);
         // this.unitservice.update(model)
         // .then(
@@ -114,21 +146,4 @@ export class EditUnitComponent implements OnInit {
     goBack(): void {
         this.location.back();
     }
- //    updateNewsletter(){
-	// 	this.unitservice.update(this.model)
-	// 	.subscribe(
-	// 		response => {
-	// 			if(response.error) {
-	//                 this.alertService.error(response.error);
-	//             } else {
-	//                 // EmitterService.get(this.userList).emit(response.users);
- //                     this.alertService.success('Update newsletter successful', true);
- //                     this.router.navigate(['/newsletter']);
-	//             }
- //            },
- //            error=> {
- //            	this.alertService.error(error);
- //            }
- //        );
-	// }
 }
