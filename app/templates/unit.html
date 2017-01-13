@@ -11,7 +11,8 @@
 							
 						</div>
 						<div class="col-md-4">
-					  		<a class="btn btn-default pull-right" ><img class="img-btn" src="../../assets/image/icon_addresident.png" [routerLink]="['/unit/add']" />&nbsp;Add Resident</a>
+					  		<button class="btn btn-default pull-right" [routerLink]="['/unit/add']" ><img class="img-btn" src="../../assets/image/icon_addresident.png" />&nbsp;Add Resident</button>
+					  		
 						</div>			
 				</div>
 			</div>
@@ -27,7 +28,7 @@
 				            <span>#{{dataUnit.address.unit_no}}-{{dataUnit.address.unit_no_2}}</span>
 				        </template>
 				    </p-column>
-				    <p-column field="landlord" header="Owner" sortable="true" [filter]="true" filterPlaceholder="Search Lanlord"></p-column>
+				    <p-column field="owner" header="Owner" sortable="true" [filter]="true" filterPlaceholder="Search Lanlord"></p-column>
 				    <p-column field="status" header="Status" sortable="true" [filter]="true" filterPlaceholder="Search Status"></p-column>
 				    <p-column sortable="true" header="No. of Tenant">
 				        <template let-dataUnit="rowData" pTemplate="body">
