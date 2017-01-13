@@ -1,0 +1,302 @@
+<div class="container">
+    <div class="main">
+        <div *ngIf="unit">
+            <div class="title">
+                Unit #{{unit.address.unit_no}}-{{unit.address.unit_no_2}}
+            </div>
+            <p>Home > Residents' Database > #{{unit.address.unit_no}}-{{unit.address.unit_no_2}}</p>
+            <a class="btn-underline" [routerLink]="['/unit']">Back to last page</a>
+
+                <div class="row bg-dark">
+                    <div class="col-md-6">
+                        <h5>General Details</h5>
+                    </div>
+                    <div class="col-md-6">
+                        <a class="btn btn-default pull-right" ><img class="img-btn" src="../../assets/image/icon_add.png" />&nbsp;Generate Code</a>
+                    </div>
+                </div>
+                <div class="row" style="border: 1px solid grey; padding: 5px;">
+                    <div class="row">
+                        <div class="col-md-4">
+                                <b>Unit No :</b>#{{unit.address.unit_no}}-{{unit.address.unit_no_2}}<br>
+                                <b>Block :</b>{{unit.address.block_no}}
+                            </div>
+                            <div class="col-md-4">
+                                <b>Owner :</b>{{unit.owner}}<br>
+                                <b>Status :</b>{{unit.status}}
+                            </div>
+                            <div class="col-md-4">
+                                <b>No of Tenant :</b>{{ unit.tenant.length }}<br>
+                                <b>Vehicle :</b> <!-- {{unit.vehicle.length}} -->
+                            </div>
+                    </div>
+                </div><br>
+
+                <div class="row bg-dark">
+                    <div class="col-md-6">
+                        <h5>Resident/Tenant</h5>
+                    </div>
+                    <div class="col-md-6">
+                        <a class="btn btn-default pull-right" (click)="firstModal.open()"><img class="img-btn" src="../../assets/image/icon_addresident.png"   />&nbsp;Add Resident</a>
+                    </div>
+                </div>
+                <div class="row">
+                   <p-dataTable [value]="residents">
+                        <p-column header="no" [style]="{'width':'42px'}" field="i">
+                        </p-column>
+                        <p-column header="Resident" field="resident_name">
+                        </p-column>
+                        <p-column header="Type" sortable="true" field="type">
+                        </p-column>
+                        <p-column header="Added on" sortable="true" field="added_on">
+                        </p-column>
+                        <p-column header="Social page" sortable="true" field="social_page">
+                        </p-column>
+                        <p-column header="Contact No." >
+                            <template let-residents="rowData" pTemplate="body">
+                                <span *ngIf="residents.phone">{{residents.phone}}<br></span>
+                                <span *ngIf="residents.email">{{residents.email}}<br></span>
+                            </template>
+                        </p-column>
+                        <p-column header="Remarks" field="remarks">
+                        </p-column>
+                        <p-column [style]="{'width':'160px'}" styleClass="col-button" >
+                            <template let-residents="rowData" pTemplate="body">
+                                    <a type="button" class="btn-underline"  (click)="openResidentDetail(residents) || residentDetail.open()">View details</a>
+                                    <button  type="button" (click)="deleteResident(residents)"><i class="fa fa-trash" aria-hidden="true"></i></button>
+                            </template>
+                        </p-column>
+                    </p-dataTable>
+                </div><br>
+
+
+                <div class="row bg-dark">
+                    <div class="col-md-6">
+                        <h5>Registered Vehicle</h5>
+                    </div>
+                    <div class="col-md-6">
+                        <a class="btn btn-default pull-right" (click)="secondModal.open()"><img class="img-btn" src="../../assets/image/icon_addresident.png" />&nbsp;Register Vehicle</a>
+                    </div>
+                </div>
+                <div class="row">
+                   <p-dataTable [value]="vehicles">
+                        <p-column header="No" [style]="{'width':'42px'}" field="i">
+                        </p-column>
+                        <p-column header="License Plate" field="license_plate">
+                        </p-column>
+                        <p-column header="Owner" sortable="true" field="owner_name">
+                        </p-column>
+                        <p-column header="Transponder" field="transponder">
+                        </p-column>
+                        <p-column header="Document" field="document">
+                        </p-column>
+                        <p-column header="Registered On" field="registered_on">
+                        </p-column>
+                        <p-column header="Remarks" field="remarks">
+                        </p-column>
+                        <p-column styleClass="col-button" >
+                            <template let-vehicles="rowData" pTemplate="body">
+                                    <a type="button" class="btn-underline" (click)="openVehicleDetail(vehicles) || vehicleDetail.open()">View details</a>
+                                    <button  type="button" (click)="deleteVehicle(vehicles)"><i class="fa fa-trash" aria-hidden="true"></i></button>
+                            </template>
+                        </p-column>
+                    </p-dataTable>
+                </div><br>
+
+        <div class="row">
+            <modal #firstModal>
+                <modal-header>
+                    <h5>Adding a Resident</h5>
+                </modal-header>
+                <modal-content>
+                    <form name="form" [formGroup]="myForm" novalidate>
+                        <div class="form-group" [ngClass]="{ 'has-error': addSubmitted && !resident }">
+                            <label class="control-label col-sm-4" for="chief">Resident :</label>
+                            <div class="col-sm-8">
+                                <div style="width: 300px; margin-bottom: 20px;">
+                                    <ng-select 
+                                            
+                                              [allowClear]="true"
+                                              [items]="items"
+                                              [disabled]="disabled"
+                                              (data)="refreshValueResident($event)"
+                                              (selected)="selected($event)"
+                                              (removed)="removed($event)"
+                                              placeholder="No Resident selected">
+                                    </ng-select>
+                                    <span *ngIf="addSubmitted && !selectedResident" class="help-block">Resident is required</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group" [ngClass]="{ 'has-error': addSubmitted && !myForm.controls.type.valid }">
+                            <label  class="control-label col-sm-4" for="type">Type :</label>
+                            <div class="col-sm-8">
+                                <input type="text" class="form-control" name="type" formControlName="type">
+                                <small style="color: red" [hidden]="myForm.controls.type.valid || (myForm.controls.type.pristine && !addSubmitted)">Type is required</small>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label  class="control-label col-sm-4" for="full_name">Social Page :</label>
+                            <div class="col-sm-8">
+                                <label><input type="radio" formControlName="social_page" name="social_page" [value]="yes">Yes</label>
+                                <label><input type="radio" formControlName="social_page" [checked]=true name="social_page" [value]="no">No</label>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label  class="control-label col-sm-4" for="full_name">Remarks :</label>
+                            <div class="col-sm-8">
+                                <textarea  type="text" class="form-control" name="remarks" formControlName="remarks" placeholder="Remarks here if any"></textarea>
+                            </div>
+                        </div>
+                        <div class="pull-right">
+                            <button  class="btn btn-primary" (click)="addResident(myForm.value, myForm.valid)">Add</button>
+                            <button class="btn btn-default" (click)="firstModal.close()">Cancel</button>
+                        </div>
+                    </form>   
+                </modal-content>
+            </modal>
+        </div>  
+
+        <div class="row">
+            <modal #secondModal>
+                <modal-header>
+                    <h5>Register a Vehicle</h5>
+                </modal-header>
+                <modal-content>
+                    <form name="form" [formGroup]="myForm2" novalidate>
+                        <div class="form-group" [ngClass]="{ 'has-error': vehicleSubmitted && !myForm2.controls.license_plate.valid }">
+                            <label  class="control-label col-sm-4" for="license_plate">License Plate :</label>
+                            <div class="col-sm-8">
+                                <input license_plate="text" class="form-control" name="license_plate" formControlName="license_plate">
+                                <small style="color: red" [hidden]="myForm2.controls.license_plate.valid || (myForm2.controls.license_plate.pristine && !addSubmitted)">License Plate is required</small>
+                            </div>
+                        </div>
+                        <div class="form-group" [ngClass]="{ 'has-error': vehicleSubmitted && !selectedresident }">
+                            <label class="control-label col-sm-4" for="chief">Owner :</label>
+                            <div class="col-sm-8">
+                                <div style="width: 300px; margin-bottom: 20px;">
+                                    <ng-select 
+                                             [allowClear]="true"
+                                              [items]="residents"
+                                              [disabled]="disabled"
+                                              (data)="refreshValueResident($event)"
+                                              (selected)="selected($event)"
+                                              (removed)="removed($event)"
+                                              placeholder="No Resident selected">
+                                    </ng-select>
+                                    <span *ngIf="vehicleSubmitted && !selectedResident" class="help-block">Resident is required</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label  class="control-label col-sm-4" for="transponder">Transponder :</label>
+                            <div class="col-sm-8">
+                                <input  type="text" class="form-control" name="transponder" formControlName="transponder" placeholder="">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label  class="control-label col-sm-4" for="document">Document :</label>
+                            <div class="col-sm-8">
+                                <input  type="text" class="form-control" name="document" formControlName="document" placeholder="">
+                            </div>
+                        </div>
+                         <div class="form-group">
+                            <label  class="control-label col-sm-4" for="remarks">Remarks :</label>
+                            <div class="col-sm-8">
+                                <textarea  type="text" class="form-control" name="remarks" formControlName="remarks" placeholder="Remarks here if any"></textarea>
+                            </div>
+                        </div>
+                        <div class="pull-right">
+                            <button  class="btn btn-primary" (click)="addVehicle(myForm2.value, myForm2.valid)">Add</button>
+                            <button class="btn btn-default" (click)="secondModal.close()">Cancel</button>
+                        </div>
+                    </form>   
+                </modal-content>
+            </modal>
+        </div>  
+
+        <div class="row">
+            <modal #residentDetail>
+                <modal-header *ngIf="resident">
+                    <h5>Resident/Tenant {{ resident.resident_name }}</h5>
+                </modal-header>
+                <modal-content *ngIf="resident">
+                    <div class="row">
+                        <div class="col-md-4">Resident</div>
+                        <div class="col-md-8"> <p>: {{ resident.resident_name }}</p></div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-4">Type</div>
+                        <div class="col-md-8"><p>: {{ resident.type }}</p></div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-4">Added on </div>
+                        <div class="col-md-8">
+                            <p>: 
+                                {{ resident.added_on | date:'fullDate' }} 
+                            </p>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-4">Contact No </div>
+                        <div class="col-md-8"><p>: {{resident.phone}}, {{resident.email}}</p></div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-4">Social Page </div>
+                        <div class="col-md-8"><p>: {{ resident.social_page }}</p></div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-4">Remarks </div>
+                        <div class="col-md-8"><p>: {{ resident.remarks }}</p></div>
+                    </div>
+                </modal-content>
+                <modal-footer>
+                      <button class="btn btn-default" (click)="residentDetail.close()">Close</button>
+                </modal-footer>
+            </modal>
+        </div>  
+
+        <div class="row">
+            <modal #vehicleDetail>
+                <modal-header *ngIf="vehicle">
+                    <h5>Registered Vehicle {{ vehicle.license_plate }}</h5>
+                </modal-header>
+                <modal-content *ngIf="vehicle">
+                    <div class="row">
+                        <div class="col-md-4">License Plate</div>
+                        <div class="col-md-8"> <p>: {{ vehicle.license_plate }}</p></div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-4">Owner</div>
+                        <div class="col-md-8"><p>: {{ vehicle.owner_name }}</p></div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-4">Transponder</div>
+                        <div class="col-md-8"><p>: {{ vehicle.transponder }}</p></div>
+                    </div>
+                   <div class="row">
+                        <div class="col-md-4">Document</div>
+                        <div class="col-md-8"><p>: {{ vehicle.document }}</p></div>
+                    </div>
+                     <div class="row">
+                        <div class="col-md-4">Registered on </div>
+                        <div class="col-md-8">
+                            <p>: {{ vehicle.registered_on | date:'fullDate'}}</p>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-4">Remarks </div>
+                        <div class="col-md-8"><p>: {{ vehicle.remarks }}</p></div>
+                    </div>
+                </modal-content>
+                <modal-footer>
+                      <button class="btn btn-default" (click)="vehicleDetail.close()">Close</button>
+                </modal-footer>
+            </modal>
+        </div>  
+                 
+
+              
+        </div>
+    </div>
+</div>

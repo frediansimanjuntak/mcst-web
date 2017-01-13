@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Development } from '../../models/index';
-import { UnitService, AlertService} from '../../services/index';
+import { UnitService, AlertService, UserService} from '../../services/index';
 import '../../rxjs-operators';
 import {NG_TABLE_DIRECTIVES}    from 'ng2-table/ng2-table'
 import { Observable} from 'rxjs/Observable';
@@ -14,33 +14,24 @@ import { Observable} from 'rxjs/Observable';
 })
 
 export class UnitComponent implements OnInit {
-	  unit: Development;
+	unit: Development;
     development: any;
     units: Development[] = [];
-    model: any = {};
-    cols: any[];
+    users: any;
     public developmentId;
     public data;
     public dataUnit;
-    public filterQuery = "";
-    public rowsOnPage = 10;
-    public sortBy = "email";
-    public sortOrder = "asc";
-
-    constructor(private router: Router,private unitservice: UnitService, private alertService: AlertService) {
+    
+    constructor(private router: Router,
+                private unitservice: UnitService, 
+                private alertService: AlertService,
+                private userService: UserService) {
     }
 
     ngOnInit(): void {
         this.developmentId = '585b36585d3cc41224fe518a';
+        this.getUsers();
         this.loadAllUnits();
-    }
-
-    public toInt(num: string) {
-        return +num;
-    }
-
-    public sortByWordLength = (a: any) => {
-        return a.city.length;
     }
 
     deleteUnit(unit: any) {
@@ -68,8 +59,10 @@ export class UnitComponent implements OnInit {
     private loadAllUnits(): void {
       this.unitservice.getDevelopments().then(development => {
 
-        this.dataUnit = development[0].properties
-
+      this.dataUnit = development[0].properties
+        for (var i = 0; i < this.dataUnit.length; i++) {
+            this.dataUnit[i].owner = this.users.find(myObj => myObj._id ===  this.dataUnit[i].landlord ).username;
+        }
       });
 
         // this.unitservice.getDevelopments()
@@ -82,12 +75,15 @@ export class UnitComponent implements OnInit {
         //     });
              // .then(development => this.development.dataUnit = development.properties);
              // console.log(this.development);
-
     }
 
-    editUnit(unit: any){
-        this.router.navigate(['/unit/edit', unit._id]);
+    getUsers(): void {
+        this.userService.getUsers().then(users => {
+            this.users = users;
+        });
     }
 
-
+    viewUnit(unit: any){
+        this.router.navigate(['/unit/view', unit._id]);
+    }
 }

@@ -37,6 +37,7 @@ import {
   EditUserComponent,
   UnitComponent,
   EditUnitComponent,
+  ViewUnitComponent,
   UserGroupComponent,
   EditUserGroupComponent,
   VisitComponent,
@@ -85,7 +86,8 @@ const routes: Routes = [
 
   { path: 'unit',   component: UnitComponent },
   { path: 'unit/add',   component: EditUnitComponent },
-  { path: 'unit/edit/:id',   component: EditUnitComponent },
+  // { path: 'unit/edit/:id',   component: EditUnitComponent },
+  { path: 'unit/view/:id',   component: ViewUnitComponent },
   // { path: 'development/edit/:name',   component: EditDevelopmentComponent },
   { path: 'user_group',   component: UserGroupComponent },
   { path: 'user_group/add',   component: EditUserGroupComponent },

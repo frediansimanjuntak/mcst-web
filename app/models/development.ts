@@ -19,7 +19,8 @@ export class Development {
         full_address : string,
       },
       landlord : User,
-      tenant : User[];
+      tenant : any[],
+      registered_vehicle : any[],
       status: string,
       created_by: User,
       created_at : string
@@ -63,7 +64,43 @@ export var Developments: any[] = [
           full_address : 'djksadkjahdkjahdkjsahdkjsahdkjsahdskadjoweowejfew',
         },
       landlord : "1",
-      tenant : ["5", "8"],
+      tenant : [
+        {
+          _id: "1", 
+          resident: "8",
+          type: "tenant",
+          added_on: "2016-12-08T03:31:07",
+          social_page: "yes",
+          remarks: "#2133"
+        },
+        {
+          _id: "2", 
+          resident: "3",
+          type: "tenant",
+          added_on: "2016-12-08T03:31:07",
+          social_page: "yes",
+          remarks: "#2133"
+        },
+        {
+          _id: "3", 
+          resident: "1",
+          type: "owner resident",
+          added_on: "2016-12-08T03:31:07",
+          social_page: "yes",
+          remarks: "#2133"
+        }
+      ],
+      registered_vehicle: [
+        {
+          _id: "1",
+          license_plate: "SGX 1266",
+          owner: "8",
+          transponder: "#12321321",
+          document: "jk12n3kj1n3jk",
+          registered_on: "2016-12-08T03:31:07",
+          remarks: ""
+        }
+      ],
       status: "active",
       created_by: "1",
       created_at : "2016-12-08T03:31:07"
@@ -80,7 +117,51 @@ export var Developments: any[] = [
           full_address : 'djksadkjahdkjahdkjsahdkjsahdkjsahdskadjoweowejfew',
         },
       landlord : "5",
-      tenant : ["4", "3"],
+      tenant : [
+        {
+          _id: "1", 
+          resident: "8",
+          type: "tenant",
+          added_on: "2016-12-08T03:31:07",
+          social_page: "yes",
+          remarks: "#2133"
+        },
+        {
+          _id: "2", 
+          resident: "3",
+          type: "tenant",
+          added_on: "2016-12-08T03:31:07",
+          social_page: "yes",
+          remarks: "#2133"
+        },
+        {
+          _id: "3", 
+          resident: "1",
+          type: "owner resident",
+          added_on: "2016-12-08T03:31:07",
+          social_page: "yes",
+          remarks: "#2133"
+        },
+         {
+          _id: "4", 
+          resident: "1",
+          type: "owner resident",
+          added_on: "2016-12-08T03:31:07",
+          social_page: "yes",
+          remarks: "#2133"
+        }
+      ],
+      registered_vehicle: [
+        {
+          _id: "1",
+          license_plate: "SGX 1266",
+          owner: "1",
+          transponder: "#12321321",
+          document: "jk12n3kj1n3jk",
+          registered_on: "2016-12-08T03:31:07",
+          remarks: ""
+        }
+      ],
       status: "inactive",
       created_by: "5",
       created_at : "2016-12-08T03:31:07"
@@ -97,7 +178,27 @@ export var Developments: any[] = [
           full_address : 'djksadkjahdkjahdkjsahdkjsahdkjsahdskadjoweowejfew',
         },
       landlord : "9",
-      tenant : ["9", "1", "2", "3"],
+      tenant : [
+        {
+          _id: "1", 
+          resident: "9",
+          type: "tenant",
+          added_on: "2016-12-08T03:31:07",
+          social_page: "yes",
+          remarks: "#2133"
+        }
+      ],
+      registered_vehicle: [
+        {
+          _id: "1",
+          license_plate: "SGX 1266",
+          owner: "9",
+          transponder: "#12321321",
+          document: "jk12n3kj1n3jk",
+          registered_on: "2016-12-08T03:31:07",
+          remarks: ""
+        }
+      ],
       status: "active",
       created_by: "9",
       created_at : "2016-12-08T03:31:07"
@@ -114,7 +215,52 @@ export var Developments: any[] = [
           full_address : 'djksadkjahdkjahdkjsahdkjsahdkjsahdskadjoweowejfew',
         },
       landlord : "3",
-      tenant : ["1", "2"],
+      tenant : [
+        {
+          _id: "1", 
+          resident: "2",
+          type: "tenant",
+          added_on: "2016-12-08T03:31:07",
+          social_page: "yes",
+          remarks: "#2133"
+        },
+        {
+          _id: "2", 
+          resident: "7",
+          type: "tenant",
+          added_on: "2016-12-08T03:31:07",
+          social_page: "yes",
+          remarks: "#2133"
+        },
+        {
+          _id: "3", 
+          resident: "9",
+          type: "tenant",
+          added_on: "2016-12-08T03:31:07",
+          social_page: "yes",
+          remarks: "#2133"
+        }
+      ],
+      registered_vehicle: [
+        {
+          _id: "1",
+          license_plate: "SGX 1266",
+          owner: "7",
+          transponder: "#12321321",
+          document: "jk12n3kj1n3jk",
+          registered_on: "2016-12-08T03:31:07",
+          remarks: ""
+        },
+        {
+          _id: "2",
+          license_plate: "SGX 1266",
+          owner: "9",
+          transponder: "#12321321",
+          document: "jk12n3kj1n3jk",
+          registered_on: "2016-12-08T03:31:07",
+          remarks: ""
+        }
+      ],
       status: "active",
       created_by: "3",
       created_at : "2016-12-08T03:31:07"
@@ -130,8 +276,41 @@ export var Developments: any[] = [
           country : 'Malaysia',
           full_address : 'djksadkjahdkjahdkjsahdkjsahdkjsahdskadjoweowejfew',
         },
-      landlord : "14",
-      tenant : ["15", "8", "7"],
+      landlord : "9",
+      tenant : [
+        {
+          _id: "1", 
+          resident: "5",
+          type: "tenant",
+          added_on: "2016-12-08T03:31:07",
+          social_page: "yes",
+          remarks: "#2133"
+        },
+        {
+          _id: "2", 
+          resident: "2",
+          type: "tenant",
+          added_on: "2016-12-08T03:31:07",
+          social_page: "yes",
+          remarks: "#2133"
+        },
+        {
+          _id: "3", 
+          resident: "6",
+          type: "tenant",
+          added_on: "2016-12-08T03:31:07",
+          social_page: "yes",
+          remarks: "#2133"
+        },
+        {
+          _id: "4", 
+          resident: "2",
+          type: "tenant",
+          added_on: "2016-12-08T03:31:07",
+          social_page: "yes",
+          remarks: "#2133"
+        }
+      ],
       status: "active",
       created_by: "14",
       created_at : "2016-12-08T03:31:07"
@@ -148,7 +327,35 @@ export var Developments: any[] = [
           full_address : 'djksadkjahdkjahdkjsahdkjsahdkjsahdskadjoweowejfew',
         },
       landlord : "10",
-      tenant : ["5", "8", '13', '11', '3', '7'],
+      tenant : [
+        {
+          _id: "1", 
+          resident: "4",
+          type: "tenant",
+          added_on: "2016-12-08T03:31:07",
+          social_page: "yes",
+          remarks: "#2133"
+        },
+        {
+          _id: "2", 
+          resident: "2",
+          type: "tenant",
+          added_on: "2016-12-08T03:31:07",
+          social_page: "yes",
+          remarks: "#2133"
+        }
+      ],
+      registered_vehicle: [
+        {
+          _id: "1",
+          license_plate: "SGX 1266",
+          owner: "4",
+          transponder: "#12321321",
+          document: "jk12n3kj1n3jk",
+          registered_on: "2016-12-08T03:31:07",
+          remarks: ""
+        }
+      ],
       status: "inactive",
       created_by: "10",
       created_at : "2016-12-08T03:31:07"
@@ -172,7 +379,7 @@ export var Developments: any[] = [
         _id : "2",
         title: "dasdsa pit adasd asdad",
         description: "BBQ pit for dasda yay",
-        type: "circular",
+        type: "egm",
         attachment: "3",
         released: true,
         pinned: { "rank": 0 },
@@ -211,7 +418,7 @@ export var Developments: any[] = [
         _id : "5",
         title: "dasdsadsadk ujg",
         description: "dklasdmsasdadjkslamdsaddsadksat for sdsadsadsad  as as yay",
-        type: "agm",
+        type: "egm",
         attachment: "9",
         released: true,
         pinned: { "rank": 0 },

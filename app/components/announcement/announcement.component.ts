@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewContainerRef, ViewEncapsulation } from '@angular/core';
+import { Component, OnInit, ViewContainerRef, ViewEncapsulation, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { Announcement, } from '../../models/index';
 import { AnnouncementService, AlertService} from '../../services/index';
@@ -18,6 +18,7 @@ import * as $ from "jquery";
 })
 
 export class AnnouncementComponent implements OnInit {
+    @ViewChild('firstModal') firstModal;
 	  announcement: Announcement;
     announcements: Announcement[] = [];
     validTillDateOptions: any = {};
@@ -113,6 +114,7 @@ export class AnnouncementComponent implements OnInit {
 
         this.announcement.sticky = this.stickyStatus;
         this.announcement.publish = true;
+        this.firstModal.close();
         console.log(this.announcement);
         this.ngOnInit();
     }

@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, Params, ActivatedRoute } from '@angular/router';
 import { Petition, Petitions } from '../../models/index';
-import { PetitionService, AlertService } from '../../services/index';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { UnitService, PetitionService, AlertService } from '../../services/index';
+import { FormBuilder, FormControl, FormGroup, FormArray, Validators } from '@angular/forms';
 import { FileUploader } from 'ng2-file-upload';
 
 import '../../rxjs-operators';
@@ -17,9 +17,12 @@ import 'rxjs/add/operator/switchMap';
 export class EditPetitionComponent implements OnInit {
 	petition: Petition;
     petitions: Petition[] = [];
+    public units;
+    public unit;
     model: any = {};
     id: string;
     myForm: FormGroup;
+    public developmentId;
     public uploader:FileUploader = new FileUploader({url:'http://localhost:3001/upload'});
     types = [
         { value: 'Maintenance', name: 'Maintenance' },
@@ -29,45 +32,115 @@ export class EditPetitionComponent implements OnInit {
 
     ];
     selectedType = '';
+    public submitted: boolean; // keep track on whether form is submitted
+    public events: any[] = []; // use later to display form changes
 
 
     constructor(private router: Router,
     	private petitionService: PetitionService,
+        private unitService: UnitService,
     	private alertService: AlertService,
-        private route: ActivatedRoute) {
+        private route: ActivatedRoute,
+        private formbuilder: FormBuilder,) {
         // this.user = JSON.parse(localStorage.getItem('user'));
     }
 
     ngOnInit(): void {
+        this.developmentId = '1';
     	this.selectedType = 'Maintenance';
+        this.loadAllPetitions();
+        this.myForm = this.formbuilder.group({
+            reference_no : [''],
+            development : [''],
+            property: [''],
+            petition_type: [''],
+            attachment: this.formbuilder.array([]),
+            contract: [''],
+            remark: [''],
+            status: [''],
+            created_by : [''],
+            updated_at : [''],
+            archieved : [''],
+            created_at : ['']
+        });
+
         this.route.params.subscribe(params => {
             this.id = params['id'];
         });
+
         if( this.id != null) {
             this.petitionService.getPetition(this.id).then(petition => {this.petition = petition;});
         }
     }
 
-    createPetition() {
-    	this.model.petition_type = this.selectedType;
-        Petitions.push(this.model);
-        console.log(this.model)
-        this.router.navigate(['/petition']);
+      createPetition(model: any, isValid: boolean) {
+        this.submitted = true;
+        if(isValid || this.unit){
+            model.property = this.unit.id;
+            model.attachment = this.model.attachment;
+            model.updated_at = new Date();
+            Petitions.push(model);
+            console.log(model);
 
-        // this.petitionService.create(this.model)
-        // .then(
-        //     data => {
-        //         this.alertService.success('Create Petition successful', true);
-        //         this.router.navigate(['/incident']);
-        //     },
-        //     error => {
-        //         console.log(error);
-        //         alert(`The petition could not be save, server Error.`);
-        //     }
-        // );
+            this.router.navigate(['/petition']);
+            //   this.userGroupService.create(model)
+            // .then(
+            //     data => {
+            //         this.alertService.success('Create usergroup successful', true);
+            //         this.router.navigate(['/user']);
+            //     },
+            //     error => {
+            //         this.alertService.error(error);
+            //     }
+            // );
+        }
     }
 
-    updateIncident(){
+    private loadAllPetitions() {
+        //---------------------------Call To Api-------------- //
+        // this.announcementService.getAll()
+        //     .subscribe((data)=> {
+        //         setTimeout(()=> {
+        //             this.data          = data.find(data => data._id === this.developmentId );
+        //             this.dataAgm       = this.data.newsletter.filter(data => data.type === 'agm' );
+        //             this.dataCircular  = this.data.newsletter.filter(data => data.type === 'circular' );
+        //             console.log(this.dataAgm);
+        //         }, 1000);
+        //     });
+
+        this.petitionService.getPetitions().then(data => {
+            this.petitions         = data;
+        });
+    }
+
+
+    private loadAllUnits(): void {
+        this.unitService.getDevelopments().then(development => {
+
+            this.units = development[0].properties;
+
+            for (var i = 0; i < this.units.length; i++) {
+                this.units[i].id            = this.units[i]._id;
+                this.units[i].text          = '#' + this.units[i].address.unit_no + '-' + this.units[i].address.unit_no_2;
+            }
+
+        });
+    }
+
+    public refreshValueUnit(value:any):void {
+        this.unit = value;
+    }
+
+
+    public selected(value:any):void {
+        // console.log('Selected value is: ', value);
+    }
+
+    public removed(value:any):void {
+        // console.log('Removed value is: ', value);
+    }
+
+    updatePetition(){
     	console.log(this.petition);
 		// this.petitionService.update(this.petition)
 		// .then(
