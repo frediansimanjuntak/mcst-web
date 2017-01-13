@@ -1,6 +1,6 @@
 <div class="container">
     <div class="main">
-        <div *ngIf="contract">
+        <!-- <div *ngIf="contract">
             <div class="title"> 
                 UPDATE PROJECT
             </div>
@@ -47,41 +47,42 @@
                 <div class="form-group pull-right">
                     <button [disabled]="loading" class="btn btn-primary">Create Project</button>
                     <img *ngIf="loading" src="data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA==" />
-                    <a [routerLink]="['/contract/view', contract._id]" class="btn btn-info">Cancel</a>
+                    <a [routerLink]="['/contract']" class="btn btn-info">Cancel</a>
                 </div>
             </form>
-        </div>
-        <div *ngIf="!contract">
+        </div> -->
+        <div *ngIf="contract">
             <div class="title"> 
-                CREATE PROJECT
+                Create a Project notice
             </div>
-            <p>Home > Manage Project > Create </p>
-            <form class="form-horizontal col-md-6" name="form" (ngSubmit)="f.form.valid && createContract()" #f="ngForm" novalidate>
+            <p>Home > Manage Project > {{contract.title}}Create > Create a Project notice</p>
+            <form class="form-horizontal col-md-6" name="form" #f="ngForm" novalidate>
                 <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !title.valid }">
-                     <label class="control-label col-sm-4" for="title">Project Title :</label>
+                     <label class="control-label col-sm-4" for="title">Title :</label>
                     <div class="col-sm-8">
                         <input type="text" class="form-control" name="title" [(ngModel)]="model.title" #title="ngModel" required placeholder="Input project title here" />
                         <span *ngIf="f.submitted && !title.valid" class="help-block">Project title is required</span>
                     </div>
                 </div>
-                <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !contract_type.valid }">
-                    <label class="control-label col-sm-4" for="contract_type">Project Type :</label>
+                <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !start_time.valid }">
+                    <label class="control-label col-sm-4" for="start_time">Commence date :</label>
                     <div class="col-sm-8">
-                        <input type="text" class="form-control" name="contract_type" [(ngModel)]="model.contract_type" #contract_type="ngModel" required placeholder="input project type Here"/>
-                        <span *ngIf="f.submitted && !contract_type.valid" class="help-block">Project type is required</span>
+                        <input type="date" class="form-control" name="start_time" [(ngModel)]="model.start_time" #start_time="ngModel" required />
+                        <span *ngIf="f.submitted && !start_time.valid" class="help-block">Commence date is required</span>
                     </div>
                 </div>
-                <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !remark.valid }">
-                    <label class="control-label col-sm-4" for="remark">Project Description :</label>
+                <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !end_time.valid }">
+                    <label class="control-label col-sm-4" for="end_time">Estimate date of completion :</label>
                     <div class="col-sm-8">
-                        <textarea class="form-control" name="remark" [(ngModel)]="model.remark" #remark="ngModel" required placeholder="Input remark here"></textarea>
-                        <span *ngIf="f.submitted && !remark.valid" class="help-block">Description is required</span>
+                        <input type="date" class="form-control" name="end_time" [(ngModel)]="model.end_time" #end_time="ngModel" required />
+                        <span *ngIf="f.submitted && !end_time.valid" class="help-block">Estimate date of completion is required</span>
                     </div>
                 </div>
-                <div class="form-group">
-                    <label class="control-label col-sm-4" for="reference_no">Linked Incident Report :</label>
+                <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !description.valid }">
+                    <label class="control-label col-sm-4" for="description">Project description :</label>
                     <div class="col-sm-8">
-                        <input type="text" disabled class="form-control" name="reference_no" [(ngModel)]="model.reference_no" #reference_no="ngModel" placeholder="-"/>
+                        <textarea class="form-control" name="description" [(ngModel)]="model.description" #description="ngModel" required placeholder="Input description here"></textarea>
+                        <span *ngIf="f.submitted && !description.valid" class="help-block">Project description is required</span>
                     </div>
                 </div>
                 <div class="form-group" >
@@ -96,9 +97,10 @@
                     </div>
                 </div>
                 <div class="form-group pull-right">
-                    <button [disabled]="loading" class="btn btn-primary">Create Project</button>
+                    <button [disabled]="loading" (click)="publishContractNotice()" class="btn btn-primary">Publish Now</button>
+                    <button [disabled]="loading" (click)="createContractNotice()" class="btn btn-primary">Save as draft</button>
                     <img *ngIf="loading" src="data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA==" />
-                    <a [routerLink]="['/contract']" class="btn btn-info">Cancel</a>
+                    <a [routerLink]="['/contract/view', contract._id]" class="btn btn-info">Cancel</a>
                 </div>
             </form>
         </div>	

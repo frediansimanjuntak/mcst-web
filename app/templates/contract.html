@@ -87,7 +87,7 @@
 	                    <h5>Project Notice</h5>
 	                </div>
 	                <div class="col-md-6">
-	                	<a class="btn btn-default pull-right"><img class="img-btn" src="../../assets/image/icon_edit_black.png" (click)="generateCode(unit)" />&nbsp;Create Project Notice</a>
+	                	<a class="btn btn-default pull-right" (click)="add_notice(contract._id)"><img class="img-btn" src="../../assets/image/icon_edit_black.png" />&nbsp;Create Project Notice</a>
 	                </div>
 	            </div>
 	            <div class="row" style="border: 1px solid grey;min-height: 100px">
@@ -100,7 +100,7 @@
 	                    		<p>Create notice to inform the residents of the project</p>
 	                    	</div>
 	                    	<div style="text-align:center">
-	                    		<a class="btn btn-default"><b>Create Project Notice</b></a>
+	                    		<a class="btn btn-default" (click)="add_notice(contract._id)"><b>Create Project Notice</b></a>
 	                    	</div>
 	                    </div>
 	                </div>
@@ -139,7 +139,7 @@
 	                    <h5>Project Note</h5>
 	                </div>
 	                <div class="col-md-6">
-	                	<a class="btn btn-default pull-right"><img class="img-btn" src="../../assets/image/icon_edit_black.png" (click)="generateCode(unit)" />&nbsp;Post Note</a>
+	                	<a class="btn btn-default pull-right" (click)="add_note(contract._id)"><img class="img-btn" src="../../assets/image/icon_edit_black.png" />&nbsp;Post Note</a>
 	                </div>
 	            </div>
 	            <div class="row" style="border: 1px solid grey;min-height: 100px">
@@ -152,7 +152,7 @@
 	                    		<p>Use note to track project's progress</p>
 	                    	</div>
 	                    	<div style="text-align:center">
-	                    		<a class="btn btn-default"><b>Post Note</b></a>
+	                    		<a class="btn btn-default" (click)="add_note(contract._id)"><b>Post Note</b></a>
 	                    	</div>
 	                    </div>
 	                </div>
