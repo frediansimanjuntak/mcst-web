@@ -30,7 +30,7 @@ export class BookingComponent implements OnInit {
 	public dt: Date = new Date();
     private opened: boolean = false;
 	booking: Booking;
-    bookings: Booking[] = [];
+    bookings: any[] = [];
     facilities: Facility[] = [];
     myForm: FormGroup;
     model: any = {}; 
@@ -114,10 +114,20 @@ export class BookingComponent implements OnInit {
     private loadAllBookings() {
         this.day     = new Date(this.dt.getTime());
         this.day     = this.convertDate(this.day);
+
         this.bookingService.getBookings()
         .then(bookings => {
             this.bookings = bookings;
+            console.log(this.bookings)
             this.selectedDay = this.bookings.filter(data => data.booking_date == this.day); 
+            // for (var i = 0; i < this.selectedDay.length; i++) {
+            //     this.selectedDay[i].facility = this.facilities.find(myObj => myObj._id ===  this.selectedDay[i].facility ).name + ' ' + this.facilities.find(myObj => myObj._id ===  this.selectedDay[i].facility ).facility_type ;
+            //     // this.selectedDay[i].facility_type = this.facilities.find(myObj => myObj._id ===  this.selectedDay[i].facility ).facility_type;
+            // }
+            // for (var i = 0; i < this.bookings.length; i++) {
+            //     this.bookings[i].facility = this.facilities.find(myObj => myObj._id ===  this.bookings[i].facility ).name + ' ' + this.facilities.find(myObj => myObj._id ===  this.bookings[i].facility ).facility_type;
+            //     // this.bookings[i].facility_type = this.facilities.find(myObj => myObj._id ===  this.bookings[i].facility ).facility_type;
+            // }
         });
     }
 

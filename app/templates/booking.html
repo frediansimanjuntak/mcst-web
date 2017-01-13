@@ -108,7 +108,11 @@
 		        		<p-dataTable [value]="bookings" [rows]="10" [paginator]="true">
 						    <p-column field="start_time" header="Time" sortable="true" [filter]="true" filterPlaceholder="Search time"></p-column>
 						    <p-column field="reference_no" header="Ref." sortable="true" [filter]="true" filterPlaceholder="Search ref."></p-column>
-						    <p-column field="facility" header="Facility" sortable="true" [filter]="true" filterPlaceholder="Search facility"></p-column>
+						    <p-column field="" header="Facility" sortable="true" [filter]="true" filterPlaceholder="Search facility">
+						    	<template let-booking="rowData">
+						    		{{booking.facility.name}} {{booking.facility.type}}
+						    	</template>
+						    </p-column>
 						    <p-column field="property" header="Booked by" sortable="true" [filter]="true" filterPlaceholder="Search booked by"></p-column>
 						    <p-column field="booking_date" header="On" sortable="true" [filter]="true" filterPlaceholder="Search date"></p-column>
 						    <p-column field="status" header="Status" sortable="true" [filter]="true" filterPlaceholder="Search status"></p-column>
@@ -130,7 +134,11 @@
 		        		<p-dataTable [value]="selectedDay" [rows]="10" [paginator]="true">
 						    <p-column field="start_time" header="Time" sortable="true" [filter]="true" filterPlaceholder="Search time"></p-column>
 						    <p-column field="reference_no" header="Ref." sortable="true" [filter]="true" filterPlaceholder="Search ref."></p-column>
-						    <p-column field="facility" header="Facility" sortable="true" [filter]="true" filterPlaceholder="Search facility"></p-column>
+						    <p-column field="" header="Facility" sortable="true" [filter]="true" filterPlaceholder="Search facility">
+						    	<template let-booking="rowData">
+						    		{{booking.facility.name}} {{booking.facility.type}}
+						    	</template>
+						    </p-column>
 						    <p-column field="property" header="Booked by" sortable="true" [filter]="true" filterPlaceholder="Search booked by"></p-column>
 						    <p-column field="booking_date" header="On" sortable="true" [filter]="true" filterPlaceholder="Search date"></p-column>
 						    <p-column field="status" header="Status" sortable="true" [filter]="true" filterPlaceholder="Search status"></p-column>
@@ -152,7 +160,11 @@
 		        		<p-dataTable [value]="filtered" [rows]="10" [paginator]="true">
 						    <p-column field="start_time" header="Time" sortable="true" [filter]="true" filterPlaceholder="Search time"></p-column>
 						    <p-column field="reference_no" header="Ref." sortable="true" [filter]="true" filterPlaceholder="Search ref."></p-column>
-						    <p-column field="facility" header="Facility" sortable="true" [filter]="true" filterPlaceholder="Search facility"></p-column>
+						    <p-column field="" header="Facility" sortable="true" [filter]="true" filterPlaceholder="Search facility">
+						    	<template let-booking="rowData">
+						    		{{booking.facility.name}} {{booking.facility.type}}
+						    	</template>
+						    </p-column>
 						    <p-column field="property" header="Booked by" sortable="true" [filter]="true" filterPlaceholder="Search booked by"></p-column>
 						    <p-column field="booking_date" header="On" sortable="true" [filter]="true" filterPlaceholder="Search date"></p-column>
 						    <p-column field="status" header="Status" sortable="true" [filter]="true" filterPlaceholder="Search status"></p-column>
