@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { Router, Params, ActivatedRoute } from '@angular/router';
 import { Petition, Petitions } from '../../models/index';
 import { UnitService, PetitionService, AlertService } from '../../services/index';
@@ -17,11 +17,12 @@ import 'rxjs/add/operator/switchMap';
 export class EditPetitionComponent implements OnInit {
 	petition: Petition;
     petitions: Petition[] = [];
-    public units;
-    public unit;
+    units: any = [];
+    unit: any = {};
     model: any = {};
     id: string;
     myForm: FormGroup;
+    myOptions: Array<any>;
     public developmentId;
     public uploader:FileUploader = new FileUploader({url:'http://localhost:3001/upload'});
     types = [
@@ -76,6 +77,7 @@ export class EditPetitionComponent implements OnInit {
       createPetition(model: any, isValid: boolean) {
         this.submitted = true;
         if(isValid || this.unit){
+            console.log(this.unit);
             model.property = this.unit.id;
             model.attachment = this.model.attachment;
             model.updated_at = new Date();
@@ -119,16 +121,25 @@ export class EditPetitionComponent implements OnInit {
 
             this.units = development[0].properties;
 
-            for (var i = 0; i < this.units.length; i++) {
-                this.units[i].id            = this.units[i]._id;
-                this.units[i].text          = '#' + this.units[i].address.unit_no + '-' + this.units[i].address.unit_no_2;
+
+            let numOptions =  this.units.length;
+            let opts = new Array(numOptions);
+
+            for (let i = 0; i < numOptions; i++) {
+                opts[i] = {
+                    id: this.units[i]._id,
+                    text: '#' + this.units[i].address.unit_no + '-' + this.units[i].address.unit_no_2
+                };
             }
+
+            this.myOptions = opts.slice(0);
 
         });
     }
 
     public refreshValueUnit(value:any):void {
         this.unit = value;
+        console.log(value);
     }
 
 
