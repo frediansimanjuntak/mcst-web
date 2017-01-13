@@ -22,6 +22,7 @@ export class NewsletterComponent implements OnInit {
     public developmentId;
     public data;
     public dataAgm;
+    public dataEgm;
     public dataCircular;
     public filterQuery = "";
     public rowsOnPage = 10;
@@ -93,6 +94,7 @@ export class NewsletterComponent implements OnInit {
                 setTimeout(()=> {
                     this.data          = data.find(data => data._id === this.developmentId );
                     this.dataAgm       = this.data.newsletter.filter(data => data.type === 'agm' );
+                    this.dataEgm       = this.data.newsletter.filter(data => data.type === 'egm' );
                     this.dataCircular  = this.data.newsletter.filter(data => data.type === 'circular' );
                     console.log(this.dataAgm);
                 }, 1000);
