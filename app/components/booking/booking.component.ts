@@ -1,4 +1,5 @@
 import { Component, OnInit, PipeTransform, Pipe } from '@angular/core';
+import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import { DatePipe  } from '@angular/common';
 import { Router, Params, ActivatedRoute } from '@angular/router'; 
 import { Booking, Facility } from '../../models/index';
@@ -31,14 +32,17 @@ export class BookingComponent implements OnInit {
 	booking: Booking;
     bookings: Booking[] = [];
     facilities: Facility[] = [];
+    myForm: FormGroup;
     model: any = {}; 
     id: string;
     times_start : any[] = [];
     times_end : any[] = [];
+    period : any[] = [];
     end : any; 
     min : any;
     start : any;
     day : any;
+    filtered : any;
     selectedDay : any;
     days : any[] = ["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"];
 
@@ -47,9 +51,17 @@ export class BookingComponent implements OnInit {
         private facilityService: FacilityService,
 		private bookingService: BookingService,
 		private alertService: AlertService,
+        private formbuilder: FormBuilder,
 		private route: ActivatedRoute){}
 
 	ngOnInit() {
+        this.myForm = this.formbuilder.group({
+            id : ['1'],
+            type : ['All'],
+            status : ['All'],
+            start : [0],
+            end : [23]
+        })
         this.facilityService.getFacilities()
         .then(facilities => { 
             this.facilities = facilities;
@@ -66,6 +78,10 @@ export class BookingComponent implements OnInit {
                    this.times_end.push(start)
             }
         });
+        for (var a = 0; a < 24; ++a) {
+            this.period.push(a)
+        }
+        this.model._id = '1';
 		this.route.params.subscribe(params => {
             this.id = params['id'];
         });
@@ -113,8 +129,41 @@ export class BookingComponent implements OnInit {
         this.router.navigate(['/booking/edit', booking._id]);
     }
 
-    onChange(id: string){
-        console.log(id)
+    filter(booking: any){
+        this.day  = new Date(this.dt.getTime());
+        this.day  = this.convertDate(this.day);
+        if(booking.start < 10) {
+            var start = "0" + booking.start.toString() + ":00"
+        }else{
+            var start = booking.start.toString() + ":00"
+        }
+        if(booking.end < 10) {
+            var end   = "0" + booking.end.toString() + ":00"
+        }else{
+            var end   = booking.end.toString() + ":00"
+        }
+        
+        this.bookingService.getBookings()
+        .then(bookings => {
+            this.bookings = bookings;
+            console.log(this.bookings[0])
+            if(booking.status == "all" ) {
+                this.filtered = this.bookings.filter(data => 
+                    data.start_time >= start && 
+                    data.end_time <= end && 
+                    data.facility == booking.id
+                );
+            }else{
+                this.filtered = this.bookings.filter(data => 
+                    data.start_time >= start && 
+                    data.end_time <= end &&
+                    data.status == booking.status &&
+                    data.facility == booking.id
+                );
+            }
+            
+            
+        });
     }
 
     convertDate(date) {
