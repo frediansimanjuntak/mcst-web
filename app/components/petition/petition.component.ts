@@ -63,16 +63,6 @@ export class PetitionComponent implements OnInit {
         }
     }
 
-    public toInt(num: string) {
-        return +num;
-    }
-
-    public sortByWordLength = (a: any) => {
-        return a.city.length;
-    }
-
-
-
     private logCheckbox(element: HTMLInputElement): void {
         console.log( `Checkbox ${element.value} was ${element.checked ? '' : 'un'}checked\n`);
     }
@@ -99,9 +89,7 @@ export class PetitionComponent implements OnInit {
         // );
     }
 
-
-
-    openModal(announcement){
+    openModal(petition){
 
     }
 
@@ -119,22 +107,8 @@ export class PetitionComponent implements OnInit {
 
         this.petitionService.getPetitions().then(data => {
             this.petitions         = data;
-            this.petitionPending   = this.petitions.filter(data => data.status === 'pending' );
-            this.petitionProgress  = this.petitions.filter(data => data.status === 'progress' );
-            this.petitionApproved  = this.petitions.filter(data => data.status === 'approved' );
 		});
     }
-
-    public tabs:Array<any> = [
-        {title: 'Dynamic Title 1', content: ''},
-        {title: 'Dynamic Title 2', content: 'Dynamic content 2', disabled: true},
-        {title: 'Dynamic Title 3', content: 'Dynamic content 3', removable: true},
-        {title: 'Dynamic Title 4', content: 'Dynamic content 4', customClass: 'customClass'}
-    ];
-
-    public setActiveTab(index:number):void {
-        this.tabs[index].active = true;
-    };
 
     viewPetition(petition: Petition){
         this.router.navigate(['/petition/view', petition._id]);
