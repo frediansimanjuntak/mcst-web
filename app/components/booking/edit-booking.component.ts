@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import { Router, Params, ActivatedRoute } from '@angular/router';
-import { Booking,Facility } from '../../models/index';
+import { Booking,Facility, Bookings } from '../../models/index';
 import { BookingService, AlertService, FacilityService } from '../../services/index';
 import '../../rxjs-operators';
 import { Observable} from 'rxjs/Observable';
@@ -55,22 +56,31 @@ export class EditBookingComponent implements OnInit  {
 	booking: Booking;
     bookings: Booking[] = [];
     facilities: Facility[] = [];
+    facility: Facility;
+    facility_id: any;
     model: any = {};
     start : any;
     loading = false;
     selectedValues: string[] = [];
     times_start : any[] = [];
     times_end : any[] = [];
+    period : any[] = [];
     tstart : any[] = [];
     tend : any[] = [];
+    timeStart : any[] = [];
+    timeEnd : any[] = [];
     end : any; 
     min : any;
+    filtered: any;
+    facility_name : any;
+    facility_type: any;
     id: string;
     ref_no: string;
     facility_id: number = 0;
     selectedDay: any;
     step: number;
     day : any;
+    myForm: FormGroup;
     days : any[] = ["sunday","monday","tuesday","wednesday","thursday","friday","saturday"];
 
     constructor(
@@ -78,9 +88,16 @@ export class EditBookingComponent implements OnInit  {
 		private bookingService: BookingService,
 		private facilityService: FacilityService,
 		private alertService: AlertService,
+        private formbuilder: FormBuilder,
 		private route: ActivatedRoute){}
 
 	ngOnInit() {
+        this.myForm = this.formbuilder.group({
+            id : ['1'],
+            choice : ['All'],
+            start : [0],
+            end : [23]
+        })
         this.step = 1;
         this.day = this.days[this.dt.getDay()];
         console.log(this.day)
@@ -95,9 +112,9 @@ export class EditBookingComponent implements OnInit  {
         			this.end = this.selectedDay[0].end_time.slice(0,2);
         			let end = +this.end
                     console.log(end);	
-        			this.min =	this.selectedDay[0].start_time.slice(2,5);
+        			this.min =	":00"
         			for (var i = start; i < end; ++i) {
-        					this.times_start.push(i)
+        			    this.times_start.push(i)
         			}
             		while(start < end){       
                			start += 1;
@@ -105,6 +122,9 @@ export class EditBookingComponent implements OnInit  {
             		}
             }
 		});
+        for (var a = 0; a < 24; ++a) {
+            this.period.push(a)
+        }
 		this.route.params.subscribe(params => {
             this.id = params['id'];
         });
@@ -121,7 +141,17 @@ export class EditBookingComponent implements OnInit  {
     }
 
     createBooking() {
+        this.model.facility = this.facility_id
+        let date = this.model.booking_date.splice(0,2)
+        let month = this.model.booking_date.splice(3,5)
+        let year = this.model.booking_date.splice(6,10)
+        let booking_date = (year +'-'+ month +'-'+ date)
+        this.model.booking_date = booking_date;
         console.log(this.model);
+        Bookings.push(this.model);
+        console.log(Bookings);
+        
+        this.router.navigate(['/booking']);
         // this.anouncementService.create(this.model)
         // .subscribe(
         //     data => {
@@ -144,20 +174,53 @@ export class EditBookingComponent implements OnInit  {
         return (ddChars[1]?dd:"0"+ddChars[0]) + '/' + (mmChars[1]?mm:"0"+mmChars[0]) + '/' + yyyy;
     }
 
-	
+	filter(data: any){
+        this.day = this.days[this.dt.getDay()];
+        if(data.start < 10) {
+            var start = "0" + data.start.toString() + ":00"
+        }else{
+            var start = data.start.toString() + ":00"
+        }
+        if(data.end < 10) {
+            var end   = "0" + data.end.toString() + ":00"
+        }else{
+            var end   = data.end.toString() + ":00"
+        }
+        this.facility_id = data.id
+        this.facilityService.getFacility(data.id)
+        .then(facility => {
+            this.facility = facility;
+            this.facility_name = facility.name;
+            this.facility_type = facility.facility_type;
+            if(data.choice == "all" ) {
+                this.filtered = this.facility.schedule.filter(data => 
+                    data.start_time <= start && 
+                    data.end_time >= end        
+                );
+            }else{
+                this.filtered = this.facility.schedule.filter(data => 
+                    data.start_time <= start && 
+                    data.end_time >= end 
+                );
+            };
+            if (this.filtered.length > 0) {   
+                this.min =    ":00"
+                for (var i = data.start; i < data.end; ++i) {
+                    this.timeStart.push(i)
+                }
+                while(data.start < data.end){       
+                    data.start += 1;
+                    this.timeEnd.push(data.start)
+                }
+            }
+            console.log(this.filtered)
+        });
+    }
 
     public archieveSelected(start:any[],end:any[],min:any,name:any,type:any){
-        // this.facilityService.getFacilities()
-        // .then(facilities => { 
-        //     this.facilities = facilities;
-        //     let selected = this.facilities.filter(data => data.name == name); 
-        //     let id = selected[0]._id;
-        //     console.log(id)
-        //     console.log(selected)
-        // });
         this.tstart.push(start)
         this.tend.push(end)
-        var time_start = Math.min.apply(null,this.tstart);
+        var time_start = Math.min.apply(Math,this.tstart);
         var time_end = Math.max.apply(Math,this.tend);
         this.model.start_time = time_start+min;
         this.model.end_time = time_end+min;
@@ -171,7 +234,7 @@ export class EditBookingComponent implements OnInit  {
         let date;
         date     = new Date(this.dt.getTime());
         date     = this.convertDate(date);
-        this.model.date = date
+        this.model.booking_date = date
         this.day = this.days[this.dt.getDay()];
         this.times_start = [];
         this.times_end   = [];

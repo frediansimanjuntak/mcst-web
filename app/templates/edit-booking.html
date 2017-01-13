@@ -57,13 +57,13 @@
 						    	<datepicker (click)="test()" [style]="{'width':'300px'}" [(ngModel)]="dt" [minDate]="minDate" [showWeeks]="false" ></datepicker>
 						    </div>  
 						</div>
-		        		<form name="form" (ngSubmit)="f.form.valid" #f="ngForm" novalidate>
+						<form [formGroup]="myForm" name="form" (ngSubmit)="f.form.valid && filter(myForm.value)" #f="ngForm" novalidate>
 				        	<div class="row">
 				        		<div class="col-md-3">Facility :</div>
 				       			<div class="col-md-9">
 				       				<p>
-				       					<select name="name" [(ngModel)]="model._id" #model="ngModel" class="form-control" style="width: 237px">
-					                    	<option *ngFor="let facility of facilities" (change)="onChange(facility)" [ngValue]="facility._id">{{facility.name}}</option>
+				       					<select name="name" class="form-control" formControlName="id" style="width: 237px">
+					                    	<option [selected]="facility._id == '1'" *ngFor="let facility of facilities" (change)="onChange(facility)" [ngValue]="facility._id">{{facility.name}}</option>
 					                    </select>
 				        			</p>
 				        		</div>
@@ -72,9 +72,10 @@
 				        		<div class="col-md-3">Choice :</div>
 				        		<div class="col-md-9">
 				       				<p>
-				       					<select class="form-control" style="width: 237px">
-						                   	<option>All</option>
-						                   	<option *ngFor="let booking of bookings" [ngValue]="booking.status">{{booking.status}}</option>
+				       					<select name="choice" class="form-control" formControlName="choice" style="width: 237px">
+						                   	<option value="all">All</option>
+						                   	<option value="available">Available</option>
+						                   	<option value="unavailable">Not Available</option>
 					                    </select>	
 				       				</p>
 				       			</div>
@@ -83,11 +84,11 @@
 				       			<div class="col-md-3">Period :</div>
 				       			<div class="col-md-9">
 				       				<p>
-				       					<select class="form-control" style="width: 116.5px">
-					                    	<option *ngFor="let start of times_start" [ngValue]="start">{{start}}{{min}}</option>
+				       					<select name="start" class="form-control" formControlName="start" style="width: 116.5px">
+					                    	<option *ngFor="let start of period" [ngValue]="start"><span *ngIf="start < 10">0</span>{{start}}{{min}}</option>
 					                    </select>
-					                    <select class="form-control" style="width: 116.5px">
-					                    	<option *ngFor="let end of times_end" [ngValue]="end">{{end}}{{min}}</option>
+					                    <select name="end" class="form-control" formControlName="end" style="width: 116.5px">
+					                    	<option *ngFor="let end of period" [ngValue]="end"><span *ngIf="end < 10">0</span>{{end}}{{min}}</option>
 					                    </select>
 			        				</p>
 			        			</div>
@@ -95,22 +96,34 @@
 			                <div class="form-group">
 			                    <button style="width: 327px" class="btn btn-primary">Filter</button>
 			                </div>
-		        		</form>
+		        		</form>	
 		        	</div>
 		        	<div class="col-lg-8">
-		        		<div *ngIf="start">
+		        		<div *ngIf="start && !filtered">
 						<table class="tableSection table-striped">
 						    <tbody>
 						        <tr *ngFor="let tstart of times_start; let i=index ; let tend of times_end">
 									<td>{{times_start[i]}}{{min}} - {{times_end[i]}}{{min}}</td>
 									<td>BBQ Pit A</td>
 									<td>available</td>
-									<p-checkbox name="archive" (click)="archieveSelected(times_start[i],times_end[i],min,'BBQ pit','A')" value="{{tstart[i]}}{{min}} - {{tend[i]}}{{min}}" [(ngModel)]="selectedValues"></p-checkbox>
+									<p-checkbox name="archive" (click)="archieveSelected(times_start[i],times_end[i],min,'BBQ pit','A')" [(ngModel)]="selectedValues"></p-checkbox>
 								</tr>
 						    </tbody>
 						</table>
 						</div>
-						<div *ngIf="!start">
+						<div *ngIf="filtered">
+						<table class="tableSection table-striped">
+						    <tbody>
+						        <tr *ngFor="let a of timeStart; let i=index ; let b of timeEnd">
+									<td>{{timeStart[i]}}{{min}} - {{timeEnd[i]}}{{min}}</td>
+									<td>{{facility_name}} {{facility_type}}</td>
+									<td><!-- {{filtered.status}} -->Available</td>
+									<p-checkbox name="archive" (click)="archieveSelected(timeStart[i],timeEnd[i],min,facility_name,facility_type)" [(ngModel)]="selectedValues"></p-checkbox>
+								</tr>
+						    </tbody>
+						</table>
+						</div>
+						<div *ngIf="!start && !filtered">
 						Data not found
 						</div>
 						<div class="row">
@@ -134,9 +147,9 @@
 		        <div class="row">
 		        	<div class="col-lg-6">
 			        	<div class="bookinginformation">
-			        		<div class="row" style="margin-left: 5px; margin-top: 10px">
+			        		<div class="row" style="margin-left: 5px; margin-top: 10px">`
 	        					<div class="col-md-6"><label>Date :</label></div>
-	        					<div class="col-md-5" style="text-align: right;border-right: 5px">{{model.date}}</div>
+	        					<div class="col-md-5" style="text-align: right;border-right: 5px">{{model.booking_date}}</div>
 	        				</div>
 	        				<div class="row" style="margin-left: 5px; margin-top: 10px">
 	        					<div class="col-md-6"><label>Facility :</label></div>
