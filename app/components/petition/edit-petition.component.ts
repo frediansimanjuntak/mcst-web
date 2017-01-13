@@ -15,6 +15,7 @@ import 'rxjs/add/operator/switchMap';
 })
 
 export class EditPetitionComponent implements OnInit {
+    public items:Array<any> = [];
 	petition: Petition;
     petitions: Petition[] = [];
     units: any = [];
@@ -134,6 +135,7 @@ export class EditPetitionComponent implements OnInit {
 
             this.myOptions = opts.slice(0);
 
+            this.items = this.myOptions;
         });
     }
 
