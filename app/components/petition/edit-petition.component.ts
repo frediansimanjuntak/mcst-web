@@ -51,6 +51,7 @@ export class EditPetitionComponent implements OnInit {
         this.developmentId = '1';
     	this.selectedType = 'Maintenance';
         this.loadAllPetitions();
+        this.loadAllUnits();
         this.myForm = this.formbuilder.group({
             reference_no : [''],
             development : [''],
