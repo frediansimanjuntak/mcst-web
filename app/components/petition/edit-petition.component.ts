@@ -15,6 +15,7 @@ import 'rxjs/add/operator/switchMap';
 })
 
 export class EditPetitionComponent implements OnInit {
+    public items:Array<any> = [];
 	petition: Petition;
     petitions: Petition[] = [];
     units: any = [];
@@ -50,6 +51,7 @@ export class EditPetitionComponent implements OnInit {
         this.developmentId = '1';
     	this.selectedType = 'Maintenance';
         this.loadAllPetitions();
+        this.loadAllUnits();
         this.myForm = this.formbuilder.group({
             reference_no : [''],
             development : [''],
@@ -134,6 +136,7 @@ export class EditPetitionComponent implements OnInit {
 
             this.myOptions = opts.slice(0);
 
+            this.items = this.myOptions;
         });
     }
 
