@@ -232,17 +232,18 @@ export class VisitComponent implements OnInit {
             this.visits.push(model);
             this.firstModal.close();
             console.log(model);
-            this.visitService.create(model)
-            .subscribe(
-                data => {
-                    this.alertService.success('Add guest successful', true);
-                    this.router.navigate(['/unit']);
-                },
-                error => {
-                    console.log(error);
-                    alert(`Guest register could not be save, server Error.`);
-                }
-            );
+            this.ngOnInit();
+            // this.visitService.create(model)
+            // .subscribe(
+            //     data => {
+            //         this.alertService.success('Add guest successful', true);
+            //         this.router.navigate(['/unit']);
+            //     },
+            //     error => {
+            //         console.log(error);
+            //         alert(`Guest register could not be save, server Error.`);
+            //     }
+            // );
             this.addSubmitted = false;
         }
     }
