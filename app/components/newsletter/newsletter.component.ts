@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Development } from '../../models/index';
-import { NewsletterService, AlertService} from '../../services/index';
+import { NewsletterService, AlertService, UserService} from '../../services/index';
 import '../../rxjs-operators';
 import { FileUploader } from 'ng2-file-upload';
 import {NG_TABLE_DIRECTIVES}    from 'ng2-table/ng2-table'
@@ -19,6 +19,7 @@ export class NewsletterComponent implements OnInit {
     newsletters: Development[] = [];
     model: any = {};
     cols: any[];
+    users: any;
     public developmentId;
     public data;
     public dataAgm;
@@ -29,11 +30,15 @@ export class NewsletterComponent implements OnInit {
     public sortBy = "email";
     public sortOrder = "asc";
 
-    constructor(private newsletterservice: NewsletterService, private alertService: AlertService) {
+    constructor(private newsletterservice: NewsletterService, 
+                private alertService: AlertService,
+                 private userService: UserService) {
     }
 
+          
     ngOnInit(): void {
         this.developmentId = '585b36585d3cc41224fe518a';
+        this.getUsers();
         this.loadAllNewsletters();
     }
 
@@ -89,16 +94,35 @@ export class NewsletterComponent implements OnInit {
     }
 
     private loadAllNewsletters() {
-        this.newsletterservice.getAll()
-            .subscribe((data)=> {
-                setTimeout(()=> {
-                    this.data          = data.find(data => data._id === this.developmentId );
-                    this.dataAgm       = this.data.newsletter.filter(data => data.type === 'agm' );
-                    this.dataEgm       = this.data.newsletter.filter(data => data.type === 'egm' );
-                    this.dataCircular  = this.data.newsletter.filter(data => data.type === 'circular' );
-                    console.log(this.dataAgm);
-                }, 1000);
-            });
+        this.newsletterservice.getDevelopments().then(development => {
+
+          this.data = development[0].newsletter;
+          this.dataAgm       = this.data.filter(data => data.type === 'agm' );
+          this.dataEgm       = this.data.filter(data => data.type === 'egm' );
+          this.dataCircular  = this.data.filter(data => data.type === 'circular' );
+
+            for (var i = 0; i < this.dataAgm.length; i++) {
+                this.dataAgm[i].created_by = this.users.find(myObj => myObj._id ===  this.dataAgm[i].created_by ).username;
+            }
+            for (var i = 0; i < this.dataEgm.length; i++) {
+                this.dataEgm[i].created_by = this.users.find(myObj => myObj._id ===  this.dataEgm[i].created_by ).username;
+            }
+            for (var i = 0; i < this.dataCircular.length; i++) {
+                this.dataCircular[i].created_by = this.users.find(myObj => myObj._id ===  this.dataCircular[i].created_by ).username;
+            }
+
+          });
+
+        // this.newsletterservice.getAll()
+        //     .subscribe((data)=> {
+        //         setTimeout(()=> {
+        //             this.data          = data.find(data => data._id === this.developmentId );
+        //             this.dataAgm       = this.data.newsletter.filter(data => data.type === 'agm' );
+        //             this.dataEgm       = this.data.newsletter.filter(data => data.type === 'egm' );
+        //             this.dataCircular  = this.data.newsletter.filter(data => data.type === 'circular' );
+        //             console.log(this.dataAgm);
+        //         }, 1000);
+        //     });
     }
 
     public tabs:Array<any> = [
@@ -111,6 +135,12 @@ export class NewsletterComponent implements OnInit {
     public setActiveTab(index:number):void {
         this.tabs[index].active = true;
     };
+
+    getUsers(): void {
+        this.userService.getUsers().then(users => {
+            this.users = users;
+        });
+    }
 
   //   //Table----------------------
   //   public rows:Array<any> = [];
