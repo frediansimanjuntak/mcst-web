@@ -1,13 +1,13 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewContainerRef, ViewEncapsulation, ViewChild } from '@angular/core';
 import { Router, Params, ActivatedRoute } from '@angular/router';
 import { Development, Developments } from '../../models/index';
 import { UnitService, AlertService, UserService } from '../../services/index';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { NG_TABLE_DIRECTIVES }    from 'ng2-table/ng2-table'
 import { Location }               from '@angular/common';
+import { Observable} from 'rxjs/Observable';
 import '../../rxjs-operators';
 import 'rxjs/add/operator/switchMap';
-// import { User } from '../../models/index';
-// import { Unit } from '../../models/unit.interface';
 
 @Component({
   // moduleId: module.id,
@@ -16,23 +16,29 @@ import 'rxjs/add/operator/switchMap';
 })
 
 export class ViewUnitComponent implements OnInit {
+    @ViewChild('firstModal') firstModal;
+    @ViewChild('secondModal') secondModal;
     public items:Array<any> = [];
     public addSubmitted: boolean;
+    public vehicleSubmitted: boolean;
+    public developmentId;
+    public submitted: boolean; // keep track on whether form is submitted
+    public events: any[] = []; // use later to display form changes
 	unit: any;
     units: any;
     users: any;
     model: any = {};
-    private resident :any = {};
+    residents :any;
+    resident :any = {};
+    selectedResident : any = {};
+    vehicles : any;
+    vehicle :any = {};
     id: string;
-    public developmentId;
+    
     myForm: FormGroup;
-    public submitted: boolean; // keep track on whether form is submitted
-    public events: any[] = []; // use later to display form changes
+    myForm2: FormGroup;
+    
     myOptions: Array<any>;
-    status = [
-        { value: 'inactive', name: 'Inactive' },
-        { value: 'active', name: 'Active' }
-    ];
 
     constructor(
         private router: Router,
@@ -51,11 +57,20 @@ export class ViewUnitComponent implements OnInit {
         this.developmentId = '585b36585d3cc41224fe518a';
 
         this.myForm = this.formbuilder.group({
-                resident: ['', <any>Validators.required],
+                resident: [''],
                 type: ['', <any>Validators.required],
-                added_on: ['', <any>Validators.required],
-                social_page: ['', <any>Validators.required],
-                remarks: ['', <any>Validators.required],
+                added_on: [''],
+                social_page: [''],
+                remarks: [''],
+        });
+
+        this.myForm2 = this.formbuilder.group({
+                license_plate: ['', <any>Validators.required],
+                owner: [''],
+                transponder: [''],
+                document: [''],
+                registered_on: [''],
+                remarks: [''],
         });
 
         this.route.params.subscribe(params => {
@@ -68,38 +83,26 @@ export class ViewUnitComponent implements OnInit {
                    .then(development => {
                        this.units = development[0].properties
                        this.unit = this.units.find(unit => unit._id === this.id);
+                       this.unit.owner = this.users.find(myObj => myObj._id ===  this.unit.landlord ).username;
 
+                       this.residents = this.unit.tenant;
+                       this.vehicles  = this.unit.registered_vehicle;
 
-                        for (var i = 0; i < this.unit.tenant.length; i++) {
-                            this.unit.tenant[i] = this.users.find(myObj => myObj._id ===  this.unit.tenant[i] );
-                            this.unit.tenant[i].i = i+1;
+                        for (var i = 0; i < this.residents.length; i++) {
+                            this.residents[i].resident_name = this.users.find(myObj => myObj._id ===  this.residents[i].resident ).username;
+                            this.residents[i].phone         = this.users.find(myObj => myObj._id ===  this.residents[i].resident ).phone;
+                            this.residents[i].email         = this.users.find(myObj => myObj._id ===  this.residents[i].resident ).email;
+                            this.residents[i].id            = this.residents[i].resident;
+                            this.residents[i].text          = this.residents[i].resident_name;
+                            this.residents[i].i = i+1;
                         }
-                        console.log(this.unit.tenant[0]);
-                    });
-        }
-    }
 
-    createUnit(model: Development, isValid: boolean) {
-        this.submitted = true;
-        console.log(Developments[0]);
-        Developments[0].properties.push(model);
-        console.log(Developments[0].properties);
-        this.router.navigate(['/unit']);
-        // model.properties.created_by = '583e4e9dd97c97149884fef5';
-        // this.model.pinned.rank = 0;
-        if(isValid == true){
-            console.log(model);
-            this.unitservice.create(model)
-            .subscribe(
-                data => {
-                    this.alertService.success('Create Unit successful', true);
-                    this.router.navigate(['/unit']);
-                },
-                error => {
-                    console.log(error);
-                    alert(`The Unit could not be save, server Error.`);
-                }
-            );
+                        for (var i = 0; i < this.vehicles.length; i++) {
+                            this.vehicles[i].owner_name = this.users.find(myObj => myObj._id ===  this.vehicles[i].owner ).username;
+                            this.vehicles[i].i = i+1;
+                        }
+
+                    });
         }
     }
 
@@ -126,7 +129,7 @@ export class ViewUnitComponent implements OnInit {
     }
 
     public refreshValueResident(value:any):void {
-        this.resident = value;
+        this.selectedResident = value;
     }
 
      public selected(value:any):void {
@@ -161,13 +164,18 @@ export class ViewUnitComponent implements OnInit {
         this.resident = resident;
     }
 
+    openVehicleDetail(vehicle: any){
+        this.vehicle = vehicle;
+    }
+
 
     addResident(model: any, isValid: boolean){
          this.addSubmitted = true;
-       
-        if(isValid == true){
-            console.log(model);
-            // this.visits.push(model);
+         model.resident = this.selectedResident.id;
+         model.added_on = new Date();
+        if(isValid && this.selectedResident){
+            this.unit.tenant.push(model);
+            this.firstModal.close();
             // this.firstModal.close();
             // console.log(model);
             // this.visitService.create(model)
@@ -182,6 +190,32 @@ export class ViewUnitComponent implements OnInit {
             //     }
             // );
             this.addSubmitted = false;
+            this.ngOnInit();
+        }
+    }
+
+    addVehicle(model: any, isValid: boolean){
+         this.vehicleSubmitted = true;
+         model.owner = this.selectedResident.id;
+         model.registered_on = new Date();
+        if(isValid && this.selectedResident){
+            this.unit.registered_vehicle.push(model);
+            this.secondModal.close();
+            // this.firstModal.close();
+            // console.log(model);
+            // this.visitService.create(model)
+            // .subscribe(
+            //     data => {
+            //         this.alertService.success('Add guest successful', true);
+            //         this.router.navigate(['/unit']);
+            //     },
+            //     error => {
+            //         console.log(error);
+            //         alert(`Guest register could not be save, server Error.`);
+            //     }
+            // );
+            this.vehicleSubmitted = false;
+            this.ngOnInit();
         }
     }
  //    updateNewsletter(){
