@@ -147,6 +147,7 @@ export class EditBookingComponent implements OnInit  {
         // let year = this.model.booking_date.splice(6,10)
         // let booking_date = (year +'-'+ month +'-'+ date)
         // this.model.booking_date = booking_date;
+        this.model.reference_no = this.model.serial_no
         console.log(this.model);
         Bookings.push(this.model);
         console.log(Bookings);
