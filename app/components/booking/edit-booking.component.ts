@@ -141,12 +141,13 @@ export class EditBookingComponent implements OnInit  {
     }
 
     createBooking() {
-        this.model.facility = this.facility_id
+        
         // let date = this.model.booking_date.splice(0,2)
         // let month = this.model.booking_date.splice(3,5)
         // let year = this.model.booking_date.splice(6,10)
         // let booking_date = (year +'-'+ month +'-'+ date)
         // this.model.booking_date = booking_date;
+        this.model.reference_no = this.model.serial_no
         console.log(this.model);
         Bookings.push(this.model);
         console.log(Bookings);
@@ -194,8 +195,8 @@ export class EditBookingComponent implements OnInit  {
             var end   = "0" + data.end.toString() + ":00"
         }else{
             var end   = data.end.toString() + ":00"
-        }
-        this.facility_id = data.id
+        } 
+        this.model.facility = data.id
         this.facilityService.getFacility(data.id)
         .then(facility => {
             this.facility = facility;
