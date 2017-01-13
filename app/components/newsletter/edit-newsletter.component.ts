@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
-import { Development } from '../../models/index';
+import { Development, Developments } from '../../models/index';
 import { NewsletterService, AlertService } from '../../services/index';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { FileUploader } from 'ng2-file-upload';
@@ -67,6 +67,8 @@ export class EditNewsletterComponent  {
 
         // this.model.pinned.rank = 0;
         console.log(this.model);
+        Developments[0].newsletter.push(this.model);
+        this.router.navigate(['/newsletter']);
         this.newsletterService.create(this.model)
         .subscribe(
             data => {
