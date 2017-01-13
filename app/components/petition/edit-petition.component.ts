@@ -18,6 +18,7 @@ export class EditPetitionComponent implements OnInit {
 	petition: Petition;
     petitions: Petition[] = [];
     public units;
+    public unit;
     model: any = {};
     id: string;
     myForm: FormGroup;
@@ -66,52 +67,34 @@ export class EditPetitionComponent implements OnInit {
         this.route.params.subscribe(params => {
             this.id = params['id'];
         });
+
         if( this.id != null) {
             this.petitionService.getPetition(this.id).then(petition => {this.petition = petition;});
         }
     }
 
-    createPetition() {
-    	this.model.petition_type = this.selectedType;
-        Petitions.push(this.model);
-        console.log(this.model)
-        this.router.navigate(['/petition']);
+      createPetition(model: any, isValid: boolean) {
+        this.submitted = true;
+        if(isValid || this.unit){
+            model.property = this.unit.id;
+            model.attachment = this.model.attachment;
+            model.updated_at = new Date();
+            Petitions.push(model);
+            console.log(model);
 
-        // this.petitionService.create(this.model)
-        // .then(
-        //     data => {
-        //         this.alertService.success('Create Petition successful', true);
-        //         this.router.navigate(['/incident']);
-        //     },
-        //     error => {
-        //         console.log(error);
-        //         alert(`The petition could not be save, server Error.`);
-        //     }
-        // );
+            this.router.navigate(['/petition']);
+            //   this.userGroupService.create(model)
+            // .then(
+            //     data => {
+            //         this.alertService.success('Create usergroup successful', true);
+            //         this.router.navigate(['/user']);
+            //     },
+            //     error => {
+            //         this.alertService.error(error);
+            //     }
+            // );
+        }
     }
-
-    //   createContractor(model: Petition, isValid: boolean) {
-    //     this.submitted = true;
-    //     if(isValid || this.companyField){
-    //         model.company = this.company.id;
-    //         model.profile_picture = this.model.profile_picture;
-    //         model.active = this.model.active;
-    //         Contractors.push(model);
-    //         console.log(model);
-
-    //         this.router.navigate(['/contractor']);
-    //         //   this.userGroupService.create(model)
-    //         // .then(
-    //         //     data => {
-    //         //         this.alertService.success('Create usergroup successful', true);
-    //         //         this.router.navigate(['/user']);
-    //         //     },
-    //         //     error => {
-    //         //         this.alertService.error(error);
-    //         //     }
-    //         // );
-    //     }
-    // }
 
     private loadAllPetitions() {
         //---------------------------Call To Api-------------- //
@@ -132,10 +115,29 @@ export class EditPetitionComponent implements OnInit {
 
 
     private loadAllUnits(): void {
-      this.unitService.getDevelopments().then(development => {
+        this.unitService.getDevelopments().then(development => {
 
-      this.units = development[0].properties;
-      });
+            this.units = development[0].properties;
+
+            for (var i = 0; i < this.units.length; i++) {
+                this.units[i].id            = this.units[i]._id;
+                this.units[i].text          = '#' + this.units[i].address.unit_no + '-' + this.units[i].address.unit_no_2;
+            }
+
+        });
+    }
+
+    public refreshValueUnit(value:any):void {
+        this.unit = value;
+    }
+
+
+    public selected(value:any):void {
+        // console.log('Selected value is: ', value);
+    }
+
+    public removed(value:any):void {
+        // console.log('Removed value is: ', value);
     }
 
     updatePetition(){
