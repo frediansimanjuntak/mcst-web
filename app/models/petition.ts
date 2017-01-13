@@ -59,7 +59,7 @@ export var Petitions: any[] = [
     remark: 'Wohohooooo',
     status: 'approved',
     archieved : false,
-    created_by : 'w0974u0a4443feaakfef24t',
+    created_by : '4',
     updated_at : '2016-12-08T03:31:07',
     created_at : '2016-12-08T03:31:07'
   },
@@ -74,7 +74,7 @@ export var Petitions: any[] = [
     remark: 'Wohohooooo',
     status: 'approved',
     archieved : false,
-    created_by : 'w0974u0a4443feaakfef24t',
+    created_by : '2',
     updated_at : '2016-12-08T03:31:07',
     created_at : '2016-12-08T03:31:07'
   },
@@ -89,7 +89,7 @@ export var Petitions: any[] = [
     remark: 'Wohohooooo',
     status: 'pending',
     archieved : false,
-    created_by : 'w0974u0a4443feaakfef24t',
+    created_by : '6',
     updated_at : '2016-12-08T03:31:07',
     created_at : '2016-12-08T03:31:07'
   },
@@ -104,7 +104,7 @@ export var Petitions: any[] = [
     remark: 'Wohohooooo',
     status: 'pending',
     archieved : false,
-    created_by : 'w0974u0a4443feaakfef24t',
+    created_by : '8',
     updated_at : '2016-12-08T03:31:07',
     created_at : '2016-12-08T03:31:07'
   },
@@ -119,7 +119,7 @@ export var Petitions: any[] = [
     remark: 'Wohohooooo',
     status: 'progress',
     archieved : false,
-    created_by : 'w0974u0a4443feaakfef24t',
+    created_by : '2',
     updated_at : '2016-12-08T03:31:07',
     created_at : '2016-12-08T03:31:07'
   },
@@ -134,7 +134,7 @@ export var Petitions: any[] = [
     remark: 'Wohohooooo',
     status: 'pending',
     archieved : false,
-    created_by : 'w0974u0a4443feaakfef24t',
+    created_by : '8',
     updated_at : '2016-12-08T03:31:07',
     created_at : '2016-12-08T03:31:07'
   },
@@ -149,37 +149,7 @@ export var Petitions: any[] = [
     remark: 'Wohohooooo',
     status: 'approved',
     archieved : false,
-    created_by : 'w0974u0a4443feaakfef24t',
-    updated_at : '2016-12-08T03:31:07',
-    created_at : '2016-12-08T03:31:07'
-  },
-  {
-    _id : '10',
-    reference_no: '7898',
-    development: 'NaX5P5gG4aefadXN34fde3',
-    property: 'NMe3DAea343c34fde3',
-    petition_type: 'maintenance',
-    attachment: ['NaX5P48b32d34fde3', 'NaX5P48b32d34fde3331'],
-    contract: 'NP5gGdzh8bgyXN34fde3',
-    remark: 'Wohohooooo',
-    status: 'progress',
-    archieved : false,
-    created_by : 'w0974u0a4443feaakfef24t',
-    updated_at : '2016-12-08T03:31:07',
-    created_at : '2016-12-08T03:31:07'
-  },
-  {
-    _id : '11',
-    reference_no: '7898',
-    development: 'NaX5P5gG4aefadXN34fde3',
-    property: 'NMe3DAea343c34fde3',
-    petition_type: 'maintenance',
-    attachment: ['NaX5P48b32d34fde3', 'NaX5P48b32d34fde3331'],
-    contract: 'NP5gGdzh8bgyXN34fde3',
-    remark: 'Wohohooooo',
-    status: 'progress',
-    archieved : true,
-    created_by : 'w0974u0a4443feaakfef24t',
+    created_by : '11',
     updated_at : '2016-12-08T03:31:07',
     created_at : '2016-12-08T03:31:07'
   },
