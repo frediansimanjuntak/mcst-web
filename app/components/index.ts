@@ -13,6 +13,8 @@ export * from './company/company.component';
 export * from './company/edit-company.component';
 export * from './contract/contract.component';
 export * from './contract/edit-contract.component';
+export * from './contract/contract-notice.component';
+export * from './contract/contract-note.component';
 export * from './contractor/contractor.component';
 export * from './contractor/edit-contractor.component';
 export * from './development/development.component';

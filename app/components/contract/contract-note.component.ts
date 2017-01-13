@@ -3,23 +3,25 @@ import { Router, Params, ActivatedRoute } from '@angular/router';
 import { Contract } from '../../models/index';
 import { ContractService, AlertService } from '../../services/index';
 import '../../rxjs-operators';
+import 'rxjs/add/operator/switchMap';
 import { Observable} from 'rxjs/Observable';
-import { FileUploader } from 'ng2-file-upload';
 
 @Component({
   // moduleId: module.id,
   selector: 'contract',
-  templateUrl: 'app/templates/contract.html',
+  templateUrl: 'app/templates/contract-note.html',
 })
 
-export class ContractComponent implements OnInit  {
+export class ContractNoteComponent implements OnInit  {
 	contract: Contract;
     contracts: Contract[] = [];
     model: any = {};
     images: any[];
     id: string;
+    _id: string;
     public open;
     public close;
+    loading = false;
 
     constructor(private router: Router, private contractService: ContractService, private alertService: AlertService,private route: ActivatedRoute) {}
 
@@ -32,37 +34,17 @@ export class ContractComponent implements OnInit  {
         this.images.push({source:'/assets/image/5.png'});
         this.route.params.subscribe(params => {
             this.id = params['id'];
+            this._id = params['_id'];
         });
-        if( this.id == null) {
-            this.loadAllContract();
-        }else{
-        	this.contractService.getContract(this.id).then(contract => {this.contract = contract;});
-        }
+        this.contractService.getContract(this.id).then(contract => {this.contract = contract;});
+        // if( this._id == null) {
+        //     this.loadContractNotice();
+        // }else{
+        // 	this.contractService.getContract(this._id).then(contract => {this.contract = contract;});
+        // }
     }
 
-    deleteContract(contract: Contract) {
-    	console.log(contract)
-        this.contractService.delete(contract._id)
-          .then(
-            response => {
-              if(response) {
-                console.log(response);
-                // console.log(response.error());
-                alert(`The Newsletter could not be deleted, server Error.`);
-              } else {
-                this.alertService.success('Create user successful', true);
-                alert(`Delete Newsletter successful`);
-                this.ngOnInit()
-              }
-            },
-            error=> {
-              console.log(error);
-                alert(`The Newsletter could not be deleted, server Error.`);
-            }
-        );
-    }
-
-	private loadAllContract() {
+	private loadContractNote() {
 		this.contractService.getContracts().then(contracts => {
 			this.contracts = contracts ;
             this.open      = this.contracts.filter(contracts => contracts.status === 'open' );
@@ -75,26 +57,26 @@ export class ContractComponent implements OnInit  {
         this.router.navigate(['/contract/view', contract._id]);
     }
 
-    edit(id: any){
-        console.log(id)
-        this.router.navigate(['/contract/edit', id]);
+    createContractNote() {
+        console.log(this.model)
+        // this.contractService.create(this.model)
+        // .then(
+        //     response => {
+        //         this.alertService.success('Create contract notice successful', true);
+        //         this.router.navigate(['/development']);
+        //     },
+        //     error => {
+        //         this.alertService.error(error);
+        //     }
+        // );
     }
 
-    add_note(id: any){
-        console.log(id)
-        this.router.navigate(['/contract/add/note', id]);
+    onChange(event: any) {
+       let files = [].slice.call(event.target.files);
+       this.model.attachment = files;
     }
 
-    add_notice(id: any){
-        console.log(id)
-        this.router.navigate(['/contract/add/notice', id]);
-    }
-
-    add(){
-        this.router.navigate(['/contract/add']);
-    }
-
-    back(){
-        this.router.navigate(['/contract']);
+    remove(i: any){
+        this.model.attachment.splice(i, 1)
     }
 }

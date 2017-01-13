@@ -23,6 +23,7 @@ export class EditContractComponent  implements OnInit {
         private route: ActivatedRoute,) {}
 
     ngOnInit(): void {
+        console.log(this.route.url);
         this.route.params.subscribe(params => {
             this.id = params['id'];
         });
@@ -37,7 +38,21 @@ export class EditContractComponent  implements OnInit {
         this.contractService.create(this.model)
         .then(
             response => {
-                this.alertService.success('Update development successful', true);
+                this.alertService.success('Create contract successful', true);
+                this.router.navigate(['/development']);
+            },
+            error => {
+                this.alertService.error(error);
+            }
+        );
+    }
+
+    createContractNote() {
+        console.log(this.model)
+        this.contractService.create(this.model)
+        .then(
+            response => {
+                this.alertService.success('Create contract note successful', true);
                 this.router.navigate(['/development']);
             },
             error => {
