@@ -76,7 +76,7 @@ export class EditBookingComponent implements OnInit  {
     facility_type: any;
     id: string;
     ref_no: string;
-    facility_id: number = 0;
+    _id: number = 0;
     selectedDay: any;
     step: number;
     day : any;
@@ -104,7 +104,7 @@ export class EditBookingComponent implements OnInit  {
 		this.facilityService.getFacilities()
 		.then(facilities => {
 			this.facilities = facilities;
-            this.selectedDay = this.facilities[this.facility_id].schedule.filter(data => data.day == this.day); 
+            this.selectedDay = this.facilities[this._id].schedule.filter(data => data.day == this.day); 
             if (this.selectedDay.length > 0) { 
     			this.start = this.selectedDay[0].start_time.slice(0,2);
         			let start = +this.start
@@ -142,11 +142,11 @@ export class EditBookingComponent implements OnInit  {
 
     createBooking() {
         this.model.facility = this.facility_id
-        let date = this.model.booking_date.splice(0,2)
-        let month = this.model.booking_date.splice(3,5)
-        let year = this.model.booking_date.splice(6,10)
-        let booking_date = (year +'-'+ month +'-'+ date)
-        this.model.booking_date = booking_date;
+        // let date = this.model.booking_date.splice(0,2)
+        // let month = this.model.booking_date.splice(3,5)
+        // let year = this.model.booking_date.splice(6,10)
+        // let booking_date = (year +'-'+ month +'-'+ date)
+        // this.model.booking_date = booking_date;
         console.log(this.model);
         Bookings.push(this.model);
         console.log(Bookings);
@@ -172,6 +172,15 @@ export class EditBookingComponent implements OnInit  {
         var mmChars = mm.split('');
         var ddChars = dd.split('');
         return (ddChars[1]?dd:"0"+ddChars[0]) + '/' + (mmChars[1]?mm:"0"+mmChars[0]) + '/' + yyyy;
+    }
+
+    convertDate1(date) {
+        var yyyy = date.getFullYear().toString();
+        var mm = (date.getMonth()+1).toString();
+        var dd  = date.getDate().toString();
+        var mmChars = mm.split('');
+        var ddChars = dd.split('');
+        return yyyy + '-' + (mmChars[1]?mm:"0"+mmChars[0]) + '-' + (ddChars[1]?dd:"0"+ddChars[0]);
     }
 
 	filter(data: any){
@@ -234,7 +243,11 @@ export class EditBookingComponent implements OnInit  {
         let date;
         date     = new Date(this.dt.getTime());
         date     = this.convertDate(date);
-        this.model.booking_date = date
+        this.model.date = date
+        let booking_date;
+        booking_date     = new Date(this.dt.getTime());
+        booking_date     = this.convertDate1(booking_date);
+        this.model.booking_date = booking_date
         this.day = this.days[this.dt.getDay()];
         this.times_start = [];
         this.times_end   = [];
