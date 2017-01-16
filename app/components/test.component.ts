@@ -4,7 +4,7 @@ import * as $ from 'jquery';
 import 'fullcalendar';
 import {Options} from "fullcalendar";
 import { Router } from '@angular/router';
-
+import { NotificationsService, SimpleNotificationsComponent } from 'angular2-notifications';
 import { TestService, AlertService } from '../services/index';
 import '../rxjs-operators';
 import { FileUploader } from 'ng2-file-upload';
@@ -16,6 +16,7 @@ export class Model {
     _id: string;
     todoMessage : string;
     createdAt : string
+    
 }
 @Component({
   // moduleId: module.id,
@@ -39,6 +40,11 @@ export class TestComponent implements OnInit{
         resizeMaxHeight: 250,
         resizeMaxWidth: 250
     };
+    public options = {
+        position: ["bottom", "left"],
+        timeOut: 5000,
+        lastOnBottom: true
+    }
 	public uploader:FileUploader = new FileUploader({url:'http://localhost:3001/upload'});
 
 
@@ -50,7 +56,10 @@ export class TestComponent implements OnInit{
      // Array of strings for multi select, string for single select.
 
 
-	constructor(private cd: ChangeDetectorRef, private http: Http, private testService:TestService) {
+	constructor(private cd: ChangeDetectorRef, 
+                private http: Http, 
+                private testService:TestService,
+                private _notificationsService: NotificationsService) {
         let numOptions = 100;
         let opts = new Array(numOptions);
 
@@ -243,6 +252,24 @@ export class TestComponent implements OnInit{
 
     remove(i: any){
         this.model.attachment.splice(i, 1)
+    }
+
+    clicknotiv(){
+        this._notificationsService.success(
+            'Some Title',
+            'Some Content',
+            {
+                timeOut: 5000,
+                showProgressBar: true,
+                pauseOnHover: false,
+                clickToClose: false,
+                maxLength: 10
+            }
+        )
+    }
+
+    created(event: any){
+        console.log(event);
     }
 }
 

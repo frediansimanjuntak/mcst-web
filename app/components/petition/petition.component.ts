@@ -37,19 +37,13 @@ export class PetitionComponent implements OnInit {
     public rowsOnPage = 10;
     public sortBy = "email";
     public sortOrder = "asc";
-    public tomorrow: Date;
-    public afterTomorrow: Date;
     constructor(
                 private router: Router,
                 private petitionService: PetitionService,
                 private alertService: AlertService,
                 private route: ActivatedRoute,
                 private location: Location
-                ) {
-    (this.tomorrow = new Date()).setDate(this.tomorrow.getDate() - 7);
-    (this.afterTomorrow = new Date()).setDate(this.tomorrow.getDate() + 2);
-
-    }
+                ) {}
 
     ngOnInit(): void {
 		this.developmentId = '585b36585d3cc41224fe518a';
@@ -69,24 +63,24 @@ export class PetitionComponent implements OnInit {
 
     deletePetition(petition) {
       console.log(petition);
-        // this.announcementService.delete(announcement._id)
-        //   .then(
-        //     response => {
-        //       if(response) {
-        //         console.log(response);
-        //         // console.log(response.error());
-        //         alert(`The Newsletter could not be deleted, server Error.`);
-        //       } else {
-        //         this.alertService.success('Create user successful', true);
-        //         alert(`Delete Newsletter successful`);
-        //         this.ngOnInit()
-        //       }
-        //     },
-        //     error=> {
-        //       console.log(error);
-        //         alert(`The Newsletter could not be deleted, server Error.`);
-        //     }
-        // );
+        this.petitionService.delete(petition._id)
+          .then(
+            response => {
+              if(response) {
+                console.log(response);
+                // console.log(response.error());
+                alert(`The Petition could not be deleted, server Error.`);
+              } else {
+                this.alertService.success('Delete Petition successful', true);
+                alert(`Delete Petition successful`);
+                this.ngOnInit()
+              }
+            },
+            error=> {
+              console.log(error);
+                alert(`The Petition could not be deleted, server Error.`);
+            }
+        );
     }
 
     openModal(petition){
@@ -95,18 +89,15 @@ export class PetitionComponent implements OnInit {
 
 	private loadAllPetitions() {
         //---------------------------Call To Api-------------- //
-        // this.announcementService.getAll()
+        // this.petitionService.getAll()
         //     .subscribe((data)=> {
         //         setTimeout(()=> {
-        //             this.data          = data.find(data => data._id === this.developmentId );
-        //             this.dataAgm       = this.data.newsletter.filter(data => data.type === 'agm' );
-        //             this.dataCircular  = this.data.newsletter.filter(data => data.type === 'circular' );
-        //             console.log(this.dataAgm);
+        //             this.petitions         = data.filter(data => data.archived === false );
         //         }, 1000);
-        //     });
+        // });
 
         this.petitionService.getPetitions().then(data => {
-            this.petitions         = data;
+            this.petitions         = data.filter(data => data.archived === false );
 		});
     }
 
@@ -128,6 +119,10 @@ export class PetitionComponent implements OnInit {
 
     archieveSelected(){
         console.log(this.selectedValues);
+        for (var i = 0; i < this.selectedValues.length; i++) {
+            this.petitionService.archive(this.selectedValues[i])
+        }
+        this.ngOnInit();
     }
 
     clearSelected(){

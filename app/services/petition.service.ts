@@ -18,17 +18,25 @@ export class PetitionService {
             .then(petition => petition.find(petition => petition._id === id));
     }
 
+
+    //----------------------------API----------------------------------//
     getAll(){
-        return this.http.get('https://192.168.10.73:3333/api/petitions')
+        return this.http.get(url + 'api/petitions')
             .map((res:Response) => res.json())
             .catch((error:any) => Observable.throw(error.json().error || 'Server error'));
     }
+
+    // getById(id:string){
+    //     return this.http.get( url + 'api/petitions' + id)
+    //         .map((res:Response) => res.json())
+    //         .catch((error:any) => Observable.throw(error.json().error || 'Server error'));
+    // }
 
     create(body:Petition){
         let options = new RequestOptions({
             headers: new Headers({ 'Content-Type': 'application/json;charset=UTF-8' }) 
         });
-        return this.http.post('https://192.168.10.73:3333/api/petitions',body, options)
+        return this.http.post(url + 'api/petitions',body, options)
             .map((res:Response) => res.json())
             .catch((error:any) => Observable.throw(error.json().error || 'Server error'));
     }
@@ -37,17 +45,34 @@ export class PetitionService {
         let options = new RequestOptions({
             headers: new Headers({ 'Content-Type': 'application/json;charset=UTF-8' }) 
         });
-        return this.http.put('https://192.168.10.73:3333/api/petitions' + body._id,body, options)
+        return this.http.put(url + 'api/petitions' + body._id,body, options)
             .map((res:Response) => res.json())
             .catch((error:any) => Observable.throw(error.json().error || 'Server error'));
     }
 
-    delete(id:string){
-        let options = new RequestOptions({
-            headers: new Headers({ 'Content-Type': 'application/json;charset=UTF-8' }) 
-        });
-        return this.http.delete('https://192.168.10.73:3333/api/petitions' + id, options)
-            .map((res:Response) => res.json())
-            .catch((error:any) => Observable.throw(error.json().error || 'Server error'));
+    delete(id: string): Promise<void> {
+        return this.http.delete( url + 'api/petitions/' + id, {headers: this.headers})
+          .toPromise()
+          .then(() => null)
+          .catch(this.handleError);
+    }
+
+    archive(id: string): Promise<void> {
+        return this.http.post( url + 'api/petitions/' + id, {headers: this.headers})
+          .toPromise()
+          .then(() => null)
+          .catch(this.handleError);
+    }  
+
+    unarchive(id: string): Promise<void> {
+        return this.http.put( url + 'api/petitions/' + id, {headers: this.headers})
+          .toPromise()
+          .then(() => null)
+          .catch(this.handleError);
+    }  
+
+    private handleError(error: any): Promise<any> {
+        console.error('An error occurred', error); // for demo purposes only
+        return Promise.reject(error.message || error);
     }
 }

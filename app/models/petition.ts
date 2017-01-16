@@ -12,7 +12,7 @@ export class Petition {
   status : string;
   created_by : User;
   updated_at : string;
-  archieved  : boolean;
+  archived  : boolean;
   created_at : string
 }
 
@@ -30,7 +30,7 @@ export var Petitions: any[] = [
     status: 'pending',
     created_by : '1',
     updated_at : '2016-12-08T03:31:07',
-    archieved : false,
+    archived : false,
     created_at : '2016-12-08T03:31:07'
   },
   {
@@ -44,7 +44,7 @@ export var Petitions: any[] = [
     remark: 'Wohohooooo',
     status: 'pending',
     created_by : '4',
-    archieved : false,
+    archived : true,
     updated_at : '2016-12-08T03:31:07',
     created_at : '2016-12-08T03:31:07'
   },
@@ -58,7 +58,7 @@ export var Petitions: any[] = [
     contract: 'NP5gGdzh8bgyXN34fde3',
     remark: 'Wohohooooo',
     status: 'approved',
-    archieved : false,
+    archived : false,
     created_by : '4',
     updated_at : '2016-12-08T03:31:07',
     created_at : '2016-12-08T03:31:07'
@@ -73,7 +73,7 @@ export var Petitions: any[] = [
     contract: 'NP5gGdzh8bgyXN34fde3',
     remark: 'Wohohooooo',
     status: 'approved',
-    archieved : false,
+    archived : false,
     created_by : '2',
     updated_at : '2016-12-08T03:31:07',
     created_at : '2016-12-08T03:31:07'
@@ -88,7 +88,7 @@ export var Petitions: any[] = [
     contract: 'NP5gGdzh8bgyXN34fde3',
     remark: 'Wohohooooo',
     status: 'pending',
-    archieved : false,
+    archived : false,
     created_by : '6',
     updated_at : '2016-12-08T03:31:07',
     created_at : '2016-12-08T03:31:07'
@@ -103,7 +103,7 @@ export var Petitions: any[] = [
     contract: 'NP5gGdzh8bgyXN34fde3',
     remark: 'Wohohooooo',
     status: 'pending',
-    archieved : false,
+    archived : false,
     created_by : '8',
     updated_at : '2016-12-08T03:31:07',
     created_at : '2016-12-08T03:31:07'
@@ -118,7 +118,7 @@ export var Petitions: any[] = [
     contract: 'NP5gGdzh8bgyXN34fde3',
     remark: 'Wohohooooo',
     status: 'progress',
-    archieved : false,
+    archived : false,
     created_by : '2',
     updated_at : '2016-12-08T03:31:07',
     created_at : '2016-12-08T03:31:07'
@@ -133,7 +133,7 @@ export var Petitions: any[] = [
     contract: 'NP5gGdzh8bgyXN34fde3',
     remark: 'Wohohooooo',
     status: 'pending',
-    archieved : false,
+    archived : false,
     created_by : '8',
     updated_at : '2016-12-08T03:31:07',
     created_at : '2016-12-08T03:31:07'
@@ -148,7 +148,7 @@ export var Petitions: any[] = [
     contract: 'NP5gGdzh8bgyXN34fde3',
     remark: 'Wohohooooo',
     status: 'approved',
-    archieved : false,
+    archived : false,
     created_by : '11',
     updated_at : '2016-12-08T03:31:07',
     created_at : '2016-12-08T03:31:07'
