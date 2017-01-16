@@ -56,27 +56,25 @@ export class CompanyComponent implements OnInit {
 
     deleteCompany(company) {
       console.log(company);
-        // this.announcementService.delete(announcement._id)
-        //   .then(
-        //     response => {
-        //       if(response) {
-        //         console.log(response);
-        //         // console.log(response.error());
-        //         alert(`The Newsletter could not be deleted, server Error.`);
-        //       } else {
-        //         this.alertService.success('Create user successful', true);
-        //         alert(`Delete Newsletter successful`);
-        //         this.ngOnInit()
-        //       }
-        //     },
-        //     error=> {
-        //       console.log(error);
-        //         alert(`The Newsletter could not be deleted, server Error.`);
-        //     }
-        // );
+        this.companyService.delete(company._id)
+          .then(
+            response => {
+              if(response) {
+                console.log(response);
+                // console.log(response.error());
+                alert(`The Company could not be deleted, server Error.`);
+              } else {
+                this.alertService.success('Delete company successful', true);
+                alert(`Delete Company successful`);
+                this.ngOnInit()
+              }
+            },
+            error=> {
+              console.log(error);
+                alert(`The Company could not be deleted, server Error.`);
+            }
+        );
     }
-
-
 
     openModal(company: Company){
         this.company = company;
@@ -85,6 +83,24 @@ export class CompanyComponent implements OnInit {
     activate(){
     	this.company.active = true;
     	this.activeModal.close();
+        // this.companyService.activation(this.company._id)
+        //   .then(
+        //     response => {
+        //       if(response) {
+        //         alert(`The Company could not be activated, server Error.`);
+        //       } else {
+        //         this.alertService.success('Activate company successful', true);
+        //         alert(`Activated Company successful`);
+        //         this.activeModal.close();
+        //         this.ngOnInit()
+        //       }
+        //     },
+        //     error=> {
+        //       console.log(error);
+        //       this.activeModal.close();
+        //         alert(`The Company could not be Activated, server Error.`);
+        //     }
+        // );
     }
 
     deactivate(){
@@ -94,13 +110,10 @@ export class CompanyComponent implements OnInit {
 
     private loadAllCompanies() {
         //---------------------------Call To Api-------------- //
-        // this.announcementService.getAll()
+        // this.companyService.getAll()
         //     .subscribe((data)=> {
         //         setTimeout(()=> {
-        //             this.data          = data.find(data => data._id === this.developmentId );
-        //             this.dataAgm       = this.data.newsletter.filter(data => data.type === 'agm' );
-        //             this.dataCircular  = this.data.newsletter.filter(data => data.type === 'circular' );
-        //             console.log(this.dataAgm);
+        //             this.companies          = data;
         //         }, 1000);
         //     });
 
