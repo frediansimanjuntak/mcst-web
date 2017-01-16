@@ -51,8 +51,13 @@ export class UserGroupComponent implements OnInit {
 
 	loadAllUserGroup(): void {
     	this.userGroupService.getUserGroups().then(usergroups => this.usergroups = usergroups);
-
-  	}
+        // this.userGroupService.getAll()
+        //     .subscribe((data)=> {
+        //         setTimeout(()=> {
+        //             this.usergroups          = data;
+        //         }, 1000);
+        //     });
+    }
 
     deleteUserGroup(usergroup: UserGroup) {
         console.log(usergroup);
