@@ -221,3 +221,7 @@
   font-family: Arial, Helvetica, sans-serif !important;
   color: #6D6E71 !important;
 }
+
+.badge-danger{
+  background-color: red !important;
+}
