@@ -13,16 +13,11 @@
 		<p-dataTable [value]="payments" [rows]="10" [paginator]="true">
 		    <p-column field="serial_no" header="Serial No." sortable="true" [filter]="true" filterPlaceholder="Search serial no"></p-column>
 		    <p-column field="payment_type" header="Payment type" sortable="true" [filter]="true" filterPlaceholder="Search payment type"></p-column>
-		    <p-column field="payment_proof" header="Payment proof">
-		    <p-column field="sender" header="Sender" sortable="true" [filter]="true" filterPlaceholder="Search sender">
-		    <p-column field="total_amount" header="Total Amount" sortable="true" [filter]="true" filterPlaceholder="Search total amount">
-		    <p-column field="remark" header="Remark" sortable="true" [filter]="true" filterPlaceholder="Search remark">
-		    <p-column field="status" header="Status" sortable="true" [filter]="true" filterPlaceholder="Search Status">
-		        <template let-col let-payment="rowData" pTemplate="body">
-		            <span [style.color]="development[col.field]">{{development[col.field]}}</span>
-		        </template>
-		    </p-column>
-		    <!-- </p-column> -->
+		    <p-column field="payment_proof" header="Payment proof"></p-column>
+		    <p-column field="sender.username" header="Sender" sortable="true" [filter]="true" filterPlaceholder="Search sender"></p-column>
+		    <p-column field="total_amount" header="Total Amount" sortable="true" [filter]="true" filterPlaceholder="Search total amount"></p-column>
+		    <p-column field="remark" header="Remark" sortable="true" [filter]="true" filterPlaceholder="Search remark"></p-column>
+		    <p-column field="status" header="Status" sortable="true" [filter]="true" filterPlaceholder="Search Status"></p-column>
 		    <p-column header="Action" styleClass="col-button">
 		    	<template let-payment="rowData" pTemplate="body">
 		        	<button type="button" (click)="view(payment)">View</button>
