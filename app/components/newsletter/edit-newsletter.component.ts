@@ -21,6 +21,7 @@ export class EditNewsletterComponent  {
     model: any = {};
     myForm: FormGroup;
     user: User;
+    public developmentId;
     public uploader:FileUploader = new FileUploader({url:'http://localhost:3001/upload'});
 
 
@@ -33,6 +34,7 @@ export class EditNewsletterComponent  {
     }
 
     ngOnInit() {
+        this.developmentId = '585b36585d3cc41224fe518a';
         this.model.released = false;
         this.model.type = 'agm';
         this.myForm = this.formbuilder.group({
@@ -68,22 +70,24 @@ export class EditNewsletterComponent  {
         // this.model.pinned.rank = 0;
         console.log(this.model);
         Developments[0].newsletter.push(this.model);
+        
+        // this.newsletterService.create(this.model, this.developmentId)
+        // .subscribe(
+        //     data => {
+        //         this.alertService.success('Create newsletter successful', true);
+        //         this.router.navigate(['/newsletter']);
+        //     },
+        //     error => {
+        //         console.log(error);
+        //         alert(`The Newsletter could not be save, server Error.`);
+        //     }
+        // );
+
         this.router.navigate(['/newsletter']);
-        this.newsletterService.create(this.model)
-        .subscribe(
-            data => {
-                this.alertService.success('Create newsletter successful', true);
-                this.router.navigate(['/newsletter']);
-            },
-            error => {
-                console.log(error);
-                alert(`The Newsletter could not be save, server Error.`);
-            }
-        );
     }
 
     updateNewsletter(){
-		this.newsletterService.update(this.model)
+		this.newsletterService.update(this.model, this.developmentId)
 		.subscribe(
 			response => {
 				if(response.error) {

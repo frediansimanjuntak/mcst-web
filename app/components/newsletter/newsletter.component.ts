@@ -86,13 +86,15 @@ export class NewsletterComponent implements OnInit {
                 alert(`The Newsletter could not be release, server Error.`);
               } else {
                 this.alertService.success('Release Newsletter successful', true);
+                this.firstModal.close();
                 alert(`Release Newsletter successful`);
                 this.ngOnInit()
               }
             },
             error=> {
               console.log(error);
-                alert(`The Newsletter could not be release, server Error.`);
+              this.firstModal.close();
+              alert(`The Newsletter could not be release, server Error.`);
             }
         );
     }
@@ -117,14 +119,24 @@ export class NewsletterComponent implements OnInit {
 
           });
 
-        // this.newsletterservice.getAll()
+        // this.newsletterservice.getAll(this.developmentId)
         //     .subscribe((data)=> {
         //         setTimeout(()=> {
-        //             this.data          = data.find(data => data._id === this.developmentId );
-        //             this.dataAgm       = this.data.newsletter.filter(data => data.type === 'agm' );
-        //             this.dataEgm       = this.data.newsletter.filter(data => data.type === 'egm' );
-        //             this.dataCircular  = this.data.newsletter.filter(data => data.type === 'circular' );
-        //             console.log(this.dataAgm);
+        //           this.data = data.newsletter;
+        //           this.dataAgm       = this.data.filter(data => data.type === 'agm' );
+        //           this.dataEgm       = this.data.filter(data => data.type === 'egm' );
+        //           this.dataCircular  = this.data.filter(data => data.type === 'circular' );
+
+        //             for (var i = 0; i < this.dataAgm.length; i++) {
+        //                 this.dataAgm[i].created_by = this.users.find(myObj => myObj._id ===  this.dataAgm[i].created_by ).username;
+        //             }
+        //             for (var i = 0; i < this.dataEgm.length; i++) {
+        //                 this.dataEgm[i].created_by = this.users.find(myObj => myObj._id ===  this.dataEgm[i].created_by ).username;
+        //             }
+        //             for (var i = 0; i < this.dataCircular.length; i++) {
+        //                 this.dataCircular[i].created_by = this.users.find(myObj => myObj._id ===  this.dataCircular[i].created_by ).username;
+        //             }
+
         //         }, 1000);
         //     });
     }
@@ -137,6 +149,13 @@ export class NewsletterComponent implements OnInit {
         this.userService.getUsers().then(users => {
             this.users = users;
         });
+
+        // this.userService.getAll()
+        //     .subscribe((data)=> {
+        //         setTimeout(()=> {
+        //            this.users = data;
+        //         }, 1000);
+        //     });
     }
 
 }

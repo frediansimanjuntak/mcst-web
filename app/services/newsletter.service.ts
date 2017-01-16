@@ -10,19 +10,17 @@ export class NewsletterService {
     private headers = new Headers({'Content-Type': 'application/json'});
     constructor(private http: Http) {}
 
-
     getDevelopments(): Promise<Development[]> {
         return Promise.resolve(Developments);
     }
-
 
     getDevelopment(id: string): Promise<Development> {
     return this.getDevelopments()
                .then(developments => developments.find(development => development._id == id));
     }
 
-    getAll(){
-        return this.http.get(url + 'api/developments')
+    getAll(id: string){
+        return this.http.get(url + 'api/developments/' + id)
             .map((res:Response) => res.json())
             .catch((error:any) => Observable.throw(error.json().error || 'Server error'));
     }
@@ -33,20 +31,20 @@ export class NewsletterService {
             .catch((error:any) => Observable.throw(error.json().error || 'Server error'));
     }
 
-    create(body:any){
+    create(body:any, id_dev:string){
         let options = new RequestOptions({
             headers: new Headers({ 'Content-Type': 'application/json;charset=UTF-8' }) 
         });
-        return this.http.post( url + 'api/newsletters/' + '585b36585d3cc41224fe518a',body, options)
+        return this.http.post( url + 'api/newsletters/' + id_dev,body, options)
             .map((res:Response) => res.json())
             .catch((error:any) => Observable.throw(error.json().error || 'Server error'));
     }
 
-    update(body:any){
+    update(body:any, id_dev:string){
         let options = new RequestOptions({
             headers: new Headers({ 'Content-Type': 'application/json;charset=UTF-8' }) 
         });
-        return this.http.put( url + 'api/newsletters' + body._id,body, options)
+        return this.http.post( url + 'api/newsletters/' + id_dev + '/update/' + body._id,body, options)
             .map((res:Response) => res.json())
             .catch((error:any) => Observable.throw(error.json().error || 'Server error'));
     }
