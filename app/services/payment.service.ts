@@ -1,48 +1,61 @@
 import { Injectable } from '@angular/core';
 import { Http, Headers, RequestOptions, Response } from '@angular/http';
 import { Observable } from 'rxjs/Rx';
-import { Payment } from '../models/index';
+import { Payment, Payments } from '../models/index';
+import { url } from '../global';
+import 'rxjs/add/operator/toPromise';
  
 @Injectable()
 export class PaymentService {
+    private headers = new Headers({'Content-Type': 'application/json'});
     constructor(private http: Http) {}
 
+    getPayments(): Promise<Payment[]> {
+        return Promise.resolve(Payments);
+    }
+
+    getPayment(id: string): Promise<Payment> {
+        return this.getPayments()
+            .then(payments => payments.find(payment => payment._id === id));
+    }
+
     getAll(){
-        return this.http.get('https://192.168.10.73:3333/api/payments')
+        return this.http.get(url + 'api/payments')
             .map((res:Response) => res.json())
             .catch((error:any) => Observable.throw(error.json().error || 'Server error'));
     }
 
     getById(id:string){
-        return this.http.get('https://192.168.10.73:3333/api/payments' + id)
+        return this.http.get(url + 'api/payments/' + id)
             .map((res:Response) => res.json())
             .catch((error:any) => Observable.throw(error.json().error || 'Server error'));
     }
 
-    create(body:Payment){
-        let options = new RequestOptions({
-            headers: new Headers({ 'Content-Type': 'application/json;charset=UTF-8' }) 
-        });
-        return this.http.post('https://192.168.10.73:3333/api/payments',body, options)
-            .map((res:Response) => res.json())
-            .catch((error:any) => Observable.throw(error.json().error || 'Server error'));
+    create(body:any): Promise<Payment> {
+        console.log(body);
+        return this.http.post(url +  'api/payments', JSON.stringify(body), {headers: this.headers})
+            .toPromise()
+            .then(res => res.json().data)
+            .catch(this.handleError);
     }
 
-    update(body:Payment){
-        let options = new RequestOptions({
-            headers: new Headers({ 'Content-Type': 'application/json;charset=UTF-8' }) 
-        });
-        return this.http.put('https://192.168.10.73:3333/api/payments' + body._id,body, options)
-            .map((res:Response) => res.json())
-            .catch((error:any) => Observable.throw(error.json().error || 'Server error'));
+    update(body:Payment): Promise<Payment> {
+        return this.http.post(url + 'api/payments/update/' + body._id,body, {headers: this.headers})
+            .toPromise()
+            .then(res => res.json().data)
+            .catch(this.handleError);
     }
 
-    delete(id:string){
-        let options = new RequestOptions({
-            headers: new Headers({ 'Content-Type': 'application/json;charset=UTF-8' }) 
-        });
-        return this.http.delete('https://192.168.10.73:3333/api/payments' + id, options)
-            .map((res:Response) => res.json())
-            .catch((error:any) => Observable.throw(error.json().error || 'Server error'));
+    delete(id: string): Promise<void> {
+    return this.http.delete(url + 'api/payments/' + id, {headers: this.headers})
+      .toPromise()
+      .then(() => null)
+      .catch(this.handleError);
     }
+
+    private handleError(error: any): Promise<any> {
+        console.error('An error occurred', error); // for demo purposes only
+        return Promise.reject(error.message || error);
+    }
+
 }
