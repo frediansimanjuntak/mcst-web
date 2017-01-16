@@ -41,7 +41,8 @@
                     <div class="col-sm-8">
                         <input type="file" multiple class="upload" name="attachment" (change)="onChange($event)" />
                         <p *ngFor="let item of user.details.identification_proof.front; let i=index ">
-                            {{ item.name }}_{{item.size/1024 | number:'1.0-0' }}kb &nbsp;   
+                            <img src="assets/image/icon_media_image.png" width="14px" height="12px">&nbsp;  
+                            <span style="text-decoration: underline;">{{ item.name }}_{{item.size/1024 | number:'1.0-0' }}kb</span> &nbsp;
                             <span class="glyphicon glyphicon-remove" style="cursor:pointer" (click)="remove(i)"></span>
                         </p>
                     </div>
@@ -51,7 +52,8 @@
                     <div class="col-sm-8">
                         <input type="file" multiple class="upload" name="attachment" (change)="onChange1($event)" />
                         <p *ngFor="let item of user.details.identification_proof.back; let i=index ">
-                            {{ item.name }}_{{item.size/1024 | number:'1.0-0' }}kb &nbsp;   
+                            <img src="assets/image/icon_media_image.png" width="14px" height="12px">&nbsp;  
+                            <span style="text-decoration: underline;">{{ item.name }}_{{item.size/1024 | number:'1.0-0' }}kb</span> &nbsp;   
                             <span class="glyphicon glyphicon-remove" style="cursor:pointer" (click)="remove1(i)"></span>
                         </p>
                     </div>

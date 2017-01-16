@@ -9,10 +9,10 @@ import '../../rxjs-operators';
 @Component({
   // moduleId: module.id,
   selector: 'edit-payment',
-  template: ``,
+  templateUrl: 'app/templates/edit-payment.html',
 })
 
-export class EditPaymentComponent implements OnInit {
+export class EditPaymentComponent{
 	payment: Payment;
     payments: Payment[] = [];
     model: any = {};
@@ -30,14 +30,10 @@ export class EditPaymentComponent implements OnInit {
         // this.user = JSON.parse(localStorage.getItem('user'));
     }
 
-    ngOnInit() {
-
-    }
-
     createPayment() {
         console.log(this.model);
         this.paymentService.create(this.model)
-        .subscribe(
+        .then(
             data => {
                 this.alertService.success('Create payment successful', true);
                 this.router.navigate(['/booking']);
@@ -51,10 +47,10 @@ export class EditPaymentComponent implements OnInit {
 
     onChange(event: any) {
        let files = [].slice.call(event.target.files);
-       this.model.attachment = files;
+       this.model.payment_proof = files;
     }
 
     remove(i: any){
-        this.model.attachment.splice(i, 1)
+        this.model.payment_proof.splice(i, 1)
     }
 }

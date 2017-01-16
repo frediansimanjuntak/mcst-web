@@ -56,12 +56,13 @@
 			        		<div class="col-md-3">Facility :</div>
 			       			<div class="col-md-9">
 			       				<p>
-			       					<select name="name" class="form-control" formControlName="id" style="width: 116.5px">
-				                    	<option [selected]="facility._id == '1'" *ngFor="let facility of facilities" (change)="onChange(facility)" [ngValue]="facility._id">{{facility.name}}</option>
+			       					<select name="name" class="form-control" formControlName="name" style="width: 116.5px">
+				                    	<option [selected]="facility.name == 'BBQ'" *ngFor="let facility of facilities" (change)="onChange(facility)" [ngValue]="facility.name">{{facility.name}}</option>
 				                    </select>
 					                <select name="type" class="form-control" formControlName="type" style="width: 116.5px">
-					                	<option>All</option>
-					                   	<option *ngFor="let facility of facilities" [ngValue]="facility.facility_type" >{{facility.facility_type}}</option>
+					                	<option value="all">All</option>
+					                   	<option value="a">A</option>
+					                   	<option value="b">B</option>
 					                </select>
 			        			</p>
 			        		</div>
@@ -109,8 +110,8 @@
 						    <p-column field="start_time" header="Time" sortable="true" [filter]="true" filterPlaceholder="Search time"></p-column>
 						    <p-column field="reference_no" header="Ref." sortable="true" [filter]="true" filterPlaceholder="Search ref."></p-column>
 						    <p-column field="" header="Facility" sortable="true" [filter]="true" filterPlaceholder="Search facility">
-						    	<template let-booking="rowData">
-						    		{{booking.facility.name}} {{booking.facility.type}}
+						    	<template let-booking="rowData" pTemplate="body">
+						    		{{booking.facility.name}} {{booking.facility.facility_type}}
 						    	</template>
 						    </p-column>
 						    <p-column field="property" header="Booked by" sortable="true" [filter]="true" filterPlaceholder="Search booked by"></p-column>
@@ -135,8 +136,8 @@
 						    <p-column field="start_time" header="Time" sortable="true" [filter]="true" filterPlaceholder="Search time"></p-column>
 						    <p-column field="reference_no" header="Ref." sortable="true" [filter]="true" filterPlaceholder="Search ref."></p-column>
 						    <p-column field="" header="Facility" sortable="true" [filter]="true" filterPlaceholder="Search facility">
-						    	<template let-booking="rowData">
-						    		{{booking.facility.name}} {{booking.facility.type}}
+						    	<template let-booking="rowData" pTemplate="body">
+						    		{{booking.facility.name}} {{booking.facility.facility_type}}
 						    	</template>
 						    </p-column>
 						    <p-column field="property" header="Booked by" sortable="true" [filter]="true" filterPlaceholder="Search booked by"></p-column>
@@ -161,8 +162,8 @@
 						    <p-column field="start_time" header="Time" sortable="true" [filter]="true" filterPlaceholder="Search time"></p-column>
 						    <p-column field="reference_no" header="Ref." sortable="true" [filter]="true" filterPlaceholder="Search ref."></p-column>
 						    <p-column field="" header="Facility" sortable="true" [filter]="true" filterPlaceholder="Search facility">
-						    	<template let-booking="rowData">
-						    		{{booking.facility.name}} {{booking.facility.type}}
+						    	<template let-booking="rowData" pTemplate="body">
+						    		{{booking.facility.name}} {{booking.facility.facility_type}}
 						    	</template>
 						    </p-column>
 						    <p-column field="property" header="Booked by" sortable="true" [filter]="true" filterPlaceholder="Search booked by"></p-column>

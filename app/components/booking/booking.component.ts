@@ -56,7 +56,7 @@ export class BookingComponent implements OnInit {
 
 	ngOnInit() {
         this.myForm = this.formbuilder.group({
-            id : ['1'],
+            name : ['BBQ'],
             type : ['All'],
             status : ['All'],
             start : [0],
@@ -118,7 +118,7 @@ export class BookingComponent implements OnInit {
         this.bookingService.getBookings()
         .then(bookings => {
             this.bookings = bookings;
-            console.log(this.bookings)
+            console.log(this.bookings[0].facility.name)
             this.selectedDay = this.bookings.filter(data => data.booking_date == this.day); 
             // for (var i = 0; i < this.selectedDay.length; i++) {
             //     this.selectedDay[i].facility = this.facilities.find(myObj => myObj._id ===  this.selectedDay[i].facility ).name + ' ' + this.facilities.find(myObj => myObj._id ===  this.selectedDay[i].facility ).facility_type ;
@@ -152,27 +152,43 @@ export class BookingComponent implements OnInit {
         }else{
             var end   = booking.end.toString() + ":00"
         }
+        console.log(booking);
         
         this.bookingService.getBookings()
         .then(bookings => {
             this.bookings = bookings;
-            console.log(this.bookings[0])
             if(booking.status == "all" ) {
                 this.filtered = this.bookings.filter(data => 
                     data.start_time >= start && 
                     data.end_time <= end && 
-                    data.facility == booking.id
+                    data.facility.name == booking.name &&
+                    data.facility.facility_type == booking.type
+                );
+            };
+            if(booking.status == "all" && booking.type == "all") {
+                this.filtered = this.bookings.filter(data => 
+                    data.start_time >= start && 
+                    data.end_time <= end && 
+                    data.facility.name == booking.name 
+                );
+            };
+            if(booking.type == "all") {
+                this.filtered = this.bookings.filter(data => 
+                    data.start_time >= start && 
+                    data.end_time <= end && 
+                    data.facility.name == booking.name &&
+                    data.status == booking.status
                 );
             }else{
                 this.filtered = this.bookings.filter(data => 
                     data.start_time >= start && 
                     data.end_time <= end &&
                     data.status == booking.status &&
-                    data.facility == booking.id
+                    data.facility.name == booking.name &&
+                    data.facility.facility_type == booking.type
                 );
             }
-            
-            
+            console.log(this.filtered)
         });
     }
 
