@@ -11,6 +11,7 @@ export * from './development.service';
 export * from './facility.service';
 export * from './incident.service';
 export * from './newsletter.service';
+export * from './notification.service';
 export * from './payment.service';
 export * from './petition.service';
 export * from './poll.service';

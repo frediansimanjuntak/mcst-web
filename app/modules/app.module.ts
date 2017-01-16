@@ -3,6 +3,7 @@ import { CommonModule }                 from '@angular/common';
 import { BrowserModule }                from '@angular/platform-browser';
 import { FormsModule }  				        from '@angular/forms';
 import { FileSelectDirective }          from 'ng2-file-upload';
+import { SimpleNotificationsModule }    from 'angular2-notifications';
 import { FileDropDirective }            from 'ng2-file-upload';
 import { ReactiveFormsModule }			    from '@angular/forms';
 import { HttpModule }                   from '@angular/http';
@@ -89,6 +90,7 @@ import {
   IncidentService,
   NewsletterService,
   PaymentService,
+  NotificationService,
   PetitionService,
   PollService,
   QuotationService,
@@ -120,6 +122,7 @@ import {
     PanelModule,
     FieldsetModule,
     DatepickerModule,
+    SimpleNotificationsModule,
     // ModalModule.forRoot(),
     ModalModule,
     BootstrapModalModule,
@@ -195,6 +198,7 @@ import {
     FacilityService,
     IncidentService,
     NewsletterService,
+    NotificationService,
     PaymentService,
     PetitionService,
     PollService,
