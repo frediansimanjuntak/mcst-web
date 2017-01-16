@@ -14,7 +14,7 @@
 		    <p-column field="name" header="Name" sortable="true" [filter]="true" filterPlaceholder="Search name"></p-column>
 		    <p-column field="owner" header="Owner" sortable="true" [filter]="true" filterPlaceholder="Search owner"></p-column>
 		    <!-- <p-column field="description" header="Description" sortable="true" [filter]="true" filterPlaceholder="Search"> -->
-		    <p-column field="description" header="Description" sortable="true" [filter]="true" filterPlaceholder="Search description">>
+		    <p-column field="description" header="Description" sortable="true" [filter]="true" filterPlaceholder="Search description">
 		        <template let-col let-development="rowData" pTemplate="body">
 		            <span [style.color]="development[col.field]">{{development[col.field]}}</span>
 		        </template>
