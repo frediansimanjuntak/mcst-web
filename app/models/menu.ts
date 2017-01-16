@@ -60,6 +60,7 @@ export const MENUS: any[] = [
       { name : 'Facility', link: '/facility' },
       { name : 'Company', link: '/company' },
       { name : 'Contractor', link: '/contractor' },
+      { name : 'Payment', link: '/payment' },
     ]
   },
 ];

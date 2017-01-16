@@ -37,7 +37,7 @@ export class EditPaymentComponent implements OnInit {
     createPayment() {
         console.log(this.model);
         this.paymentService.create(this.model)
-        .subscribe(
+        .then(
             data => {
                 this.alertService.success('Create payment successful', true);
                 this.router.navigate(['/booking']);
