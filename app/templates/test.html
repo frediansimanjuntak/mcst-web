@@ -7,6 +7,8 @@
     			</ul>
     		</div>
     	</div>
+    	<simple-notifications [options]="options" (onCreate)="created($event)" ></simple-notifications>
+    	<button class="btn btn-primary" (click)="clicknotiv()">Notif bro</button>
 		<p-schedule [events]="events" [editable]="true" (onDayClick)="handleDayClick($event)" (onEventClick)="handleEventClick($event)"></p-schedule>
 		<p-dialog header="Event Details" [(visible)]="dialogVisible" [responsive]="true" showEffect="fade" [modal]="false">
 		    <div class="ui-grid ui-grid-responsive ui-fluid" *ngIf="event">
