@@ -2,15 +2,18 @@ import { Injectable } from '@angular/core';
 import { Http, Headers, RequestOptions, Response } from '@angular/http';
 import { Observable } from 'rxjs/Rx';
 import { url } from '../global';
-import { AuthenticationService } from '../services/index';
 import { Announcement, Announcements } from '../models/index';
 import 'rxjs/add/operator/toPromise';
  
 @Injectable()
 export class AnnouncementService {
-    private headers = new Headers({ 'Authorization': 'Bearer ' + this.authenticationService.token });
+    token : string;
+    private headers = new Headers({ 'Authorization': 'Bearer ' + this.token });
     private options = new RequestOptions({ headers: this.headers });
-    constructor(private http: Http, private authenticationService: AuthenticationService) {}
+    constructor(private http: Http) {
+        var authToken = JSON.parse(localStorage.getItem('authToken'));
+        this.token = authToken && authToken.token;
+    }
 
     getAnnouncements(): Promise<Announcement[]> {
         return Promise.resolve(Announcements);

@@ -2,7 +2,6 @@ import { Injectable } from '@angular/core';
 import { Http, Headers, RequestOptions, Response } from '@angular/http';
 import { Observable } from 'rxjs/Rx';
 import { AccessControl, AccessControls } from '../models/index';
-import { AuthenticationService } from '../services/index';
 import { url } from '../global';
 import 'rxjs/add/operator/toPromise';
  
