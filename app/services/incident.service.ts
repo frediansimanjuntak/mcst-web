@@ -47,10 +47,38 @@ export class IncidentService {
     }
 
     delete(id: string): Promise<void> {
-    return this.http.delete(url + 'api/incidents/' + id, {headers: this.headers})
-      .toPromise()
-      .then(() => null)
-      .catch(this.handleError);
+        return this.http.delete(url + 'api/incidents/' + id, {headers: this.headers})
+            .toPromise()
+            .then(() => null)
+            .catch(this.handleError);
+    }
+
+    starred(id: string): Promise<Incident> {
+        return this.http.post(url + 'api/incidents/starred/' + id, {headers: this.headers})
+            .toPromise()
+            .then(res => res.json().data)
+            .catch(this.handleError);
+    }
+
+    unstarred(id: string): Promise<Incident> {
+        return this.http.put(url + 'api/incidents/starred/' + id, {headers: this.headers})
+            .toPromise()
+            .then(res => res.json().data)
+            .catch(this.handleError);
+    }
+
+    archieve(id: string): Promise<Incident> {
+        return this.http.post(url + 'api/incidents/achieve/' + id, {headers: this.headers})
+            .toPromise()
+            .then(res => res.json().data)
+            .catch(this.handleError);
+    }
+
+    unarchieve(id: string): Promise<Incident> {
+        return this.http.put(url + 'api/incidents/achieve/' + id, {headers: this.headers})
+            .toPromise()
+            .then(res => res.json().data)
+            .catch(this.handleError);
     }
 
     private handleError(error: any): Promise<any> {

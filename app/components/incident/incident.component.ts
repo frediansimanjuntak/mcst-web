@@ -21,6 +21,7 @@ export class IncidentComponent implements OnInit {
     images: any[];
     id: string;
     isFavorite = false;
+    isArchieved = false;
     change = new EventEmitter();
     public data;
     public dataNew;
@@ -97,14 +98,23 @@ export class IncidentComponent implements OnInit {
         this.router.navigate(['/contract/add',reference_no]);
     }
 
-    archive(id:any){
-        console.log(id)
+    archive(incident:Incident){
+        this.incidentService.archieve(incident._id);
+        this.ngOnInit()
     }
 
-    onClick(incident:Incident) {
-        this.isFavorite = !this.isFavorite;
-        this.change.emit({
-            newValue: this.isFavorite
-        });
+    unarchive(incident:Incident){
+        this.incidentService.unarchieve(incident._id);
+        this.ngOnInit()
+    }
+
+    starred(incident:Incident) {
+        this.incidentService.starred(incident._id)
+        this.ngOnInit()
+    }
+
+    unstarred(incident:Incident) {
+        this.incidentService.unstarred(incident._id)
+        this.ngOnInit()
     }
 }
