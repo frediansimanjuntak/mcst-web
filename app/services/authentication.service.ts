@@ -9,17 +9,9 @@ import { url } from '../global';
  
 @Injectable()
 export class AuthenticationService {
-  public headers: Headers;
-  public token: string;
-  // constructor(
-  //   public http: Http,
-  //   private _router: Router,
-  //   ){
-  //   this.headers = new Headers();
-  //   this.headers.append('Content-Type', 'application/json');
-  // }
-  constructor(private http: Http,
-    private _router: Router) {
+    public headers: Headers;
+    public token: string;
+    constructor(private http: Http,private _router: Router) {
         // set token if saved in local storage
         var authToken = JSON.parse(localStorage.getItem('authToken'));
         this.token = authToken && authToken.token;
@@ -27,25 +19,10 @@ export class AuthenticationService {
         this.headers.append('Content-Type', 'application/json');
     }
  
-  logout() {
-    localStorage.removeItem("user");
-    this._router.navigate(['login']);
-  }
-
-  // login(username: string, password: string) {
-        
-  //       return this.http.post(url + 'auth/local', JSON.stringify({ username: username, password: password }), { headers: this.headers })
-  //           .map((response: Response) => {
-  //               // login successful if there's a jwt token in the response
-  //               let user = response.json();
-  //               if (user) {
-  //                   console.log(user, "elic");
-  //                   // store user details and jwt token in local storage to keep user logged in between page refreshes
-  //                   localStorage.setItem("user", JSON.stringify(user));
-  //               }
-
-  //           }).catch(this.handleError);
-  //   }
+    logout() {
+        localStorage.removeItem("user");
+        this._router.navigate(['login']);
+    }
 
     login(username: string, password: string): Observable<boolean> {
         return this.http.post(url + 'auth/local', JSON.stringify({ username: username, password: password }), { headers: this.headers })
@@ -63,14 +40,14 @@ export class AuthenticationService {
             });
     }
 
-   checkCredentials(){
-    if (localStorage.getItem("user") === null){
-        this._router.navigate(['Login']);
-    }; console.log(localStorage.getItem("user"));
-  }
+    checkCredentials(){
+        if (localStorage.getItem("user") === null){
+            this._router.navigate(['Login']);
+        }; console.log(localStorage.getItem("user"));
+    }
 
-  handleError(error: Response) {
-    console.error(error);
-    return Observable.throw(error.json().error || 'Server error');
-  } 
+    handleError(error: Response) {
+        console.error(error);
+        return Observable.throw(error.json().error || 'Server error');
+    } 
 }
