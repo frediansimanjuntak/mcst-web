@@ -11,8 +11,7 @@ import { Observable} from 'rxjs/Observable';
 	styleUrls: [ 'app/templates/styles/header.css' ]
 })
 
-export class HeaderComponent implements OnInit{
-	title = 'MCST';
+export class HeaderComponent implements OnInit {
 	notification: Notification;
 	allNotifications: Notification[] = [];
 	unreadNotifications: Notification[] = [];
@@ -28,13 +27,13 @@ export class HeaderComponent implements OnInit{
 
     ngOnInit(): void {
     	
-       	this.loadUnread();
+       	this.loadNotifications();
 
 	}
 
-	private loadUnread() {
+	private loadNotifications() {
         //---------------------------Call To Api-------------- //
-        // this.notificationService.getUnread(this.userId)
+        // this.notificationService.getAll(this.userId)
         //     .subscribe((data)=> {
         //         setTimeout(()=> {
         //             this.unreadNotifications = data;
@@ -43,9 +42,7 @@ export class HeaderComponent implements OnInit{
         //     });
 
         this.notificationService.getNotifications().then(data => {
-            this.allNotifications      		= data;
-            this.unreadNotifications 		= this.allNotifications.filter(data => data.read_at == '' && data.user == this.userId );
-            this.unreadNotificationTotal 	= this.unreadNotifications.length
+            this.allNotifications 		= data.filter(data => data.user == this.userId );
             console.log(this.unreadNotificationTotal);
         });
     }
