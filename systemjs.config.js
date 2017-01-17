@@ -43,7 +43,8 @@
       'angular2-modal/plugins/bootstrap': 'npm:angular2-modal/bundles/angular2-modal.bootstrap.umd.js',
       'ng2-imageupload': 'node_modules/ng2-imageupload',
       'ng2-slim-loading-bar': 'node_modules/ng2-slim-loading-bar/bundles/index.umd.js',
-      'angular2-notifications': 'node_modules/angular2-notifications'
+      'angular2-notifications': 'node_modules/angular2-notifications',
+      "ng2-popover": "node_modules/ng2-popover"
     },
     // packages tells the System loader how to load when no filename and/or no extension
     packages: {
@@ -64,7 +65,8 @@
       "ng2-modal": { "main": "index.js", "defaultExtension": "js" },
       'ng2-imageupload': { main: 'index.js', defaultExtension: 'js'},
       'angular2-modal': { defaultExtension: 'js', main: '/bundles/angular2-modal.umd.js' },
-      'angular2-notifications': { main: 'components.js', defaultExtension: 'js' }
+      'angular2-notifications': { main: 'components.js', defaultExtension: 'js' },
+      "ng2-popover": { "main": "index.js", "defaultExtension": "js" }
     }
   });
 })(this);

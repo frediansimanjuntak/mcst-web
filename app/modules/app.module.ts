@@ -20,8 +20,9 @@ import { DataTableModule,SharedModule,ScheduleModule,DialogModule,InputMaskModul
 import { EqualValidator }               from '../components/user/equal-validator.directive';
 import { ImageUploadModule }            from 'ng2-imageupload';
 import { ModalModule }                  from "ng2-modal";
-import { BootstrapModalModule } from 'angular2-modal/plugins/bootstrap';
-import { SlimLoadingBarModule } from 'ng2-slim-loading-bar';
+import { BootstrapModalModule }         from 'angular2-modal/plugins/bootstrap';
+import { SlimLoadingBarModule }         from 'ng2-slim-loading-bar';
+import { PopoverModule }                from 'ng2-popover';
 
 import { 
   AccessControlComponent,
@@ -130,6 +131,7 @@ import {
     MyDatePickerModule,
     CalendarModule,
     ImageUploadModule,
+    PopoverModule,
     SlimLoadingBarModule.forRoot(),
   ],
   declarations: [ 
