@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import '../rxjs-operators';
 import {SlimLoadingBarService} from 'ng2-slim-loading-bar';
 import {
@@ -50,7 +50,7 @@ import {
 	`]
 })
 
-export class AppComponent  { 
+export class AppComponent implements OnInit { 
 	loading: boolean = true;
   authToken : any;
     constructor(
@@ -58,12 +58,14 @@ export class AppComponent  {
         router.events.subscribe((event: RouterEvent) => {
             this.navigationInterceptor(event);
         });
+        
+    }
+
+    ngOnInit(): void {
         this.authToken = JSON.parse(localStorage.getItem('authToken'));
     }
 
-    
-
-  start() {
+    start() {
         this.slimLoadingBarService.start(() => {
             console.log('Loading complete');
         });
