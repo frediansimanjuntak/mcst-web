@@ -30,7 +30,7 @@ export class LoginComponent implements OnInit {
             .subscribe(result => {
                 if (result === true) {
                     // login successful
-                    this.router.navigate(['/user']);
+                    this.router.navigate(['/dashboard']);
                 }
                 else {
                     // login failed
