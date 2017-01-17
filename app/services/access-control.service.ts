@@ -8,9 +8,13 @@ import 'rxjs/add/operator/toPromise';
  
 @Injectable()
 export class AccessControlService {
-    private headers = new Headers({ 'Authorization': 'Bearer ' + this.authenticationService.token });
+    token : string;
+    private headers = new Headers({ 'Authorization': 'Bearer ' + this.token });
     private options = new RequestOptions({ headers: this.headers });
-    constructor(private http: Http, private authenticationService: AuthenticationService) {}
+    constructor(private http: Http) {
+        var authToken = JSON.parse(localStorage.getItem('authToken'));
+        this.token = authToken && authToken.token;
+    }
 
     getAccessControls(): Promise<AccessControl[]> {
         return Promise.resolve(AccessControls);
@@ -22,42 +26,40 @@ export class AccessControlService {
     }
 
     getAll(){
-        return this.http.get(url + 'api/accesscontrols', this.options)
+        return this.http.get(url + 'api/', this.options)
             .map((res:Response) => res.json())
             .catch((error:any) => Observable.throw(error.json().error || 'Server error'));
     }
 
     getById(id:string){
-        return this.http.get(url + 'api/accesscontrols/' + id, this.options)
+        return this.http.get(url + 'api/access_controls/' + id, this.options)
             .map((res:Response) => res.json())
             .catch((error:any) => Observable.throw(error.json().error || 'Server error'));
     }
 
     create(body:any): Promise<AccessControl> {
-        console.log(body);
-        return this.http.post(url +  'api/accesscontrols', JSON.stringify(body), this.options)
+        return this.http.post(url +  'api/access_controls', body, this.options)
             .toPromise()
             .then(res => res.json().data)
             .catch(this.handleError);
     }
 
     update(body:AccessControl): Promise<AccessControl> {
-        return this.http.post(url + 'api/accesscontrols/update/' + body._id,body, this.options)
+        return this.http.post(url + 'api/access_controls/update/' + body._id,body, this.options)
             .toPromise()
             .then(res => res.json().data)
             .catch(this.handleError);
     }
 
     delete(id: string): Promise<void> {
-    return this.http.delete(url + 'api/accesscontrols/' + id, this.options)
-      .toPromise()
-      .then(() => null)
-      .catch(this.handleError);
+        return this.http.delete(url + 'api/access_controls/' + id, this.options)
+          .toPromise()
+          .then(() => null)
+          .catch(this.handleError);
     }
 
     private handleError(error: any): Promise<any> {
-        console.error('An error occurred', error); 
+        console.error('An error occurred', error);
         return Promise.reject(error.message || error);
     }
-
 }
