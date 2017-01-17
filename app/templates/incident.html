@@ -86,7 +86,6 @@
 						    		<a type="button" style="text-decoration: underline;cursor:pointer" (click)="view(data)">View</a>
 						    		<img *ngIf="data.starred_by == null" title="starred" src="../../assets/image/star_filled.png" width="24px" height="28px" (click)="starred(data)" />
 						    		<img *ngIf="data.starred_by != null" title="unstarred" src="../../assets/image/icon_star_active@3x.png" width="24px" height="28px" (click)="unstarred(data)" />
-						    		
 									<img *ngIf="data.archive == false" title="archived" src="../../assets/image/icon_archived.png" (click)="archived(data)" />
 									<img *ngIf="data.archive == true" title="unarchived" src="../../assets/image/icon_archived.png" (click)="unarchived(data)" />
 						    	</template>
@@ -116,10 +115,10 @@
 						    <p-column [style]="{'width':'150px'}" styleClass="col-button" header="action">
 						    	<template let-data="rowData" pTemplate="body">
 						    		<a type="button" style="text-decoration: underline;cursor:pointer" (click)="view(data)">View</a>
-						    		<img *ngIf="!isFavorite" src="../../assets/image/star_filled.png" width="24px" height="28px" (click)="onClick(data)" />
-						    		<img *ngIf="isFavorite" src="../../assets/image/icon_star_active@3x.png" width="24px" height="28px" (click)="onClick(data)" />
-						    		
-									<img src="../../assets/image/icon_archived.png" (click)="onClick(data)" />
+						    		<img *ngIf="data.starred_by == null" title="starred" src="../../assets/image/star_filled.png" width="24px" height="28px" (click)="starred(data)" />
+						    		<img *ngIf="data.starred_by != null" title="unstarred" src="../../assets/image/icon_star_active@3x.png" width="24px" height="28px" (click)="unstarred(data)" />
+									<img *ngIf="data.archive == false" title="archived" src="../../assets/image/icon_archived.png" (click)="archived(data)" />
+									<img *ngIf="data.archive == true" title="unarchived" src="../../assets/image/icon_archived.png" (click)="unarchived(data)" />
 						    	</template>
 						    </p-column>
 						</p-dataTable>
@@ -148,10 +147,10 @@
 						    <p-column [style]="{'width':'150px'}" styleClass="col-button" header="action">
 						    	<template let-data="rowData" pTemplate="body">
 						    		<a type="button" style="text-decoration: underline;cursor:pointer" (click)="view(data)">View</a>
-						    		<img *ngIf="!isFavorite" src="../../assets/image/star_filled.png" width="24px" height="28px" (click)="onClick(data)" />
-						    		<img *ngIf="isFavorite" src="../../assets/image/icon_star_active@3x.png" width="24px" height="28px" (click)="onClick(data)" />
-						    		
-									<img src="../../assets/image/icon_archived.png" (click)="onClick(data)" />
+						    		<img *ngIf="data.starred_by == null" title="starred" src="../../assets/image/star_filled.png" width="24px" height="28px" (click)="starred(data)" />
+						    		<img *ngIf="data.starred_by != null" title="unstarred" src="../../assets/image/icon_star_active@3x.png" width="24px" height="28px" (click)="unstarred(data)" />
+									<img *ngIf="data.archive == false" title="archived" src="../../assets/image/icon_archived.png" (click)="archived(data)" />
+									<img *ngIf="data.archive == true" title="unarchived" src="../../assets/image/icon_archived.png" (click)="unarchived(data)" />
 						    	</template>
 						    </p-column>
 						</p-dataTable>
@@ -179,10 +178,10 @@
 						    <p-column [style]="{'width':'150px'}" styleClass="col-button" header="action">
 						    	<template let-data="rowData" pTemplate="body">
 						    		<a type="button" style="text-decoration: underline;cursor:pointer" (click)="view(data)">View</a>
-						    		<img *ngIf="!isFavorite" src="../../assets/image/star_filled.png" width="24px" height="28px" (click)="onClick(data)" />
-						    		<img *ngIf="isFavorite" src="../../assets/image/icon_star_active@3x.png" width="24px" height="28px" (click)="onClick(data)" />
-						    		
-									<img src="../../assets/image/icon_archived.png" (click)="onClick(data)" />
+						    		<img *ngIf="data.starred_by == null" title="starred" src="../../assets/image/star_filled.png" width="24px" height="28px" (click)="starred(data)" />
+						    		<img *ngIf="data.starred_by != null" title="unstarred" src="../../assets/image/icon_star_active@3x.png" width="24px" height="28px" (click)="unstarred(data)" />
+									<img *ngIf="data.archive == false" title="archived" src="../../assets/image/icon_archived.png" (click)="archived(data)" />
+									<img *ngIf="data.archive == true" title="unarchived" src="../../assets/image/icon_archived.png" (click)="unarchived(data)" />
 						    	</template>
 						    </p-column>
 						</p-dataTable>
