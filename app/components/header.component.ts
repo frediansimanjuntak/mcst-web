@@ -45,7 +45,7 @@ export class HeaderComponent implements OnInit{
         this.notificationService.getNotifications().then(data => {
             this.allNotifications      		= data;
             this.unreadNotifications 		= this.allNotifications.filter(data => data.read_at == '' && data.user == this.userId );
-            this.unreadNotificationTotal 	= this.unreadNotifications.length
+            this.unreadNotificationTotal 	= this.unreadNotifications.length;
             console.log(this.unreadNotificationTotal);
         });
     }

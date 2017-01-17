@@ -2,13 +2,15 @@ import { Injectable } from '@angular/core';
 import { Http, Headers, RequestOptions, Response } from '@angular/http';
 import { Observable } from 'rxjs/Rx';
 import { Development, Developments } from '../models/index';
+import { AuthenticationService } from '../services/index';
 import { url } from '../global'
 import 'rxjs/add/operator/toPromise';
  
 @Injectable()
 export class NewsletterService {
-    private headers = new Headers({'Content-Type': 'application/json'});
-    constructor(private http: Http) {}
+    private headers = new Headers({ 'Authorization': 'Bearer ' + this.authenticationService.token });
+    private options = new RequestOptions({ headers: this.headers });
+    constructor(private http: Http, private authenticationService: AuthenticationService) {}
 
     getDevelopments(): Promise<Development[]> {
         return Promise.resolve(Developments);
@@ -20,44 +22,46 @@ export class NewsletterService {
     }
 
     getAll(id: string){
-        return this.http.get(url + 'api/developments/' + id)
+        return this.http.get(url + 'api/newsletters/' + id, this.options)
             .map((res:Response) => res.json())
             .catch((error:any) => Observable.throw(error.json().error || 'Server error'));
     }
 
-    getById(id:string){
-        return this.http.get( url + 'api/newsletters' + id)
+    getById(id:string, id_dev:string){
+        return this.http.get( url + 'api/newsletters/' + id_dev + '/' + id, this.options)
             .map((res:Response) => res.json())
             .catch((error:any) => Observable.throw(error.json().error || 'Server error'));
     }
 
-    create(body:any, id_dev:string){
-        let options = new RequestOptions({
-            headers: new Headers({ 'Content-Type': 'application/json;charset=UTF-8' }) 
-        });
-        return this.http.post( url + 'api/newsletters/' + id_dev,body, options)
-            .map((res:Response) => res.json())
-            .catch((error:any) => Observable.throw(error.json().error || 'Server error'));
+    // create(body:any, id_dev:string){
+    //     return this.http.post( url + 'api/newsletters/' + id_dev,body, this.options)
+    //         .map((res:Response) => res.json())
+    //         .catch((error:any) => Observable.throw(error.json().error || 'Server error'));
+    // }
+
+    create(body:any, id_dev:string): Promise<any> {
+        return this.http.post(url + 'api/newsletters/' + id_dev, JSON.stringify(body), this.options)
+            .toPromise()
+            .then(res => res.json().data)
+            .catch(this.handleError);
     }
 
-    update(body:any, id_dev:string){
-        let options = new RequestOptions({
-            headers: new Headers({ 'Content-Type': 'application/json;charset=UTF-8' }) 
-        });
-        return this.http.post( url + 'api/newsletters/' + id_dev + '/update/' + body._id,body, options)
-            .map((res:Response) => res.json())
-            .catch((error:any) => Observable.throw(error.json().error || 'Server error'));
+    update(body:any, id_dev:string): Promise<any> {
+        return this.http.post(url + 'api/newsletters/' + id_dev + '/update/' + body._id ,body, this.options)
+            .toPromise()
+            .then(res => res.json().data)
+            .catch(this.handleError);
     }
 
     release(id: string, id_dev: string): Promise<void> {
-        return this.http.post( url + 'api/newsletters/' + id_dev + '/release/' + id, {headers: this.headers})
-          .toPromise()
-          .then(() => null)
-          .catch(this.handleError);
+        return this.http.post( url + 'api/newsletters/' + id_dev + '/release/' + id, this.options)
+            .toPromise()
+            .then(res => res.json().data)
+            .catch(this.handleError);
     }
 
     delete(id: string, id_dev: string): Promise<void> {
-        return this.http.delete( url + 'api/newsletters/' + id_dev + '/' + id, {headers: this.headers})
+        return this.http.delete( url + 'api/newsletters/' + id_dev + '/' + id,  this.options)
           .toPromise()
           .then(() => null)
           .catch(this.handleError);
