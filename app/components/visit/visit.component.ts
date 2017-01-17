@@ -173,8 +173,8 @@ export class VisitComponent implements OnInit {
             this.visitOut.checkout_by = "123n1kj2b31kb31b23k21j";
             this.checkOutModal.close();
 
-                this.visitService.create(model)
-                .subscribe(
+                this.visitService.checkOut(model._id)
+                .then(
                     data => {
                         this.alertService.success('Add guest successful', true);
                         this.router.navigate(['/unit']);
@@ -199,8 +199,8 @@ export class VisitComponent implements OnInit {
             this.visit.checkin_by = "123n1kj2b31kb31b23k21j";
             this.checkInModal.close();
 
-                this.visitService.create(model)
-                .subscribe(
+                this.visitService.create(model._id)
+                .then(
                     data => {
                         this.alertService.success('Add guest successful', true);
                         this.router.navigate(['/unit']);

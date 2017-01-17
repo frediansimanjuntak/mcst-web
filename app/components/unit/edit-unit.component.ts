@@ -107,8 +107,8 @@ export class EditUnitComponent implements OnInit {
             Developments[0].properties.push(model);
             this.router.navigate(['/unit']);    
             console.log(model);
-            this.unitservice.create(model)
-            .subscribe(
+            this.unitservice.create(model, this.developmentId)
+            .then(
                 data => {
                     this.alertService.success('Create Unit successful', true);
                     this.router.navigate(['/unit']);

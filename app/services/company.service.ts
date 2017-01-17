@@ -2,12 +2,15 @@ import { Injectable } from '@angular/core';
 import { Http, Headers, RequestOptions, Response } from '@angular/http';
 import { Observable } from 'rxjs/Rx';
 import { url } from '../global'
+import { AuthenticationService } from '../services/index';
 import { Company, Companies } from '../models/index';
+import 'rxjs/add/operator/toPromise';
  
 @Injectable()
 export class CompanyService {
-    private headers = new Headers({'Content-Type': 'application/json'});
-    constructor(private http: Http) {}
+    private headers = new Headers({ 'Authorization': 'Bearer ' + this.authenticationService.token });
+    private options = new RequestOptions({ headers: this.headers });
+    constructor(private http: Http, private authenticationService: AuthenticationService) {}
 
      getCompanies(): Promise<Company[]> {
         return Promise.resolve(Companies);
@@ -19,44 +22,40 @@ export class CompanyService {
     }
 
     getAll(){
-        return this.http.get(url + 'api/company')
+        return this.http.get(url + 'api/company', this.options)
             .map((res:Response) => res.json())
             .catch((error:any) => Observable.throw(error.json().error || 'Server error'));
     }
 
     getById(id:string){
-        return this.http.get(url + 'api/company/' + id)
+        return this.http.get(url + 'api/company/' + id, this.options)
             .map((res:Response) => res.json())
             .catch((error:any) => Observable.throw(error.json().error || 'Server error'));
     }
 
-    create(body:Company){
-        let options = new RequestOptions({
-            headers: new Headers({ 'Content-Type': 'application/json;charset=UTF-8' }) 
-        });
-        return this.http.post(url + 'api/company/',body, options)
-            .map((res:Response) => res.json())
-            .catch((error:any) => Observable.throw(error.json().error || 'Server error'));
+    create(body:any): Promise<Company> {
+        return this.http.post(url +  'api/company', JSON.stringify(body), this.options)
+            .toPromise()
+            .then(res => res.json().data)
+            .catch(this.handleError);
     }
 
-    update(body:Company){
-        let options = new RequestOptions({
-            headers: new Headers({ 'Content-Type': 'application/json;charset=UTF-8' }) 
-        });
-        return this.http.post(url + 'api/company/update/' + body._id,body, options)
-            .map((res:Response) => res.json())
-            .catch((error:any) => Observable.throw(error.json().error || 'Server error'));
+    update(body:Company): Promise<Company> {
+        return this.http.post(url + 'api/company/update/' + body._id,body, this.options)
+            .toPromise()
+            .then(res => res.json().data)
+            .catch(this.handleError);
     }
 
     delete(id: string): Promise<void> {
-        return this.http.delete( url + 'api/company/' + id, {headers: this.headers})
+        return this.http.delete(url + 'api/company/' + id, this.options)
           .toPromise()
           .then(() => null)
           .catch(this.handleError);
     }
 
     activation(id: string): Promise<void> {
-        return this.http.post( url + 'api/company/activation/' + id, {headers: this.headers})
+        return this.http.post( url + 'api/company/activation/' + id, this.options)
           .toPromise()
           .then(() => null)
           .catch(this.handleError);

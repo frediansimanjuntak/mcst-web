@@ -88,7 +88,7 @@ export class EditNewsletterComponent  {
 
     updateNewsletter(){
 		this.newsletterService.update(this.model, this.developmentId)
-		.subscribe(
+		.then(
 			response => {
 				if(response.error) {
 	                this.alertService.error(response.error);

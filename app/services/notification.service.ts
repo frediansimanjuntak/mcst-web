@@ -2,12 +2,15 @@ import { Injectable } from '@angular/core';
 import { Http, Headers, RequestOptions, Response } from '@angular/http';
 import { Observable } from 'rxjs/Rx';
 import { url } from '../global';
+import { AuthenticationService } from '../services/index';
 import { Notification, Notifications } from '../models/index';
+import 'rxjs/add/operator/toPromise';
  
 @Injectable()
 export class NotificationService {
-    private headers = new Headers({'Content-Type': 'application/json'});
-    constructor(private http: Http) {}
+    private headers = new Headers({ 'Authorization': 'Bearer ' + this.authenticationService.token });
+    private options = new RequestOptions({ headers: this.headers });
+    constructor(private http: Http, private authenticationService: AuthenticationService) {}
 
     getNotifications(): Promise<Notification[]> {
         return Promise.resolve(Notifications);
@@ -19,24 +22,22 @@ export class NotificationService {
     }
 
     getAll(id:string){
-        return this.http.get(url + 'api/notifications/user/' + id)
+        return this.http.get(url + 'api/notifications/user/' + id, this.options)
             .map((res:Response) => res.json())
             .catch((error:any) => Observable.throw(error.json().error || 'Server error'));
     }
 
     getUnread(id:string){
-        return this.http.get(url + 'api/notifications/user/' + id + '/unread')
+        return this.http.get(url + 'api/notifications/user/' + id + '/unread', this.options)
             .map((res:Response) => res.json())
             .catch((error:any) => Observable.throw(error.json().error || 'Server error'));
     }
 
-    read(body:Notification, id:string){
-        let options = new RequestOptions({
-            headers: new Headers({ 'Content-Type': 'application/json;charset=UTF-8' }) 
-        });
-        return this.http.post(url + 'api/notifications/user/' + id,body, options)
-            .map((res:Response) => res.json())
-            .catch((error:any) => Observable.throw(error.json().error || 'Server error'));
+    read(body:any, id:string): Promise<any>{
+        return this.http.post(url + 'api/notifications/user/' + id, JSON.stringify(body), this.options)
+            .toPromise()
+            .then(res => res.json().data)
+            .catch(this.handleError);
     }
 
     private handleError(error: any): Promise<any> {
