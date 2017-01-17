@@ -1,6 +1,8 @@
 import { Component, ElementRef, OnInit } from '@angular/core';
 import { AuthenticationService } from '../../services/index';
 import { Router } from '@angular/router';
+import { AppComponent } from '../index';
+
 @Component({
     // moduleId: module.id,
     selector: 'login-form',
@@ -17,11 +19,13 @@ export class LoginComponent implements OnInit {
     constructor(
         private router: Router,
         private AuhtService: AuthenticationService,
+        private appComponent: AppComponent,
            ) { }
 
     ngOnInit() {
         // reset login status
         this.AuhtService.logout();
+        this.appComponent.ngOnInit();
     }
 
     login() {
@@ -30,6 +34,7 @@ export class LoginComponent implements OnInit {
             .subscribe(result => {
                 if (result === true) {
                     // login successful
+                    this.appComponent.ngOnInit();
                     this.router.navigate(['/dashboard']);
                 }
                 else {
