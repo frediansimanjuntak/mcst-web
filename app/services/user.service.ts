@@ -8,6 +8,8 @@ import 'rxjs/add/operator/toPromise';
  
 @Injectable()
 export class UserService {
+    private headers = new Headers({ 'Authorization': 'Bearer ' + this.authenticationService.token });
+    private options = new RequestOptions({ headers: this.headers });
     constructor(private http: Http, private authenticationService: AuthenticationService) {}
 
     getUsers(): Promise<User[]> {
@@ -20,43 +22,33 @@ export class UserService {
     }
 
     getAll(){
-        let headers = new Headers({ 'Authorization': 'Bearer ' + this.authenticationService.token });
-        let options = new RequestOptions({ headers: headers });
-        return this.http.get(url + 'api/users', options)
+        return this.http.get(url + 'api/users', this.options)
             .map((res:Response) => res.json())
             .catch((error:any) => Observable.throw(error.json().error || 'Server error'));
     }
 
     getById(id:string){    
-        let headers = new Headers({ 'Authorization': 'Bearer ' + this.authenticationService.token });
-        let options = new RequestOptions({ headers: headers });
-        return this.http.get(url + 'api/users/' + id, options)
+        return this.http.get(url + 'api/users/' + id, this.options)
             .map((res:Response) => res.json())
             .catch((error:any) => Observable.throw(error.json().error || 'Server error'));
     }
 
     create(body:any): Promise<User> {
-        let headers = new Headers({ 'Authorization': 'Bearer ' + this.authenticationService.token });
-        let options = new RequestOptions({ headers: headers });
-        return this.http.post(url +  'api/users', JSON.stringify(body), options)
+        return this.http.post(url +  'api/users', JSON.stringify(body), this.options)
             .toPromise()
             .then(res => res.json().data)
             .catch(this.handleError);
     }
 
     update(body:User): Promise<User> {
-        let headers = new Headers({ 'Authorization': 'Bearer ' + this.authenticationService.token });
-        let options = new RequestOptions({ headers: headers });
-        return this.http.post(url + 'api/users/update/' + body._id,body, options)
+        return this.http.post(url + 'api/users/update/' + body._id,body, this.options)
             .toPromise()
             .then(res => res.json().data)
             .catch(this.handleError);
     }
 
     delete(id: string): Promise<void> {
-        let headers = new Headers({ 'Authorization': 'Bearer ' + this.authenticationService.token });
-        let options = new RequestOptions({ headers: headers });
-        return this.http.delete(url + 'api/users/' + id, options)
+        return this.http.delete(url + 'api/users/' + id, this.options)
           .toPromise()
           .then(() => null)
           .catch(this.handleError);
