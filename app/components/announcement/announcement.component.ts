@@ -114,8 +114,23 @@ export class AnnouncementComponent implements OnInit {
 
         this.announcement.sticky = this.stickyStatus;
         this.announcement.publish = true;
+        // this.announcementService.publish(this.announcement._id)
+        //   .then(
+        //     response => {
+        //       if(response) {
+        //         alert(`The Announcement could not be publish, server Error.`);
+        //       } else {
+        //         alert(`Delete Newsletter successful`);
+        //         this.firstModal.close();
+        //         this.ngOnInit()
+        //       }
+        //     },
+        //     error=> {
+        //       console.log(error);
+        //         alert(`The Announcement could not be deleted, server Error.`);
+        //     }
+        // );
         this.firstModal.close();
-        console.log(this.announcement);
         this.ngOnInit();
     }
 
