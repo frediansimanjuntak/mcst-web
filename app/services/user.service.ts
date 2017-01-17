@@ -33,6 +33,12 @@ export class UserService {
             .catch((error:any) => Observable.throw(error.json().error || 'Server error'));
     }
 
+    getByToken(){    
+        return this.http.get(url + 'me', this.options)
+            .map((res:Response) => res.json())
+            .catch((error:any) => Observable.throw(error.json().error || 'Server error'));
+    }
+
     create(body:any): Promise<User> {
         return this.http.post(url +  'api/users', JSON.stringify(body), this.options)
             .toPromise()
