@@ -304,7 +304,7 @@ export var Developments: any[] = [
         },
         {
           _id: "4", 
-          resident: "2",
+          resident: "3",
           type: "tenant",
           added_on: "2016-12-08T03:31:07",
           social_page: "yes",

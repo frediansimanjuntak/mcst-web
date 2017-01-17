@@ -11,7 +11,7 @@ import { Observable} from 'rxjs/Observable';
 	styleUrls: [ 'app/templates/styles/header.css' ]
 })
 
-export class HeaderComponent {
+export class HeaderComponent implements OnInit{
 	title = 'MCST';
 	notification: Notification;
 	allNotifications: Notification[] = [];
@@ -43,10 +43,14 @@ export class HeaderComponent {
         //     });
 
         this.notificationService.getNotifications().then(data => {
-            this.allNotifications      = data;
-            this.unreadNotifications = this.allNotifications.filter(data => data.read_at == '' && data.user == this.userId );
-            this.unreadNotificationTotal = this.unreadNotifications.length
+            this.allNotifications      		= data;
+            this.unreadNotifications 		= this.allNotifications.filter(data => data.read_at == '' && data.user == this.userId );
+            this.unreadNotificationTotal 	= this.unreadNotifications.length
             console.log(this.unreadNotificationTotal);
         });
+    }
+
+    onNotificationClick(){
+    	this.unreadNotificationTotal = 0;
     }
 }
