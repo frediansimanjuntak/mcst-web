@@ -22,6 +22,7 @@ export class UserComponent implements OnInit {
     }
 
     ngOnInit() {
+        console.log(localStorage.getItem('authToken'));
         this.loadAllUsers();
     }
 
@@ -39,7 +40,7 @@ export class UserComponent implements OnInit {
 
 
     private loadAllUsers() {
-        this.userService.getUsers().then(users => { this.users = users });
+        this.userService.getAll().subscribe(users => { this.users = users });
     }
 
     add(){
