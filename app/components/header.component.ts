@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Notification, Notifications } from '../models/index';
-import { NotificationService, AlertService} from '../services/index';
+import { NotificationService, AlertService, UserService, AuthenticationService} from '../services/index';
 import '../rxjs-operators';
 import { Observable} from 'rxjs/Observable';
 
@@ -18,16 +18,19 @@ export class HeaderComponent implements OnInit{
 	unreadNotifications: Notification[] = [];
 	unreadNotificationTotal: number;
 	userId: string;
+    user: string;
 
 	constructor(
                 private notificationService: NotificationService,
                 private alertService: AlertService,
+                private userService: UserService,
+                private authService: AuthenticationService,
                 ) {
 		this.userId = "1"
     }
 
-    ngOnInit(): void {
-    	
+    ngOnInit(){
+    	this.userService.getByToken().subscribe(user => { this.user = user; console.log(user.username);})
        	this.loadUnread();
 
 	}
@@ -52,5 +55,9 @@ export class HeaderComponent implements OnInit{
 
     onNotificationClick(){
     	this.unreadNotificationTotal = 0;
+    }
+
+    logout(){
+        this.authService.logout()
     }
 }

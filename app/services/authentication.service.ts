@@ -20,7 +20,7 @@ export class AuthenticationService {
     }
  
     logout() {
-        localStorage.removeItem("user");
+        localStorage.removeItem("authToken");
         this._router.navigate(['login']);
     }
 

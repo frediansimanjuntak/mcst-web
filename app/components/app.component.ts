@@ -14,12 +14,11 @@ import {
   moduleId: module.id,
   selector: 'my-app',
   template: `
-  	<headers></headers>
-  	<navbar></navbar>
-  	
-    
+    <div *ngIf="authToken">
+  	  <headers></headers>
+  	  <navbar></navbar>
+  	</div>
     <ng2-slim-loading-bar></ng2-slim-loading-bar>
-	  
    	<router-outlet></router-outlet>
 
   	
@@ -53,12 +52,13 @@ import {
 
 export class AppComponent  { 
 	loading: boolean = true;
-
+  authToken : any;
     constructor(
         private slimLoadingBarService: SlimLoadingBarService,private router: Router) {
         router.events.subscribe((event: RouterEvent) => {
             this.navigationInterceptor(event);
         });
+        this.authToken = JSON.parse(localStorage.getItem('authToken'));
     }
 
     
