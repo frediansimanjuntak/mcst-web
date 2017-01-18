@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, Params, ActivatedRoute } from '@angular/router';
 import { Payment } from '../../models/index';
-import { PaymentService, AlertService } from '../../services/index';
+import { PaymentService, AlertService, UserService } from '../../services/index';
 import '../../rxjs-operators';
 import { Observable } from 'rxjs/Observable';
 import { FileUploader } from 'ng2-file-upload';
@@ -17,9 +17,13 @@ export class PaymentComponent implements OnInit {
     payments: Payment[] = [];
     model: any = {};
     id: string;
-    authToken: any;
+    name: any;
 
-    constructor(private router: Router, private paymentService: PaymentService, private alertService: AlertService,private route: ActivatedRoute) {}
+    constructor(private router: Router, 
+        private paymentService: PaymentService, 
+        private alertService: AlertService,
+        private route: ActivatedRoute,
+        private userService: UserService) {}
 
     ngOnInit(): void {
         this.route.params.subscribe(params => {
@@ -63,12 +67,12 @@ export class PaymentComponent implements OnInit {
     // }
 
     view(payment: Payment){
-        this.authToken = JSON.parse(localStorage.getItem('authToken'));
-        this.router.navigate([this.authToken.default_development.name + '/payment/view', payment._id]);
+        this.userService.getByToken().subscribe(name => this.name = name)
+        this.router.navigate([this.name.default_development.name + '/payment/view', payment._id]);
     }
 
     add(){
-        this.authToken = JSON.parse(localStorage.getItem('authToken'));
-        this.router.navigate([this.authToken.default_development.name + '/payment/add']);
+        this.userService.getByToken().subscribe(name => this.name = name)
+        this.router.navigate([this.name.default_development.name + '/payment/add']);
     }
 }

@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, Params, ActivatedRoute } from '@angular/router';
 import { Contract } from '../../models/index';
-import { ContractService, AlertService } from '../../services/index';
+import { ContractService, AlertService, UserService } from '../../services/index';
 import '../../rxjs-operators';
 import 'rxjs/add/operator/switchMap';
 import { Observable} from 'rxjs/Observable';
@@ -22,9 +22,13 @@ export class ContractNoteComponent implements OnInit  {
     public open;
     public close;
     loading = false;
-    authToken: any;
+    name: any;
 
-    constructor(private router: Router, private contractService: ContractService, private alertService: AlertService,private route: ActivatedRoute) {}
+    constructor(private router: Router,
+        private contractService: ContractService,
+        private alertService: AlertService,
+        private userService: UserService,
+        private route: ActivatedRoute) {}
 
     ngOnInit(): void {
         this.images = [];
@@ -82,7 +86,7 @@ export class ContractNoteComponent implements OnInit  {
     }
 
     cancel(id:any){
-        this.authToken = JSON.parse(localStorage.getItem('authToken'));
-        this.router.navigate([this.authToken.default_development.name + '/contract/view', id ]);
+        this.userService.getByToken().subscribe(name => this.name = name)
+        this.router.navigate([this.name.default_development.name + '/contract/view', id ]);
     }
 }

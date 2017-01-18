@@ -1,7 +1,7 @@
 import { Component, OnInit, EventEmitter } from '@angular/core';
 import { Router, Params, ActivatedRoute } from '@angular/router';
 import { Incident } from '../../models/index';
-import { IncidentService, AlertService } from '../../services/index';
+import { IncidentService, AlertService, UserService } from '../../services/index';
 import '../../rxjs-operators';
 import { Observable } from 'rxjs/Observable';
 import { FileUploader } from 'ng2-file-upload';
@@ -20,7 +20,7 @@ export class IncidentComponent implements OnInit {
     model: any = {};
     images: any[];
     id: string;
-    authToken: any;
+    name: any;
     isFavorite = false;
     isArchieved = false;
     change = new EventEmitter();
@@ -31,7 +31,11 @@ export class IncidentComponent implements OnInit {
     public dataResolved;
     public dataUrgent;
 
-    constructor(private router: Router, private incidentService: IncidentService, private alertService: AlertService,private route: ActivatedRoute) {}
+    constructor(private router: Router, 
+        private incidentService: IncidentService, 
+        private alertService: AlertService,
+        private route: ActivatedRoute,
+        private userService: UserService) {}
 
     ngOnInit(): void {
         this.images = [];
@@ -85,18 +89,18 @@ export class IncidentComponent implements OnInit {
     // }
 
     view(incident: Incident){
-        this.authToken = JSON.parse(localStorage.getItem('authToken'));
-        this.router.navigate([this.authToken.default_development.name + '/incident/view', incident._id]);
+        this.userService.getByToken().subscribe(name => this.name = name)
+        this.router.navigate([this.name.default_development.name + '/incident/view', incident._id]);
     }
 
     add(){
-        this.authToken = JSON.parse(localStorage.getItem('authToken'));
-        this.router.navigate([this.authToken.default_development.name + '/incident/add']);
+        this.userService.getByToken().subscribe(name => this.name = name)
+        this.router.navigate([this.name.default_development.name + '/incident/add']);
     }
 
     add_project(reference_no:any){
-        this.authToken = JSON.parse(localStorage.getItem('authToken'));
-        this.router.navigate([this.authToken.default_development.name + '/contract/add',reference_no]);
+        this.userService.getByToken().subscribe(name => this.name = name)
+        this.router.navigate([this.name.default_development.name + '/contract/add',reference_no]);
     }
 
     archive(incident:Incident){

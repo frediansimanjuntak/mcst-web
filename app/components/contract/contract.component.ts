@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, Params, ActivatedRoute } from '@angular/router';
 import { Contract } from '../../models/index';
-import { ContractService, AlertService } from '../../services/index';
+import { ContractService, AlertService, UserService } from '../../services/index';
 import '../../rxjs-operators';
 import { Observable} from 'rxjs/Observable';
 import { FileUploader } from 'ng2-file-upload';
@@ -20,9 +20,13 @@ export class ContractComponent implements OnInit  {
     id: string;
     public open;
     public close;
-    authToken: any;
+    name: any;
 
-    constructor(private router: Router, private contractService: ContractService, private alertService: AlertService,private route: ActivatedRoute) {}
+    constructor(private router: Router, 
+        private contractService: ContractService, 
+        private alertService: AlertService,
+        private route: ActivatedRoute,
+        private userService: UserService) {}
 
     ngOnInit(): void {
         this.images = [];
@@ -72,32 +76,32 @@ export class ContractComponent implements OnInit  {
     }
 
     view(contract: Contract){
-        this.authToken = JSON.parse(localStorage.getItem('authToken'));
-        this.router.navigate([this.authToken.default_development.name + '/contract/view', contract._id]);
+        this.userService.getByToken().subscribe(name => this.name = name)
+        this.router.navigate([this.name.default_development.name + '/contract/view', contract._id]);
     }
 
     edit(id: any){
-        this.authToken = JSON.parse(localStorage.getItem('authToken'));
-        this.router.navigate([this.authToken.default_development.name + '/contract/edit', id]);
+        this.userService.getByToken().subscribe(name => this.name = name)
+        this.router.navigate([this.name.default_development.name + '/contract/edit', id]);
     }
 
     add_note(id: any){
-        this.authToken = JSON.parse(localStorage.getItem('authToken'));
-        this.router.navigate([this.authToken.default_development.name + '/contract/add/note', id]);
+        this.userService.getByToken().subscribe(name => this.name = name)
+        this.router.navigate([this.name.default_development.name + '/contract/add/note', id]);
     }
 
     add_notice(id: any){
-        this.authToken = JSON.parse(localStorage.getItem('authToken'));
-        this.router.navigate([this.authToken.default_development.name + '/contract/add/notice', id]);
+        this.userService.getByToken().subscribe(name => this.name = name)
+        this.router.navigate([this.name.default_development.name + '/contract/add/notice', id]);
     }
 
     add(){
-        this.authToken = JSON.parse(localStorage.getItem('authToken'));
-        this.router.navigate([this.authToken.default_development.name + '/contract/add']);
+        this.userService.getByToken().subscribe(name => this.name = name);
+        this.router.navigate([this.name.default_development.name + '/contract/add']);
     }
 
     back(){
-        this.authToken = JSON.parse(localStorage.getItem('authToken'));
-        this.router.navigate([this.authToken.default_development.name + '/contract']);
+        this.userService.getByToken().subscribe(name => this.name = name)
+        this.router.navigate([this.name.default_development.name + '/contract']);
     }
 }

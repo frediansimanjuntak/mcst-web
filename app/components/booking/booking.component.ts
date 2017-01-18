@@ -3,7 +3,7 @@ import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import { DatePipe  } from '@angular/common';
 import { Router, Params, ActivatedRoute } from '@angular/router'; 
 import { Booking, Facility } from '../../models/index';
-import { BookingService, AlertService, FacilityService } from '../../services/index';
+import { BookingService, AlertService, FacilityService, UserService } from '../../services/index';
 import '../../rxjs-operators';
 import { Observable} from 'rxjs/Observable';
 import * as moment from 'moment';
@@ -45,7 +45,7 @@ export class BookingComponent implements OnInit {
     filtered : any;
     selectedDay : any;
     days : any[] = ["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"];
-    authToken: any;
+    name: any;
 
 	constructor(
 		private router: Router,
@@ -53,7 +53,8 @@ export class BookingComponent implements OnInit {
 		private bookingService: BookingService,
 		private alertService: AlertService,
         private formbuilder: FormBuilder,
-		private route: ActivatedRoute){}
+		private route: ActivatedRoute,
+        private userService: UserService){}
 
 	ngOnInit() {
         this.myForm = this.formbuilder.group({
@@ -133,13 +134,13 @@ export class BookingComponent implements OnInit {
     }
 
     add(){
-        this.authToken = JSON.parse(localStorage.getItem('authToken'));
-        this.router.navigate([this.authToken.default_development.name + '/booking/add']);
+        this.userService.getByToken().subscribe(name => this.name = name)
+        this.router.navigate([this.name.default_development.name + '/booking/add']);
     }
 
     view(booking: Booking){
-        this.authToken = JSON.parse(localStorage.getItem('authToken'));
-        this.router.navigate([this.authToken.default_development.name + '/booking/edit', booking._id]);
+        this.userService.getByToken().subscribe(name => this.name = name)
+        this.router.navigate([this.name.default_development.name + '/booking/edit', booking._id]);
     }
 
     filter(booking: any){
