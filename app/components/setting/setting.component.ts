@@ -13,6 +13,7 @@ import { Observable} from 'rxjs/Observable';
 export class SettingComponent implements OnInit {
     user: User;
     users: User[] = [];
+    authToken: any;
     model: any = {};
 
     constructor(private router: Router,private userService: UserService,private alertService: AlertService) {
@@ -29,6 +30,7 @@ export class SettingComponent implements OnInit {
     }
 
     edit(user: User){
-        this.router.navigate(['/setting/edit', user._id]);
+        this.authToken = JSON.parse(localStorage.getItem('authToken'));
+        this.router.navigate([this.authToken.development.name + '/setting/edit', user._id]);
     }
 }

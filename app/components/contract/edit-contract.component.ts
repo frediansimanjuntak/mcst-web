@@ -16,6 +16,7 @@ export class EditContractComponent  implements OnInit {
     model: any = {};
     id: string;
     loading = false;
+    authToken: any;
 
     constructor(private router: Router,
     	private contractService: ContractService,
@@ -84,4 +85,14 @@ export class EditContractComponent  implements OnInit {
             }
         );
 	}
+
+    cancel(){
+        this.authToken = JSON.parse(localStorage.getItem('authToken'));
+        this.router.navigate([this.authToken.development.name + '/contract' ]);
+    }
+
+    back(id:any){
+        this.authToken = JSON.parse(localStorage.getItem('authToken'));
+        this.router.navigate([this.authToken.development.name + '/contract/view', id ]);
+    }
 }

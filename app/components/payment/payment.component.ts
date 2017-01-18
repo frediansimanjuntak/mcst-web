@@ -17,6 +17,7 @@ export class PaymentComponent implements OnInit {
     payments: Payment[] = [];
     model: any = {};
     id: string;
+    authToken: any;
 
     constructor(private router: Router, private paymentService: PaymentService, private alertService: AlertService,private route: ActivatedRoute) {}
 
@@ -62,10 +63,12 @@ export class PaymentComponent implements OnInit {
     // }
 
     view(payment: Payment){
-        this.router.navigate(['/payment/view', payment._id]);
+        this.authToken = JSON.parse(localStorage.getItem('authToken'));
+        this.router.navigate([this.authToken.development.name + '/payment/view', payment._id]);
     }
 
     add(){
-        this.router.navigate(['/payment/add']);
+        this.authToken = JSON.parse(localStorage.getItem('authToken'));
+        this.router.navigate([this.authToken.development.name + '/payment/add']);
     }
 }

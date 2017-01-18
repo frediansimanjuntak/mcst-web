@@ -16,6 +16,7 @@ export class FacilityComponent implements OnInit {
     facilities: Facility[] = [];
     model: any = {};
     id: string;
+    authToken: any;
 
     constructor(private router: Router,private facilityService: FacilityService,private alertService: AlertService,private route: ActivatedRoute) {}
 
@@ -54,14 +55,17 @@ export class FacilityComponent implements OnInit {
     }
 
     add(){
-        this.router.navigate(['/facility/add']);
+        this.authToken = JSON.parse(localStorage.getItem('authToken'));
+        this.router.navigate([this.authToken.development.name + '/facility/add']);
     }
 
     edit(facility: Facility){
-        this.router.navigate(['/facility/edit', facility._id]);
+        this.authToken = JSON.parse(localStorage.getItem('authToken'));
+        this.router.navigate([this.authToken.development.name + '/facility/edit', facility._id]);
     }
 
     view(facility: Facility){
-        this.router.navigate(['/facility/view', facility._id]);
+        this.authToken = JSON.parse(localStorage.getItem('authToken'));
+        this.router.navigate([this.authToken.development.name + '/facility/view', facility._id]);
     }
 }

@@ -20,6 +20,7 @@ export class IncidentComponent implements OnInit {
     model: any = {};
     images: any[];
     id: string;
+    authToken: any;
     isFavorite = false;
     isArchieved = false;
     change = new EventEmitter();
@@ -87,15 +88,18 @@ export class IncidentComponent implements OnInit {
     // }
 
     view(incident: Incident){
-        this.router.navigate(['/incident/view', incident._id]);
+        this.authToken = JSON.parse(localStorage.getItem('authToken'));
+        this.router.navigate([this.authToken.development.name + '/incident/view', incident._id]);
     }
 
     add(){
-        this.router.navigate(['/incident/add']);
+        this.authToken = JSON.parse(localStorage.getItem('authToken'));
+        this.router.navigate([this.authToken.development.name + '/incident/add']);
     }
 
     add_project(reference_no:any){
-        this.router.navigate(['/contract/add',reference_no]);
+        this.authToken = JSON.parse(localStorage.getItem('authToken'));
+        this.router.navigate([this.authToken.development.name + '/contract/add',reference_no]);
     }
 
     archive(incident:Incident){

@@ -19,6 +19,7 @@ export class EditPaymentComponent{
     myForm: FormGroup;
     user: User;
     development : Development;
+    authToken: any;
 
     constructor(private router: Router,
     	private paymentService: PaymentService,
@@ -52,5 +53,10 @@ export class EditPaymentComponent{
 
     remove(i: any){
         this.model.payment_proof.splice(i, 1)
+    }
+
+    cancel(){
+        this.authToken = JSON.parse(localStorage.getItem('authToken'));
+        this.router.navigate([this.authToken.development.name + '/payment' ]);
     }
 }

@@ -22,6 +22,7 @@ export class EditUserComponent implements OnInit {
     unit: Development;
     myForm: FormGroup;
     public submitted: boolean;
+    authToken: any;
     // developmentID: string;
 
     constructor(private router: Router,
@@ -206,6 +207,11 @@ export class EditUserComponent implements OnInit {
         if (!pattern.test(inputChar)) {
             event.preventDefault();
         }
+    }
+
+    cancel(){
+        this.authToken = JSON.parse(localStorage.getItem('authToken'));
+        this.router.navigate([this.authToken.development.name + '/user' ]);
     }
 
     text(event: any) {

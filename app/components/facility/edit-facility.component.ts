@@ -18,6 +18,7 @@ export class EditFacilityComponent  {
     id: string;
     myForm: FormGroup;
     start_time:any;
+    authToken: any;
 
     days = [
         { value: 'monday', name: 'Monday' },
@@ -118,4 +119,9 @@ export class EditFacilityComponent  {
             }
         );
 	}
+
+    cancel(){
+        this.authToken = JSON.parse(localStorage.getItem('authToken'));
+        this.router.navigate([this.authToken.development.name + '/facility' ]);
+    }
 }

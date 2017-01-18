@@ -18,6 +18,7 @@ export class AccessControlComponent implements OnInit {
     model: any = {};
     public card;
     public transponder;
+    authToken: any;
 
     constructor(private router: Router,private accesscontrolService: AccessControlService,private alertService: AlertService) {}
 
@@ -56,10 +57,12 @@ export class AccessControlComponent implements OnInit {
     }
 
     add(){
-        this.router.navigate(['/access_control/add']);
+        this.authToken = JSON.parse(localStorage.getItem('authToken'));
+        this.router.navigate([this.authToken.development.name + '/access_control/add']);
     }
 
     edit(accesscontrol: AccessControl){
-        this.router.navigate(['/access_control/edit', accesscontrol._id]);
+        this.authToken = JSON.parse(localStorage.getItem('authToken'));
+        this.router.navigate([this.authToken.development.name + '/access_control/edit', accesscontrol._id]);
     }
 }
