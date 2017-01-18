@@ -7,6 +7,7 @@ import { Observable} from 'rxjs/Observable';
 
 @Component({
     // moduleId: module.id,
+    selector: 'setting',
     templateUrl: 'app/templates/setting.html',
 })
 
@@ -31,6 +32,6 @@ export class SettingComponent implements OnInit {
 
     edit(user: User){
         this.authToken = JSON.parse(localStorage.getItem('authToken'));
-        this.router.navigate([this.authToken.development.name + '/setting/edit', user._id]);
+        this.router.navigate([this.authToken.default_development.name + '/setting/edit', user._id]);
     }
 }

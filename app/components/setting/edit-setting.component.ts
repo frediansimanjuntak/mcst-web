@@ -7,6 +7,7 @@ import '../../rxjs-operators';
 
 @Component({
     // moduleId: module.id,
+    selector: 'edit-setting',
     templateUrl: 'app/templates/edit-setting.html',
 })
 
@@ -84,6 +85,6 @@ export class EditSettingComponent {
 
     cancel(){
         this.authToken = JSON.parse(localStorage.getItem('authToken'));
-        this.router.navigate([this.authToken.development.name + '/setting' ]);
+        this.router.navigate([this.authToken.default_development.name + '/setting' ]);
     }
 }
