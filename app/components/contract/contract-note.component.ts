@@ -31,6 +31,7 @@ export class ContractNoteComponent implements OnInit  {
         private route: ActivatedRoute) {}
 
     ngOnInit(): void {
+        this.userService.getByToken().subscribe(name => {this.name = name;})
         this.images = [];
         this.images.push({source:'/assets/image/1.png'});
         this.images.push({source:'/assets/image/2.png'});
@@ -86,7 +87,6 @@ export class ContractNoteComponent implements OnInit  {
     }
 
     cancel(id:any){
-        this.userService.getByToken().subscribe(name => this.name = name)
         this.router.navigate([this.name.default_development.name + '/contract/view', id ]);
     }
 }

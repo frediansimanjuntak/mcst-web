@@ -94,6 +94,7 @@ export class EditBookingComponent implements OnInit  {
         private userService: UserService){}
 
 	ngOnInit() {
+        this.userService.getByToken().subscribe(name => {this.name = name;})
         this.myForm = this.formbuilder.group({
             id : ['1'],
             choice : ['All'],
@@ -143,17 +144,10 @@ export class EditBookingComponent implements OnInit  {
     }
 
     createBooking() {
-        
-        // let date = this.model.booking_date.splice(0,2)
-        // let month = this.model.booking_date.splice(3,5)
-        // let year = this.model.booking_date.splice(6,10)
-        // let booking_date = (year +'-'+ month +'-'+ date)
-        // this.model.booking_date = booking_date;
         this.model.reference_no = this.model.serial_no
         console.log(this.model);
         Bookings.push(this.model);
         console.log(Bookings);
-        
         this.router.navigate(['/booking']);
         // this.anouncementService.create(this.model)
         // .subscribe(
@@ -297,7 +291,6 @@ export class EditBookingComponent implements OnInit  {
     }
 
     cancel(){
-        this.userService.getByToken().subscribe(name => this.name = name)
         this.router.navigate([this.name.default_development.name + '/booking' ]);
     }
 	

@@ -12,7 +12,7 @@ import '../../rxjs-operators';
   templateUrl: 'app/templates/edit-payment.html',
 })
 
-export class EditPaymentComponent{
+export class EditPaymentComponent implements OnInit{
 	payment: Payment;
     payments: Payment[] = [];
     model: any = {};
@@ -29,6 +29,10 @@ export class EditPaymentComponent{
         private formbuilder: FormBuilder ) {
 
         // this.user = JSON.parse(localStorage.getItem('user'));
+    }
+
+    ngOnInit():void{ 
+        this.userService.getByToken().subscribe(name => {this.name = name;})
     }
 
     createPayment() {
@@ -56,7 +60,6 @@ export class EditPaymentComponent{
     }
 
     cancel(){
-        this.userService.getByToken().subscribe(name => this.name = name)
         this.router.navigate([this.name.default_development.name + '/payment' ]);
     }
 }

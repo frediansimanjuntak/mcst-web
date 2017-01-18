@@ -27,6 +27,7 @@ export class EditAccessControlComponent implements OnInit {
         private route: ActivatedRoute,) {}
 
     ngOnInit(): void {
+        this.userService.getByToken().subscribe(name => {this.name = name;})
         this.unitService.getDevelopment("1")
             .then(unit => {
                 this.unit = unit;
@@ -74,7 +75,6 @@ export class EditAccessControlComponent implements OnInit {
 	}
 
     cancel(){
-        this.userService.getByToken().subscribe(name => this.name = name)
         this.router.navigate([this.name.development.name + '/access_control' ]);
     }
 }

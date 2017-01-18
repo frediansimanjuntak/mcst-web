@@ -38,6 +38,7 @@ export class IncidentComponent implements OnInit {
         private userService: UserService) {}
 
     ngOnInit(): void {
+        this.userService.getByToken().subscribe(name => {this.name = name;})
         this.images = [];
         this.images.push({source:'/assets/image/1.png'});
         this.images.push({source:'/assets/image/2.png'});
@@ -89,18 +90,15 @@ export class IncidentComponent implements OnInit {
     // }
 
     view(incident: Incident){
-        this.userService.getByToken().subscribe(name => this.name = name)
         this.router.navigate([this.name.default_development.name + '/incident/view', incident._id]);
     }
 
     add(){
-        this.userService.getByToken().subscribe(name => this.name = name)
         this.router.navigate([this.name.default_development.name + '/incident/add']);
     }
 
     add_project(reference_no:any){
-        this.userService.getByToken().subscribe(name => this.name = name)
-        this.router.navigate([this.name.default_development.name + '/contract/add',reference_no]);
+        this.router.navigate([this.name.default_development.name + '/contract/add',reference_no]);    
     }
 
     archive(incident:Incident){

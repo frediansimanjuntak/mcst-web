@@ -26,6 +26,7 @@ export class AccessControlComponent implements OnInit {
         private userService: UserService) {}
 
     ngOnInit() {
+        this.userService.getByToken().subscribe(name => {this.name = name;})
         this.loadAllAccessControls();
         // this.onChangeTable(this.config);
 
@@ -60,12 +61,10 @@ export class AccessControlComponent implements OnInit {
     }
 
     add(){
-        this.userService.getByToken().subscribe(name => this.name = name)
-        this.router.navigate([this.name.development.name + '/access_control/add']);
+        this.router.navigate([this.name.development.name + '/access_control/add']);  
     }
 
     edit(accesscontrol: AccessControl){
-        this.userService.getByToken().subscribe(name => this.name = name)
         this.router.navigate([this.name.development.name + '/access_control/edit', accesscontrol._id]);
     }
 }

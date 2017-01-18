@@ -30,6 +30,7 @@ export class FeedbackComponent implements OnInit {
         private userService: UserService) {}
 
     ngOnInit(): void {
+        this.userService.getByToken().subscribe(name => {this.name = name;})
         this.loadAllFeedback();
     }
 
@@ -66,8 +67,7 @@ export class FeedbackComponent implements OnInit {
     //     this.router.navigate(['/incident/edit', incident._id]);
     // }
 
-    add(){
-        this.userService.getByToken().subscribe(name => this.name = name)
+    reply(){
         this.router.navigate([this.name.default_development.name + '/feedback/add']);
     }
 

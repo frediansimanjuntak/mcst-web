@@ -24,6 +24,7 @@ export class EditSettingComponent {
         private developmentService: DevelopmentService) {}
 
     ngOnInit(): void {
+        this.userService.getByToken().subscribe(name => {this.name = name;})
         this.route.params.subscribe(params => {
             this.id = params['id'];
         });
@@ -84,7 +85,6 @@ export class EditSettingComponent {
     }
 
     cancel(){
-        this.userService.getByToken().subscribe(name => this.name = name)
         this.router.navigate([this.name.default_development.name + '/setting' ]);
     }
 }
