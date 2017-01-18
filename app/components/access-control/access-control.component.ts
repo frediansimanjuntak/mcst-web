@@ -8,7 +8,7 @@ import { Observable} from 'rxjs/Observable';
 
 @Component({
   // moduleId: module.id,
-  selector: 'access-control',
+  selector: 'development',
   templateUrl: 'app/templates/access-control.html',
 })
 
@@ -58,11 +58,11 @@ export class AccessControlComponent implements OnInit {
 
     add(){
         this.authToken = JSON.parse(localStorage.getItem('authToken'));
-        this.router.navigate([this.authToken.default_development.name + '/access_control/add']);
+        this.router.navigate([this.authToken.development.name + '/access_control/add']);
     }
 
     edit(accesscontrol: AccessControl){
         this.authToken = JSON.parse(localStorage.getItem('authToken'));
-        this.router.navigate([this.authToken.default_development.name + '/access_control/edit', accesscontrol._id]);
+        this.router.navigate([this.authToken.development.name + '/access_control/edit', accesscontrol._id]);
     }
 }

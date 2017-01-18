@@ -7,7 +7,7 @@ import 'rxjs/add/operator/switchMap';
 
 @Component({
   // moduleId: module.id,
-  selector: 'edit-access-control',
+  selector: 'edit-development',
   templateUrl: 'app/templates/edit-access-control.html',
 })
 
@@ -75,6 +75,6 @@ export class EditAccessControlComponent implements OnInit {
 
     cancel(){
         this.authToken = JSON.parse(localStorage.getItem('authToken'));
-        this.router.navigate([this.authToken.default_development.name + '/access_control' ]);
+        this.router.navigate([this.authToken.development.name + '/access_control' ]);
     }
 }
