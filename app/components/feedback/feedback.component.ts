@@ -64,7 +64,7 @@ export class FeedbackComponent implements OnInit {
 
     add(){
         this.authToken = JSON.parse(localStorage.getItem('authToken'));
-        this.router.navigate([this.authToken.development.name + '/feedback/add']);
+        this.router.navigate([this.authToken.default_development.name + '/feedback/add']);
     }
 
     archive(feedback:Feedback){
