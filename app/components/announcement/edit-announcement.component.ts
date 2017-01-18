@@ -1,7 +1,7 @@
 import { Component, OnInit, Input }from '@angular/core';
 import { Router, Params, ActivatedRoute } from '@angular/router';
 import { Announcement, Announcements } from '../../models/index';
-import { AnnouncementService, AlertService } from '../../services/index';
+import { AnnouncementService, AlertService, UserService } from '../../services/index';
 import { FormBuilder, FormGroup, FormControl, FormArray, Validators } from '@angular/forms';
 import '../../rxjs-operators';
 import 'rxjs/add/operator/switchMap';
@@ -20,19 +20,20 @@ export class EditAnnouncementComponent  {
     id: string;
     autoPostOnDateOptions: any = {};
     validTillDateOptions: any = {};
-
-
+    name: any;
 
     constructor(private router: Router,
     	private anouncementService: AnnouncementService,
     	private alertService: AlertService,
         private formbuilder: FormBuilder,
-        private route: ActivatedRoute ) {
+        private route: ActivatedRoute,
+        private userService: UserService ) {
 
         // this.user = JSON.parse(localStorage.getItem('user'));
     }
 
     ngOnInit() {
+        this.userService.getByToken().subscribe(name => {this.name = name;})
         this.autoPostOnDateOptions = {
             todayBtnTxt: 'Today',
             dateFormat: 'yyyy-mm-dd',
@@ -96,16 +97,16 @@ export class EditAnnouncementComponent  {
         }
         console.log(this.model);
         Announcements.push(this.model);
-        this.router.navigate(['/announcement']);
+        this.router.navigate([this.name.default_development.name + '/announcement']);
         // this.anouncementService.create(this.model)
-        // .subscribe(
+        // .then(
         //     data => {
-        //         this.alertService.success('Create newsletter successful', true);
-        //         this.router.navigate(['/newsletter']);
+        //         this.alertService.success('Create announcement successful', true);
+        //         this.router.navigate([this.name.default_development.name + '/newsletter']);
         //     },
         //     error => {
         //         console.log(error);
-        //         alert(`The Newsletter could not be save, server Error.`);
+        //         alert(`The announcement could not be save, server Error.`);
         //     }
         // );
     }
@@ -152,7 +153,7 @@ export class EditAnnouncementComponent  {
 	}
 
     toAnnouncement(){
-         this.router.navigate(['/announcement']);
+         this.router.navigate([this.name.default_development.name + '/announcement']);
     }
 
 

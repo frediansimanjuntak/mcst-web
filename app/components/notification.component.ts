@@ -17,16 +17,20 @@ export class NotificationComponent implements OnInit {
 	unreadNotifications: Notification[] = [];
 	allNotificationTotal: number;
 	userId: string;
+    name: any;
 
 	constructor(
                 private notificationService: NotificationService,
                 private alertService: AlertService,
-                ) {
-		this.userId = "1"
-    }
+                private userService: UserService
+                ) {}
 
     ngOnInit(): void {
-    	
+    	this.userService.getByToken()
+            .subscribe(name => {
+                   this.name = name;
+                   this.userId = this.name._id;
+               })
        	this.loadNotifications();
 
 	}

@@ -4,12 +4,12 @@
             <div class="title">
                 Notification
             </div>
+            <p>Home > Notification</p>
 	        <div class="row">
 				<p-dataTable [value]="dataToShow" [lazy]="true" [rows]="10" [paginator]="true" 
 			            [totalRecords]="allNotificationTotal" (onLazyLoad)="loadLazy($event)">
 			    <header>All Notifications</header>
 			    <p-column field="message" header="Message"></p-column>
-			    <p-column field="created_at" header="Date Time"></p-column>
 			    <p-column header="Date Time">
 					<template let-dataToShow="rowData" pTemplate="body">
 						{{dataToShow.created_at | date:'fullDate'}}     

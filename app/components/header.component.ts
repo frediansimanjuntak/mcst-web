@@ -23,6 +23,7 @@ export class HeaderComponent implements OnInit{
 	userId: string;
     user: string;
     NotificationClicked: boolean;
+    name: any;
 
 	constructor(
                 private notificationService: NotificationService,
@@ -35,7 +36,7 @@ export class HeaderComponent implements OnInit{
     }
 
     ngOnInit(){
-    	this.userService.getByToken().subscribe(user => { this.user = user; console.log(user.username);})
+    	this.userService.getByToken().subscribe(name => { this.name = name})
        	this.loadUnread();
         this.NotificationClicked = false;
 

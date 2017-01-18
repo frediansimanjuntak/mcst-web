@@ -30,6 +30,7 @@ export class NewsletterComponent implements OnInit {
     public rowsOnPage = 10;
     public sortBy = "email";
     public sortOrder = "asc";
+    name: any;
 
     constructor(private newsletterservice: NewsletterService, 
                 private alertService: AlertService,
@@ -38,7 +39,7 @@ export class NewsletterComponent implements OnInit {
 
           
     ngOnInit(): void {
-        this.developmentId = '585b36585d3cc41224fe518a';
+        this.userService.getByToken().subscribe(name => {this.name = name;})
         this.getUsers();
         this.loadAllNewsletters();
     }
@@ -52,7 +53,7 @@ export class NewsletterComponent implements OnInit {
     }
 
     deleteNewsletter(newsletter: any) {
-        this.newsletterservice.delete(newsletter._id, this.developmentId)
+        this.newsletterservice.delete(newsletter._id, this.name.default_development.name)
           .then(
             response => {
               if(response) {
@@ -60,7 +61,7 @@ export class NewsletterComponent implements OnInit {
                 // console.log(response.error());
                 alert(`The Newsletter could not be deleted, server Error.`);
               } else {
-                this.alertService.success('Create user successful', true);
+                this.alertService.success('Create newsletter successful', true);
                 alert(`Delete Newsletter successful`);
                 this.ngOnInit()
               }
@@ -77,7 +78,7 @@ export class NewsletterComponent implements OnInit {
       this.newsletter.released = true;
       this.firstModal.close();
       this.ngOnInit();
-      this.newsletterservice.release(newsletter._id, this.developmentId)
+      this.newsletterservice.release(newsletter._id, this.name.default_development.name)
           .then(
             response => {
               if(response) {
@@ -119,7 +120,7 @@ export class NewsletterComponent implements OnInit {
 
           });
 
-        // this.newsletterservice.getAll(this.developmentId)
+        // this.newsletterservice.getAll(this.name.default_development.name)
         //     .subscribe((data)=> {
         //         setTimeout(()=> {
         //           this.data = data.newsletter;

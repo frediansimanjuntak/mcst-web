@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { Development, Developments } from '../../models/index';
-import { NewsletterService, AlertService } from '../../services/index';
+import { NewsletterService, AlertService, UserService } from '../../services/index';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { FileUploader } from 'ng2-file-upload';
 import '../../rxjs-operators';
@@ -23,18 +23,19 @@ export class EditNewsletterComponent  {
     user: User;
     public developmentId;
     public uploader:FileUploader = new FileUploader({url:'http://localhost:3001/upload'});
-
+    name: any;
 
     constructor(private router: Router,
     	private newsletterService: NewsletterService,
     	private alertService: AlertService,
-        private formbuilder: FormBuilder ) {
+        private formbuilder: FormBuilder,
+        private userService: UserService ) {
 
         // this.user = JSON.parse(localStorage.getItem('user'));
     }
 
     ngOnInit() {
-        this.developmentId = '585b36585d3cc41224fe518a';
+        this.userService.getByToken().subscribe(name => {this.name = name;})
         this.model.released = false;
         this.model.type = 'agm';
         this.myForm = this.formbuilder.group({
@@ -71,11 +72,11 @@ export class EditNewsletterComponent  {
         console.log(this.model);
         Developments[0].newsletter.push(this.model);
         
-        // this.newsletterService.create(this.model, this.developmentId)
+        // this.newsletterService.create(this.model, this.name.default_development.name)
         // .subscribe(
         //     data => {
         //         this.alertService.success('Create newsletter successful', true);
-        //         this.router.navigate(['/newsletter']);
+        //         this.router.navigate([this.name.default_development.name,'/newsletter']);
         //     },
         //     error => {
         //         console.log(error);
@@ -83,11 +84,11 @@ export class EditNewsletterComponent  {
         //     }
         // );
 
-        this.router.navigate(['/newsletter']);
+        this.router.navigate([this.name.default_development.name + '/newsletter']);
     }
 
     updateNewsletter(){
-		this.newsletterService.update(this.model, this.developmentId)
+		this.newsletterService.update(this.model, this.name.default_development.name)
 		.then(
 			response => {
 				if(response.error) {
@@ -95,7 +96,7 @@ export class EditNewsletterComponent  {
 	            } else {
 	                // EmitterService.get(this.userList).emit(response.users);
                      this.alertService.success('Update newsletter successful', true);
-                     this.router.navigate(['/newsletter']);
+                     this.router.navigate([this.name.default_development.name, '/newsletter']);
 	            }
             },
             error=> {

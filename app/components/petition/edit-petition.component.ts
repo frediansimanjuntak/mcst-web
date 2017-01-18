@@ -1,7 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { Router, Params, ActivatedRoute } from '@angular/router';
 import { Petition, Petitions } from '../../models/index';
-import { UnitService, PetitionService, AlertService } from '../../services/index';
+import { UnitService, PetitionService, AlertService, UserService } from '../../services/index';
 import { FormBuilder, FormControl, FormGroup, FormArray, Validators } from '@angular/forms';
 import { FileUploader } from 'ng2-file-upload';
 
@@ -36,19 +36,20 @@ export class EditPetitionComponent implements OnInit {
     selectedType = '';
     public submitted: boolean; // keep track on whether form is submitted
     public events: any[] = []; // use later to display form changes
-
+    name: any;
 
     constructor(private router: Router,
     	private petitionService: PetitionService,
         private unitService: UnitService,
     	private alertService: AlertService,
         private route: ActivatedRoute,
-        private formbuilder: FormBuilder,) {
+        private formbuilder: FormBuilder,
+        private userService: UserService) {
         // this.user = JSON.parse(localStorage.getItem('user'));
     }
 
     ngOnInit(): void {
-        this.developmentId = '1';
+        this.userService.getByToken().subscribe(name => {this.name = name;})
     	this.selectedType = 'Maintenance';
         this.loadAllPetitions();
         this.loadAllUnits();
@@ -80,17 +81,18 @@ export class EditPetitionComponent implements OnInit {
         this.submitted = true;
         if(isValid || this.unit){
             console.log(this.unit);
+            model.development = this.name.default_development.name;
             model.property = this.unit.id;
             model.attachment = this.model.attachment;
             model.updated_at = new Date();
             Petitions.push(model);
             console.log(model);
 
-            this.router.navigate(['/petition']);
-            //   this.userGroupService.create(model)
+            this.router.navigate([this.name.default_development.name + '/petition']);
+              // this.petitionService.create(model)
             // .then(
             //     data => {
-            //         this.alertService.success('Create usergroup successful', true);
+            //         this.alertService.success('Create petition successful', true);
             //         this.router.navigate(['/user']);
             //     },
             //     error => {
