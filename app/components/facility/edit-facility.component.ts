@@ -122,6 +122,6 @@ export class EditFacilityComponent  {
 
     cancel(){
         this.authToken = JSON.parse(localStorage.getItem('authToken'));
-        this.router.navigate([this.authToken.development.name + '/facility' ]);
+        this.router.navigate([this.authToken.default_development.name + '/facility' ]);
     }
 }

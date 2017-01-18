@@ -56,16 +56,16 @@ export class FacilityComponent implements OnInit {
 
     add(){
         this.authToken = JSON.parse(localStorage.getItem('authToken'));
-        this.router.navigate([this.authToken.development.name + '/facility/add']);
+        this.router.navigate([this.authToken.default_development.name + '/facility/add']);
     }
 
     edit(facility: Facility){
         this.authToken = JSON.parse(localStorage.getItem('authToken'));
-        this.router.navigate([this.authToken.development.name + '/facility/edit', facility._id]);
+        this.router.navigate([this.authToken.default_development.name + '/facility/edit', facility._id]);
     }
 
     view(facility: Facility){
         this.authToken = JSON.parse(localStorage.getItem('authToken'));
-        this.router.navigate([this.authToken.development.name + '/facility/view', facility._id]);
+        this.router.navigate([this.authToken.default_development.name + '/facility/view', facility._id]);
     }
 }
