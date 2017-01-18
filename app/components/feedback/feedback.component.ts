@@ -1,4 +1,4 @@
-import { Component, OnInit, EventEmitter } from '@angular/core';
+import { Component, OnInit, EventEmitter, ViewChild } from '@angular/core';
 import { Router, Params, ActivatedRoute } from '@angular/router';
 import { Feedback } from '../../models/index';
 import { FeedbackService, AlertService, UserService } from '../../services/index';
@@ -13,6 +13,7 @@ import { FileUploader } from 'ng2-file-upload';
 })
 
 export class FeedbackComponent implements OnInit {
+    @ViewChild('firstModal') firstModal;
 	feedback: Feedback;
     feedbacks: Feedback[] = [];
     model: any = {};
@@ -73,6 +74,11 @@ export class FeedbackComponent implements OnInit {
 
     archive(feedback:Feedback){
         this.feedbackService.archieve(feedback._id);
+        this.ngOnInit()
+    }
+
+    publish(feedback:Feedback){
+        this.feedbackService.publish(feedback._id);
         this.ngOnInit()
     }
 
