@@ -8,7 +8,7 @@ import { FileUploader } from 'ng2-file-upload';
 
 @Component({
     // moduleId: module.id,
-    selector: 'incident',
+    selector: 'payment',
     templateUrl: 'app/templates/payment.html',
 })
 
@@ -64,11 +64,11 @@ export class PaymentComponent implements OnInit {
 
     view(payment: Payment){
         this.authToken = JSON.parse(localStorage.getItem('authToken'));
-        this.router.navigate([this.authToken.development.name + '/payment/view', payment._id]);
+        this.router.navigate([this.authToken.default_development.name + '/payment/view', payment._id]);
     }
 
     add(){
         this.authToken = JSON.parse(localStorage.getItem('authToken'));
-        this.router.navigate([this.authToken.development.name + '/payment/add']);
+        this.router.navigate([this.authToken.default_development.name + '/payment/add']);
     }
 }

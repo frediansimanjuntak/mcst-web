@@ -57,6 +57,6 @@ export class EditPaymentComponent{
 
     cancel(){
         this.authToken = JSON.parse(localStorage.getItem('authToken'));
-        this.router.navigate([this.authToken.development.name + '/payment' ]);
+        this.router.navigate([this.authToken.default_development.name + '/payment' ]);
     }
 }
