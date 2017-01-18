@@ -45,6 +45,7 @@ export class BookingComponent implements OnInit {
     filtered : any;
     selectedDay : any;
     days : any[] = ["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"];
+    authToken: any;
 
 	constructor(
 		private router: Router,
@@ -132,11 +133,13 @@ export class BookingComponent implements OnInit {
     }
 
     add(){
-        this.router.navigate(['/booking/add']);
+        this.authToken = JSON.parse(localStorage.getItem('authToken'));
+        this.router.navigate([this.authToken.development.name + '/booking/add']);
     }
 
     view(booking: Booking){
-        this.router.navigate(['/booking/edit', booking._id]);
+        this.authToken = JSON.parse(localStorage.getItem('authToken'));
+        this.router.navigate([this.authToken.development.name + '/booking/edit', booking._id]);
     }
 
     filter(booking: any){

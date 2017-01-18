@@ -82,6 +82,7 @@ export class EditBookingComponent implements OnInit  {
     day : any;
     myForm: FormGroup;
     days : any[] = ["sunday","monday","tuesday","wednesday","thursday","friday","saturday"];
+    authToken: any;
 
     constructor(
 		private router: Router,
@@ -273,7 +274,7 @@ export class EditBookingComponent implements OnInit  {
         this.step = 2;
     }
 
-    cancel(){
+    change(){
         this.step = 1
     }
 
@@ -292,6 +293,11 @@ export class EditBookingComponent implements OnInit  {
 
     generate(){
         this.ref_no = this.getRandomInt(1, 9999999);
+    }
+
+    cancel(){
+        this.authToken = JSON.parse(localStorage.getItem('authToken'));
+        this.router.navigate([this.authToken.development.name + '/booking' ]);
     }
 	
 }
