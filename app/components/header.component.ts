@@ -3,6 +3,7 @@ import { Notification, Notifications } from '../models/index';
 import { NotificationService, AlertService, UserService, AuthenticationService} from '../services/index';
 import '../rxjs-operators';
 import { Observable} from 'rxjs/Observable';
+import { AppComponent } from './index';
 
 @Component({
 	// moduleId: module.id,
@@ -28,6 +29,7 @@ export class HeaderComponent implements OnInit{
                 private alertService: AlertService,
                 private userService: UserService,
                 private authService: AuthenticationService,
+               private appComponent: AppComponent,
                 ) {
 		this.userId = "1"
     }
@@ -45,7 +47,14 @@ export class HeaderComponent implements OnInit{
         //     .subscribe((data)=> {
         //         setTimeout(()=> {
         //             this.unreadNotifications = data;
+        //             this.unreadNotificationsToShow  = data.slice(0, 10);
         //             this.unreadNotificationTotal = this.unreadNotifications.length;
+
+        //             for (var i = 0; i < this.unreadNotificationsToShow.length; i++) {
+        //                 this.notificationsIds[i] = this.unreadNotificationsToShow[i]._id;
+        //             }
+
+        //             console.log(this.notificationsIds);
         //         }, 1000);
         //     });
 
@@ -75,5 +84,6 @@ export class HeaderComponent implements OnInit{
 
     logout(){
         this.authService.logout()
+        this.appComponent.ngOnInit();
     }
 }
