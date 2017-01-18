@@ -35,7 +35,7 @@
 									</tr>
 							    </tbody>
 							</table>
-							<a style="color: black" [routerLink]="'/' + user.default_development.name + '/notification'">See more Notifications</a>
+							<a *ngIf="user" style="color: black" [routerLink]="'/' + user.default_development.name + '/notification'">See more Notifications</a>
 						</popover-content>
 					</li>
 		        	<li>

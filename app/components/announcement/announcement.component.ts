@@ -1,7 +1,7 @@
 import { Component, OnInit, ViewContainerRef, ViewEncapsulation, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { Announcement, } from '../../models/index';
-import { AnnouncementService, AlertService} from '../../services/index';
+import { AnnouncementService, AlertService, UserService} from '../../services/index';
 import '../../rxjs-operators';
 import { NG_TABLE_DIRECTIVES }    from 'ng2-table/ng2-table'
 import { Observable} from 'rxjs/Observable';
@@ -34,16 +34,18 @@ export class AnnouncementComponent implements OnInit {
     public sortOrder = "asc";
     valid_tillStatus: string;
     stickyStatus: string;
+    name: any;
     constructor(
                 private router: Router,
                 private announcementService: AnnouncementService,
                 private alertService: AlertService,
+                private userService: UserService
                 ) {
 
     }
 
     ngOnInit(): void {
-
+        this.userService.getByToken().subscribe(name => {this.name = name;})
         this.validTillDateOptions = {
             todayBtnTxt: 'Today',
             dateFormat: 'yyyy-mm-dd',
@@ -57,8 +59,7 @@ export class AnnouncementComponent implements OnInit {
             selectionTxtFontSize: '16px'
         };
 
-
-        this.developmentId = '585b36585d3cc41224fe518a';
+        this.developmentId = this.name.default_development.name;
         this.loadAllAnnouncements();
     }
 
@@ -144,10 +145,9 @@ export class AnnouncementComponent implements OnInit {
         // this.announcementService.getAll()
         //     .subscribe((data)=> {
         //         setTimeout(()=> {
-        //             this.data          = data.find(data => data._id === this.developmentId );
-        //             this.dataAgm       = this.data.newsletter.filter(data => data.type === 'agm' );
-        //             this.dataCircular  = this.data.newsletter.filter(data => data.type === 'circular' );
-        //             console.log(this.dataAgm);
+        //                   this.announcements            = data;
+        //                   this.announcementsDrafted     = this.announcements.filter(data => data.publish === false );
+        //                   this.announcementsPublished   = this.announcements.filter(data => data.publish === true );
         //         }, 1000);
         //     });
 
@@ -171,7 +171,7 @@ export class AnnouncementComponent implements OnInit {
 
 
     editAnnouncement(anouncement: Announcement){
-        this.router.navigate(['/announcement/edit', anouncement._id]);
+        this.router.navigate([this.name.default_development.name + '/announcement/edit', anouncement._id]);
     }
 
 }
