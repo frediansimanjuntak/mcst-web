@@ -16,9 +16,12 @@ export class HeaderComponent implements OnInit{
 	notification: Notification;
 	allNotifications: Notification[] = [];
 	unreadNotifications: Notification[] = [];
+    unreadNotificationsToShow: Notification[] = [];
+    notificationsIds: any[] = [];
 	unreadNotificationTotal: number;
 	userId: string;
     user: string;
+    NotificationClicked: boolean;
 
 	constructor(
                 private notificationService: NotificationService,
@@ -32,6 +35,7 @@ export class HeaderComponent implements OnInit{
     ngOnInit(){
     	this.userService.getByToken().subscribe(user => { this.user = user; console.log(user.username);})
        	this.loadUnread();
+        this.NotificationClicked = false;
 
 	}
 
@@ -48,13 +52,25 @@ export class HeaderComponent implements OnInit{
         this.notificationService.getNotifications().then(data => {
             this.allNotifications      		= data;
             this.unreadNotifications 		= this.allNotifications.filter(data => data.read_at == '' && data.user == this.userId );
+            this.unreadNotificationsToShow  = this.allNotifications.filter(data => data.read_at == '' && data.user == this.userId ).slice(0, 10);
             this.unreadNotificationTotal 	= this.unreadNotifications.length;
-            console.log(this.unreadNotificationTotal);
+
+            for (var i = 0; i < this.unreadNotificationsToShow.length; i++) {
+                this.notificationsIds[i] = this.unreadNotificationsToShow[i]._id;
+            }
+
+            console.log(this.notificationsIds);
         });
     }
 
     onNotificationClick(){
     	this.unreadNotificationTotal = 0;
+
+        if(this.NotificationClicked == false){
+            this.notificationService.read(this.notificationsIds, this.userId)
+        }
+        
+        this.NotificationClicked = true;
     }
 
     logout(){

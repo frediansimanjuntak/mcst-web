@@ -30,6 +30,7 @@ import {
   RegisterComponent,
   NavbarComponent,
   NewsletterComponent,
+  NotificationComponent,
   EditNewsletterComponent,
   PaymentComponent,
   EditPaymentComponent,
@@ -110,6 +111,7 @@ const routes: Routes = [
   { path: ':name/contractor', component: ContractorComponent },
   { path: ':name/:name/contractor/edit/:id', component: EditContractorComponent },
   { path: ':name/contractor/add',   component: EditContractorComponent },
+  { path: ':name/notification', component: NotificationComponent },
 
   // { path: 'petition/edit/:id',   component: EditAnnouncementComponent },
   // { path: 'form',     component: HeroFormComponent },

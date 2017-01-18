@@ -76,6 +76,7 @@ import {
   VisitComponent,
   TestComponent,
   Galleria,
+  NotificationComponent,
 } from '../components/index';
 
 import {
@@ -187,6 +188,7 @@ import {
     EditAnnouncementComponent,
     TestComponent,
     Galleria,
+    NotificationComponent,
     
   ],
   providers: [ 

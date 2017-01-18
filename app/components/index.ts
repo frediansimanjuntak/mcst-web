@@ -34,6 +34,7 @@ export * from './galleria.component';
 export * from './domhandler.component';
 export * from './newsletter/newsletter.component';
 export * from './newsletter/edit-newsletter.component';
+export * from './notification.component';
 export * from './payment/payment.component';
 export * from './payment/edit-payment.component';
 export * from './petition/petition.component';

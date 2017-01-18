@@ -1,21 +1,21 @@
 import { Component, OnInit } from '@angular/core';
 import { Notification, Notifications } from '../models/index';
-import { NotificationService, AlertService} from '../services/index';
+import { NotificationService, AlertService, UserService} from '../services/index';
 import '../rxjs-operators';
 import { Observable} from 'rxjs/Observable';
 
 @Component({
 	// moduleId: module.id,
-	selector: 'headers',
-	templateUrl: 'app/templates/header.html',
-	styleUrls: [ 'app/templates/styles/header.css' ]
+	selector: 'notification',
+	templateUrl: 'app/templates/notification.html',
 })
 
-export class HeaderComponent implements OnInit {
+export class NotificationComponent implements OnInit {
 	notification: Notification;
-	allNotifications: Notification[] = [];
+	allNotifications: Notification[];
+    dataToShow: Notification[];
 	unreadNotifications: Notification[] = [];
-	unreadNotificationTotal: number;
+	allNotificationTotal: number;
 	userId: string;
 
 	constructor(
@@ -36,18 +36,25 @@ export class HeaderComponent implements OnInit {
         // this.notificationService.getAll(this.userId)
         //     .subscribe((data)=> {
         //         setTimeout(()=> {
-        //             this.unreadNotifications = data;
-        //             this.unreadNotificationTotal = this.unreadNotifications.length;
+        //             this.allNotifications = data;
+        //             this.allNotificationTotal = this.allNotifications.length;
+        //             this.dataToShow            = this.allNotifications.slice(0, 10);
         //         }, 1000);
         //     });
 
         this.notificationService.getNotifications().then(data => {
-            this.allNotifications 		= data.filter(data => data.user == this.userId );
-            console.log(this.unreadNotificationTotal);
+            this.allNotifications 	   = data.filter(data => data.user == this.userId );
+            this.allNotificationTotal  = this.allNotifications.length;
+            this.dataToShow            = this.allNotifications.slice(0, 10);
+            console.log(this.allNotificationTotal);
         });
     }
 
-    onNotificationClick(){
-    	this.unreadNotificationTotal = 0;
+    loadLazy(event) {
+        setTimeout(() => {
+            if(this.allNotifications) {
+                this.dataToShow = this.allNotifications.slice(event.first, (event.first + event.rows));
+            }
+        }, 250);
     }
 }
