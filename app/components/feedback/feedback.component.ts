@@ -1,7 +1,7 @@
 import { Component, OnInit, EventEmitter } from '@angular/core';
 import { Router, Params, ActivatedRoute } from '@angular/router';
 import { Feedback } from '../../models/index';
-import { FeedbackService, AlertService } from '../../services/index';
+import { FeedbackService, AlertService, UserService } from '../../services/index';
 import '../../rxjs-operators';
 import { Observable } from 'rxjs/Observable';
 import { FileUploader } from 'ng2-file-upload';
@@ -18,12 +18,16 @@ export class FeedbackComponent implements OnInit {
     model: any = {};
     images: any[];
     id: string;
-    authToken: any;
+    name: any;
     isFavorite = false;
     isArchieved = false;
     change = new EventEmitter();
     public published;
-    constructor(private router: Router, private feedbackService: FeedbackService, private alertService: AlertService,private route: ActivatedRoute) {}
+    constructor(private router: Router, 
+        private feedbackService: FeedbackService, 
+        private alertService: AlertService,
+        private route: ActivatedRoute,
+        private userService: UserService) {}
 
     ngOnInit(): void {
         this.loadAllFeedback();
@@ -63,8 +67,8 @@ export class FeedbackComponent implements OnInit {
     // }
 
     add(){
-        this.authToken = JSON.parse(localStorage.getItem('authToken'));
-        this.router.navigate([this.authToken.default_development.name + '/feedback/add']);
+        this.userService.getByToken().subscribe(name => this.name = name)
+        this.router.navigate([this.name.default_development.name + '/feedback/add']);
     }
 
     archive(feedback:Feedback){

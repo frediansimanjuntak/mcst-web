@@ -19,7 +19,7 @@ export class EditPaymentComponent{
     myForm: FormGroup;
     user: User;
     development : Development;
-    authToken: any;
+    name: any;
 
     constructor(private router: Router,
     	private paymentService: PaymentService,
@@ -56,7 +56,7 @@ export class EditPaymentComponent{
     }
 
     cancel(){
-        this.authToken = JSON.parse(localStorage.getItem('authToken'));
-        this.router.navigate([this.authToken.default_development.name + '/payment' ]);
+        this.userService.getByToken().subscribe(name => this.name = name)
+        this.router.navigate([this.name.default_development.name + '/payment' ]);
     }
 }

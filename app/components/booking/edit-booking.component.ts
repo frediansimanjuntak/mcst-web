@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import { Router, Params, ActivatedRoute } from '@angular/router';
 import { Booking,Facility, Bookings } from '../../models/index';
-import { BookingService, AlertService, FacilityService } from '../../services/index';
+import { BookingService, AlertService, FacilityService, UserService } from '../../services/index';
 import '../../rxjs-operators';
 import { Observable} from 'rxjs/Observable';
 import * as moment from 'moment';
@@ -82,7 +82,7 @@ export class EditBookingComponent implements OnInit  {
     day : any;
     myForm: FormGroup;
     days : any[] = ["sunday","monday","tuesday","wednesday","thursday","friday","saturday"];
-    authToken: any;
+    name: any;
 
     constructor(
 		private router: Router,
@@ -90,7 +90,8 @@ export class EditBookingComponent implements OnInit  {
 		private facilityService: FacilityService,
 		private alertService: AlertService,
         private formbuilder: FormBuilder,
-		private route: ActivatedRoute){}
+		private route: ActivatedRoute,
+        private userService: UserService){}
 
 	ngOnInit() {
         this.myForm = this.formbuilder.group({
@@ -296,8 +297,8 @@ export class EditBookingComponent implements OnInit  {
     }
 
     cancel(){
-        this.authToken = JSON.parse(localStorage.getItem('authToken'));
-        this.router.navigate([this.authToken.default_development.name + '/booking' ]);
+        this.userService.getByToken().subscribe(name => this.name = name)
+        this.router.navigate([this.name.default_development.name + '/booking' ]);
     }
 	
 }

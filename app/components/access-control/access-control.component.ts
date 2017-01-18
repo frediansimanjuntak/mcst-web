@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { AccessControl } from '../../models/index';
-import { AccessControlService, AlertService } from '../../services/index';
+import { AccessControlService, AlertService, UserService } from '../../services/index';
 import '../../rxjs-operators';
 import { Observable} from 'rxjs/Observable';
 
@@ -16,11 +16,14 @@ export class AccessControlComponent implements OnInit {
 	accesscontrol: AccessControl;
     accesscontrols: AccessControl[] = [];
     model: any = {};
+    name : any;
     public card;
     public transponder;
-    authToken: any;
 
-    constructor(private router: Router,private accesscontrolService: AccessControlService,private alertService: AlertService) {}
+    constructor(private router: Router,
+        private accesscontrolService: AccessControlService,
+        private alertService: AlertService,
+        private userService: UserService) {}
 
     ngOnInit() {
         this.loadAllAccessControls();
@@ -57,12 +60,12 @@ export class AccessControlComponent implements OnInit {
     }
 
     add(){
-        this.authToken = JSON.parse(localStorage.getItem('authToken'));
-        this.router.navigate([this.authToken.development.name + '/access_control/add']);
+        this.userService.getByToken().subscribe(name => this.name = name)
+        this.router.navigate([this.name.development.name + '/access_control/add']);
     }
 
     edit(accesscontrol: AccessControl){
-        this.authToken = JSON.parse(localStorage.getItem('authToken'));
-        this.router.navigate([this.authToken.development.name + '/access_control/edit', accesscontrol._id]);
+        this.userService.getByToken().subscribe(name => this.name = name)
+        this.router.navigate([this.name.development.name + '/access_control/edit', accesscontrol._id]);
     }
 }

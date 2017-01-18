@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, Params, ActivatedRoute } from '@angular/router';
 import { Contract } from '../../models/index';
-import { ContractService, AlertService } from '../../services/index';
+import { ContractService, AlertService, UserService } from '../../services/index';
 import '../../rxjs-operators';
 import 'rxjs/add/operator/switchMap';
 
@@ -16,12 +16,13 @@ export class EditContractComponent  implements OnInit {
     model: any = {};
     id: string;
     loading = false;
-    authToken: any;
+    name: any;
 
     constructor(private router: Router,
     	private contractService: ContractService,
     	private alertService: AlertService,
-        private route: ActivatedRoute,) {}
+        private route: ActivatedRoute,
+        private userService: UserService) {}
 
     ngOnInit(): void {
         console.log(this.route.url);
@@ -87,12 +88,12 @@ export class EditContractComponent  implements OnInit {
 	}
 
     cancel(){
-        this.authToken = JSON.parse(localStorage.getItem('authToken'));
-        this.router.navigate([this.authToken.default_development.name + '/contract' ]);
+        this.userService.getByToken().subscribe(name => this.name = name)
+        this.router.navigate([this.name.default_development.name + '/contract' ]);
     }
 
     back(id:any){
-        this.authToken = JSON.parse(localStorage.getItem('authToken'));
-        this.router.navigate([this.authToken.default_development.name + '/contract/view', id ]);
+        this.userService.getByToken().subscribe(name => this.name = name)
+        this.router.navigate([this.name.default_development.name + '/contract/view', id ]);
     }
 }

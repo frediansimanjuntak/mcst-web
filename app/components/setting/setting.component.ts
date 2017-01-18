@@ -14,7 +14,7 @@ import { Observable} from 'rxjs/Observable';
 export class SettingComponent implements OnInit {
     user: User;
     users: User[] = [];
-    authToken: any;
+    name: any;
     model: any = {};
 
     constructor(private router: Router,private userService: UserService,private alertService: AlertService) {
@@ -31,7 +31,7 @@ export class SettingComponent implements OnInit {
     }
 
     edit(user: User){
-        this.authToken = JSON.parse(localStorage.getItem('authToken'));
-        this.router.navigate([this.authToken.default_development.name + '/setting/edit', user._id]);
+        this.userService.getByToken().subscribe(name => this.name = name)
+        this.router.navigate([this.name.default_development.name + '/setting/edit', user._id]);
     }
 }

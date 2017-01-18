@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, Params, ActivatedRoute } from '@angular/router';
 import { Incident, Incidents } from '../../models/index';
-import { IncidentService, AlertService } from '../../services/index';
+import { IncidentService, AlertService, UserService } from '../../services/index';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { FileUploader } from 'ng2-file-upload';
 import '../../rxjs-operators';
@@ -18,7 +18,7 @@ export class EditIncidentComponent implements OnInit {
     incidents: Incident[] = [];
     model: any = {};
     id: string;
-    authToken: any;
+    name: any;
     myForm: FormGroup;
     public uploader:FileUploader = new FileUploader({url:'http://localhost:3001/upload'});
     types = [
@@ -32,7 +32,8 @@ export class EditIncidentComponent implements OnInit {
     constructor(private router: Router,
     	private incidentService: IncidentService,
     	private alertService: AlertService,
-        private route: ActivatedRoute) {
+        private route: ActivatedRoute,
+        private userService: UserService) {
         // this.user = JSON.parse(localStorage.getItem('user'));
     }
 
@@ -88,7 +89,7 @@ export class EditIncidentComponent implements OnInit {
     }
 
     cancel(){
-        this.authToken = JSON.parse(localStorage.getItem('authToken'));
-        this.router.navigate([this.authToken.default_development.name + '/incident' ]);
+        this.userService.getByToken().subscribe(name => this.name = name)
+        this.router.navigate([this.name.default_development.name + '/incident' ]);
     }
 }

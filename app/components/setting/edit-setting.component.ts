@@ -14,7 +14,7 @@ import '../../rxjs-operators';
 export class EditSettingComponent {
     user: User;
     model: any = {};
-    authToken: any;
+    name: any;
     id: string;
 
     constructor(private router: Router,
@@ -84,7 +84,7 @@ export class EditSettingComponent {
     }
 
     cancel(){
-        this.authToken = JSON.parse(localStorage.getItem('authToken'));
-        this.router.navigate([this.authToken.default_development.name + '/setting' ]);
+        this.userService.getByToken().subscribe(name => this.name = name)
+        this.router.navigate([this.name.default_development.name + '/setting' ]);
     }
 }

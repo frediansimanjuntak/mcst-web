@@ -2,7 +2,7 @@ import { Component, OnInit, Input } from '@angular/core';
 import { Router, Params, ActivatedRoute } from '@angular/router';
 import { FormBuilder, FormControl, FormGroup, FormArray, Validators, ReactiveFormsModule  } from '@angular/forms';
 import { Facility,Facilities } from '../../models/index';
-import { FacilityService, AlertService } from '../../services/index';
+import { FacilityService, AlertService, UserService } from '../../services/index';
 import '../../rxjs-operators';
 import 'rxjs/add/operator/switchMap';
 
@@ -18,7 +18,7 @@ export class EditFacilityComponent  {
     id: string;
     myForm: FormGroup;
     start_time:any;
-    authToken: any;
+    name: any;
 
     days = [
         { value: 'monday', name: 'Monday' },
@@ -34,7 +34,8 @@ export class EditFacilityComponent  {
     	private facilityService: FacilityService,
     	private alertService: AlertService,
         private formbuilder: FormBuilder,
-        private route: ActivatedRoute,) {}
+        private route: ActivatedRoute,
+        private userService: UserService) {}
 
     ngOnInit(): void {
         this.myForm = this.formbuilder.group({
@@ -121,7 +122,7 @@ export class EditFacilityComponent  {
 	}
 
     cancel(){
-        this.authToken = JSON.parse(localStorage.getItem('authToken'));
-        this.router.navigate([this.authToken.default_development.name + '/facility' ]);
+        this.userService.getByToken().subscribe(name => this.name = name);
+        this.router.navigate([this.name.default_development.name + '/facility' ]);
     }
 }
