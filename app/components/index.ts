@@ -22,6 +22,7 @@ export * from './development/edit-development.component';
 export * from './dashboard.component';
 export * from './facility/facility.component';
 export * from './facility/edit-facility.component';
+export * from './feedback/feedback.component';
 export * from './header.component';
 export * from './incident/incident.component';
 export * from './incident/edit-incident.component';

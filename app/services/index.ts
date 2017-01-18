@@ -9,6 +9,7 @@ export * from './contract.service';
 export * from './contractor.service';
 export * from './development.service';
 export * from './facility.service';
+export * from './feedback.service';
 export * from './incident.service';
 export * from './newsletter.service';
 export * from './notification.service';

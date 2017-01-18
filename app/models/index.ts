@@ -6,6 +6,7 @@ export * from './contract';
 export * from './contractor';
 export * from './development';
 export * from './facility';
+export * from './feedback';
 export * from './incident';
 export * from './notification';
 export * from './payment';
