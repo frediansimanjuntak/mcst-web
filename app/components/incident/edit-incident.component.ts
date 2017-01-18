@@ -89,6 +89,6 @@ export class EditIncidentComponent implements OnInit {
 
     cancel(){
         this.authToken = JSON.parse(localStorage.getItem('authToken'));
-        this.router.navigate([this.authToken.development.name + '/incident' ]);
+        this.router.navigate([this.authToken.default_development.name + '/incident' ]);
     }
 }

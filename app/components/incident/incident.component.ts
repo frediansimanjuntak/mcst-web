@@ -86,17 +86,17 @@ export class IncidentComponent implements OnInit {
 
     view(incident: Incident){
         this.authToken = JSON.parse(localStorage.getItem('authToken'));
-        this.router.navigate([this.authToken.development.name + '/incident/view', incident._id]);
+        this.router.navigate([this.authToken.default_development.name + '/incident/view', incident._id]);
     }
 
     add(){
         this.authToken = JSON.parse(localStorage.getItem('authToken'));
-        this.router.navigate([this.authToken.development.name + '/incident/add']);
+        this.router.navigate([this.authToken.default_development.name + '/incident/add']);
     }
 
     add_project(reference_no:any){
         this.authToken = JSON.parse(localStorage.getItem('authToken'));
-        this.router.navigate([this.authToken.development.name + '/contract/add',reference_no]);
+        this.router.navigate([this.authToken.default_development.name + '/contract/add',reference_no]);
     }
 
     archive(incident:Incident){
