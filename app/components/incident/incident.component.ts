@@ -75,11 +75,8 @@ export class IncidentComponent implements OnInit {
 	private loadAllIncident() {
 		this.incidentService.getIncidents().then(incidents => {
 					this.incidents = incidents ;
-                    this.dataNew        = this.incidents.filter(incidents => incidents.status === 'new' );
-                    this.dataReviewing  = this.incidents.filter(incidents => incidents.status === 'reviewing' );
                     this.dataInProgress = this.incidents.filter(incidents => incidents.status === 'inprogress' );
                     this.dataResolved   = this.incidents.filter(incidents => incidents.status === 'resolved' );
-                    this.dataUrgent     = this.incidents.filter(incidents => incidents.status === 'urgent' );
 		});
     }
 
