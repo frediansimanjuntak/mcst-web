@@ -18,6 +18,7 @@ export class EditIncidentComponent implements OnInit {
     incidents: Incident[] = [];
     model: any = {};
     id: string;
+    authToken: any;
     myForm: FormGroup;
     public uploader:FileUploader = new FileUploader({url:'http://localhost:3001/upload'});
     types = [
@@ -84,5 +85,10 @@ export class EditIncidentComponent implements OnInit {
 
     remove(i: any){
         this.model.attachment.splice(i, 1)
+    }
+
+    cancel(){
+        this.authToken = JSON.parse(localStorage.getItem('authToken'));
+        this.router.navigate([this.authToken.development.name + '/incident' ]);
     }
 }
