@@ -24,6 +24,7 @@ export class UserComponent implements OnInit {
     }
 
     ngOnInit() {
+        this.userService.getByToken().subscribe(name => {this.name = name;})
         this.loadAllUsers();
     }
 
@@ -45,12 +46,10 @@ export class UserComponent implements OnInit {
     }
 
     add(){
-        this.userService.getByToken().subscribe(name => this.name = name)
         this.router.navigate([this.name.default_development.name + '/user/add' ]);
     }
 
     edit(user: User){
-        this.userService.getByToken().subscribe(name => this.name = name);
         this.router.navigate([this.name.default_development.name + '/user/edit', user._id ]);
     }
 }

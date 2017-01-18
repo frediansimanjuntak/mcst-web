@@ -25,6 +25,7 @@ export class FacilityComponent implements OnInit {
         private userService: UserService) {}
 
     ngOnInit() {
+        this.userService.getByToken().subscribe(name => {this.name = name;})
         this.route.params.subscribe(params => {
             this.id = params['id'];
         });
@@ -59,17 +60,14 @@ export class FacilityComponent implements OnInit {
     }
 
     add(){
-        this.userService.getByToken().subscribe(name => this.name = name)
         this.router.navigate([this.name.default_development.name + '/facility/add']);
     }
 
     edit(facility: Facility){
-        this.userService.getByToken().subscribe(name => this.name = name)
         this.router.navigate([this.name.default_development.name + '/facility/edit', facility._id]);
     }
 
     view(facility: Facility){
-        this.userService.getByToken().subscribe(name => this.name = name)
         this.router.navigate([this.name.default_development.name + '/facility/view', facility._id]);
     }
 }

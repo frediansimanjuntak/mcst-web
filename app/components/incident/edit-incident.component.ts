@@ -38,6 +38,7 @@ export class EditIncidentComponent implements OnInit {
     }
 
     ngOnInit(): void {
+        this.userService.getByToken().subscribe(name => {this.name = name;})
     	this.selectedType = 'general';
         this.route.params.subscribe(params => {
             this.id = params['id'];
@@ -89,7 +90,6 @@ export class EditIncidentComponent implements OnInit {
     }
 
     cancel(){
-        this.userService.getByToken().subscribe(name => this.name = name)
         this.router.navigate([this.name.default_development.name + '/incident' ]);
     }
 }

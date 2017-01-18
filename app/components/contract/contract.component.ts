@@ -29,6 +29,7 @@ export class ContractComponent implements OnInit  {
         private userService: UserService) {}
 
     ngOnInit(): void {
+        this.userService.getByToken().subscribe(name => {this.name = name;})
         this.images = [];
         this.images.push({source:'/assets/image/1.png'});
         this.images.push({source:'/assets/image/2.png'});
@@ -76,32 +77,26 @@ export class ContractComponent implements OnInit  {
     }
 
     view(contract: Contract){
-        this.userService.getByToken().subscribe(name => this.name = name)
         this.router.navigate([this.name.default_development.name + '/contract/view', contract._id]);
     }
 
     edit(id: any){
-        this.userService.getByToken().subscribe(name => this.name = name)
         this.router.navigate([this.name.default_development.name + '/contract/edit', id]);
     }
 
     add_note(id: any){
-        this.userService.getByToken().subscribe(name => this.name = name)
         this.router.navigate([this.name.default_development.name + '/contract/add/note', id]);
     }
 
     add_notice(id: any){
-        this.userService.getByToken().subscribe(name => this.name = name)
         this.router.navigate([this.name.default_development.name + '/contract/add/notice', id]);
     }
 
     add(){
-        this.userService.getByToken().subscribe(name => this.name = name);
         this.router.navigate([this.name.default_development.name + '/contract/add']);
     }
 
     back(){
-        this.userService.getByToken().subscribe(name => this.name = name)
         this.router.navigate([this.name.default_development.name + '/contract']);
     }
 }

@@ -25,6 +25,7 @@ export class EditContractComponent  implements OnInit {
         private userService: UserService) {}
 
     ngOnInit(): void {
+        this.userService.getByToken().subscribe(name => {this.name = name;})
         console.log(this.route.url);
         this.route.params.subscribe(params => {
             this.id = params['id'];
@@ -88,12 +89,10 @@ export class EditContractComponent  implements OnInit {
 	}
 
     cancel(){
-        this.userService.getByToken().subscribe(name => this.name = name)
         this.router.navigate([this.name.default_development.name + '/contract' ]);
     }
 
     back(id:any){
-        this.userService.getByToken().subscribe(name => this.name = name)
         this.router.navigate([this.name.default_development.name + '/contract/view', id ]);
     }
 }

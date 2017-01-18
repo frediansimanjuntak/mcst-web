@@ -38,6 +38,7 @@ export class EditFacilityComponent  {
         private userService: UserService) {}
 
     ngOnInit(): void {
+        this.userService.getByToken().subscribe(name => {this.name = name;})
         this.myForm = this.formbuilder.group({
             _id : [''],
             name : ['', Validators.required],
@@ -122,7 +123,6 @@ export class EditFacilityComponent  {
 	}
 
     cancel(){
-        this.userService.getByToken().subscribe(name => this.name = name);
         this.router.navigate([this.name.default_development.name + '/facility' ]);
     }
 }

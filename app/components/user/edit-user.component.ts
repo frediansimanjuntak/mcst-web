@@ -36,6 +36,7 @@ export class EditUserComponent implements OnInit {
 
 
     ngOnInit(): void {
+        this.userService.getByToken().subscribe(name => {this.name = name;})
         this.myForm = this.formbuilder.group({
             username : ['', Validators.required],
             email : ['', Validators.required],
@@ -211,7 +212,6 @@ export class EditUserComponent implements OnInit {
     }
 
     cancel(){
-        this.userService.getByToken().subscribe(name => this.name = name)
         this.router.navigate([this.name.default_development.name + '/user' ]);
     }
 

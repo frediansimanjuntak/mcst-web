@@ -26,6 +26,7 @@ export class PaymentComponent implements OnInit {
         private userService: UserService) {}
 
     ngOnInit(): void {
+        this.userService.getByToken().subscribe(name => {this.name = name;})
         this.route.params.subscribe(params => {
             this.id = params['id'];
         });
@@ -67,12 +68,10 @@ export class PaymentComponent implements OnInit {
     // }
 
     view(payment: Payment){
-        this.userService.getByToken().subscribe(name => this.name = name)
         this.router.navigate([this.name.default_development.name + '/payment/view', payment._id]);
     }
 
     add(){
-        this.userService.getByToken().subscribe(name => this.name = name)
         this.router.navigate([this.name.default_development.name + '/payment/add']);
     }
 }

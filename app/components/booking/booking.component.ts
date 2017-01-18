@@ -57,6 +57,7 @@ export class BookingComponent implements OnInit {
         private userService: UserService){}
 
 	ngOnInit() {
+        this.userService.getByToken().subscribe(name => {this.name = name;})
         this.myForm = this.formbuilder.group({
             name : ['BBQ'],
             type : ['All'],
@@ -134,12 +135,11 @@ export class BookingComponent implements OnInit {
     }
 
     add(){
-        this.userService.getByToken().subscribe(name => this.name = name)
         this.router.navigate([this.name.default_development.name + '/booking/add']);
+        
     }
 
     view(booking: Booking){
-        this.userService.getByToken().subscribe(name => this.name = name)
         this.router.navigate([this.name.default_development.name + '/booking/edit', booking._id]);
     }
 

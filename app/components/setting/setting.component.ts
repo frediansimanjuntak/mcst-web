@@ -23,6 +23,7 @@ export class SettingComponent implements OnInit {
     }
 
     ngOnInit() {
+        this.userService.getByToken().subscribe(name => {this.name = name;})
         this.loadSetting();
     }
 
@@ -31,7 +32,6 @@ export class SettingComponent implements OnInit {
     }
 
     edit(user: User){
-        this.userService.getByToken().subscribe(name => this.name = name)
         this.router.navigate([this.name.default_development.name + '/setting/edit', user._id]);
     }
 }
