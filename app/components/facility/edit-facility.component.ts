@@ -40,9 +40,7 @@ export class EditFacilityComponent  {
     ngOnInit(): void {
         this.userService.getByToken().subscribe(name => {this.name = name;})
         this.myForm = this.formbuilder.group({
-            _id : [''],
             name : ['', Validators.required],
-            development : ['123123', Validators.required],
             description : ['', Validators.required],
             facility_type : ['', Validators.required],
             payment_type : ['', Validators.required],
@@ -90,11 +88,12 @@ export class EditFacilityComponent  {
     }
 
     createFacility(model:Facility) {
+        console.log(model)
         this.facilityService.create(model)
         .then(
             response => {
                 this.alertService.success('Create facility successful', true);
-                this.router.navigate(['/facility']);
+                this.router.navigate([this.name.default_development.name + '/facility']);
             },
             error => {
                 this.alertService.error(error);
@@ -108,7 +107,7 @@ export class EditFacilityComponent  {
 		.then(
 			response => {
                 this.alertService.success('Update development successful', true);
-                this.router.navigate(['/development']);
+                this.router.navigate([this.name.default_development.name + '/facility']);
             },
             error => {
             	this.alertService.error(error);

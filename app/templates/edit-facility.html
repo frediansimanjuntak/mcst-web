@@ -161,8 +161,8 @@
                     <label class="control-label col-sm-4" for="facility_type">Facility type :</label>
                     <div class="col-sm-8">
                         <select class="form-control" name="facility_type" id="facility_type" formControlName="facility_type" placeholder="Choose facility type">
-                            <option value="hourly">Hourly</option>
-                            <option value="daily" selected>Daily</option>
+                            <option value="a">A</option>
+                            <option value="b" selected>B</option>
                         </select>
                         <small *ngIf="f.submitted && !myForm.controls.facility_type.valid" class="text-danger">
                             Facility type is required

@@ -59,7 +59,7 @@ const routes: Routes = [
   { path: ':name/user',     component: UserComponent, canActivate: [AuthGuard] },
   { path: ':name/user/add/',   component: EditUserComponent },
   { path: ':name/user/edit/:id',   component: EditUserComponent },
-  { path: 'dashboard',     component: DashboardComponent },
+  { path: ':name/dashboard',     component: DashboardComponent },
   { path: ':name/newsletter',   component: NewsletterComponent },
   { path: ':name/newsletter/add',   component: EditNewsletterComponent },
   { path: ':name/newsletter/edit/:id',   component: EditNewsletterComponent },

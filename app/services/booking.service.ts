@@ -22,33 +22,33 @@ export class BookingService {
     }
 
     getAll(){
-        return this.http.get(url + 'api/bookings', this.options)
+        return this.http.get(url + 'api/booking', this.options)
             .map((res:Response) => res.json())
             .catch((error:any) => Observable.throw(error.json().error || 'Server error'));
     }
 
     getById(id:string){
-        return this.http.get(url + 'api/bookings/' + id, this.options)
+        return this.http.get(url + 'api/booking/' + id, this.options)
             .map((res:Response) => res.json())
             .catch((error:any) => Observable.throw(error.json().error || 'Server error'));
     }
 
     create(body:any): Promise<Booking> {
-        return this.http.post(url +  'api/bookings', body, this.options)
+        return this.http.post(url +  'api/booking', body, this.options)
             .toPromise()
             .then(res => res.json().data)
             .catch(this.handleError);
     }
 
     update(body:Booking): Promise<Booking> {
-        return this.http.post(url + 'api/bookings/update/' + body._id,body, this.options)
+        return this.http.post(url + 'api/booking/update/' + body._id,body, this.options)
             .toPromise()
             .then(res => res.json().data)
             .catch(this.handleError);
     }
 
     delete(id: string): Promise<void> {
-        return this.http.delete(url + 'api/bookings/' + id, this.options)
+        return this.http.delete(url + 'api/booking/' + id, this.options)
           .toPromise()
           .then(() => null)
           .catch(this.handleError);

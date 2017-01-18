@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import '../rxjs-operators';
 import {SlimLoadingBarService} from 'ng2-slim-loading-bar';
+import { UserService } from '../services/index';
 import {
     Event as RouterEvent,
     NavigationStart,
@@ -53,8 +54,9 @@ import {
 export class AppComponent implements OnInit { 
 	loading: boolean = true;
   authToken : any;
+  name: any;
     constructor(
-        private slimLoadingBarService: SlimLoadingBarService,private router: Router) {
+        private slimLoadingBarService: SlimLoadingBarService,private router: Router, private userService:UserService) {
         router.events.subscribe((event: RouterEvent) => {
             this.navigationInterceptor(event);
         });
@@ -63,6 +65,7 @@ export class AppComponent implements OnInit {
 
     ngOnInit(): void {
         this.authToken = JSON.parse(localStorage.getItem('authToken'));
+        this.userService.getByToken().subscribe(name => {this.name = name;})
     }
 
     start() {
