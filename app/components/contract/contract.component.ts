@@ -20,6 +20,7 @@ export class ContractComponent implements OnInit  {
     id: string;
     public open;
     public close;
+    authToken: any;
 
     constructor(private router: Router, private contractService: ContractService, private alertService: AlertService,private route: ActivatedRoute) {}
 
@@ -71,30 +72,32 @@ export class ContractComponent implements OnInit  {
     }
 
     view(contract: Contract){
-        console.log(contract)
-        this.router.navigate(['/contract/view', contract._id]);
+        this.authToken = JSON.parse(localStorage.getItem('authToken'));
+        this.router.navigate([this.authToken.development.name + '/contract/view', contract._id]);
     }
 
     edit(id: any){
-        console.log(id)
-        this.router.navigate(['/contract/edit', id]);
+        this.authToken = JSON.parse(localStorage.getItem('authToken'));
+        this.router.navigate([this.authToken.development.name + '/contract/edit', id]);
     }
 
     add_note(id: any){
-        console.log(id)
-        this.router.navigate(['/contract/add/note', id]);
+        this.authToken = JSON.parse(localStorage.getItem('authToken'));
+        this.router.navigate([this.authToken.development.name + '/contract/add/note', id]);
     }
 
     add_notice(id: any){
-        console.log(id)
-        this.router.navigate(['/contract/add/notice', id]);
+        this.authToken = JSON.parse(localStorage.getItem('authToken'));
+        this.router.navigate([this.authToken.development.name + '/contract/add/notice', id]);
     }
 
     add(){
-        this.router.navigate(['/contract/add']);
+        this.authToken = JSON.parse(localStorage.getItem('authToken'));
+        this.router.navigate([this.authToken.development.name + '/contract/add']);
     }
 
     back(){
-        this.router.navigate(['/contract']);
+        this.authToken = JSON.parse(localStorage.getItem('authToken'));
+        this.router.navigate([this.authToken.development.name + '/contract']);
     }
 }

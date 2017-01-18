@@ -22,6 +22,7 @@ export class ContractNoticeComponent implements OnInit  {
     public open;
     public close;
     loading = false;
+    authToken: any;
 
     constructor(private router: Router, private contractService: ContractService, private alertService: AlertService,private route: ActivatedRoute) {}
 
@@ -94,5 +95,10 @@ export class ContractNoticeComponent implements OnInit  {
 
     remove(i: any){
         this.model.attachment.splice(i, 1)
+    }
+
+    cancel(id:any){
+        this.authToken = JSON.parse(localStorage.getItem('authToken'));
+        this.router.navigate([this.authToken.development.name + '/contract/view', id ]);
     }
 }
