@@ -104,8 +104,8 @@ export class EditBookingComponent implements OnInit  {
         this.step = 1;
         this.day = this.days[this.dt.getDay()];
         console.log(this.day)
-		this.facilityService.getFacilities()
-		.then(facilities => {
+		this.facilityService.getAll()
+		.subscribe(facilities => {
 			this.facilities = facilities;
             this.selectedDay = this.facilities[this._id].schedule.filter(data => data.day == this.day); 
             if (this.selectedDay.length > 0) { 
@@ -134,13 +134,13 @@ export class EditBookingComponent implements OnInit  {
         if( this.id == null) {
             this.loadAllBookings();
         }else{
-        	this.bookingService.getBooking(this.id).then(booking => {this.booking = booking;});
+        	this.bookingService.getById(this.id).subscribe(booking => {this.booking = booking;});
         }
 
     }
 
     private loadAllBookings() {
-        this.bookingService.getBookings().then(bookings => { this.bookings = bookings; });
+        this.bookingService.getAll().subscribe(bookings => { this.bookings = bookings; });
     }
 
     createBooking() {
@@ -193,7 +193,7 @@ export class EditBookingComponent implements OnInit  {
             var end   = data.end.toString() + ":00"
         } 
         this.model.facility = data.id
-        this.facilityService.getFacility(data.id)
+        this.facilityService.getById(data.id)
         .then(facility => {
             this.facility = facility;
             this.facility_name = facility.name;

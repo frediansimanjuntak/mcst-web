@@ -58,8 +58,8 @@ export class EditFacilityComponent  {
             this.id = params['id'];
         });
         if( this.id != null) {
-            this.facilityService.getFacility(this.id)
-            .then(facility => {
+            this.facilityService.getById(this.id)
+            .subscribe(facility => {
                 this.facility = facility;
                 for (let entry of this.facility.schedule) {
                     const control = <FormArray>this.myForm.controls['schedule'];
@@ -90,26 +90,20 @@ export class EditFacilityComponent  {
     }
 
     createFacility(model:Facility) {
-        console.log('model=',this.model)
-        Facilities.push(this.model);
-        console.log('facilities=',Facilities);
-        this.router.navigate(['/facility']);
-        // console.log(model)
-        // this.facilityService.create(model)
-        // .then(
-        //     response => {
-        //         this.alertService.success('Update facility successful', true);
-        //         this.router.navigate(['/facility']);
-        //     },
-        //     error => {
-        //         this.alertService.error(error);
-        //     }
-        // );
+        this.facilityService.create(model)
+        .then(
+            response => {
+                this.alertService.success('Create facility successful', true);
+                this.router.navigate(['/facility']);
+            },
+            error => {
+                this.alertService.error(error);
+            }
+        );
     }
 
 
     updateFacility(facility:Facility){
-        console.log(facility)
 		this.facilityService.update(facility)
 		.then(
 			response => {

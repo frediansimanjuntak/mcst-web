@@ -59,7 +59,7 @@ export class BookingComponent implements OnInit {
 	ngOnInit() {
         this.userService.getByToken().subscribe(name => {this.name = name;})
         this.myForm = this.formbuilder.group({
-            name : ['BBQ'],
+            name : [''],
             type : ['All'],
             status : ['All'],
             start : [0],
@@ -97,7 +97,6 @@ export class BookingComponent implements OnInit {
     }
  
     deleteBooking(booking: Booking) {
-    	console.log(booking)
         this.bookingService.delete(booking._id)
         .then(
 			response => {
@@ -118,19 +117,11 @@ export class BookingComponent implements OnInit {
         this.day     = new Date(this.dt.getTime());
         this.day     = this.convertDate(this.day);
 
-        this.bookingService.getBookings()
-        .then(bookings => {
+        this.bookingService.getAll()
+        .subscribe(bookings => {
             this.bookings = bookings;
             console.log(this.bookings[0].facility.name)
             this.selectedDay = this.bookings.filter(data => data.booking_date == this.day); 
-            // for (var i = 0; i < this.selectedDay.length; i++) {
-            //     this.selectedDay[i].facility = this.facilities.find(myObj => myObj._id ===  this.selectedDay[i].facility ).name + ' ' + this.facilities.find(myObj => myObj._id ===  this.selectedDay[i].facility ).facility_type ;
-            //     // this.selectedDay[i].facility_type = this.facilities.find(myObj => myObj._id ===  this.selectedDay[i].facility ).facility_type;
-            // }
-            // for (var i = 0; i < this.bookings.length; i++) {
-            //     this.bookings[i].facility = this.facilities.find(myObj => myObj._id ===  this.bookings[i].facility ).name + ' ' + this.facilities.find(myObj => myObj._id ===  this.bookings[i].facility ).facility_type;
-            //     // this.bookings[i].facility_type = this.facilities.find(myObj => myObj._id ===  this.bookings[i].facility ).facility_type;
-            // }
         });
     }
 
