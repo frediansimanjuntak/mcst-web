@@ -9,6 +9,7 @@ import '../../rxjs-operators';
 
 @Component({
     // moduleId: module.id,
+    selector: 'edit-user',
     templateUrl: 'app/templates/edit-user.html',
 })
 
@@ -211,7 +212,7 @@ export class EditUserComponent implements OnInit {
 
     cancel(){
         this.authToken = JSON.parse(localStorage.getItem('authToken'));
-        this.router.navigate([this.authToken.development.name + '/user' ]);
+        this.router.navigate([this.authToken.default_development.name + '/user' ]);
     }
 
     text(event: any) {
