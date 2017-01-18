@@ -73,31 +73,31 @@ export class ContractComponent implements OnInit  {
 
     view(contract: Contract){
         this.authToken = JSON.parse(localStorage.getItem('authToken'));
-        this.router.navigate([this.authToken.development.name + '/contract/view', contract._id]);
+        this.router.navigate([this.authToken.default_development.name + '/contract/view', contract._id]);
     }
 
     edit(id: any){
         this.authToken = JSON.parse(localStorage.getItem('authToken'));
-        this.router.navigate([this.authToken.development.name + '/contract/edit', id]);
+        this.router.navigate([this.authToken.default_development.name + '/contract/edit', id]);
     }
 
     add_note(id: any){
         this.authToken = JSON.parse(localStorage.getItem('authToken'));
-        this.router.navigate([this.authToken.development.name + '/contract/add/note', id]);
+        this.router.navigate([this.authToken.default_development.name + '/contract/add/note', id]);
     }
 
     add_notice(id: any){
         this.authToken = JSON.parse(localStorage.getItem('authToken'));
-        this.router.navigate([this.authToken.development.name + '/contract/add/notice', id]);
+        this.router.navigate([this.authToken.default_development.name + '/contract/add/notice', id]);
     }
 
     add(){
         this.authToken = JSON.parse(localStorage.getItem('authToken'));
-        this.router.navigate([this.authToken.development.name + '/contract/add']);
+        this.router.navigate([this.authToken.default_development.name + '/contract/add']);
     }
 
     back(){
         this.authToken = JSON.parse(localStorage.getItem('authToken'));
-        this.router.navigate([this.authToken.development.name + '/contract']);
+        this.router.navigate([this.authToken.default_development.name + '/contract']);
     }
 }

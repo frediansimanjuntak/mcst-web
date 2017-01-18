@@ -8,7 +8,7 @@ import { Observable} from 'rxjs/Observable';
 
 @Component({
   // moduleId: module.id,
-  selector: 'contract',
+  selector: 'contract-notice',
   templateUrl: 'app/templates/contract-notice.html',
 })
 
@@ -99,6 +99,6 @@ export class ContractNoticeComponent implements OnInit  {
 
     cancel(id:any){
         this.authToken = JSON.parse(localStorage.getItem('authToken'));
-        this.router.navigate([this.authToken.development.name + '/contract/view', id ]);
+        this.router.navigate([this.authToken.default_development.name + '/contract/view', id ]);
     }
 }
