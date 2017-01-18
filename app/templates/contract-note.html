@@ -56,7 +56,7 @@
                 Create a Project notice
             </div>
             <p>Home > Manage Project > {{contract.title}}Create > Create a Project notice</p>
-            <form class="form-horizontal col-md-6" name="form" (ngSubmit)="f.form.valid && createContractNote()" #f="ngForm" novalidate>
+            <form class="form-horizontal col-md-6" name="form" (ngSubmit)="f.form.valid && createContractNote(contract._id)" #f="ngForm" novalidate>
                 <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !status.valid }">
                      <label class="control-label col-sm-4" for="status">Project Status :</label>
                     <div class="col-sm-8">

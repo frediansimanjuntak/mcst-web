@@ -5,7 +5,7 @@
                 UPDATE PROJECT
             </div>
             <p>Home > Manage Project > {{contract.title}} > update </p>
-            <form class="form-horizontal col-md-6" name="form" (ngSubmit)="f.form.valid && updateContract()" #f="ngForm" novalidate>
+            <form class="form-horizontal col-md-6" name="form" (ngSubmit)="f.form.valid && updateContract(contract._id)" #f="ngForm" novalidate>
                 <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !title.valid }">
                      <label class="control-label col-sm-4" for="title">Project Title :</label>
                     <div class="col-sm-8">

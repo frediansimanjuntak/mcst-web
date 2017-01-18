@@ -68,18 +68,18 @@ export class BookingComponent implements OnInit {
         this.facilityService.getFacilities()
         .then(facilities => { 
             this.facilities = facilities;
-            this.start = facilities[0].schedule[0].start_time.slice(0,2);
-            let start = +this.start
-            this.end = facilities[0].schedule[0].end_time.slice(0,2);
-            let end = +this.end    
-            this.min =    facilities[0].schedule[0].start_time.slice(2,5);
-            for (var i = start; i < end; ++i) {
-                    this.times_start.push(i)
-            }
-            while(start < end){       
-                   start += 1;
-                   this.times_end.push(start)
-            }
+            // this.start = facilities[0].schedule[0].start_time.slice(0,2);
+            // let start = +this.start
+            // this.end = facilities[0].schedule[0].end_time.slice(0,2);
+            // let end = +this.end    
+            // this.min =    facilities[0].schedule[0].start_time.slice(2,5);
+            // for (var i = start; i < end; ++i) {
+            //         this.times_start.push(i)
+            // }
+            // while(start < end){       
+            //        start += 1;
+            //        this.times_end.push(start)
+            // }
         });
         for (var a = 0; a < 24; ++a) {
             this.period.push(a)
@@ -120,8 +120,7 @@ export class BookingComponent implements OnInit {
         this.bookingService.getAll()
         .subscribe(bookings => {
             this.bookings = bookings;
-            console.log(this.bookings[0].facility.name)
-            this.selectedDay = this.bookings.filter(data => data.booking_date == this.day); 
+            this.selectedDay = this.bookings.filter(data => data.booking_date.slice(0,10) == this.day); 
         });
     }
 

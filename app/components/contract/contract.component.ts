@@ -54,10 +54,10 @@ export class ContractComponent implements OnInit  {
               if(response) {
                 console.log(response);
                 // console.log(response.error());
-                alert(`The Newsletter could not be deleted, server Error.`);
+                alert(`The Contract could not be deleted, server Error.`);
               } else {
-                this.alertService.success('Create user successful', true);
-                alert(`Delete Newsletter successful`);
+                this.alertService.success('Create contract successful', true);
+                alert(`Delete Contarct successful`);
                 this.ngOnInit()
               }
             },

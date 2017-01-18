@@ -49,21 +49,17 @@ export class EditIncidentComponent implements OnInit {
     }
 
     createIncident() {
-        console.log('model=',this.model)
-        Incidents.push(this.model);
-        console.log('incidents=',Incidents);
-        this.router.navigate(['/incident']);
-        // this.incidentService.create(this.model)
-        // .then(
-        //     data => {
-        //         this.alertService.success('Create incident successful', true);
-        //         this.router.navigate(['/incident']);
-        //     },
-        //     error => {
-        //         console.log(error);
-        //         alert(`The incident could not be save, server Error.`);
-        //     }
-        // );
+        this.incidentService.create(this.model)
+        .then(
+            data => {
+                this.alertService.success('Create incident successful', true);
+                this.router.navigate([this.name.default_development.name + '/incident']);
+            },
+            error => {
+                console.log(error);
+                alert(`The incident could not be save, server Error.`);
+            }
+        );
     }
 
     updateIncident(){
@@ -72,7 +68,7 @@ export class EditIncidentComponent implements OnInit {
 		.then(
 			response => {
                 this.alertService.success('Update incident successful', true);
-                this.router.navigate(['/incident']);
+                this.router.navigate([this.name.default_development.name + '/incident']);
             },
             error => {
             	this.alertService.error(error);

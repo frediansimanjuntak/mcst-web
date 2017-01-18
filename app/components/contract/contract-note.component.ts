@@ -63,18 +63,17 @@ export class ContractNoteComponent implements OnInit  {
         this.router.navigate(['/contract/view', contract._id]);
     }
 
-    createContractNote() {
-        console.log(this.model)
-        // this.contractService.create(this.model)
-        // .then(
-        //     response => {
-        //         this.alertService.success('Create contract notice successful', true);
-        //         this.router.navigate(['/development']);
-        //     },
-        //     error => {
-        //         this.alertService.error(error);
-        //     }
-        // );
+    createContractNote(id:any) {
+        this.contractService.create(this.model)
+        .then(
+            response => {
+                this.alertService.success('Create contract notice successful', true);
+                this.router.navigate([this.name.development.name , 'contract/view', id]);
+            },
+            error => {
+                this.alertService.error(error);
+            }
+        );
     }
 
     onChange(event: any) {

@@ -42,21 +42,7 @@ export class EditContractComponent  implements OnInit {
         .then(
             response => {
                 this.alertService.success('Create contract successful', true);
-                this.router.navigate(['/development']);
-            },
-            error => {
-                this.alertService.error(error);
-            }
-        );
-    }
-
-    createContractNote() {
-        console.log(this.model)
-        this.contractService.create(this.model)
-        .then(
-            response => {
-                this.alertService.success('Create contract note successful', true);
-                this.router.navigate(['/development']);
+                this.router.navigate([this.name.default_development.name + '/contract' ]);
             },
             error => {
                 this.alertService.error(error);
@@ -73,14 +59,14 @@ export class EditContractComponent  implements OnInit {
         this.model.attachment.splice(i, 1)
     }
 
-    updateContract(){
+    updateContract(id:any){
         this.contract.attachment = this.model.attachment
         console.log(this.contract)
 		this.contractService.update(this.contract)
 		.then(
 			response => {
                 this.alertService.success('Update contract successful', true);
-                this.router.navigate(['/contract']);
+                this.router.navigate([this.name.default_development.name + '/contract/view', id ]);
             },
             error => {
             	this.alertService.error(error);

@@ -42,7 +42,7 @@ export class EditSettingComponent {
 		    this.userService.update(this.user)
 		    .then(response => {
                   this.alertService.success('Update User successful', true);
-                  this.router.navigate(['/user']);
+                  this.router.navigate([this.name.default_development.name + '/user']);
 	            },
               error=> {
             	    this.alertService.error(error);

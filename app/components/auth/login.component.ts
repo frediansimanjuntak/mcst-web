@@ -112,7 +112,7 @@ export class LoginComponent implements OnInit {
                 if (result === true) {
                     // login successful
                     this.appComponent.ngOnInit();
-                    this.router.navigate(['/dashboard']);
+                    this.router.navigate([this.appComponent.name.default_development.name , 'dashboard']);
                 }
                 else {
                     // login failed

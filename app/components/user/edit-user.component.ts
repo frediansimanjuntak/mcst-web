@@ -173,34 +173,29 @@ export class EditUserComponent implements OnInit {
     }
 
     createUser(model:User , isValid: boolean) {
-        this.submitted = true;
-        console.log(model)
-        Users.push(model);
-        this.router.navigate(['/user']);
-        // this.userService.create(model)
-        // .then(
-        //     data => {
-        //         this.alertService.success('Create user successful', true);
-        //         this.router.navigate(['/user']);
-        //     },
-        //     error => {
-        //         this.alertService.error(error);
-        //     }
-        // );
+        this.userService.create(model)
+        .then(
+            data => {
+                this.alertService.success('Create user successful', true);
+                this.router.navigate([this.name.default_development.name + '/user']);
+            },
+            error => {
+                this.alertService.error(error);
+            }
+        );
     }
 
     updateUser(user:User){
-        console.log(user);
-		// this.userService.update(this.user)
-		// .then(
-        //     response => {
-        //         this.alertService.success('Update User successful', true);
-        //         this.router.navigate(['/user']);
-	       //  },
-        //     error=> {
-        //     	this.alertService.error(error);
-        //     }
-        // );
+		this.userService.update(this.user)
+		.then(
+            response => {
+                this.alertService.success('Update User successful', true);
+                this.router.navigate([this.name.default_development.name + '/user']);
+	        },
+            error=> {
+            	this.alertService.error(error);
+            }
+        );
 	}
 
     number(event: any) {

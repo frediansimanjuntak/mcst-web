@@ -143,23 +143,19 @@ export class EditBookingComponent implements OnInit  {
         this.bookingService.getAll().subscribe(bookings => { this.bookings = bookings; });
     }
 
-    createBooking() {
+    createBooking() { 
         this.model.reference_no = this.model.serial_no
-        console.log(this.model);
-        Bookings.push(this.model);
-        console.log(Bookings);
-        this.router.navigate(['/booking']);
-        // this.anouncementService.create(this.model)
-        // .subscribe(
-        //     data => {
-        //         this.alertService.success('Create newsletter successful', true);
-        //         this.router.navigate(['/newsletter']);
-        //     },
-        //     error => {
-        //         console.log(error);
-        //         alert(`The Newsletter could not be save, server Error.`);
-        //     }
-        // );
+        this.bookingService.create(this.model)
+        .then(
+            data => {
+                this.alertService.success('Create booking successful', true);
+                this.router.navigate([this.name.default_development.name + '/booking']);
+            },
+            error => {
+                console.log(error);
+                alert(`The booking could not be save, server Error.`);
+            }
+        );
     }
 
     convertDate(date) {
@@ -194,9 +190,9 @@ export class EditBookingComponent implements OnInit  {
         } 
         this.model.facility = data.id
         this.facilityService.getById(data.id)
-        .then(facility => {
+        .subscribe(facility => {
             this.facility = facility;
-            this.facility_name = facility.name;
+            this.facility_name = facility.namre;
             this.facility_type = facility.facility_type;
             if(data.choice == "all" ) {
                 this.filtered = this.facility.schedule.filter(data => 

@@ -41,7 +41,7 @@ export class EditPaymentComponent implements OnInit{
         .then(
             data => {
                 this.alertService.success('Create payment successful', true);
-                this.router.navigate(['/booking']);
+                this.router.navigate([this.name.default_development.name + '/payment']);
             },
             error => {
                 console.log(error);

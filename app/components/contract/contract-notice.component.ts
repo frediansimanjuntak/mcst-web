@@ -63,34 +63,32 @@ export class ContractNoticeComponent implements OnInit  {
         this.router.navigate(['/contract/view', contract._id]);
     }
 
-    createContractNotice() {
+    createContractNotice(id:any) {
         this.model.publish = false;
-        console.log(this.model)
-        // this.contractService.create(this.model)
-        // .then(
-        //     response => {
-        //         this.alertService.success('Create contract notice successful', true);
-        //         this.router.navigate(['/development']);
-        //     },
-        //     error => {
-        //         this.alertService.error(error);
-        //     }
-        // );
+        this.contractService.create(this.model)
+        .then(
+            response => {
+                this.alertService.success('Create contract notice successful', true);
+                this.router.navigate([this.name.development.name , 'contract/view', id]);
+            },
+            error => {
+                this.alertService.error(error);
+            }
+        );
     }
 
-    publishContractNotice() {
+    publishContractNotice(id:any) {
         this.model.publish = true;
-        console.log(this.model)
-        // this.contractService.create(this.model)
-        // .then(
-        //     response => {
-        //         this.alertService.success('Create contract notice successful', true);
-        //         this.router.navigate(['/development']);
-        //     },
-        //     error => {
-        //         this.alertService.error(error);
-        //     }
-        // );
+        this.contractService.create(this.model)
+        .then(
+            response => {
+                this.alertService.success('Create contract notice successful', true);
+                this.router.navigate([this.name.development.name , 'contract/view', id]);
+            },
+            error => {
+                this.alertService.error(error);
+            }
+        );
     }
 
     onChange(event: any) {

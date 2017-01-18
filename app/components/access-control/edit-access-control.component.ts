@@ -52,7 +52,7 @@ export class EditAccessControlComponent implements OnInit {
         .then(
             response => {
                 this.alertService.success('Create access control successful', true);
-                this.router.navigate(['/access_control']);
+                this.router.navigate([this.name.development.name + '/access_control']);
             },
             error => {
                 this.alertService.error(error);
@@ -66,7 +66,7 @@ export class EditAccessControlComponent implements OnInit {
 		.then(
 			response => {
                 this.alertService.success('Update access control successful', true);
-                this.router.navigate(['/access_control']);
+                this.router.navigate([this.name.development.name + '/access_control']);
             },
             error => {
             	this.alertService.error(error);
