@@ -37,8 +37,6 @@ export class FacilityComponent implements OnInit {
     }
 
     deleteFacility(facility: Facility) {
-        console.log(facility);
-
         this.facilityService.delete(facility._id)
         .then(
 			response => {
@@ -56,7 +54,7 @@ export class FacilityComponent implements OnInit {
     }
 
     private loadAllFacilities() {
-        this.facilityService.getFacilities().then(facilities => { this.facilities = facilities; });
+        this.facilityService.getAll().subscribe(facilities => { this.facilities = facilities; });
     }
 
     add(){
