@@ -15,6 +15,7 @@ export class UserComponent implements OnInit {
     users: User[] = [];
     model: any = {};
     developmentID = "1";
+    authToken: any;
 
     constructor(private router: Router,private userService: UserService,private alertService: AlertService) {
         // this.user = JSON.parse(localStorage.getItem('user'));
@@ -22,6 +23,7 @@ export class UserComponent implements OnInit {
     }
 
     ngOnInit() {
+        this.authToken = JSON.parse(localStorage.getItem('authToken'));
         console.log(localStorage.getItem('authToken'));
         this.loadAllUsers();
     }
@@ -44,10 +46,13 @@ export class UserComponent implements OnInit {
     }
 
     add(){
-        this.router.navigate(['/user/add' , this.developmentID]);
+        this.authToken = JSON.parse(localStorage.getItem('authToken'));
+        this.router.navigate([this.authToken.development.name + '/user/add' ]);
     }
 
     edit(user: User){
-        this.router.navigate(['/user/edit', this.developmentID, user._id ]);
+
+        this.authToken = JSON.parse(localStorage.getItem('authToken'));
+        this.router.navigate([this.authToken.development.name + '/user/edit', user._id ]);
     }
 }
