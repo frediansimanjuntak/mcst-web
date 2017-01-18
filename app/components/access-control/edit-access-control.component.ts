@@ -17,6 +17,7 @@ export class EditAccessControlComponent implements OnInit {
     unit: Development;
     users: User[];
     id: string;
+    authToken: any;
 
     constructor(private router: Router,
     	private accesscontrolService: AccessControlService,
@@ -71,4 +72,9 @@ export class EditAccessControlComponent implements OnInit {
             }
         );
 	}
+
+    cancel(){
+        this.authToken = JSON.parse(localStorage.getItem('authToken'));
+        this.router.navigate([this.authToken.development.name + '/access_control' ]);
+    }
 }
