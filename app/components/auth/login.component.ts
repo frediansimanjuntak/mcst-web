@@ -9,12 +9,13 @@ import { AppComponent } from '../index';
     providers: [AuthenticationService],
     templateUrl: 'app/templates/login.html',
     styles: [`
-        .container-fluid {
-            padding: 0 !important;
+        body
+        {
             background-color: #30333e;
         }
+
         .form-signin
-        {ss
+        {
             max-width: 330px;
             padding: 15px;
             margin: 0 auto;
