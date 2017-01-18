@@ -13,6 +13,7 @@ import '../../rxjs-operators';
 export class EditSettingComponent {
     user: User;
     model: any = {};
+    authToken: any;
     id: string;
 
     constructor(private router: Router,
@@ -79,5 +80,10 @@ export class EditSettingComponent {
 
     remove1(i: any){
         this.model.back.splice(i, 1)
+    }
+
+    cancel(){
+        this.authToken = JSON.parse(localStorage.getItem('authToken'));
+        this.router.navigate([this.authToken.development.name + '/setting' ]);
     }
 }
