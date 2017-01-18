@@ -28,14 +28,14 @@
 						    
 						    <table class="tableSection table-striped">
 							    <tbody>
-							        <tr *ngFor="let u of unreadNotifications">
+							        <tr *ngFor="let u of unreadNotificationsToShow">
 										<td style="cursor: pointer"><b>{{ u.message }}</b><br>
 											   <small>{{ u.created_at | date:'medium'}}</small>
 										</td>
 									</tr>
 							    </tbody>
 							</table>
-							<a style="color: black" [routerLink]="['/notification']">See all Notifications</a>
+							<a style="color: black" [routerLink]="['/notification']">See more Notifications</a>
 						</popover-content>
 					</li>
 		        	<li>
