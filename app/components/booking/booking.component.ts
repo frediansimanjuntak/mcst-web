@@ -10,7 +10,7 @@ import * as moment from 'moment';
 
 @Component({
   // moduleId: module.id,
-  selector: 'development',
+  selector: 'booking',
   templateUrl: 'app/templates/booking.html',
   styles: [`
   	.full button span {
@@ -134,12 +134,12 @@ export class BookingComponent implements OnInit {
 
     add(){
         this.authToken = JSON.parse(localStorage.getItem('authToken'));
-        this.router.navigate([this.authToken.development.name + '/booking/add']);
+        this.router.navigate([this.authToken.default_development.name + '/booking/add']);
     }
 
     view(booking: Booking){
         this.authToken = JSON.parse(localStorage.getItem('authToken'));
-        this.router.navigate([this.authToken.development.name + '/booking/edit', booking._id]);
+        this.router.navigate([this.authToken.default_development.name + '/booking/edit', booking._id]);
     }
 
     filter(booking: any){
