@@ -1,13 +1,13 @@
 <nav class="navbar-component">
-		<div class="container">
-			<div class="navbar-header">
-      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
-        Menu<span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-      </button>		
-    </div>
-     <div class="collapse navbar-collapse" id="myNavbar">
+	<div class="container">
+		<div class="navbar-header">
+      		<button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+	        	Menu<span class="icon-bar"></span>
+	        	<span class="icon-bar"></span>
+	        	<span class="icon-bar"></span>
+      		</button>		
+    	</div>
+     	<div class="collapse navbar-collapse" id="myNavbar">
 		    <ul class="nav nav-nav nav-justified">
 		      	<li *ngFor="let menu of menus" [class.dropdown]="menu.sub" class="active" >
 		      		<a routerLinkActive="active" *ngIf="menu.link" (click)="start()" [routerLink]="menu.link" [class.dropdown-toggle]="menu.sub"
@@ -20,11 +20,11 @@
 		      		</a>
 		      		<ul *ngIf="menu.sub" class="dropdown-menu">
 			          <li>
-			          	<a *ngFor="let sub of menu.sub" [routerLink]="sub.link"><strong>{{ sub.name }}</strong></a>
+			          	<a *ngFor="let sub of menu.sub" [routerLink]="sub.link"><strong>{{ sub.name }}{{user.development}}</strong></a>
 			          </li>
 			        </ul>
 		      	</li>
 			</ul>
-	 </div>
-			 </div>
-		</nav>
+	 	</div>
+	</div>
+</nav>
