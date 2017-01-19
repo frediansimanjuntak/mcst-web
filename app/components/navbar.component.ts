@@ -11,11 +11,11 @@ import {SlimLoadingBarService, SlimLoadingBarComponent} from 'ng2-slim-loading-b
 
 export class NavbarComponent implements OnInit {
 	menus = MENUS;
-	user : any;
+	name : any;
 	constructor(private slimLoadingBarService: SlimLoadingBarService, private userService: UserService) { }
 
 	ngOnInit(){
-		this.userService.getByToken().subscribe(user => { this.user = user; console.log(user);})
+		this.userService.getByToken().subscribe(name => { this.name = name;})
 	}
 
 	start() {
