@@ -100,8 +100,11 @@ export class EditBookingComponent implements OnInit  {
         this.route.params.subscribe(params => {
             this.id = params['id'];
         });
-        this.userService.getByToken().subscribe(name => {this.name = name;})
-        this.unitService.getAll(this.name).subscribe(units => this.units = units)
+        this.userService.getByToken()
+        .subscribe(name => {
+            this.name = name;
+            this.unitService.getAll(name.default_development.name).subscribe(units => {this.units = units.properties; console.log(units.properties); console.log(this.units)})
+        })
         this.myForm = this.formbuilder.group({
             id : ['1'],
             choice : ['All'],
