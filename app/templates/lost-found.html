@@ -1,0 +1,98 @@
+<div class="container">
+	<div class="main">
+		<div class="title">
+			Manage Lost & Found
+		</div>
+		Home > Manage Lost & Found
+		<div class="row">
+			<div class="col-md-4 pull-right">
+					  		<a class="btn btn-default pull-right" [routerLink]="[name.default_development.name + '/lost_found/add']">
+					  		<i class="fa fa-plus" aria-hidden="true"></i>&nbsp;Add Report</a>
+					  		<a class="btn btn-default pull-right" >
+					  		<i class="fa fa-plus" aria-hidden="true"></i>&nbsp;View Archived</a>
+					  		
+			</div>
+		</div>
+		<div (click)="$event.preventDefault()">
+		  <tabset>
+		    <tab heading="All">
+		    	<p-dataTable [value]="all" [rows]="10" [paginator]="true">
+				    <p-column field="" header="S/N" [filter]="true" filterPlaceholder="Search S/N"></p-column>
+				    <p-column field="" header="Made by" [filter]="true" filterPlaceholder="Search User"></p-column>
+				    <p-column field="" header="Unit.no" [filter]="true" filterPlaceholder="Search User"></p-column>
+				    <p-column field="" header="Type" sortable="true"  [filter]="true" filterPlaceholder="Search Type"></p-column>
+				    <p-column field="" header="Description"></p-column>
+				    <p-column field="" header="Photo"></p-column>
+				    <p-column field="" header="Preferred method of contact"></p-column>
+				    <p-column field="" header="Reported on" sortable="true" ></p-column>
+				   <p-column styleClass="col-button">
+				    	<template let-all="rowData" class="pull-right" pTemplate="body">
+				    	<a type="button" class="btn-underline" (click)="viewLostFound(all)">View</a>
+				        <button type="button"  (click)="openModal(all) || firstModal.open()"><img class="img-btn" src="../../assets/image/icon_archived.png" /></button>
+				    	</template>
+				    </p-column>
+				</p-dataTable>
+		    </tab>
+		    <tab heading="Lost">
+		    	<p-dataTable [value]="losts" [rows]="10" [paginator]="true">
+				    <p-column field="" header="S/N" [filter]="true" filterPlaceholder="Search S/N"></p-column>
+				    <p-column field="" header="Made by" [filter]="true" filterPlaceholder="Search User"></p-column>
+				    <p-column field="" header="Unit.no" [filter]="true" filterPlaceholder="Search User"></p-column>
+				    <p-column field="" header="Type" sortable="true"  [filter]="true" filterPlaceholder="Search Type"></p-column>
+				    <p-column field="" header="Description"></p-column>
+				    <p-column field="" header="Photo"></p-column>
+				    <p-column field="" header="Preferred method of contact"></p-column>
+				    <p-column field="" header="Reported on" sortable="true" ></p-column>
+				   <p-column styleClass="col-button">
+				    	<template let-losts="rowData" class="pull-right" pTemplate="body">
+				    	<a type="button" class="btn-underline" (click)="viewLostFound(losts)">View</a>
+				       <button type="button"  (click)="openModal(losts) || firstModal.open()"><img class="img-btn" src="../../assets/image/icon_archived.png" /></button>
+				    	</template>
+				    </p-column>
+				</p-dataTable>
+		    </tab>
+		    <tab heading="Found">
+		    	<p-dataTable [value]="founds" [rows]="10" [paginator]="true">
+				    <p-column field="" header="S/N" [filter]="true" filterPlaceholder="Search S/N"></p-column>
+				    <p-column field="" header="Made by" [filter]="true" filterPlaceholder="Search User"></p-column>
+				    <p-column field="" header="Unit.no" [filter]="true" filterPlaceholder="Search User"></p-column>
+				    <p-column field="" header="Type" sortable="true"  [filter]="true" filterPlaceholder="Search Type"></p-column>
+				    <p-column field="" header="Description"></p-column>
+				    <p-column field="" header="Photo"></p-column>
+				    <p-column field="" header="Preferred method of contact"></p-column>
+				    <p-column field="" header="Reported on" sortable="true" ></p-column>
+				   <p-column styleClass="col-button">
+				    	<template let-founds="rowData" class="pull-right" pTemplate="body">
+				    	<a type="button" class="btn-underline" (click)="viewLostFound(founds)">View</a>
+				        <button type="button"  (click)="openModal(founds) || firstModal.open()"><img class="img-btn" src="../../assets/image/icon_archived.png" /></button>
+				    	</template>
+				    </p-column>
+				</p-dataTable>
+		    </tab>
+		  </tabset>
+		</div>	
+
+		<div class="row">
+		    
+		    <modal #firstModal>
+		        <modal-header>
+		            <h5>Archieve Lost/Found</h5>
+		        </modal-header>
+		        <modal-content>
+
+		           <div *ngIf="lostFound">
+		              
+		           		Archieve this Lost/Found ?	
+		              
+		                <div class="pull-right">
+		                    <button  type="button" class="btn btn-primary" (click)="archieve()">Archieve</button>
+		                    <button class="btn btn-default" (click)="firstModal.close()">Cancel</button>
+		                </div>
+		             
+		           </div>
+		        </modal-content>
+		        
+		    </modal>
+		</div>
+	</div>
+</div>

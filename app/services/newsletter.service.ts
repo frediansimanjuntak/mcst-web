@@ -21,47 +21,41 @@ export class NewsletterService {
                .then(developments => developments.find(development => development._id == id));
     }
 
-    getAll(id: string){
-        return this.http.get(url + 'api/newsletters/' + id, this.options)
+    getAll(name: string){
+        return this.http.get(url + 'api/newsletters/' + name, this.options)
             .map((res:Response) => res.json())
             .catch((error:any) => Observable.throw(error.json().error || 'Server error'));
     }
 
-    getById(id:string, id_dev:string){
-        return this.http.get( url + 'api/newsletters/' + id_dev + '/' + id, this.options)
+    getById(id:string, name:string){
+        return this.http.get( url + 'api/newsletters/' + name + '/' + id, this.options)
             .map((res:Response) => res.json())
             .catch((error:any) => Observable.throw(error.json().error || 'Server error'));
     }
 
-    // create(body:any, id_dev:string){
-    //     return this.http.post( url + 'api/newsletters/' + id_dev,body, this.options)
-    //         .map((res:Response) => res.json())
-    //         .catch((error:any) => Observable.throw(error.json().error || 'Server error'));
-    // }
-
-    create(body:any, id_dev:string): Promise<any> {
-        return this.http.post(url + 'api/newsletters/' + id_dev, JSON.stringify(body), this.options)
+    create(body:any, name:string): Promise<any> {
+        return this.http.post(url + 'api/newsletters/' + name, JSON.stringify(body), this.options)
             .toPromise()
             .then(res => res.json().data)
             .catch(this.handleError);
     }
 
-    update(body:any, id_dev:string): Promise<any> {
-        return this.http.post(url + 'api/newsletters/' + id_dev + '/update/' + body._id ,body, this.options)
+    update(body:any, name:string): Promise<any> {
+        return this.http.post(url + 'api/newsletters/' + name + '/update/' + body._id ,body, this.options)
             .toPromise()
             .then(res => res.json().data)
             .catch(this.handleError);
     }
 
-    release(id: string, id_dev: string): Promise<void> {
-        return this.http.post( url + 'api/newsletters/' + id_dev + '/release/' + id, this.options)
+    release(id: string, name: string): Promise<void> {
+        return this.http.post( url + 'api/newsletters/' + name + '/release/' + id, this.options)
             .toPromise()
             .then(res => res.json().data)
             .catch(this.handleError);
     }
 
-    delete(id: string, id_dev: string): Promise<void> {
-        return this.http.delete( url + 'api/newsletters/' + id_dev + '/' + id,  this.options)
+    delete(id: string, name: string): Promise<void> {
+        return this.http.delete( url + 'api/newsletters/' + name + '/' + id,  this.options)
           .toPromise()
           .then(() => null)
           .catch(this.handleError);
