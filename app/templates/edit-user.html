@@ -254,18 +254,13 @@
                         <div class="panel-body">
                             <div class="form-group col-xs-10">
                                 <label class="control-label" for="property">Unit No :</label>
-                                <select class="form-control" name="property" id="property" formControlName="property" placeholder="Choose property">
-                                    <div *ngIf="units">
-                                        <option *ngFor="let unit of unit" [ngValue]="unit._id">
+                                <div *ngIf="units">
+                                    <select class="form-control" name="property" id="property" formControlName="property" placeholder="Choose property">              
+                                        <option *ngFor="let unit of units" [ngValue]="unit._id">
                                             #{{unit.address.unit_no}}-{{unit.address.unit_no_2}}
                                         </option>
-                                    </div>
-                                    <div *ngIf="!units">
-                                        <option value="">
-                                            No available unit
-                                        </option>
-                                    </div>
-                                </select>
+                                    </select>
+                                </div>
                             </div>
                             <div class="form-group col-xs-10">
                                 <label>Role :</label>
@@ -285,18 +280,13 @@
                         <div class="panel-body">
                             <div class="form-group col-xs-10">
                                 <label class="control-label" for="property">Unit No :</label>
-                                <select class="form-control" name="property" id="property" formControlName="property" placeholder="Choose property">
-                                    <div *ngIf="units">
-                                        <option *ngFor="let unit of unit" [ngValue]="unit._id">
+                                <div *ngIf="units">
+                                    <select class="form-control" name="property" id="property" formControlName="property" placeholder="Choose property">              
+                                        <option *ngFor="let unit of units" [ngValue]="unit._id">
                                             #{{unit.address.unit_no}}-{{unit.address.unit_no_2}}
                                         </option>
-                                    </div>
-                                    <div *ngIf="!units">
-                                        <option value="">
-                                            No available unit 
-                                        </option>
-                                    </div>
-                                </select>
+                                    </select>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -311,18 +301,13 @@
                         <div class="panel-body" [formGroupName]="i">      
                             <div class="form-group col-xs-10">
                                 <label class="control-label" for="property">Unit No :</label>
-                                <select class="form-control" name="property" id="property" formControlName="property" placeholder="Choose property">
-                                    <div *ngIf="units">
-                                        <option *ngFor="let unit of unit" [ngValue]="unit._id">
+                                <div *ngIf="units">
+                                    <select class="form-control" name="property" id="property" formControlName="property" placeholder="Choose property">              
+                                        <option *ngFor="let unit of units" [ngValue]="unit._id">
                                             #{{unit.address.unit_no}}-{{unit.address.unit_no_2}}
                                         </option>
-                                    </div>
-                                    <div *ngIf="!units">
-                                        <option value="">
-                                            No available unit 
-                                        </option>
-                                    </div>
-                                </select>
+                                    </select>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -343,18 +328,13 @@
                             <div>   
                                 <div class="form-group col-xs-10">
                                     <label class="control-label" for="property">Unit No :</label>
-                                    <select class="form-control" name="property" id="property" formControlName="property" placeholder="Choose property">
-                                        <div *ngIf="units">
-                                            <option *ngFor="let unit of units" [ngValue]="unit._id">
-                                                #{{unit.address.unit_no}}-{{unit.address.unit_no_2}}
-                                            </option>
-                                        </div>
-                                        <div *ngIf="!units">
-                                            <option value="">
-                                                No available unit
-                                            </option>
-                                        </div>
+                                    <div *ngIf="units">
+                                    <select class="form-control" name="property" id="property" formControlName="property" placeholder="Choose property">              
+                                        <option *ngFor="let unit of units" [ngValue]="unit._id">
+                                            #{{unit.address.unit_no}}-{{unit.address.unit_no_2}}
+                                        </option>
                                     </select>
+                                </div>
                                 </div>
                             </div>    
                         </div>    
