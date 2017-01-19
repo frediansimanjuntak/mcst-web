@@ -20,7 +20,7 @@ export class EditUserComponent implements OnInit {
     model: any = {};
     id: string;
     developmentID = "585b36585d3cc41224fe518a";
-    unit: Development;
+    units: any[] = [];
     myForm: FormGroup;
     public submitted: boolean;
     name: any;
@@ -60,11 +60,7 @@ export class EditUserComponent implements OnInit {
             authorized_development: ['']
 
         });
-        let self = this;
-        this.unitService.getDevelopment("1")
-            .then(unit => {
-                self.unit = unit;
-            });
+        this.unitService.getAll(this.name).subscribe(units => this.units = units)
         this.route.params.subscribe(params => {
             this.id = params['id'];
         });
