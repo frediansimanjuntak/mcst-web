@@ -1,5 +1,79 @@
 <div class="container">
     <div class="main">
+        <!-- Edit Announcment -->
+        <div *ngIf="unit">
+            <div class="title">
+                Edit Unit
+            </div>
+            <p>Home > Manage Unit > Edit</p>
+            <form class="form-horizontal col-md-6" (ngSubmit)="f.form.valid && updateUnit()" name="form" #f="ngForm" novalidate>
+                <div class="form-group" [ngClass]="{ 'has-error': !unit_no.valid }">
+                    <label class="control-label col-sm-4" for="unit_no">Unit no :</label>
+                    <div class="col-sm-8">
+                        <input type="text" class="form-control" name="unit_no" [(ngModel)]="unit.address.unit_no" #unit_no="ngModel" required />
+                        <span *ngIf= " !unit_no.valid" class="help-block">Unit no is required</span>
+                    </div>
+                </div>
+                <div class="form-group" [ngClass]="{ 'has-error': !unit_no_2.valid }">
+                    <label class="control-label col-sm-4" for="unit_no_2">Unit no 2 :</label>
+                    <div class="col-sm-8">
+                        <input type="text" class="form-control" name="unit_no_2" [(ngModel)]="unit.address.unit_no_2" #unit_no_2="ngModel" required />
+                        <span *ngIf= " !unit_no_2.valid" class="help-block">Unit no 2 is required</span>
+                    </div>
+                </div>
+                <div class="form-group" [ngClass]="{ 'has-error': !block_no.valid }">
+                    <label class="control-label col-sm-4" for="block_no">Block no :</label>
+                    <div class="col-sm-8">
+                        <input type="text" class="form-control" name="block_no" [(ngModel)]="unit.address.block_no" #block_no="ngModel" required />
+                        <span *ngIf= " !block_no.valid" class="help-block">Block no is required</span>
+                    </div>
+                </div>
+                <div class="form-group" [ngClass]="{ 'has-error': !street_name.valid }">
+                    <label class="control-label col-sm-4" for="street_name">Street name :</label>
+                    <div class="col-sm-8">
+                        <input type="text" class="form-control" name="street_name" [(ngModel)]="unit.address.street_name" #street_name="ngModel" required placeholder="Input street_name here"/>
+                        <span *ngIf= " !street_name.valid" class="help-block">Street Name is required</span>
+                    </div>
+                </div>
+                <div class="form-group" [ngClass]="{ 'has-error': !postal_code.valid }">
+                    <label class="control-label col-sm-4" for="postal_code">Postal code :</label>
+                    <div class="col-sm-8">
+                        <input type="text" class="form-control" name="postal_code" [(ngModel)]="unit.address.postal_code" #postal_code="ngModel" required placeholder="Input postal_code here"/>
+                        <span *ngIf= " !postal_code.valid" class="help-block">Postal code is required</span>
+                    </div>
+                </div>
+                <div class="form-group" [ngClass]="{ 'has-error': !country.valid }">
+                    <label class="control-label col-sm-4" for="country">Country :</label>
+                    <div class="col-sm-8">
+                        <input type="text" name=""> type="text" class="form-control" name="country" [(ngModel)]="unit.address.country" #country="ngModel" required placeholder="Input country here"/>
+                        <span *ngIf= " !country.valid" class="help-block">Country is required</span>
+                    </div>
+                </div>
+                <div class="form-group" [ngClass]="{ 'has-error': !full_address.valid }">
+                    <label class="control-label col-sm-4" for="full_address">Full address :</label>
+                    <div class="col-sm-8">
+                        <textarea type="text" class="form-control" name="full_address" [(ngModel)]="unit.address.full_address" #full_address="ngModel" required placeholder="Input full address here"></textarea>
+                        <span *ngIf= " !full_address.valid" class="help-block">Full address is required</span>
+                    </div>
+                </div>
+
+                <div class="form-group" >
+                    <label class="control-label col-sm-4" for="sticky">Make Sticky :</label>
+                    <div class="col-sm-8">
+                        <select class="form-control" name="sticky" [(ngModel)]="unit.status">
+                          <option [selected]="unit.status==false" value="no">No</option>
+                          <option [selected]="unit.status==true" value="yes">Yes</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group pull-right">
+                    <button [disabled]="loading" class="btn btn-primary">Save</button>
+                    <img *ngIf="loading" src="data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA==" />
+                    <a (click)="toAnnouncement()" class="btn btn-info">Cancel</a>
+                </div>
+            </form>     
+        </div>
+
             <!-- CREATE UNIT -->
             <div *ngIf="!unit">
                 <div class="title">
@@ -85,10 +159,8 @@
                             </div>
                         </div>
                         
-                        
-
                         <button type="submit" class="btn btn-primary">Submit</button>
-                        <a [routerLink]="[name.default_development.name + '/unit']" class="btn btn-info">Cancel</a>
+                        <a (click)="goToUnit()" class="btn btn-info">Cancel</a>
 
                     </form>
                 </div>
