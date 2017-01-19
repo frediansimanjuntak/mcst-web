@@ -67,6 +67,11 @@
 						    <p-column field="reference_no" header="Report No." sortable="true" [filter]="true" filterPlaceholder="Search Report No."></p-column>
 						    <p-column field="incident_type" header="Type" sortable="true" [filter]="true" filterPlaceholder="Search Type"></p-column>
 						    <p-column field="created_by" header="Reported by" sortable="true" [filter]="true" filterPlaceholder="Search Reported by"></p-column>
+						    <p-column field="" header="Unit No." sortable="true" [filter]="true" filterPlaceholder="Search unit no">
+						    	<template let-data="rowData" pTemplate="body">
+						    		{{data.property.address.unit_no}}-{{data.property.address.unit_no_2}}
+						    	</template>
+						    </p-column>
 						    <p-column field="created_at" header="Report time" sortable="true" [filter]="true" filterPlaceholder="Search Report time"></p-column>
 						    <p-column field="title" header="Title" sortable="true" [filter]="true" filterPlaceholder="Search Title"></p-column>
 						    <p-column field="remark" header="Message" sortable="true" [filter]="true" filterPlaceholder="Search Message"></p-column>
@@ -98,6 +103,11 @@
 						   <p-column field="reference_no" header="Report No." sortable="true" [filter]="true" filterPlaceholder="Search Report No."></p-column>
 						    <p-column field="incident_type" header="Type" sortable="true" [filter]="true" filterPlaceholder="Search Type"></p-column>
 						    <p-column field="created_by" header="Reported by" sortable="true" [filter]="true" filterPlaceholder="Search Reported by"></p-column>
+						    <p-column field="" header="Unit No." sortable="true" [filter]="true" filterPlaceholder="Search unit no">
+						    	<template let-data="rowData" pTemplate="body">
+						    		{{data.property.address.unit_no}}-{{data.property.address.unit_no_2}}
+						    	</template>
+						    </p-column>
 						    <p-column field="created_at" header="Report time" sortable="true" [filter]="true" filterPlaceholder="Search Report time"></p-column>
 						    <p-column field="title" header="Title" sortable="true" [filter]="true" filterPlaceholder="Search Title"></p-column>
 						    <p-column field="remark" header="Message" sortable="true" [filter]="true" filterPlaceholder="Search Message"></p-column>
@@ -130,6 +140,11 @@
 						    <<p-column field="reference_no" header="Report No." sortable="true" [filter]="true" filterPlaceholder="Search Report No."></p-column>
 						    <p-column field="incident_type" header="Type" sortable="true" [filter]="true" filterPlaceholder="Search Type"></p-column>
 						    <p-column field="created_by" header="Reported by" sortable="true" [filter]="true" filterPlaceholder="Search Reported by"></p-column>
+						    <p-column field="" header="Unit No." sortable="true" [filter]="true" filterPlaceholder="Search unit no">
+						    	<template let-data="rowData" pTemplate="body">
+						    		{{data.property.address.unit_no}}-{{data.property.address.unit_no_2}}
+						    	</template>
+						    </p-column>
 						    <p-column field="created_at" header="Report time" sortable="true" [filter]="true" filterPlaceholder="Search Report time"></p-column>
 						    <p-column field="title" header="Title" sortable="true" [filter]="true" filterPlaceholder="Search Title"></p-column>
 						    <p-column field="remark" header="Message" sortable="true" [filter]="true" filterPlaceholder="Search Message"></p-column>
@@ -161,6 +176,11 @@
 						    <p-column field="reference_no" header="Report No." sortable="true" [filter]="true" filterPlaceholder="Search Report No."></p-column>
 						    <p-column field="incident_type" header="Type" sortable="true" [filter]="true" filterPlaceholder="Search Type"></p-column>
 						    <p-column field="created_by" header="Reported by" sortable="true" [filter]="true" filterPlaceholder="Search Reported by"></p-column>
+						    <p-column field="" header="Unit No." sortable="true" [filter]="true" filterPlaceholder="Search unit no">
+						    	<template let-data="rowData" pTemplate="body">
+						    		{{data.property.unit_no}}-{{data.property.unit_no_2}}
+						    	</template>
+						    </p-column>
 						    <p-column field="created_at" header="Report time" sortable="true" [filter]="true" filterPlaceholder="Search Report time"></p-column>
 						    <p-column field="title" header="Title" sortable="true" [filter]="true" filterPlaceholder="Search Title"></p-column>
 						    <p-column field="remark" header="Message" sortable="true" [filter]="true" filterPlaceholder="Search Message"></p-column>
