@@ -21,6 +21,7 @@ export class FeedbackComponent implements OnInit {
     id: string;
     name: any;
     feedback_reply: any;
+    archived: any;
     isArchieved = false;
     change = new EventEmitter();
     public published;
@@ -59,8 +60,8 @@ export class FeedbackComponent implements OnInit {
 
 	private loadAllFeedback() {
 		this.feedbackService.getFeedbacks().then(feedbacks => {
-					this.feedbacks = feedbacks ;
-                    this.published     = this.feedbacks.filter(feedbacks => feedbacks.status === 'published' );
+			this.feedbacks     = feedbacks.filter(feedbacks => feedbacks.archive == false );
+            this.published     = feedbacks.filter(feedbacks => feedbacks.status === 'published' && feedbacks.archive == false );
 		});
     }
 
@@ -82,6 +83,21 @@ export class FeedbackComponent implements OnInit {
         //         this.alertService.error(error);
         //     }
         // );
+    }
+
+    viewArchived(){
+        this.feedbackService.getFeedbacks().then(feedbacks => {
+            this.feedbacks = feedbacks ;
+            this.archived  = this.feedbacks.filter(feedbacks => feedbacks.archive == true );
+        });
+    }
+
+    viewUnarchived(){
+        this.feedbackService.getFeedbacks().then(feedbacks => {
+            this.feedbacks     = feedbacks.filter(feedbacks => feedbacks.archive == false );
+            this.published     = feedbacks.filter(feedbacks => feedbacks.status === 'published' && feedbacks.archive == false );
+        });       
+        this.archived = '';
     }
 
     archive(feedback:Feedback){

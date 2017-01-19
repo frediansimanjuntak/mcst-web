@@ -74,7 +74,7 @@ export var Feedbacks: any[] = [
     },
     feedback_type : 'Lost & Found',
     feedback_privacy : 'General',
-    archive : false,
+    archive : true,
     remark : 'oh yeah oh yeah',
     status : 'unpublish',
     created_by : {
