@@ -61,11 +61,7 @@ export class EditUnitComponent implements OnInit {
                     country : ['', <any>Validators.required],
                     full_address : ['', <any>Validators.required]
                 }),
-                landlord: [''],
-                tenant: this.formbuilder.array([]),
-                registered_vehicle: this.formbuilder.array([]),
                 status: ['', <any>Validators.required],
-                created_by: ['master']
         });
 
         this.route.params.subscribe(params => {
@@ -74,10 +70,9 @@ export class EditUnitComponent implements OnInit {
 
         if( this.id != null) {
             this.unitservice
-                .getDevelopments()
-                   .then(development => {
-                       this.units = development[0].properties
-                       this.unit = this.units.find(unit => unit._id === this.id);
+                .getById(this.id, this.name.default_development.name)
+                   .subscribe(unit => {
+                       this.unit = unit.propeties;
                     });
         }
     }
@@ -104,17 +99,12 @@ export class EditUnitComponent implements OnInit {
         this.submitted = true;
         
         if(isValid){
-            // model.landlord = this.selectedLanlord.id;
-            // Developments[0].properties.push(model);
-            // this.router.navigate(['/unit']);    
-            // console.log(model);
-
-
+            console.log(model);
             this.unitservice.create(model, this.name.default_development.name)
             .then(
                 data => {
                     this.alertService.success('Create Unit successful', true);
-                    this.router.navigate(['/unit']);
+                    this.router.navigate([this.name.default_development.name + '/unit']);
                 },
                 error => {
                     console.log(error);
@@ -134,19 +124,23 @@ export class EditUnitComponent implements OnInit {
 
     updateUnit(){
          console.log(this.unit);
-        // this.unitservice.update(model)
-        // .then(
-        //     response => {
-        //         this.alertService.success('Update development successful', true);
-        //         this.router.navigate(['/development']);
-        //     },
-        //     error => {
-        //         this.alertService.error(error);
-        //     }
-        // );
+        this.unitservice.update(this.unit, this.name.default_development.name)
+        .then(
+            response => {
+                this.alertService.success('Update unit successful', true);
+                this.router.navigate([this.name.default_development.name + '/unit']);
+            },
+            error => {
+                this.alertService.error(error);
+            }
+        );
     }
 
     goBack(): void {
         this.location.back();
+    }
+
+    goToUnit(){
+        this.router.navigate([this.name.default_development.name + '/unit']);  
     }
 }
