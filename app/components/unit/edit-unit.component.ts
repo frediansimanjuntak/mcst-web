@@ -50,6 +50,7 @@ export class EditUnitComponent implements OnInit {
     ngOnInit() {
         this.userService.getByToken().subscribe(name => {this.name = name;})
         this.getUsers();
+        this.submitted = false;
         this.myForm = this.formbuilder.group({
                 address: this.formbuilder.group({
                     unit_no : ['',  <any>Validators.required],
@@ -64,7 +65,7 @@ export class EditUnitComponent implements OnInit {
                 tenant: this.formbuilder.array([]),
                 registered_vehicle: this.formbuilder.array([]),
                 status: ['', <any>Validators.required],
-                created_by: ['583e4e9dd97c97149884fef5']
+                created_by: ['master']
         });
 
         this.route.params.subscribe(params => {
@@ -102,7 +103,7 @@ export class EditUnitComponent implements OnInit {
     createUnit(model: any, isValid: boolean) {
         this.submitted = true;
         
-        if(isValid && this.selectedLanlord){
+        if(isValid){
             // model.landlord = this.selectedLanlord.id;
             // Developments[0].properties.push(model);
             // this.router.navigate(['/unit']);    

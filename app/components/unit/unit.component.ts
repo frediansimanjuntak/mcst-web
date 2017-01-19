@@ -58,24 +58,14 @@ export class UnitComponent implements OnInit {
     }
 
     private loadAllUnits(): void {
-      this.unitservice.getDevelopments().then(development => {
-
-      this.dataUnit = development[0].properties
-        for (var i = 0; i < this.dataUnit.length; i++) {
-            this.dataUnit[i].owner = this.users.find(myObj => myObj._id ===  this.dataUnit[i].landlord ).username;
-        }
-      });
-
-        // this.unitservice.getAll(this.name.default_development.name)
-        //     .subscribe((data)=> {
-        //         setTimeout(()=> {
-        //             this.dataUnit       = this.data;
-        //             for (var i = 0; i < this.dataUnit.length; i++) {
-        //               this.dataUnit[i].owner = this.users.find(myObj => myObj._id ===  this.dataUnit[i].landlord ).username;
-        //              }
-        //             console.log(this.dataUnit);
-        //         }, 1000);
-        //     });
+      
+        this.unitservice.getAll(this.name.default_development.name)
+            .subscribe((data)=> {
+                setTimeout(()=> {
+                    this.dataUnit = this.data.properties;
+                    console.log(this.dataUnit);
+                }, 1000);
+            });
     }
 
     getUsers(): void {
