@@ -75,6 +75,7 @@ export class EditBookingComponent implements OnInit  {
     filtered: any;
     facility_name : any;
     facility_type: any;
+    booking_status: any
     id: string;
     ref_no: string;
     _id: number = 0;
@@ -131,6 +132,22 @@ export class EditBookingComponent implements OnInit  {
             		}
             }
 		});
+        let booking_date;
+        booking_date     = new Date(this.dt.getTime());
+        booking_date     = this.convertDate1(booking_date);
+        this.bookingService.getAll()
+        .subscribe(bookings => {
+            this.bookings = bookings.filter(data => 
+                data.booking_date == booking_date && 
+                data.start_time == this.times_end &&
+                data.end_time == this.times_start )
+            console.log(this.bookings)
+            if(this.bookings != null) {
+                this.booking_status = "Not Available"
+            }else{
+                this.booking_status = "Available"
+            }
+        })
         for (var a = 0; a < 24; ++a) {
             this.period.push(a)
         }

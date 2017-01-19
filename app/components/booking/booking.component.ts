@@ -122,6 +122,7 @@ export class BookingComponent implements OnInit {
             this.bookings = bookings;
             this.selectedDay = this.bookings.filter(data => data.booking_date.slice(0,10) == this.day); 
             console.log(this.selectedDay);
+            console.log(this.bookings);
         });
     }
 

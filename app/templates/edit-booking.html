@@ -105,7 +105,7 @@
 						        <tr *ngFor="let tstart of times_start; let i=index ; let tend of times_end">
 									<td>{{times_start[i]}}{{min}} - {{times_end[i]}}{{min}}</td>
 									<td>BBQ Pit A</td>
-									<td>available</td>
+									<td>{{this.booking_status}}</td>
 									<p-checkbox name="archive" (click)="archieveSelected(times_start[i],times_end[i],min,'BBQ pit','A')" [(ngModel)]="selectedValues"></p-checkbox>
 								</tr>
 						    </tbody>
@@ -117,7 +117,9 @@
 						        <tr *ngFor="let a of timeStart; let i=index ; let b of timeEnd">
 									<td>{{timeStart[i]}}{{min}} - {{timeEnd[i]}}{{min}}</td>
 									<td>{{facility_name}} {{facility_type}}</td>
-									<td><!-- {{filtered.status}} -->Available</td>
+									<td>
+										{{this.booking_status}}
+									</td>
 									<p-checkbox name="archive" (click)="archieveSelected(timeStart[i],timeEnd[i],min,facility_name,facility_type)" [(ngModel)]="selectedValues"></p-checkbox>
 								</tr>
 						    </tbody>
@@ -202,7 +204,7 @@
 						    <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !property.valid }">
 						        <label class="control-label col-sm-4" for="property">Unit no :</label>
 						        <div class="col-sm-8">	
-						        	<select class="form-control" [(ngModel)]="model.property" name="property" id="property" formControlName="property" placeholder="Choose property">
+						        	<select class="form-control" [(ngModel)]="model.property" name="property" id="property"placeholder="Choose property">
 						        		<div *ngIf="units">
 	                                        <option *ngFor="let unit of units" [ngValue]="unit._id">
 	                                            #{{unit.address.unit_no}}-{{unit.address.unit_no_2}}
