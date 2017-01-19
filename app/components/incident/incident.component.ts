@@ -26,10 +26,8 @@ export class IncidentComponent implements OnInit {
     change = new EventEmitter();
     public data;
     public dataNew;
-    public dataReviewing;
     public dataInProgress;
     public dataResolved;
-    public dataUrgent;
 
     constructor(private router: Router, 
         private incidentService: IncidentService, 
@@ -82,6 +80,7 @@ export class IncidentComponent implements OnInit {
 					this.incidents = incidents ;
                     this.dataInProgress = this.incidents.filter(incidents => incidents.status === 'inprogress' );
                     this.dataResolved   = this.incidents.filter(incidents => incidents.status === 'resolved' );
+                    console.log(this.incidents)
 		});
     }
 

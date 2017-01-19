@@ -105,7 +105,11 @@
 						        <tr *ngFor="let tstart of times_start; let i=index ; let tend of times_end">
 									<td>{{times_start[i]}}{{min}} - {{times_end[i]}}{{min}}</td>
 									<td>BBQ Pit A</td>
-									<td>available</td>
+									<td>
+										{{booking_status}}
+										<!-- <span *ngIf="bookings.start_time == timeStart[i]">available</span> -->
+										<!-- <span *ngIf="bookings.start_time != timeStart[i]">not available</span> -->
+									</td>
 									<p-checkbox name="archive" (click)="archieveSelected(times_start[i],times_end[i],min,'BBQ pit','A')" [(ngModel)]="selectedValues"></p-checkbox>
 								</tr>
 						    </tbody>
@@ -117,7 +121,11 @@
 						        <tr *ngFor="let a of timeStart; let i=index ; let b of timeEnd">
 									<td>{{timeStart[i]}}{{min}} - {{timeEnd[i]}}{{min}}</td>
 									<td>{{facility_name}} {{facility_type}}</td>
-									<td><!-- {{filtered.status}} -->Available</td>
+									<td>
+										{{booking_status}}
+										<!-- <span *ngIf="bookings.start_time == timeStart[i]">available</span> -->
+										<!-- <span *ngIf="bookings.start_time != timeStart[i]">not available</span> -->
+									</td>
 									<p-checkbox name="archive" (click)="archieveSelected(timeStart[i],timeEnd[i],min,facility_name,facility_type)" [(ngModel)]="selectedValues"></p-checkbox>
 								</tr>
 						    </tbody>
@@ -201,9 +209,14 @@
 						    </div>
 						    <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !property.valid }">
 						        <label class="control-label col-sm-4" for="property">Unit no :</label>
-						        <div class="col-sm-8">
-						            <input type="text" class="form-control" name="property" [(ngModel)]="model.property" #property="ngModel" required placeholder="Input property here"/>
-						            <span *ngIf="f.submitted && !property.valid" class="help-block">Property is required</span>
+						        <div class="col-sm-8">	
+						        	<div *ngIf="units">
+						        		<select class="form-control" [(ngModel)]="model.property" #property="ngModel" name="property" id="property"placeholder="Choose property">	
+	                                        <option *ngFor="let unit of units" [ngValue]="unit._id">
+	                                            #{{unit.address.unit_no}}-{{unit.address.unit_no_2}}
+	                                        </option>
+	                                	</select>
+	                                </div>
 						        </div>
 						    </div>
 						    <div class="form-group">

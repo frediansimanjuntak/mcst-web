@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import { Router, Params, ActivatedRoute } from '@angular/router';
-import { Booking,Facility, Bookings } from '../../models/index';
-import { BookingService, AlertService, FacilityService, UserService } from '../../services/index';
+import { Booking, Facility, Bookings } from '../../models/index';
+import { BookingService, AlertService, FacilityService, UserService, UnitService } from '../../services/index';
 import '../../rxjs-operators';
 import { Observable} from 'rxjs/Observable';
 import * as moment from 'moment';
@@ -57,6 +57,7 @@ export class EditBookingComponent implements OnInit  {
     bookings: Booking[] = [];
     facilities: Facility[] = [];
     facility: Facility;
+    units: any[] = [];
     facility_id: any;
     model: any = {};
     start : any;
@@ -74,6 +75,7 @@ export class EditBookingComponent implements OnInit  {
     filtered: any;
     facility_name : any;
     facility_type: any;
+    booking_status: any
     id: string;
     ref_no: string;
     _id: number = 0;
@@ -91,10 +93,18 @@ export class EditBookingComponent implements OnInit  {
 		private alertService: AlertService,
         private formbuilder: FormBuilder,
 		private route: ActivatedRoute,
-        private userService: UserService){}
+        private userService: UserService,
+        private unitService: UnitService){}
 
 	ngOnInit() {
-        this.userService.getByToken().subscribe(name => {this.name = name;})
+        this.route.params.subscribe(params => {
+            this.id = params['id'];
+        });
+        this.userService.getByToken()
+        .subscribe(name => {
+            this.name = name;
+            this.unitService.getAll(name.default_development.name).subscribe(units => {this.units = units.properties; console.log(units.properties); console.log(this.units)})
+        })
         this.myForm = this.formbuilder.group({
             id : ['1'],
             choice : ['All'],
@@ -125,12 +135,25 @@ export class EditBookingComponent implements OnInit  {
             		}
             }
 		});
+        let booking_date;
+        booking_date     = new Date(this.dt.getTime());
+        booking_date     = this.convertDate1(booking_date);
+        this.bookingService.getAll()
+        .subscribe(bookings => {
+            this.bookings = bookings.filter(data => 
+                data.booking_date == booking_date && 
+                data.start_time == this.times_end &&
+                data.end_time == this.times_start )
+            console.log(this.bookings)
+            if(this.bookings != null) {
+                this.booking_status = "Not Available"
+            }else{
+                this.booking_status = "Available"
+            }
+        })
         for (var a = 0; a < 24; ++a) {
             this.period.push(a)
         }
-		this.route.params.subscribe(params => {
-            this.id = params['id'];
-        });
         if( this.id == null) {
             this.loadAllBookings();
         }else{
@@ -152,6 +175,7 @@ export class EditBookingComponent implements OnInit  {
             console.log(this.filtered._id)
         })
         this.model.reference_no = this.model.serial_no
+        console.log(this.model)
         this.bookingService.create(this.model)
         .then(
             data => {

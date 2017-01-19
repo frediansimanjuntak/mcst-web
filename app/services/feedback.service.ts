@@ -22,27 +22,27 @@ export class FeedbackService {
     }
 
     getAll(){
-        return this.http.get( url + 'api/feedbacks', this.options)
+        return this.http.get( url + 'api/feedback', this.options)
             .map((res:Response) => res.json())
             .catch((error:any) => Observable.throw(error.json().error || 'Server error'));
     }
 
     getById(id:string){
-        return this.http.get( url + 'api/feedbacks' + id, this.options)
+        return this.http.get( url + 'api/feedback' + id, this.options)
             .map((res:Response) => res.json())
             .catch((error:any) => Observable.throw(error.json().error || 'Server error'));
     }
 
     create(body:any): Promise<Feedback> {
         console.log(body);
-        return this.http.post(url +  'api/feedbacks', JSON.stringify(body), this.options)
+        return this.http.post(url +  'api/feedback', JSON.stringify(body), this.options)
             .toPromise()
             .then(res => res.json().data)
             .catch(this.handleError);
     }
 
-    update(body:Feedback): Promise<Feedback> {
-        return this.http.post(url + 'api/feedbacks/update/' + body._id,body, this.options)
+    reply(body:Feedback): Promise<Feedback> {
+        return this.http.post(url + 'api/feedback/reply/' + body._id,body, this.options)
             .toPromise()
             .then(res => res.json().data)
             .catch(this.handleError);
@@ -56,21 +56,21 @@ export class FeedbackService {
     }
 
     archieve(id: string): Promise<Feedback> {
-        return this.http.post(url + 'api/feedbacks/achieve/' + id, this.options)
+        return this.http.post(url + 'api/feedback/achieve/' + id, this.options)
             .toPromise()
             .then(res => res.json().data)
             .catch(this.handleError);
     }
 
     publish(id: string): Promise<Feedback> {
-        return this.http.post(url + 'api/feedbacks/publish/' + id, this.options)
+        return this.http.post(url + 'api/feedback/publish/' + id, this.options)
             .toPromise()
             .then(res => res.json().data)
             .catch(this.handleError);
     }
 
     unarchieve(id: string): Promise<Feedback> {
-        return this.http.put(url + 'api/feedbacks/achieve/' + id, this.options)
+        return this.http.put(url + 'api/feedback/achieve/' + id, this.options)
             .toPromise()
             .then(res => res.json().data)
             .catch(this.handleError);
