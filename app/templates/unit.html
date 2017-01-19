@@ -11,7 +11,7 @@
 							
 						</div>
 						<div class="col-md-4">
-					  		<button class="btn btn-default pull-right" [routerLink]="[name.default_development.name + '/unit/add']" ><img class="img-btn" src="../../assets/image/icon_addresident.png" />&nbsp;Add Resident</button>
+					  		<button class="btn btn-default pull-right" (click)="add()"><img class="img-btn" src="../../assets/image/icon_addresident.png" />&nbsp;Add Resident</button>
 					  		
 						</div>			
 				</div>
@@ -37,7 +37,7 @@
 				    </p-column>
 					<p-column [style]="{'width':'300px'}" styleClass="col-button" header="action">
 					    <template class="pull-right" let-dataUnit="rowData" pTemplate="body">
-					    	<a type="button" class="btn-underline" (click)="viewUnit(dataUnit)">View unit details</a>
+					    	<a type="button" class="btn-underline" (click)="view(dataUnit)">View unit details</a>
 					    	
 					    </template>
 					</p-column>

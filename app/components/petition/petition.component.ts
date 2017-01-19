@@ -128,6 +128,10 @@ export class PetitionComponent implements OnInit {
         this.ngOnInit();
     }
 
+    add(){
+      this.router.navigate([this.name.default_development.name + '/petition/add']);  
+    }
+
     clearSelected(){
         this.selectedValues = [];
         this.checkSelected();

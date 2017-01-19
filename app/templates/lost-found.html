@@ -50,7 +50,7 @@
 			Home > Manage Lost & Found
 			<div class="row">
 				<div class="col-md-4 pull-right">
-						  		<a class="btn btn-default pull-right" [routerLink]="[name.default_development.name + '/lost_found/add']">
+						  		<a class="btn btn-default pull-right" (click)="add()">
 						  		<i class="fa fa-plus" aria-hidden="true"></i>&nbsp;Add Report</a>
 						  		<a class="btn btn-default pull-right" (click)="viewArchieved()">
 						  		<i class="fa fa-plus" aria-hidden="true"></i>&nbsp;View Archived</a>
@@ -124,7 +124,7 @@
 			Home > Manage Lost & Found > Archieved
 			<div class="row">
 				<div class="col-md-4 pull-right">
-						  		<a class="btn btn-default pull-right" [routerLink]="[name.default_development.name + '/lost_found/add']">
+						  		<a class="btn btn-default pull-right" (click)="add()">
 						  		<i class="fa fa-plus" aria-hidden="true"></i>&nbsp;Add Report</a>
 						  		<a class="btn btn-default pull-right" (click)="viewArchieved()">
 						  		<i class="fa fa-plus" aria-hidden="true"></i>&nbsp;View Archived</a>

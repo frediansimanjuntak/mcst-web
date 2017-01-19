@@ -60,31 +60,24 @@ export class EditNewsletterComponent  {
     createNewsletter() {
 
         if(this.model.released == true){
-            this.model.released_by = '583e4e9dd97c97149884fef5';
             this.model.released_at =  Date.now();
         } else {
-            this.model.released_by = null;
-            this.model.released_at = null;
+            this.model.released_by = '';
+            this.model.released_at = '';
         }
-        this.model.created_by = '583e4e9dd97c97149884fef5';
-
-        // this.model.pinned.rank = 0;
         console.log(this.model);
-        Developments[0].newsletter.push(this.model);
-        
-        // this.newsletterService.create(this.model, this.name.default_development.name)
-        // .subscribe(
-        //     data => {
-        //         this.alertService.success('Create newsletter successful', true);
-        //         this.router.navigate([this.name.default_development.name,'/newsletter']);
-        //     },
-        //     error => {
-        //         console.log(error);
-        //         alert(`The Newsletter could not be save, server Error.`);
-        //     }
-        // );
-
-        this.router.navigate([this.name.default_development.name + '/newsletter']);
+       
+        this.newsletterService.create(this.model, this.name.default_development.name)
+        .then(
+            data => {
+                this.alertService.success('Create newsletter successful', true);
+                this.router.navigate([this.name.default_development.name,'/newsletter']);
+            },
+            error => {
+                console.log(error);
+                alert(`The Newsletter could not be save, server Error.`);
+            }
+        );
     }
 
     updateNewsletter(){
@@ -112,5 +105,9 @@ export class EditNewsletterComponent  {
 
     remove(i: any){
         this.model.attachment.splice(i, 1)
+    }
+
+    goToNewsletters(){
+        this.router.navigate([this.name.default_development.name + '/newsletter']);  
     }
 }

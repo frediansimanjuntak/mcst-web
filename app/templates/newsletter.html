@@ -6,7 +6,7 @@
 		Home > EGM/AGM & Circular
 		<div class="row">
 			<div class="col-md-4 pull-right">
-					  		<a class="btn btn-default pull-right" [routerLink]="[name.default_development.name + '/newsletter/add']">
+					  		<a class="btn btn-default pull-right" (click)="add()">
 					  		<i class="fa fa-plus" aria-hidden="true"></i>&nbsp;Upload EGM/AGM or Circular</a>
 					  		
 			</div>
@@ -23,7 +23,7 @@
 				            <span [style.color]="data[col.field]">{{data[col.field]}}</span>
 				        </template>
 				    </p-column>
-				    <p-column field="created_by" header="Uploaded by" sortable="true" [filter]="true" filterPlaceholder="Search Uploaded by"></p-column>
+				    <p-column field="created_by.username" header="Uploaded by" sortable="true" [filter]="true" filterPlaceholder="Search Created by"></p-column>
 				     <p-column field="attachment" header="Attachment" sortable="true" [filter]="true" filterPlaceholder="Search Attachment"></p-column>
 				    <!-- </p-column> -->
 				    <p-column styleClass="col-button">
@@ -44,7 +44,7 @@
 				            <span [style.color]="data[col.field]">{{data[col.field]}}</span>
 				        </template>
 				    </p-column>
-				    <p-column field="created_by" header="Uploaded by" sortable="true" [filter]="true" filterPlaceholder="Search Uploaded by"></p-column>
+				    <p-column field="created_by.username" header="Uploaded by" sortable="true" [filter]="true" filterPlaceholder="Search Created by"></p-column>
 				     <p-column field="attachment" header="Attachment" sortable="true" [filter]="true" filterPlaceholder="Search Attachment"></p-column>
 				    <!-- </p-column> -->
 				    <p-column styleClass="col-button">
@@ -65,7 +65,7 @@
 				            <span [style.color]="data[col.field]">{{data[col.field]}}</span>
 				        </template>
 				    </p-column>
-				    <p-column field="uploaded_by" header="Uploaded by" sortable="true" [filter]="true" filterPlaceholder="Search Uploaded by"></p-column>
+				    <p-column field="created_by.username" header="Uploaded by" sortable="true" [filter]="true" filterPlaceholder="Search created by by"></p-column>
 				     <p-column field="attachment" header="Attachment" sortable="true" [filter]="true" filterPlaceholder="Search Attachment"></p-column>
 				    <!-- </p-column> -->
 				    <p-column styleClass="col-button">

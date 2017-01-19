@@ -158,17 +158,9 @@ export class AnnouncementComponent implements OnInit {
         });
     }
 
-    public tabs:Array<any> = [
-        {title: 'Dynamic Title 1', content: ''},
-        {title: 'Dynamic Title 2', content: 'Dynamic content 2', disabled: true},
-        {title: 'Dynamic Title 3', content: 'Dynamic content 3', removable: true},
-        {title: 'Dynamic Title 4', content: 'Dynamic content 4', customClass: 'customClass'}
-    ];
-
-    public setActiveTab(index:number):void {
-        this.tabs[index].active = true;
-    };
-
+    add(){
+        this.router.navigate([this.name.development.name + '/announcement/add']);  
+    }
 
     editAnnouncement(anouncement: Announcement){
         this.router.navigate([this.name.default_development.name + '/announcement/edit', anouncement._id]);

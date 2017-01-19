@@ -126,4 +126,7 @@ export class CompanyComponent implements OnInit {
         this.router.navigate(['/company/edit', company._id]);
     }
 
+    add(){
+       this.router.navigate(['/company/add']);   
+    }
 }
