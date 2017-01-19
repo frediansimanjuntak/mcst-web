@@ -1,7 +1,7 @@
 import { Component, OnInit, ViewContainerRef, ViewEncapsulation } from '@angular/core';
 import { Router, Params, ActivatedRoute } from '@angular/router';
 import { Petition } from '../../models/index';
-import { PetitionService, AlertService} from '../../services/index';
+import { PetitionService, AlertService, UserService} from '../../services/index';
 import '../../rxjs-operators';
 import { NG_TABLE_DIRECTIVES }    from 'ng2-table/ng2-table'
 import { Observable} from 'rxjs/Observable';
@@ -37,16 +37,19 @@ export class PetitionComponent implements OnInit {
     public rowsOnPage = 10;
     public sortBy = "email";
     public sortOrder = "asc";
+    name: any;
+
     constructor(
                 private router: Router,
                 private petitionService: PetitionService,
                 private alertService: AlertService,
                 private route: ActivatedRoute,
-                private location: Location
+                private location: Location,
+                private userService: UserService
                 ) {}
 
     ngOnInit(): void {
-		this.developmentId = '585b36585d3cc41224fe518a';
+        this.userService.getByToken().subscribe(name => {this.name = name;})
         this.route.params.subscribe(params => {
             this.id = params['id'];
         });
@@ -97,16 +100,16 @@ export class PetitionComponent implements OnInit {
         // });
 
         this.petitionService.getPetitions().then(data => {
-            this.petitions         = data.filter(data => data.archived === false );
+            this.petitions         = data.filter(data => data.archived === false && data.development === this.name.default_development.name );
 		});
     }
 
     viewPetition(petition: Petition){
-        this.router.navigate(['/petition/view', petition._id]);
+        this.router.navigate([this.name.default_development.name + '/petition/view', petition._id]);
     }
 
     editPetition(petition: Petition){
-        this.router.navigate(['/petition/edit', petition._id]);
+        this.router.navigate([this.name.default_development.name + '/petition/edit', petition._id]);
     }
 
     checkSelected(){

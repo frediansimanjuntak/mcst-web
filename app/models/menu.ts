@@ -46,7 +46,7 @@ export const MENUS: any[] = [
   		{ name : 'Manage Announcement', link: '/announcement' },
   		{ name : 'E-voting', link: '' },
   		{ name : 'Manage Feedbacks', link: '/feedback' },
-  		{ name : 'Lost & Found', link: '' },
+  		{ name : 'Lost & Found', link: '/lost_found' },
   	]
   },
   { 

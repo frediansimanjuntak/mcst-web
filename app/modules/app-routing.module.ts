@@ -50,7 +50,8 @@ import {
   EditAnnouncementComponent,
   PetitionComponent,
   EditPetitionComponent,
-  TestComponent
+  TestComponent,
+  LostFoundComponent,
 } from '../components/index';
 const routes: Routes = [
   { path: '', redirectTo: '/login', pathMatch: 'full' },
@@ -112,6 +113,8 @@ const routes: Routes = [
   { path: ':name/:name/contractor/edit/:id', component: EditContractorComponent },
   { path: ':name/contractor/add',   component: EditContractorComponent },
   { path: ':name/notification', component: NotificationComponent },
+  { path: ':name/lost_found', component: LostFoundComponent },
+  { path: ':name/lost_found/view/:id', component: LostFoundComponent },
 
   // { path: 'petition/edit/:id',   component: EditAnnouncementComponent },
   // { path: 'form',     component: HeroFormComponent },

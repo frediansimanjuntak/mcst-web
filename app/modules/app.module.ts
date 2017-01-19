@@ -77,6 +77,7 @@ import {
   TestComponent,
   Galleria,
   NotificationComponent,
+  LostFoundComponent
 } from '../components/index';
 
 import {
@@ -103,6 +104,7 @@ import {
   UserGroupService,
   UnitService,
   VisitService,
+  LostFoundService,
   TestService,
 } from '../services/index';
 
@@ -190,6 +192,7 @@ import {
     TestComponent,
     Galleria,
     NotificationComponent,
+    LostFoundComponent,
     
   ],
   providers: [ 
@@ -217,6 +220,7 @@ import {
     UnitService,
     UserGroupService,
     VisitService,
+    LostFoundService,
     TestService,
   ],
   bootstrap:    [ AppComponent ],

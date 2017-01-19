@@ -35,6 +35,7 @@ export class AnnouncementComponent implements OnInit {
     valid_tillStatus: string;
     stickyStatus: string;
     name: any;
+    
     constructor(
                 private router: Router,
                 private announcementService: AnnouncementService,
@@ -59,7 +60,6 @@ export class AnnouncementComponent implements OnInit {
             selectionTxtFontSize: '16px'
         };
 
-        this.developmentId = this.name.default_development.name;
         this.loadAllAnnouncements();
     }
 

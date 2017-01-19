@@ -1,7 +1,7 @@
 import { Component, OnInit, ViewContainerRef, ViewEncapsulation, ViewChild } from '@angular/core';
 import { Router, Params, ActivatedRoute } from '@angular/router';
 import { Visit, Visits } from '../../models/index';
-import { VisitService, AlertService} from '../../services/index';
+import { VisitService, AlertService, UserService} from '../../services/index';
 import '../../rxjs-operators';
 import { NG_TABLE_DIRECTIVES }    from 'ng2-table/ng2-table'
 import { Observable} from 'rxjs/Observable';
@@ -43,6 +43,7 @@ export class VisitComponent implements OnInit {
     public addSubmitted: boolean;
     public checkInSsubmitted: boolean;
     public checkOutSsubmitted: boolean;
+    name: any;
 
     constructor(
                 private router: Router,
@@ -50,7 +51,8 @@ export class VisitComponent implements OnInit {
                 private alertService: AlertService,
                 private route: ActivatedRoute,
                 private location: Location,
-                private formbuilder: FormBuilder
+                private formbuilder: FormBuilder,
+                 private userService: UserService
                 ) {
      this.visitDateCreate = new Date();
      this.activeDate = this.activeDateFull = new Date();
@@ -60,7 +62,7 @@ export class VisitComponent implements OnInit {
     	this.addSubmitted = false;
     	this.checkInSsubmitted = false;
         this.checkOutSsubmitted = false;
-		this.developmentId = '585b36585d3cc41224fe518a';
+		this.userService.getByToken().subscribe(name => {this.name = name;})
 
         if(typeof this.visitDateCreate !== "string"){
             this.visitDateCreate = this.convertDate(this.visitDateCreate);
@@ -173,19 +175,18 @@ export class VisitComponent implements OnInit {
             this.visitOut.checkout_by = "123n1kj2b31kb31b23k21j";
             this.checkOutModal.close();
 
-                this.visitService.checkOut(model._id)
-                .then(
-                    data => {
-                        this.alertService.success('Add guest successful', true);
-                        this.router.navigate(['/unit']);
-                        this.checkInSsubmitted = false;
-                    },
-                    error => {
-                        console.log(error);
-                        alert(`Guest register could not be save, server Error.`);
-                        this.checkInSsubmitted = false;
-                    }
-                );
+                // this.visitService.checkOut(this.visitOut._id)
+                // .then(
+                //     data => {
+                //         this.checkOutModal.close();
+                //         this.alertService.success('Check out guest successful', true);
+                //     },
+                //     error => {
+                //         console.log(error);
+                //         this.checkOutModal.close();
+                //         alert(`Check out could not be save, server Error.`);
+                //     }
+                // );
         }
     }
 
@@ -199,19 +200,18 @@ export class VisitComponent implements OnInit {
             this.visit.checkin_by = "123n1kj2b31kb31b23k21j";
             this.checkInModal.close();
 
-                this.visitService.create(model._id)
-                .then(
-                    data => {
-                        this.alertService.success('Add guest successful', true);
-                        this.router.navigate(['/unit']);
-                        this.checkInSsubmitted = false;
-                    },
-                    error => {
-                        console.log(error);
-                        alert(`Guest register could not be save, server Error.`);
-                        this.checkInSsubmitted = false;
-                    }
-                );
+                // this.visitService.checkIn(this.visit._id)
+                // .then(
+                //     data => {
+                //         this.checkInModal.close();
+                //         this.alertService.success('Check in guest successful', true);
+                //     },
+                //     error => {
+                //         console.log(error);
+                //         this.checkInModal.close();
+                //         alert(`Check in could not be save, server Error.`);
+                //     }
+                // );
         }
 
     }
@@ -233,30 +233,35 @@ export class VisitComponent implements OnInit {
             this.firstModal.close();
             console.log(model);
             this.ngOnInit();
+
             // this.visitService.create(model)
-            // .subscribe(
+            // .then(
             //     data => {
             //         this.alertService.success('Add guest successful', true);
-            //         this.router.navigate(['/unit']);
+            //         this.firstModal.close();
+            //         this.ngOnInit();
             //     },
             //     error => {
             //         console.log(error);
+            //         this.firstModal.close();
             //         alert(`Guest register could not be save, server Error.`);
             //     }
             // );
+
             this.addSubmitted = false;
         }
     }
 
 	private loadVisits() {
         //---------------------------Call To Api-------------- //
-        // this.announcementService.getAll()
+        // this.visitService.getAll()
         //     .subscribe((data)=> {
         //         setTimeout(()=> {
-        //             this.data          = data.find(data => data._id === this.developmentId );
-        //             this.dataAgm       = this.data.newsletter.filter(data => data.type === 'agm' );
-        //             this.dataCircular  = this.data.newsletter.filter(data => data.type === 'circular' );
-        //             console.log(this.dataAgm);
+        //             this.visits            = data.filter(data => data.development == this.name.default_development.name);
+        //             this.visitActive       = data.filter(data => data.visit_date.slice(0, 10)  == this.activeDate );
+        //             for (var i = 0; i < this.visitActive.length; i++) {
+        //             this.visitActive[i].i = i+1;
+        //     }
         //         }, 1000);
         //     });
 

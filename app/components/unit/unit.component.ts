@@ -21,7 +21,8 @@ export class UnitComponent implements OnInit {
     public developmentId;
     public data;
     public dataUnit;
-    
+    name: any;
+
     constructor(private router: Router,
                 private unitservice: UnitService, 
                 private alertService: AlertService,
@@ -29,7 +30,7 @@ export class UnitComponent implements OnInit {
     }
 
     ngOnInit(): void {
-        this.developmentId = '585b36585d3cc41224fe518a';
+        this.userService.getByToken().subscribe(name => {this.name = name;})
         this.getUsers();
         this.loadAllUnits();
     }
@@ -65,16 +66,16 @@ export class UnitComponent implements OnInit {
         }
       });
 
-        // this.unitservice.getDevelopments()
+        // this.unitservice.getAll(this.name.default_development.name)
         //     .subscribe((data)=> {
         //         setTimeout(()=> {
-        //             this.data          =   data.find(data => data._id === "1" );
-        //             this.dataUnit       = this.data.properties;
+        //             this.dataUnit       = this.data;
+        //             for (var i = 0; i < this.dataUnit.length; i++) {
+        //               this.dataUnit[i].owner = this.users.find(myObj => myObj._id ===  this.dataUnit[i].landlord ).username;
+        //              }
         //             console.log(this.dataUnit);
         //         }, 1000);
         //     });
-             // .then(development => this.development.dataUnit = development.properties);
-             // console.log(this.development);
     }
 
     getUsers(): void {
@@ -84,6 +85,6 @@ export class UnitComponent implements OnInit {
     }
 
     viewUnit(unit: any){
-        this.router.navigate(['/unit/view', unit._id]);
+        this.router.navigate([this.name.default_development.name + '/unit/view', unit._id]);
     }
 }

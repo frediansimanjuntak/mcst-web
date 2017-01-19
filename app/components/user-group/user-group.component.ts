@@ -27,6 +27,7 @@ export class UserGroupComponent implements OnInit {
     public rowsOnPage = 10;
     public sortBy = "email";
     public sortOrder = "asc";
+    name: any;
 
     constructor(
                 private router: Router,
@@ -36,7 +37,7 @@ export class UserGroupComponent implements OnInit {
     }
 
     ngOnInit(): void {
-        this.developmentId = '585b36585d3cc41224fe518a';
+        this.userService.getByToken().subscribe(name => {this.name = name;})
         this.loadAllUserGroup();
         this.getUsers();
 
@@ -79,10 +80,10 @@ export class UserGroupComponent implements OnInit {
     }
 
     add(){
-        this.router.navigate(['/user_group/add']);
+        this.router.navigate([this.name.default_development.name + '/user_group/add']);
     }
 
     editUserGroup(usergroup: UserGroup){
-        this.router.navigate(['/user_group/edit', usergroup._id]);
+        this.router.navigate([this.name.default_development.name + '/user_group/edit', usergroup._id]);
     }
 }
