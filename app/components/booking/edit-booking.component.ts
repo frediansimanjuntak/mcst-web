@@ -144,6 +144,13 @@ export class EditBookingComponent implements OnInit  {
     }
 
     createBooking() { 
+        this.facilityService.getAll()
+        .subscribe(facilities => {
+            this.facilities = facilities;
+            this.filtered = this.facilities.filter(data => data.name >= this.model.name );
+            this.model.facility = this.filtered._id;
+            console.log(this.filtered._id)
+        })
         this.model.reference_no = this.model.serial_no
         this.bookingService.create(this.model)
         .then(

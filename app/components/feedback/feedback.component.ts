@@ -20,7 +20,7 @@ export class FeedbackComponent implements OnInit {
     images: any[];
     id: string;
     name: any;
-    isFavorite = false;
+    feedback_reply: any;
     isArchieved = false;
     change = new EventEmitter();
     public published;
@@ -64,9 +64,11 @@ export class FeedbackComponent implements OnInit {
 		});
     }
 
-    // edit(incident: Incident){
-    //     this.router.navigate(['/incident/edit', incident._id]);
-    // }
+    openModal(feedback){
+        this.feedback = feedback;
+        this.feedback_reply = feedback.feedback_reply;    
+        console.log(this.feedback);
+    }
 
     reply(){
         this.router.navigate([this.name.default_development.name + '/feedback/add']);
