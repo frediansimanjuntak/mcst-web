@@ -32,6 +32,7 @@ export * from './auth/auth.guard';
 export * from './navbar.component';
 export * from './galleria.component';
 export * from './domhandler.component';
+export * from './lost-found/lost-found.component';
 export * from './newsletter/newsletter.component';
 export * from './newsletter/edit-newsletter.component';
 export * from './notification.component';

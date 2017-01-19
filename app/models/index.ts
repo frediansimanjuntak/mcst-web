@@ -1,4 +1,5 @@
 export * from './access-control';
+export * from './announcement';
 export * from './attachment';
 export * from './booking';
 export * from './company';
@@ -8,6 +9,7 @@ export * from './development';
 export * from './facility';
 export * from './feedback';
 export * from './incident';
+export * from './lost-found';
 export * from './notification';
 export * from './payment';
 export * from './petition';
@@ -16,4 +18,3 @@ export * from './quotation';
 export * from './user';
 export * from './user-group';
 export * from './visit';
-export * from './announcement';
