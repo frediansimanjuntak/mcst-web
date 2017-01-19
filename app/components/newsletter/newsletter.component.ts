@@ -32,16 +32,21 @@ export class NewsletterComponent implements OnInit {
     public sortOrder = "asc";
     name: any;
 
-    constructor(private newsletterservice: NewsletterService, 
+    constructor(
+                private router: Router,
+                private newsletterservice: NewsletterService, 
                 private alertService: AlertService,
-                 private userService: UserService) {
+                private userService: UserService) {
     }
 
           
     ngOnInit(): void {
-        this.userService.getByToken().subscribe(name => {this.name = name;})
+        this.userService.getByToken()
+          .subscribe(name => {
+            this.name = name;
+            this.loadAllNewsletters();
+          })
         this.getUsers();
-        this.loadAllNewsletters();
     }
 
     public toInt(num: string) {
@@ -76,8 +81,6 @@ export class NewsletterComponent implements OnInit {
     releaseNewsletter(newsletter: any){
 
       this.newsletter.released = true;
-      this.firstModal.close();
-      this.ngOnInit();
       this.newsletterservice.release(newsletter._id, this.name.default_development.name)
           .then(
             response => {
@@ -101,45 +104,16 @@ export class NewsletterComponent implements OnInit {
     }
 
     private loadAllNewsletters() {
-        this.newsletterservice.getDevelopments().then(development => {
+        this.newsletterservice.getAll(this.name.default_development.name)
+            .subscribe((data)=> {
+                setTimeout(()=> {
+                  this.data = data.newsletter;
+                  this.dataAgm       = this.data.filter(data => data.type === 'agm' );
+                  this.dataEgm       = this.data.filter(data => data.type === 'egm' );
+                  this.dataCircular  = this.data.filter(data => data.type === 'circular' );
 
-          this.data = development[0].newsletter;
-          this.dataAgm       = this.data.filter(data => data.type === 'agm' );
-          this.dataEgm       = this.data.filter(data => data.type === 'egm' );
-          this.dataCircular  = this.data.filter(data => data.type === 'circular' );
-
-            for (var i = 0; i < this.dataAgm.length; i++) {
-                this.dataAgm[i].created_by = this.users.find(myObj => myObj._id ===  this.dataAgm[i].created_by ).username;
-            }
-            for (var i = 0; i < this.dataEgm.length; i++) {
-                this.dataEgm[i].created_by = this.users.find(myObj => myObj._id ===  this.dataEgm[i].created_by ).username;
-            }
-            for (var i = 0; i < this.dataCircular.length; i++) {
-                this.dataCircular[i].created_by = this.users.find(myObj => myObj._id ===  this.dataCircular[i].created_by ).username;
-            }
-
-          });
-
-        // this.newsletterservice.getAll(this.name.default_development.name)
-        //     .subscribe((data)=> {
-        //         setTimeout(()=> {
-        //           this.data = data.newsletter;
-        //           this.dataAgm       = this.data.filter(data => data.type === 'agm' );
-        //           this.dataEgm       = this.data.filter(data => data.type === 'egm' );
-        //           this.dataCircular  = this.data.filter(data => data.type === 'circular' );
-
-        //             for (var i = 0; i < this.dataAgm.length; i++) {
-        //                 this.dataAgm[i].created_by = this.users.find(myObj => myObj._id ===  this.dataAgm[i].created_by ).username;
-        //             }
-        //             for (var i = 0; i < this.dataEgm.length; i++) {
-        //                 this.dataEgm[i].created_by = this.users.find(myObj => myObj._id ===  this.dataEgm[i].created_by ).username;
-        //             }
-        //             for (var i = 0; i < this.dataCircular.length; i++) {
-        //                 this.dataCircular[i].created_by = this.users.find(myObj => myObj._id ===  this.dataCircular[i].created_by ).username;
-        //             }
-
-        //         }, 1000);
-        //     });
+                }, 1000);
+            });
     }
 
     openModal(newsletter){
@@ -157,6 +131,10 @@ export class NewsletterComponent implements OnInit {
         //            this.users = data;
         //         }, 1000);
         //     });
+    }
+
+    add(){
+      this.router.navigate([this.name.default_development.name + '/newsletter/add']);  
     }
 
 }
