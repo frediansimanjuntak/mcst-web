@@ -56,7 +56,7 @@
                                 <small style="color: red" [hidden]="myForm.controls.address.controls.full_address.valid || (myForm.controls.address.controls.full_address.pristine && !submitted)">Full address No is required</small>
                             </div>
                         </div>
-                         <div class="form-group" [ngClass]="{ 'has-error': submitted && !selectedLanlord }">
+                         <!-- <div class="form-group" [ngClass]="{ 'has-error': submitted && !selectedLanlord }">
                             <label class="control-label col-sm-4" for="chief">Owner :</label>
                             <div class="col-sm-8">
                                 <div style="width: 300px; margin-bottom: 20px;">
@@ -72,7 +72,7 @@
                                     <span *ngIf="submitted && !selectedLanlord" class="help-block">Owner is required</span>
                                 </div>
                             </div>
-                        </div>
+                        </div> -->
                         <div class="form-group" [ngClass]="{ 'has-error': submitted && !myForm.controls.status.valid }">
                             <label class="control-label col-sm-4" for="status">Status</label>
                             <div class="col-sm-8">

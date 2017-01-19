@@ -29,7 +29,7 @@ export class EditUnitComponent implements OnInit {
     myForm: FormGroup;
     public submitted: boolean; // keep track on whether form is submitted
     public events: any[] = []; // use later to display form changes
-
+     name: any;
     status = [
         { value: 'tenanted', name: 'Tenanted' },
         { value: 'own_stay', name: 'Own Stay' }
@@ -48,8 +48,9 @@ export class EditUnitComponent implements OnInit {
     }
 
     ngOnInit() {
-        this.developmentId = '585b36585d3cc41224fe518a';
+        this.userService.getByToken().subscribe(name => {this.name = name;})
         this.getUsers();
+        this.submitted = false;
         this.myForm = this.formbuilder.group({
                 address: this.formbuilder.group({
                     unit_no : ['',  <any>Validators.required],
@@ -64,7 +65,7 @@ export class EditUnitComponent implements OnInit {
                 tenant: this.formbuilder.array([]),
                 registered_vehicle: this.formbuilder.array([]),
                 status: ['', <any>Validators.required],
-                created_by: ['583e4e9dd97c97149884fef5']
+                created_by: ['master']
         });
 
         this.route.params.subscribe(params => {
@@ -102,12 +103,14 @@ export class EditUnitComponent implements OnInit {
     createUnit(model: any, isValid: boolean) {
         this.submitted = true;
         
-        if(isValid && this.selectedLanlord){
-            model.landlord = this.selectedLanlord.id;
-            Developments[0].properties.push(model);
-            this.router.navigate(['/unit']);    
-            console.log(model);
-            this.unitservice.create(model, this.developmentId)
+        if(isValid){
+            // model.landlord = this.selectedLanlord.id;
+            // Developments[0].properties.push(model);
+            // this.router.navigate(['/unit']);    
+            // console.log(model);
+
+
+            this.unitservice.create(model, this.name.default_development.name)
             .then(
                 data => {
                     this.alertService.success('Create Unit successful', true);
