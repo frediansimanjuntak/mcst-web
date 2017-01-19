@@ -70,8 +70,18 @@ export class FeedbackComponent implements OnInit {
         console.log(this.feedback);
     }
 
-    reply(){
-        this.router.navigate([this.name.default_development.name + '/feedback/add']);
+    replyFeedback(){
+        console.log(this.feedback)
+        // this.feedbackService.reply(this.feedback)
+        // .then(
+        //     response => {
+        //         this.alertService.success('Update User successful', true);
+        //         this.router.navigate([this.name.default_development.name + '/user']);
+        //     },
+        //     error=> {
+        //         this.alertService.error(error);
+        //     }
+        // );
     }
 
     archive(feedback:Feedback){

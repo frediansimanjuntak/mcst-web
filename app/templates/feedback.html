@@ -81,7 +81,7 @@
 		        </modal-header>
 		        <modal-content>
 		        	<div *ngIf="feedback">
-		        		<form class="form-horizontal" name="form" (ngSubmit)="f.form.valid && updateDevelopment()" #f="ngForm" novalidate>
+		        		<form class="form-horizontal" name="form" (ngSubmit)="f.form.valid && replyFeedback()" #f="ngForm" novalidate>
 			                <div [ngClass]="{ 'has-error': f.submitted && !feedback_reply.valid }">
 			                	<label class="control-label" for="feedback_reply">Reply :</label>
                                 <textarea style="width: 550px" type="text" name="feedback_reply" [(ngModel)]="feedback.feedback_reply" #feedback_reply="ngModel" required placeholder="Input feedback reply here" ></textarea>
