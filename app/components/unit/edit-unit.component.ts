@@ -29,7 +29,7 @@ export class EditUnitComponent implements OnInit {
     myForm: FormGroup;
     public submitted: boolean; // keep track on whether form is submitted
     public events: any[] = []; // use later to display form changes
-
+     name: any;
     status = [
         { value: 'tenanted', name: 'Tenanted' },
         { value: 'own_stay', name: 'Own Stay' }
@@ -48,7 +48,7 @@ export class EditUnitComponent implements OnInit {
     }
 
     ngOnInit() {
-        this.developmentId = '585b36585d3cc41224fe518a';
+        this.userService.getByToken().subscribe(name => {this.name = name;})
         this.getUsers();
         this.myForm = this.formbuilder.group({
                 address: this.formbuilder.group({
@@ -103,11 +103,13 @@ export class EditUnitComponent implements OnInit {
         this.submitted = true;
         
         if(isValid && this.selectedLanlord){
-            model.landlord = this.selectedLanlord.id;
-            Developments[0].properties.push(model);
-            this.router.navigate(['/unit']);    
-            console.log(model);
-            this.unitservice.create(model, this.developmentId)
+            // model.landlord = this.selectedLanlord.id;
+            // Developments[0].properties.push(model);
+            // this.router.navigate(['/unit']);    
+            // console.log(model);
+
+
+            this.unitservice.create(model, this.name.default_development.name)
             .then(
                 data => {
                     this.alertService.success('Create Unit successful', true);
