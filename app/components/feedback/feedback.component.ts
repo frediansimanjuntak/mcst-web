@@ -1,4 +1,4 @@
-import { Component, OnInit, EventEmitter } from '@angular/core';
+import { Component, OnInit, EventEmitter, ViewChild } from '@angular/core';
 import { Router, Params, ActivatedRoute } from '@angular/router';
 import { Feedback } from '../../models/index';
 import { FeedbackService, AlertService, UserService } from '../../services/index';
@@ -13,13 +13,14 @@ import { FileUploader } from 'ng2-file-upload';
 })
 
 export class FeedbackComponent implements OnInit {
+    @ViewChild('firstModal') firstModal;
 	feedback: Feedback;
     feedbacks: Feedback[] = [];
     model: any = {};
     images: any[];
     id: string;
     name: any;
-    isFavorite = false;
+    feedback_reply: any;
     isArchieved = false;
     change = new EventEmitter();
     public published;
@@ -63,9 +64,11 @@ export class FeedbackComponent implements OnInit {
 		});
     }
 
-    // edit(incident: Incident){
-    //     this.router.navigate(['/incident/edit', incident._id]);
-    // }
+    openModal(feedback){
+        this.feedback = feedback;
+        this.feedback_reply = feedback.feedback_reply;    
+        console.log(this.feedback);
+    }
 
     reply(){
         this.router.navigate([this.name.default_development.name + '/feedback/add']);
@@ -73,6 +76,11 @@ export class FeedbackComponent implements OnInit {
 
     archive(feedback:Feedback){
         this.feedbackService.archieve(feedback._id);
+        this.ngOnInit()
+    }
+
+    publish(feedback:Feedback){
+        this.feedbackService.publish(feedback._id);
         this.ngOnInit()
     }
 
