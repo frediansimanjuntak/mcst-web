@@ -47,7 +47,7 @@ export class NotificationComponent implements OnInit {
         //     });
 
         this.notificationService.getNotifications().then(data => {
-            this.allNotifications 	   = data.filter(data => data.user == this.userId );
+            this.allNotifications 	   = data.filter(data => data.user == '1' );
             this.allNotificationTotal  = this.allNotifications.length;
             this.dataToShow            = this.allNotifications.slice(0, 10);
             console.log(this.allNotificationTotal);
