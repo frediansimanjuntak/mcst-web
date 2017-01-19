@@ -23,12 +23,18 @@ import * as $ from "jquery";
 export class LostFoundComponent implements OnInit {
     @ViewChild('firstModal') firstModal;
 	lostFound: any;
+    lostFoundforModal: any;
     lostFounds: any[] = [];
     all: any[]= [];
     losts: any[] = [];
     founds: any[] = [];
     archieveds: any[] = [];
 
+    archievedLosts: any[] = [];
+    archievedFounds: any[] = [];
+
+    buttonViewArchive: boolean;
+    images: any[];
     model: any = {};
     id: string;
     
@@ -48,7 +54,22 @@ export class LostFoundComponent implements OnInit {
 
     ngOnInit(): void {
 		this.userService.getByToken().subscribe(name => {this.name = name;})
-        this.loadLostFounds();
+        this.buttonViewArchive = false;
+        this.images = [];
+        this.images.push({source:'/assets/image/1.png'});
+        this.images.push({source:'/assets/image/2.png'});
+        this.images.push({source:'/assets/image/3.png'});
+        this.images.push({source:'/assets/image/4.png'});
+        this.images.push({source:'/assets/image/5.png'});
+        this.route.params.subscribe(params => {
+            this.id = params['id'];
+        });
+        if( this.id == null) {
+            this.loadLostFounds();
+        }else{
+            this.lostFoundService.getById(this.id)
+                .subscribe(lostFound => {this.lostFound = lostFound;});
+        }
     }
 
     convertDate(date) {
@@ -63,11 +84,11 @@ export class LostFoundComponent implements OnInit {
 	}
 
     preCheckIn(lostFound){
-    	this.lostFound = lostFound;
+    	this.lostFoundforModal = lostFound;
     }
 
-    archieve() {
-        this.lostFoundService.archieve(this.lostFound._id)
+    archieve(id) {
+        this.lostFoundService.archieve(id)
             .then(
                 data => {
                     this.firstModal.close();
@@ -81,7 +102,11 @@ export class LostFoundComponent implements OnInit {
             );
     }
 
-   private loadLostFounds() {
+    viewArchieved(){
+        this.buttonViewArchive = true;
+    }
+
+    private loadLostFounds() {
         //---------------------------Call To Api-------------- //
         // this.lostFoundService.getAll()
         //     .subscribe((data)=> {
@@ -97,6 +122,9 @@ export class LostFoundComponent implements OnInit {
         this.lostFoundService.getLostFounds().then(data => {
             this.lostFounds      = data.filter(data => data.development == this.name.default_development.name);
             this.archieveds      = this.lostFounds.filter(data => data.archieved );
+            this.archievedLosts = this.all.filter(data => data.type == 'lost');
+            this.archievedFounds= this.all.filter(data => data.type == 'found');
+
             this.all             = this.lostFounds.filter(data => !data.archieved );
             this.losts           = this.all.filter(data => data.type == 'lost');
             this.founds          = this.all.filter(data => data.type == 'found');
@@ -106,4 +134,8 @@ export class LostFoundComponent implements OnInit {
     goBack(): void {
     	this.location.back();
   	}
+
+    viewLostFound(lostfound: LostFound){
+        this.router.navigate([this.name.default_development.name + '/lost_found/view', lostfound._id]);
+    }
 }
