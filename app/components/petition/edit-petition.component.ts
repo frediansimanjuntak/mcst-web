@@ -49,9 +49,19 @@ export class EditPetitionComponent implements OnInit {
     }
 
     ngOnInit(): void {
-        this.userService.getByToken().subscribe(name => {this.name = name;})
+        this.route.params.subscribe(params => {
+            this.id = params['id'];
+        });
+        this.userService.getByToken()
+                            .subscribe(name => {
+                                this.name = name;
+                                this.loadAllUnits();
+                                if( this.id != null) {
+                                    this.petitionService.getPetition(this.id).then(petition => {this.petition = petition;});
+                                }
+                            })
         this.selectedType = 'Maintenance';
-        this.loadAllUnits();
+        
         this.myForm = this.formbuilder.group({
             reference_no : [''],
             development : [''],
@@ -66,21 +76,12 @@ export class EditPetitionComponent implements OnInit {
             archieved : [''],
             created_at : ['']
         });
-
-        this.route.params.subscribe(params => {
-            this.id = params['id'];
-        });
-
-        if( this.id != null) {
-            this.petitionService.getPetition(this.id).then(petition => {this.petition = petition;});
-        }
     }
 
     createPetition(model: any, isValid: boolean) {
         this.submitted = true;
         if(isValid || this.unit){
             console.log(this.unit);
-            model.development = this.name.default_development.name;
             model.property = this.unit.id;
             model.attachment = this.model.attachment;
             model.updated_at = new Date();

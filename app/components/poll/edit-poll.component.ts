@@ -8,7 +8,7 @@ import 'rxjs/add/operator/switchMap';
 
 
 @Component({
-  moduleId: module.id,
+  // moduleId: module.id,
   selector: 'edit-poll',
   template: `app/templates/edit-poll.html`,
 })
