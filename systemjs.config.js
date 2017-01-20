@@ -37,6 +37,8 @@
       'primeng': 'npm:primeng',
       'fullcalendar' : 'npm:fullcalendar/dist/', 
       'angular2-select': 'npm:angular2-select',
+      'angular2-signaturepad': 'npm:angular2-signaturepad',
+      'signature_pad' : 'npm:signature_pad',
       'angular2-modal': 'npm:angular2-modal',
       'mydatepicker': 'npm:mydatepicker',
       "ng2-modal": "node_modules/ng2-modal",
@@ -66,7 +68,9 @@
       'ng2-imageupload': { main: 'index.js', defaultExtension: 'js'},
       'angular2-modal': { defaultExtension: 'js', main: '/bundles/angular2-modal.umd.js' },
       'angular2-notifications': { main: 'components.js', defaultExtension: 'js' },
-      "ng2-popover": { "main": "index.js", "defaultExtension": "js" }
+      "ng2-popover": { "main": "index.js", "defaultExtension": "js" },
+      'angular2-signaturepad': { main: 'index.js', defaultExtension: 'js' },
+      'signature_pad': { main: 'signature_pad.js', defaultExtension: 'js' },
     }
   });
 })(this);

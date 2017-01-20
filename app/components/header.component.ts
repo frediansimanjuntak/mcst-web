@@ -36,7 +36,7 @@ export class HeaderComponent implements OnInit{
     }
 
     ngOnInit(){
-    	this.userService.getByToken().subscribe(name => { this.name = name; console.log(this.name.default_development)})
+    	this.userService.getByToken().subscribe(name => this.name = name)
        	this.loadUnread();
         this.NotificationClicked = false;
 
