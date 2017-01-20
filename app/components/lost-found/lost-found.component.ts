@@ -121,11 +121,11 @@ export class LostFoundComponent implements OnInit {
 
         this.lostFoundService.getLostFounds().then(data => {
             this.lostFounds      = data.filter(data => data.development == this.name.default_development.name);
-            this.archieveds      = this.lostFounds.filter(data => data.archieved );
+            this.archieveds      = this.lostFounds.filter(data => data.archieve );
             this.archievedLosts = this.all.filter(data => data.type == 'lost');
             this.archievedFounds= this.all.filter(data => data.type == 'found');
 
-            this.all             = this.lostFounds.filter(data => !data.archieved );
+            this.all             = this.lostFounds.filter(data => !data.archieve );
             this.losts           = this.all.filter(data => data.type == 'lost');
             this.founds          = this.all.filter(data => data.type == 'found');
 		});
