@@ -106,7 +106,7 @@ export class EditBookingComponent implements OnInit  {
             this.unitService.getAll(name.default_development.name).subscribe(units => {this.units = units.properties; console.log(units.properties); console.log(this.units)})
         })
         this.myForm = this.formbuilder.group({
-            id : ['1'],
+            id : [''],
             choice : ['All'],
             start : [0],
             end : [23]
@@ -121,10 +121,8 @@ export class EditBookingComponent implements OnInit  {
             if (this.selectedDay.length > 0) { 
     			this.start = this.selectedDay[0].start_time.slice(0,2);
         			let start = +this.start
-                    console.log(start);
         			this.end = this.selectedDay[0].end_time.slice(0,2);
         			let end = +this.end
-                    console.log(end);	
         			this.min =	":00"
         			for (var i = start; i < end; ++i) {
         			    this.times_start.push(i)
@@ -144,7 +142,6 @@ export class EditBookingComponent implements OnInit  {
                 data.booking_date == booking_date && 
                 data.start_time == this.times_end &&
                 data.end_time == this.times_start )
-            console.log(this.bookings)
             if(this.bookings != null) {
                 this.booking_status = "Not Available"
             }else{
@@ -167,13 +164,6 @@ export class EditBookingComponent implements OnInit  {
     }
 
     createBooking() { 
-        this.facilityService.getAll()
-        .subscribe(facilities => {
-            this.facilities = facilities;
-            this.filtered = this.facilities.filter(data => data.name >= this.model.name );
-            this.model.facility = this.filtered._id;
-            console.log(this.filtered._id)
-        })
         this.model.reference_no = this.model.serial_no
         console.log(this.model)
         this.bookingService.create(this.model)
@@ -223,8 +213,10 @@ export class EditBookingComponent implements OnInit  {
         this.facilityService.getById(data.id)
         .subscribe(facility => {
             this.facility = facility;
-            this.facility_name = facility.namre;
+            this.facility_name = facility.name;
             this.facility_type = facility.facility_type;
+             this.timeStart = [];
+             this.timeEnd = [];
             if(data.choice == "all" ) {
                 this.filtered = this.facility.schedule.filter(data => 
                     data.start_time <= start && 
@@ -259,8 +251,6 @@ export class EditBookingComponent implements OnInit  {
         this.model.end_time = time_end+min;
         this.model.name = name;
         this.model.facility_type = type;
-        
-        console.log(this.model)
     }
 
     public test() {  
@@ -278,7 +268,7 @@ export class EditBookingComponent implements OnInit  {
         this.ngOnInit();
     }
 
-    next(){
+    next(){ 
         this.generate()
         this.model.serial_no = this.ref_no.toString();
         this.model.sender = "Mr. Nice";
@@ -290,10 +280,9 @@ export class EditBookingComponent implements OnInit  {
         var deposit = +this.model.fees[0].deposit_fee;
         var booking = +this.model.fees[0].booking_fee;
         var admin_fee = +this.model.fees[0].admin_fee;
-        console.log(deposit+booking+admin_fee);
         this.model.total_amount = deposit + booking + admin_fee;
-        console.log(this.model.total_amount)
         this.step = 2;
+        console.log(this.model)
     }
 
     change(){

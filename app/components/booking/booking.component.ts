@@ -3,7 +3,7 @@ import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import { DatePipe  } from '@angular/common';
 import { Router, Params, ActivatedRoute } from '@angular/router'; 
 import { Booking, Facility } from '../../models/index';
-import { BookingService, AlertService, FacilityService, UserService } from '../../services/index';
+import { BookingService, AlertService, FacilityService, UserService, UnitService } from '../../services/index';
 import '../../rxjs-operators';
 import { Observable} from 'rxjs/Observable';
 import * as moment from 'moment';
@@ -35,6 +35,8 @@ export class BookingComponent implements OnInit {
     myForm: FormGroup;
     model: any = {}; 
     id: string;
+    units: any[];
+    unit: any;
     times_start : any[] = [];
     times_end : any[] = [];
     period : any[] = [];
@@ -54,7 +56,8 @@ export class BookingComponent implements OnInit {
 		private alertService: AlertService,
         private formbuilder: FormBuilder,
 		private route: ActivatedRoute,
-        private userService: UserService){}
+        private userService: UserService,
+        private unitService: UnitService,){}
 
 	ngOnInit() {
         this.userService.getByToken().subscribe(name => {this.name = name;})
@@ -121,9 +124,25 @@ export class BookingComponent implements OnInit {
         .subscribe(bookings => {
             this.bookings = bookings;
             this.selectedDay = this.bookings.filter(data => data.booking_date.slice(0,10) == this.day); 
-            console.log(this.selectedDay);
-            console.log(this.bookings);
+            this.userService.getByToken()
+            .subscribe(name => {
+                this.name = name;
+                this.unitService.getAll(this.name.default_development.name)
+                .subscribe(units => {
+                    this.units = units.properties;
+                    for (var i = 0; i < this.selectedDay.length; ++i) {
+                        let a = this.units.find(data => data._id == this.selectedDay[i].property);
+                        this.selectedDay[i].unit = '#'+a.address.unit_no +'-'+ a.address.unit_no_2;
+                        console.log(this.selectedDay.unit)
+                    }
+                })
+            })
+            
+            
+            console.log(this.bookings)
         });
+        
+
     }
 
     add(){
@@ -184,7 +203,6 @@ export class BookingComponent implements OnInit {
                     data.facility.facility_type == booking.type
                 );
             }
-            console.log(this.filtered)
         });
     }
 

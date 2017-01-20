@@ -1,4 +1,4 @@
-import {Component, OnInit, ChangeDetectorRef} from '@angular/core';
+import {Component, OnInit, ChangeDetectorRef, ViewChild } from '@angular/core';
 import { Http, Headers, RequestOptions, Response } from '@angular/http';
 import * as $ from 'jquery';
 import 'fullcalendar';
@@ -10,6 +10,9 @@ import '../rxjs-operators';
 import { FileUploader } from 'ng2-file-upload';
 import { Observable} from 'rxjs/Observable';
 import { ImageResult, ResizeOptions } from 'ng2-imageupload';
+import { SignaturePad } from 'angular2-signaturepad/signature-pad';
+import { SignaturePadPage } from './esign.component';
+
 // import {ModalModule} from "ng2-modal";
 
 export class Model {
@@ -20,7 +23,7 @@ export class Model {
 }
 @Component({
   // moduleId: module.id,
-  selector: 'newsletter',
+  selector: 'test',
   templateUrl: 'app/templates/test.html',
   styleUrls: [ 'app/templates/styles/newsletter.css' ],
 })
@@ -121,6 +124,37 @@ export class TestComponent implements OnInit{
             {value: 'c', label: 'Gamma'},
         ];
         this.mySelectValue = ['b', 'c'];
+    }
+
+    @ViewChild(SignaturePad) signaturePad: SignaturePad;
+
+    private signaturePadOptions: Object = { // passed through to szimek/signature_pad constructor
+        'minWidth': 5,
+        'canvasWidth': 500,
+        'canvasHeight': 300,
+    };
+
+
+    ngAfterViewInit() {
+        // this.signaturePad is now available
+        this.signaturePad.set('minWidth', 5); // set szimek/signature_pad options at runtime
+        this.signaturePad.clear(); // invoke functions from szimek/signature_pad API
+    }
+
+    drawComplete() {
+        // will be notified of szimek/signature_pad's onEnd event
+        console.log(this.signaturePad.toDataURL('image/png'));
+        var data = this.signaturePad.toDataURL('image/png');
+        window.open(data);
+    }
+
+    drawClear(){
+        this.signaturePad.clear();
+    }
+
+    drawStart() {
+        // will be notified of szimek/signature_pad's onBegin event
+        console.log('begin drawing');
     }
 
 
