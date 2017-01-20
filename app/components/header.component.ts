@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Notification, Notifications } from '../models/index';
+import { Router} from '@angular/router';
 import { NotificationService, AlertService, UserService, AuthenticationService} from '../services/index';
 import '../rxjs-operators';
 import { Observable} from 'rxjs/Observable';
@@ -30,7 +31,8 @@ export class HeaderComponent implements OnInit{
                 private alertService: AlertService,
                 private userService: UserService,
                 private authService: AuthenticationService,
-               private appComponent: AppComponent,
+                private appComponent: AppComponent,
+                private router: Router,
                 ) {
 		this.userId = "1"
     }
@@ -83,7 +85,36 @@ export class HeaderComponent implements OnInit{
     }
 
     goToPage(notification: Notification){
-        
+        switch (notification.ref)
+        {
+            case 'petition' :
+                this.router.navigate([this.name.default_development.name + '/petition/view', notification.ref_id]);
+            break;
+            case 'incident' :
+                this.router.navigate([this.name.default_development.name + '/incident/view', notification.ref_id]);
+            break;
+            case 'payment' :
+                this.router.navigate([this.name.default_development.name + '/payment/view', notification.ref_id]);
+            break;
+            case 'contract' :
+                this.router.navigate([this.name.default_development.name + '/contract/view', notification.ref_id]);
+            break;
+            case 'facility' :
+                this.router.navigate([this.name.default_development.name + '/facility/view', notification.ref_id]);
+            break;
+            case 'booking' :
+                this.router.navigate([this.name.default_development.name + '/booking/view', notification.ref_id]);
+            break;
+            case 'unit' :
+                this.router.navigate([this.name.default_development.name + '/unit/view', notification.ref_id]);
+            break;
+            case 'lost_found' :
+                this.router.navigate([this.name.default_development.name + '/lost_found/view', notification.ref_id]);
+            break;
+            case 'poll' :
+                this.router.navigate([this.name.default_development.name + '/poll/view', notification.ref_id]);
+            break;     
+        }
     }
 
     logout(){

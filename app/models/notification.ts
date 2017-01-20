@@ -6,6 +6,7 @@ export class Notification {
   type : string;
   message : string;
   ref : string;
+  ref_id: string;
   created_by : User;
   read_at : string;
   created_at : string;
