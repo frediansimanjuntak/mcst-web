@@ -65,7 +65,7 @@ export class ViewUnitComponent implements OnInit {
                                     this.unitservice
                                         .getById(this.id, this.name.default_development.name)
                                            .subscribe(unit => {
-                                               this.unit = unit.properties;
+                                               this.unit = unit.properties[0];
                                                console.log(unit.properties);
                                         });
                                 }
