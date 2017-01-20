@@ -29,8 +29,9 @@
 						    <table class="tableSection table-striped">
 							    <tbody>
 							        <tr *ngFor="let u of unreadNotificationsToShow">
-										<td style="cursor: pointer"><b>{{ u.message }}</b><br>
-											   <small>{{ u.created_at | date:'medium'}}</small>
+										<td (click)="goToPage(u)" style="cursor: pointer">
+											<b>{{ u.message }}</b><br>
+										    <small>{{ u.created_at | date:'medium'}}</small>
 										</td>
 									</tr>
 							    </tbody>

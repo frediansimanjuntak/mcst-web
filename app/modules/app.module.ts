@@ -64,6 +64,7 @@ import {
   PetitionComponent,
   EditPetitionComponent,
   PollComponent,
+  EditPollComponent,
   QuotationComponent,
   RegisterComponent,
   SettingComponent,
@@ -79,7 +80,8 @@ import {
   TestComponent,
   Galleria,
   NotificationComponent,
-  LostFoundComponent
+  LostFoundComponent,
+
 } from '../components/index';
 
 import {
@@ -177,6 +179,7 @@ import {
     PetitionComponent,
     EditPetitionComponent,
     PollComponent,
+    EditPollComponent,
     QuotationComponent,
     RegisterComponent,
     SettingComponent,

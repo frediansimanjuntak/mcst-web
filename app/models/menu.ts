@@ -44,7 +44,7 @@ export const MENUS: any[] = [
     description: 'Manage event and announcement, E-voting and feedbacks',
   	sub : [
   		{ name : 'Manage Announcement', link: '/announcement' },
-  		{ name : 'E-voting', link: '' },
+  		{ name : 'E-voting', link: '/poll' },
   		{ name : 'Manage Feedbacks', link: '/feedback' },
   		{ name : 'Lost & Found', link: '/lost_found' },
   	]
