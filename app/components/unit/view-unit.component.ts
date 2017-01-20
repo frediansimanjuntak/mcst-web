@@ -37,8 +37,9 @@ export class ViewUnitComponent implements OnInit {
     
     myForm: FormGroup;
     myForm2: FormGroup;
-    
     myOptions: Array<any>;
+
+    name: any;
 
     constructor(
         private router: Router,
@@ -53,8 +54,24 @@ export class ViewUnitComponent implements OnInit {
     }
 
     ngOnInit() {
+        this.route.params.subscribe(params => {
+            this.id = params['id'];
+        });
+
+        this.userService.getByToken()
+                            .subscribe(name => {
+                                this.name = name;
+                                if( this.id != null) {
+                                    this.unitservice
+                                        .getById(this.id, this.name.default_development.name)
+                                           .subscribe(unit => {
+                                               this.unit = unit.properties;
+                                               console.log(unit.properties);
+                                        });
+                                }
+                            });
+
         this.getUsers();
-        this.developmentId = '585b36585d3cc41224fe518a';
 
         this.myForm = this.formbuilder.group({
                 resident: [''],
@@ -73,37 +90,35 @@ export class ViewUnitComponent implements OnInit {
                 remarks: [''],
         });
 
-        this.route.params.subscribe(params => {
-            this.id = params['id'];
-        });
+        
+        
+            // this.unitservice
+            //     .getDevelopments()
+            //        .then(development => {
+            //            this.units = development[0].properties
+            //            this.unit = this.units.find(unit => unit._id === this.id);
+            //            this.unit.owner = this.users.find(myObj => myObj._id ===  this.unit.landlord ).username;
 
-        if( this.id != null) {
-            this.unitservice
-                .getDevelopments()
-                   .then(development => {
-                       this.units = development[0].properties
-                       this.unit = this.units.find(unit => unit._id === this.id);
-                       this.unit.owner = this.users.find(myObj => myObj._id ===  this.unit.landlord ).username;
+            //            this.residents = this.unit.tenant;
+            //            this.vehicles  = this.unit.registered_vehicle;
 
-                       this.residents = this.unit.tenant;
-                       this.vehicles  = this.unit.registered_vehicle;
+            //             for (var i = 0; i < this.residents.length; i++) {
+            //                 this.residents[i].resident_name = this.users.find(myObj => myObj._id ===  this.residents[i].resident ).username;
+            //                 this.residents[i].phone         = this.users.find(myObj => myObj._id ===  this.residents[i].resident ).phone;
+            //                 this.residents[i].email         = this.users.find(myObj => myObj._id ===  this.residents[i].resident ).email;
+            //                 this.residents[i].id            = this.residents[i].resident;
+            //                 this.residents[i].text          = this.residents[i].resident_name;
+            //                 this.residents[i].i = i+1;
+            //             }
 
-                        for (var i = 0; i < this.residents.length; i++) {
-                            this.residents[i].resident_name = this.users.find(myObj => myObj._id ===  this.residents[i].resident ).username;
-                            this.residents[i].phone         = this.users.find(myObj => myObj._id ===  this.residents[i].resident ).phone;
-                            this.residents[i].email         = this.users.find(myObj => myObj._id ===  this.residents[i].resident ).email;
-                            this.residents[i].id            = this.residents[i].resident;
-                            this.residents[i].text          = this.residents[i].resident_name;
-                            this.residents[i].i = i+1;
-                        }
+            //             for (var i = 0; i < this.vehicles.length; i++) {
+            //                 this.vehicles[i].owner_name = this.users.find(myObj => myObj._id ===  this.vehicles[i].owner ).username;
+            //                 this.vehicles[i].i = i+1;
+            //             }
 
-                        for (var i = 0; i < this.vehicles.length; i++) {
-                            this.vehicles[i].owner_name = this.users.find(myObj => myObj._id ===  this.vehicles[i].owner ).username;
-                            this.vehicles[i].i = i+1;
-                        }
+            //         });
 
-                    });
-        }
+            
     }
 
     getUsers(): void {
@@ -168,6 +183,9 @@ export class ViewUnitComponent implements OnInit {
         this.vehicle = vehicle;
     }
 
+    goToUnit(){
+        this.router.navigate([this.name.default_development.name + '/unit']);  
+    }
 
     addResident(model: any, isValid: boolean){
          this.addSubmitted = true;
@@ -193,6 +211,7 @@ export class ViewUnitComponent implements OnInit {
             this.ngOnInit();
         }
     }
+
 
     addVehicle(model: any, isValid: boolean){
          this.vehicleSubmitted = true;

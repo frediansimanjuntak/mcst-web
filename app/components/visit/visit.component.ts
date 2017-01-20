@@ -62,7 +62,11 @@ export class VisitComponent implements OnInit {
     	this.addSubmitted = false;
     	this.checkInSsubmitted = false;
         this.checkOutSsubmitted = false;
-		this.userService.getByToken().subscribe(name => {this.name = name;})
+		this.userService.getByToken()
+                            .subscribe(name => {
+                                this.name = name;
+                                this.loadVisits();
+                            })
 
         if(typeof this.visitDateCreate !== "string"){
             this.visitDateCreate = this.convertDate(this.visitDateCreate);
@@ -72,7 +76,7 @@ export class VisitComponent implements OnInit {
 		this.activeDate = this.convertDate(this.activeDate);
 		}
 
-       	this.loadVisits();
+       	
 
 		this.myForm = this.formbuilder.group({
 			 	property: ['', <any>Validators.required],
@@ -254,26 +258,26 @@ export class VisitComponent implements OnInit {
 
 	private loadVisits() {
         //---------------------------Call To Api-------------- //
-        // this.visitService.getAll()
-        //     .subscribe((data)=> {
-        //         setTimeout(()=> {
-        //             this.visits            = data.filter(data => data.development == this.name.default_development.name);
-        //             this.visitActive       = data.filter(data => data.visit_date.slice(0, 10)  == this.activeDate );
-        //             for (var i = 0; i < this.visitActive.length; i++) {
-        //             this.visitActive[i].i = i+1;
-        //     }
-        //         }, 1000);
-        //     });
-
-        this.visitService.getVisits().then(data => {
-            this.visits      = data;
-            this.visitActive = this.visits.filter(data => data.visit_date.slice(0, 10)  == this.activeDate );
-            console.log(this.visitActive.length);
-            for (var i = 0; i < this.visitActive.length; i++) {
-            	this.visitActive[i].i = i+1;
+        this.visitService.getAll()
+            .subscribe((data)=> {
+                setTimeout(()=> {
+                    this.visits            = data.filter(data => data.development._id == this.name.default_development._id);
+                    this.visitActive       = data.filter(data => data.visit_date.slice(0, 10)  == this.activeDate );
+                    for (var i = 0; i < this.visitActive.length; i++) {
+                    this.visitActive[i].i = i+1;
             }
+                }, 1000);
+            });
 
-		});
+  //       this.visitService.getVisits().then(data => {
+  //           this.visits      = data;
+  //           this.visitActive = this.visits.filter(data => data.visit_date.slice(0, 10)  == this.activeDate );
+  //           console.log(this.visitActive.length);
+  //           for (var i = 0; i < this.visitActive.length; i++) {
+  //           	this.visitActive[i].i = i+1;
+  //           }
+
+		// });
     }
 
     onPickerClick(event:any) {

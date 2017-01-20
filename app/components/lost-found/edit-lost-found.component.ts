@@ -84,5 +84,8 @@ export class EditLostFoundComponent  {
         this.model.attachment.splice(i, 1)
     }
 
+    goToLostFound(){
+      this.router.navigate([this.name.default_development.name + '/lost_found']);  
+    }
 
 }

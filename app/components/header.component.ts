@@ -36,7 +36,7 @@ export class HeaderComponent implements OnInit{
     }
 
     ngOnInit(){
-    	this.userService.getByToken().subscribe(name => { this.name = name})
+    	this.userService.getByToken().subscribe(name => { this.name = name; console.log(this.name.default_development)})
        	this.loadUnread();
         this.NotificationClicked = false;
 
@@ -69,7 +69,6 @@ export class HeaderComponent implements OnInit{
                 this.notificationsIds[i] = this.unreadNotificationsToShow[i]._id;
             }
 
-            console.log(this.notificationsIds);
         });
     }
 
@@ -77,7 +76,7 @@ export class HeaderComponent implements OnInit{
     	this.unreadNotificationTotal = 0;
 
         // if(this.NotificationClicked == false){
-        //     this.notificationService.read(this.notificationsIds, this.userId)
+        //     this.notificationService.read(this.notificationsIds, this.name._id)
         // }
         
         this.NotificationClicked = true;

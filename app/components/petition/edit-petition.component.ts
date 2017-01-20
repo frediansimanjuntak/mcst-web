@@ -179,5 +179,8 @@ export class EditPetitionComponent implements OnInit {
         this.model.attachment.splice(i, 1)
     }
 
+    goToPetition(){
+      this.router.navigate([this.name.default_development.name + '/petition']);  
+    }
 
 }

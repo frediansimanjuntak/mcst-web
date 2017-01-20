@@ -190,6 +190,10 @@ export class EditUserGroupComponent implements OnInit {
         );
     }
 
+    goToUserGroup(){
+        this.router.navigate([this.name.default_development.name + '/user_group']);  
+    }
+
     updateUserGroup(){
         if(this.chiefField && this.usergroup.description != ''){
             this.usergroup.users = [];

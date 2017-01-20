@@ -30,9 +30,11 @@ export class UnitComponent implements OnInit {
     }
 
     ngOnInit(): void {
-        this.userService.getByToken().subscribe(name => {this.name = name;})
+        this.userService.getByToken().subscribe(name => {
+                this.name = name;
+                this.loadAllUnits();
+            })
         this.getUsers();
-        this.loadAllUnits();
     }
 
     deleteUnit(unit: any) {
@@ -62,7 +64,7 @@ export class UnitComponent implements OnInit {
         this.unitservice.getAll(this.name.default_development.name)
             .subscribe((data)=> {
                 setTimeout(()=> {
-                    this.dataUnit = this.data.properties;
+                    this.dataUnit = data.properties;
                     console.log(this.dataUnit);
                 }, 1000);
             });
@@ -74,7 +76,11 @@ export class UnitComponent implements OnInit {
         });
     }
 
-    viewUnit(unit: any){
+    view(unit: any){
         this.router.navigate([this.name.default_development.name + '/unit/view', unit._id]);
+    }
+
+    add(){
+        this.router.navigate([this.name.default_development.name + '/unit/add']);  
     }
 }

@@ -57,7 +57,7 @@
 			Home > Manage Request
 			<div class="row">
 				<div class="col-md-4 pull-right">
-								<a class="btn btn-default" [routerLink]="[name.default_development.name + '/petition/add']"><img class="img-btn" src="../../assets/image/icon_add.png" />&nbsp;Add Request</a>
+								<a class="btn btn-default" (click)="add()"><img class="img-btn" src="../../assets/image/icon_add.png" />&nbsp;Add Request</a>
 						  		<button class="btn btn-default" [disabled]="!btnArchive" (click)="archieveSelected()"><img class="img-btn" src="../../assets/image/icon_archived.png" />&nbsp;Archive Selected</button>
 				</div>
 			</div>
