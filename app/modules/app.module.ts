@@ -21,10 +21,10 @@ import { url }                          from '../global'
 import { DataTableModule,SharedModule,ScheduleModule,DialogModule,InputMaskModule,CheckboxModule,PanelModule,FieldsetModule,CalendarModule } from 'primeng/primeng';
 import { EqualValidator }               from '../components/user/equal-validator.directive';
 import { ImageUploadModule }            from 'ng2-imageupload';
-import { ModalModule }                  from "ng2-modal";
+import { ModalModule }                  from "ngx-modal";
 import { BootstrapModalModule }         from 'angular2-modal/plugins/bootstrap';
 import { SlimLoadingBarModule }         from 'ng2-slim-loading-bar';
-import { PopoverModule }                from 'ng2-popover';
+import { PopoverModule }                from 'ngx-popover';
 
 import { 
   AccessControlComponent,
