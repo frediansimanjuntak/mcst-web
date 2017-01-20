@@ -1,0 +1,134 @@
+<div class="container">
+    <div class="main">
+        <div *ngIf="poll">
+            <div class="title">
+                Edit A Poll
+            </div>
+            <p>Home > Manage Poll > Edit</p>
+            <form class="form-horizontal col-md-6" (ngSubmit)="f.form.valid && updatePoll()" name="form" #f="ngForm" novalidate>
+                <div class="form-group" [ngClass]="{ 'has-error': !title.valid }">
+                    <label class="control-label col-sm-4" for="title">Title :</label>
+                    <div class="col-sm-8">
+                        <input type="text" class="form-control" name="title" [(ngModel)]="poll.title" #title="ngModel" required />
+                        <span *ngIf= " !title.valid" class="help-block">Title is required</span>
+                    </div>
+                </div>
+                <div class="form-group" [ngClass]="{ 'has-error': !description.valid }">
+                    <label class="control-label col-sm-4" for="description">Description :</label>
+                    <div class="col-sm-8">
+                        <textarea type="text" class="form-control" name="description" [(ngModel)]="v.description" #description="ngModel" required placeholder="Input Description here"></textarea>
+                        <span *ngIf= " !description.valid" class="help-block">Description is required</span>
+                    </div>
+                </div>
+                <div class="form-group" >
+                    <label class="control-label col-sm-4" for="poll_type">Poll Type :</label>
+                    <div class="col-sm-8">
+                        <select class="form-control" name="poll_type" [(ngModel)]="poll.poll_type">
+                          <option selected value="yes_or_no">Yes or No</option>
+                          <option value="multiple_choices">Multiple Choices</option>
+                        </select>
+                       
+                    </div>
+                </div>
+                <div class="form-group" >
+                    <label class="control-label col-sm-4" for="outcome">Outcome :</label>
+                    <div class="col-sm-8">
+                        <select class="form-control" name="outcome" [(ngModel)]="poll.outcome">
+                            <option selected value="yes">Yes</option>
+                            <option value="no">No</option>
+                        </select>
+                       
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label col-sm-4" for="auto_post_on">Commence date :</label>
+                    <div class="col-sm-8">
+                            <my-date-picker [options]="startTimeOptions"
+                            [selDate]="model.startTime" (dateChanged)="startTimeDateChanged($event)"></my-date-picker>
+                    </div>
+                </div>
+                <div class="form-group" >
+                    <label class="control-label col-sm-4" for="valid_till">Result date :</label>
+                    <div class="col-sm-8">
+                        <my-date-picker [options]="endTimeOptions"
+                            [selDate]="model.end_time" (dateChanged)="endTimeDateChanged($event)"></my-date-picker>
+                    </div>
+                </div>
+
+             
+
+            
+                <div class="form-group pull-right">
+                    <button [disabled]="loading" class="btn btn-primary">Save</button>
+                    <img *ngIf="loading" src="data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA==" />
+                    <a (click)="toPoll()" class="btn btn-info">Cancel</a>
+                </div>
+            </form>     
+        </div>
+
+        <div *ngIf="!poll">
+            <div class="title">
+                Create a Poll
+            </div>
+            <p>Home > Manage Poll > Create a Poll </p>
+            
+            <form class="form-horizontal col-md-6" name="form" (ngSubmit)="f.form.valid && createPoll()" #f="ngForm" novalidate>
+                <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !title.valid }">
+                    <label class="control-label col-sm-4" for="title">Title :</label>
+                    <div class="col-sm-8">
+                        <input type="text" class="form-control" name="title" [(ngModel)]="model.title" #title="ngModel" required placeholder="Input title here" />
+                        <span *ngIf="f.submitted && !title.valid" class="help-block">Title is required</span>
+                    </div>
+                </div>
+                   <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !description.valid }">
+                    <label class="control-label col-sm-4" for="description">Description :</label>
+                    <div class="col-sm-8">
+                        <textarea type="text" class="form-control" name="description" [(ngModel)]="model.description" #description="ngModel" required placeholder="Input Description here"></textarea>
+                        <span *ngIf="f.submitted && !description.valid" class="help-block">Description is required</span>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label col-sm-4" for="poll_type">Poll Type :</label>
+                    <div class="col-sm-8">
+                        <select class="form-control" name="poll_type" [(ngModel)]="model.poll_type">
+                          <option selected value="yes_or_no">Yes or No</option>
+                          <option value="multiple_choices">Multiple Choices</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label col-sm-4" for="outcome">Outcome :</label>
+                    <div class="col-sm-8">
+                        <select class="form-control" name="outcome" [(ngModel)]="model.outcome">
+                          <option selected value="yes">Yes</option>
+                          <option value="no">No</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label col-sm-4" for="start_time">Commence date : </label>
+                    <div class="col-sm-8">
+                        <my-date-picker [options]="startTimeOptions"
+                            [selDate]="selectedDate" (dateChanged)="startTimeDateChanged($event)">
+                        </my-date-picker>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="control-label col-sm-4" for="valid_till">Result Date :</label>
+                    <div class="col-sm-8">
+                        <my-date-picker [options]="endTimeOptions"
+                            (dateChanged)="endTimeDateChanged($event)">
+                        </my-date-picker>
+                    </div>
+                </div>
+                <div class="form-group pull-right">
+                    <button [disabled]="loading" class="btn btn-primary">Create</button>
+                    <img *ngIf="loading" src="data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA==" />
+                    <a (click)="toPoll()" class="btn btn-info">Cancel</a>
+                </div>
+            </form>     
+        </div>
+    </div>
+</div>
+          
