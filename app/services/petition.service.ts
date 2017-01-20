@@ -29,7 +29,7 @@ export class PetitionService {
     }
 
     getById(id:string){
-        return this.http.get( url + 'api/petitions' + id, this.options)
+        return this.http.get( url + 'api/petitions/' + id, this.options)
             .map((res:Response) => res.json())
             .catch((error:any) => Observable.throw(error.json().error || 'Server error'));
     }
@@ -55,15 +55,15 @@ export class PetitionService {
           .catch(this.handleError);
     }     
 
-    archive(id: string): Promise<void> {
-        return this.http.post( url + 'api/petitions/archieve' + id, this.options)
-          .toPromise()
-          .then(res => res.json().data)
-          .catch(this.handleError);
-    }  
+    archive(body:any): Promise<Petition> {
+        return this.http.post(url + 'api/petitions/archieve/' ,body, this.options)
+            .toPromise()
+            .then(res => res.json().data)
+            .catch(this.handleError);
+    } 
 
     unarchive(id: string): Promise<void> {
-        return this.http.put( url + 'api/petitions/archieve' + id, this.options)
+        return this.http.put( url + 'api/petitions/archieve/' + id, this.options)
           .toPromise()
           .then(res => res.json().data)
           .catch(this.handleError);    
