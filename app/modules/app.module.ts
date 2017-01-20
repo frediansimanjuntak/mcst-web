@@ -12,6 +12,8 @@ import { Ng2BootstrapModule }           from 'ng2-bootstrap/ng2-bootstrap';
 import { PaginationModule,DatepickerModule }             from 'ng2-bootstrap/ng2-bootstrap';
 import { SelectModule }                 from 'ng2-select/ng2-select';
 import { MyDatePickerModule }           from 'mydatepicker/dist/my-date-picker.module';
+import { SignaturePadModule }           from 'angular2-signaturepad';
+import { signature_pad }                from 'signature_pad';
 // import { DatePickerModule }             from 'ng2-datepicker';
 // import { SELECT_DIRECTIVES }            from 'ng2-select';
 import { AppRoutingModule }     		    from './app-routing.module';

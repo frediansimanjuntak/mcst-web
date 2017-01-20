@@ -55,8 +55,8 @@ import {
 } from '../components/index';
 const routes: Routes = [
   { path: '', redirectTo: '/login', pathMatch: 'full' },
-  { path: 'login',  component: LoginComponent, canActivate: [AuthGuard] },
-  { path: 'register', component: RegisterComponent, canActivate: [AuthGuard] },
+  { path: 'login',  component: LoginComponent},
+  { path: 'register', component: RegisterComponent},
   { path: ':name/user',     component: UserComponent, canActivate: [AuthGuard] },
   { path: ':name/user/add',   component: EditUserComponent, canActivate: [AuthGuard] },
   { path: ':name/user/edit/:id',   component: EditUserComponent, canActivate: [AuthGuard] },
