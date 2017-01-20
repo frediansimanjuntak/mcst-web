@@ -54,6 +54,15 @@ export class PollService {
           .catch(this.handleError);
     }
 
+
+    start(id: string): Promise<void> {
+        return this.http.post(url + 'api/polls/start/' + id, this.options)
+          .toPromise()
+          .then(() => null)
+          .catch(this.handleError);
+    }
+    
+
     private handleError(error: any): Promise<any> {
         console.error('An error occurred', error); // for demo purposes only
         return Promise.reject(error.message || error);
