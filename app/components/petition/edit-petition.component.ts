@@ -50,8 +50,7 @@ export class EditPetitionComponent implements OnInit {
 
     ngOnInit(): void {
         this.userService.getByToken().subscribe(name => {this.name = name;})
-    	this.selectedType = 'Maintenance';
-        this.loadAllPetitions();
+        this.selectedType = 'Maintenance';
         this.loadAllUnits();
         this.myForm = this.formbuilder.group({
             reference_no : [''],
@@ -77,7 +76,7 @@ export class EditPetitionComponent implements OnInit {
         }
     }
 
-      createPetition(model: any, isValid: boolean) {
+    createPetition(model: any, isValid: boolean) {
         this.submitted = true;
         if(isValid || this.unit){
             console.log(this.unit);
@@ -88,58 +87,40 @@ export class EditPetitionComponent implements OnInit {
             Petitions.push(model);
             console.log(model);
 
-            this.router.navigate([this.name.default_development.name + '/petition']);
-              // this.petitionService.create(model)
-            // .then(
-            //     data => {
-            //         this.alertService.success('Create petition successful', true);
-            //         this.router.navigate(['/user']);
-            //     },
-            //     error => {
-            //         this.alertService.error(error);
-            //     }
-            // );
+            // this.router.navigate([this.name.default_development.name + '/petition']);
+            this.petitionService.create(model)
+            .then(
+                data => {
+                    this.alertService.success('Create petition successful', true);
+                    this.router.navigate(['/petition']);
+                },
+                error => {
+                    this.alertService.error(error);
+                }
+            );
         }
     }
 
-    private loadAllPetitions() {
-        //---------------------------Call To Api-------------- //
-        // this.announcementService.getAll()
-        //     .subscribe((data)=> {
-        //         setTimeout(()=> {
-        //             this.data          = data.find(data => data._id === this.developmentId );
-        //             this.dataAgm       = this.data.newsletter.filter(data => data.type === 'agm' );
-        //             this.dataCircular  = this.data.newsletter.filter(data => data.type === 'circular' );
-        //             console.log(this.dataAgm);
-        //         }, 1000);
-        //     });
-
-        this.petitionService.getPetitions().then(data => {
-            this.petitions         = data;
-        });
-    }
-
-
     private loadAllUnits(): void {
-        this.unitService.getDevelopments().then(development => {
+        this.unitService.getAll(this.name.default_development.name)
+            .subscribe((data)=> {
+                setTimeout(()=> {
+                    this.units = data.properties;
 
-            this.units = development[0].properties;
+                    console.log(this.units);
+                    let numOptions =  this.units.length;
+                    let opts = new Array(numOptions);
 
-
-            let numOptions =  this.units.length;
-            let opts = new Array(numOptions);
-
-            for (let i = 0; i < numOptions; i++) {
-                opts[i] = {
-                    id: this.units[i]._id,
-                    text: '#' + this.units[i].address.unit_no + '-' + this.units[i].address.unit_no_2
-                };
-            }
-
-            this.myOptions = opts.slice(0);
-
-            this.items = this.myOptions;
-        });
+                    for (let i = 0; i < numOptions; i++) {
+                        opts[i] = {
+                            id: this.units[i]._id,
+                            text: '#' + this.units[i].address.unit_no + '-' + this.units[i].address.unit_no_2
+                        };
+                    }
+                    this.myOptions = opts.slice(0);
+                    this.items = this.myOptions;
+                }, 1000);
+            });
     }
 
     public refreshValueUnit(value:any):void {
@@ -158,16 +139,16 @@ export class EditPetitionComponent implements OnInit {
 
     updatePetition(){
     	console.log(this.petition);
-		// this.petitionService.update(this.petition)
-		// .then(
-		// 	response => {
-  //               this.alertService.success('Update incident successful', true);
-  //               this.router.navigate(['/incident']);
-  //           },
-  //           error => {
-  //           	this.alertService.error(error);
-  //           }
-  //       );
+		this.petitionService.update(this.petition)
+		.then(
+			response => {
+                this.alertService.success('Update incident successful', true);
+                this.router.navigate(['/incident']);
+            },
+            error => {
+            	this.alertService.error(error);
+            }
+        );
 	}
 
     onChange(event: any) {

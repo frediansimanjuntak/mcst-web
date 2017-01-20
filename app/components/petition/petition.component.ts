@@ -49,15 +49,22 @@ export class PetitionComponent implements OnInit {
                 ) {}
 
     ngOnInit(): void {
-        this.userService.getByToken().subscribe(name => {this.name = name;})
         this.route.params.subscribe(params => {
             this.id = params['id'];
         });
-        if( this.id == null) {
-            this.loadAllPetitions();
-        }else{
-        	this.petitionService.getPetition(this.id).then(petition => {this.petition = petition;});
-        }
+
+        this.userService.getByToken()
+                            .subscribe(name => {
+                                this.name = name;
+                                if( this.id == null) {
+                                    this.loadAllPetitions();
+                                }else{
+                                    this.petitionService.getById(this.id)
+                                        .subscribe(petition => {
+                                            this.petition = petition;
+                                        });
+                                }
+                            })
     }
 
     private logCheckbox(element: HTMLInputElement): void {
@@ -91,17 +98,16 @@ export class PetitionComponent implements OnInit {
     }
 
 	private loadAllPetitions() {
-        //---------------------------Call To Api-------------- //
-        // this.petitionService.getAll()
-        //     .subscribe((data)=> {
-        //         setTimeout(()=> {
-        //             this.petitions         = data.filter(data => data.archived === false );
-        //         }, 1000);
-        // });
+        this.petitionService.getAll()
+            .subscribe((data)=> {
+                setTimeout(()=> {
+                    this.petitions = data.filter(data => data.archived === false && data.development._id == this.name.default_development._id );
+                }, 1000);
+        });
 
-        this.petitionService.getPetitions().then(data => {
-            this.petitions         = data.filter(data => data.archived === false && data.development === this.name.default_development.name );
-		});
+  //       this.petitionService.getPetitions().then(data => {
+  //           this.petitions         = data.filter(data => data.archived === false && data.development === this.name.default_development.name );
+		// });
     }
 
     viewPetition(petition: Petition){
@@ -122,9 +128,7 @@ export class PetitionComponent implements OnInit {
 
     archieveSelected(){
         console.log(this.selectedValues);
-        for (var i = 0; i < this.selectedValues.length; i++) {
-            this.petitionService.archive(this.selectedValues[i])
-        }
+        this.petitionService.archive(this.selectedValues)
         this.ngOnInit();
     }
 
