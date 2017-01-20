@@ -3,7 +3,6 @@ import { Router, Params, ActivatedRoute } from '@angular/router';
 import { Petition } from '../../models/index';
 import { PetitionService, AlertService, UserService} from '../../services/index';
 import '../../rxjs-operators';
-import { NG_TABLE_DIRECTIVES }    from 'ng2-table/ng2-table'
 import { Observable} from 'rxjs/Observable';
 import { Location }               from '@angular/common';
 import * as $ from "jquery";

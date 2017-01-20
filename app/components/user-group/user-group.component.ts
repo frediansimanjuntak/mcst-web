@@ -4,7 +4,6 @@ import { UserGroup, User } from '../../models/index';
 import { UserGroupService, UserService, AlertService} from '../../services/index';
 import '../../rxjs-operators';
 import { FileUploader } from 'ng2-file-upload';
-import {NG_TABLE_DIRECTIVES}    from 'ng2-table/ng2-table'
 import { Observable} from 'rxjs/Observable';
 
 @Component({

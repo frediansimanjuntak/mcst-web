@@ -2,16 +2,15 @@ import { Component, OnInit, ViewContainerRef, ViewEncapsulation, ViewChild } fro
 import { Router, Params, ActivatedRoute } from '@angular/router';
 import { Poll } from '../../models/index';
 import { PollService, AlertService, UserService} from '../../services/index';
-import { NG_TABLE_DIRECTIVES }    from 'ng2-table/ng2-table'
 import { Observable} from 'rxjs/Observable';
 import { Location }               from '@angular/common';
 import * as $ from "jquery";
 import '../../rxjs-operators';
 
 @Component({
-  moduleId: module.id,
+  // moduleId: module.id,
   selector: 'poll',
-  template: 'app/templates/petition.html',
+  templateUrl: 'app/templates/poll.html',
 })
 
 export class PollComponent implements OnInit { 

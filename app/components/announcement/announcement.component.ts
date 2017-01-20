@@ -3,7 +3,6 @@ import { Router } from '@angular/router';
 import { Announcement, Announcements} from '../../models/index';
 import { AnnouncementService, AlertService, UserService} from '../../services/index';
 import '../../rxjs-operators';
-import { NG_TABLE_DIRECTIVES }    from 'ng2-table/ng2-table'
 import { Observable} from 'rxjs/Observable';
 import * as $ from "jquery";
 // import { Overlay } from 'angular2-modal';

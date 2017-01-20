@@ -3,7 +3,6 @@ import { Router, Params, ActivatedRoute } from '@angular/router';
 import { Development, Developments } from '../../models/index';
 import { UnitService, AlertService, UserService } from '../../services/index';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
-import { NG_TABLE_DIRECTIVES }    from 'ng2-table/ng2-table'
 import { Location }               from '@angular/common';
 import { Observable} from 'rxjs/Observable';
 import '../../rxjs-operators';
