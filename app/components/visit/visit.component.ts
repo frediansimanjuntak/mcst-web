@@ -3,21 +3,15 @@ import { Router, Params, ActivatedRoute } from '@angular/router';
 import { Visit, Visits } from '../../models/index';
 import { VisitService, AlertService, UserService} from '../../services/index';
 import '../../rxjs-operators';
-import { NG_TABLE_DIRECTIVES }    from 'ng2-table/ng2-table'
 import { Observable} from 'rxjs/Observable';
 import { Location }               from '@angular/common';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import * as $ from "jquery";
-// import { Overlay } from 'angular2-modal';
-// import { Modal } from 'angular2-modal/plugins/bootstrap';
-// import { PublishAnnouncementModalComponent, PublishAnnouncementModalData } from './publish-announcement-modal.component';
-
 
 @Component({
   // moduleId: module.id,
   selector: 'visit',
   templateUrl: 'app/templates/visit.html',
-
 })
 
 export class VisitComponent implements OnInit {
@@ -54,8 +48,8 @@ export class VisitComponent implements OnInit {
                 private formbuilder: FormBuilder,
                  private userService: UserService
                 ) {
-     this.visitDateCreate = new Date();
-     this.activeDate = this.activeDateFull = new Date();
+        this.visitDateCreate = new Date();
+        this.activeDate = this.activeDateFull = new Date();
     }
 
     ngOnInit(): void {
@@ -76,9 +70,7 @@ export class VisitComponent implements OnInit {
 		this.activeDate = this.convertDate(this.activeDate);
 		}
 
-       	
-
-		this.myForm = this.formbuilder.group({
+       	this.myForm = this.formbuilder.group({
 			 	property: ['', <any>Validators.required],
                 visitor: this.formbuilder.group({
                     full_name : ['',  <any>Validators.required],
@@ -257,7 +249,6 @@ export class VisitComponent implements OnInit {
     }
 
 	private loadVisits() {
-        //---------------------------Call To Api-------------- //
         this.visitService.getAll()
             .subscribe((data)=> {
                 setTimeout(()=> {

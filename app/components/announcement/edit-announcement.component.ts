@@ -88,7 +88,7 @@ export class EditAnnouncementComponent  {
         };
     }
 
-    createAnnouncement(event: any) {
+    createAnnouncement() {
         if(this.model.auto_post_on == ""){
             this.model.auto_post_on = "no"
         }

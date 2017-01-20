@@ -35,6 +35,7 @@ import {
   PaymentComponent,
   EditPaymentComponent,
   PollComponent,
+  EditPollComponent,
   QuotationComponent,
   SettingComponent,
   EditSettingComponent,
@@ -115,7 +116,11 @@ const routes: Routes = [
   { path: ':name/notification', component: NotificationComponent, canActivate: [AuthGuard] },
   { path: ':name/lost_found', component: LostFoundComponent, canActivate: [AuthGuard] },
   { path: ':name/lost_found/view/:id', component: LostFoundComponent, canActivate: [AuthGuard] },
-
+  { path: ':name/poll', component: PollComponent, canActivate: [AuthGuard] },
+  { path: ':name/poll/view/:id', component: PollComponent, canActivate: [AuthGuard] },
+  { path: ':name/poll/edit/:id',   component: EditPollComponent, canActivate: [AuthGuard] },
+  { path: ':name/company/add',   component: EditPollComponent, canActivate: [AuthGuard] },
+ 
   // { path: 'petition/edit/:id',   component: EditAnnouncementComponent },
   // { path: 'form',     component: HeroFormComponent },
   // { path: 'table',     component: TableDemoComponent },

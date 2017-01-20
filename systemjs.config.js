@@ -41,12 +41,12 @@
       'signature_pad' : 'npm:signature_pad',
       'angular2-modal': 'npm:angular2-modal',
       'mydatepicker': 'npm:mydatepicker',
-      "ng2-modal": "node_modules/ng2-modal",
+      "ngx-modal": "node_modules/ngx-modal",
       'angular2-modal/plugins/bootstrap': 'npm:angular2-modal/bundles/angular2-modal.bootstrap.umd.js',
       'ng2-imageupload': 'node_modules/ng2-imageupload',
       'ng2-slim-loading-bar': 'node_modules/ng2-slim-loading-bar/bundles/index.umd.js',
       'angular2-notifications': 'node_modules/angular2-notifications',
-      "ng2-popover": "node_modules/ng2-popover"
+      "ngx-popover": "node_modules/ngx-popover"
     },
     // packages tells the System loader how to load when no filename and/or no extension
     packages: {
@@ -64,11 +64,11 @@
       'lodash': { main: 'lodash.js', defaultExtension: 'js' },
       primeng: { defaultExtension: 'js' },
       'fullcalendar': { main: 'fullcalendar.js', defaultExtension: 'js' },
-      "ng2-modal": { "main": "index.js", "defaultExtension": "js" },
+      "ngx-modal": { "main": "index.js", "defaultExtension": "js" },
       'ng2-imageupload': { main: 'index.js', defaultExtension: 'js'},
       'angular2-modal': { defaultExtension: 'js', main: '/bundles/angular2-modal.umd.js' },
       'angular2-notifications': { main: 'components.js', defaultExtension: 'js' },
-      "ng2-popover": { "main": "index.js", "defaultExtension": "js" },
+      "ngx-popover": { "main": "index.js", "defaultExtension": "js" },
       'angular2-signaturepad': { main: 'index.js', defaultExtension: 'js' },
       'signature_pad': { main: 'signature_pad.js', defaultExtension: 'js' },
     }

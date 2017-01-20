@@ -3,7 +3,6 @@ import { Router, Params, ActivatedRoute } from '@angular/router';
 import { LostFound, LostFounds } from '../../models/index';
 import { LostFoundService, AlertService, UserService} from '../../services/index';
 import '../../rxjs-operators';
-import { NG_TABLE_DIRECTIVES }    from 'ng2-table/ng2-table'
 import { Observable} from 'rxjs/Observable';
 import { Location }               from '@angular/common';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
@@ -121,11 +120,11 @@ export class LostFoundComponent implements OnInit {
 
         this.lostFoundService.getLostFounds().then(data => {
             this.lostFounds      = data.filter(data => data.development == this.name.default_development.name);
-            this.archieveds      = this.lostFounds.filter(data => data.archieved );
+            this.archieveds      = this.lostFounds.filter(data => data.archieve );
             this.archievedLosts = this.all.filter(data => data.type == 'lost');
             this.archievedFounds= this.all.filter(data => data.type == 'found');
 
-            this.all             = this.lostFounds.filter(data => !data.archieved );
+            this.all             = this.lostFounds.filter(data => !data.archieve );
             this.losts           = this.all.filter(data => data.type == 'lost');
             this.founds          = this.all.filter(data => data.type == 'found');
 		});
