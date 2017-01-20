@@ -122,7 +122,6 @@ import {
   	FormsModule,
   	ReactiveFormsModule,
   	HttpModule,
-  	Ng2TableModule,
   	Ng2BootstrapModule,
   	PaginationModule,
   	AppRoutingModule,
