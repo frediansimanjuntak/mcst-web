@@ -60,7 +60,7 @@ const routes: Routes = [
   { path: ':name/user',     component: UserComponent, canActivate: [AuthGuard] },
   { path: ':name/user/add',   component: EditUserComponent, canActivate: [AuthGuard] },
   { path: ':name/user/edit/:id',   component: EditUserComponent, canActivate: [AuthGuard] },
-  { path: ':name/dashboard',     component: DashboardComponent, canActivate: [AuthGuard] },
+  { path: ':name/dashboard',     component: DashboardComponent},
   { path: ':name/newsletter',   component: NewsletterComponent, canActivate: [AuthGuard] },
   { path: ':name/newsletter/add',   component: EditNewsletterComponent, canActivate: [AuthGuard] },
   { path: ':name/newsletter/edit/:id',   component: EditNewsletterComponent, canActivate: [AuthGuard] },
