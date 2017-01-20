@@ -56,3 +56,4 @@ export * from './unit/view-unit.component';
 export * from './visit/visit.component';
 export * from './visit/edit-visit.component';
 export * from './test.component';
+export * from './esign.component';

@@ -14,6 +14,7 @@ import { SelectModule }                 from 'ng2-select/ng2-select';
 import { MyDatePickerModule }           from 'mydatepicker/dist/my-date-picker.module';
 import { SignaturePadModule }           from 'angular2-signaturepad';
 import { signature_pad }                from 'signature_pad';
+import { SignaturePad } from 'angular2-signaturepad/signature-pad';
 // import { DatePickerModule }             from 'ng2-datepicker';
 // import { SELECT_DIRECTIVES }            from 'ng2-select';
 import { AppRoutingModule }     		    from './app-routing.module';
@@ -79,7 +80,8 @@ import {
   TestComponent,
   Galleria,
   NotificationComponent,
-  LostFoundComponent
+  LostFoundComponent,
+  SignaturePadPage,
 } from '../components/index';
 
 import {
@@ -123,6 +125,7 @@ import {
   	PaginationModule,
   	AppRoutingModule,
     SharedModule,
+    SignaturePadModule,
     ScheduleModule,
     DialogModule,
     InputMaskModule,
@@ -195,7 +198,7 @@ import {
     Galleria,
     NotificationComponent,
     LostFoundComponent,
-    
+    SignaturePadPage,
   ],
   providers: [ 
     AccessControlService,
