@@ -81,6 +81,7 @@ import {
   Galleria,
   NotificationComponent,
   LostFoundComponent,
+  EditLostFoundComponent,
 
 } from '../components/index';
 
@@ -198,7 +199,7 @@ import {
     Galleria,
     NotificationComponent,
     LostFoundComponent,
-    
+    EditLostFoundComponent
   ],
   providers: [ 
     AccessControlService,
