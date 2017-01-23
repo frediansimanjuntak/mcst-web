@@ -200,7 +200,7 @@ import {
     Galleria,
     NotificationComponent,
     LostFoundComponent,
-    
+    EditLostFoundComponent
   ],
   providers: [ 
     AccessControlService,
