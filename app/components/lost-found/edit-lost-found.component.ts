@@ -37,14 +37,16 @@ export class EditLostFoundComponent  {
     }
 
     ngOnInit() {
-        this.userService.getByToken().subscribe(name => {this.name = name;})
-        this.loadAllUnits();
+        this.userService.getByToken()
+                            .subscribe(name => {
+                                this.name = name;
+                                this.loadAllUnits();
+                            })
+        
     }
 
     createReport(event: any) {
         this.model.serial_number = 142141;
-        this.model.made_by       = this.name.username;
-        this.model.development         = this.name.default_development.name;
         console.log(this.model);
         this.lostFoundService.create(this.model)
         .then(
@@ -68,7 +70,7 @@ export class EditLostFoundComponent  {
         this.unitService.getAll(this.name.default_development.name)
             .subscribe((data)=> {
                 setTimeout(()=> {
-                    this.dataUnit       = data;
+                    this.dataUnit       = data.properties;
                     console.log(this.dataUnit);
                 }, 1000);
             });

@@ -7,7 +7,6 @@ import { SimpleNotificationsModule }    from 'angular2-notifications';
 import { FileDropDirective }            from 'ng2-file-upload';
 import { ReactiveFormsModule }			    from '@angular/forms';
 import { HttpModule }                   from '@angular/http';
-import { Ng2TableModule }               from 'ng2-table/ng2-table';
 import { Ng2BootstrapModule }           from 'ng2-bootstrap/ng2-bootstrap';
 import { PaginationModule,DatepickerModule }             from 'ng2-bootstrap/ng2-bootstrap';
 import { SelectModule }                 from 'ng2-select/ng2-select';
@@ -82,6 +81,8 @@ import {
   Galleria,
   NotificationComponent,
   LostFoundComponent,
+  EditLostFoundComponent,
+
   SignaturePadPage,
 } from '../components/index';
 
@@ -121,7 +122,6 @@ import {
   	FormsModule,
   	ReactiveFormsModule,
   	HttpModule,
-  	Ng2TableModule,
   	Ng2BootstrapModule,
   	PaginationModule,
   	AppRoutingModule,
@@ -200,7 +200,7 @@ import {
     Galleria,
     NotificationComponent,
     LostFoundComponent,
-    SignaturePadPage,
+    EditLostFoundComponent
   ],
   providers: [ 
     AccessControlService,

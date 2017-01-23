@@ -10,7 +10,7 @@
                     <label class="control-label col-sm-4" for="unit_no">Unit No :</label>
                     <div class="col-sm-8">
                         <select class="form-control" name="sticky" [(ngModel)]="model.unit_no">
-                          <option *ngFor="let u of dataUnit" [ngValue]="u._id">#{{u.unit_no}}-{{u.unit_no2}}</option>
+                          <option *ngFor="let u of dataUnit" [ngValue]="u._id">#{{u.address.unit_no}}-{{u.address.unit_no_2}}</option>
                         </select>
                     </div>
                 </div>
