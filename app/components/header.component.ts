@@ -15,11 +15,12 @@ import { AppComponent } from './index';
 
 export class HeaderComponent implements OnInit{
 	title = 'MCST';
+    authToken : any;
 	notification: Notification;
 	allNotifications: Notification[] = [];
 	unreadNotifications: Notification[] = [];
     unreadNotificationsToShow: Notification[] = [];
-    notificationsIds: any[] = [];
+    notificationsIds: any ={};
 	unreadNotificationTotal: number;
 	userId: string;
     user: string;
@@ -38,45 +39,36 @@ export class HeaderComponent implements OnInit{
     }
 
     ngOnInit(){
-    	this.userService.getByToken().subscribe(name => this.name = name)
-       	this.loadUnread();
+        this.authToken = JSON.parse(localStorage.getItem('authToken'));
+    	this.userService.getByToken()
+                            .subscribe(name => {
+                                this.name = name;
+                                if(this.authToken){
+                                    this.loadUnread();
+                                }
+                            })
         this.NotificationClicked = false;
 
 	}
 
-	private loadUnread() {
-        //---------------------------Call To Api-------------- //
-        // this.notificationService.getUnread(this.userId)
-        //     .subscribe((data)=> {
-        //         setTimeout(()=> {
-        //             this.unreadNotifications = data;
-        //             this.unreadNotificationsToShow  = data.slice(0, 10);
-        //             this.unreadNotificationTotal = this.unreadNotifications.length;
+	private loadUnread() {        this.notificationService.getUnread(this.name._id)
+            .subscribe((data)=> {
+                setTimeout(()=> {
+                    this.unreadNotifications = data;
+                    this.unreadNotificationsToShow  = data.slice(0, 10);
+                    this.unreadNotificationTotal = this.unreadNotifications.length;
+                    this.notificationsIds._ids = [];    
+                    for (var i = 0; i < this.unreadNotificationsToShow.length; i++) {
+                        this.notificationsIds._ids.push(this.unreadNotificationsToShow[i]._id)
+                    }
+                }, 1000);
+            });
 
-        //             for (var i = 0; i < this.unreadNotificationsToShow.length; i++) {
-        //                 this.notificationsIds[i] = this.unreadNotificationsToShow[i]._id;
-        //             }
-
-        //             console.log(this.notificationsIds);
-        //         }, 1000);
-        //     });
-
-        this.notificationService.getNotifications().then(data => {
-            this.allNotifications      		= data;
-            this.unreadNotifications 		= this.allNotifications.filter(data => data.read_at == '' && data.user == this.userId );
-            this.unreadNotificationsToShow  = this.allNotifications.filter(data => data.read_at == '' && data.user == this.userId ).slice(0, 10);
-            this.unreadNotificationTotal 	= this.unreadNotifications.length;
-
-            for (var i = 0; i < this.unreadNotificationsToShow.length; i++) {
-                this.notificationsIds[i] = this.unreadNotificationsToShow[i]._id;
-            }
-
-        });
     }
 
     onNotificationClick(){
     	this.unreadNotificationTotal = 0;
-
+        
         if(this.NotificationClicked == false){
             this.notificationService.read(this.notificationsIds, this.name._id)
         }
