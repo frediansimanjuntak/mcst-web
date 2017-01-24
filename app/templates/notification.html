@@ -9,10 +9,14 @@
 				<p-dataTable [value]="dataToShow" [lazy]="true" [rows]="10" [paginator]="true" 
 			            [totalRecords]="allNotificationTotal" (onLazyLoad)="loadLazy($event)">
 			    <header>All Notifications</header>
-			    <p-column field="message" header="Message"></p-column>
+			    <p-column header="Message">
+			    	<template let-dataToShow="rowData" pTemplate="body">
+						<a type="button" class="btn-underline" (click)="goToPage(dataToShow)">{{dataToShow.message}}</a>    
+			        </template>
+			    </p-column>
 			    <p-column header="Date Time">
 					<template let-dataToShow="rowData" pTemplate="body">
-						{{dataToShow.created_at | date:'fullDate'}}     
+						{{dataToShow.created_at | date:'fullDate'}} - {{dataToShow.created_at | date:'shortTime'}}      
 			        </template>
 				</p-column>
 			</p-dataTable>  		

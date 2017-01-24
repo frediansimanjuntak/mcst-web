@@ -57,6 +57,7 @@ export class PollComponent implements OnInit {
     	  this.pollService.getAll()
             .subscribe((data)=> {
                 setTimeout(()=> {
+                    console.log(data);
                     this.polls 		= data.filter(data => data.development._id == this.name.default_development._id );
                     this.pollsDraft = this.polls.filter(data => data.status == "draft" );
                     this.pollsActive = this.polls.filter(data => data.status == "active" );

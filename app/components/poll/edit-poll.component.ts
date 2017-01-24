@@ -10,7 +10,7 @@ import 'rxjs/add/operator/switchMap';
 @Component({
   // moduleId: module.id,
   selector: 'edit-poll',
-  template: `app/templates/edit-poll.html`,
+  templateUrl: `app/templates/edit-poll.html`,
 })
 
 export class EditPollComponent  { 
@@ -83,6 +83,7 @@ export class EditPollComponent  {
 
     createPoll() {
     	this.model.status = 'draft';
+        console.log(this.model);
         this.pollService.create(this.model)
         .then(
             data => {
