@@ -71,18 +71,18 @@ export class BookingComponent implements OnInit {
         this.facilityService.getFacilities()
         .then(facilities => { 
             this.facilities = facilities;
-            // this.start = facilities[0].schedule[0].start_time.slice(0,2);
-            // let start = +this.start
-            // this.end = facilities[0].schedule[0].end_time.slice(0,2);
-            // let end = +this.end    
-            // this.min =    facilities[0].schedule[0].start_time.slice(2,5);
-            // for (var i = start; i < end; ++i) {
-            //         this.times_start.push(i)
-            // }
-            // while(start < end){       
-            //        start += 1;
-            //        this.times_end.push(start)
-            // }
+            this.start = facilities[0].schedule[0].start_time.slice(0,2);
+            let start = +this.start
+            this.end = facilities[0].schedule[0].end_time.slice(0,2);
+            let end = +this.end    
+            this.min =    facilities[0].schedule[0].start_time.slice(2,5);
+            for (var i = start; i < end; ++i) {
+                    this.times_start.push(i)
+            }
+            while(start < end){       
+                   start += 1;
+                   this.times_end.push(start)
+            }
         });
         for (var a = 0; a < 24; ++a) {
             this.period.push(a)
@@ -137,8 +137,6 @@ export class BookingComponent implements OnInit {
                     }
                 })
             })
-            
-            
             console.log(this.bookings)
         });
         
@@ -172,37 +170,44 @@ export class BookingComponent implements OnInit {
         this.bookingService.getBookings()
         .then(bookings => {
             this.bookings = bookings;
-            if(booking.status == "all" ) {
+            if(booking.status == "all" && booking.type != "all" ) {
                 this.filtered = this.bookings.filter(data => 
+                    data.booking_date.slice(0,10) == this.day &&
                     data.start_time >= start && 
-                    data.end_time <= end && 
-                    data.facility.name == booking.name &&
-                    data.facility.facility_type == booking.type
+                    data.end_time <= end &&
+                    data.facility.name == booking.name 
                 );
+                console.log("1")
             };
             if(booking.status == "all" && booking.type == "all") {
                 this.filtered = this.bookings.filter(data => 
-                    data.start_time >= start && 
-                    data.end_time <= end && 
-                    data.facility.name == booking.name 
-                );
-            };
-            if(booking.type == "all") {
-                this.filtered = this.bookings.filter(data => 
-                    data.start_time >= start && 
-                    data.end_time <= end && 
-                    data.facility.name == booking.name &&
-                    data.status == booking.status
-                );
-            }else{
-                this.filtered = this.bookings.filter(data => 
+                    data.booking_date.slice(0,10) == this.day &&
                     data.start_time >= start && 
                     data.end_time <= end &&
-                    data.status == booking.status &&
-                    data.facility.name == booking.name &&
-                    data.facility.facility_type == booking.type
+                    data.facility.name == booking.name 
                 );
+                console.log("2")
+            };
+            if(booking.status != "all" && booking.type == "all") {
+                this.filtered = this.bookings.filter(data => 
+                    data.booking_date.slice(0,10) == this.day &&
+                    data.start_time <= start && 
+                    data.end_time >= end &&
+                    data.facility.name == booking.name 
+                );
+                console.log("3")
             }
+            if(booking.status != "all" && booking.type != "all") {
+                this.filtered = this.bookings.filter(data => 
+                    data.booking_date.slice(0,10) == this.day &&
+                    data.start_time >= start && 
+                    data.end_time <= end &&
+                    data.facility.name == booking.name 
+                    
+                );
+                console.log("4")
+            };
+            console.log(this.filtered,booking,start,end)
         });
     }
 
