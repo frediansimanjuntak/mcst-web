@@ -8,7 +8,7 @@ import 'rxjs/add/operator/toPromise';
  
 @Injectable()
 export class LostFoundService {
-    private headers = new Headers({'Content-Type': 'application/json', 'Authorization': 'Bearer ' + this.authenticationService.token });
+    private headers = new Headers({ 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + this.authenticationService.token });
     private options = new RequestOptions({ headers: this.headers });
     constructor(private http: Http, private authenticationService: AuthenticationService) {}
 
@@ -33,8 +33,8 @@ export class LostFoundService {
             .catch((error:any) => Observable.throw(error.json().error || 'Server error'));
     }
 
-    create(body:any): Promise<LostFound> {
-        return this.http.post(url +  'api/lost_found', JSON.stringify(body), this.options)
+    create(body:any): Promise<any> {
+        return this.http.post(url +  'api/lost_found', body, this.options)
             .toPromise()
             .then(res => res.json().data)
             .catch(this.handleError);
@@ -54,8 +54,9 @@ export class LostFoundService {
           .catch(this.handleError);
     }
 
-    archieve(id: string): Promise<void> {
-        return this.http.post(url + 'api/lost_found/archieve/' + id, this.options)
+    archieve(id: string): Promise<LostFound> {
+        console.log(this.options);
+        return this.http.post(url + 'api/lost_found/archieve/' + id, '', this.options)
           .toPromise()
           .then(() => null)
           .catch(this.handleError);

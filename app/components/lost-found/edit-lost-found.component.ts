@@ -23,6 +23,7 @@ export class EditLostFoundComponent  {
     validTillDateOptions: any = {};
     name: any;
     dataUnit: any[]=[];
+    photos: any;
 
     constructor(private router: Router,
     	private lostFoundService: LostFoundService,
@@ -46,7 +47,8 @@ export class EditLostFoundComponent  {
     }
 
     createReport(event: any) {
-        this.model.serial_number = 142141;
+        // this.model.serial_number = 142141;
+        this.model.archieve = false;
         console.log(this.model);
         this.lostFoundService.create(this.model)
         .then(
@@ -79,11 +81,11 @@ export class EditLostFoundComponent  {
 
     onChange(event: any) {
        let files = [].slice.call(event.target.files);
-       this.model.attachment = files;
+       this.model.photo = files;
     }
 
     remove(i: any){
-        this.model.attachment.splice(i, 1)
+        this.model.photo.splice(i, 1)
     }
 
     goToLostFound(){

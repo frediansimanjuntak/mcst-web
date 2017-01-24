@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Notification, Notifications } from '../models/index';
 import { NotificationService, AlertService, UserService} from '../services/index';
+import { Router} from '@angular/router';
 import '../rxjs-operators';
 import { Observable} from 'rxjs/Observable';
 
@@ -22,7 +23,8 @@ export class NotificationComponent implements OnInit {
 	constructor(
                 private notificationService: NotificationService,
                 private alertService: AlertService,
-                private userService: UserService
+                private userService: UserService,
+                private router: Router,
                 ) {}
 
     ngOnInit(): void {
@@ -30,28 +32,20 @@ export class NotificationComponent implements OnInit {
             .subscribe(name => {
                    this.name = name;
                    this.userId = this.name._id;
+                   this.loadNotifications();
                })
-       	this.loadNotifications();
 
 	}
 
 	private loadNotifications() {
-        //---------------------------Call To Api-------------- //
-        // this.notificationService.getAll(this.userId)
-        //     .subscribe((data)=> {
-        //         setTimeout(()=> {
-        //             this.allNotifications = data;
-        //             this.allNotificationTotal = this.allNotifications.length;
-        //             this.dataToShow            = this.allNotifications.slice(0, 10);
-        //         }, 1000);
-        //     });
-
-        this.notificationService.getNotifications().then(data => {
-            this.allNotifications 	   = data.filter(data => data.user == '1' );
-            this.allNotificationTotal  = this.allNotifications.length;
-            this.dataToShow            = this.allNotifications.slice(0, 10);
-            console.log(this.allNotificationTotal);
-        });
+        this.notificationService.getAll(this.userId)
+            .subscribe((data)=> {
+                setTimeout(()=> {
+                    this.allNotifications = data;
+                    this.allNotificationTotal = this.allNotifications.length;
+                    this.dataToShow            = this.allNotifications.slice(0, 10);
+                }, 1000);
+            });
     }
 
     loadLazy(event) {
@@ -60,5 +54,38 @@ export class NotificationComponent implements OnInit {
                 this.dataToShow = this.allNotifications.slice(event.first, (event.first + event.rows));
             }
         }, 250);
+    }
+
+    goToPage(notification: Notification){
+        switch (notification.ref)
+        {
+            case 'petition' :
+                this.router.navigate([this.name.default_development.name + '/petition/view', notification.ref_id]);
+            break;
+            case 'incident' :
+                this.router.navigate([this.name.default_development.name + '/incident/view', notification.ref_id]);
+            break;
+            case 'payment' :
+                this.router.navigate([this.name.default_development.name + '/payment/view', notification.ref_id]);
+            break;
+            case 'contract' :
+                this.router.navigate([this.name.default_development.name + '/contract/view', notification.ref_id]);
+            break;
+            case 'facility' :
+                this.router.navigate([this.name.default_development.name + '/facility/view', notification.ref_id]);
+            break;
+            case 'booking' :
+                this.router.navigate([this.name.default_development.name + '/booking/view', notification.ref_id]);
+            break;
+            case 'unit' :
+                this.router.navigate([this.name.default_development.name + '/unit/view', notification.ref_id]);
+            break;
+            case 'lost_found' :
+                this.router.navigate([this.name.default_development.name + '/lost_found/view', notification.ref_id]);
+            break;
+            case 'poll' :
+                this.router.navigate([this.name.default_development.name + '/poll/view', notification.ref_id]);
+            break;     
+        }
     }
 }
