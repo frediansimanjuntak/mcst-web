@@ -82,21 +82,23 @@ export class LostFoundComponent implements OnInit {
 	  return yyyy + '-' + (mmChars[1]?mm:"0"+mmChars[0]) + '-' + (ddChars[1]?dd:"0"+ddChars[0]);
 	}
 
-    preCheckIn(lostFound){
+    openModal(lostFound){
     	this.lostFoundforModal = lostFound;
     }
 
     archieve(id) {
+        console.log(id);
         this.lostFoundService.archieve(id)
             .then(
                 data => {
                     this.firstModal.close();
-                    this.alertService.success('Publish data successful', true);
+                    this.alertService.success('Archive data successful', true);
+                    this.ngOnInit();
                 },
                 error => {
                     console.log(error);
                     this.firstModal.close();
-                    alert(`could not be Publish, server Error.`);
+                    alert(`could not be archive, server Error.`);
                 }
             );
     }
@@ -107,27 +109,31 @@ export class LostFoundComponent implements OnInit {
 
     private loadLostFounds() {
         //---------------------------Call To Api-------------- //
-        // this.lostFoundService.getAll()
-        //     .subscribe((data)=> {
-        //         setTimeout(()=> {
-        //             this.lostFounds      = data.filter(data => data.development == this.name.default_development.name);
-        //             this.archieveds      = this.lostFounds.filter(data => data.archieved );
-        //             this.all             = this.lostFounds.filter(data => !data.archieved );
-        //             this.losts           = this.all.filter(data => data.type == 'lost');
-        //             this.founds          = this.all.filter(data => data.type == 'found');
-        //         }, 1000);
-        //     });
+        this.lostFoundService.getAll()
+            .subscribe((data)=> {
+                setTimeout(()=> {
+                    this.lostFounds      = data.filter(data => data.development == this.name.default_development._id);
+                    this.archieveds      = this.lostFounds.filter(data => data.archieved );
+                    this.archievedLosts = this.archieveds.filter(data => data.type == 'lost');
+                    this.archievedFounds= this.archieveds.filter(data => data.type == 'found');
 
-        this.lostFoundService.getLostFounds().then(data => {
-            this.lostFounds      = data.filter(data => data.development == this.name.default_development.name);
-            this.archieveds      = this.lostFounds.filter(data => data.archieve );
-            this.archievedLosts = this.all.filter(data => data.type == 'lost');
-            this.archievedFounds= this.all.filter(data => data.type == 'found');
+                    this.all             = this.lostFounds.filter(data => !data.archieved );
+                    this.losts           = this.all.filter(data => data.type == 'lost');
+                    this.founds          = this.all.filter(data => data.type == 'found');
+                    console.log(this.lostFounds);
+                }, 1000);
+            });
 
-            this.all             = this.lostFounds.filter(data => !data.archieve );
-            this.losts           = this.all.filter(data => data.type == 'lost');
-            this.founds          = this.all.filter(data => data.type == 'found');
-		});
+  //       this.lostFoundService.getLostFounds().then(data => {
+  //           this.lostFounds      = data.filter(data => data.development == this.name.default_development.name);
+  //           this.archieveds      = this.lostFounds.filter(data => data.archieve );
+  //           this.archievedLosts = this.archieveds.filter(data => data.type == 'lost');
+  //           this.archievedFounds= this.archieveds.filter(data => data.type == 'found');
+
+  //           this.all             = this.lostFounds.filter(data => !data.archieve );
+  //           this.losts           = this.all.filter(data => data.type == 'lost');
+  //           this.founds          = this.all.filter(data => data.type == 'found');
+		// });
     }
 
     goBack(): void {
