@@ -1,7 +1,7 @@
 import { Component, OnInit, ViewContainerRef, ViewEncapsulation, ViewChild } from '@angular/core';
 import { Router, Params, ActivatedRoute } from '@angular/router';
 import { Visit, Visits } from '../../models/index';
-import { VisitService, AlertService, UserService} from '../../services/index';
+import { VisitService, AlertService, UserService, UnitService} from '../../services/index';
 import '../../rxjs-operators';
 import { Observable} from 'rxjs/Observable';
 import { Location }               from '@angular/common';
@@ -27,6 +27,7 @@ export class VisitComponent implements OnInit {
     model: any = {};
     id: string;
     visitDateCreate: any;
+    dataUnit: any[]=[];
     myForm: FormGroup;
     checkInForm: FormGroup;
     checkOutForm: FormGroup;
@@ -46,7 +47,9 @@ export class VisitComponent implements OnInit {
                 private route: ActivatedRoute,
                 private location: Location,
                 private formbuilder: FormBuilder,
-                 private userService: UserService
+                private userService: UserService,
+                private unitService: UnitService,
+
                 ) {
         this.visitDateCreate = new Date();
         this.activeDate = this.activeDateFull = new Date();
@@ -59,7 +62,7 @@ export class VisitComponent implements OnInit {
 		this.userService.getByToken()
                             .subscribe(name => {
                                 this.name = name;
-                                this.loadVisits();
+                                this.loadAllUnits();
                             })
 
         if(typeof this.visitDateCreate !== "string"){
@@ -76,10 +79,12 @@ export class VisitComponent implements OnInit {
                     full_name : ['',  <any>Validators.required],
                     vehicle : [''],
                     pass : [''],
+                    prefix: ['']
                 }),
                 purpose: ['house_visit'],
                 remarks : [''],
-                check_in: [false,<any>Validators.required],
+                check_in: ['',<any>Validators.required],
+                check_out: [''],
         });
 
         this.visitDateCreateOptions = {
@@ -165,24 +170,19 @@ export class VisitComponent implements OnInit {
         this.checkOutSsubmitted = true;
 
         if(isValid == true){
-            model.check_out = new Date();
-            console.log(model);
-            this.visitOut.check_out =  model.check_out;
-            this.visitOut.checkout_by = "123n1kj2b31kb31b23k21j";
-            this.checkOutModal.close();
-
-                // this.visitService.checkOut(this.visitOut._id)
-                // .then(
-                //     data => {
-                //         this.checkOutModal.close();
-                //         this.alertService.success('Check out guest successful', true);
-                //     },
-                //     error => {
-                //         console.log(error);
-                //         this.checkOutModal.close();
-                //         alert(`Check out could not be save, server Error.`);
-                //     }
-                // );
+             this.visitService.checkOut(this.visitOut._id)
+                .then(
+                    data => {
+                        this.checkOutModal.close();
+                        this.ngOnInit();
+                        this.alertService.success('Check out guest successful', true);
+                    },
+                    error => {
+                        console.log(error);
+                        this.checkOutModal.close();
+                        alert(`Check out could not be save, server Error.`);
+                    }
+                );
         }
     }
 
@@ -190,24 +190,19 @@ export class VisitComponent implements OnInit {
         this.checkInSsubmitted = true;
 
         if(isValid == true){
-            model.check_in = new Date();
-            console.log(model);
-            this.visit.check_in =  model.check_in;
-            this.visit.checkin_by = "123n1kj2b31kb31b23k21j";
-            this.checkInModal.close();
-
-                // this.visitService.checkIn(this.visit._id)
-                // .then(
-                //     data => {
-                //         this.checkInModal.close();
-                //         this.alertService.success('Check in guest successful', true);
-                //     },
-                //     error => {
-                //         console.log(error);
-                //         this.checkInModal.close();
-                //         alert(`Check in could not be save, server Error.`);
-                //     }
-                // );
+            this.visitService.checkIn(this.visit._id)
+                .then(
+                    data => {
+                        this.checkInModal.close();
+                        this.ngOnInit();
+                        this.alertService.success('Check in guest successful', true);
+                    },
+                    error => {
+                        console.log(error);
+                        this.checkInModal.close();
+                        alert(`Check in could not be save, server Error.`);
+                    }
+                );
         }
 
     }
@@ -218,31 +213,31 @@ export class VisitComponent implements OnInit {
         // this.model.pinned.rank = 0;
         if(model.check_in == true){
         	model.check_in = this.convertDate(new Date());
-            model.checkin_by = "123n1kj2b31kb31b23k21j";
         }else{
-        	model.check_in = '';
+            model.check_in = ''
         }
+        console.log(model);
         model.visit_date =  this.visitDateCreate;
         if(isValid == true){
 
-            this.visits.push(model);
-            this.firstModal.close();
-            console.log(model);
-            this.ngOnInit();
+            // this.visits.push(model);
+            // this.firstModal.close();
+            // console.log(model);
+            // this.ngOnInit();
 
-            // this.visitService.create(model)
-            // .then(
-            //     data => {
-            //         this.alertService.success('Add guest successful', true);
-            //         this.firstModal.close();
-            //         this.ngOnInit();
-            //     },
-            //     error => {
-            //         console.log(error);
-            //         this.firstModal.close();
-            //         alert(`Guest register could not be save, server Error.`);
-            //     }
-            // );
+            this.visitService.create(model)
+            .then(
+                data => {
+                    this.alertService.success('Add guest successful', true);
+                    this.firstModal.close();
+                    this.ngOnInit();
+                },
+                error => {
+                    console.log(error);
+                    this.firstModal.close();
+                    alert(`Guest register could not be save, server Error.`);
+                }
+            );
 
             this.addSubmitted = false;
         }
@@ -252,11 +247,13 @@ export class VisitComponent implements OnInit {
         this.visitService.getAll()
             .subscribe((data)=> {
                 setTimeout(()=> {
+                    
                     this.visits            = data.filter(data => data.development._id == this.name.default_development._id);
                     this.visitActive       = data.filter(data => data.visit_date.slice(0, 10)  == this.activeDate );
                     for (var i = 0; i < this.visitActive.length; i++) {
-                    this.visitActive[i].i = i+1;
-            }
+                        this.visitActive[i].i = i+1;
+                    }
+                    console.log(data.development);
                 }, 1000);
             });
 
@@ -271,7 +268,18 @@ export class VisitComponent implements OnInit {
 		// });
     }
 
+    private loadAllUnits(): void {
+        this.unitService.getAll(this.name.default_development.name)
+            .subscribe((data)=> {
+                setTimeout(()=> {
+                    this.dataUnit       = data.properties;
+                    this.loadVisits();
+                }, 1000);
+            });
+    }
+
     onPickerClick(event:any) {
+      this.visitActive  = [];
       this.activeDate = event.formatted;
       this.activeDateFull = event.jsdate;
       this.loadVisits();
@@ -282,12 +290,14 @@ export class VisitComponent implements OnInit {
     }
 
     previousDay(){
+        this.visitActive  = [];
     	(this.activeDate = new Date()).setDate(this.activeDateFull.getDate() - 1);
     	this.activeDateFull = this.activeDate;
     	this.ngOnInit();
     }
 
     nextDay(){
+        this.visitActive  = [];
     	(this.activeDate = new Date()).setDate(this.activeDateFull.getDate() + 1);
     	this.activeDateFull = this.activeDate;
     	console.log(this.activeDateFull);

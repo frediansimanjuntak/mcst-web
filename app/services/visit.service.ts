@@ -8,7 +8,7 @@ import 'rxjs/add/operator/toPromise';
  
 @Injectable()
 export class VisitService {
-    private headers = new Headers({ 'Authorization': 'Bearer ' + this.authenticationService.token });
+    private headers = new Headers({ 'Content-Type': 'application/json','Authorization': 'Bearer ' + this.authenticationService.token });
     private options = new RequestOptions({ headers: this.headers });
     constructor(private http: Http, private authenticationService: AuthenticationService) {}
 
@@ -47,15 +47,15 @@ export class VisitService {
             .catch(this.handleError);
     }
 
-    checkIn(id: string): Promise<void> {
-        return this.http.post(url + 'api/guest_registrations/checkin/' + id, this.options)
+    checkIn(id: string): Promise<any> {
+        return this.http.post(url + 'api/guest_registrations/checkin/' + id, '',this.options)
             .toPromise()
             .then(res => res.json().data)
             .catch(this.handleError);
     }
 
-    checkOut(id: string): Promise<void> {
-        return this.http.post(url + 'api/guest_registrations/checkout/' + id, this.options)
+    checkOut(id: string): Promise<any> {
+        return this.http.post(url + 'api/guest_registrations/checkout/' + id, '', this.options)
             .toPromise()
             .then(res => res.json().data)
             .catch(this.handleError);

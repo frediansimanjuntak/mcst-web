@@ -73,7 +73,7 @@
 					    	<template let-visitActive="rowData" pTemplate="body">
                                 <div class="row">
                                     <div class="col-md-4">
-                                        <button *ngIf="(!visitActive.check_in && !visitActive.check_out) || (visitActive.check_in && visitActive.check_out)" [disabled]="visitActive.check_in != '' && visitActive.check_out != '' " type="button" class="btn btn-default" (click)="preCheckIn(visitActive) || checkInModal.open()">IN</button>
+                                        <button *ngIf="(!visitActive.check_in && !visitActive.check_out) || (visitActive.check_in && visitActive.check_out)" [disabled]="visitActive.check_in != null && visitActive.check_out != null " type="button" class="btn btn-default" (click)="preCheckIn(visitActive) || checkInModal.open()">IN</button>
                                         <button *ngIf="visitActive.check_in && !visitActive.check_out" type="button" class="btn btn-primary" (click)="preCheckOut(visitActive) || checkOutModal.open()">OUT</button>
                                     </div>
                                     <div class="col-md-8">
@@ -94,6 +94,13 @@
 		        </modal-header>
 		        <modal-content>
 					<form name="form" [formGroup]="myForm" novalidate>
+                        <div class="form-group" [ngClass]="{ 'has-error': addSubmitted && !myForm.controls.visitor.controls.prefix.valid }" formGroupName="visitor">
+                            <label  class="control-label col-sm-4" for="prefix">Prefix :</label>
+                            <div class="col-sm-8">
+                                <input type="text" class="form-control" name="prefix" formControlName="prefix">
+                                <small style="color: red" [hidden]="myForm.controls.visitor.controls.prefix.valid || (myForm.controls.visitor.controls.prefix.pristine && !addSubmitted)">Prefix is required</small>
+                            </div>
+                        </div>
 						<div class="form-group" [ngClass]="{ 'has-error': addSubmitted && !myForm.controls.visitor.controls.full_name.valid }" formGroupName="visitor">
                             <label  class="control-label col-sm-4" for="full_name">Name of Guest/visitor :</label>
                             <div class="col-sm-8">
@@ -122,13 +129,25 @@
                                 </select>
                             </div>
                         </div>
-                        <div class="form-group" [ngClass]="{ 'has-error': addSubmitted && !myForm.controls.property.valid }">
+                        <!-- <div class="form-group" [ngClass]="{ 'has-error': addSubmitted && !myForm.controls.property.valid }">
                             <label  class="control-label col-sm-4" for="full_name">Visiting :</label>
                             <div class="col-sm-8">
                                 <input type="text" class="form-control" name="property" formControlName="property">
                                 <small style="color: red" [hidden]="myForm.controls.property.valid || (myForm.controls.property.pristine && !addSubmitted)">Unit no is required</small>
                             </div>
+                        </div> -->
+
+                        <div class="form-group" [ngClass]="{ 'has-error': addSubmitted && !myForm.controls.property.valid }">
+                            <label class="control-label col-sm-4" for="unit_no">Visiting :</label>
+                            <div class="col-sm-8">
+                                <select class="form-control" formControlName="property" name="property">
+                                     <option *ngFor="let u of dataUnit" [ngValue]="u._id">#{{u.address.unit_no}}-{{u.address.unit_no_2}}</option>
+                                </select>
+                                <small style="color: red" [hidden]="myForm.controls.property.valid || (myForm.controls.property.pristine && !addSubmitted)">Unit no is required</small>
+                            </div>
                         </div>
+
+
                         <div class="form-group">
                             <label  class="control-label col-sm-4" for="full_name">Remarks :</label>
                             <div class="col-sm-8">
