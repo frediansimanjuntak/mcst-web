@@ -59,7 +59,7 @@
                         </p-column>
 					    <p-column header="Added by" field="" sortable="true">visitActive
 					    	<template let-visitActive="rowData" pTemplate="body">
-					            <span class="btn-underline">{{visitActive.created_by}}</span><br>
+					            <span class="btn-underline">{{visitActive.created_by.username}}</span><br>
 					            <span class="btn-underline">on {{visitActive.created_at | date:'d/M/y'}}</span>
 					        </template>
 						</p-column>

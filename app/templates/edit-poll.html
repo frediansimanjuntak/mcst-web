@@ -96,14 +96,14 @@
                         </select>
                     </div>
                 </div>
-                <div class="form-group"> 
+                <div *ngIf="model.poll_type == 'multiple_choices'" class="form-group"> 
                     <label class="control-label col-sm-4" for="choices">Choices :</label>         
                     <div class="col-sm-8">
                         <div *ngFor="let c of model.choices; let i=index">
                             <span>Option {{i + 1}}</span>
                                 <span class="glyphicon glyphicon-remove pull-right" *ngIf="model.choices.length > 1" (click)="removeChoice(i)"></span>
                             <input type="text" class="form-control" #{{i}}="ngModel" [(ngModel)]="model.choices[i]" required placeholder="Input choice name here" [ngModelOptions]="{standalone: true}"/>
-                            <span *ngIf="f.submitted && !i.valid" class="help-block">Option is [ngModelOptions]="{standalone: true}"required</span>
+                            <span *ngIf="f.submitted && !i.valid" class="help-block">Option is required</span>
                         </div>
                          <div class="margin-20">
                             <a (click)="addChoice()" style="cursor: default">
