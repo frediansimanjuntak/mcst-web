@@ -32,7 +32,7 @@ export class EditContractComponent  implements OnInit {
         });
         this.model.reference_no = this.id;
         if( this.id != null) {
-            this.contractService.getContract(this.id).then(contract => this.contract = contract);
+            this.contractService.getById(this.id).subscribe(contract => this.contract = contract);
         }
     }
 

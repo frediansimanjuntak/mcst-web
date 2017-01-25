@@ -42,7 +42,15 @@ export class ContractComponent implements OnInit  {
         if( this.id == null) {
             this.loadAllContract();
         }else{
-        	this.contractService.getContract(this.id).then(contract => {this.contract = contract;});
+        	this.contractService.getById(this.id)
+            .subscribe(contract => {
+                this.contract = contract;
+                this.images = [];
+                this.images.push({source:contract.attachment.url}); 
+                // for (var i = 0; i < this.contract.attachment.length; ++i) {
+                //     this.images.push({source:this.contract.attachment[i].url});
+                // };
+            });
         }
     }
 
@@ -69,7 +77,7 @@ export class ContractComponent implements OnInit  {
     }
 
 	private loadAllContract() {
-		this.contractService.getContracts().then(contracts => {
+		this.contractService.getAll().subscribe(contracts => {
 			this.contracts = contracts ;
             this.open      = this.contracts.filter(contracts => contracts.status === 'open' );
             this.close     = this.contracts.filter(contracts => contracts.status === 'closed' );

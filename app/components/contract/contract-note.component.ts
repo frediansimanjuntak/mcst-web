@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, Params, ActivatedRoute } from '@angular/router';
 import { Contract } from '../../models/index';
-import { ContractService, AlertService, UserService } from '../../services/index';
+import { ContractService, AlertService, UserService, ContractNoteService } from '../../services/index';
 import '../../rxjs-operators';
 import 'rxjs/add/operator/switchMap';
 import { Observable} from 'rxjs/Observable';
@@ -26,6 +26,7 @@ export class ContractNoteComponent implements OnInit  {
 
     constructor(private router: Router,
         private contractService: ContractService,
+        private contractnoteService: ContractNoteService
         private alertService: AlertService,
         private userService: UserService,
         private route: ActivatedRoute) {}
@@ -42,7 +43,7 @@ export class ContractNoteComponent implements OnInit  {
             this.id = params['id'];
             this._id = params['_id'];
         });
-        this.contractService.getContract(this.id).then(contract => {this.contract = contract;});
+        this.contractnoteService.getById(this.id,this._id).subscribe(contract => {this.contract = contract;});
         // if( this._id == null) {
         //     this.loadContractNotice();
         // }else{
@@ -51,7 +52,11 @@ export class ContractNoteComponent implements OnInit  {
     }
 
 	private loadContractNote() {
-		this.contractService.getContracts().then(contracts => {
+        this.route.params.subscribe(params => {
+            this.id = params['id'];
+            this._id = params['_id'];
+        });
+		this.contractnoteService.getAll(this.id).subscribe(contracts => {
 			this.contracts = contracts ;
             this.open      = this.contracts.filter(contracts => contracts.status === 'open' );
             this.close     = this.contracts.filter(contracts => contracts.status === 'closed' );
@@ -64,7 +69,11 @@ export class ContractNoteComponent implements OnInit  {
     }
 
     createContractNote(id:any) {
-        this.contractService.create(this.model)
+        this.route.params.subscribe(params => {
+            this.id = params['id'];
+            this._id = params['_id'];
+        });
+        this.contractnoteService.create(this.model, this.id)
         .then(
             response => {
                 this.alertService.success('Create contract notice successful', true);
@@ -72,6 +81,31 @@ export class ContractNoteComponent implements OnInit  {
             },
             error => {
                 this.alertService.error(error);
+            }
+        );
+    }
+
+    deleteContractNote(contract: Contract) {
+        this.route.params.subscribe(params => {
+            this.id = params['id'];
+            this._id = params['_id'];
+        });
+        this.contractnoteService.delete(contract._id,this.id)
+          .then(
+            response => {
+              if(response) {
+                console.log(response);
+                // console.log(response.error());
+                alert(`The Contract could not be deleted, server Error.`);
+              } else {
+                this.alertService.success('Create contract successful', true);
+                alert(`Delete Contarct successful`);
+                this.ngOnInit()
+              }
+            },
+            error=> {
+              console.log(error);
+                alert(`The Newsletter could not be deleted, server Error.`);
             }
         );
     }

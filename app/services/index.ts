@@ -6,6 +6,8 @@ export * from './authentication.service';
 export * from './booking.service';
 export * from './company.service';
 export * from './contract.service';
+export * from './contract-note.service';
+export * from './contract-notice.service';
 export * from './contractor.service';
 export * from './development.service';
 export * from './facility.service';

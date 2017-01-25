@@ -82,6 +82,8 @@ const routes: Routes = [
   { path: ':name/contract/add',   component: EditContractComponent, canActivate: [AuthGuard] },
   { path: ':name/contract/add/:id',   component: EditContractComponent, canActivate: [AuthGuard] },
   { path: ':name/contract/add/note/:id',   component: ContractNoteComponent, canActivate: [AuthGuard] },
+  { path: ':name/contract/note/:id/view/:_id',   component: ContractNoteComponent, canActivate: [AuthGuard] },
+  { path: ':name/contract/notice/:id/view/:_id',   component: ContractNoticeComponent, canActivate: [AuthGuard] },
   { path: ':name/contract/add/notice/:id',   component: ContractNoticeComponent, canActivate: [AuthGuard] },
   { path: ':name/contract/view/:id',   component: ContractComponent, canActivate: [AuthGuard] },
   { path: ':name/contract/edit/:id',   component: EditContractComponent, canActivate: [AuthGuard] },
