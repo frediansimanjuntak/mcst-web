@@ -25,6 +25,7 @@ import { ModalModule }                  from "ngx-modal";
 import { BootstrapModalModule }         from 'angular2-modal/plugins/bootstrap';
 import { SlimLoadingBarModule }         from 'ng2-slim-loading-bar';
 import { PopoverModule }                from 'ngx-popover';
+import { MomentModule }                   from 'angular2-moment';
 
 import { 
   AccessControlComponent,
@@ -143,6 +144,7 @@ import {
     CalendarModule,
     ImageUploadModule,
     PopoverModule,
+    MomentModule,
     SlimLoadingBarModule.forRoot(),
   ],
   declarations: [ 
