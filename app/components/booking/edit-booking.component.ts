@@ -209,12 +209,13 @@ export class EditBookingComponent implements OnInit  {
         }else{
             var end   = data.end.toString() + ":00"
         } 
-        this.model.facility = data.id
+        this.model.facility = data.id;
         this.facilityService.getById(data.id)
         .subscribe(facility => {
             this.facility = facility;
             this.facility_name = facility.name;
             this.facility_type = facility.facility_type;
+            this.model.booking_fee = facility.booking_fee;
              this.timeStart = [];
              this.timeEnd = [];
             if(data.choice == "all" ) {
@@ -247,6 +248,16 @@ export class EditBookingComponent implements OnInit  {
         this.tend.push(end)
         var time_start = Math.min.apply(Math,this.tstart);
         var time_end = Math.max.apply(Math,this.tend);
+        let booking_fee = this.model.booking_fee * (time_end - time_start);
+        this.model.fees = [{
+            deposit_fee : "80",
+            booking_fee : booking_fee,
+            admin_fee : "0"
+        }]
+        var deposit = +this.model.fees[0].deposit_fee;
+        var booking = +this.model.fees[0].booking_fee;
+        var admin_fee = +this.model.fees[0].admin_fee;
+        this.model.total_amount = deposit + booking + admin_fee;
         this.model.start_time = time_start+min;
         this.model.end_time = time_end+min;
         this.model.name = name;
@@ -272,15 +283,6 @@ export class EditBookingComponent implements OnInit  {
         this.generate()
         this.model.serial_no = this.ref_no.toString();
         this.model.sender = "Mr. Nice";
-        this.model.fees = [{
-            deposit_fee : "80",
-            booking_fee : "30",
-            admin_fee : "0"
-        }]
-        var deposit = +this.model.fees[0].deposit_fee;
-        var booking = +this.model.fees[0].booking_fee;
-        var admin_fee = +this.model.fees[0].admin_fee;
-        this.model.total_amount = deposit + booking + admin_fee;
         this.step = 2;
         console.log(this.model)
     }
