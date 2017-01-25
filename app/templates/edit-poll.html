@@ -16,7 +16,7 @@
                 <div class="form-group" [ngClass]="{ 'has-error': !description.valid }">
                     <label class="control-label col-sm-4" for="description">Description :</label>
                     <div class="col-sm-8">
-                        <textarea type="text" class="form-control" name="description" [(ngModel)]="v.description" #description="ngModel" required placeholder="Input Description here"></textarea>
+                        <textarea type="text" class="form-control" name="description" [(ngModel)]="poll.description" #description="ngModel" required placeholder="Input Description here"></textarea>
                         <span *ngIf= " !description.valid" class="help-block">Description is required</span>
                     </div>
                 </div>
@@ -44,14 +44,14 @@
                     <label class="control-label col-sm-4" for="auto_post_on">Commence date :</label>
                     <div class="col-sm-8">
                             <my-date-picker [options]="startTimeOptions"
-                            [selDate]="model.startTime" (dateChanged)="startTimeDateChanged($event)"></my-date-picker>
+                            [selDate]="poll.start_time" (dateChanged)="startTimeDateChanged($event)"></my-date-picker>
                     </div>
                 </div>
                 <div class="form-group" >
                     <label class="control-label col-sm-4" for="valid_till">Result date :</label>
                     <div class="col-sm-8">
                         <my-date-picker [options]="endTimeOptions"
-                            [selDate]="model.end_time" (dateChanged)="endTimeDateChanged($event)"></my-date-picker>
+                            [selDate]="poll.end_time" (dateChanged)="endTimeDateChanged($event)"></my-date-picker>
                     </div>
                 </div>
 
@@ -109,7 +109,7 @@
                     <label class="control-label col-sm-4" for="start_time">Commence date : </label>
                     <div class="col-sm-8">
                         <my-date-picker [options]="startTimeOptions"
-                            [selDate]="selectedDate" (dateChanged)="startTimeDateChanged($event)">
+                            [selDate]="model.start_time" (dateChanged)="startTimeDateChanged($event)">
                         </my-date-picker>
                     </div>
                 </div>
@@ -117,7 +117,7 @@
                 <div class="form-group">
                     <label class="control-label col-sm-4" for="valid_till">Result Date :</label>
                     <div class="col-sm-8">
-                        <my-date-picker [options]="endTimeOptions"
+                        <my-date-picker [options]="endTimeOptions" [selDate]="model.end_time" 
                             (dateChanged)="endTimeDateChanged($event)">
                         </my-date-picker>
                     </div>

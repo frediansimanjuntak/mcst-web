@@ -20,7 +20,6 @@ export class EditPollComponent  {
     myForm: FormGroup;
     id: string;
     name: any;
-
     startTimeOptions: any = {};
     endTimeOptions: any = {};
 
@@ -30,9 +29,11 @@ export class EditPollComponent  {
         private formbuilder: FormBuilder,
         private route: ActivatedRoute,
         private userService: UserService ) {
+
     }
 
     ngOnInit() {
+
     	this.route.params.subscribe(params => {
             this.id = params['id'];
         });
@@ -45,7 +46,7 @@ export class EditPollComponent  {
             height: '34px',
             width: '260px',
             inline: false,
-            customPlaceholderTxt: 'Select Commence DAte',
+            customPlaceholderTxt: 'Select Commence Date',
             // disableUntil: {year: 2016, month: 8, day: 10},
             selectionTxtFontSize: '16px'
         };
@@ -63,8 +64,7 @@ export class EditPollComponent  {
             selectionTxtFontSize: '16px'
         };
 
-        this.model.startTime = "";
-        this.model.end_time = "";
+        this.model.end_time = this.model.start_time = this.convertDate(new Date());
     
         this.userService.getByToken()
         					.subscribe(name => {
@@ -74,11 +74,21 @@ export class EditPollComponent  {
 						                    .getById(this.id)
 						                    .subscribe(poll => {
 						                       	this.poll = poll;
-						                        this.model.startTime  = this.poll.start_time;
-						                        this.model.end_time = this.poll.end_time; 
 											});
 						        };
         					})
+    }
+
+
+    convertDate(date) {
+      var yyyy = date.getFullYear().toString();
+      var mm = (date.getMonth()+1).toString();
+      var dd  = date.getDate().toString();
+
+      var mmChars = mm.split('');
+      var ddChars = dd.split('');
+
+      return yyyy + '-' + (mmChars[1]?mm:"0"+mmChars[0]) + '-' + (ddChars[1]?dd:"0"+ddChars[0]);
     }
 
     createPoll() {
@@ -98,11 +108,17 @@ export class EditPollComponent  {
     }
 
     startTimeDateChanged(event:any) {
-   		this.model.startTime = event.formatted;
+   		this.model.start_time = event.formatted;
+        if(this.poll){
+            this.poll.start_time  = event.formatted;
+        }
     }
 
     endTimeDateChanged(event:any) {
     	this.model.end_time = event.formatted;
+        if(this.poll){
+            this.poll.end_time  = event.formatted;
+        }
     }
 
     updatePoll(){
@@ -113,7 +129,7 @@ export class EditPollComponent  {
 	                this.alertService.error('Failed Update . server error');
 	            } else {
                     this.alertService.success('Update Poll successful', true);
-                    this.router.navigate(['/poll']);
+                    this.router.navigate([this.name.default_development.name + '/poll']);
 	            }
             },
             error=> {

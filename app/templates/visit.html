@@ -1,5 +1,5 @@
 <div class="container">
-	<div class="main">
+	<div class="main" id="print-section">
         	<div class="title">
 			Guest & Visitor
 			</div>
@@ -8,7 +8,7 @@
 			{{ afterTomorrow}}
 			<div class="row">
 				<div class="col-md-4 pull-right">
-								<a class="btn btn-default pull-right" ><img class="img-btn" src="../../assets/image/icon_print.png" (click)="viewPdf(petitionPending)" />&nbsp;Print</a>
+								<a class="btn btn-default pull-right" ><img class="img-btn" src="../../assets/image/icon_print.png" (click)="print()" />&nbsp;Print</a>
 						  		<button type="button" class="btn btn-default pull-right" (click)="firstModal.open()"><img class="img-btn" src="../../assets/image/icon_add.png"  />&nbsp;Add Visitor/Guest</button>
 				</div>
 			</div>
@@ -60,7 +60,7 @@
 					    <p-column header="Added by" field="" sortable="true">visitActive
 					    	<template let-visitActive="rowData" pTemplate="body">
 					            <span class="btn-underline">{{visitActive.created_by}}</span><br>
-					            <span class="btn-underline">on {{visitActive.created_at}}</span>
+					            <span class="btn-underline">on {{visitActive.created_at | date:'d/M/y'}}</span>
 					        </template>
 						</p-column>
 						<p-column header="Card no" field="" sortable="true">
@@ -129,14 +129,6 @@
                                 </select>
                             </div>
                         </div>
-                        <!-- <div class="form-group" [ngClass]="{ 'has-error': addSubmitted && !myForm.controls.property.valid }">
-                            <label  class="control-label col-sm-4" for="full_name">Visiting :</label>
-                            <div class="col-sm-8">
-                                <input type="text" class="form-control" name="property" formControlName="property">
-                                <small style="color: red" [hidden]="myForm.controls.property.valid || (myForm.controls.property.pristine && !addSubmitted)">Unit no is required</small>
-                            </div>
-                        </div> -->
-
                         <div class="form-group" [ngClass]="{ 'has-error': addSubmitted && !myForm.controls.property.valid }">
                             <label class="control-label col-sm-4" for="unit_no">Visiting :</label>
                             <div class="col-sm-8">

@@ -34,11 +34,11 @@
 	        		</div>
 	        		<div class="row">
 	        			<div class="col-md-4">Commence Date</div>
-	        			<div class="col-md-8"> <p>:  {{poll.start_time}}</p></div>
+	        			<div class="col-md-8"> <p>:  {{poll.start_time | date:'d/M/y'}}</p></div>
 	        		</div>
 	        		<div class="row">
 	        			<div class="col-md-4">Result Date</div>
-	        			<div class="col-md-8"> <p>:  {{poll.end_time}}</p></div>
+	        			<div class="col-md-8"> <p>:  {{poll.end_time | date:'d/M/y'}}</p></div>
 	        		</div>
 	        		<div class="row">
 	        			<div class="col-md-4">Status</div>
@@ -46,11 +46,11 @@
 	        		</div>
 	        		<div class="row">
 	        			<div class="col-md-4">Created By</div>
-	        			<div class="col-md-8"> <p>:  {{poll.created_by}}</p></div>
+	        			<div class="col-md-8"> <p>:  {{poll.created_by.username}}</p></div>
 	        		</div>
 	        		<div class="row">
 	        			<div class="col-md-4">Created at</div>
-	        			<div class="col-md-8"> <p>:  {{poll.created_at}}</p></div>
+	        			<div class="col-md-8"> <p>:  {{poll.created_at | date: 'd/M/y'}}</p></div>
 	        		</div>
         </div>
 
@@ -74,13 +74,21 @@
 					    <p-column field="description" header="Poll" sortable="true" [filter]="true" filterPlaceholder="Search Poll"></p-column>
 					    <p-column field="poll_type" header="Poll Type" sortable="true" [filter]="true" filterPlaceholder="Search Type"></p-column>
 					    <p-column field="" header="Open to" sortable="true" [filter]="true" filterPlaceholder="Search Type"></p-column>
-						<p-column field="start_time" header="Commence date" sortable="true"></p-column>
-						<p-column field="end_time" header="Result date" sortable="true"></p-column>
+						<p-column header="Commence date" sortable="true">
+						    	<template let-pollsDraft="rowData" pTemplate="body">
+						            <span>{{pollsDraft.start_time | date:'d/M/y'}}</span>
+						        </template>
+						</p-column>
+						<p-column header="Result date" sortable="true">
+						    	<template let-pollsDraft="rowData" pTemplate="body">
+						            <span>{{pollsDraft.end_time | date:'d/M/y'}}</span>
+						        </template>
+						</p-column>
 						<p-column [style]="{'width':'300px'}" styleClass="col-button">
 					    	<template class="pull-right" let-pollsDraft="rowData" pTemplate="body">
 					    	<a type="button" style="cursor:pointer" (click)="editPoll(pollsDraft)"><i class="fa fa-edit" aria-hidden="true"></i>&nbsp;Edit</a>
 					    	<button type="button" class="btn btn-primary btn-xs" (click)="openModal(pollsDraft) || firstModal.open()">Start Poll</button>
-					        <button  type="button" (click)="deletePoll(announcementsDrafted)"><i class="fa fa-trash" aria-hidden="true"></i></button>
+					        <button  type="button" (click)="deletePoll(pollsDraft)"><i class="fa fa-trash" aria-hidden="true"></i></button>
 					    	</template>
 					    </p-column>
 					</p-dataTable>
@@ -94,10 +102,15 @@
 						            <span>{{pollsActive.votes.length}}</span>
 						        </template>
 						</p-column>
-						<p-column field="end_time" header="Result date" sortable="true"></p-column>
+						<p-column header="Result date" sortable="true">
+						    	<template let-pollsActive="rowData" pTemplate="body">
+						            <span>{{pollsActive.end_time | date:'d/M/y'}}</span>
+						        </template>
+						</p-column>
 						<p-column header="Days Remaining" sortable="true">
 						    	<template let-pollsActive="rowData" pTemplate="body">
-						            <span></span>
+						            <span>{{pollsActive.end_time | amDifference: today :'days' : true}}</span>
+						             Expiration: {{nextDay | amDifference: today :'days' : true}} days
 						        </template>
 						</p-column>
 						<p-column [style]="{'width':'300px'}" styleClass="col-button">

@@ -56,7 +56,7 @@ export class PollService {
 
 
     start(id: string): Promise<void> {
-        return this.http.post(url + 'api/polls/start/' + id, this.options)
+        return this.http.post(url + 'api/polls/start_poll/' + id, '', this.options)
           .toPromise()
           .then(() => null)
           .catch(this.handleError);
