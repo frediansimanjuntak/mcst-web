@@ -231,7 +231,7 @@ export class VisitComponent implements OnInit {
         // model.properties.created_by = '583e4e9dd97c97149884fef5';
         // this.model.pinned.rank = 0;
         if(model.check_in == true){
-        	model.check_in = this.convertDate(new Date());
+        	model.check_in = new Date();
         }else{
             model.check_in = ''
         }
@@ -266,8 +266,8 @@ export class VisitComponent implements OnInit {
         this.visitService.getAll()
             .subscribe((data)=> {
                 setTimeout(()=> {
-                    console.log(data[0].development._id);
-                    this.visits            = data.filter(data => data.development._id == this.name.default_development._id);
+                    console.log(data[0]);
+                    this.visits            = data.filter(data => data.development == this.name.default_development._id);
                     this.visitActive       = data.filter(data => data.visit_date.slice(0, 10)  == this.activeDate );
                     for (var i = 0; i < this.visitActive.length; i++) {
                         this.visitActive[i].i = i+1;
