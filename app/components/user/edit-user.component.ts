@@ -57,8 +57,8 @@ export class EditUserComponent implements OnInit {
                 development: [''],
                 property: ['']
             }),
-            owned_property: this.formbuilder.array([]),
-            authorized_property: this.formbuilder.array([]),
+            owned_property: this.formbuilder.array([this.initOwned()]),
+            authorized_property: this.formbuilder.array([this.initAuthorized()]),
             active: ['', Validators.required],
             default_development: [''],
             authorized_development: ['']
@@ -98,8 +98,8 @@ export class EditUserComponent implements OnInit {
                         development: [''],
                         property: ['']
                     }),
-                    owned_property: this.formbuilder.array([this.initOwned()]),
-                    authorized_property: this.formbuilder.array([this.initAuthorized()]),
+                    owned_property: this.formbuilder.array([]),
+                    authorized_property: this.formbuilder.array([]),
                     active: ['', Validators.required],
                     default_development: [''],
                     authorized_development: [''],
