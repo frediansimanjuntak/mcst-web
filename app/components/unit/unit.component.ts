@@ -21,11 +21,12 @@ export class UnitComponent implements OnInit {
     public data;
     public dataUnit;
     name: any;
-
+    loading = false;
     constructor(private router: Router,
                 private unitservice: UnitService, 
                 private alertService: AlertService,
                 private userService: UserService) {
+
     }
 
     ngOnInit(): void {
@@ -59,12 +60,13 @@ export class UnitComponent implements OnInit {
     }
 
     private loadAllUnits(): void {
-      
+        this.loading = true;
         this.unitservice.getAll(this.name.default_development.name)
             .subscribe((data)=> {
                 setTimeout(()=> {
                     this.dataUnit = data.properties;
                     console.log(this.dataUnit);
+                    this.loading = false;
                 }, 1000);
             });
     }

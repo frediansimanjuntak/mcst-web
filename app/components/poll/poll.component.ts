@@ -24,6 +24,7 @@ export class PollComponent implements OnInit {
 	model: any = {};
     id: string;
     name: any;
+    today:Date;
     nextDay: Date;
     constructor(
                 private router: Router,
@@ -33,9 +34,10 @@ export class PollComponent implements OnInit {
                 private location: Location,
                 private userService: UserService
                 ) {  
+        this.today = new Date();
         this.nextDay = new Date();
-        this.nextDay.setDate(this.nextDay.getDate() + 1);
-        console.log(this.nextDay)
+
+      this.nextDay.setDate(this.nextDay.getDate() + 5);
       }
 
     ngOnInit(): void {
@@ -57,15 +59,28 @@ export class PollComponent implements OnInit {
                             })
     }
 
+    convertDate(date) {
+      var yyyy = date.getFullYear().toString();
+      var mm = (date.getMonth()+1).toString();
+      var dd  = date.getDate().toString();
+
+      var mmChars = mm.split('');
+      var ddChars = dd.split('');
+
+      return yyyy + '-' + (mmChars[1]?mm:"0"+mmChars[0]) + '-' + (ddChars[1]?dd:"0"+ddChars[0]);
+    }
+
     private loadPolls(){
     	  this.pollService.getAll()
             .subscribe((data)=> {
                 setTimeout(()=> {
-                    console.log(data);
                     this.polls 		= data.filter(data => data.development._id == this.name.default_development._id );
                     this.pollsDraft = this.polls.filter(data => data.status == "draft" );
                     this.pollsActive = this.polls.filter(data => data.status == "active" );
                     this.pollsResult= this.polls.filter(data => data.status == "result" );
+                    console.log(this.today);
+                    console.log(this.nextDay);
+                    console.log(this.pollsActive[0].end_time);
                 }, 1000);
         });
 	}

@@ -37,6 +37,8 @@ export class EditPollComponent  {
     	this.route.params.subscribe(params => {
             this.id = params['id'];
         });
+        this.model.choices  = [];
+        this.model.choices[0] = '';
 
     	this.startTimeOptions = {
             todayBtnTxt: 'Today',
@@ -137,6 +139,16 @@ export class EditPollComponent  {
             }
         );
 	}
+
+    addChoice() {
+        this.model.choices.push('choice');
+        console.log(this.model.choices);
+    }
+
+    removeChoice(i: number) {
+        this.model.choices.splice(i,1);
+        console.log(this.model.choices);
+    }
 
     toPoll(){
          this.router.navigate([this.name.default_development.name + '/poll']);

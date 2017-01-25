@@ -109,13 +109,13 @@
 						</p-column>
 						<p-column header="Days Remaining" sortable="true">
 						    	<template let-pollsActive="rowData" pTemplate="body">
-						            <span>{{pollsActive.end_time | amDifference: today :'days' : true}}</span>
-						             Expiration: {{nextDay | amDifference: today :'days' : true}} days
+						            <span>{{pollsActive.end_time | amDifference: today :'days' : true}}
+						            </span>
 						        </template>
 						</p-column>
 						<p-column [style]="{'width':'300px'}" styleClass="col-button">
 					    	<template class="pull-right" let-pollsActive="rowData" pTemplate="body">
-					    	<a type="button" style="cursor:pointer" (click)="viewPoll(pollsActive)"><i class="fa fa-edit" aria-hidden="true"></i>&nbsp;View Progress</a>
+					    	<a type="button" style="cursor:pointer" (click)="viewPoll(pollsActive)">&nbsp;View Progress</a>
 					    	</template>
 					    </p-column>
 					</p-dataTable>
