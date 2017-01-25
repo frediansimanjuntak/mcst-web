@@ -33,7 +33,11 @@ export class EditAnnouncementComponent  {
     }
 
     ngOnInit() {
-        this.userService.getByToken().subscribe(name => {this.name = name;})
+        this.route.params.subscribe(params => {
+            this.id = params['id'];
+        });
+
+        
         this.autoPostOnDateOptions = {
             todayBtnTxt: 'Today',
             dateFormat: 'yyyy-mm-dd',
@@ -64,28 +68,28 @@ export class EditAnnouncementComponent  {
         this.model.valid_till = "forever"
         this.model.publish = false;
         this.model.sticky = 'no';
-        this.route.params.subscribe(params => {
-            this.id = params['id'];
-        });
-
-        if( this.id != null) {
-            this.anouncementService
-                    .getAnnouncement(this.id)
-                    .then(announcement => {
-                        this.announcement = announcement;
-                        if(this.announcement.auto_post_on != "no"){
-                           this.model.auto_post_on = this.announcement.auto_post_on;
-                        }else{
-                            this.model.auto_post_on = "";
-                        }
-                        if(this.announcement.valid_till != "forever"){
-                           this.model.valid_till = this.announcement.valid_till;
-                        }else{
-                            this.model.valid_till = "";
-                        }
-
-                    });
-        };
+        
+        this.userService.getByToken()
+                            .subscribe(name => {
+                                this.name = name;
+                                if( this.id != null) {
+                                    this.anouncementService
+                                            .getAnnouncement(this.id)
+                                            .then(announcement => {
+                                                this.announcement = announcement;
+                                                if(this.announcement.auto_post_on != "no"){
+                                                   this.model.auto_post_on = this.announcement.auto_post_on;
+                                                }else{
+                                                    this.model.auto_post_on = "";
+                                                }
+                                                if(this.announcement.valid_till != "forever"){
+                                                   this.model.valid_till = this.announcement.valid_till;
+                                                }else{
+                                                    this.model.valid_till = "";
+                                                }
+                                            });
+                                };
+                            })
     }
 
     createAnnouncement() {
