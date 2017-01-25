@@ -60,8 +60,7 @@ export class EditUserComponent implements OnInit {
             owned_property: this.formbuilder.array([this.initOwned()]),
             authorized_property: this.formbuilder.array([this.initAuthorized()]),
             active: ['', Validators.required],
-            default_development: [''],
-            authorized_development: ['']
+            authorized_development: []
 
         });
         this.route.params.subscribe(params => {
@@ -101,7 +100,7 @@ export class EditUserComponent implements OnInit {
                     owned_property: this.formbuilder.array([]),
                     authorized_property: this.formbuilder.array([]),
                     active: ['', Validators.required],
-                    default_development: [''],
+                    default_development: [],
                     authorized_development: [''],
                     user_group : [''],
                     created_at : [''],
@@ -172,6 +171,7 @@ export class EditUserComponent implements OnInit {
     }
 
     createUser(model:User , isValid: boolean) {
+        console.log(model)
         this.userService.create(model)
         .then(
             data => {

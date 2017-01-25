@@ -8,7 +8,7 @@ import 'rxjs/add/operator/toPromise';
  
 @Injectable()
 export class UserService {
-    private headers = new Headers({ 'Authorization': 'Bearer ' + this.authenticationService.token });
+    private headers = new Headers({'Content-Type': 'application/json', 'Authorization': 'Bearer ' + this.authenticationService.token });
     private options = new RequestOptions({ headers: this.headers });
     constructor(private http: Http, private authenticationService: AuthenticationService) {}
 
@@ -40,6 +40,7 @@ export class UserService {
     }
 
     create(body:any): Promise<User> {
+        console.log(JSON.stringify(body))
         return this.http.post(url +  'api/users', JSON.stringify(body), this.options)
             .toPromise()
             .then(res => res.json().data)
