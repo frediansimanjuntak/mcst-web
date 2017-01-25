@@ -33,6 +33,7 @@
 				    <p-column field="facility_type" header="Facility Type" sortable="true" [filter]="true" filterPlaceholder="Search Facility Type"></p-column>
 				    <p-column field="payment_type" header="Payment Type" sortable="true" [filter]="true" filterPlaceholder="Search Payment Type"></p-column>
 					<p-column field="booking_type" header="Booking Type" sortable="true" [filter]="true" filterPlaceholder="Search Booking Type"></p-column>
+					<p-column field="booking_fee" header="Booking Fee" sortable="true" [filter]="true" filterPlaceholder="Search Booking Fee"></p-column>
 				    <p-column field="status" header="Status" sortable="true" [filter]="true" filterPlaceholder="Search Status">
 				        <template let-col let-data="rowData" pTemplate="body">
 				            <span [style.color]="data[col.field]">{{data[col.field]}}</span>
