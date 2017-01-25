@@ -24,7 +24,7 @@ export class PollComponent implements OnInit {
 	model: any = {};
     id: string;
     name: any;
-
+    nextDay: Date;
     constructor(
                 private router: Router,
                 private pollService: PollService,
@@ -32,7 +32,11 @@ export class PollComponent implements OnInit {
                 private route: ActivatedRoute,
                 private location: Location,
                 private userService: UserService
-                ) {}
+                ) {  
+        this.nextDay = new Date();
+        this.nextDay.setDate(this.nextDay.getDate() + 1);
+        console.log(this.nextDay)
+      }
 
     ngOnInit(): void {
         this.route.params.subscribe(params => {
@@ -67,6 +71,7 @@ export class PollComponent implements OnInit {
 	}
 
 	deletePoll(poll) {
+        console.log(poll)
         this.pollService.delete(poll._id)
           .then(
             response => {
