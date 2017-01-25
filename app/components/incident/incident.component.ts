@@ -48,14 +48,12 @@ export class IncidentComponent implements OnInit {
         	this.incidentService.getById(this.id)
             .subscribe(incident => {
                 this.incident = incident;
-                console.log(incident.attachment)
                 this.images = [];
                 this.images.push({source:incident.attachment.url}); 
                 this.incident.created_at = this.incident.created_at.slice(0,10);
                 // for (var i = 0; i < this.incident.attachment.length; ++i) {
                 //     this.images.push({source:this.incident.attachment[i].url});
                 // };
-                console.log(this.images)
 
             });
         }
