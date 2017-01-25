@@ -9,8 +9,10 @@ export class Facility {
   payment_type : string;
   booking_type : string;
   booking_fee : string;
-  maintenance_start : string;
-  maintenance_end : string;
+  maintenance:[{
+    start_date : string,
+    end_date :string
+  }];
   schedule : [{
     day : string[],
     start_time : string,

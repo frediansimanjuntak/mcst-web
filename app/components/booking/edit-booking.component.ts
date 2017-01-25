@@ -103,7 +103,7 @@ export class EditBookingComponent implements OnInit  {
         this.userService.getByToken()
         .subscribe(name => {
             this.name = name;
-            this.unitService.getAll(name.default_development.name).subscribe(units => {this.units = units.properties; console.log(units.properties); console.log(this.units)})
+            this.unitService.getAll(name.default_development.name).subscribe(units => {this.units = units.properties})
         })
         this.myForm = this.formbuilder.group({
             id : [''],

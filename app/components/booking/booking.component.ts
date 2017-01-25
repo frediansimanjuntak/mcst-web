@@ -167,8 +167,8 @@ export class BookingComponent implements OnInit {
         }
         console.log(booking);
         
-        this.bookingService.getBookings()
-        .then(bookings => {
+        this.bookingService.getAll()
+        .subscribe(bookings => {
             this.bookings = bookings;
             if(booking.status == "all" && booking.type != "all" ) {
                 this.filtered = this.bookings.filter(data => 

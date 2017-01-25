@@ -56,28 +56,28 @@ export class IncidentService {
     }
 
     starred(id: string): Promise<Incident> {
-        return this.http.post(url + 'api/incidents/starred/' + id, this.options)
+        return this.http.post(url + 'api/incidents/starred/' + id,'', this.options)
             .toPromise()
             .then(res => res.json().data)
             .catch(this.handleError);
     }
 
     unstarred(id: string): Promise<Incident> {
-        return this.http.put(url + 'api/incidents/starred/' + id, this.options)
+        return this.http.put(url + 'api/incidents/starred/' + id,'', this.options)
             .toPromise()
             .then(res => res.json().data)
             .catch(this.handleError);
     }
 
     archieve(id: string): Promise<Incident> {
-        return this.http.post(url + 'api/incidents/achieve/' + id, this.options)
+        return this.http.post(url + 'api/incidents/achieve/' + id,'', this.options)
             .toPromise()
             .then(res => res.json().data)
             .catch(this.handleError);
     }
 
     unarchieve(id: string): Promise<Incident> {
-        return this.http.put(url + 'api/incidents/achieve/' + id, this.options)
+        return this.http.put(url + 'api/incidents/achieve/' + id,'', this.options)
             .toPromise()
             .then(res => res.json().data)
             .catch(this.handleError);

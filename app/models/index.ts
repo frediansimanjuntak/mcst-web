@@ -12,6 +12,7 @@ export * from './incident';
 export * from './lost-found';
 export * from './notification';
 export * from './payment';
+export * from './payment-reminder';
 export * from './petition';
 export * from './poll';
 export * from './quotation';

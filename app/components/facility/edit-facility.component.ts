@@ -45,10 +45,9 @@ export class EditFacilityComponent  {
             facility_type : ['', Validators.required],
             payment_type : ['', Validators.required],
             booking_type : ['', Validators.required],
-            schedule: this.formbuilder.array([]),
+            booking_fee : ['', Validators.required],
+            schedule: this.formbuilder.array([this.initSchedule()]),
             status: ['', Validators.required],
-            maintenance_start : [''],
-            maintenance_end : [''],
             created_by : [''],
             created_at : ['']
         });
@@ -59,6 +58,43 @@ export class EditFacilityComponent  {
             this.facilityService.getById(this.id)
             .subscribe(facility => {
                 this.facility = facility;
+                this.myForm = this.formbuilder.group({
+                    _id: [''],
+                    name : ['', Validators.required],
+                    development : [''],
+                    description : ['', Validators.required],
+                    facility_type : ['', Validators.required],
+                    payment_type : ['', Validators.required],
+                    booking_type : ['', Validators.required],
+                    booking_fee : ['', Validators.required],
+                    schedule: this.formbuilder.array([]),
+                    status: ['', Validators.required],
+                    maintenance: [''],
+                    created_by : [''],
+                    created_at : [''],
+                    __v : [''],
+                });
+                if(this.facility.maintenance.length) {
+                    this.myForm = this.formbuilder.group({
+                        _id: [''],
+                        name : ['', Validators.required],
+                        development : [''],
+                        description : ['', Validators.required],
+                        facility_type : ['', Validators.required],
+                        payment_type : ['', Validators.required],
+                        booking_type : ['', Validators.required],
+                        booking_fee : ['', Validators.required],
+                        schedule: this.formbuilder.array([]),
+                        status: ['', Validators.required],
+                        maintenance: this.formbuilder.group({
+                            start_date: [''],
+                            end_date: ['']
+                        }),
+                        created_by : [''],
+                        created_at : [''],
+                        __v : [''],
+                    });
+                }
                 for (let entry of this.facility.schedule) {
                     const control = <FormArray>this.myForm.controls['schedule'];
                     control.push(this.initSchedule());
@@ -70,6 +106,7 @@ export class EditFacilityComponent  {
 
     initSchedule() {
         return this.formbuilder.group({
+            _id : [''],
             day : [''],
             start_time : [this.start_time],
             end_time : ['']
