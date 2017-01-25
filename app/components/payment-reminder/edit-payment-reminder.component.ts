@@ -40,7 +40,7 @@ export class EditPaymentReminderComponent implements OnInit{
             auto_issue_on : ['', Validators.required],
             due_on : ['', Validators.required],
             message_to_receiver : ['', Validators.required],
-            notification_list: this.formbuilder.array([]),
+            notification_list: this.formbuilder.array([this.initNotification_list()]),
         });
         this.route.params.subscribe(params => {
             this.id = params['id'];
