@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, Params, ActivatedRoute } from '@angular/router';
 import { Contract } from '../../models/index';
-import { ContractService, AlertService, UserService } from '../../services/index';
+import { ContractService, AlertService, UserService, ContractNoticeService } from '../../services/index';
 import '../../rxjs-operators';
 import 'rxjs/add/operator/switchMap';
 import { Observable} from 'rxjs/Observable';
@@ -26,6 +26,7 @@ export class ContractNoticeComponent implements OnInit  {
 
     constructor(private router: Router, 
         private contractService: ContractService, 
+        private contractnoticeService: ContractNoticeService,
         private alertService: AlertService,
         private route: ActivatedRoute,
         private userService: UserService) {}
@@ -42,7 +43,7 @@ export class ContractNoticeComponent implements OnInit  {
             this.id = params['id'];
             this._id = params['_id'];
         });
-        this.contractService.getContract(this.id).then(contract => {this.contract = contract;});
+        this.contractnoticeService.getById(this.id,this._id).subscribe(contract => {this.contract = contract;});
         // if( this._id == null) {
         //     this.loadContractNotice();
         // }else{
@@ -51,7 +52,11 @@ export class ContractNoticeComponent implements OnInit  {
     }
 
 	private loadContractNotice() {
-		this.contractService.getContracts().then(contracts => {
+        this.route.params.subscribe(params => {
+            this.id = params['id'];
+            this._id = params['_id'];
+        });
+		this.contractnoticeService.getAll(this.id).subscribe(contracts => {
 			this.contracts = contracts ;
             this.open      = this.contracts.filter(contracts => contracts.status === 'open' );
             this.close     = this.contracts.filter(contracts => contracts.status === 'closed' );
@@ -64,8 +69,12 @@ export class ContractNoticeComponent implements OnInit  {
     }
 
     createContractNotice(id:any) {
+        this.route.params.subscribe(params => {
+            this.id = params['id'];
+            this._id = params['_id'];
+        });
         this.model.publish = false;
-        this.contractService.create(this.model)
+        this.contractnoticeService.create(this.model, this.id)
         .then(
             response => {
                 this.alertService.success('Create contract notice successful', true);
@@ -78,8 +87,12 @@ export class ContractNoticeComponent implements OnInit  {
     }
 
     publishContractNotice(id:any) {
+        this.route.params.subscribe(params => {
+            this.id = params['id'];
+            this._id = params['_id'];
+        });
         this.model.publish = true;
-        this.contractService.create(this.model)
+        this.contractnoticeService.create(this.model, this.id)
         .then(
             response => {
                 this.alertService.success('Create contract notice successful', true);
@@ -89,6 +102,15 @@ export class ContractNoticeComponent implements OnInit  {
                 this.alertService.error(error);
             }
         );
+    }
+
+    publish(contract: Contract){
+        this.route.params.subscribe(params => {
+            this.id = params['id'];
+            this._id = params['_id'];
+        });
+        this.contractnoticeService.publish(this.id,contract._id);
+        this.ngOnInit()
     }
 
     onChange(event: any) {

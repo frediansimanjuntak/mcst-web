@@ -106,7 +106,7 @@ export class EditFacilityComponent  {
 
     initSchedule() {
         return this.formbuilder.group({
-            _id : [''],
+            _id : [],
             day : [''],
             start_time : [this.start_time],
             end_time : ['']

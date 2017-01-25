@@ -44,7 +44,7 @@ export class EditIncidentComponent implements OnInit {
             this.id = params['id'];
         });
         if( this.id != null) {
-            this.incidentService.getIncident(this.id).then(incident => {this.incident = incident;});
+            this.incidentService.getById(this.id).subscribe(incident => {this.incident = incident;});
         }
     }
 

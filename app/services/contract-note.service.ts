@@ -1,69 +1,53 @@
 import { Injectable } from '@angular/core';
 import { Http, Headers, RequestOptions, Response } from '@angular/http';
 import { Observable } from 'rxjs/Rx';
-import { User, Users } from '../models/index';
+import { Contract } from '../models/index';
 import { AuthenticationService } from '../services/index';
 import { url } from '../global';
 import 'rxjs/add/operator/toPromise';
  
 @Injectable()
-export class UserService {
+export class ContractNoteService {
     private headers = new Headers({'Content-Type': 'application/json', 'Authorization': 'Bearer ' + this.authenticationService.token });
     private options = new RequestOptions({ headers: this.headers });
     constructor(private http: Http, private authenticationService: AuthenticationService) {}
 
-    getUsers(): Promise<User[]> {
-        return Promise.resolve(Users);
-    }
-
-    getUser(id: string): Promise<User> {
-        return this.getUsers()
-            .then(users => users.find(user => user._id === id));
-    }
-
-    getAll(){
-        return this.http.get(url + 'api/users', this.options)
+    getAll(id: string){
+        return this.http.get( url + 'api/contracts_note/' + id, this.options)
             .map((res:Response) => res.json())
             .catch((error:any) => Observable.throw(error.json().error || 'Server error'));
     }
 
-    getById(id:string){    
-        return this.http.get(url + 'api/users/' + id, this.options)
+    getById(idcontract:string , id:string){
+        return this.http.get( url + 'api/contracts_note/' + idcontract +'/'+ id , this.options)
             .map((res:Response) => res.json())
             .catch((error:any) => Observable.throw(error.json().error || 'Server error'));
     }
 
-    getByToken(){    
-        return this.http.get(url + 'me', this.options)
-            .map((res:Response) => res.json())
-            .catch((error:any) => Observable.throw(error.json().error || 'Server error'));
-    }
-
-    create(body:any): Promise<User> {
-        console.log(JSON.stringify(body))
-        return this.http.post(url +  'api/users', JSON.stringify(body), this.options)
+   create(body:any, id:string): Promise<Contract> {
+        console.log(body);
+        return this.http.post(url +  'api/contracts_note/' + id, JSON.stringify(body), this.options)
             .toPromise()
             .then(res => res.json().data)
             .catch(this.handleError);
     }
 
-    update(body:User): Promise<User> {
-        return this.http.post(url + 'api/users/update/' + body._id,body, this.options)
+    update(body:Contract, id:string): Promise<Contract> {
+        return this.http.post(url + 'api/contracts_note/update/' + id + '/' + body._id,body, this.options)
             .toPromise()
             .then(res => res.json().data)
             .catch(this.handleError);
     }
 
-    delete(id: string): Promise<void> {
-        return this.http.delete(url + 'api/users/' + id, this.options)
-          .toPromise()
-          .then(() => null)
-          .catch(this.handleError);
+    delete(idcontract: string, id:string): Promise<void> {
+        return this.http.delete(url + 'api/contracts_note/' + idcontract +'/'+ id, this.options)
+            .toPromise()
+            .then(() => null)
+            .catch(this.handleError);
     }
 
     private handleError(error: any): Promise<any> {
         console.error('An error occurred', error);
         return Promise.reject(error.message || error);
     }
-
 }
