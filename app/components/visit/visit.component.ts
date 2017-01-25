@@ -83,7 +83,7 @@ export class VisitComponent implements OnInit {
                 }),
                 purpose: ['house_visit'],
                 remarks : [''],
-                check_in: ['',<any>Validators.required],
+                check_in: [false,<any>Validators.required],
                 check_out: [''],
         });
 
@@ -173,9 +173,9 @@ export class VisitComponent implements OnInit {
              this.visitService.checkOut(this.visitOut._id)
                 .then(
                     data => {
-                        this.checkOutModal.close();
                         this.ngOnInit();
                         this.alertService.success('Check out guest successful', true);
+                        this.checkOutModal.close();
                     },
                     error => {
                         console.log(error);
@@ -186,6 +186,25 @@ export class VisitComponent implements OnInit {
         }
     }
 
+    print(): void {
+        let printContents, popupWin;
+        printContents = document.getElementById('print-section').innerHTML;
+        popupWin = window.open('', '_blank', 'top=0,left=0,height=100%,width=auto');
+        popupWin.document.open();
+        popupWin.document.write(`
+          <html>
+            <head>
+              <title>Print tab</title>
+              <style>
+              //........Customized style.......
+              </style>
+            </head>
+        <body onload="window.print();window.close()">${printContents}</body>
+          </html>`
+        );
+        popupWin.document.close();
+    }
+
     checkIn(model: any, isValid: boolean) {
         this.checkInSsubmitted = true;
 
@@ -193,9 +212,9 @@ export class VisitComponent implements OnInit {
             this.visitService.checkIn(this.visit._id)
                 .then(
                     data => {
-                        this.checkInModal.close();
                         this.ngOnInit();
                         this.alertService.success('Check in guest successful', true);
+                        this.checkInModal.close();
                     },
                     error => {
                         console.log(error);
@@ -247,25 +266,15 @@ export class VisitComponent implements OnInit {
         this.visitService.getAll()
             .subscribe((data)=> {
                 setTimeout(()=> {
-                    
+                    console.log(data[0].development._id);
                     this.visits            = data.filter(data => data.development._id == this.name.default_development._id);
                     this.visitActive       = data.filter(data => data.visit_date.slice(0, 10)  == this.activeDate );
                     for (var i = 0; i < this.visitActive.length; i++) {
                         this.visitActive[i].i = i+1;
                     }
-                    console.log(data.development);
+                    
                 }, 1000);
             });
-
-  //       this.visitService.getVisits().then(data => {
-  //           this.visits      = data;
-  //           this.visitActive = this.visits.filter(data => data.visit_date.slice(0, 10)  == this.activeDate );
-  //           console.log(this.visitActive.length);
-  //           for (var i = 0; i < this.visitActive.length; i++) {
-  //           	this.visitActive[i].i = i+1;
-  //           }
-
-		// });
     }
 
     private loadAllUnits(): void {
