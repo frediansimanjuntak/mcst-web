@@ -45,14 +45,14 @@
                     </div>
                 </div>
                 <!--owned-->
-                <div class="col-md-10">
+                <div class="col-md-12">
                     <div formArrayName="notification_list">          
                         <div class="panel panel-default">
                             <div class="panel-heading">
                                 <span>Charge/Bill</span> 
-                                <span style="margin-left: 90px">Remarks</span>
-                                <span style="margin-left: 245px">Applies to</span>
-                                <span style="text-align: center;margin-left: 100px">Amount</span>
+                                <span style="margin-left: 80px">Remarks</span>
+                                <span style="margin-left: 253px">Applies to</span>
+                                <span style="margin-left: 90px">Amount</span>
                             </div>
                             <div *ngFor="let owned of myForm.controls.notification_list.controls; let i=index" class="form-group">
                                 <div class="panel-body" [formGroupName]="i">
@@ -75,7 +75,7 @@
                             </a>
                         </div>  
                     </div>    
-                </div>  
+                </div>
                 <div class="col-md-10">
                     <div class="form-group pull-right">
                         <button [disabled]="loading" class="btn btn-primary">Save</button>
@@ -132,14 +132,14 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-md-10">
+                <div class="col-md-12">
                     <div formArrayName="notification_list">          
                         <div class="panel panel-default">
                             <div class="panel-heading">
                                 <span>Charge/Bill</span> 
-                                <span style="margin-left: 90px">Remarks</span>
-                                <span style="margin-left: 245px">Applies to</span>
-                                <span style="text-align: right;">Amount</span>
+                                <span style="margin-left: 80px">Remarks</span>
+                                <span style="margin-left: 253px">Applies to</span>
+                                <span style="margin-left: 90px">Amount</span>
                             </div>
                             <div *ngFor="let owned of myForm.controls.notification_list.controls; let i=index" class="form-group">
                                 <div class="panel-body" [formGroupName]="i">
