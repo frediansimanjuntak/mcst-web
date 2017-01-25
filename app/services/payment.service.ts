@@ -49,10 +49,10 @@ export class PaymentService {
     }
 
     delete(id: string): Promise<void> {
-    return this.http.delete(url + 'api/payments/' + id, this.options)
-      .toPromise()
-      .then(() => null)
-      .catch(this.handleError);
+        return this.http.delete(url + 'api/payments/' + id, this.options)
+            .toPromise()
+            .then(() => null)
+            .catch(this.handleError);
     }
 
     private handleError(error: any): Promise<any> {

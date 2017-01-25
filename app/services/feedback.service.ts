@@ -56,21 +56,21 @@ export class FeedbackService {
     }
 
     archieve(id: string): Promise<Feedback> {
-        return this.http.post(url + 'api/feedback/achieve/' + id, this.options)
+        return this.http.post(url + 'api/feedback/achieve/' + id,'', this.options)
             .toPromise()
             .then(res => res.json().data)
             .catch(this.handleError);
     }
 
     publish(id: string): Promise<Feedback> {
-        return this.http.post(url + 'api/feedback/publish/' + id, this.options)
+        return this.http.post(url + 'api/feedback/publish/' + id,'', this.options)
             .toPromise()
             .then(res => res.json().data)
             .catch(this.handleError);
     }
 
     unarchieve(id: string): Promise<Feedback> {
-        return this.http.put(url + 'api/feedback/achieve/' + id, this.options)
+        return this.http.put(url + 'api/feedback/achieve/' + id,'', this.options)
             .toPromise()
             .then(res => res.json().data)
             .catch(this.handleError);
