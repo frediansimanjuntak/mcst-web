@@ -1,7 +1,7 @@
 import { Component, OnInit, EventEmitter } from '@angular/core';
 import { Router, Params, ActivatedRoute } from '@angular/router';
 import { Incident } from '../../models/index';
-import { IncidentService, AlertService, UserService } from '../../services/index';
+import { IncidentService, AlertService, UserService, UnitService } from '../../services/index';
 import '../../rxjs-operators';
 import { Observable } from 'rxjs/Observable';
 import { FileUploader } from 'ng2-file-upload';
@@ -21,6 +21,7 @@ export class IncidentComponent implements OnInit {
     images: any[];
     id: string;
     name: any;
+    units: any;
     isFavorite = false;
     isArchieved = false;
     change = new EventEmitter();
@@ -33,23 +34,30 @@ export class IncidentComponent implements OnInit {
         private incidentService: IncidentService, 
         private alertService: AlertService,
         private route: ActivatedRoute,
-        private userService: UserService) {}
+        private userService: UserService,
+        private unitService: UnitService) {}
 
     ngOnInit(): void {
         this.userService.getByToken().subscribe(name => {this.name = name;})
-        this.images = [];
-        this.images.push({source:'/assets/image/1.png'});
-        this.images.push({source:'/assets/image/2.png'});
-        this.images.push({source:'/assets/image/3.png'});
-        this.images.push({source:'/assets/image/4.png'});
-        this.images.push({source:'/assets/image/5.png'});
         this.route.params.subscribe(params => {
             this.id = params['id'];
         });
         if( this.id == null) {
             this.loadAllIncident();
         }else{
-        	this.incidentService.getIncident(this.id).then(incident => {this.incident = incident;});
+        	this.incidentService.getById(this.id)
+            .subscribe(incident => {
+                this.incident = incident;
+                console.log(incident.attachment)
+                this.images = [];
+                this.images.push({source:incident.attachment.url}); 
+                this.incident.created_at = this.incident.created_at.slice(0,10);
+                // for (var i = 0; i < this.incident.attachment.length; ++i) {
+                //     this.images.push({source:this.incident.attachment[i].url});
+                // };
+                console.log(this.images)
+
+            });
         }
     }
 
@@ -76,11 +84,36 @@ export class IncidentComponent implements OnInit {
     }
 
 	private loadAllIncident() {
-		this.incidentService.getIncidents().then(incidents => {
+		this.incidentService.getAll().subscribe(incidents => {
 					this.incidents = incidents ;
+                    console.log(this.incidents)
                     this.dataInProgress = this.incidents.filter(incidents => incidents.status === 'inprogress' );
                     this.dataResolved   = this.incidents.filter(incidents => incidents.status === 'resolved' );
-                    console.log(this.incidents)
+                    for (var i = 0; i < this.incidents.length; ++i) {
+                        this.incidents[i].created_at = this.incidents[i].created_at.slice(0,10);
+                    }
+                    for (var i = 0; i < this.dataInProgress.length; ++i) {
+                        this.dataInProgress[i].created_at = this.dataInProgress[i].created_at.slice(0,10);
+                    }
+                    for (var i = 0; i < this.dataResolved.length; ++i) {
+                        this.dataResolved[i].created_at = this.dataResolved[i].created_at.slice(0,10);
+                    }
+                    this.unitService.getAll(this.name.default_development.name)
+                    .subscribe(units => {
+                        this.units = units.properties;
+                        for (var i = 0; i < this.incidents.length; ++i) {
+                            let a = this.units.find(data => data._id == this.incidents[i].property);
+                            this.incidents[i].property = '#'+a.address.unit_no +'-'+ a.address.unit_no_2;
+                        }
+                        for (var i = 0; i < this.dataInProgress.length; ++i) {
+                            let a = this.units.find(data => data._id == this.dataInProgress[i].property);
+                            this.dataInProgress[i].property = '#'+a.address.unit_no +'-'+ a.address.unit_no_2;
+                        }
+                        for (var i = 0; i < this.dataResolved.length; ++i) {
+                            let a = this.units.find(data => data._id == this.dataResolved[i].property);
+                            this.dataResolved[i].property = '#'+a.address.unit_no +'-'+ a.address.unit_no_2;
+                        }
+                    })
 		});
     }
 
