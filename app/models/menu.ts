@@ -27,7 +27,7 @@ export const MENUS: any[] = [
   },
   { 
   	name: 'Payment System', 
-  	link: '#',
+  	link: '/payment_system',
     description: 'Manage monthly MCST, deposits and other payments', 
   },
   { 

@@ -39,6 +39,8 @@ export * from './newsletter/edit-newsletter.component';
 export * from './notification.component';
 export * from './payment/payment.component';
 export * from './payment/edit-payment.component';
+export * from './payment-reminder/payment-reminder.component';
+export * from './payment-reminder/edit-payment-reminder.component';
 export * from './petition/petition.component';
 export * from './petition/edit-petition.component';
 export * from './poll/poll.component';

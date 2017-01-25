@@ -15,6 +15,7 @@ export * from './lost-found.service';
 export * from './newsletter.service';
 export * from './notification.service';
 export * from './payment.service';
+export * from './payment-reminder.service';
 export * from './petition.service';
 export * from './poll.service';
 export * from './quotation.service';
