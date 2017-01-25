@@ -26,7 +26,7 @@ export class ContractNoteComponent implements OnInit  {
 
     constructor(private router: Router,
         private contractService: ContractService,
-        private contractnoteService: ContractNoteService
+        private contractnoteService: ContractNoteService,
         private alertService: AlertService,
         private userService: UserService,
         private route: ActivatedRoute) {}
