@@ -45,7 +45,7 @@ export class EditFacilityComponent  {
             facility_type : ['', Validators.required],
             payment_type : ['', Validators.required],
             booking_type : ['', Validators.required],
-            schedule: this.formbuilder.array([]),
+            schedule: this.formbuilder.array([this.initSchedule()]),
             status: ['', Validators.required],
             maintenance_start : [''],
             maintenance_end : [''],
