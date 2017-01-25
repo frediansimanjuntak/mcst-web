@@ -60,7 +60,6 @@ export class EditUserComponent implements OnInit {
             owned_property: this.formbuilder.array([this.initOwned()]),
             authorized_property: this.formbuilder.array([this.initAuthorized()]),
             active: ['', Validators.required],
-            authorized_development: []
 
         });
         this.route.params.subscribe(params => {
@@ -68,9 +67,10 @@ export class EditUserComponent implements OnInit {
         });
 
         if( this.id != null) {
-            this.userService.getUser(this.id)
-            .then(user => {
+            this.userService.getById(this.id)
+            .subscribe(user => {
                 this.user = user;
+                console.log(this.user)
                 this.myForm = this.formbuilder.group({
                     _id : [''],
                     username : ['', Validators.required],
@@ -83,16 +83,6 @@ export class EditUserComponent implements OnInit {
                         property: ['', Validators.required],
                         role : ['', Validators.required]
                     }),
-                    details : this.formbuilder.group({
-                        first_name : [''],
-                        last_name : [''],
-                        identification_type : [''],
-                        identification_no : [''],
-                        identification_proof : this.formbuilder.group({
-                          front : [''],
-                          back : ['']
-                        })
-                    }),
                     rented_property: this.formbuilder.group({
                         development: [''],
                         property: ['']
@@ -101,9 +91,8 @@ export class EditUserComponent implements OnInit {
                     authorized_property: this.formbuilder.array([]),
                     active: ['', Validators.required],
                     default_development: [],
-                    authorized_development: [''],
-                    user_group : [''],
-                    created_at : [''],
+                    salt: [],
+                    __v: [],
                 });
                 for (let entry of this.user.owned_property) {
                     const control = <FormArray>this.myForm.controls['owned_property'];
@@ -124,6 +113,7 @@ export class EditUserComponent implements OnInit {
 
     initOwned() {
         return this.formbuilder.group({
+            _id: [],
             development: ['585b36585d3cc41224fe518a'],
             property: ['']
         });
@@ -131,6 +121,7 @@ export class EditUserComponent implements OnInit {
 
     initAuthorized() {
         return this.formbuilder.group({
+            _id: [],
             development: ['585b36585d3cc41224fe518a'],
             property: ['']
         });
