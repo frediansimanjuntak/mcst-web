@@ -39,6 +39,7 @@ export class VisitComponent implements OnInit {
     public checkInSsubmitted: boolean;
     public checkOutSsubmitted: boolean;
     name: any;
+    loading = false;
 
     constructor(
                 private router: Router,
@@ -56,6 +57,7 @@ export class VisitComponent implements OnInit {
     }
 
     ngOnInit(): void {
+        this.loading = true;
     	this.addSubmitted = false;
     	this.checkInSsubmitted = false;
         this.checkOutSsubmitted = false;
@@ -137,7 +139,7 @@ export class VisitComponent implements OnInit {
     preCheckIn(visit){
     	this.visit = visit;
    		this.checkInForm = this.formbuilder.group({
-			 	property: [{value: visit.property, disabled: true}],
+			 	property: [{value: visit.visiting, disabled: true}],
                 visitor: this.formbuilder.group({
                     full_name : [{value: visit.visitor.full_name, disabled: true}],
                     vehicle : [{ value: visit.visitor.vehicle, disabled: true}],
@@ -153,7 +155,7 @@ export class VisitComponent implements OnInit {
     preCheckOut(visit){
         this.visitOut = visit;
            this.checkOutForm = this.formbuilder.group({
-                 property: [{value: visit.property, disabled: true}],
+                 property: [{value: visit.visiting, disabled: true}],
                 visitor: this.formbuilder.group({
                     full_name : [{value: visit.visitor.full_name, disabled: true}],
                     vehicle : [{ value: visit.visitor.vehicle, disabled: true}],
@@ -170,17 +172,20 @@ export class VisitComponent implements OnInit {
         this.checkOutSsubmitted = true;
 
         if(isValid == true){
-             this.visitService.checkOut(this.visitOut._id)
+            this.loading = true;
+            this.visitService.checkOut(this.visitOut._id)
                 .then(
                     data => {
                         this.ngOnInit();
                         this.alertService.success('Check out guest successful', true);
                         this.checkOutModal.close();
+                        this.loading = false;
                     },
                     error => {
                         console.log(error);
                         this.checkOutModal.close();
                         alert(`Check out could not be save, server Error.`);
+                        this.loading = false;
                     }
                 );
         }
@@ -207,19 +212,21 @@ export class VisitComponent implements OnInit {
 
     checkIn(model: any, isValid: boolean) {
         this.checkInSsubmitted = true;
-
         if(isValid == true){
+            this.loading = true;
             this.visitService.checkIn(this.visit._id)
                 .then(
                     data => {
                         this.ngOnInit();
                         this.alertService.success('Check in guest successful', true);
                         this.checkInModal.close();
+                        this.loading = false;
                     },
                     error => {
                         console.log(error);
                         this.checkInModal.close();
                         alert(`Check in could not be save, server Error.`);
+                        this.loading = false;
                     }
                 );
         }
@@ -238,23 +245,20 @@ export class VisitComponent implements OnInit {
         console.log(model);
         model.visit_date =  this.visitDateCreate;
         if(isValid == true){
-
-            // this.visits.push(model);
-            // this.firstModal.close();
-            // console.log(model);
-            // this.ngOnInit();
-
+            this.loading = true;
             this.visitService.create(model)
             .then(
                 data => {
                     this.alertService.success('Add guest successful', true);
                     this.firstModal.close();
                     this.ngOnInit();
+                    this.loading = false;
                 },
                 error => {
                     console.log(error);
                     this.firstModal.close();
                     alert(`Guest register could not be save, server Error.`);
+                    this.loading = false;
                 }
             );
 
@@ -266,13 +270,16 @@ export class VisitComponent implements OnInit {
         this.visitService.getAll()
             .subscribe((data)=> {
                 setTimeout(()=> {
-                    console.log(data[0]);
                     this.visits            = data.filter(data => data.development == this.name.default_development._id);
                     this.visitActive       = data.filter(data => data.visit_date.slice(0, 10)  == this.activeDate );
                     for (var i = 0; i < this.visitActive.length; i++) {
                         this.visitActive[i].i = i+1;
+                        let visiting = this.dataUnit.find(data => data._id ==  this.visitActive[i].property);
+                        this.visitActive[i].visiting = '#' + visiting.address.unit_no + '-' + visiting.address.unit_no_2;
                     }
-                    
+
+                    console.log(this.visitActive[0]);
+                    this.loading = false;
                 }, 1000);
             });
     }
