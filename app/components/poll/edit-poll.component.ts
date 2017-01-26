@@ -95,6 +95,9 @@ export class EditPollComponent  {
 
     createPoll() {
     	this.model.status = 'draft';
+        if (this.model.poll_type == 'yes_or_no'){
+            this.model.choices = ['yes', 'no'];
+        }
         console.log(this.model);
         this.pollService.create(this.model)
         .then(

@@ -15,7 +15,7 @@ import '../../rxjs-operators';
 
 export class PollComponent implements OnInit { 
 	@ViewChild('firstModal') firstModal;
-	poll: Poll;
+	  poll: any;
     polls: 		Poll[] = [];
     pollsDraft:  Poll[] = [];
     pollsActive: Poll[] = [];
@@ -54,6 +54,18 @@ export class PollComponent implements OnInit {
                                     this.pollService.getById(this.id)
                                         .subscribe(poll => {
                                             this.poll = poll;
+
+                                            let numOptions =  this.poll.choices.length;
+                                            let opts = new Array(numOptions);
+
+                                            for (let i = 0; i < numOptions; i++) {
+                                                opts[i] = {
+                                                    choice: this.poll.choices[i],
+                                                    progress: this.poll.votes.filter(data => data.answer == this.poll.choices[i] ).length,
+                                                };
+                                            }
+                                            this.poll.answers = opts.slice(0);
+                                            
                                         });
                                 }
                             })

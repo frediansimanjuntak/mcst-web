@@ -30,6 +30,7 @@ export class UnitComponent implements OnInit {
     }
 
     ngOnInit(): void {
+        this.loading = true;
         this.userService.getByToken().subscribe(name => {
                 this.name = name;
                 this.loadAllUnits();
@@ -60,7 +61,6 @@ export class UnitComponent implements OnInit {
     }
 
     private loadAllUnits(): void {
-        this.loading = true;
         this.unitservice.getAll(this.name.default_development.name)
             .subscribe((data)=> {
                 setTimeout(()=> {

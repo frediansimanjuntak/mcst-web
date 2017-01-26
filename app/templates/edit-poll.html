@@ -92,11 +92,11 @@
                     <div class="col-sm-8">
                         <select class="form-control" name="poll_type" [(ngModel)]="model.poll_type">
                           <option selected value="yes_or_no">Yes or No</option>
-                          <option value="multiple_choices">Multiple Choices</option>
+                          <option value="multiple">Multiple Choices</option>
                         </select>
                     </div>
                 </div>
-                <div *ngIf="model.poll_type == 'multiple_choices'" class="form-group"> 
+                <div *ngIf="model.poll_type == 'multiple'" class="form-group"> 
                     <label class="control-label col-sm-4" for="choices">Choices :</label>         
                     <div class="col-sm-8">
                         <div *ngFor="let c of model.choices; let i=index">

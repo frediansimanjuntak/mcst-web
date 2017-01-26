@@ -16,7 +16,12 @@
 	        		</div>
 	        		<div class="row">
 	        			<div class="col-md-4">Type</div>
-	        			<div class="col-md-8"> <p>:  {{poll.poll_type}}</p></div>
+	        			<div class="col-md-8">
+	        				<p>:  
+	        					<span *ngIf="poll.poll_type == 'yes_or_no'">Yes / No</span>
+						        <span *ngIf="poll.poll_type == 'multiple'">Multiple</span>
+	        				</p>
+	        			</div>
 	        		</div>
 	        		<div class="row">
 	        			<div class="col-md-4">Voted Total</div>
@@ -25,7 +30,18 @@
 	        		<div class="row">
 	        			<div class="col-md-4">Choices </div>
 	        			<div class="col-md-8">
-	        				:<i href="#" *ngFor="let a of poll.choices"> {{a}}&nbsp; </i>
+	        				:<span *ngFor="let a of poll.choices">{{a}}&nbsp;, </span>
+	        			</div>
+	        		</div>
+	        		<div class="row">
+	        			<div class="col-md-4">Progress </div>
+	        			<div class="col-md-8">
+	        				:<span href="#" *ngFor="let a of poll.answers"> 
+	        					{{a.choice}}( {{a.progress}}&nbsp;
+	        					<span *ngIf="a.progress > 1">votes</span>
+	        					<span *ngIf="a.progress == 1">vote</span> 
+	        					),&nbsp;
+	        				</span>
 	        			</div>
 	        		</div>
 	        		<div class="row">
@@ -72,7 +88,13 @@
 			    	<p-dataTable [value]="pollsDraft" [rows]="10" [paginator]="true">
 					    <p-column field="title" header="Poll Title" sortable="true" [filter]="true" filterPlaceholder="Search Title"></p-column>
 					    <p-column field="description" header="Poll" sortable="true" [filter]="true" filterPlaceholder="Search Poll"></p-column>
-					    <p-column field="poll_type" header="Poll Type" sortable="true" [filter]="true" filterPlaceholder="Search Type"></p-column>
+					    <p-column header="Poll Type" sortable="true" [filter]="true" filterPlaceholder="Search Type">
+						    	<template let-pollsDraft="rowData" pTemplate="body">
+						            <span *ngIf="pollsDraft.poll_type == 'yes_or_no'">Yes / No</span>
+						            <span *ngIf="pollsDraft.poll_type == 'multiple'">Multiple</span>
+						        </template>
+						</p-column>
+
 					    <p-column field="" header="Open to" sortable="true" [filter]="true" filterPlaceholder="Search Type"></p-column>
 						<p-column header="Commence date" sortable="true">
 						    	<template let-pollsDraft="rowData" pTemplate="body">
