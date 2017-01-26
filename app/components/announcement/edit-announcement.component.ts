@@ -100,19 +100,17 @@ export class EditAnnouncementComponent  {
             this.model.valid_till = "forever"
         }
         console.log(this.model);
-        Announcements.push(this.model);
-        this.router.navigate([this.name.default_development.name + '/announcement']);
-        // this.anouncementService.create(this.model)
-        // .then(
-        //     data => {
-        //         this.alertService.success('Create announcement successful', true);
-        //         this.router.navigate([this.name.default_development.name + '/newsletter']);
-        //     },
-        //     error => {
-        //         console.log(error);
-        //         alert(`The announcement could not be save, server Error.`);
-        //     }
-        // );
+        this.anouncementService.create(this.model)
+        .then(
+            data => {
+                this.alertService.success('Create announcement successful', true);
+                this.router.navigate([this.name.default_development.name + '/announcement']);
+            },
+            error => {
+                console.log(error);
+                alert(`The announcement could not be save, server Error.`);
+            }
+        );
     }
 
     autoPostOnDateChanged(event:any) {
@@ -127,33 +125,33 @@ export class EditAnnouncementComponent  {
 
     updateAnnouncement(){
         if(this.model.auto_post_on == ""){
-             this.announcement.auto_post_on  = "no";
+            this.announcement.auto_post_on  = "no";
         }else{
-             this.announcement.auto_post_on  = this.model.auto_post_on;
+            this.announcement.auto_post_on  = this.model.auto_post_on;
         }
 
         if(this.model.valid_till == ""){
-            this.announcement.valid_till = "forever";
+           this.announcement.valid_till = "forever";
         }else{
             this.announcement.valid_till = this.model.valid_till;
         }
         console.log(this.announcement);
 
-		// this.anouncementService.update(this.model)
-		// .subscribe(
-		// 	response => {
-		// 		if(response.error) {
-	 //                this.alertService.error(response.error);
-	 //            } else {
-	 //                // EmitterService.get(this.userList).emit(response.users);
-  //                    this.alertService.success('Update newsletter successful', true);
-  //                    this.router.navigate(['/newsletter']);
-	 //            }
-  //           },
-  //           error=> {
-  //           	this.alertService.error(error);
-  //           }
-  //       );
+		this.anouncementService.update(this.announcement)
+		.then(
+			response => {
+				if(response) {
+	                this.alertService.error('Update announcement failed');
+	            } else {
+	                // EmitterService.get(this.userList).emit(response.users);
+                     this.alertService.success('Update announcement successful', true);
+                     this.router.navigate(['/announcement']);
+	            }
+            },
+            error=> {
+            	this.alertService.error(error);
+            }
+        );
 	}
 
     toAnnouncement(){
