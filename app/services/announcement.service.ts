@@ -7,12 +7,14 @@ import 'rxjs/add/operator/toPromise';
  
 @Injectable()
 export class AnnouncementService {
-    token : string;
-    private headers = new Headers({ 'Authorization': 'Bearer ' + this.token });
-    private options = new RequestOptions({ headers: this.headers });
+    public headers: Headers;
+    public token: string;
+    public options: RequestOptions;
     constructor(private http: Http) {
         var authToken = JSON.parse(localStorage.getItem('authToken'));
         this.token = authToken && authToken.token;
+        this.headers = new Headers({  'Content-Type': 'application/json', 'Authorization': 'Bearer ' + this.token });
+        this.options = new RequestOptions({ headers: this.headers });
     }
 
     getAnnouncements(): Promise<Announcement[]> {
@@ -58,7 +60,7 @@ export class AnnouncementService {
     }
     
     publish(id: string): Promise<void> {
-        return this.http.post(url + 'api/announcements/publish/' + id, this.options)
+        return this.http.post(url + 'api/announcements/publish/' + id,'', this.options)
           .toPromise()
           .then(() => null)
           .catch(this.handleError);

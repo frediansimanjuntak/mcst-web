@@ -50,7 +50,7 @@ export class AnnouncementComponent implements OnInit {
                                 this.name = name;
                                 this.loadAllAnnouncements();
                             })
-                            
+        this.model.publish = false;                              
         this.validTillDateOptions = {
             todayBtnTxt: 'Today',
             dateFormat: 'yyyy-mm-dd',
@@ -63,14 +63,6 @@ export class AnnouncementComponent implements OnInit {
             // disableUntil: {year: 2016, month: 8, day: 10},
             selectionTxtFontSize: '16px'
         };
-    }
-
-    public toInt(num: string) {
-        return +num;
-    }
-
-    public sortByWordLength = (a: any) => {
-        return a.city.length;
     }
 
     deleteAnnouncement(announcement) {
@@ -118,22 +110,22 @@ export class AnnouncementComponent implements OnInit {
         this.announcement.sticky = this.stickyStatus;
         this.announcement.publish = true;
 
-        // this.announcementService.publish(this.announcement._id)
-        //   .then(
-        //     response => {
-        //       if(response) {
-        //         alert(`The Announcement could not be publish, server Error.`);
-        //       } else {
-        //         alert(`Delete Newsletter successful`);
-        //         this.firstModal.close();
-        //         this.ngOnInit()
-        //       }
-        //     },
-        //     error=> {
-        //       console.log(error);
-        //         alert(`The Announcement could not be deleted, server Error.`);
-        //     }
-        // );
+        this.announcementService.publish(this.announcement._id)
+          .then(
+            response => {
+              if(response) {
+                alert(`The Announcement could not be publish, server Error.`);
+              } else {
+                alert(`Delete Newsletter successful`);
+                this.firstModal.close();
+                this.ngOnInit()
+              }
+            },
+            error=> {
+              console.log(error);
+                alert(`The Announcement could not be deleted, server Error.`);
+            }
+        );
 
         this.firstModal.close();
         this.ngOnInit();
@@ -145,26 +137,19 @@ export class AnnouncementComponent implements OnInit {
     }
 
     private loadAllAnnouncements() {
-        // this.announcementService.getAll()
-        //     .subscribe((data)=> {
-        //         setTimeout(()=> {
-        //                   this.announcements            = data.filter(data => data.development._id === this.name.default_development._id );
-        //                   this.announcementsDrafted     = this.announcements.filter(data => data.publish === false );
-        //                   this.announcementsPublished   = this.announcements.filter(data => data.publish === true );
-        //         }, 1000);
-        //     });
-
-
-
-        this.announcementService.getAnnouncements().then(data => {
-            this.announcements            = data;
-            this.announcementsDrafted     = this.announcements.filter(data => data.publish === false );
-            this.announcementsPublished   = this.announcements.filter(data => data.publish === true );
-        });
+        this.announcementService.getAll()
+            .subscribe((data)=> {
+                setTimeout(()=> {
+                    console.log(data);
+                          this.announcements            = data.filter(data => data.development === this.name.default_development._id );
+                          this.announcementsDrafted     = this.announcements.filter(data => data.publish === "false" );
+                          this.announcementsPublished   = this.announcements.filter(data => data.publish === "true" );
+                }, 1000);
+            });
     }
 
     add(){
-        this.router.navigate([this.name.development.name + '/announcement/add']);  
+        this.router.navigate([this.name.default_development.name + '/announcement/add']);  
     }
 
     editAnnouncement(anouncement: Announcement){

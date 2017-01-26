@@ -37,7 +37,11 @@
 				    <p-column field="sticky" header="Sticky?" sortable="true" [filter]="true"></p-column>
 				    <p-column field="valid_till" header="Valid till" sortable="true" [filter]="true" filterPlaceholder="Search Date "></p-column>
 				    <p-column field="created_at" header="Created on" sortable="true" [filter]="true" filterPlaceholder="Search Date "></p-column>
-				    <p-column field="created_by" header="Created by" sortable="true" [filter]="true" filterPlaceholder="Search Date "></p-column>
+				    <p-column filterPlaceholder="Search Created by" header="Created by">
+				        <template let-announcementsPublished="rowData" pTemplate="body">
+				            <span>{{announcementsPublished.created_by.username}}</span>
+				        </template>
+				    </p-column>
 				    <p-column styleClass="col-button">
 				    	<template class="pull-right" let-announcementsPublished="rowData" pTemplate="body">
 				        <button  type="button" (click)="deleteAnnouncement(announcementsPublished)"><i class="fa fa-trash" aria-hidden="true"></i></button>

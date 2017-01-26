@@ -8,9 +8,9 @@ export class Announcement {
   auto_post_on : string;
   valid_till : string;
   publish : boolean;
-  publish_by : string;
+  publish_by : User;
   publish_at : string;
-  created_by : string;
+  created_by : User;
   updated_at : string;
   created_at : string;
 }
