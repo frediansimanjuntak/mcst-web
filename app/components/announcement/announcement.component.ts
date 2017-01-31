@@ -18,8 +18,8 @@ import * as $ from "jquery";
 
 export class AnnouncementComponent implements OnInit {
     @ViewChild('firstModal') firstModal;
-	  announcement: Announcement;
-    announcements: Announcement[] = [];
+	announcement: Announcement;
+    announcements: any[] = [];
     validTillDateOptions: any = {};
     model: any = {};
     cols: any[];
@@ -60,7 +60,7 @@ export class AnnouncementComponent implements OnInit {
             width: '260px',
             inline: false,
             customPlaceholderTxt: 'Forever (default)',
-            // disableUntil: {year: 2016, month: 8, day: 10},
+            // disableUntil: {year: 2016, month: 8, day: 10}
             selectionTxtFontSize: '16px'
         };
     }
@@ -141,9 +141,9 @@ export class AnnouncementComponent implements OnInit {
             .subscribe((data)=> {
                 setTimeout(()=> {
                     console.log(data);
-                          this.announcements            = data.filter(data => data.development === this.name.default_development._id );
-                          this.announcementsDrafted     = this.announcements.filter(data => data.publish === "false" );
-                          this.announcementsPublished   = this.announcements.filter(data => data.publish === "true" );
+                          this.announcements            = data.filter(data => data.development._id === this.name.default_development._id );
+                          this.announcementsDrafted     = this.announcements.filter(data => data.publish == 'false' );
+                          this.announcementsPublished   = this.announcements.filter(data => data.publish == 'true' );
                 }, 1000);
             });
     }
@@ -153,6 +153,7 @@ export class AnnouncementComponent implements OnInit {
     }
 
     editAnnouncement(anouncement: Announcement){
+        console.log(anouncement);
         this.router.navigate([this.name.default_development.name + '/announcement/edit', anouncement._id]);
     }
 

@@ -74,8 +74,9 @@ export class EditAnnouncementComponent  {
                                 this.name = name;
                                 if( this.id != null) {
                                     this.anouncementService
-                                            .getAnnouncement(this.id)
-                                            .then(announcement => {
+                                            .getById(this.id)
+                                            .subscribe(announcement => {
+                                                console.log(announcement);
                                                 this.announcement = announcement;
                                                 if(this.announcement.auto_post_on != "no"){
                                                    this.model.auto_post_on = this.announcement.auto_post_on;
@@ -145,7 +146,7 @@ export class EditAnnouncementComponent  {
 	            } else {
 	                // EmitterService.get(this.userList).emit(response.users);
                      this.alertService.success('Update announcement successful', true);
-                     this.router.navigate(['/announcement']);
+                     this.router.navigate([this.name.default_development.name + '/announcement']);
 	            }
             },
             error=> {
