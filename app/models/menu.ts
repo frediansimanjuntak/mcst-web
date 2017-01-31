@@ -41,7 +41,7 @@ export const MENUS: any[] = [
   },
   { 
   	name: 'Manage Community',
-    description: 'Manage event and announcement, E-voting and feedbacks',
+    description: 'Manage event and announcement, E-voting and feedback',
   	sub : [
   		{ name : 'Manage Announcement', link: '/announcement' },
   		{ name : 'E-voting', link: '/poll' },
@@ -61,6 +61,7 @@ export const MENUS: any[] = [
       { name : 'Company', link: '/company' },
       { name : 'Contractor', link: '/contractor' },
       { name : 'Payment', link: '/payment' },
+      { name : 'Test', link: '/test' },
     ]
   },
 ];

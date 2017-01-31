@@ -16,8 +16,10 @@ import 'rxjs/add/operator/switchMap';
 export class EditLostFoundComponent  {
     @Input('group')
 	lostFound: LostFound;
+    filesToUpload: Array<File>;
     model: any = {};
     myForm: FormGroup;
+    attachment: any = [];
     id: string;
     autoPostOnDateOptions: any = {};
     validTillDateOptions: any = {};
@@ -46,9 +48,21 @@ export class EditLostFoundComponent  {
         
     }
 
+
+    onChange(fileInput: any){
+        this.filesToUpload = <Array<File>> fileInput.target.files;
+        this.model.photo = this.filesToUpload;
+    }
+
     createReport(event: any) {
         // this.model.serial_number = 142141;
         this.model.archieve = false;
+
+      
+        // for(var i = 0; i < this.filesToUpload.length; i++) {
+        //     this.model.append("photo[]", this.filesToUpload.length[i], this.filesToUpload.length[i].name);
+        // }
+        
         console.log(this.model);
         this.lostFoundService.create(this.model)
         .then(
@@ -72,17 +86,18 @@ export class EditLostFoundComponent  {
         this.unitService.getAll(this.name.default_development.name)
             .subscribe((data)=> {
                 setTimeout(()=> {
-                    this.dataUnit       = data.properties;
+                    console.log(data);
+                    this.dataUnit      = data.properties;
                     console.log(this.dataUnit);
                 }, 1000);
             });
     }
 
 
-    onChange(event: any) {
-       let files = [].slice.call(event.target.files);
-       this.model.photo = files;
-    }
+    // onChange(event: any) {
+    //    let files = [].slice.call(event.target.files);
+    //    this.model.photo = files;
+    // }
 
     remove(i: any){
         this.model.photo.splice(i, 1)

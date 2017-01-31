@@ -62,8 +62,9 @@
 		    </footer>
 		</p-dialog>
 
+		<input type="file" (change)="fileChange($event)" placeholder="Upload files" multiple>
 		
-		<!-- <form class="form-horizontal col-md-6" name="form" (ngSubmit)="f.form.valid && uploader.uploadAll() || upload()" #f="ngForm" novalidate enctype="multipart/form-data">
+		<form class="form-horizontal col-md-6" name="form" (ngSubmit)="f.form.valid && uploader.uploadAll() || upload()" #f="ngForm" novalidate enctype="multipart/form-data">
 			<div class="form-group" >
 			    <label class="control-label col-sm-4" for="attachment">Attachment :</label>
 			    <div class="col-sm-8">
@@ -111,7 +112,7 @@
 		<img [src]="src" [hidden]="!src"><br>
       	<input multiple type="file" (change)="onChange($event)" image-upload
         (imageSelected)="selected($event)"
-        [resizeOptions]="resizeOptions"> -->
+        [resizeOptions]="resizeOptions">
 
 
 		<!-- Gunama -->

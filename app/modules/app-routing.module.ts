@@ -135,7 +135,7 @@ const routes: Routes = [
   // { path: 'petition/edit/:id',   component: EditAnnouncementComponent },
   // { path: 'form',     component: HeroFormComponent },
   // { path: 'table',     component: TableDemoComponent },
-  { path: 'test',     component: TestComponent },
+  { path: ':name/test',     component: TestComponent, canActivate: [AuthGuard] },
   
 ];
 
