@@ -1,9 +1,12 @@
 import { Component, OnInit, Input }from '@angular/core';
 import { Router, Params, ActivatedRoute } from '@angular/router';
 import { LostFound, LostFounds } from '../../models/index';
+import { Http, Headers, RequestOptions, Response } from '@angular/http';
 import { LostFoundService, AlertService, UserService, UnitService } from '../../services/index';
 import { FormBuilder, FormGroup, FormControl, FormArray, Validators } from '@angular/forms';
 import { FileUploader } from 'ng2-file-upload';
+import { Observable} from 'rxjs/Observable';
+import { url } from '../../global';
 import '../../rxjs-operators';
 import 'rxjs/add/operator/switchMap';
 
@@ -14,6 +17,10 @@ import 'rxjs/add/operator/switchMap';
 })
 
 export class EditLostFoundComponent  {
+       public headers: Headers;
+    public token: string;
+    public pilihan: RequestOptions;
+
     @Input('group')
 	lostFound: LostFound;
     filesToUpload: Array<File>;
@@ -33,8 +40,13 @@ export class EditLostFoundComponent  {
         private formbuilder: FormBuilder,
         private route: ActivatedRoute,
         private userService: UserService,
-        private unitService: UnitService
+        private unitService: UnitService,
+        private http: Http, 
          ) {
+        var authToken = JSON.parse(localStorage.getItem('authToken'));
+        this.token = authToken && authToken.token;
+        this.headers = new Headers({ 'Accept': 'application/json', 'Authorization': 'Bearer ' + this.token });
+        this.pilihan = new RequestOptions({ headers: this.headers });
 
         // this.user = JSON.parse(localStorage.getItem('user'));
     }
@@ -48,23 +60,33 @@ export class EditLostFoundComponent  {
         
     }
 
-
     onChange(fileInput: any){
         this.filesToUpload = <Array<File>> fileInput.target.files;
         this.model.photo = this.filesToUpload;
     }
 
+    fileChange(event) {
+        let fileList: FileList = event.target.files;
+        this.model.photo = fileList;
+        console.log(this.model.photo);
+    }
+
     createReport(event: any) {
         // this.model.serial_number = 142141;
         this.model.archieve = false;
-
-      
-        // for(var i = 0; i < this.filesToUpload.length; i++) {
-        //     this.model.append("photo[]", this.filesToUpload.length[i], this.filesToUpload.length[i].name);
-        // }
+        let formData:FormData = new FormData();
         
-        console.log(this.model);
-        this.lostFoundService.create(this.model)
+        for (var i = 0; i < this.model.photo.length; i++) {
+            formData.append("photo[]", this.model.photo[i]);
+        }
+
+        formData.append("archieve", this.model.archieve);
+        formData.append("property", this.model.property);
+        formData.append("type", this.model.type);
+        formData.append("description", this.model.description);
+        formData.append("preferred_method_of_contact", this.model.preferred_method_of_contact);
+        
+        this.lostFoundService.create(formData)
         .then(
             data => {
                 this.alertService.success('Create Report successful', true);

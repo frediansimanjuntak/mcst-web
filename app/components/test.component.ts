@@ -71,8 +71,9 @@ export class TestComponent implements OnInit{
                 private authenticationService: AuthenticationService) {
         var authToken = JSON.parse(localStorage.getItem('authToken'));
         this.token = authToken && authToken.token;
-        this.headers = new Headers({  'Content-Type': 'application/json', 'Authorization': 'Bearer ' + this.token });
+        this.headers = new Headers({ 'Accept': 'application/json', 'Authorization': 'Bearer ' + this.token });
         this.pilihan = new RequestOptions({ headers: this.headers });
+
         let numOptions = 100;
         let opts = new Array(numOptions);
 
@@ -281,11 +282,13 @@ fileChange(event) {
     if(fileListLength > 0) {
         let formData:FormData = new FormData();
         for (var i = 0; i < fileListLength; i++) {
-            formData.append("attachment[]", fileList[i]);
+            formData.append("attachment", fileList[i]);
         }
+       
         let headers = new Headers();
-        headers.append('Content-Type', 'multipart/form-data');
+        // headers.append('Content-Type', 'multipart/form-data');
         headers.append('Accept', 'application/json');
+        console.log(headers);
         let options = new RequestOptions({ headers: headers });
         console.log(formData);
         this.http.post(`${url + 'api/attachments'}`, formData, this.pilihan)

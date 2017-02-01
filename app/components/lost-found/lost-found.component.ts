@@ -55,11 +55,6 @@ export class LostFoundComponent implements OnInit {
 		this.userService.getByToken().subscribe(name => {this.name = name;})
         this.buttonViewArchive = false;
         this.images = [];
-        this.images.push({source:'/assets/image/1.png'});
-        this.images.push({source:'/assets/image/2.png'});
-        this.images.push({source:'/assets/image/3.png'});
-        this.images.push({source:'/assets/image/4.png'});
-        this.images.push({source:'/assets/image/5.png'});
         this.route.params.subscribe(params => {
             this.id = params['id'];
         });
@@ -67,7 +62,14 @@ export class LostFoundComponent implements OnInit {
             this.loadLostFounds();
         }else{
             this.lostFoundService.getById(this.id)
-                .subscribe(lostFound => {this.lostFound = lostFound;});
+                .subscribe(lostFound => {
+                    this.lostFound = lostFound;
+                    if(this.lostFound.photo.length > 0){
+                        for (var i = 0; i < this.lostFound.photo.length; i++) {
+                            this.images.push({source: this.lostFound.photo[i].url});   
+                        }
+                    }
+                });
         }
     }
 
@@ -108,11 +110,10 @@ export class LostFoundComponent implements OnInit {
     }
 
     private loadLostFounds() {
-        //---------------------------Call To Api-------------- //
         this.lostFoundService.getAll()
             .subscribe((data)=> {
                 setTimeout(()=> {
-                    this.lostFounds      = data.filter(data => data.development == this.name.default_development._id);
+                    this.lostFounds      = data.filter(data => data.development._id == this.name.default_development._id);
                     this.archieveds      = this.lostFounds.filter(data => data.archieve == true );
                     this.archievedLosts = this.archieveds.filter(data => data.type == 'lost');
                     this.archievedFounds= this.archieveds.filter(data => data.type == 'found');
@@ -123,17 +124,6 @@ export class LostFoundComponent implements OnInit {
                     console.log(this.lostFounds);
                 }, 1000);
             });
-
-  //       this.lostFoundService.getLostFounds().then(data => {
-  //           this.lostFounds      = data.filter(data => data.development == this.name.default_development.name);
-  //           this.archieveds      = this.lostFounds.filter(data => data.archieve );
-  //           this.archievedLosts = this.archieveds.filter(data => data.type == 'lost');
-  //           this.archievedFounds= this.archieveds.filter(data => data.type == 'found');
-
-  //           this.all             = this.lostFounds.filter(data => !data.archieve );
-  //           this.losts           = this.all.filter(data => data.type == 'lost');
-  //           this.founds          = this.all.filter(data => data.type == 'found');
-		// });
     }
 
     goBack(): void {

@@ -12,7 +12,7 @@
 	        	<div class="col-lg-6">
 	        		<div class="row">
 	        			<div class="col-md-4">Reported by :</div>
-	        			<div class="col-md-8"> <p>{{ lostFound.created_by }}</p></div>
+	        			<div class="col-md-8"> <p>{{ lostFound.created_by.username }}</p></div>
 	        		</div>
 	        		<div class="row">
 	        			<div class="col-md-4">Type :</div>
@@ -62,13 +62,26 @@
 			    <tab heading="All">
 			    	<p-dataTable [value]="all" [rows]="10" [paginator]="true">
 					    <p-column field="_id" header="S/N" [filter]="true" filterPlaceholder="Search S/N"></p-column>
-					    <p-column field="created_by" header="Made by" [filter]="true" filterPlaceholder="Search User"></p-column>
+					    <p-column header="Made by">
+				        	<template let-all="rowData" pTemplate="body">
+				            	<span>{{all.created_by.username}}</span>
+				        	</template>
+				    	</p-column>
 					    <p-column field="property" header="Unit.no" [filter]="true" filterPlaceholder="Search User"></p-column>
 					    <p-column field="type" header="Type" sortable="true" [filter]="true" filterPlaceholder="Search Type"></p-column>
 					    <p-column field="description" header="Description"></p-column>
-					    <p-column field="photo[0]" header="Photo"></p-column>
+					    <p-column header="Photo">
+				        	<template let-all="rowData" pTemplate="body">
+				            	<span *ngIf="all.photo">Yes</span>
+				            	<span *ngIf="!all.photo">No</span>
+				        	</template>
+				    	</p-column>
 					    <p-column field="preferred_method_of_contact" header="Preferred method of contact"></p-column>
-					    <p-column field="created_at" header="Reported on" sortable="true" ></p-column>
+					    <p-column header="Reported on" sortable="true">
+						    	<template let-all="rowData" pTemplate="body">
+						            <span>{{all.created_at | date:'d/M/y'}}</span>
+						        </template>
+						</p-column>
 					   <p-column styleClass="col-button">
 					    	<template let-all="rowData" class="pull-right" pTemplate="body">
 					    	<a type="button" class="btn-underline" (click)="viewLostFound(all)">View</a>
@@ -80,13 +93,26 @@
 			    <tab heading="Lost">
 			    	<p-dataTable [value]="losts" [rows]="10" [paginator]="true">
 					    <p-column field="_id" header="S/N" [filter]="true" filterPlaceholder="Search S/N"></p-column>
-					    <p-column field="created_by" header="Made by" [filter]="true" filterPlaceholder="Search User"></p-column>
+					    <p-column header="Made by">
+				        	<template let-losts="rowData" pTemplate="body">
+				            	<span>{{losts.created_by.username}}</span>
+				        	</template>
+				    	</p-column>
 					    <p-column field="property" header="Unit.no" [filter]="true" filterPlaceholder="Search User"></p-column>
 					    <p-column field="type" header="Type" sortable="true"  [filter]="true" filterPlaceholder="Search Type"></p-column>
 					    <p-column field="description" header="Description"></p-column>
-					    <p-column field="photo[0]" header="Photo"></p-column>
+					    <p-column header="Photo">
+				        	<template let-losts="rowData" pTemplate="body">
+				            	<span *ngIf="losts.photo">Yes</span>
+				            	<span *ngIf="!losts.photo">No</span>
+				        	</template>
+				    	</p-column>
 					    <p-column field="preferred_method_of_contact" header="Preferred method of contact"></p-column>
-					    <p-column field="created_at" header="Reported on" sortable="true" ></p-column>
+					    <p-column header="Reported on" sortable="true">
+						    	<template let-losts="rowData" pTemplate="body">
+						            <span>{{losts.created_at | date:'d/M/y'}}</span>
+						        </template>
+						</p-column>
 					   <p-column styleClass="col-button">
 					    	<template let-losts="rowData" class="pull-right" pTemplate="body">
 					    	<a type="button" class="btn-underline" (click)="viewLostFound(losts)">View</a>
@@ -98,13 +124,26 @@
 			    <tab heading="Found">
 			    	<p-dataTable [value]="founds" [rows]="10" [paginator]="true">
 					     <p-column field="_id" header="S/N" [filter]="true" filterPlaceholder="Search S/N"></p-column>
-					    <p-column field="created_by" header="Made by" [filter]="true" filterPlaceholder="Search User"></p-column>
+					    <p-column header="Made by">
+				        	<template let-founds="rowData" pTemplate="body">
+				            	<span>{{founds.created_by.username}}</span>
+				        	</template>
+				    	</p-column>
 					    <p-column field="property" header="Unit.no" [filter]="true" filterPlaceholder="Search User"></p-column>
 					    <p-column field="type" header="Type" sortable="true"  [filter]="true" filterPlaceholder="Search Type"></p-column>
 					    <p-column field="description" header="Description"></p-column>
-					    <p-column field="photo[0]" header="Photo"></p-column>
+					    <p-column header="Photo">
+				        	<template let-founds="rowData" pTemplate="body">
+				            	<span *ngIf="founds.photo">Yes</span>
+				            	<span *ngIf="!founds.photo">No</span>
+				        	</template>
+				    	</p-column>
 					    <p-column field="preferred_method_of_contact" header="Preferred method of contact"></p-column>
-					    <p-column field="created_at" header="Reported on" sortable="true" ></p-column>
+					     <p-column header="Reported on" sortable="true">
+						    	<template let-founds="rowData" pTemplate="body">
+						            <span>{{founds.created_at | date:'d/M/y'}}</span>
+						        </template>
+						</p-column>
 					   <p-column styleClass="col-button">
 					    	<template let-founds="rowData" class="pull-right" pTemplate="body">
 					    	<a type="button" class="btn-underline" (click)="viewLostFound(founds)">View</a>
@@ -134,13 +173,26 @@
 			    <tab heading="All">
 			    	<p-dataTable [value]="archieveds" [rows]="10" [paginator]="true">
 					     <p-column field="_id" header="S/N" [filter]="true" filterPlaceholder="Search S/N"></p-column>
-					    <p-column field="created_by" header="Made by" [filter]="true" filterPlaceholder="Search User"></p-column>
+					    <p-column header="Made by">
+				        	<template let-archieveds="rowData" pTemplate="body">
+				            	<span>{{archieveds.created_by.username}}</span>
+				        	</template>
+				    	</p-column>
 					    <p-column field="property" header="Unit.no" [filter]="true" filterPlaceholder="Search User"></p-column>
 					    <p-column field="type" header="Type" sortable="true"  [filter]="true" filterPlaceholder="Search Type"></p-column>
 					    <p-column field="description" header="Description"></p-column>
-					    <p-column field="photo[0]" header="Photo"></p-column>
+					    <p-column header="Photo">
+				        	<template let-archieveds="rowData" pTemplate="body">
+				            	<span *ngIf="archieveds.photo">Yes</span>
+				            	<span *ngIf="!archieveds.photo">No</span>
+				        	</template>
+				    	</p-column>
 					    <p-column field="preferred_method_of_contact" header="Preferred method of contact"></p-column>
-					    <p-column field="created_at" header="Reported on" sortable="true" ></p-column>
+					    <p-column header="Reported on" sortable="true">
+						    	<template let-archieveds="rowData" pTemplate="body">
+						            <span>{{archieveds.created_at | date:'d/M/y'}}</span>
+						        </template>
+						</p-column>
 					   <p-column styleClass="col-button">
 					    	<template let-archieveds="rowData" class="pull-right" pTemplate="body">
 					    	<a type="button" class="btn-underline" (click)="viewLostFound(archieveds)">View</a>
@@ -151,13 +203,27 @@
 			    <tab heading="Lost">
 			    	<p-dataTable [value]="archievedLosts" [rows]="10" [paginator]="true">
 					     <p-column field="_id" header="S/N" [filter]="true" filterPlaceholder="Search S/N"></p-column>
-					    <p-column field="created_by" header="Made by" [filter]="true" filterPlaceholder="Search User"></p-column>
+					    <p-column header="Made by">
+				        	<template let-archievedLosts="rowData" pTemplate="body">
+				            	<span>{{archievedLosts.created_by.username}}</span>
+				        	</template>
+				    	</p-column>
 					    <p-column field="property" header="Unit.no" [filter]="true" filterPlaceholder="Search User"></p-column>
 					    <p-column field="type" header="Type" sortable="true"  [filter]="true" filterPlaceholder="Search Type"></p-column>
 					    <p-column field="description" header="Description"></p-column>
-					    <p-column field="photo[0]" header="Photo"></p-column>
+					    <p-column header="Photo">
+				        	<template let-archievedLosts="rowData" pTemplate="body">
+				            	<span *ngIf="archievedLosts.photo">Yes</span>
+				            	<span *ngIf="!archievedLosts.photo">No</span>
+				        	</template>
+				    	</p-column>
 					    <p-column field="preferred_method_of_contact" header="Preferred method of contact"></p-column>
 					    <p-column field="created_at" header="Reported on" sortable="true" ></p-column>
+					    <p-column header="Reported on" sortable="true">
+						    	<template let-archievedLosts="rowData" pTemplate="body">
+						            <span>{{archievedLosts.created_at | date:'d/M/y'}}</span>
+						        </template>
+						</p-column>
 					   <p-column styleClass="col-button">
 					    	<template let-archievedLosts="rowData" class="pull-right" pTemplate="body">
 					    	<a type="button" class="btn-underline" (click)="viewLostFound(archievedLosts)">View</a>
@@ -168,13 +234,26 @@
 			    <tab heading="Found">
 			    	<p-dataTable [value]="archievedFounds" [rows]="10" [paginator]="true">
 					     <p-column field="_id" header="S/N" [filter]="true" filterPlaceholder="Search S/N"></p-column>
-					    <p-column field="created_by" header="Made by" [filter]="true" filterPlaceholder="Search User"></p-column>
+					    <p-column header="Made by">
+				        	<template let-archievedFounds="rowData" pTemplate="body">
+				            	<span>{{archievedFounds.created_by.username}}</span>
+				        	</template>
+				    	</p-column>
 					    <p-column field="property" header="Unit.no" [filter]="true" filterPlaceholder="Search User"></p-column>
 					    <p-column field="type" header="Type" sortable="true"  [filter]="true" filterPlaceholder="Search Type"></p-column>
 					    <p-column field="description" header="Description"></p-column>
-					    <p-column field="photo[0]" header="Photo"></p-column>
+					     <p-column header="Photo">
+				        	<template let-archievedFounds="rowData" pTemplate="body">
+				            	<span *ngIf="archievedFounds.photo">Yes</span>
+				            	<span *ngIf="!archievedFounds.photo">No</span>
+				        	</template>
+				    	</p-column>
 					    <p-column field="preferred_method_of_contact" header="Preferred method of contact"></p-column>
-					    <p-column field="created_at" header="Reported on" sortable="true" ></p-column>
+					    <p-column header="Reported on" sortable="true">
+						    	<template let-archievedFounds="rowData" pTemplate="body">
+						            <span>{{archievedFounds.created_at | date:'d/M/y'}}</span>
+						        </template>
+						</p-column>
 					   <p-column styleClass="col-button">
 					    	<template let-archievedFounds="rowData" class="pull-right" pTemplate="body">
 					    	<a type="button" class="btn-underline" (click)="viewLostFound(archievedFounds)">View</a>
