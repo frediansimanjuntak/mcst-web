@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ElementRef } from '@angular/core';
 import { Notification, Notifications } from '../models/index';
 import { Router} from '@angular/router';
 import { NotificationService, AlertService, UserService, AuthenticationService} from '../services/index';

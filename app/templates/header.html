@@ -19,9 +19,9 @@
 		      	<ul  class="nav navbar-nav navbar-right">
 		        	<p class="navbar-text">Welcome, <a class="" href="#"><strong><span *ngIf="name">{{name.username}}</span></strong></a><br><a class="pull-right" [routerLink]="['/setting']">Settings</a> </p>
 		        	<li>
-		        		
-		        		<a [popover]="myPopover" style="cursor: pointer" (click)="onNotificationClick()"><i class="fa fa-bell-o" aria-hidden="true"></i><span *ngIf="unreadNotificationTotal > 0" class="badge badge-danger">{{ unreadNotificationTotal }}</span></a>
-		        		<popover-content style="color: black" #myPopover 	
+		        		<!-- [popover]="myPopover"  -->
+		        		<a style="cursor: pointer" (click)="onNotificationClick()"><i class="fa fa-bell-o" aria-hidden="true"></i><span *ngIf="unreadNotificationTotal > 0" class="badge badge-danger">{{ unreadNotificationTotal }}</span></a>
+		        		<!-- <popover-content style="color: black" #myPopover 	
 				            title="New Notifications" 
 				            [animation]="true" 
 				            [closeOnClickOutside]="true" >
@@ -37,7 +37,7 @@
 							    </tbody>
 							</table>
 							<a *ngIf="name" style="color: black" [routerLink]="'/' + name.default_development.name + '/notification'">See more Notifications</a>
-						</popover-content>
+						</popover-content> -->
 					</li>
 		        	<li>
 		        		<a (click)="logout()" title="Logout"><i class="fa fa-power-off" aria-hidden="true"></i></a>

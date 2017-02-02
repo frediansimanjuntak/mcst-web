@@ -47,7 +47,6 @@
       'ng2-imageupload': 'node_modules/ng2-imageupload',
       'ng2-slim-loading-bar': 'node_modules/ng2-slim-loading-bar/bundles/index.umd.js',
       'angular2-notifications': 'node_modules/angular2-notifications',
-      "ngx-popover": "node_modules/ngx-popover"
     },
     // packages tells the System loader how to load when no filename and/or no extension
     packages: {
@@ -70,7 +69,6 @@
       'ng2-imageupload': { main: 'index.js', defaultExtension: 'js'},
       'angular2-modal': { defaultExtension: 'js', main: '/bundles/angular2-modal.umd.js' },
       'angular2-notifications': { main: 'components.js', defaultExtension: 'js' },
-      "ngx-popover": { "main": "index.js", "defaultExtension": "js" },
       'angular2-signaturepad': { main: 'index.js', defaultExtension: 'js' },
       'signature_pad': { main: 'signature_pad.js', defaultExtension: 'js' },
     }

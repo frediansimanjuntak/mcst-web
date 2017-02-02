@@ -1,4 +1,4 @@
-import {Component, OnInit, ChangeDetectorRef, ViewChild } from '@angular/core';
+import {Component, OnInit, ChangeDetectorRef, ViewChild, ElementRef } from '@angular/core';
 import { Http, Headers, RequestOptions, Response } from '@angular/http';
 import * as $ from 'jquery';
 import 'fullcalendar';
