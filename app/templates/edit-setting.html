@@ -40,7 +40,7 @@
                     <label class="control-label col-sm-4" for="attachment">Front :</label>
                     <div class="col-sm-8">
                         <input type="file" multiple class="upload" name="attachment" (change)="onChange($event)" />
-                        <p *ngFor="let item of user.details.identification_proof.front; let i=index ">
+                        <p *ngFor="let item of model.front; let i=index ">
                             <img src="assets/image/icon_media_image.png" width="14px" height="12px">&nbsp;  
                             <span style="text-decoration: underline;">{{ item.name }}_{{item.size/1024 | number:'1.0-0' }}kb</span> &nbsp;
                             <span class="glyphicon glyphicon-remove" style="cursor:pointer" (click)="remove(i)"></span>
@@ -51,7 +51,7 @@
                     <label class="control-label col-sm-4" for="attachment">Back :</label>
                     <div class="col-sm-8">
                         <input type="file" multiple class="upload" name="attachment" (change)="onChange1($event)" />
-                        <p *ngFor="let item of user.details.identification_proof.back; let i=index ">
+                        <p *ngFor="let item of model.back; let i=index ">
                             <img src="assets/image/icon_media_image.png" width="14px" height="12px">&nbsp;  
                             <span style="text-decoration: underline;">{{ item.name }}_{{item.size/1024 | number:'1.0-0' }}kb</span> &nbsp;   
                             <span class="glyphicon glyphicon-remove" style="cursor:pointer" (click)="remove1(i)"></span>
