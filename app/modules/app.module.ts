@@ -138,7 +138,7 @@ import {
     SelectModule,
     PanelModule,
     FieldsetModule,
-    DatepickerModule,
+    DatepickerModule.forRoot(),
     SimpleNotificationsModule,
     // ModalModule.forRoot(),
     TabsModule.forRoot(),

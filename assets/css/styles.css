@@ -225,3 +225,7 @@
 .badge-danger{
   background-color: red !important;
 }
+
+.capitalize{
+  text-transform: capitalize;
+}
