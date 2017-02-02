@@ -175,18 +175,26 @@
 				  	<!-- ALL -->
 				    <tab heading="All">
 				    	<p-dataTable [value]="contracts" [rows]="10" [paginator]="true">
-						    <p-column field="title" header="Project Title" sortable="true" [filter]="true" filterPlaceholder="Search Project Title"></p-column>
-						    <p-column field="start_time" header="Commence on" sortable="true" [filter]="true" filterPlaceholder="Search Commence on"></p-column>
-						    <p-column field="end_time" header="Estimated Completion" sortable="true" [filter]="true" filterPlaceholder="Search Estimated Completion"></p-column>
-						    <p-column field="remark" header="Remarks" sortable="true" [filter]="true" filterPlaceholder="Search Remark"></p-column>
-						    <p-column field="status" header="Status" sortable="true" [filter]="true" filterPlaceholder="Search Status"></p-column>
-						    <p-column field="" header="Created/Update" sortable="true" [filter]="true" filterPlaceholder="Search Issued on">
+						    <p-column [style]="{'text-transform': 'capitalize'}" field="title" header="Project Title" sortable="true" [filter]="true" filterPlaceholder="Search Project Title"></p-column>
+						    <p-column header="Commence on" sortable="true" [filter]="true" filterPlaceholder="Search Commence on">
 						    	<template let-contracts="rowData" pTemplate="body">
-						            <span>Created:{{contracts.created_at}}</span>
-						            <span>Latest:{{contracts.updated_at}}</span>
+						            <span>{{contracts.start_time | date:'d/M/y'}}</span>
 						        </template>
 						    </p-column>
-						    <p-column styleClass="col-button" header="action">
+						    <p-column header="Estimated Completion" sortable="true" [filter]="true" filterPlaceholder="Search Estimated Completion">
+						    	<template let-contracts="rowData" pTemplate="body">
+						            <span>{{contracts.end_time | date:'d/M/y'}}</span>
+						        </template>
+						    </p-column>
+						    <p-column field="remark" header="Remarks" sortable="true" [filter]="true" filterPlaceholder="Search Remark"></p-column>
+						    <p-column [style]="{'text-transform': 'capitalize'}" field="status" header="Status" sortable="true" [filter]="true" filterPlaceholder="Search Status"></p-column>
+						    <p-column field="" header="Created/Update" sortable="true" [filter]="true" filterPlaceholder="Search Issued on">
+						    	<template let-contracts="rowData" pTemplate="body">
+						            <span>Created:{{contracts.created_at | date:'d/M/y'}}</span>
+						            <span>Latest:{{contracts.updated_at | date:'d/M/y'}}</span>
+						        </template>
+						    </p-column>
+						    <p-column styleClass="col-button" header="Action">
 						    	<template let-contracts="rowData" pTemplate="body">
 						    		<a type="button" style="cursor:pointer" (click)="view(contracts)">See Details</a>
 									<button type="button" (click)="deleteContract(contracts)">Remove</button>
@@ -197,18 +205,18 @@
 				    <!-- OPEN -->
 				    <tab heading="Open">
 				    	<p-dataTable [value]="open" [rows]="10" [paginator]="true">
-						    <p-column field="title" header="Project Title" sortable="true" [filter]="true" filterPlaceholder="Search Project Title"></p-column>
+						    <p-column [style]="{'text-transform': 'capitalize'}" field="title" header="Project Title" sortable="true" [filter]="true" filterPlaceholder="Search Project Title"></p-column>
 						    <p-column field="start_time" header="Commence on" sortable="true" [filter]="true" filterPlaceholder="Search Commence on"></p-column>
 						    <p-column field="end_time" header="Estimated Completion" sortable="true" [filter]="true" filterPlaceholder="Search Estimated Completion"></p-column>
 						    <p-column field="remark" header="Remarks" sortable="true" [filter]="true" filterPlaceholder="Search Remark"></p-column>
-						    <p-column field="status" header="Status" sortable="true" [filter]="true" filterPlaceholder="Search Status"></p-column>
+						    <p-column [style]="{'text-transform': 'capitalize'}" class="text-capitalize" field="status" header="Status" sortable="true" [filter]="true" filterPlaceholder="Search Status"></p-column>
 						    <p-column field="" header="Created/Update" sortable="true" [filter]="true" filterPlaceholder="Search Issued on">
 						    	<template let-open="rowData" pTemplate="body">
 						            <span>Created:{{open.created_at}}</span>
 						            <span>Latest:{{open.updated_at}}</span>
 						        </template>
 						    </p-column>
-						    <p-column styleClass="col-button" header="action">
+						    <p-column styleClass="col-button" header="Action">
 						    	<template let-open="rowData" pTemplate="body">
 						    		<a type="button" style="cursor:pointer" (click)="view(open)">See Details</a>
 									<button type="button" (click)="deleteContract(open)">Remove</button>
@@ -217,20 +225,20 @@
 						</p-dataTable>
 				    </tab>
 				    <!-- CLOSE -->
-				    <tab heading="Close">
+				    <tab heading="Closed">
 				    	<p-dataTable [value]="close" [rows]="10" [paginator]="true">
-						    <p-column field="title" header="Project Title" sortable="true" [filter]="true" filterPlaceholder="Search Project Title"></p-column>
+						    <p-column [style]="{'text-transform': 'capitalize'}" field="title" header="Project Title" sortable="true" [filter]="true" filterPlaceholder="Search Project Title"></p-column>
 						    <p-column field="start_time" header="Commence on" sortable="true" [filter]="true" filterPlaceholder="Search Commence on"></p-column>
 						    <p-column field="end_time" header="Estimated Completion" sortable="true" [filter]="true" filterPlaceholder="Search Estimated Completion"></p-column>
 						    <p-column field="remark" header="Remarks" sortable="true" [filter]="true" filterPlaceholder="Search Remark"></p-column>
-						    <p-column field="status" header="Status" sortable="true" [filter]="true" filterPlaceholder="Search Status"></p-column>
+						    <p-column [style]="{'text-transform': 'capitalize'}" field="status" header="Status" sortable="true" [filter]="true" filterPlaceholder="Search Status"></p-column>
 						    <p-column field="" header="Created/Update" sortable="true" [filter]="true" filterPlaceholder="Search Issued on">
 						    	<template let-close="rowData" pTemplate="body">
-						            <span>Created:{{close.created_at}}</span>
-						            <span>Latest:{{close.updated_at}}</span>
+						            <p>Created:{{close.created_at}}</p>
+						            <p>Latest:{{close.updated_at}}</p>
 						        </template>
 						    </p-column>
-						    <p-column styleClass="col-button" header="action">
+						    <p-column styleClass="col-button" header="Action">
 						    	<template let-close="rowData" pTemplate="body">
 						    		<a type="button" style="cursor:pointer" (click)="view(close)">See Details</a>
 									<button type="button" (click)="deleteContract(close)">Remove</button>
