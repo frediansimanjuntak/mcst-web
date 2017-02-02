@@ -19,12 +19,13 @@ export class EditIncidentComponent implements OnInit {
     model: any = {};
     id: string;
     name: any;
+    filesToUpload: Array<File>;
     myForm: FormGroup;
     public uploader:FileUploader = new FileUploader({url:'http://localhost:3001/upload'});
     types = [
-        { value: 'general', name: 'General' },
-        { value: 'hygiene', name: 'Hygiene' },
-        { value: 'damage', name: 'Damage' },
+        { value: 'General', name: 'General' },
+        { value: 'Hygiene', name: 'Hygiene' },
+        { value: 'Damage', name: 'Damage' },
 
     ];
     selectedType = '';
@@ -48,16 +49,26 @@ export class EditIncidentComponent implements OnInit {
         }
     }
 
-    createIncident() {
-        this.incidentService.create(this.model)
+    createIncident(event: any) {
+        let formData:FormData = new FormData();
+        
+        for (var i = 0; i < this.model.photo.length; i++) {
+            formData.append("attachment[]", this.model.attachment[i]);
+        }
+
+        formData.append("incident_type", this.model.incident_type);
+        formData.append("title", this.model.title);
+        formData.append("remark", this.model.remark);
+        
+        this.incidentService.create(formData)
         .then(
             data => {
-                this.alertService.success('Create incident successful', true);
+                this.alertService.success('Create incident report successful', true);
                 this.router.navigate([this.name.default_development.name + '/incident']);
             },
             error => {
                 console.log(error);
-                alert(`The incident could not be save, server Error.`);
+                alert(`The incident report could not be save, server Error.`);
             }
         );
     }
@@ -76,10 +87,21 @@ export class EditIncidentComponent implements OnInit {
         );
 	}
 
-    onChange(event: any) {
-       let files = [].slice.call(event.target.files);
-       this.model.attachment = files;
+    // fileChangeEvent(fileInput: any){
+    //     this.filesToUpload = <Array<File>> fileInput.target.files;
+    //     this.model.attachment = this.filesToUpload;
+    //     console.log(this.model.attachment)
+    // }
+
+    onChange(fileInput: any){
+        this.filesToUpload = <Array<File>> fileInput.target.files;
+        this.model.photo = this.filesToUpload;
     }
+
+    // onChange(event: any) {
+    //    let files = [].slice.call(event.target.files);
+    //    this.model.attachment = files;
+    // }
 
     remove(i: any){
         this.model.attachment.splice(i, 1)

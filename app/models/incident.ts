@@ -73,7 +73,7 @@ export var Incidents: any[] = [{
           unit_no_2 : '12',
       }
     },
-  incident_type:'general',
+  incident_type:'hygiene',
   contract: '',
   remark: 'tolong di perbaiki dong',
   status: 'inprogress',
@@ -94,7 +94,7 @@ export var Incidents: any[] = [{
           unit_no_2 : '13',
       }
     },
-  incident_type:'general',
+  incident_type:'repair',
   contract: '',
   archive: false,
   remark: 'tolong di perbaiki dong',
