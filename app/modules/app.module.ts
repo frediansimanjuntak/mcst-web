@@ -1,4 +1,4 @@
-import { NgModule, Directive }          from '@angular/core';
+import { NgModule, Directive, ElementRef  }          from '@angular/core';
 import { CommonModule }                 from '@angular/common';
 import { BrowserModule }                from '@angular/platform-browser';
 import { FormsModule }  				        from '@angular/forms';
@@ -7,7 +7,7 @@ import { SimpleNotificationsModule }    from 'angular2-notifications';
 import { FileDropDirective }            from 'ng2-file-upload';
 import { ReactiveFormsModule }			    from '@angular/forms';
 import { HttpModule }                   from '@angular/http';
-import { Ng2BootstrapModule, PaginationModule, DatepickerModule } from 'ng2-bootstrap';
+import { Ng2BootstrapModule, PaginationModule, DatepickerModule, TabsModule, PopoverModule } from 'ng2-bootstrap';
 import { SelectModule }                 from 'ng2-select/ng2-select';
 import { MyDatePickerModule }           from 'mydatepicker';
 import { SignaturePadModule }           from 'angular2-signaturepad';
@@ -23,8 +23,7 @@ import { ImageUploadModule }            from 'ng2-imageupload';
 import { ModalModule }                  from "ngx-modal";
 import { BootstrapModalModule }         from 'angular2-modal/plugins/bootstrap';
 import { SlimLoadingBarModule }         from 'ng2-slim-loading-bar';
-import { PopoverModule }                from 'ngx-popover';
-import { MomentModule }                   from 'angular2-moment';
+import { MomentModule }                 from 'angular2-moment';
 
 import { 
   AccessControlComponent,
@@ -142,12 +141,13 @@ import {
     DatepickerModule,
     SimpleNotificationsModule,
     // ModalModule.forRoot(),
+    TabsModule.forRoot(),
     ModalModule,
     BootstrapModalModule,
     MyDatePickerModule,
+    PopoverModule.forRoot(),
     CalendarModule,
     ImageUploadModule,
-    PopoverModule,
     MomentModule,
     SlimLoadingBarModule.forRoot(),
   ],
