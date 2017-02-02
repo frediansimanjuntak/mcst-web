@@ -47,7 +47,7 @@
             Create Report
             </div>
             <p>Home > Incident Reports > Create Report</p>
-            <form class="form-horizontal col-md-6" name="form" (ngSubmit)="f.form.valid && createIncident()" #f="ngForm" novalidate enctype="multipart/form-data">
+            <form class="form-horizontal col-md-6" name="form" (ngSubmit)="f.form.valid && createIncident()" #f="ngForm" novalidate>
                 <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !incident_type.valid }">
                   <label class="control-label col-sm-4" for="type">Type of Report :</label>
                   <div class="col-sm-8">

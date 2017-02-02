@@ -65,7 +65,7 @@
 				    <tab heading="All">
 				    	<p-dataTable [value]="incidents" [rows]="10" [paginator]="true">
 						    <p-column field="reference_no" header="Report No." sortable="true" [filter]="true" filterPlaceholder="Search Report No."></p-column>
-						    <p-column field="incident_type" header="Type" sortable="true" [filter]="true" filterPlaceholder="Search Type"></p-column>
+						    <p-column [style]="{'text-transform': 'capitalize'}" field="incident_type" header="Type" sortable="true" [filter]="true" filterPlaceholder="Search Type"></p-column>
 						    <p-column field="created_by.username" header="Reported by" sortable="true" [filter]="true" filterPlaceholder="Search Reported by"></p-column>
 						    <p-column field="property" header="Unit No." sortable="true" [filter]="true" filterPlaceholder="Search unit no">
 						    	<!-- <template let-data="rowData" pTemplate="body">
@@ -81,12 +81,12 @@
 						    		<a *ngIf="data.attachment == null">-</a>
 						    	</template>
 						    </p-column>
-						    <p-column field="status" header="Status" sortable="true" [filter]="true" filterPlaceholder="Search Status">
+						    <p-column [style]="{'text-transform': 'capitalize'}" field="status" header="Status" sortable="true" [filter]="true" filterPlaceholder="Search Status">
 						        <template let-col let-data="rowData" pTemplate="body">
 						            <span [style.color]="data[col.field]">{{data[col.field]}}</span>
 						        </template>
 						    </p-column>
-						    <p-column [style]="{'width':'150px'}" styleClass="col-button" header="action">
+						    <p-column [style]="{'width':'150px'}" styleClass="col-button" header="Action">
 						    	<template let-data="rowData" pTemplate="body">
 						    		<a type="button" style="text-decoration: underline;cursor:pointer" (click)="view(data)">View</a>
 						    		<img *ngIf="data.starred_by.length < 1" title="starred" src="../../assets/image/star_filled.png" width="24px" height="28px" (click)="starred(data)" />
@@ -101,7 +101,7 @@
 				    <tab heading="New">
 				    	<p-dataTable [value]="dataNew" [rows]="10" [paginator]="true">
 						   <p-column field="reference_no" header="Report No." sortable="true" [filter]="true" filterPlaceholder="Search Report No."></p-column>
-						    <p-column field="incident_type" header="Type" sortable="true" [filter]="true" filterPlaceholder="Search Type"></p-column>
+						    <p-column [style]="{'text-transform': 'capitalize'}" field="incident_type" header="Type" sortable="true" [filter]="true" filterPlaceholder="Search Type"></p-column>
 						    <p-column field="created_by" header="Reported by" sortable="true" [filter]="true" filterPlaceholder="Search Reported by"></p-column>
 						    <p-column field="" header="Unit No." sortable="true" [filter]="true" filterPlaceholder="Search unit no">
 						    	<template let-data="rowData" pTemplate="body">
@@ -117,12 +117,12 @@
 						    		<a *ngIf="data.attachment == null">-</a>
 						    	</template>
 						    </p-column>
-						    <p-column field="status" header="Status" sortable="true" [filter]="true" filterPlaceholder="Search Status">
+						    <p-column [style]="{'text-transform': 'capitalize'}" field="status" header="Status" sortable="true" [filter]="true" filterPlaceholder="Search Status">
 						        <template let-col let-data="rowData" pTemplate="body">
 						            <span [style.color]="data[col.field]">{{data[col.field]}}</span>
 						        </template>
 						    </p-column>
-						    <p-column [style]="{'width':'150px'}" styleClass="col-button" header="action">
+						    <p-column [style]="{'width':'150px'}" styleClass="col-button" header="Action">
 						    	<template let-data="rowData" pTemplate="body">
 						    		<a type="button" style="text-decoration: underline;cursor:pointer" (click)="view(data)">View</a>
 						    		<img *ngIf="data.starred_by == null" title="starred" src="../../assets/image/star_filled.png" width="24px" height="28px" (click)="starred(data)" />
@@ -137,8 +137,7 @@
 				    <tab heading="In-Progress">
 				    	<p-dataTable [value]="dataInProgress" [rows]="10" [paginator]="true">
 						    <p-column field="reference_no" header="Report No." sortable="true" [filter]="true" filterPlaceholder="Search Report No."></p-column>
-						    <<p-column field="reference_no" header="Report No." sortable="true" [filter]="true" filterPlaceholder="Search Report No."></p-column>
-						    <p-column field="incident_type" header="Type" sortable="true" [filter]="true" filterPlaceholder="Search Type"></p-column>
+						    <p-column [style]="{'text-transform': 'capitalize'}" field="incident_type" header="Type" sortable="true" [filter]="true" filterPlaceholder="Search Type"></p-column>
 						    <p-column field="created_by" header="Reported by" sortable="true" [filter]="true" filterPlaceholder="Search Reported by"></p-column>
 						    <p-column field="" header="Unit No." sortable="true" [filter]="true" filterPlaceholder="Search unit no">
 						    	<template let-data="rowData" pTemplate="body">
@@ -154,12 +153,12 @@
 						    		<a *ngIf="data.attachment == null">-</a>
 						    	</template>
 						    </p-column>
-						    <p-column field="status" header="Status" sortable="true" [filter]="true" filterPlaceholder="Search Status">
+						    <p-column [style]="{'text-transform': 'capitalize'}" field="status" header="Status" sortable="true" [filter]="true" filterPlaceholder="Search Status">
 						        <template let-col let-data="rowData" pTemplate="body">
 						            <span [style.color]="data[col.field]">{{data[col.field]}}</span>
 						        </template>
 						    </p-column>
-						    <p-column [style]="{'width':'150px'}" styleClass="col-button" header="action">
+						    <p-column [style]="{'width':'150px'}" styleClass="col-button" header="Action">
 						    	<template let-data="rowData" pTemplate="body">
 						    		<a type="button" style="text-decoration: underline;cursor:pointer" (click)="view(data)">View</a>
 						    		<img *ngIf="data.starred_by == null" title="starred" src="../../assets/image/star_filled.png" width="24px" height="28px" (click)="starred(data)" />
@@ -174,7 +173,7 @@
 				    <tab heading="Resolved">
 				    	<p-dataTable [value]="dataResolved" [rows]="10" [paginator]="true">
 						    <p-column field="reference_no" header="Report No." sortable="true" [filter]="true" filterPlaceholder="Search Report No."></p-column>
-						    <p-column field="incident_type" header="Type" sortable="true" [filter]="true" filterPlaceholder="Search Type"></p-column>
+						    <p-column [style]="{'text-transform': 'capitalize'}" field="incident_type" header="Type" sortable="true" [filter]="true" filterPlaceholder="Search Type"></p-column>
 						    <p-column field="created_by" header="Reported by" sortable="true" [filter]="true" filterPlaceholder="Search Reported by"></p-column>
 						    <p-column field="" header="Unit No." sortable="true" [filter]="true" filterPlaceholder="Search unit no">
 						    	<template let-data="rowData" pTemplate="body">
@@ -190,12 +189,12 @@
 						    		<a *ngIf="data.attachment == null">-</a>
 						    	</template>
 						    </p-column>
-						    <p-column field="status" header="Status" sortable="true" [filter]="true" filterPlaceholder="Search Status">
+						    <p-column [style]="{'text-transform': 'capitalize'}" field="status" header="Status" sortable="true" [filter]="true" filterPlaceholder="Search Status">
 						        <template let-col let-data="rowData" pTemplate="body">
 						            <span [style.color]="data[col.field]">{{data[col.field]}}</span>
 						        </template>
 						    </p-column>
-						    <p-column [style]="{'width':'150px'}" styleClass="col-button" header="action">
+						    <p-column [style]="{'width':'150px'}" styleClass="col-button" header="Action">
 						    	<template let-data="rowData" pTemplate="body">
 						    		<a type="button" style="text-decoration: underline;cursor:pointer" (click)="view(data)">View</a>
 						    		<img *ngIf="data.starred_by == null" title="starred" src="../../assets/image/star_filled.png" width="24px" height="28px" (click)="starred(data)" />
