@@ -8,7 +8,7 @@ import 'rxjs/add/operator/toPromise';
  
 @Injectable()
 export class IncidentService {
-    private headers = new Headers({ 'Accept': 'application/json', 'Authorization': 'Bearer ' + this.authenticationService.token });
+    private headers = new Headers({'Authorization': 'Bearer ' + this.authenticationService.token });
     private options = new RequestOptions({ headers: this.headers });
     constructor(private http: Http, private authenticationService: AuthenticationService) {}
 
@@ -34,7 +34,7 @@ export class IncidentService {
     }
 
    create(body:any): Promise<any> {
-        return this.http.post(`${url + 'api/lost_found'}`, body, this.options)
+        return this.http.post(`${url + 'api/incidents'}`, body, this.options)
             .toPromise()
             .then(res => res.json().data)
             .catch(this.handleError);
@@ -55,7 +55,7 @@ export class IncidentService {
     }
 
     starred(id: string): Promise<Incident> {
-        return this.http.post(url + 'api/incidents/starred/' + id,'', this.options)
+        return this.http.post(url + 'api/incidents/starred/' + id, '', this.options)
             .toPromise()
             .then(res => res.json().data)
             .catch(this.handleError);
