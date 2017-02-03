@@ -2,13 +2,15 @@ import { Injectable } from '@angular/core';
 import { Http, Headers, RequestOptions, Response } from '@angular/http';
 import { Observable } from 'rxjs/Rx';
 import { Contract, Contracts } from '../models/index';
+import { AuthenticationService } from '../services/index';
 import { url } from '../global';
 import 'rxjs/add/operator/toPromise';
  
 @Injectable()
 export class ContractService {
-    private headers = new Headers({'Content-Type': 'application/json'});
-    constructor(private http: Http) {}
+    private headers = new Headers({'Content-Type': 'application/json', 'Authorization': 'Bearer ' + this.authenticationService.token });
+    private options = new RequestOptions({ headers: this.headers });
+    constructor(private http: Http, private authenticationService: AuthenticationService) {}
 
     
     getContracts(): Promise<Contract[]> {
@@ -21,41 +23,41 @@ export class ContractService {
     }
 
     getAll(){
-        return this.http.get( url + 'api/contracts')
+        return this.http.get( url + 'api/contracts', this.options)
             .map((res:Response) => res.json())
             .catch((error:any) => Observable.throw(error.json().error || 'Server error'));
     }
 
     getById(id:string){
-        return this.http.get( url + 'api/contracts' + id)
+        return this.http.get( url + 'api/contracts/' + id, this.options)
             .map((res:Response) => res.json())
             .catch((error:any) => Observable.throw(error.json().error || 'Server error'));
     }
 
    create(body:any): Promise<Contract> {
         console.log(body);
-        return this.http.post(url +  'api/contracts', JSON.stringify(body), {headers: this.headers})
+        return this.http.post(url +  'api/contracts', JSON.stringify(body), this.options)
             .toPromise()
             .then(res => res.json().data)
             .catch(this.handleError);
     }
 
     update(body:Contract): Promise<Contract> {
-        return this.http.post(url + 'api/contracts/update/' + body._id,body, {headers: this.headers})
+        return this.http.post(url + 'api/contracts/update/' + body._id,body, this.options)
             .toPromise()
             .then(res => res.json().data)
             .catch(this.handleError);
     }
 
     delete(id: string): Promise<void> {
-    return this.http.delete(url + 'api/contracts/' + id, {headers: this.headers})
-      .toPromise()
-      .then(() => null)
-      .catch(this.handleError);
+        return this.http.delete(url + 'api/contracts/' + id, this.options)
+            .toPromise()
+            .then(() => null)
+            .catch(this.handleError);
     }
 
     private handleError(error: any): Promise<any> {
-        console.error('An error occurred', error); // for demo purposes only
+        console.error('An error occurred', error);
         return Promise.reject(error.message || error);
     }
 }

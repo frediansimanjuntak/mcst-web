@@ -3,7 +3,6 @@ import { Router } from '@angular/router';
 import { Contractor, Contractors } from '../../models/index';
 import { ContractorService, AlertService} from '../../services/index';
 import '../../rxjs-operators';
-import { NG_TABLE_DIRECTIVES }    from 'ng2-table/ng2-table'
 import { Observable} from 'rxjs/Observable';
 import * as $ from "jquery";
 // import { Overlay } from 'angular2-modal';
@@ -55,36 +54,52 @@ export class ContractorComponent implements OnInit {
     }
 
     deleteContractor(contractor) {
-      console.log(contractor);
-        // this.announcementService.delete(announcement._id)
+        console.log(contractor);
+        // this.contractorService.delete(contractor._id)
         //   .then(
         //     response => {
         //       if(response) {
         //         console.log(response);
         //         // console.log(response.error());
-        //         alert(`The Newsletter could not be deleted, server Error.`);
+        //         alert(`The contractor could not be deleted, server Error.`);
         //       } else {
-        //         this.alertService.success('Create user successful', true);
-        //         alert(`Delete Newsletter successful`);
+        //         this.alertService.success('Delete contractor successful', true);
+        //         alert(`Delete Contractor successful`);
         //         this.ngOnInit()
         //       }
         //     },
         //     error=> {
         //       console.log(error);
-        //         alert(`The Newsletter could not be deleted, server Error.`);
+        //         alert(`The Contractor could not be deleted, server Error.`);
         //     }
         // );
     }
-
-
 
     openModal(contractor: Contractor){
         this.contractor = contractor;
     }
 
     activate(){
-    	this.contractor.active = true;
-    	this.activeModal.close();
+        this.contractor.active = true;
+        this.activeModal.close();
+        // this.contractorService.activation(this.contractor._id)
+        //   .then(
+        //     response => {
+        //       if(response) {
+        //         alert(`The Contractor could not be activated, server Error.`);
+        //       } else {
+        //         this.alertService.success('Activate Contractor successful', true);
+        //         alert(`Activated Contractor successful`);
+        //         this.activeModal.close();
+        //         this.ngOnInit()
+        //       }
+        //     },
+        //     error=> {
+        //       console.log(error);
+        //       this.activeModal.close();
+        //         alert(`The Contractor could not be Activated, server Error.`);
+        //     }
+        // );
     }
 
     deactivate(){
@@ -94,13 +109,10 @@ export class ContractorComponent implements OnInit {
 
     private loadAllContractors() {
         //---------------------------Call To Api-------------- //
-        // this.announcementService.getAll()
+        // this.contractorService.getAll()
         //     .subscribe((data)=> {
         //         setTimeout(()=> {
-        //             this.data          = data.find(data => data._id === this.developmentId );
-        //             this.dataAgm       = this.data.newsletter.filter(data => data.type === 'agm' );
-        //             this.dataCircular  = this.data.newsletter.filter(data => data.type === 'circular' );
-        //             console.log(this.dataAgm);
+        //             this.contractors = data;
         //         }, 1000);
         //     });
 

@@ -7,6 +7,7 @@ import { Observable} from 'rxjs/Observable';
 
 @Component({
     // moduleId: module.id,
+    selector: 'user',
     templateUrl: 'app/templates/user.html',
 })
 
@@ -15,6 +16,7 @@ export class UserComponent implements OnInit {
     users: User[] = [];
     model: any = {};
     developmentID = "1";
+    name: any;
 
     constructor(private router: Router,private userService: UserService,private alertService: AlertService) {
         // this.user = JSON.parse(localStorage.getItem('user'));
@@ -22,6 +24,7 @@ export class UserComponent implements OnInit {
     }
 
     ngOnInit() {
+        this.userService.getByToken().subscribe(name => {this.name = name;})
         this.loadAllUsers();
     }
 
@@ -39,14 +42,14 @@ export class UserComponent implements OnInit {
 
 
     private loadAllUsers() {
-        this.userService.getUsers().then(users => { this.users = users });
+        this.userService.getAll().subscribe(users => { this.users = users });
     }
 
     add(){
-        this.router.navigate(['/user/add' , this.developmentID]);
+        this.router.navigate([this.name.default_development.name + '/user/add' ]);
     }
 
     edit(user: User){
-        this.router.navigate(['/user/edit', this.developmentID, user._id ]);
+        this.router.navigate([this.name.default_development.name + '/user/edit', user._id ]);
     }
 }

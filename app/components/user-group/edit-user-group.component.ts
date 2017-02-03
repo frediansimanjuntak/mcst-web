@@ -32,6 +32,7 @@ export class EditUserGroupComponent implements OnInit {
     options1: Array<any> = [];
     mySelectUsers: Array<string>;
     selection: Array<string>;
+    name: any;
 
     constructor(private router: Router,
     	private userGroupService: UserGroupService,
@@ -42,6 +43,7 @@ export class EditUserGroupComponent implements OnInit {
     }
 
     ngOnInit(): void {
+        this.userService.getByToken().subscribe(name => {this.name = name;})
         this.getUsers();
         this.myForm = this.formbuilder.group({
             description : ['', Validators.required],
@@ -174,17 +176,22 @@ export class EditUserGroupComponent implements OnInit {
 
         UserGroups.push(this.model);
         console.log(this.model)
-        this.router.navigate(['/user_group']);
-        //   this.userGroupService.create(model)
-        // .then(
-        //     data => {
-        //         this.alertService.success('Create usergroup successful', true);
-        //         this.router.navigate(['/user']);
-        //     },
-        //     error => {
-        //         this.alertService.error(error);
-        //     }
-        // );
+        this.router.navigate([this.name.default_development.name + '/user_group']);
+         
+        this.userGroupService.create(this.model)
+        .then(
+            data => {
+                this.alertService.success('Create usergroup successful', true);
+                this.router.navigate([this.name.default_development.name + '/user_group']);
+            },
+            error => {
+                this.alertService.error(error);
+            }
+        );
+    }
+
+    goToUserGroup(){
+        this.router.navigate([this.name.default_development.name + '/user_group']);  
     }
 
     updateUserGroup(){
@@ -200,7 +207,7 @@ export class EditUserGroupComponent implements OnInit {
     //     .then(
     //         response => {
     //             this.alertService.success('Update Usergroup successful', true);
-    //             this.router.navigate(['/user']);
+    //             this.router.navigate([this.name.default_development.name + '/user_group']);
     //         },
     //         error=> {
     //             this.alertService.error(error);

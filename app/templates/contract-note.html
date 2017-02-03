@@ -1,0 +1,93 @@
+<div class="container">
+    <div class="main">
+        <!-- <div *ngIf="contract">
+            <div class="title"> 
+                UPDATE PROJECT
+            </div>
+            <p>Home > Manage Project > {{contract.title}} > update </p>
+            <form class="form-horizontal col-md-6" name="form" (ngSubmit)="f.form.valid && updateContract()" #f="ngForm" novalidate>
+                <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !title.valid }">
+                     <label class="control-label col-sm-4" for="title">Project Title :</label>
+                    <div class="col-sm-8">
+                        <input type="text" class="form-control" name="title" [(ngModel)]="contract.title" #title="ngModel" required placeholder="Input project title here" />
+                        <span *ngIf="f.submitted && !title.valid" class="help-block">Project title is required</span>
+                    </div>
+                </div>
+                <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !contract_type.valid }">
+                    <label class="control-label col-sm-4" for="contract_type">Project Type :</label>
+                    <div class="col-sm-8">
+                        <input type="text" class="form-control" name="contract_type" [(ngModel)]="contract.contract_type" #contract_type="ngModel" required placeholder="input project type Here"/>
+                        <span *ngIf="f.submitted && !contract_type.valid" class="help-block">Project type is required</span>
+                    </div>
+                </div>
+                <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !remark.valid }">
+                    <label class="control-label col-sm-4" for="remark">Project Description :</label>
+                    <div class="col-sm-8">
+                        <textarea class="form-control" name="remark" [(ngModel)]="contract.remark" #remark="ngModel" required placeholder="Input remark here"></textarea>
+                        <span *ngIf="f.submitted && !remark.valid" class="help-block">Description is required</span>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label col-sm-4" for="reference_no">Linked Incident Report :</label>
+                    <div class="col-sm-8">
+                        <input type="text" disabled class="form-control" name="reference_no" [(ngModel)]="contract.reference_no" #reference_no="ngModel" placeholder="-"/>
+                    </div>
+                </div>
+                <div class="form-group" >
+                    <label class="control-label col-sm-4" for="attachment">Attachment :</label>
+                    <div class="col-sm-8">
+                        <input type="file" multiple class="upload" value="Add media" name="attachment" (change)="onChange($event)" />
+                        <p *ngFor="let item of model.attachment; let i=index ">
+                            <img src="assets/image/icon_media_image.png" width="14px" height="12px">&nbsp;  
+                            <span style="text-decoration: underline;">{{ item.name }}_{{item.size/1024 | number:'1.0-0' }}kb</span> &nbsp;   
+                            <span style="cursor:pointer" (click)="remove(i)"><img src="assets/image/icon_close_black.png" width="14px" height="12px"></span>
+                        </p>
+                    </div>
+                </div>
+                <div class="form-group pull-right">
+                    <button [disabled]="loading" class="btn btn-primary">Create Project</button>
+                    <img *ngIf="loading" src="data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA==" />
+                    <a [routerLink]="['/contract']" class="btn btn-info">Cancel</a>
+                </div>
+            </form>
+        </div> -->
+        <div *ngIf="contract">
+            <div class="title"> 
+                Create a Project notice
+            </div>
+            <p>Home > Manage Project > {{contract.title}}Create > Create a Project notice</p>
+            <form class="form-horizontal col-md-6" name="form" (ngSubmit)="f.form.valid && createContractNote(contract._id)" #f="ngForm" novalidate>
+                <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !status.valid }">
+                     <label class="control-label col-sm-4" for="status">Project Status :</label>
+                    <div class="col-sm-8">
+                        <input type="text" class="form-control" name="status" [(ngModel)]="contract.status" #status="ngModel" required placeholder="Input project status here" />
+                        <span *ngIf="f.submitted && !status.valid" class="help-block">Project status is required</span>
+                    </div>
+                </div>
+                <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !note_remark.valid }">
+                    <label class="control-label col-sm-4" for="note_remark">Remark :</label>
+                    <div class="col-sm-8">
+                        <textarea class="form-control" name="note_remark" [(ngModel)]="model.note_remark" #note_remark="ngModel" required placeholder="Input remark here"></textarea>
+                        <span *ngIf="f.submitted && !note_remark.valid" class="help-block">Remark is required</span>
+                    </div>
+                </div>
+                <div class="form-group" >
+                    <label class="control-label col-sm-4" for="attachment">Attachment :</label>
+                    <div class="col-sm-8">
+                        <input type="file" multiple class="upload" value="Add media" name="attachment" (change)="onChange($event)" />
+                        <p *ngFor="let item of model.attachment; let i=index ">
+                            <img src="assets/image/icon_media_image.png" width="14px" height="12px">&nbsp;  
+                            <span style="text-decoration: underline;">{{ item.name }}_{{item.size/1024 | number:'1.0-0' }}kb</span> &nbsp;   
+                            <span style="cursor:pointer" (click)="remove(i)"><img src="assets/image/icon_close_black.png" width="14px" height="12px"></span>
+                        </p>
+                    </div>
+                </div>
+                <div class="form-group pull-right">
+                    <button [disabled]="loading" class="btn btn-primary">Post</button>
+                    <img *ngIf="loading" src="data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA==" />
+                    <a (click)="cancel(contract._id)" class="btn btn-info">Cancel</a>
+                </div>
+            </form>
+        </div>	
+	</div>
+</div>

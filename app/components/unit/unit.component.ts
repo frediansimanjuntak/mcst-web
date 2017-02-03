@@ -1,9 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Development } from '../../models/index';
-import { UnitService, AlertService} from '../../services/index';
+import { UnitService, AlertService, UserService} from '../../services/index';
 import '../../rxjs-operators';
-import {NG_TABLE_DIRECTIVES}    from 'ng2-table/ng2-table'
 import { Observable} from 'rxjs/Observable';
 
 @Component({
@@ -14,33 +13,29 @@ import { Observable} from 'rxjs/Observable';
 })
 
 export class UnitComponent implements OnInit {
-	  unit: Development;
+	unit: Development;
     development: any;
     units: Development[] = [];
-    model: any = {};
-    cols: any[];
+    users: any;
     public developmentId;
     public data;
     public dataUnit;
-    public filterQuery = "";
-    public rowsOnPage = 10;
-    public sortBy = "email";
-    public sortOrder = "asc";
+    name: any;
+    loading = false;
+    constructor(private router: Router,
+                private unitservice: UnitService, 
+                private alertService: AlertService,
+                private userService: UserService) {
 
-    constructor(private router: Router,private unitservice: UnitService, private alertService: AlertService) {
     }
 
     ngOnInit(): void {
-        this.developmentId = '585b36585d3cc41224fe518a';
-        this.loadAllUnits();
-    }
-
-    public toInt(num: string) {
-        return +num;
-    }
-
-    public sortByWordLength = (a: any) => {
-        return a.city.length;
+        this.loading = true;
+        this.userService.getByToken().subscribe(name => {
+                this.name = name;
+                this.loadAllUnits();
+            })
+        this.getUsers();
     }
 
     deleteUnit(unit: any) {
@@ -66,28 +61,27 @@ export class UnitComponent implements OnInit {
     }
 
     private loadAllUnits(): void {
-      this.unitservice.getDevelopments().then(development => {
-
-        this.dataUnit = development[0].properties
-
-      });
-
-        // this.unitservice.getDevelopments()
-        //     .subscribe((data)=> {
-        //         setTimeout(()=> {
-        //             this.data          =   data.find(data => data._id === "1" );
-        //             this.dataUnit       = this.data.properties;
-        //             console.log(this.dataUnit);
-        //         }, 1000);
-        //     });
-             // .then(development => this.development.dataUnit = development.properties);
-             // console.log(this.development);
-
+        this.unitservice.getAll(this.name.default_development.name)
+            .subscribe((data)=> {
+                setTimeout(()=> {
+                    this.dataUnit = data.properties;
+                    console.log(this.dataUnit);
+                    this.loading = false;
+                }, 1000);
+            });
     }
 
-    editUnit(unit: any){
-        this.router.navigate(['/unit/edit', unit._id]);
+    getUsers(): void {
+        this.userService.getUsers().then(users => {
+            this.users = users;
+        });
     }
 
+    view(unit: any){
+        this.router.navigate([this.name.default_development.name + '/unit/view', unit._id]);
+    }
 
+    add(){
+        this.router.navigate([this.name.default_development.name + '/unit/add']);  
+    }
 }

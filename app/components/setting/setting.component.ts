@@ -7,12 +7,14 @@ import { Observable} from 'rxjs/Observable';
 
 @Component({
     // moduleId: module.id,
+    selector: 'setting',
     templateUrl: 'app/templates/setting.html',
 })
 
 export class SettingComponent implements OnInit {
     user: User;
     users: User[] = [];
+    name: any;
     model: any = {};
 
     constructor(private router: Router,private userService: UserService,private alertService: AlertService) {
@@ -21,6 +23,7 @@ export class SettingComponent implements OnInit {
     }
 
     ngOnInit() {
+        this.userService.getByToken().subscribe(name => {this.name = name;})
         this.loadSetting();
     }
 
@@ -29,6 +32,6 @@ export class SettingComponent implements OnInit {
     }
 
     edit(user: User){
-        this.router.navigate(['/setting/edit', user._id]);
+        this.router.navigate([this.name.default_development.name + '/setting/edit', user._id]);
     }
 }

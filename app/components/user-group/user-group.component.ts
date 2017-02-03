@@ -4,7 +4,6 @@ import { UserGroup, User } from '../../models/index';
 import { UserGroupService, UserService, AlertService} from '../../services/index';
 import '../../rxjs-operators';
 import { FileUploader } from 'ng2-file-upload';
-import {NG_TABLE_DIRECTIVES}    from 'ng2-table/ng2-table'
 import { Observable} from 'rxjs/Observable';
 
 @Component({
@@ -27,6 +26,7 @@ export class UserGroupComponent implements OnInit {
     public rowsOnPage = 10;
     public sortBy = "email";
     public sortOrder = "asc";
+    name: any;
 
     constructor(
                 private router: Router,
@@ -36,7 +36,7 @@ export class UserGroupComponent implements OnInit {
     }
 
     ngOnInit(): void {
-        this.developmentId = '585b36585d3cc41224fe518a';
+        this.userService.getByToken().subscribe(name => {this.name = name;})
         this.loadAllUserGroup();
         this.getUsers();
 
@@ -51,8 +51,13 @@ export class UserGroupComponent implements OnInit {
 
 	loadAllUserGroup(): void {
     	this.userGroupService.getUserGroups().then(usergroups => this.usergroups = usergroups);
-
-  	}
+        // this.userGroupService.getAll()
+        //     .subscribe((data)=> {
+        //         setTimeout(()=> {
+        //             this.usergroups          = data;
+        //         }, 1000);
+        //     });
+    }
 
     deleteUserGroup(usergroup: UserGroup) {
         console.log(usergroup);
@@ -74,10 +79,10 @@ export class UserGroupComponent implements OnInit {
     }
 
     add(){
-        this.router.navigate(['/user_group/add']);
+        this.router.navigate([this.name.default_development.name + '/user_group/add']);
     }
 
     editUserGroup(usergroup: UserGroup){
-        this.router.navigate(['/user_group/edit', usergroup._id]);
+        this.router.navigate([this.name.default_development.name + '/user_group/edit', usergroup._id]);
     }
 }

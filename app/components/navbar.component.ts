@@ -1,5 +1,6 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { MENUS } from '../models/menu';
+import { UserService } from '../services/index';
 import {SlimLoadingBarService, SlimLoadingBarComponent} from 'ng2-slim-loading-bar';
 @Component({
 	// moduleId: module.id,
@@ -8,10 +9,14 @@ import {SlimLoadingBarService, SlimLoadingBarComponent} from 'ng2-slim-loading-b
 	styleUrls: [ 'app/templates/styles/navbar.css' ]
 })
 
-export class NavbarComponent {
+export class NavbarComponent implements OnInit {
 	menus = MENUS;
+	name : any;
+	constructor(private slimLoadingBarService: SlimLoadingBarService, private userService: UserService) { }
 
-	constructor(private slimLoadingBarService: SlimLoadingBarService) { }
+	ngOnInit(){
+		this.userService.getByToken().subscribe(name => { this.name = name;})
+	}
 
 	start() {
         this.slimLoadingBarService.start(() => {

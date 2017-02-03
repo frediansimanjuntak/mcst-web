@@ -1,30 +1,39 @@
-import {Component, OnInit, ChangeDetectorRef} from '@angular/core';
+import {Component, OnInit, ChangeDetectorRef, ViewChild, ElementRef } from '@angular/core';
 import { Http, Headers, RequestOptions, Response } from '@angular/http';
 import * as $ from 'jquery';
 import 'fullcalendar';
 import {Options} from "fullcalendar";
 import { Router } from '@angular/router';
-
+import { NotificationsService, SimpleNotificationsComponent } from 'angular2-notifications';
 import { TestService, AlertService } from '../services/index';
 import '../rxjs-operators';
 import { FileUploader } from 'ng2-file-upload';
 import { Observable} from 'rxjs/Observable';
 import { ImageResult, ResizeOptions } from 'ng2-imageupload';
+import { SignaturePad } from 'angular2-signaturepad/signature-pad';
+import { SignaturePadPage } from './esign.component';
+import { url } from '../global'
+import { AuthenticationService } from '../services/index';
 // import {ModalModule} from "ng2-modal";
 
 export class Model {
     _id: string;
     todoMessage : string;
     createdAt : string
+    
 }
 @Component({
   // moduleId: module.id,
-  selector: 'newsletter',
+  selector: 'test',
   templateUrl: 'app/templates/test.html',
   styleUrls: [ 'app/templates/styles/newsletter.css' ],
 })
 
 export class TestComponent implements OnInit{
+    
+    public headers: Headers;
+    public token: string;
+    public pilihan: RequestOptions;
 
 	model: any = {};
     models: Model[];
@@ -39,6 +48,11 @@ export class TestComponent implements OnInit{
         resizeMaxHeight: 250,
         resizeMaxWidth: 250
     };
+    public options = {
+        position: ["bottom", "left"],
+        timeOut: 5000,
+        lastOnBottom: true
+    }
 	public uploader:FileUploader = new FileUploader({url:'http://localhost:3001/upload'});
 
 
@@ -50,7 +64,16 @@ export class TestComponent implements OnInit{
      // Array of strings for multi select, string for single select.
 
 
-	constructor(private cd: ChangeDetectorRef, private http: Http, private testService:TestService) {
+	constructor(private cd: ChangeDetectorRef, 
+                private http: Http, 
+                private testService:TestService,
+                private _notificationsService: NotificationsService,
+                private authenticationService: AuthenticationService) {
+        var authToken = JSON.parse(localStorage.getItem('authToken'));
+        this.token = authToken && authToken.token;
+        this.headers = new Headers({ 'Accept': 'application/json', 'Authorization': 'Bearer ' + this.token });
+        this.pilihan = new RequestOptions({ headers: this.headers });
+
         let numOptions = 100;
         let opts = new Array(numOptions);
 
@@ -112,6 +135,37 @@ export class TestComponent implements OnInit{
             {value: 'c', label: 'Gamma'},
         ];
         this.mySelectValue = ['b', 'c'];
+    }
+
+    @ViewChild(SignaturePad) signaturePad: SignaturePad;
+
+    private signaturePadOptions: Object = { // passed through to szimek/signature_pad constructor
+        'minWidth': 5,
+        'canvasWidth': 500,
+        'canvasHeight': 300,
+    };
+
+
+    ngAfterViewInit() {
+        // this.signaturePad is now available
+        this.signaturePad.set('minWidth', 5); // set szimek/signature_pad options at runtime
+        this.signaturePad.clear(); // invoke functions from szimek/signature_pad API
+    }
+
+    drawComplete() {
+        // will be notified of szimek/signature_pad's onEnd event
+        console.log(this.signaturePad.toDataURL('image/png'));
+        var data = this.signaturePad.toDataURL('image/png');
+        window.open(data);
+    }
+
+    drawClear(){
+        this.signaturePad.clear();
+    }
+
+    drawStart() {
+        // will be notified of szimek/signature_pad's onBegin event
+        console.log('begin drawing');
     }
 
 
@@ -207,8 +261,8 @@ export class TestComponent implements OnInit{
     }
 
     upload() {
-        console.log(this.model);
-        this.makeFileRequest("http://localhost:3000/upload", [], this.model).then((result) => {
+        console.log(this.filesToUpload);
+        this.makeFileRequest(url + 'api/attachments', this.model.attachment).then((result) => {
             console.log(result);
         }, (error) => {
             console.error(error);
@@ -220,12 +274,40 @@ export class TestComponent implements OnInit{
         this.model.attachment = this.filesToUpload;
     }
 
-    makeFileRequest(url: string, params: Array<string>, files: Array<File>) {
+
+fileChange(event) {
+    let fileList: FileList = event.target.files;
+    let fileListLength = fileList.length;
+    console.log(fileList);
+    if(fileListLength > 0) {
+        let formData:FormData = new FormData();
+        for (var i = 0; i < fileListLength; i++) {
+            formData.append("attachment", fileList[i]);
+        }
+       
+        let headers = new Headers();
+        // headers.append('Content-Type', 'multipart/form-data');
+        headers.append('Accept', 'application/json');
+        console.log(headers);
+        let options = new RequestOptions({ headers: headers });
+        console.log(formData);
+        this.http.post(`${url + 'api/attachments'}`, formData, this.pilihan)
+            .map(res => res.json())
+            .catch(error => Observable.throw(error))
+            .subscribe(
+                data => console.log('success'),
+                error => console.log(error)
+            )
+    }
+}
+
+    makeFileRequest(url: string, files: Array<File>) {
         return new Promise((resolve, reject) => {
+            
             var formData: any = new FormData();
             var xhr = new XMLHttpRequest();
             for(var i = 0; i < files.length; i++) {
-                formData.append("uploads[]", files[i], files[i].name);
+                formData.append("attachments[]", files[i], files[i].name);
             }
             xhr.onreadystatechange = function () {
                 if (xhr.readyState == 4) {
@@ -237,12 +319,31 @@ export class TestComponent implements OnInit{
                 }
             }
             xhr.open("POST", url, true);
+            console.log(formData);
             xhr.send(formData);
         });
     }
 
     remove(i: any){
         this.model.attachment.splice(i, 1)
+    }
+
+    clicknotiv(){
+        this._notificationsService.success(
+            'Some Title',
+            'Some Content',
+            {
+                timeOut: 5000,
+                showProgressBar: true,
+                pauseOnHover: false,
+                clickToClose: false,
+                maxLength: 10
+            }
+        )
+    }
+
+    created(event: any){
+        console.log(event);
     }
 }
 

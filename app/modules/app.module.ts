@@ -1,16 +1,18 @@
-import { NgModule, Directive }          from '@angular/core';
+import { NgModule, Directive, ElementRef  }          from '@angular/core';
 import { CommonModule }                 from '@angular/common';
 import { BrowserModule }                from '@angular/platform-browser';
 import { FormsModule }  				        from '@angular/forms';
 import { FileSelectDirective }          from 'ng2-file-upload';
+import { SimpleNotificationsModule }    from 'angular2-notifications';
 import { FileDropDirective }            from 'ng2-file-upload';
 import { ReactiveFormsModule }			    from '@angular/forms';
 import { HttpModule }                   from '@angular/http';
-import { Ng2TableModule }               from 'ng2-table/ng2-table';
-import { Ng2BootstrapModule }           from 'ng2-bootstrap/ng2-bootstrap';
-import { PaginationModule,DatepickerModule }             from 'ng2-bootstrap/ng2-bootstrap';
+import { Ng2BootstrapModule, PaginationModule, DatepickerModule, TabsModule, PopoverModule } from 'ng2-bootstrap';
 import { SelectModule }                 from 'ng2-select/ng2-select';
-import { MyDatePickerModule }           from 'mydatepicker/dist/my-date-picker.module';
+import { MyDatePickerModule }           from 'mydatepicker';
+import { SignaturePadModule }           from 'angular2-signaturepad';
+import { signature_pad }                from 'signature_pad';
+import { SignaturePad } from 'angular2-signaturepad/signature-pad';
 // import { DatePickerModule }             from 'ng2-datepicker';
 // import { SELECT_DIRECTIVES }            from 'ng2-select';
 import { AppRoutingModule }     		    from './app-routing.module';
@@ -18,9 +20,10 @@ import { url }                          from '../global'
 import { DataTableModule,SharedModule,ScheduleModule,DialogModule,InputMaskModule,CheckboxModule,PanelModule,FieldsetModule,CalendarModule } from 'primeng/primeng';
 import { EqualValidator }               from '../components/user/equal-validator.directive';
 import { ImageUploadModule }            from 'ng2-imageupload';
-import { ModalModule }                  from "ng2-modal";
-import { BootstrapModalModule } from 'angular2-modal/plugins/bootstrap';
-import { SlimLoadingBarModule } from 'ng2-slim-loading-bar';
+import { ModalModule }                  from "ngx-modal";
+import { BootstrapModalModule }         from 'angular2-modal/plugins/bootstrap';
+import { SlimLoadingBarModule }         from 'ng2-slim-loading-bar';
+import { MomentModule }                 from 'angular2-moment';
 
 import { 
   AccessControlComponent,
@@ -37,6 +40,8 @@ import {
   EditCompanyComponent,
   ContractComponent,
   EditContractComponent,
+  ContractNoticeComponent,
+  ContractNoteComponent,
   ContractorComponent,
   EditContractorComponent,
   DashboardComponent,
@@ -44,6 +49,7 @@ import {
   EditDevelopmentComponent, 
   FacilityComponent,
   EditFacilityComponent,
+  FeedbackComponent,
   HeaderComponent,
   IncidentComponent,
   EditIncidentComponent,
@@ -53,9 +59,13 @@ import {
   NewsletterComponent,
   EditNewsletterComponent,
   PaymentComponent,
+  EditPaymentComponent,
+  PaymentReminderComponent,
+  EditPaymentReminderComponent,
   PetitionComponent,
   EditPetitionComponent,
   PollComponent,
+  EditPollComponent,
   QuotationComponent,
   RegisterComponent,
   SettingComponent,
@@ -64,11 +74,17 @@ import {
   EditUserComponent,
   UnitComponent,
   EditUnitComponent,
+  ViewUnitComponent,
   UserGroupComponent,
   EditUserGroupComponent,
   VisitComponent,
   TestComponent,
   Galleria,
+  NotificationComponent,
+  LostFoundComponent,
+  EditLostFoundComponent,
+
+  SignaturePadPage,
 } from '../components/index';
 
 import {
@@ -80,12 +96,17 @@ import {
   BookingService,
   CompanyService,
   ContractService,
+  ContractNoteService,
+  ContractNoticeService,
   ContractorService,
   DevelopmentService,
   FacilityService,
+  FeedbackService,
   IncidentService,
   NewsletterService,
   PaymentService,
+  PaymentReminderService,
+  NotificationService,
   PetitionService,
   PollService,
   QuotationService,
@@ -93,6 +114,7 @@ import {
   UserGroupService,
   UnitService,
   VisitService,
+  LostFoundService,
   TestService,
 } from '../services/index';
 
@@ -104,11 +126,11 @@ import {
   	FormsModule,
   	ReactiveFormsModule,
   	HttpModule,
-  	Ng2TableModule,
   	Ng2BootstrapModule,
   	PaginationModule,
   	AppRoutingModule,
     SharedModule,
+    SignaturePadModule,
     ScheduleModule,
     DialogModule,
     InputMaskModule,
@@ -116,13 +138,17 @@ import {
     SelectModule,
     PanelModule,
     FieldsetModule,
-    DatepickerModule,
+    DatepickerModule.forRoot(),
+    SimpleNotificationsModule,
     // ModalModule.forRoot(),
+    TabsModule.forRoot(),
     ModalModule,
     BootstrapModalModule,
     MyDatePickerModule,
+    PopoverModule.forRoot(),
     CalendarModule,
     ImageUploadModule,
+    MomentModule,
     SlimLoadingBarModule.forRoot(),
   ],
   declarations: [ 
@@ -138,6 +164,8 @@ import {
     EditCompanyComponent,
     ContractComponent,
     EditContractComponent,
+    ContractNoticeComponent,
+    ContractNoteComponent,
     ContractorComponent,
     EditContractorComponent,
     DashboardComponent,
@@ -145,6 +173,7 @@ import {
     EditDevelopmentComponent,
     FacilityComponent,
     EditFacilityComponent,
+    FeedbackComponent,
     FileSelectDirective,
     HeaderComponent,
     IncidentComponent,
@@ -154,9 +183,13 @@ import {
     NewsletterComponent,
     EditNewsletterComponent,
     PaymentComponent,
+    EditPaymentComponent,
+    PaymentReminderComponent,
+    EditPaymentReminderComponent,
     PetitionComponent,
     EditPetitionComponent,
     PollComponent,
+    EditPollComponent,
     QuotationComponent,
     RegisterComponent,
     SettingComponent,
@@ -165,6 +198,7 @@ import {
     EditUserComponent,
     EditUnitComponent,
     UnitComponent,
+    ViewUnitComponent,
     UserGroupComponent,
     EditUserGroupComponent,
     VisitComponent, 
@@ -172,7 +206,10 @@ import {
     EditAnnouncementComponent,
     TestComponent,
     Galleria,
-    
+    NotificationComponent,
+    LostFoundComponent,
+    EditLostFoundComponent,
+    SignaturePadPage,
   ],
   providers: [ 
     AccessControlService,
@@ -184,12 +221,17 @@ import {
     BookingService,
     CompanyService,
     ContractService,
+    ContractNoteService,
+    ContractNoticeService,
     ContractorService,
     DevelopmentService,
     FacilityService,
+    FeedbackService,
     IncidentService,
     NewsletterService,
+    NotificationService,
     PaymentService,
+    PaymentReminderService,
     PetitionService,
     PollService,
     QuotationService,
@@ -197,6 +239,7 @@ import {
     UnitService,
     UserGroupService,
     VisitService,
+    LostFoundService,
     TestService,
   ],
   bootstrap:    [ AppComponent ],

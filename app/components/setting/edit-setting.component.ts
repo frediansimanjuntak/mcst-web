@@ -7,12 +7,14 @@ import '../../rxjs-operators';
 
 @Component({
     // moduleId: module.id,
+    selector: 'edit-setting',
     templateUrl: 'app/templates/edit-setting.html',
 })
 
 export class EditSettingComponent {
     user: User;
     model: any = {};
+    name: any;
     id: string;
 
     constructor(private router: Router,
@@ -22,6 +24,7 @@ export class EditSettingComponent {
         private developmentService: DevelopmentService) {}
 
     ngOnInit(): void {
+        this.userService.getByToken().subscribe(name => {this.name = name;})
         this.route.params.subscribe(params => {
             this.id = params['id'];
         });
@@ -39,7 +42,7 @@ export class EditSettingComponent {
 		    this.userService.update(this.user)
 		    .then(response => {
                   this.alertService.success('Update User successful', true);
-                  this.router.navigate(['/user']);
+                  this.router.navigate([this.name.default_development.name + '/user']);
 	            },
               error=> {
             	    this.alertService.error(error);
@@ -79,5 +82,9 @@ export class EditSettingComponent {
 
     remove1(i: any){
         this.model.back.splice(i, 1)
+    }
+
+    cancel(){
+        this.router.navigate([this.name.default_development.name + '/setting' ]);
     }
 }

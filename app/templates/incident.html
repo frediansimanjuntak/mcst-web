@@ -11,28 +11,38 @@
 	        	</div>
 	        	<div class="col-lg-6">
 	        		<div class="row">
-	        			<div class="col-md-4">Reported by </div>
-	        			<div class="col-md-8"> <p>: {{ incident.created_by }}</p></div>
+	        			<div class="col-md-4">Reported by :</div>
+	        			<div class="col-md-8"> <p>{{ incident.created_by.username }}</p></div>
 	        		</div>
 	        		<div class="row">
-	        			<div class="col-md-4">Type of Report </div>
-	        			<div class="col-md-8"><p>: {{ incident.incident_type }}</p></div>
+	        			<div class="col-md-4">Type of Report :</div>
+	        			<div class="col-md-8"><p>{{ incident.incident_type }}</p></div>
 	        		</div>
 	        		<div class="row">
-	        			<div class="col-md-4">Report time </div>
-	        			<div class="col-md-8"><p>: {{ incident.created_at }}</p></div>
+	        			<div class="col-md-4">Report time :</div>
+	        			<div class="col-md-8"><p>{{ incident.created_at }}</p></div>
 	        		</div>
 	        		<div class="row">
-	        			<div class="col-md-4">Status </div>
-	        			<div class="col-md-8"><p>: {{ incident.status }}</p></div>
+	        			<div class="col-md-4">Status :</div>
+	        			<div class="col-md-8"><p>{{ incident.status }}</p></div>
 	        		</div>
 	        		<div class="row">
-	        			<div class="col-md-4">Order </div>
-	        			<div class="col-md-8">: <!-- <p>{{ incident.orde }}</p> --></div>
+	        			<div class="col-md-4">Order :</div>
+	        			<div class="col-md-8"><p><span *ngIf="!incident.contract"><img src="assets/image/menu_manageproject.png" width="14px" height="12px"> <a (click)="add_project(incident.reference_no)" style="text-decoration: underline;cursor:pointer">Create Project</a></span>
+	        			<span *ngIf="incident.contract">aaa</span></p></div>
 	        		</div>
 	        		<div class="row">
-	        			<div class="col-md-4">Message </div>
-	        			<div class="col-md-8"><p>: {{ incident.remark }}</p></div>
+	        			<div class="col-md-4">Message :</div>
+	        			<div class="col-md-8"><p>{{ incident.remark }}</p></div>
+	        		</div>
+	        		<div class="row">
+	        			<div class="col-md-4"><p>Action :</p></div>
+	        		</div>
+	        		<div class="row">	
+	        			<div class="col-md-12">
+	        				<span *ngIf="!incident.contract"><a class="btn btn-primary" (click)="add_project(incident.reference_no)" style="cursor:pointer"><img src="assets/image/menu_manageproject.png" width="14px" height="12px"> Create Project</a></span>
+	        				<a class="btn btn-primary" (click)="archive(incident._id)" style="cursor:pointer"><img src="assets/image/icon_archived.png" width="14px" height="12px"> Archive Report</a>
+	        			</div>
 	        		</div>
 	        	</div>
 	        </div>
@@ -50,195 +60,152 @@
 				</div>
 			</div>
 			<div (click)="$event.preventDefault()">
-			  <tabset>
+			  	<tabset>
 			  <!-- ALL -->
-			    <tab heading="All">
-			    	<p-dataTable [value]="incidents" [rows]="10" [paginator]="true">
-					    <p-column field="reference_no" header="Report No." sortable="true" [filter]="true" filterPlaceholder="Search Report No."></p-column>
-					    <p-column field="incident_type" header="Type" sortable="true" [filter]="true" filterPlaceholder="Search Type"></p-column>
-					    <p-column field="created_by" header="Reported by" sortable="true" [filter]="true" filterPlaceholder="Search Reported by"></p-column>
-					    <p-column field="created_at" header="Report time" sortable="true" [filter]="true" filterPlaceholder="Search Report time"></p-column>
-					    <p-column field="title" header="Title" sortable="true" [filter]="true" filterPlaceholder="Search Title"></p-column>
-					    <p-column field="remark" header="Message" sortable="true" [filter]="true" filterPlaceholder="Search Message"></p-column>
-					    <p-column [style]="{'width':'75px'}" header="Photo">
-					    	<template let-data="rowData" pTemplate="body">
-					    		<a *ngIf="data.attachment != null" style="text-decoration: underline;cursor:pointer" (click)="view(data)">View</a>
-					    		<a *ngIf="data.attachment == null">-</a>
-					    	</template>
-					    </p-column>
-					    <p-column field="status" header="Status" sortable="true" [filter]="true" filterPlaceholder="Search Status">
-					        <template let-col let-data="rowData" pTemplate="body">
-					            <span [style.color]="data[col.field]">{{data[col.field]}}</span>
-					        </template>
-					    </p-column>
-					    <p-column [style]="{'width':'150px'}" styleClass="col-button" header="action">
-					    	<template let-data="rowData" pTemplate="body">
-					    		<a type="button" style="text-decoration: underline;cursor:pointer" (click)="view(data)">View</a>
-					    		<img *ngIf="!isFavorite" src="../../assets/image/star_filled.png" width="24px" height="28px" (click)="onClick(data)" />
-					    		<img *ngIf="isFavorite" src="../../assets/image/icon_star_active@3x.png" width="24px" height="28px" (click)="onClick(data)" />
-					    		
-								<img src="../../assets/image/icon_archived.png" (click)="onClick(data)" />
-					    	</template>
-					    </p-column>
-					</p-dataTable>
-			    </tab>
-			    <!-- NEW -->
-			    <tab heading="New">
-			    	<p-dataTable [value]="dataNew" [rows]="10" [paginator]="true">
-					   <p-column field="reference_no" header="Report No." sortable="true" [filter]="true" filterPlaceholder="Search Report No."></p-column>
-					    <p-column field="incident_type" header="Type" sortable="true" [filter]="true" filterPlaceholder="Search Type"></p-column>
-					    <p-column field="created_by" header="Reported by" sortable="true" [filter]="true" filterPlaceholder="Search Reported by"></p-column>
-					    <p-column field="created_at" header="Report time" sortable="true" [filter]="true" filterPlaceholder="Search Report time"></p-column>
-					    <p-column field="title" header="Title" sortable="true" [filter]="true" filterPlaceholder="Search Title"></p-column>
-					    <p-column field="remark" header="Message" sortable="true" [filter]="true" filterPlaceholder="Search Message"></p-column>
-					    <p-column [style]="{'width':'75px'}" header="Photo">
-					    	<template let-data="rowData" pTemplate="body">
-					    		<a *ngIf="data.attachment != null" style="text-decoration: underline;cursor:pointer" (click)="view(data)">View</a>
-					    		<a *ngIf="data.attachment == null">-</a>
-					    	</template>
-					    </p-column>
-					    <p-column field="status" header="Status" sortable="true" [filter]="true" filterPlaceholder="Search Status">
-					        <template let-col let-data="rowData" pTemplate="body">
-					            <span [style.color]="data[col.field]">{{data[col.field]}}</span>
-					        </template>
-					    </p-column>
-					    <p-column [style]="{'width':'150px'}" styleClass="col-button" header="action">
-					    	<template let-data="rowData" pTemplate="body">
-					    		<a type="button" style="text-decoration: underline;cursor:pointer" (click)="view(data)">View</a>
-					    		<img *ngIf="!isFavorite" src="../../assets/image/star_filled.png" width="24px" height="28px" (click)="onClick(data)" />
-					    		<img *ngIf="isFavorite" src="../../assets/image/icon_star_active@3x.png" width="24px" height="28px" (click)="onClick(data)" />
-					    		
-								<img src="../../assets/image/icon_archived.png" (click)="onClick(data)" />
-					    	</template>
-					    </p-column>
-					</p-dataTable>
-			    </tab>
-			    <!-- REVIEWING -->
-			    <tab heading="Reviewing">
-			    	<p-dataTable [value]="dataReviewing" [rows]="10" [paginator]="true">
-					   <p-column field="reference_no" header="Report No." sortable="true" [filter]="true" filterPlaceholder="Search Report No."></p-column>
-					    <p-column field="incident_type" header="Type" sortable="true" [filter]="true" filterPlaceholder="Search Type"></p-column>
-					    <p-column field="created_by" header="Reported by" sortable="true" [filter]="true" filterPlaceholder="Search Reported by"></p-column>
-					    <p-column field="created_at" header="Report time" sortable="true" [filter]="true" filterPlaceholder="Search Report time"></p-column>
-					    <p-column field="title" header="Title" sortable="true" [filter]="true" filterPlaceholder="Search Title"></p-column>
-					    <p-column field="remark" header="Message" sortable="true" [filter]="true" filterPlaceholder="Search Message"></p-column>
-					    <p-column [style]="{'width':'75px'}" header="Photo">
-					    	<template let-data="rowData" pTemplate="body">
-					    		<a *ngIf="data.attachment != null" style="text-decoration: underline;cursor:pointer" (click)="view(data)">View</a>
-					    		<a *ngIf="data.attachment == null">-</a>
-					    	</template>
-					    </p-column>
-					    <p-column field="status" header="Status" sortable="true" [filter]="true" filterPlaceholder="Search Status">
-					        <template let-col let-data="rowData" pTemplate="body">
-					            <span [style.color]="data[col.field]">{{data[col.field]}}</span>
-					        </template>
-					    </p-column>
-					    <p-column [style]="{'width':'150px'}" styleClass="col-button" header="action">
-					    	<template let-data="rowData" pTemplate="body">
-					    		<a type="button" style="text-decoration: underline;cursor:pointer" (click)="view(data)">View</a>
-					    		<img *ngIf="!isFavorite" src="../../assets/image/star_filled.png" width="24px" height="28px" (click)="onClick(data)" />
-					    		<img *ngIf="isFavorite" src="../../assets/image/icon_star_active@3x.png" width="24px" height="28px" (click)="onClick(data)" />
-					    		
-								<img src="../../assets/image/icon_archived.png" (click)="onClick(data)" />
-					    	</template>
-					    </p-column>
-					</p-dataTable>
-			    </tab>	
-			    <!-- IN PROGRESS -->
-			    <tab heading="In-Progress">
-			    	<p-dataTable [value]="dataInProgress" [rows]="10" [paginator]="true">
-					    <p-column field="reference_no" header="Report No." sortable="true" [filter]="true" filterPlaceholder="Search Report No."></p-column>
-					    <<p-column field="reference_no" header="Report No." sortable="true" [filter]="true" filterPlaceholder="Search Report No."></p-column>
-					    <p-column field="incident_type" header="Type" sortable="true" [filter]="true" filterPlaceholder="Search Type"></p-column>
-					    <p-column field="created_by" header="Reported by" sortable="true" [filter]="true" filterPlaceholder="Search Reported by"></p-column>
-					    <p-column field="created_at" header="Report time" sortable="true" [filter]="true" filterPlaceholder="Search Report time"></p-column>
-					    <p-column field="title" header="Title" sortable="true" [filter]="true" filterPlaceholder="Search Title"></p-column>
-					    <p-column field="remark" header="Message" sortable="true" [filter]="true" filterPlaceholder="Search Message"></p-column>
-					    <p-column [style]="{'width':'75px'}" header="Photo">
-					    	<template let-data="rowData" pTemplate="body">
-					    		<a *ngIf="data.attachment != null" style="text-decoration: underline;cursor:pointer" (click)="view(data)">View</a>
-					    		<a *ngIf="data.attachment == null">-</a>
-					    	</template>
-					    </p-column>
-					    <p-column field="status" header="Status" sortable="true" [filter]="true" filterPlaceholder="Search Status">
-					        <template let-col let-data="rowData" pTemplate="body">
-					            <span [style.color]="data[col.field]">{{data[col.field]}}</span>
-					        </template>
-					    </p-column>
-					    <p-column [style]="{'width':'150px'}" styleClass="col-button" header="action">
-					    	<template let-data="rowData" pTemplate="body">
-					    		<a type="button" style="text-decoration: underline;cursor:pointer" (click)="view(data)">View</a>
-					    		<img *ngIf="!isFavorite" src="../../assets/image/star_filled.png" width="24px" height="28px" (click)="onClick(data)" />
-					    		<img *ngIf="isFavorite" src="../../assets/image/icon_star_active@3x.png" width="24px" height="28px" (click)="onClick(data)" />
-					    		
-								<img src="../../assets/image/icon_archived.png" (click)="onClick(data)" />
-					    	</template>
-					    </p-column>
-					</p-dataTable>
-			    </tab>	
-			    <!-- RESOLVED -->
-			    <tab heading="Resolved">
-			    	<p-dataTable [value]="dataResolved" [rows]="10" [paginator]="true">
-					    <p-column field="reference_no" header="Report No." sortable="true" [filter]="true" filterPlaceholder="Search Report No."></p-column>
-					    <p-column field="incident_type" header="Type" sortable="true" [filter]="true" filterPlaceholder="Search Type"></p-column>
-					    <p-column field="created_by" header="Reported by" sortable="true" [filter]="true" filterPlaceholder="Search Reported by"></p-column>
-					    <p-column field="created_at" header="Report time" sortable="true" [filter]="true" filterPlaceholder="Search Report time"></p-column>
-					    <p-column field="title" header="Title" sortable="true" [filter]="true" filterPlaceholder="Search Title"></p-column>
-					    <p-column field="remark" header="Message" sortable="true" [filter]="true" filterPlaceholder="Search Message"></p-column>
-					    <p-column [style]="{'width':'75px'}" header="Photo">
-					    	<template let-data="rowData" pTemplate="body">
-					    		<a *ngIf="data.attachment != null" style="text-decoration: underline;cursor:pointer" (click)="view(data)">View</a>
-					    		<a *ngIf="data.attachment == null">-</a>
-					    	</template>
-					    </p-column>
-					    <p-column field="status" header="Status" sortable="true" [filter]="true" filterPlaceholder="Search Status">
-					        <template let-col let-data="rowData" pTemplate="body">
-					            <span [style.color]="data[col.field]">{{data[col.field]}}</span>
-					        </template>
-					    </p-column>
-					    <p-column [style]="{'width':'150px'}" styleClass="col-button" header="action">
-					    	<template let-data="rowData" pTemplate="body">
-					    		<a type="button" style="text-decoration: underline;cursor:pointer" (click)="view(data)">View</a>
-					    		<img *ngIf="!isFavorite" src="../../assets/image/star_filled.png" width="24px" height="28px" (click)="onClick(data)" />
-					    		<img *ngIf="isFavorite" src="../../assets/image/icon_star_active@3x.png" width="24px" height="28px" (click)="onClick(data)" />
-					    		
-								<img src="../../assets/image/icon_archived.png" (click)="onClick(data)" />
-					    	</template>
-					    </p-column>
-					</p-dataTable>
-			    </tab>	
-			    <!-- URGENT -->
-			    <tab heading="Urgent">
-			    	<p-dataTable [value]="dataUrgent" [rows]="10" [paginator]="true">
-					   <p-column field="reference_no" header="Report No." sortable="true" [filter]="true" filterPlaceholder="Search Report No."></p-column>
-					    <p-column field="incident_type" header="Type" sortable="true" [filter]="true" filterPlaceholder="Search Type"></p-column>
-					    <p-column field="created_by" header="Reported by" sortable="true" [filter]="true" filterPlaceholder="Search Reported by"></p-column>
-					    <p-column field="created_at" header="Report time" sortable="true" [filter]="true" filterPlaceholder="Search Report time"></p-column>
-					    <p-column field="title" header="Title" sortable="true" [filter]="true" filterPlaceholder="Search Title"></p-column>
-					    <p-column field="remark" header="Message" sortable="true" [filter]="true" filterPlaceholder="Search Message"></p-column>
-					    <p-column [style]="{'width':'75px'}" header="Photo">
-					    	<template let-data="rowData" pTemplate="body">
-					    		<a *ngIf="data.attachment != null" style="text-decoration: underline;cursor:pointer" (click)="view(data)">View</a>
-					    		<a *ngIf="data.attachment == null">-</a>
-					    	</template>
-					    </p-column>
-					    <p-column field="status" header="Status" sortable="true" [filter]="true" filterPlaceholder="Search Status">
-					        <template let-col let-data="rowData" pTemplate="body">
-					            <span [style.color]="data[col.field]">{{data[col.field]}}</span>
-					        </template>
-					    </p-column>
-					    <p-column [style]="{'width':'150px'}" styleClass="col-button" header="action">
-					    	<template let-data="rowData" pTemplate="body">
-					    		<a type="button" style="text-decoration: underline;cursor:pointer" (click)="view(data)">View</a>
-					    		<img *ngIf="!isFavorite" src="../../assets/image/star_filled.png" width="24px" height="28px" (click)="onClick(data)" />
-					    		<img *ngIf="isFavorite" src="../../assets/image/icon_star_active@3x.png" width="24px" height="28px" (click)="onClick(data)" />
-					    		
-								<img src="../../assets/image/icon_archived.png" (click)="onClick(data)" />
-					    	</template>
-					    </p-column>
-					</p-dataTable>
-			    </tab>		
-			  </tabset>
+				    <tab heading="All">
+				    	<p-dataTable [value]="incidents" [rows]="10" [paginator]="true">
+						    <p-column field="reference_no" header="Report No." sortable="true" [filter]="true" filterPlaceholder="Search Report No."></p-column>
+						    <p-column [style]="{'text-transform': 'capitalize'}" field="incident_type" header="Type" sortable="true" [filter]="true" filterPlaceholder="Search Type"></p-column>
+						    <p-column field="created_by.username" header="Reported by" sortable="true" [filter]="true" filterPlaceholder="Search Reported by"></p-column>
+						    <p-column field="property" header="Unit No." sortable="true" [filter]="true" filterPlaceholder="Search unit no">
+						    	<!-- <template let-data="rowData" pTemplate="body">
+						    		{{data.property.address.unit_no}}-{{data.property.address.unit_no_2}}
+						    	</template> -->
+						    </p-column>
+						    <p-column field="created_at" header="Report time" sortable="true" [filter]="true" filterPlaceholder="Search Report time"></p-column>
+						    <p-column field="title" header="Title" sortable="true" [filter]="true" filterPlaceholder="Search Title"></p-column>
+						    <p-column field="remark" header="Message" sortable="true" [filter]="true" filterPlaceholder="Search Message"></p-column>
+						    <p-column [style]="{'width':'75px'}" header="Photo">
+						    	<template let-data="rowData" pTemplate="body">
+						    		<a *ngIf="data.attachment != null" style="text-decoration: underline;cursor:pointer" (click)="view(data)">View</a>
+						    		<a *ngIf="data.attachment == null">-</a>
+						    	</template>
+						    </p-column>
+						    <p-column [style]="{'text-transform': 'capitalize'}" field="status" header="Status" sortable="true" [filter]="true" filterPlaceholder="Search Status">
+						        <template let-col let-data="rowData" pTemplate="body">
+						            <span [style.color]="data[col.field]">{{data[col.field]}}</span>
+						        </template>
+						    </p-column>
+						    <p-column [style]="{'width':'150px'}" styleClass="col-button" header="Action">
+						    	<template let-data="rowData" pTemplate="body">
+						    		<a type="button" style="text-decoration: underline;cursor:pointer" (click)="view(data)">View</a>
+						    		<img *ngIf="data.starred_by.length < 1" title="starred" src="../../assets/image/star_filled.png" width="24px" height="28px" (click)="starred(data)" />
+						    		<img *ngIf="data.starred_by > 0" title="unstarred" src="../../assets/image/icon_star_active@3x.png" width="24px" height="28px" (click)="unstarred(data)" />
+									<img *ngIf="data.archive == false" title="archived" src="../../assets/image/icon_archived.png" (click)="archived(data)" />
+									<img *ngIf="data.archive == true" title="unarchived" src="../../assets/image/icon_archived.png" (click)="unarchived(data)" />
+						    	</template>
+						    </p-column>
+						</p-dataTable>
+				    </tab>
+				    <!-- NEW -->
+				    <tab heading="New">
+				    	<p-dataTable [value]="dataNew" [rows]="10" [paginator]="true">
+						   <p-column field="reference_no" header="Report No." sortable="true" [filter]="true" filterPlaceholder="Search Report No."></p-column>
+						    <p-column [style]="{'text-transform': 'capitalize'}" field="incident_type" header="Type" sortable="true" [filter]="true" filterPlaceholder="Search Type"></p-column>
+						    <p-column field="created_by" header="Reported by" sortable="true" [filter]="true" filterPlaceholder="Search Reported by"></p-column>
+						    <p-column field="" header="Unit No." sortable="true" [filter]="true" filterPlaceholder="Search unit no">
+						    	<template let-data="rowData" pTemplate="body">
+						    		{{data.property.address.unit_no}}-{{data.property.address.unit_no_2}}
+						    	</template>
+						    </p-column>
+						    <p-column field="created_at" header="Report time" sortable="true" [filter]="true" filterPlaceholder="Search Report time"></p-column>
+						    <p-column field="title" header="Title" sortable="true" [filter]="true" filterPlaceholder="Search Title"></p-column>
+						    <p-column field="remark" header="Message" sortable="true" [filter]="true" filterPlaceholder="Search Message"></p-column>
+						    <p-column [style]="{'width':'75px'}" header="Photo">
+						    	<template let-data="rowData" pTemplate="body">
+						    		<a *ngIf="data.attachment != null" style="text-decoration: underline;cursor:pointer" (click)="view(data)">View</a>
+						    		<a *ngIf="data.attachment == null">-</a>
+						    	</template>
+						    </p-column>
+						    <p-column [style]="{'text-transform': 'capitalize'}" field="status" header="Status" sortable="true" [filter]="true" filterPlaceholder="Search Status">
+						        <template let-col let-data="rowData" pTemplate="body">
+						            <span [style.color]="data[col.field]">{{data[col.field]}}</span>
+						        </template>
+						    </p-column>
+						    <p-column [style]="{'width':'150px'}" styleClass="col-button" header="Action">
+						    	<template let-data="rowData" pTemplate="body">
+						    		<a type="button" style="text-decoration: underline;cursor:pointer" (click)="view(data)">View</a>
+						    		<img *ngIf="data.starred_by == null" title="starred" src="../../assets/image/star_filled.png" width="24px" height="28px" (click)="starred(data)" />
+						    		<img *ngIf="data.starred_by != null" title="unstarred" src="../../assets/image/icon_star_active@3x.png" width="24px" height="28px" (click)="unstarred(data)" />
+									<img *ngIf="data.archive == false" title="archived" src="../../assets/image/icon_archived.png" (click)="archived(data)" />
+									<img *ngIf="data.archive == true" title="unarchived" src="../../assets/image/icon_archived.png" (click)="unarchived(data)" />
+						    	</template>
+						    </p-column>
+						</p-dataTable>
+				    </tab>
+				    <!-- IN PROGRESS -->
+				    <tab heading="In-Progress">
+				    	<p-dataTable [value]="dataInProgress" [rows]="10" [paginator]="true">
+						    <p-column field="reference_no" header="Report No." sortable="true" [filter]="true" filterPlaceholder="Search Report No."></p-column>
+						    <p-column [style]="{'text-transform': 'capitalize'}" field="incident_type" header="Type" sortable="true" [filter]="true" filterPlaceholder="Search Type"></p-column>
+						    <p-column field="created_by" header="Reported by" sortable="true" [filter]="true" filterPlaceholder="Search Reported by"></p-column>
+						    <p-column field="" header="Unit No." sortable="true" [filter]="true" filterPlaceholder="Search unit no">
+						    	<template let-data="rowData" pTemplate="body">
+						    		{{data.property.address.unit_no}}-{{data.property.address.unit_no_2}}
+						    	</template>
+						    </p-column>
+						    <p-column field="created_at" header="Report time" sortable="true" [filter]="true" filterPlaceholder="Search Report time"></p-column>
+						    <p-column field="title" header="Title" sortable="true" [filter]="true" filterPlaceholder="Search Title"></p-column>
+						    <p-column field="remark" header="Message" sortable="true" [filter]="true" filterPlaceholder="Search Message"></p-column>
+						    <p-column [style]="{'width':'75px'}" header="Photo">
+						    	<template let-data="rowData" pTemplate="body">
+						    		<a *ngIf="data.attachment != null" style="text-decoration: underline;cursor:pointer" (click)="view(data)">View</a>
+						    		<a *ngIf="data.attachment == null">-</a>
+						    	</template>
+						    </p-column>
+						    <p-column [style]="{'text-transform': 'capitalize'}" field="status" header="Status" sortable="true" [filter]="true" filterPlaceholder="Search Status">
+						        <template let-col let-data="rowData" pTemplate="body">
+						            <span [style.color]="data[col.field]">{{data[col.field]}}</span>
+						        </template>
+						    </p-column>
+						    <p-column [style]="{'width':'150px'}" styleClass="col-button" header="Action">
+						    	<template let-data="rowData" pTemplate="body">
+						    		<a type="button" style="text-decoration: underline;cursor:pointer" (click)="view(data)">View</a>
+						    		<img *ngIf="data.starred_by == null" title="starred" src="../../assets/image/star_filled.png" width="24px" height="28px" (click)="starred(data)" />
+						    		<img *ngIf="data.starred_by != null" title="unstarred" src="../../assets/image/icon_star_active@3x.png" width="24px" height="28px" (click)="unstarred(data)" />
+									<img *ngIf="data.archive == false" title="archived" src="../../assets/image/icon_archived.png" (click)="archived(data)" />
+									<img *ngIf="data.archive == true" title="unarchived" src="../../assets/image/icon_archived.png" (click)="unarchived(data)" />
+						    	</template>
+						    </p-column>
+						</p-dataTable>
+				    </tab>	
+				    <!-- RESOLVED -->
+				    <tab heading="Resolved">
+				    	<p-dataTable [value]="dataResolved" [rows]="10" [paginator]="true">
+						    <p-column field="reference_no" header="Report No." sortable="true" [filter]="true" filterPlaceholder="Search Report No."></p-column>
+						    <p-column [style]="{'text-transform': 'capitalize'}" field="incident_type" header="Type" sortable="true" [filter]="true" filterPlaceholder="Search Type"></p-column>
+						    <p-column field="created_by" header="Reported by" sortable="true" [filter]="true" filterPlaceholder="Search Reported by"></p-column>
+						    <p-column field="" header="Unit No." sortable="true" [filter]="true" filterPlaceholder="Search unit no">
+						    	<template let-data="rowData" pTemplate="body">
+						    		{{data.property.unit_no}}-{{data.property.unit_no_2}}
+						    	</template>
+						    </p-column>
+						    <p-column field="created_at" header="Report time" sortable="true" [filter]="true" filterPlaceholder="Search Report time"></p-column>
+						    <p-column field="title" header="Title" sortable="true" [filter]="true" filterPlaceholder="Search Title"></p-column>
+						    <p-column field="remark" header="Message" sortable="true" [filter]="true" filterPlaceholder="Search Message"></p-column>
+						    <p-column [style]="{'width':'75px'}" header="Photo">
+						    	<template let-data="rowData" pTemplate="body">
+						    		<a *ngIf="data.attachment != null" style="text-decoration: underline;cursor:pointer" (click)="view(data)">View</a>
+						    		<a *ngIf="data.attachment == null">-</a>
+						    	</template>
+						    </p-column>
+						    <p-column [style]="{'text-transform': 'capitalize'}" field="status" header="Status" sortable="true" [filter]="true" filterPlaceholder="Search Status">
+						        <template let-col let-data="rowData" pTemplate="body">
+						            <span [style.color]="data[col.field]">{{data[col.field]}}</span>
+						        </template>
+						    </p-column>
+						    <p-column [style]="{'width':'150px'}" styleClass="col-button" header="Action">
+						    	<template let-data="rowData" pTemplate="body">
+						    		<a type="button" style="text-decoration: underline;cursor:pointer" (click)="view(data)">View</a>
+						    		<img *ngIf="data.starred_by == null" title="starred" src="../../assets/image/star_filled.png" width="24px" height="28px" (click)="starred(data)" />
+						    		<img *ngIf="data.starred_by != null" title="unstarred" src="../../assets/image/icon_star_active@3x.png" width="24px" height="28px" (click)="unstarred(data)" />
+									<img *ngIf="data.archive == false" title="archived" src="../../assets/image/icon_archived.png" (click)="archived(data)" />
+									<img *ngIf="data.archive == true" title="unarchived" src="../../assets/image/icon_archived.png" (click)="unarchived(data)" />
+						    	</template>
+						    </p-column>
+						</p-dataTable>
+				    </tab>	
+			    </tabset>
 			</div>	
         </div>
     </div>

@@ -6,7 +6,7 @@
 		Home > Manage Announcement
 		<div class="row">
 			<div class="col-md-4 pull-right">
-					  		<a class="btn btn-default pull-right" [routerLink]="['/announcement/add']">
+					  		<a class="btn btn-default pull-right" (click)="add()">
 					  		<i class="fa fa-plus" aria-hidden="true"></i>&nbsp;Make an Announcement</a>
 					  		
 			</div>
@@ -19,9 +19,17 @@
 				    <p-column field="message" header="Message" sortable="true" [filter]="true" filterPlaceholder="Search Message"></p-column>
 				    <p-column field="sticky" header="Sticky?" sortable="true" [filter]="true"></p-column>
 				    <p-column field="auto_post_on" header="Auto post on" sortable="true" [filter]="true" filterPlaceholder="Search Date "></p-column>
-				    <p-column field="valid_till" header="Valid till" sortable="true" [filter]="true" filterPlaceholder="Search Date "></p-column>
-				    <p-column field="created_at" header="Created on" sortable="true" [filter]="true" filterPlaceholder="Search Date "></p-column>
-				    <p-column [style]="{'width':'300px'}" styleClass="col-button" header="action">
+				    <p-column header="Valid till" sortable="true">
+						    	<template let-announcementsDrafted="rowData" pTemplate="body">
+						            <span>{{announcementsDrafted.valid_till | date:'y/M/d'}}</span>
+						        </template>
+					</p-column>
+					<p-column header="Created on" sortable="true">
+						    	<template let-announcementsDrafted="rowData" pTemplate="body">
+						            <span>{{announcementsDrafted.created_at | date:'y/M/d'}}</span>
+						        </template>
+					</p-column>
+					<p-column [style]="{'width':'300px'}" styleClass="col-button" header="action">
 				    	<template class="pull-right" let-announcementsDrafted="rowData" pTemplate="body">
 				    	<a type="button" style="cursor:pointer" (click)="editAnnouncement(announcementsDrafted)"><i class="fa fa-edit" aria-hidden="true"></i>&nbsp;Edit</a>
 				    	<button type="button" class="btn btn-primary btn-xs" (click)="openModal(announcementsDrafted) || firstModal.open()">Publish</button>
@@ -35,9 +43,21 @@
 				    <p-column field="title" header="Title" sortable="true" [filter]="true" filterPlaceholder="Search title"></p-column>
 				    <p-column field="message" header="Message" sortable="true" [filter]="true" filterPlaceholder="Search Message"></p-column>
 				    <p-column field="sticky" header="Sticky?" sortable="true" [filter]="true"></p-column>
-				    <p-column field="valid_till" header="Valid till" sortable="true" [filter]="true" filterPlaceholder="Search Date "></p-column>
-				    <p-column field="created_at" header="Created on" sortable="true" [filter]="true" filterPlaceholder="Search Date "></p-column>
-				    <p-column field="created_by" header="Created by" sortable="true" [filter]="true" filterPlaceholder="Search Date "></p-column>
+				     <p-column header="Valid till" sortable="true">
+						    	<template let-announcementsPublished="rowData" pTemplate="body">
+						            <span>{{announcementsPublished.valid_till | date:'y/M/d'}}</span>
+						        </template>
+					</p-column>
+					<p-column header="Created on" sortable="true">
+						    	<template let-announcementsPublished="rowData" pTemplate="body">
+						            <span>{{announcementsPublished.created_at | date:'y/M/d'}}</span>
+						        </template>
+					</p-column>
+				    <p-column filterPlaceholder="Search Created by" header="Created by">
+				        <template let-announcementsPublished="rowData" pTemplate="body">
+				            <span>{{announcementsPublished.created_by.username}}</span>
+				        </template>
+				    </p-column>
 				    <p-column styleClass="col-button">
 				    	<template class="pull-right" let-announcementsPublished="rowData" pTemplate="body">
 				        <button  type="button" (click)="deleteAnnouncement(announcementsPublished)"><i class="fa fa-trash" aria-hidden="true"></i></button>

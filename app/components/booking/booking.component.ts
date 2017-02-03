@@ -1,15 +1,16 @@
 import { Component, OnInit, PipeTransform, Pipe } from '@angular/core';
+import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import { DatePipe  } from '@angular/common';
 import { Router, Params, ActivatedRoute } from '@angular/router'; 
 import { Booking, Facility } from '../../models/index';
-import { BookingService, AlertService, FacilityService } from '../../services/index';
+import { BookingService, AlertService, FacilityService, UserService, UnitService } from '../../services/index';
 import '../../rxjs-operators';
 import { Observable} from 'rxjs/Observable';
 import * as moment from 'moment';
 
 @Component({
   // moduleId: module.id,
-  selector: 'development',
+  selector: 'booking',
   templateUrl: 'app/templates/booking.html',
   styles: [`
   	.full button span {
@@ -29,27 +30,44 @@ export class BookingComponent implements OnInit {
 	public dt: Date = new Date();
     private opened: boolean = false;
 	booking: Booking;
-    bookings: Booking[] = [];
+    bookings: any[] = [];
     facilities: Facility[] = [];
+    myForm: FormGroup;
     model: any = {}; 
     id: string;
+    units: any[];
+    unit: any;
     times_start : any[] = [];
     times_end : any[] = [];
+    period : any[] = [];
     end : any; 
     min : any;
     start : any;
     day : any;
+    filtered : any;
     selectedDay : any;
     days : any[] = ["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"];
+    name: any;
 
 	constructor(
 		private router: Router,
         private facilityService: FacilityService,
 		private bookingService: BookingService,
 		private alertService: AlertService,
-		private route: ActivatedRoute){}
+        private formbuilder: FormBuilder,
+		private route: ActivatedRoute,
+        private userService: UserService,
+        private unitService: UnitService,){}
 
 	ngOnInit() {
+        this.userService.getByToken().subscribe(name => {this.name = name;})
+        this.myForm = this.formbuilder.group({
+            name : [''],
+            type : ['All'],
+            status : ['All'],
+            start : [0],
+            end : [23]
+        })
         this.facilityService.getFacilities()
         .then(facilities => { 
             this.facilities = facilities;
@@ -66,6 +84,10 @@ export class BookingComponent implements OnInit {
                    this.times_end.push(start)
             }
         });
+        for (var a = 0; a < 24; ++a) {
+            this.period.push(a)
+        }
+        this.model._id = '1';
 		this.route.params.subscribe(params => {
             this.id = params['id'];
         });
@@ -78,7 +100,6 @@ export class BookingComponent implements OnInit {
     }
  
     deleteBooking(booking: Booking) {
-    	console.log(booking)
         this.bookingService.delete(booking._id)
         .then(
 			response => {
@@ -98,23 +119,96 @@ export class BookingComponent implements OnInit {
     private loadAllBookings() {
         this.day     = new Date(this.dt.getTime());
         this.day     = this.convertDate(this.day);
-        this.bookingService.getBookings()
-        .then(bookings => {
+
+        this.bookingService.getAll()
+        .subscribe(bookings => {
             this.bookings = bookings;
-            this.selectedDay = this.bookings.filter(data => data.booking_date == this.day); 
+            this.selectedDay = this.bookings.filter(data => data.booking_date.slice(0,10) == this.day); 
+            this.userService.getByToken()
+            .subscribe(name => {
+                this.name = name;
+                this.unitService.getAll(this.name.default_development.name)
+                .subscribe(units => {
+                    this.units = units.properties;
+                    for (var i = 0; i < this.selectedDay.length; ++i) {
+                        let a = this.units.find(data => data._id == this.selectedDay[i].property);
+                        this.selectedDay[i].unit = '#'+a.address.unit_no +'-'+ a.address.unit_no_2;
+                        console.log(this.selectedDay.unit)
+                    }
+                })
+            })
+            console.log(this.bookings)
         });
+        
+
     }
 
     add(){
-        this.router.navigate(['/booking/add']);
+        this.router.navigate([this.name.default_development.name + '/booking/add']);
+        
     }
 
     view(booking: Booking){
-        this.router.navigate(['/booking/edit', booking._id]);
+        this.router.navigate([this.name.default_development.name + '/booking/edit', booking._id]);
     }
 
-    onChange(id: string){
-        console.log(id)
+    filter(booking: any){
+        this.day  = new Date(this.dt.getTime());
+        this.day  = this.convertDate(this.day);
+        if(booking.start < 10) {
+            var start = "0" + booking.start.toString() + ":00"
+        }else{
+            var start = booking.start.toString() + ":00"
+        }
+        if(booking.end < 10) {
+            var end   = "0" + booking.end.toString() + ":00"
+        }else{
+            var end   = booking.end.toString() + ":00"
+        }
+        console.log(booking);
+        
+        this.bookingService.getAll()
+        .subscribe(bookings => {
+            this.bookings = bookings;
+            if(booking.status == "all" && booking.type != "all" ) {
+                this.filtered = this.bookings.filter(data => 
+                    data.booking_date.slice(0,10) == this.day &&
+                    data.start_time >= start && 
+                    data.end_time <= end &&
+                    data.facility.name == booking.name 
+                );
+                console.log("1")
+            };
+            if(booking.status == "all" && booking.type == "all") {
+                this.filtered = this.bookings.filter(data => 
+                    data.booking_date.slice(0,10) == this.day &&
+                    data.start_time >= start && 
+                    data.end_time <= end &&
+                    data.facility.name == booking.name 
+                );
+                console.log("2")
+            };
+            if(booking.status != "all" && booking.type == "all") {
+                this.filtered = this.bookings.filter(data => 
+                    data.booking_date.slice(0,10) == this.day &&
+                    data.start_time <= start && 
+                    data.end_time >= end &&
+                    data.facility.name == booking.name 
+                );
+                console.log("3")
+            }
+            if(booking.status != "all" && booking.type != "all") {
+                this.filtered = this.bookings.filter(data => 
+                    data.booking_date.slice(0,10) == this.day &&
+                    data.start_time >= start && 
+                    data.end_time <= end &&
+                    data.facility.name == booking.name 
+                    
+                );
+                console.log("4")
+            };
+            console.log(this.filtered,booking,start,end)
+        });
     }
 
     convertDate(date) {

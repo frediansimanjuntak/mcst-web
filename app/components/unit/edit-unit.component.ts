@@ -1,8 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewContainerRef, ViewEncapsulation, ViewChild } from '@angular/core';
 import { Router, Params, ActivatedRoute } from '@angular/router';
 import { Development, Developments } from '../../models/index';
-import { UnitService, AlertService } from '../../services/index';
+import { UnitService, AlertService, UserService } from '../../services/index';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { Location }               from '@angular/common';
+import { Observable} from 'rxjs/Observable';
 import '../../rxjs-operators';
 import 'rxjs/add/operator/switchMap';
 // import { User } from '../../models/index';
@@ -17,32 +19,38 @@ import 'rxjs/add/operator/switchMap';
 export class EditUnitComponent implements OnInit {
 	unit: any;
     units: any;
-
+    users: any;
+    selectedLanlord: any = {};
+    public items:Array<any> = [];
+    myOptions: Array<any>;
     model: any = {};
     id: string;
     public developmentId;
     myForm: FormGroup;
     public submitted: boolean; // keep track on whether form is submitted
     public events: any[] = []; // use later to display form changes
-
+     name: any;
     status = [
-        { value: 'inactive', name: 'Inactive' },
-        { value: 'active', name: 'Active' }
+        { value: 'tenanted', name: 'Tenanted' },
+        { value: 'own_stay', name: 'Own Stay' }
     ];
 
     constructor(
         private router: Router,
         private route: ActivatedRoute,
     	private unitservice: UnitService,
+        private userService: UserService,
     	private alertService: AlertService,
-        private formbuilder: FormBuilder ) {
+        private formbuilder: FormBuilder,
+        private location: Location ) {
 
         // this.user = JSON.parse(localStorage.getItem('user'));
     }
 
     ngOnInit() {
-        this.developmentId = '585b36585d3cc41224fe518a';
-
+        this.userService.getByToken().subscribe(name => {this.name = name;})
+        this.getUsers();
+        this.submitted = false;
         this.myForm = this.formbuilder.group({
                 address: this.formbuilder.group({
                     unit_no : ['',  <any>Validators.required],
@@ -54,7 +62,6 @@ export class EditUnitComponent implements OnInit {
                     full_address : ['', <any>Validators.required]
                 }),
                 status: ['', <any>Validators.required],
-                created_by: ['583e4e9dd97c97149884fef5']
         });
 
         this.route.params.subscribe(params => {
@@ -63,29 +70,41 @@ export class EditUnitComponent implements OnInit {
 
         if( this.id != null) {
             this.unitservice
-                .getDevelopments()
-                   .then(development => {
-                       this.units = development[0].properties
-                       this.unit = this.units.find(unit => unit._id === this.id);
+                .getById(this.id, this.name.default_development.name)
+                   .subscribe(unit => {
+                       this.unit = unit.propeties;
                     });
         }
     }
 
-    createUnit(model: Development, isValid: boolean) {
+    getUsers(): void {
+        this.userService.getUsers().then(users => {
+            this.users = users;
+            let numOptions =  this.users.length;
+            let opts = new Array(numOptions);
+
+            for (let i = 0; i < numOptions; i++) {
+                opts[i] = {
+                    id: this.users[i]._id,
+                    text: this.users[i].username
+                };
+            }
+
+            this.myOptions = opts.slice(0);
+            this.items = this.myOptions;
+        });
+    }
+
+    createUnit(model: any, isValid: boolean) {
         this.submitted = true;
-        console.log(Developments[0]);
-        Developments[0].properties.push(model);
-        console.log(Developments[0].properties);
-        this.router.navigate(['/unit']);
-        // model.properties.created_by = '583e4e9dd97c97149884fef5';
-        // this.model.pinned.rank = 0;
-        if(isValid == true){
+        
+        if(isValid){
             console.log(model);
-            this.unitservice.create(model)
-            .subscribe(
+            this.unitservice.create(model, this.name.default_development.name)
+            .then(
                 data => {
                     this.alertService.success('Create Unit successful', true);
-                    this.router.navigate(['/unit']);
+                    this.router.navigate([this.name.default_development.name + '/unit']);
                 },
                 error => {
                     console.log(error);
@@ -95,35 +114,33 @@ export class EditUnitComponent implements OnInit {
         }
     }
 
-     updateUnit(){
-         console.log(this.unit);
-        // this.unitservice.update(model)
-        // .then(
-        //     response => {
-        //         this.alertService.success('Update development successful', true);
-        //         this.router.navigate(['/development']);
-        //     },
-        //     error => {
-        //         this.alertService.error(error);
-        //     }
-        // );
+    public refreshValueLanlord(value:any):void {
+        this.selectedLanlord = value;
     }
 
- //    updateNewsletter(){
-	// 	this.unitservice.update(this.model)
-	// 	.subscribe(
-	// 		response => {
-	// 			if(response.error) {
-	//                 this.alertService.error(response.error);
-	//             } else {
-	//                 // EmitterService.get(this.userList).emit(response.users);
- //                     this.alertService.success('Update newsletter successful', true);
- //                     this.router.navigate(['/newsletter']);
-	//             }
- //            },
- //            error=> {
- //            	this.alertService.error(error);
- //            }
- //        );
-	// }
+    public selected(value:any):void {
+        // console.log('Selected value is: ', value);
+    }
+
+    updateUnit(){
+         console.log(this.unit);
+        this.unitservice.update(this.unit, this.name.default_development.name)
+        .then(
+            response => {
+                this.alertService.success('Update unit successful', true);
+                this.router.navigate([this.name.default_development.name + '/unit']);
+            },
+            error => {
+                this.alertService.error(error);
+            }
+        );
+    }
+
+    goBack(): void {
+        this.location.back();
+    }
+
+    goToUnit(){
+        this.router.navigate([this.name.default_development.name + '/unit']);  
+    }
 }

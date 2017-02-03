@@ -9,8 +9,10 @@ export class Facility {
   payment_type : string;
   booking_type : string;
   booking_fee : string;
-  maintenance_start : string;
-  maintenance_end : string;
+  maintenance:[{
+    start_date : string,
+    end_date :string
+  }];
   schedule : [{
     day : string[],
     start_time : string,
@@ -27,7 +29,7 @@ export var Facilities: any[] = [
     name : 'BBQ',
     development : '1',
     description : 'colorjdn nkdn ajknkj asnjkn ajsnksjk ankj kan kjan kjan kjan akj nkajnkj ankj an kjn',
-    facility_type : 'daily',
+    facility_type : 'a',
     payment_type : 'cash',
     booking_type : 'hourly',
     maintenance_start : '',
@@ -55,7 +57,7 @@ export var Facilities: any[] = [
     description : 'colorjdn nkdn ajknkj asnjkn ajsnksjk ankj kan kjan kjan kjan akj nkajnkj ankj an kjn',
     facility_type : 'a',
     payment_type : 'cash',
-    booking_type : 'daily',
+    booking_type : 'A',
     schedule : [{
       day: 'monday',
       start_time: '08:00',
@@ -73,7 +75,7 @@ export var Facilities: any[] = [
     description : 'colorjdn nkdn ajknkj asnjkn ajsnksjk ankj kan kjan kjan kjan akj nkajnkj ankj an kjn',
     facility_type : 'a',
     payment_type : 'cash',
-    booking_type : 'daily',
+    booking_type : 'A',
     schedule : [{
       day: 'thursday',
       start_time: '08:00',

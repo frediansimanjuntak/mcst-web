@@ -2,9 +2,9 @@
     <div class="main">
         <div *ngIf="booking">
             <div class="title">
-                {{incident.reference_no}} {{incident.title}}
+                
             </div>
-            <p>Home > Incident Reports > {{incident.reference_no}} {{incident.title}}</p>
+            <p>Home > booking > </p>
 	        <div class="row">
 	        	<div class="col-lg-6">
 	        		<p-galleria [images]="images" panelWidth="500" panelHeight="313"></p-galleria>
@@ -12,19 +12,19 @@
 	        	<div class="col-lg-6">
 	        		<div class="row">
 	        			<div class="col-md-4">Reported by </div>
-	        			<div class="col-md-8"> <p>: {{ incident.created_by }}</p></div>
+	        			<div class="col-md-8"> <p>: </p></div>
 	        		</div>
 	        		<div class="row">
 	        			<div class="col-md-4">Type of Report </div>
-	        			<div class="col-md-8"><p>: {{ incident.incident_type }}</p></div>
+	        			<div class="col-md-8"><p>: </p></div>
 	        		</div>
 	        		<div class="row">
 	        			<div class="col-md-4">Report time </div>
-	        			<div class="col-md-8"><p>: {{ incident.created_at }}</p></div>
+	        			<div class="col-md-8"><p>: </p></div>
 	        		</div>
 	        		<div class="row">
 	        			<div class="col-md-4">Status </div>
-	        			<div class="col-md-8"><p>: {{ incident.status }}</p></div>
+	        			<div class="col-md-8"><p>: </p></div>
 	        		</div>
 	        		<div class="row">
 	        			<div class="col-md-4">Order </div>
@@ -32,7 +32,7 @@
 	        		</div>
 	        		<div class="row">
 	        			<div class="col-md-4">Message </div>
-	        			<div class="col-md-8"><p>: {{ incident.remark }}</p></div>
+	        			<div class="col-md-8"><p>: </p></div>
 	        		</div>
 	        	</div>
 	        </div>
@@ -57,13 +57,13 @@
 						    	<datepicker (click)="test()" [style]="{'width':'300px'}" [(ngModel)]="dt" [minDate]="minDate" [showWeeks]="false" ></datepicker>
 						    </div>  
 						</div>
-		        		<form name="form" (ngSubmit)="f.form.valid" #f="ngForm" novalidate>
+						<form [formGroup]="myForm" name="form" (ngSubmit)="f.form.valid && filter(myForm.value)" #f="ngForm" novalidate>
 				        	<div class="row">
 				        		<div class="col-md-3">Facility :</div>
 				       			<div class="col-md-9">
 				       				<p>
-				       					<select name="name" [(ngModel)]="model._id" #model="ngModel" class="form-control" style="width: 237px">
-					                    	<option *ngFor="let facility of facilities" (change)="onChange(facility)" [ngValue]="facility._id">{{facility.name}}</option>
+				       					<select name="name" class="form-control" formControlName="id" style="width: 237px">
+					                    	<option [selected]="facility._id == '1'" *ngFor="let facility of facilities" (change)="onChange(facility)" [ngValue]="facility._id">{{facility.name}}</option>
 					                    </select>
 				        			</p>
 				        		</div>
@@ -72,9 +72,10 @@
 				        		<div class="col-md-3">Choice :</div>
 				        		<div class="col-md-9">
 				       				<p>
-				       					<select class="form-control" style="width: 237px">
-						                   	<option>All</option>
-						                   	<option *ngFor="let booking of bookings" [ngValue]="booking.status">{{booking.status}}</option>
+				       					<select name="choice" class="form-control" formControlName="choice" style="width: 237px">
+						                   	<option value="all">All</option>
+						                   	<option value="available">Available</option>
+						                   	<option value="unavailable">Not Available</option>
 					                    </select>	
 				       				</p>
 				       			</div>
@@ -83,11 +84,11 @@
 				       			<div class="col-md-3">Period :</div>
 				       			<div class="col-md-9">
 				       				<p>
-				       					<select class="form-control" style="width: 116.5px">
-					                    	<option *ngFor="let start of times_start" [ngValue]="start">{{start}}{{min}}</option>
+				       					<select name="start" class="form-control" formControlName="start" style="width: 116.5px">
+					                    	<option *ngFor="let start of period" [ngValue]="start"><span *ngIf="start < 10">0</span>{{start}}{{min}}</option>
 					                    </select>
-					                    <select class="form-control" style="width: 116.5px">
-					                    	<option *ngFor="let end of times_end" [ngValue]="end">{{end}}{{min}}</option>
+					                    <select name="end" class="form-control" formControlName="end" style="width: 116.5px">
+					                    	<option *ngFor="let end of period" [ngValue]="end"><span *ngIf="end < 10">0</span>{{end}}{{min}}</option>
 					                    </select>
 			        				</p>
 			        			</div>
@@ -95,29 +96,49 @@
 			                <div class="form-group">
 			                    <button style="width: 327px" class="btn btn-primary">Filter</button>
 			                </div>
-		        		</form>
+		        		</form>	
 		        	</div>
 		        	<div class="col-lg-8">
-		        		<div *ngIf="start">
+		        		<div *ngIf="start && !filtered">
 						<table class="tableSection table-striped">
 						    <tbody>
 						        <tr *ngFor="let tstart of times_start; let i=index ; let tend of times_end">
 									<td>{{times_start[i]}}{{min}} - {{times_end[i]}}{{min}}</td>
-									<td>BBQ Pit A</td>
-									<td>available</td>
-									<p-checkbox name="archive" (click)="archieveSelected(times_start[i],times_end[i],min,'BBQ pit','A')" value="{{tstart[i]}}{{min}} - {{tend[i]}}{{min}}" [(ngModel)]="selectedValues"></p-checkbox>
+									<td>BBQ A</td>
+									<td>
+										{{booking_status}}
+										<!-- <span *ngIf="bookings.start_time == timeStart[i]">available</span> -->
+										<!-- <span *ngIf="bookings.start_time != timeStart[i]">not available</span> -->
+									</td>
+									<p-checkbox name="archive" (click)="archieveSelected(times_start[i],times_end[i],min,'BBQ','A')" [(ngModel)]="selectedValues"></p-checkbox>
 								</tr>
 						    </tbody>
 						</table>
 						</div>
-						<div *ngIf="!start">
+						<div *ngIf="filtered">
+						<table class="tableSection table-striped">
+						    <tbody>
+						        <tr *ngFor="let a of timeStart; let i=index ; let b of timeEnd">
+									<td>{{timeStart[i]}}{{min}} - {{timeEnd[i]}}{{min}}</td>
+									<td>{{facility_name}} {{facility_type}}</td>
+									<td>
+										{{booking_status}}
+										<!-- <span *ngIf="bookings.start_time == timeStart[i]">available</span> -->
+										<!-- <span *ngIf="bookings.start_time != timeStart[i]">not available</span> -->
+									</td>
+									<p-checkbox name="archive" (click)="archieveSelected(timeStart[i],timeEnd[i],min,facility_name,facility_type)" [(ngModel)]="selectedValues"></p-checkbox>
+								</tr>
+						    </tbody>
+						</table>
+						</div>
+						<div *ngIf="!start && !filtered">
 						Data not found
 						</div>
 						<div class="row">
 							<div class="col-md-4 pull-right">
 								<a class="btn btn-default pull-right" (click)="next()">
 								Next</a>
-								<a [routerLink]="['/booking']" class="btn btn-info">Cancel</a>
+								<a (click)="cancel()" class="btn btn-info">Cancel</a>
 							</div>
 						</div>
 		        	</div>
@@ -134,7 +155,7 @@
 		        <div class="row">
 		        	<div class="col-lg-6">
 			        	<div class="bookinginformation">
-			        		<div class="row" style="margin-left: 5px; margin-top: 10px">
+			        		<div class="row" style="margin-left: 5px; margin-top: 10px">`
 	        					<div class="col-md-6"><label>Date :</label></div>
 	        					<div class="col-md-5" style="text-align: right;border-right: 5px">{{model.date}}</div>
 	        				</div>
@@ -152,7 +173,7 @@
 	        				</div>
 	        				<div class="form-group">
 	        					<br/>
-		                    	<button style="width: 320px; margin-left: 20px" class="btn btn-primary">Change Booking</button>
+		                    	<button style="width: 320px; margin-left: 20px" (click)="change()" class="btn btn-primary">Change Booking</button>
 		                    	<br/>
 		                    	<hr style="width: 320px; margin-left: 20px; border-color: black;">
 		                	</div>
@@ -186,11 +207,16 @@
 						            <input disabled type="text" class="form-control" name="serial_no" [(ngModel)]="model.serial_no" #serial_no="ngModel" />
 						        </div>
 						    </div>
-						    <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !property.valid }">
+						    <div class="form-group">
 						        <label class="control-label col-sm-4" for="property">Unit no :</label>
-						        <div class="col-sm-8">
-						            <input type="text" class="form-control" name="property" [(ngModel)]="model.property" #property="ngModel" required placeholder="Input property here"/>
-						            <span *ngIf="f.submitted && !property.valid" class="help-block">Property is required</span>
+						        <div class="col-sm-8">	
+						        	<div *ngIf="units">
+						        		<select class="form-control" [(ngModel)]="model.property" #property="ngModel" name="property" id="property" placeholder="Choose property" required >	
+	                                        <option *ngFor="let unit of units" [ngValue]="unit._id">
+	                                            #{{unit.address.unit_no}}-{{unit.address.unit_no_2}}
+	                                        </option>
+	                                	</select>
+	                                </div>
 						        </div>
 						    </div>
 						    <div class="form-group">
@@ -222,7 +248,7 @@
 						    <div class="form-group pull-right">
 				                <button [disabled]="loading" class="btn btn-primary">Confirm</button>
 				                <img *ngIf="loading" src="data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA==" />
-				                <a [routerLink]="['/booking']" class="btn btn-info">Cancel</a>
+				                <a (click)="cancel()" class="btn btn-info">Cancel</a>
 				            </div>
 						</form>		
 		        	</div>

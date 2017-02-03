@@ -25,28 +25,28 @@ export const MENUS: any[] = [
   	link: '/booking',
     description: 'Manage booking of facilities', 
   },
-  {
-  	name: 'Payment System',
-  	link: '#',
-    description: 'Manage monthly MCST, deposits and other payments',
+  { 
+  	name: 'Payment System', 
+  	link: '/payment_system',
+    description: 'Manage monthly MCST, deposits and other payments', 
   },
   {
   	name: 'Resident Database',
     description: 'Track issuance of access cards, car decal, transponder',
   	sub : [
-  		{ name : 'Browse Database', link: '' },
-  		{ name : 'Add Resident', link: '' },
+  		{ name : 'Browse Database', link :'/unit' },
+  		{ name : 'Add Resident', link: '/unit/add' },
   		{ name : 'Manage Access control', link: '/access_control' }
   	]
   },
   {
   	name: 'Manage Community',
-    description: 'Manage event and announcement, E-voting and feedbacks',
+    description: 'Manage event and announcement, E-voting and feedback',
   	sub : [
   		{ name : 'Manage Announcement', link: '/announcement' },
-  		{ name : 'E-voting', link: '' },
-  		{ name : 'Manage Feedbacks', link: '' },
-  		{ name : 'Lost & Found', link: '' },
+  		{ name : 'E-voting', link: '/poll' },
+  		{ name : 'Manage Feedbacks', link: '/feedback' },
+  		{ name : 'Lost & Found', link: '/lost_found' },
   	]
   },
   {
@@ -55,12 +55,13 @@ export const MENUS: any[] = [
   		{ name : 'AGM & Circular', link: '/newsletter' },
   		{ name : 'Contact Directory', link: '' },
       { name : 'User', link: '/user' },
-      { name : 'Unit', link: '/unit' },
       { name : 'User Group', link: '/user_group' },
       { name : 'Development', link: '/development' },
       { name : 'Facility', link: '/facility' },
       { name : 'Company', link: '/company' },
       { name : 'Contractor', link: '/contractor' },
+      { name : 'Payment', link: '/payment' },
+      { name : 'Test', link: '/test' },
     ]
   },
 ];

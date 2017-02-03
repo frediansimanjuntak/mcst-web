@@ -7,6 +7,33 @@
     			</ul>
     		</div>
     	</div>
+    	<simple-notifications [options]="options" (onCreate)="created($event)" ></simple-notifications>
+    	<button class="btn btn-primary" (click)="clicknotiv()">Notif bro</button>
+
+    	<!-- <div popover="content to be shown in the popover"
+		     popoverTitle="Popover header"
+		     popoverPlacement="top"
+		     [popoverOnHover]="false"
+		     [popoverCloseOnClickOutside]="true"
+		     [popoverCloseOnMouseOutside]="false"
+		     [popoverDisabled]="false"
+		     [popoverAnimation]="true"
+		     [popoverDismissTimeout]="1000">
+		    element on which this popover is applied.
+		</div> -->
+
+		<!-- <popover-content #myPopover 
+                title="Popover title" 
+                [animation]="true" 
+                [closeOnClickOutside]="true" >
+		    <b>Very</b> <span style="color: #C21F39">Dynamic</span> <span style="color: #00b3ee">Reusable</span>
+		    <b><i><span style="color: #ffc520">Popover With</span></i></b> <small>Html support</small>.
+		</popover-content>
+
+		<button [popover]="myPopover">element on which this popover is applied.</button> -->
+
+
+
 		<p-schedule [events]="events" [editable]="true" (onDayClick)="handleDayClick($event)" (onEventClick)="handleEventClick($event)"></p-schedule>
 		<p-dialog header="Event Details" [(visible)]="dialogVisible" [responsive]="true" showEffect="fade" [modal]="false">
 		    <div class="ui-grid ui-grid-responsive ui-fluid" *ngIf="event">
@@ -35,7 +62,9 @@
 		    </footer>
 		</p-dialog>
 
-		<!-- <form class="form-horizontal col-md-6" name="form" (ngSubmit)="f.form.valid && uploader.uploadAll() || upload()" #f="ngForm" novalidate enctype="multipart/form-data">
+		<input type="file" (change)="fileChange($event)" placeholder="Upload files" multiple>
+		
+		<form class="form-horizontal col-md-6" name="form" (ngSubmit)="f.form.valid && uploader.uploadAll() || upload()" #f="ngForm" novalidate enctype="multipart/form-data">
 			<div class="form-group" >
 			    <label class="control-label col-sm-4" for="attachment">Attachment :</label>
 			    <div class="col-sm-8">
@@ -83,7 +112,7 @@
 		<img [src]="src" [hidden]="!src"><br>
       	<input multiple type="file" (change)="onChange($event)" image-upload
         (imageSelected)="selected($event)"
-        [resizeOptions]="resizeOptions"> -->
+        [resizeOptions]="resizeOptions">
 
 
 		<!-- Gunama -->
@@ -174,5 +203,6 @@
         </modal-footer>
     </modal>
 		</div> -->
+		<!-- <signaturepad></signaturepad> -->
 	</div>
 </div>

@@ -1,9 +1,8 @@
 import { Component, OnInit, ViewContainerRef, ViewEncapsulation } from '@angular/core';
 import { Router, Params, ActivatedRoute } from '@angular/router';
 import { Petition } from '../../models/index';
-import { PetitionService, AlertService} from '../../services/index';
+import { PetitionService, AlertService, UserService} from '../../services/index';
 import '../../rxjs-operators';
-import { NG_TABLE_DIRECTIVES }    from 'ng2-table/ng2-table'
 import { Observable} from 'rxjs/Observable';
 import { Location }               from '@angular/common';
 import * as $ from "jquery";
@@ -37,41 +36,35 @@ export class PetitionComponent implements OnInit {
     public rowsOnPage = 10;
     public sortBy = "email";
     public sortOrder = "asc";
-    public tomorrow: Date;
-    public afterTomorrow: Date;
+    name: any;
+
     constructor(
                 private router: Router,
                 private petitionService: PetitionService,
                 private alertService: AlertService,
                 private route: ActivatedRoute,
-                private location: Location
-                ) {
-    (this.tomorrow = new Date()).setDate(this.tomorrow.getDate() - 7);
-    (this.afterTomorrow = new Date()).setDate(this.tomorrow.getDate() + 2);
-
-    }
+                private location: Location,
+                private userService: UserService
+                ) {}
 
     ngOnInit(): void {
-		this.developmentId = '585b36585d3cc41224fe518a';
         this.route.params.subscribe(params => {
             this.id = params['id'];
         });
-        if( this.id == null) {
-            this.loadAllPetitions();
-        }else{
-        	this.petitionService.getPetition(this.id).then(petition => {this.petition = petition;});
-        }
+
+        this.userService.getByToken()
+                            .subscribe(name => {
+                                this.name = name;
+                                if( this.id == null) {
+                                    this.loadAllPetitions();
+                                }else{
+                                    this.petitionService.getById(this.id)
+                                        .subscribe(petition => {
+                                            this.petition = petition;
+                                        });
+                                }
+                            })
     }
-
-    public toInt(num: string) {
-        return +num;
-    }
-
-    public sortByWordLength = (a: any) => {
-        return a.city.length;
-    }
-
-
 
     private logCheckbox(element: HTMLInputElement): void {
         console.log( `Checkbox ${element.value} was ${element.checked ? '' : 'un'}checked\n`);
@@ -79,69 +72,49 @@ export class PetitionComponent implements OnInit {
 
     deletePetition(petition) {
       console.log(petition);
-        // this.announcementService.delete(announcement._id)
-        //   .then(
-        //     response => {
-        //       if(response) {
-        //         console.log(response);
-        //         // console.log(response.error());
-        //         alert(`The Newsletter could not be deleted, server Error.`);
-        //       } else {
-        //         this.alertService.success('Create user successful', true);
-        //         alert(`Delete Newsletter successful`);
-        //         this.ngOnInit()
-        //       }
-        //     },
-        //     error=> {
-        //       console.log(error);
-        //         alert(`The Newsletter could not be deleted, server Error.`);
-        //     }
-        // );
+        this.petitionService.delete(petition._id)
+          .then(
+            response => {
+              if(response) {
+                console.log(response);
+                // console.log(response.error());
+                alert(`The Petition could not be deleted, server Error.`);
+              } else {
+                this.alertService.success('Delete Petition successful', true);
+                alert(`Delete Petition successful`);
+                this.ngOnInit()
+              }
+            },
+            error=> {
+              console.log(error);
+                alert(`The Petition could not be deleted, server Error.`);
+            }
+        );
     }
 
-
-
-    openModal(announcement){
+    openModal(petition){
 
     }
 
 	private loadAllPetitions() {
-        //---------------------------Call To Api-------------- //
-        // this.announcementService.getAll()
-        //     .subscribe((data)=> {
-        //         setTimeout(()=> {
-        //             this.data          = data.find(data => data._id === this.developmentId );
-        //             this.dataAgm       = this.data.newsletter.filter(data => data.type === 'agm' );
-        //             this.dataCircular  = this.data.newsletter.filter(data => data.type === 'circular' );
-        //             console.log(this.dataAgm);
-        //         }, 1000);
-        //     });
+        this.petitionService.getAll()
+            .subscribe((data)=> {
+                setTimeout(()=> {
+                    this.petitions = data.filter(data => data.archived === false && data.development._id == this.name.default_development._id );
+                }, 1000);
+        });
 
-        this.petitionService.getPetitions().then(data => {
-            this.petitions         = data;
-            this.petitionPending   = this.petitions.filter(data => data.status === 'pending' );
-            this.petitionProgress  = this.petitions.filter(data => data.status === 'progress' );
-            this.petitionApproved  = this.petitions.filter(data => data.status === 'approved' );
-		});
+  //       this.petitionService.getPetitions().then(data => {
+  //           this.petitions         = data.filter(data => data.archived === false && data.development === this.name.default_development.name );
+		// });
     }
 
-    public tabs:Array<any> = [
-        {title: 'Dynamic Title 1', content: ''},
-        {title: 'Dynamic Title 2', content: 'Dynamic content 2', disabled: true},
-        {title: 'Dynamic Title 3', content: 'Dynamic content 3', removable: true},
-        {title: 'Dynamic Title 4', content: 'Dynamic content 4', customClass: 'customClass'}
-    ];
-
-    public setActiveTab(index:number):void {
-        this.tabs[index].active = true;
-    };
-
     viewPetition(petition: Petition){
-        this.router.navigate(['/petition/view', petition._id]);
+        this.router.navigate([this.name.default_development.name + '/petition/view', petition._id]);
     }
 
     editPetition(petition: Petition){
-        this.router.navigate(['/petition/edit', petition._id]);
+        this.router.navigate([this.name.default_development.name + '/petition/edit', petition._id]);
     }
 
     checkSelected(){
@@ -154,6 +127,12 @@ export class PetitionComponent implements OnInit {
 
     archieveSelected(){
         console.log(this.selectedValues);
+        this.petitionService.archive(this.selectedValues)
+        this.ngOnInit();
+    }
+
+    add(){
+      this.router.navigate([this.name.default_development.name + '/petition/add']);  
     }
 
     clearSelected(){

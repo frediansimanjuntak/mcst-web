@@ -82,6 +82,18 @@ export class EditContractorComponent implements OnInit {
                         this.model.profile_picture = this.contractor.profile_picture;
 
                     });
+
+            // this.contractorService.getById(this.id)
+            //     .subscribe((data)=> {
+            //         setTimeout(()=> {
+            //             this.contractor = data;
+                        
+            //             this.company.text = this.companyList.find(myObj => myObj._id ===  this.contractor.company ).name;
+            //             this.company.id = this.contractor.company;
+            //             this.companyField = true;
+            //             this.model.profile_picture = this.contractor.profile_picture;
+            //         }, 1000);
+            //     });
         };
 
     }
@@ -141,6 +153,25 @@ export class EditContractorComponent implements OnInit {
             this.myOptions = opts.slice(0);
             this.items = this.myOptions;
         });
+
+        // this.companyService.getAll()
+        //     .subscribe((data)=> {
+        //         setTimeout(()=> {
+        //             this.companyList          = data;
+        //             let numOptions =  this.companyList.length;
+        //             let opts = new Array(numOptions);
+
+        //             for (let i = 0; i < numOptions; i++) {
+        //                 opts[i] = {
+        //                     id: this.companyList[i]._id,
+        //                     text: this.companyList[i].name
+        //                 };
+        //             }
+
+        //             this.myOptions = opts.slice(0);
+        //             this.items = this.myOptions;
+        //         }, 1000);
+        //     });
     }
 
 
@@ -178,17 +209,20 @@ export class EditContractorComponent implements OnInit {
 			Contractors.push(model);
     		console.log(model);
 
+            // this.contractorService.create(model)
+            // .subscribe(
+            //     data => {
+            //         this.alertService.success('Create contractor successful', true);
+            //         this.router.navigate(['/contractor']);
+            //     },
+            //     error => {
+            //         console.log(error);
+            //         alert(`The contractor could not be save, server Error.`);
+            //     }
+            // );
+
 	        this.router.navigate(['/contractor']);
-	        //   this.userGroupService.create(model)
-	        // .then(
-	        //     data => {
-	        //         this.alertService.success('Create usergroup successful', true);
-	        //         this.router.navigate(['/user']);
-	        //     },
-	        //     error => {
-	        //         this.alertService.error(error);
-	        //     }
-	        // );
+	        
     	}
 	}
 
@@ -196,18 +230,20 @@ export class EditContractorComponent implements OnInit {
         if(this.companyField){
             this.contractor.profile_picture = this.model.profile_picture;
             this.contractor.company = this.company.id;
-            console.log(this.company);
+            
+            // this.contractorService.update(this.contractor)
+            // .subscribe(
+            //     data => {
+            //         this.alertService.success('Update contractor successful', true);
+            //         this.router.navigate(['/contractor']);
+            //     },
+            //     error => {
+            //         console.log(error);
+            //         alert(`The contractor could not be Update, server Error.`);
+            //     }
+            // );
+
             this.router.navigate(['/contractor']);
         }
-    //     this.companyService.update(this.usergroup)
-    //     .then(
-    //         response => {
-    //             this.alertService.success('Update Usergroup successful', true);
-    //             this.router.navigate(['/user']);
-    //         },
-    //         error=> {
-    //             this.alertService.error(error);
-    //         }
-    //     );
     }
 }

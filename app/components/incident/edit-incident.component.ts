@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, Params, ActivatedRoute } from '@angular/router';
 import { Incident, Incidents } from '../../models/index';
-import { IncidentService, AlertService } from '../../services/index';
+import { IncidentService, AlertService, UserService } from '../../services/index';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { FileUploader } from 'ng2-file-upload';
 import '../../rxjs-operators';
@@ -18,12 +18,14 @@ export class EditIncidentComponent implements OnInit {
     incidents: Incident[] = [];
     model: any = {};
     id: string;
+    name: any;
+    filesToUpload: Array<File>;
     myForm: FormGroup;
     public uploader:FileUploader = new FileUploader({url:'http://localhost:3001/upload'});
     types = [
-        { value: 'general', name: 'General' },
-        { value: 'hygiene', name: 'Hygiene' },
-        { value: 'damage', name: 'Damage' },
+        { value: 'General', name: 'General' },
+        { value: 'Hygiene', name: 'Hygiene' },
+        { value: 'Damage', name: 'Damage' },
 
     ];
     selectedType = '';
@@ -31,36 +33,44 @@ export class EditIncidentComponent implements OnInit {
     constructor(private router: Router,
     	private incidentService: IncidentService,
     	private alertService: AlertService,
-        private route: ActivatedRoute) {
+        private route: ActivatedRoute,
+        private userService: UserService) {
         // this.user = JSON.parse(localStorage.getItem('user'));
     }
 
     ngOnInit(): void {
+        this.userService.getByToken().subscribe(name => {this.name = name;})
     	this.selectedType = 'general';
         this.route.params.subscribe(params => {
             this.id = params['id'];
         });
         if( this.id != null) {
-            this.incidentService.getIncident(this.id).then(incident => {this.incident = incident;});
+            this.incidentService.getById(this.id).subscribe(incident => {this.incident = incident;});
         }
     }
 
-    createIncident() {
-        console.log('model=',this.model)
-        Incidents.push(this.model);
-        console.log('incidents=',Incidents);
-        this.router.navigate(['/incident']);
-        // this.incidentService.create(this.model)
-        // .then(
-        //     data => {
-        //         this.alertService.success('Create incident successful', true);
-        //         this.router.navigate(['/incident']);
-        //     },
-        //     error => {
-        //         console.log(error);
-        //         alert(`The incident could not be save, server Error.`);
-        //     }
-        // );
+    createIncident(event: any) {
+        let formData:FormData = new FormData();
+        
+        for (var i = 0; i < this.model.photo.length; i++) {
+            formData.append("attachment[]", this.model.attachment[i]);
+        }
+
+        formData.append("incident_type", this.model.incident_type);
+        formData.append("title", this.model.title);
+        formData.append("remark", this.model.remark);
+        
+        this.incidentService.create(formData)
+        .then(
+            data => {
+                this.alertService.success('Create incident report successful', true);
+                this.router.navigate([this.name.default_development.name + '/incident']);
+            },
+            error => {
+                console.log(error);
+                alert(`The incident report could not be save, server Error.`);
+            }
+        );
     }
 
     updateIncident(){
@@ -69,7 +79,7 @@ export class EditIncidentComponent implements OnInit {
 		.then(
 			response => {
                 this.alertService.success('Update incident successful', true);
-                this.router.navigate(['/incident']);
+                this.router.navigate([this.name.default_development.name + '/incident']);
             },
             error => {
             	this.alertService.error(error);
@@ -77,12 +87,27 @@ export class EditIncidentComponent implements OnInit {
         );
 	}
 
-    onChange(event: any) {
-       let files = [].slice.call(event.target.files);
-       this.model.attachment = files;
+    // fileChangeEvent(fileInput: any){
+    //     this.filesToUpload = <Array<File>> fileInput.target.files;
+    //     this.model.attachment = this.filesToUpload;
+    //     console.log(this.model.attachment)
+    // }
+
+    onChange(fileInput: any){
+        this.filesToUpload = <Array<File>> fileInput.target.files;
+        this.model.photo = this.filesToUpload;
     }
+
+    // onChange(event: any) {
+    //    let files = [].slice.call(event.target.files);
+    //    this.model.attachment = files;
+    // }
 
     remove(i: any){
         this.model.attachment.splice(i, 1)
+    }
+
+    cancel(){
+        this.router.navigate([this.name.default_development.name + '/incident' ]);
     }
 }

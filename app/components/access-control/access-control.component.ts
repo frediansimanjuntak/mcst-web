@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { AccessControl } from '../../models/index';
-import { AccessControlService, AlertService } from '../../services/index';
+import { AccessControlService, AlertService, UserService } from '../../services/index';
 import '../../rxjs-operators';
 import { Observable} from 'rxjs/Observable';
 
@@ -16,12 +16,17 @@ export class AccessControlComponent implements OnInit {
 	accesscontrol: AccessControl;
     accesscontrols: AccessControl[] = [];
     model: any = {};
+    name : any;
     public card;
     public transponder;
 
-    constructor(private router: Router,private accesscontrolService: AccessControlService,private alertService: AlertService) {}
+    constructor(private router: Router,
+        private accesscontrolService: AccessControlService,
+        private alertService: AlertService,
+        private userService: UserService) {}
 
     ngOnInit() {
+        this.userService.getByToken().subscribe(name => {this.name = name;})
         this.loadAllAccessControls();
         // this.onChangeTable(this.config);
 
@@ -56,10 +61,10 @@ export class AccessControlComponent implements OnInit {
     }
 
     add(){
-        this.router.navigate(['/access_control/add']);
+        this.router.navigate([this.name.development.name + '/access_control/add']);  
     }
 
     edit(accesscontrol: AccessControl){
-        this.router.navigate(['/access_control/edit', accesscontrol._id]);
+        this.router.navigate([this.name.development.name + '/access_control/edit', accesscontrol._id]);
     }
 }

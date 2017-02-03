@@ -29,6 +29,7 @@
       'moment': 'npm:moment/',
       'ng2-table': 'npm:ng2-table',
       'angular2-datatable': 'npm:angular2-datatable',
+      'angular2-moment': 'npm:angular2-moment',
       'ng2-bootstrap': 'npm:ng2-bootstrap',
       'ng2-file-upload' : 'npm:ng2-file-upload',
       'ng2-select' : 'npm:ng2-select',
@@ -37,21 +38,25 @@
       'primeng': 'npm:primeng',
       'fullcalendar' : 'npm:fullcalendar/dist/', 
       'angular2-select': 'npm:angular2-select',
+      'angular2-signaturepad': 'npm:angular2-signaturepad',
+      'signature_pad' : 'npm:signature_pad',
       'angular2-modal': 'npm:angular2-modal',
-      'mydatepicker': 'npm:mydatepicker',
-      "ng2-modal": "node_modules/ng2-modal",
+      'mydatepicker': 'npm:mydatepicker/bundles/mydatepicker.umd.js',
+      "ngx-modal": "node_modules/ngx-modal",
       'angular2-modal/plugins/bootstrap': 'npm:angular2-modal/bundles/angular2-modal.bootstrap.umd.js',
       'ng2-imageupload': 'node_modules/ng2-imageupload',
-      'ng2-slim-loading-bar': 'node_modules/ng2-slim-loading-bar/bundles/index.umd.js'
+      'ng2-slim-loading-bar': 'node_modules/ng2-slim-loading-bar/bundles/index.umd.js',
+      'angular2-notifications': 'node_modules/angular2-notifications',
     },
     // packages tells the System loader how to load when no filename and/or no extension
     packages: {
       app: { main: './main.js', defaultExtension: 'js' },
       rxjs: { defaultExtension: 'js' },
       'moment': { main: 'moment.js', defaultExtension: 'js' },
+      'angular2-moment': { main: './index.js', defaultExtension: 'js' },
       'ng2-table': { main: 'ng2-table.js', defaultExtension: 'js' },
       mydatepicker: { defaultExtension: 'js' },
-      'ng2-bootstrap': { main: 'ng2-bootstrap.js', defaultExtension: 'js' },
+      'ng2-bootstrap': { main: '/bundles/ng2-bootstrap.umd.js', defaultExtension: 'js' },
       'ng2-file-upload' : { main: './ng2-file-upload.js', defaultExtension: 'js' },
       'ng2-select' : { main: './ng2-select.js', defaultExtension: 'js' },
       'jquery': { main: 'jquery.js', defaultExtension: 'js' },
@@ -60,9 +65,12 @@
       'lodash': { main: 'lodash.js', defaultExtension: 'js' },
       primeng: { defaultExtension: 'js' },
       'fullcalendar': { main: 'fullcalendar.js', defaultExtension: 'js' },
-      "ng2-modal": { "main": "index.js", "defaultExtension": "js" },
+      "ngx-modal": { "main": "index.js", "defaultExtension": "js" },
       'ng2-imageupload': { main: 'index.js', defaultExtension: 'js'},
-      'angular2-modal': { defaultExtension: 'js', main: '/bundles/angular2-modal.umd.js' }
+      'angular2-modal': { defaultExtension: 'js', main: '/bundles/angular2-modal.umd.js' },
+      'angular2-notifications': { main: 'components.js', defaultExtension: 'js' },
+      'angular2-signaturepad': { main: 'index.js', defaultExtension: 'js' },
+      'signature_pad': { main: 'signature_pad.js', defaultExtension: 'js' },
     }
   });
 })(this);

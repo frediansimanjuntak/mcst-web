@@ -1,9 +1,9 @@
 import { Component, OnInit, EventEmitter } from '@angular/core';
 import { Router, Params, ActivatedRoute } from '@angular/router';
 import { Incident } from '../../models/index';
-import { IncidentService, AlertService } from '../../services/index';
+import { IncidentService, AlertService, UserService, UnitService } from '../../services/index';
 import '../../rxjs-operators';
-import { Observable} from 'rxjs/Observable';
+import { Observable } from 'rxjs/Observable';
 import { FileUploader } from 'ng2-file-upload';
 
 @Component({
@@ -20,31 +20,42 @@ export class IncidentComponent implements OnInit {
     model: any = {};
     images: any[];
     id: string;
+    name: any;
+    units: any;
     isFavorite = false;
+    isArchieved = false;
     change = new EventEmitter();
     public data;
     public dataNew;
-    public dataReviewing;
     public dataInProgress;
     public dataResolved;
-    public dataUrgent;
 
-    constructor(private router: Router, private incidentService: IncidentService, private alertService: AlertService,private route: ActivatedRoute) {}
+    constructor(private router: Router, 
+        private incidentService: IncidentService, 
+        private alertService: AlertService,
+        private route: ActivatedRoute,
+        private userService: UserService,
+        private unitService: UnitService) {}
 
     ngOnInit(): void {
-        this.images = [];
-        this.images.push({source:'/assets/image/1.png'});
-        this.images.push({source:'/assets/image/2.png'});
-        this.images.push({source:'/assets/image/3.png'});
-        this.images.push({source:'/assets/image/4.png'});
-        this.images.push({source:'/assets/image/5.png'});
+        this.userService.getByToken().subscribe(name => {this.name = name;})
         this.route.params.subscribe(params => {
             this.id = params['id'];
         });
         if( this.id == null) {
             this.loadAllIncident();
         }else{
-        	this.incidentService.getIncident(this.id).then(incident => {this.incident = incident;});
+        	this.incidentService.getById(this.id)
+            .subscribe(incident => {
+                this.incident = incident;
+                this.images = [];
+                this.images.push({source:incident.attachment.url}); 
+                this.incident.created_at = this.incident.created_at.slice(0,10);
+                // for (var i = 0; i < this.incident.attachment.length; ++i) {
+                //     this.images.push({source:this.incident.attachment[i].url});
+                // };
+
+            });
         }
     }
 
@@ -71,13 +82,36 @@ export class IncidentComponent implements OnInit {
     }
 
 	private loadAllIncident() {
-		this.incidentService.getIncidents().then(incidents => {
+		this.incidentService.getAll().subscribe(incidents => {
 					this.incidents = incidents ;
-                    this.dataNew        = this.incidents.filter(incidents => incidents.status === 'new' );
-                    this.dataReviewing  = this.incidents.filter(incidents => incidents.status === 'reviewing' );
+                    console.log(this.incidents)
                     this.dataInProgress = this.incidents.filter(incidents => incidents.status === 'inprogress' );
                     this.dataResolved   = this.incidents.filter(incidents => incidents.status === 'resolved' );
-                    this.dataUrgent     = this.incidents.filter(incidents => incidents.status === 'urgent' );
+                    for (var i = 0; i < this.incidents.length; ++i) {
+                        this.incidents[i].created_at = this.incidents[i].created_at.slice(0,10);
+                    }
+                    for (var i = 0; i < this.dataInProgress.length; ++i) {
+                        this.dataInProgress[i].created_at = this.dataInProgress[i].created_at.slice(0,10);
+                    }
+                    for (var i = 0; i < this.dataResolved.length; ++i) {
+                        this.dataResolved[i].created_at = this.dataResolved[i].created_at.slice(0,10);
+                    }
+                    this.unitService.getAll(this.name.default_development.name)
+                    .subscribe(units => {
+                        this.units = units.properties;
+                        for (var i = 0; i < this.incidents.length; ++i) {
+                            let a = this.units.find(data => data._id == this.incidents[i].property);
+                            this.incidents[i].property = '#'+a.address.unit_no +'-'+ a.address.unit_no_2;
+                        }
+                        for (var i = 0; i < this.dataInProgress.length; ++i) {
+                            let a = this.units.find(data => data._id == this.dataInProgress[i].property);
+                            this.dataInProgress[i].property = '#'+a.address.unit_no +'-'+ a.address.unit_no_2;
+                        }
+                        for (var i = 0; i < this.dataResolved.length; ++i) {
+                            let a = this.units.find(data => data._id == this.dataResolved[i].property);
+                            this.dataResolved[i].property = '#'+a.address.unit_no +'-'+ a.address.unit_no_2;
+                        }
+                    })
 		});
     }
 
@@ -86,17 +120,34 @@ export class IncidentComponent implements OnInit {
     // }
 
     view(incident: Incident){
-        this.router.navigate(['/incident/view', incident._id]);
+        this.router.navigate([this.name.default_development.name + '/incident/view', incident._id]);
     }
 
     add(){
-        this.router.navigate(['/incident/add']);
+        this.router.navigate([this.name.default_development.name + '/incident/add']);
     }
 
-    onClick(incident:Incident) {
-        this.isFavorite = !this.isFavorite;
-        this.change.emit({
-            newValue: this.isFavorite
-        });
+    add_project(reference_no:any){
+        this.router.navigate([this.name.default_development.name + '/contract/add',reference_no]);    
+    }
+
+    archive(incident:Incident){
+        this.incidentService.archieve(incident._id);
+        this.ngOnInit()
+    }
+
+    unarchive(incident:Incident){
+        this.incidentService.unarchieve(incident._id);
+        this.ngOnInit()
+    }
+
+    starred(incident:Incident) {
+        this.incidentService.starred(incident._id)
+        this.ngOnInit()
+    }
+
+    unstarred(incident:Incident) {
+        this.incidentService.unstarred(incident._id)
+        this.ngOnInit()
     }
 }

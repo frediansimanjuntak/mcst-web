@@ -1,0 +1,141 @@
+<div class="container">
+    <div class="main">
+    	<div *ngIf="!archived">
+    		<div class="title">
+				MANAGE FEEDBACK
+			</div>
+			Home > Manage Feedback
+			<div class="row">
+				<div class="col-md-4 pull-right">
+					<a class="btn btn-default pull-right" (click)="viewArchived()">View Archived</a>	  		
+				</div>
+			</div>
+			<div (click)="$event.preventDefault()">
+			  	<tabset>
+			  <!-- ALL -->
+				    <tab heading="All Feedback">
+				    	<p-dataTable [value]="feedbacks" [rows]="10" [paginator]="true">
+						    <p-column field="created_by.username" header="Made by" sortable="true" [filter]="true" filterPlaceholder="Search Made by"></p-column>
+						    <p-column field="" header="Unit.no" sortable="true" [filter]="true" filterPlaceholder="Search Unit.no">
+						    	<template let-feedback="rowData" pTemplate="body">
+						    		{{feedback.property.address.unit_no}}-{{feedback.property.address.unit_no_2}}
+						    	</template>
+						    </p-column>
+						    <p-column field="title" header="Topic / Title" sortable="true" [filter]="true" filterPlaceholder="Search Topic / Title"></p-column>
+						    <p-column field="feedback_type" header="Type" sortable="true" [filter]="true" filterPlaceholder="Search Type"></p-column>>
+						    <p-column field="feedback_privacy" header="Privacy" sortable="true" [filter]="true" filterPlaceholder="Search Privacy"></p-column>
+						    <p-column field="remark" header="Feedback" sortable="true" [filter]="true" filterPlaceholder="Search Feedback"></p-column>
+						    <p-column field="feedback_reply" header="Reply" sortable="true" [filter]="true" filterPlaceholder="Search Reply"></p-column>
+						    <p-column field="" header="Commented on" sortable="true" [filter]="true" filterPlaceholder="Search Commented on">
+						        <template let-feedback="rowData" pTemplate="body">
+						            <p>{{feedback.created_at}}</p>
+						            <span *ngIf="feedback.reply_at != null">replied at {{feedback.reply_at}}</span>
+						        </template>
+						    </p-column>
+						    <p-column [style]="{'width':'180px'}" styleClass="col-button" header="action">
+						    	<template let-feedback="rowData" pTemplate="body">
+						    		<a type="button" style="cursor:pointer" (click)="openModal(feedback) || firstModal.open()"><img src="../../assets/image/icon_reply.png" width="10px" height="10x">&nbsp;Reply</a>
+						    		<button disabled="feedback.status == unpublished" style="text-decoration: underline;cursor:pointer" (click)="publish(feedback)">Publish</button>
+									<img *ngIf="feedback.archive == false" title="archived" src="../../assets/image/icon_archived.png" (click)="archived(feedback)" />
+									<img *ngIf="feedback.archive == true" title="unarchived" src="../../assets/image/icon_archived.png" (click)="unarchived(feedback)" />
+						    	</template>
+						    </p-column>
+						</p-dataTable>
+				    </tab>
+				    <!-- Published -->
+				    <tab heading="Published Feedback">
+				    	<p-dataTable [value]="published" [rows]="10" [paginator]="true">
+						    <p-column field="created_by.username" header="Made by" sortable="true" [filter]="true" filterPlaceholder="Search Made by"></p-column>
+						    <p-column field="" header="Unit.no" sortable="true" [filter]="true" filterPlaceholder="Search Unit.no">
+						    	<template let-feedback="rowData" pTemplate="body">
+						    		{{feedback.property.address.unit_no}}-{{feedback.property.address.unit_no_2}}
+						    	</template>
+						    </p-column>
+						    <p-column field="title" header="Topic / Title" sortable="true" [filter]="true" filterPlaceholder="Search Topic / Title"></p-column>
+						    <p-column field="feedback_type" header="Type" sortable="true" [filter]="true" filterPlaceholder="Search Type"></p-column>>
+						    <p-column field="feedback_privacy" header="Privacy" sortable="true" [filter]="true" filterPlaceholder="Search Privacy"></p-column>
+						    <p-column field="remark" header="Feedback" sortable="true" [filter]="true" filterPlaceholder="Search Feedback"></p-column>
+						    <p-column field="feedback_reply" header="Reply" sortable="true" [filter]="true" filterPlaceholder="Search Reply"></p-column>
+						    <p-column field="" header="Commented on" sortable="true" [filter]="true" filterPlaceholder="Search Commented on">
+						        <template let-feedback="rowData" pTemplate="body">
+						            <p>{{feedback.created_at}}</p>
+						            <span *ngIf="feedback.reply_at != null">replied at {{feedback.reply_at}}</span>
+						        </template>
+						    </p-column>
+						    <p-column [style]="{'width':'180px'}" styleClass="col-button" header="action">
+						    	<template let-feedback="rowData" pTemplate="body">
+						    		<a type="button" style="cursor:pointer" (click)="openModal(feedback) || firstModal.open()"><img src="../../assets/image/icon_reply.png" width="10px" height="10x">&nbsp;Reply</a>
+						    		<button disabled="feedback.status == unpublished" style="text-decoration: underline;cursor:pointer" (click)="publish(feedback)">Publish</button>
+									<img *ngIf="feedback.archive == false" title="archived" src="../../assets/image/icon_archived.png" (click)="archived(feedback)" />
+									<img *ngIf="feedback.archive == true" title="unarchived" src="../../assets/image/icon_archived.png" (click)="unarchived(feedback)" />
+						    	</template>
+						    </p-column>
+						</p-dataTable>
+				    </tab>
+			    </tabset>
+			</div>	
+			<!--MODAL-->
+			<div class="row">
+			    <modal #firstModal>
+			        <modal-header>
+			            <h5>Adding Guest/Visitor</h5>
+			        </modal-header>
+			        <modal-content>
+			        	<div *ngIf="feedback">
+			        		<form class="form-horizontal" name="form" (ngSubmit)="f.form.valid && replyFeedback()" #f="ngForm" novalidate>
+				                <div [ngClass]="{ 'has-error': f.submitted && !feedback_reply.valid }">
+				                	<label class="control-label" for="feedback_reply">Reply :</label>
+	                                <textarea style="width: 550px" type="text" name="feedback_reply" [(ngModel)]="feedback.feedback_reply" #feedback_reply="ngModel" required placeholder="Input feedback reply here" ></textarea>
+				                    <span *ngIf="f.submitted && !feedback_reply.valid" class="help-block">Feedback reply is required</span>
+				                </div>
+				                <div class="pull-right">
+				                    <button [disabled]="loading" class="btn btn-primary">Save</button>
+				                    <img *ngIf="loading" src="data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA==" />
+		                            <button class="btn btn-default" (click)="firstModal.close()">Cancel</button>
+				                </div>
+				            </form>
+			        	</div>
+			        </modal-content>
+			    </modal>
+			</div>	
+    	</div>
+    	<div  *ngIf="archived">
+    		<div class="title">
+				ARCHIVED FEEDBACK
+			</div>
+			Home > Manage Feedback > Archived Feedback
+			<div class="row">
+				<div class="col-md-4 pull-right">
+					<a class="btn btn-default pull-right" (click)="viewUnarchived()">View Unarchived</a>	  		
+				</div>
+			</div>
+			<p-dataTable [value]="archived" [rows]="10" [paginator]="true">
+			    <p-column field="created_by.username" header="Made by" sortable="true" [filter]="true" filterPlaceholder="Search Made by"></p-column>
+			    <p-column field="" header="Unit.no" sortable="true" [filter]="true" filterPlaceholder="Search Unit.no">
+			    	<template let-feedback="rowData" pTemplate="body">
+			    		{{feedback.property.address.unit_no}}-{{feedback.property.address.unit_no_2}}
+			    	</template>
+			    </p-column>
+			    <p-column field="title" header="Topic / Title" sortable="true" [filter]="true" filterPlaceholder="Search Topic / Title"></p-column>
+			    <p-column field="feedback_type" header="Type" sortable="true" [filter]="true" filterPlaceholder="Search Type"></p-column>>
+			    <p-column field="feedback_privacy" header="Privacy" sortable="true" [filter]="true" filterPlaceholder="Search Privacy"></p-column>
+			    <p-column field="remark" header="Feedback" sortable="true" [filter]="true" filterPlaceholder="Search Feedback"></p-column>
+			    <p-column field="feedback_reply" header="Reply" sortable="true" [filter]="true" filterPlaceholder="Search Reply"></p-column>
+			    <p-column field="" header="Commented on" sortable="true" [filter]="true" filterPlaceholder="Search Commented on">
+			        <template let-feedback="rowData" pTemplate="body">
+			            <p>{{feedback.created_at}}</p>
+			            <span *ngIf="feedback.reply_at != null">replied at {{feedback.reply_at}}</span>
+			        </template>
+			    </p-column>
+			    <!-- <p-column [style]="{'width':'150px'}" styleClass="col-button" header="action">
+			    	<template let-feedback="rowData" pTemplate="body">
+			    		<a type="button" style="cursor:pointer" (click)="openModal(feedback) || firstModal.open()"><img src="../../assets/image/icon_reply.png">&nbsp;Reply</a>
+			    		<button disabled="feedback.status == unpublished" style="text-decoration: underline;cursor:pointer" (click)="publish(feedback)">Publish</button>
+						<img *ngIf="feedback.archive == false" title="archived" src="../../assets/image/icon_archived.png" (click)="archived(feedback)" />
+						<img *ngIf="feedback.archive == true" title="unarchived" src="../../assets/image/icon_archived.png" (click)="unarchived(feedback)" />
+			    	</template>
+			    </p-column> -->
+			</p-dataTable>
+    	</div>         
+    </div>
+</div>

@@ -1,5 +1,5 @@
 <div class="container">
-	<div class="main">
+	<div class="main" id="print-section">
         	<div class="title">
 			Guest & Visitor
 			</div>
@@ -7,8 +7,11 @@
 			{{ tomorrow }}<br>
 			{{ afterTomorrow}}
 			<div class="row">
+                <div class="col-md-8">
+                    
+                </div>
 				<div class="col-md-4 pull-right">
-								<a class="btn btn-default pull-right" ><img class="img-btn" src="../../assets/image/icon_print.png" (click)="viewPdf(petitionPending)" />&nbsp;Print</a>
+								<a class="btn btn-default pull-right" ><img class="img-btn" src="../../assets/image/icon_print.png" (click)="print()" />&nbsp;Print</a>
 						  		<button type="button" class="btn btn-default pull-right" (click)="firstModal.open()"><img class="img-btn" src="../../assets/image/icon_add.png"  />&nbsp;Add Visitor/Guest</button>
 				</div>
 			</div>
@@ -30,7 +33,7 @@
                 </div>
 			</div>
 			<div class="row">
-			    	<p-dataTable [value]="visitActive" scrollable="true" scrollHeight="380px">
+			    	<p-dataTable [value]="visitActive" scrollable="true" scrollHeight="360px">
 					    <p-column header="No" [style]="{'width':'42px'}" field="i">
 						</p-column>
 						<p-column header="Visitor/Guest" field="" filterPlaceholder="Search Name">
@@ -47,7 +50,7 @@
 						<p-column header="Visiting" field="" filterPlaceholder="Search unit no">
 					    	<template let-visitActive="rowData" pTemplate="body">
 					            <span *ngIf="visitActive.property==''">N/A</span>
-                                <span>{{visitActive.property}}</span>
+                                <span>{{visitActive.visiting}}</span>
 					        </template>
 						</p-column>
 						<p-column field="purpose" header="Purpose of visit" ></p-column>
@@ -59,8 +62,8 @@
                         </p-column>
 					    <p-column header="Added by" field="" sortable="true">visitActive
 					    	<template let-visitActive="rowData" pTemplate="body">
-					            <span class="btn-underline">{{visitActive.created_by}}</span><br>
-					            <span class="btn-underline">on {{visitActive.created_at}}</span>
+					            <span class="btn-underline">{{visitActive.created_by.username}}</span><br>
+					            <span class="btn-underline">on {{visitActive.created_at | date:'d/M/y'}}</span>
 					        </template>
 						</p-column>
 						<p-column header="Card no" field="" sortable="true">
@@ -73,7 +76,7 @@
 					    	<template let-visitActive="rowData" pTemplate="body">
                                 <div class="row">
                                     <div class="col-md-4">
-                                        <button *ngIf="(!visitActive.check_in && !visitActive.check_out) || (visitActive.check_in && visitActive.check_out)" [disabled]="visitActive.check_in != '' && visitActive.check_out != '' " type="button" class="btn btn-default" (click)="preCheckIn(visitActive) || checkInModal.open()">IN</button>
+                                        <button *ngIf="(!visitActive.check_in && !visitActive.check_out) || (visitActive.check_in && visitActive.check_out)" [disabled]="visitActive.check_in != null && visitActive.check_out != null " type="button" class="btn btn-default" (click)="preCheckIn(visitActive) || checkInModal.open()">IN</button>
                                         <button *ngIf="visitActive.check_in && !visitActive.check_out" type="button" class="btn btn-primary" (click)="preCheckOut(visitActive) || checkOutModal.open()">OUT</button>
                                     </div>
                                     <div class="col-md-8">
@@ -86,6 +89,9 @@
 					    </p-column>
 					</p-dataTable>
 			</div>
+            <span>
+                    <img *ngIf="loading" src="data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA==" />
+            </span>
        
 		<div class="row">
 		    <modal #firstModal>
@@ -94,6 +100,13 @@
 		        </modal-header>
 		        <modal-content>
 					<form name="form" [formGroup]="myForm" novalidate>
+                        <div class="form-group" [ngClass]="{ 'has-error': addSubmitted && !myForm.controls.visitor.controls.prefix.valid }" formGroupName="visitor">
+                            <label  class="control-label col-sm-4" for="prefix">Prefix :</label>
+                            <div class="col-sm-8">
+                                <input type="text" class="form-control" name="prefix" formControlName="prefix">
+                                <small style="color: red" [hidden]="myForm.controls.visitor.controls.prefix.valid || (myForm.controls.visitor.controls.prefix.pristine && !addSubmitted)">Prefix is required</small>
+                            </div>
+                        </div>
 						<div class="form-group" [ngClass]="{ 'has-error': addSubmitted && !myForm.controls.visitor.controls.full_name.valid }" formGroupName="visitor">
                             <label  class="control-label col-sm-4" for="full_name">Name of Guest/visitor :</label>
                             <div class="col-sm-8">
@@ -123,12 +136,16 @@
                             </div>
                         </div>
                         <div class="form-group" [ngClass]="{ 'has-error': addSubmitted && !myForm.controls.property.valid }">
-                            <label  class="control-label col-sm-4" for="full_name">Visiting :</label>
+                            <label class="control-label col-sm-4" for="unit_no">Visiting :</label>
                             <div class="col-sm-8">
-                                <input type="text" class="form-control" name="property" formControlName="property">
+                                <select class="form-control" formControlName="property" name="property">
+                                     <option *ngFor="let u of dataUnit" [ngValue]="u._id">#{{u.address.unit_no}}-{{u.address.unit_no_2}}</option>
+                                </select>
                                 <small style="color: red" [hidden]="myForm.controls.property.valid || (myForm.controls.property.pristine && !addSubmitted)">Unit no is required</small>
                             </div>
                         </div>
+
+
                         <div class="form-group">
                             <label  class="control-label col-sm-4" for="full_name">Remarks :</label>
                             <div class="col-sm-8">
@@ -149,7 +166,11 @@
                             </div>
                         </div>
                         <div class="pull-right">
-                            <button  class="btn btn-primary" (click)="addGuest(myForm.value, myForm.valid)">Add</button>
+                            <button  class="btn btn-primary" [disabled]="loading" (click)="addGuest(myForm.value, myForm.valid)">Add
+                                <span>
+                                    <img *ngIf="loading" src="data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA==" />
+                                </span>
+                            </button>
                             <button class="btn btn-default" (click)="firstModal.close()">Cancel</button>
                         </div>
 		            </form>   
@@ -205,7 +226,11 @@
                             </div>
                         </div>
                         <div class="pull-right">
-                            <button  class="btn btn-primary" (click)="checkIn(checkInForm.value, checkInForm.valid)">Check-In</button>
+                            <button  class="btn btn-primary" [disabled]="loading" (click)="checkIn(checkInForm.value, checkInForm.valid)">Check-In
+                                <span>
+                                    <img *ngIf="loading" src="data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA==" />
+                                </span>
+                            </button>
                             <button class="btn btn-default" (click)="checkInModal.close()">Cancel</button>
                         </div>
                     </form>   
@@ -228,7 +253,11 @@
                             </div>
                         </div>
                         <div class="pull-right">
-                            <button  class="btn btn-primary" >Check-Out</button>
+                            <button  class="btn btn-primary" [disabled]="loading">Check-Out
+                                <span>
+                                    <img *ngIf="loading" src="data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA==" />
+                                </span>
+                            </button>
                             <a class="btn btn-default" (click)="checkOutModal.close()">Cancel</a>
                         </div>
                     </form>   

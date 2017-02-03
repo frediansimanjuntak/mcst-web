@@ -1,23 +1,17 @@
 import { Component, OnInit, ViewContainerRef, ViewEncapsulation, ViewChild } from '@angular/core';
 import { Router, Params, ActivatedRoute } from '@angular/router';
 import { Visit, Visits } from '../../models/index';
-import { VisitService, AlertService} from '../../services/index';
+import { VisitService, AlertService, UserService, UnitService} from '../../services/index';
 import '../../rxjs-operators';
-import { NG_TABLE_DIRECTIVES }    from 'ng2-table/ng2-table'
 import { Observable} from 'rxjs/Observable';
 import { Location }               from '@angular/common';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import * as $ from "jquery";
-// import { Overlay } from 'angular2-modal';
-// import { Modal } from 'angular2-modal/plugins/bootstrap';
-// import { PublishAnnouncementModalComponent, PublishAnnouncementModalData } from './publish-announcement-modal.component';
-
 
 @Component({
   // moduleId: module.id,
   selector: 'visit',
   templateUrl: 'app/templates/visit.html',
-
 })
 
 export class VisitComponent implements OnInit {
@@ -33,6 +27,7 @@ export class VisitComponent implements OnInit {
     model: any = {};
     id: string;
     visitDateCreate: any;
+    dataUnit: any[]=[];
     myForm: FormGroup;
     checkInForm: FormGroup;
     checkOutForm: FormGroup;
@@ -43,6 +38,8 @@ export class VisitComponent implements OnInit {
     public addSubmitted: boolean;
     public checkInSsubmitted: boolean;
     public checkOutSsubmitted: boolean;
+    name: any;
+    loading = false;
 
     constructor(
                 private router: Router,
@@ -50,17 +47,25 @@ export class VisitComponent implements OnInit {
                 private alertService: AlertService,
                 private route: ActivatedRoute,
                 private location: Location,
-                private formbuilder: FormBuilder
+                private formbuilder: FormBuilder,
+                private userService: UserService,
+                private unitService: UnitService,
+
                 ) {
-     this.visitDateCreate = new Date();
-     this.activeDate = this.activeDateFull = new Date();
+        this.visitDateCreate = new Date();
+        this.activeDate = this.activeDateFull = new Date();
     }
 
     ngOnInit(): void {
+        this.loading = true;
     	this.addSubmitted = false;
     	this.checkInSsubmitted = false;
         this.checkOutSsubmitted = false;
-		this.developmentId = '585b36585d3cc41224fe518a';
+		this.userService.getByToken()
+                            .subscribe(name => {
+                                this.name = name;
+                                this.loadAllUnits();
+                            })
 
         if(typeof this.visitDateCreate !== "string"){
             this.visitDateCreate = this.convertDate(this.visitDateCreate);
@@ -70,18 +75,18 @@ export class VisitComponent implements OnInit {
 		this.activeDate = this.convertDate(this.activeDate);
 		}
 
-       	this.loadVisits();
-
-		this.myForm = this.formbuilder.group({
+       	this.myForm = this.formbuilder.group({
 			 	property: ['', <any>Validators.required],
                 visitor: this.formbuilder.group({
                     full_name : ['',  <any>Validators.required],
                     vehicle : [''],
                     pass : [''],
+                    prefix: ['']
                 }),
                 purpose: ['house_visit'],
                 remarks : [''],
                 check_in: [false,<any>Validators.required],
+                check_out: [''],
         });
 
         this.visitDateCreateOptions = {
@@ -134,7 +139,7 @@ export class VisitComponent implements OnInit {
     preCheckIn(visit){
     	this.visit = visit;
    		this.checkInForm = this.formbuilder.group({
-			 	property: [{value: visit.property, disabled: true}],
+			 	property: [{value: visit.visiting, disabled: true}],
                 visitor: this.formbuilder.group({
                     full_name : [{value: visit.visitor.full_name, disabled: true}],
                     vehicle : [{ value: visit.visitor.vehicle, disabled: true}],
@@ -150,7 +155,7 @@ export class VisitComponent implements OnInit {
     preCheckOut(visit){
         this.visitOut = visit;
            this.checkOutForm = this.formbuilder.group({
-                 property: [{value: visit.property, disabled: true}],
+                 property: [{value: visit.visiting, disabled: true}],
                 visitor: this.formbuilder.group({
                     full_name : [{value: visit.visitor.full_name, disabled: true}],
                     vehicle : [{ value: visit.visitor.vehicle, disabled: true}],
@@ -167,49 +172,61 @@ export class VisitComponent implements OnInit {
         this.checkOutSsubmitted = true;
 
         if(isValid == true){
-            model.check_out = new Date();
-            console.log(model);
-            this.visitOut.check_out =  model.check_out;
-            this.visitOut.checkout_by = "123n1kj2b31kb31b23k21j";
-            this.checkOutModal.close();
-
-                this.visitService.create(model)
-                .subscribe(
+            this.loading = true;
+            this.visitService.checkOut(this.visitOut._id)
+                .then(
                     data => {
-                        this.alertService.success('Add guest successful', true);
-                        this.router.navigate(['/unit']);
-                        this.checkInSsubmitted = false;
+                        this.ngOnInit();
+                        this.alertService.success('Check out guest successful', true);
+                        this.checkOutModal.close();
+                        this.loading = false;
                     },
                     error => {
                         console.log(error);
-                        alert(`Guest register could not be save, server Error.`);
-                        this.checkInSsubmitted = false;
+                        this.checkOutModal.close();
+                        alert(`Check out could not be save, server Error.`);
+                        this.loading = false;
                     }
                 );
         }
     }
 
+    print(): void {
+        let printContents, popupWin;
+        printContents = document.getElementById('print-section').innerHTML;
+        popupWin = window.open('', '_blank', 'top=0,left=0,height=100%,width=auto');
+        popupWin.document.open();
+        popupWin.document.write(`
+          <html>
+            <head>
+              <title>Print tab</title>
+              <style>
+              //........Customized style.......
+              </style>
+            </head>
+        <body onload="window.print();window.close()">${printContents}</body>
+          </html>`
+        );
+        popupWin.document.close();
+    }
+
     checkIn(model: any, isValid: boolean) {
         this.checkInSsubmitted = true;
-
         if(isValid == true){
-            model.check_in = new Date();
-            console.log(model);
-            this.visit.check_in =  model.check_in;
-            this.visit.checkin_by = "123n1kj2b31kb31b23k21j";
-            this.checkInModal.close();
-
-                this.visitService.create(model)
-                .subscribe(
+            this.loading = true;
+            this.visitService.checkIn(this.visit._id)
+                .then(
                     data => {
-                        this.alertService.success('Add guest successful', true);
-                        this.router.navigate(['/unit']);
-                        this.checkInSsubmitted = false;
+                        this.ngOnInit();
+                        this.alertService.success('Check in guest successful', true);
+                        this.checkInModal.close();
+                        this.loading = false;
                     },
                     error => {
                         console.log(error);
-                        alert(`Guest register could not be save, server Error.`);
-                        this.checkInSsubmitted = false;
+                        this.checkInModal.close();
+                        alert(`Check in could not be save, server Error.`);
+                        this.loading = false;
                     }
                 );
         }
@@ -221,56 +238,64 @@ export class VisitComponent implements OnInit {
         // model.properties.created_by = '583e4e9dd97c97149884fef5';
         // this.model.pinned.rank = 0;
         if(model.check_in == true){
-        	model.check_in = this.convertDate(new Date());
-            model.checkin_by = "123n1kj2b31kb31b23k21j";
+        	model.check_in = new Date();
         }else{
-        	model.check_in = '';
+            model.check_in = ''
         }
+        console.log(model);
         model.visit_date =  this.visitDateCreate;
         if(isValid == true){
-
-            this.visits.push(model);
-            this.firstModal.close();
-            console.log(model);
+            this.loading = true;
             this.visitService.create(model)
-            .subscribe(
+            .then(
                 data => {
                     this.alertService.success('Add guest successful', true);
-                    this.router.navigate(['/unit']);
+                    this.firstModal.close();
+                    this.ngOnInit();
+                    this.loading = false;
                 },
                 error => {
                     console.log(error);
+                    this.firstModal.close();
                     alert(`Guest register could not be save, server Error.`);
+                    this.loading = false;
                 }
             );
+
             this.addSubmitted = false;
         }
     }
 
 	private loadVisits() {
-        //---------------------------Call To Api-------------- //
-        // this.announcementService.getAll()
-        //     .subscribe((data)=> {
-        //         setTimeout(()=> {
-        //             this.data          = data.find(data => data._id === this.developmentId );
-        //             this.dataAgm       = this.data.newsletter.filter(data => data.type === 'agm' );
-        //             this.dataCircular  = this.data.newsletter.filter(data => data.type === 'circular' );
-        //             console.log(this.dataAgm);
-        //         }, 1000);
-        //     });
+        this.visitService.getAll()
+            .subscribe((data)=> {
+                setTimeout(()=> {
+                    this.visits            = data.filter(data => data.development == this.name.default_development._id);
+                    this.visitActive       = data.filter(data => data.visit_date.slice(0, 10)  == this.activeDate );
+                    for (var i = 0; i < this.visitActive.length; i++) {
+                        this.visitActive[i].i = i+1;
+                        let visiting = this.dataUnit.find(data => data._id ==  this.visitActive[i].property);
+                        this.visitActive[i].visiting = '#' + visiting.address.unit_no + '-' + visiting.address.unit_no_2;
+                    }
 
-        this.visitService.getVisits().then(data => {
-            this.visits      = data;
-            this.visitActive = this.visits.filter(data => data.visit_date.slice(0, 10)  == this.activeDate );
-            console.log(this.visitActive.length);
-            for (var i = 0; i < this.visitActive.length; i++) {
-            	this.visitActive[i].i = i+1;
-            }
+                    console.log(this.visitActive[0]);
+                    this.loading = false;
+                }, 1000);
+            });
+    }
 
-		});
+    private loadAllUnits(): void {
+        this.unitService.getAll(this.name.default_development.name)
+            .subscribe((data)=> {
+                setTimeout(()=> {
+                    this.dataUnit       = data.properties;
+                    this.loadVisits();
+                }, 1000);
+            });
     }
 
     onPickerClick(event:any) {
+      this.visitActive  = [];
       this.activeDate = event.formatted;
       this.activeDateFull = event.jsdate;
       this.loadVisits();
@@ -281,12 +306,14 @@ export class VisitComponent implements OnInit {
     }
 
     previousDay(){
+        this.visitActive  = [];
     	(this.activeDate = new Date()).setDate(this.activeDateFull.getDate() - 1);
     	this.activeDateFull = this.activeDate;
     	this.ngOnInit();
     }
 
     nextDay(){
+        this.visitActive  = [];
     	(this.activeDate = new Date()).setDate(this.activeDateFull.getDate() + 1);
     	this.activeDateFull = this.activeDate;
     	console.log(this.activeDateFull);

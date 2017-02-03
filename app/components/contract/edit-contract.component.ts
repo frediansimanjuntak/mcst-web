@@ -1,12 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, Params, ActivatedRoute } from '@angular/router';
 import { Contract } from '../../models/index';
-import { ContractService, AlertService } from '../../services/index';
+import { ContractService, AlertService, UserService } from '../../services/index';
 import '../../rxjs-operators';
 import 'rxjs/add/operator/switchMap';
 
 @Component({
-  moduleId: module.id,
+  // moduleId: module.id,
   selector: 'edit-contract',
   templateUrl: 'app/templates/edit-contract.html',
 })
@@ -16,16 +16,21 @@ export class EditContractComponent  implements OnInit {
     model: any = {};
     id: string;
     loading = false;
+    name: any;
 
     constructor(private router: Router,
     	private contractService: ContractService,
     	private alertService: AlertService,
-        private route: ActivatedRoute,) {}
+        private route: ActivatedRoute,
+        private userService: UserService) {}
 
     ngOnInit(): void {
+        this.userService.getByToken().subscribe(name => {this.name = name;})
+        console.log(this.route.url);
         this.route.params.subscribe(params => {
             this.id = params['id'];
         });
+        this.model.reference_no = this.id;
         if( this.id != null) {
             this.contractService.getById(this.id).subscribe(contract => this.contract = contract);
         }
@@ -36,8 +41,8 @@ export class EditContractComponent  implements OnInit {
         this.contractService.create(this.model)
         .then(
             response => {
-                this.alertService.success('Update development successful', true);
-                this.router.navigate(['/development']);
+                this.alertService.success('Create contract successful', true);
+                this.router.navigate([this.name.default_development.name + '/contract' ]);
             },
             error => {
                 this.alertService.error(error);
@@ -54,16 +59,26 @@ export class EditContractComponent  implements OnInit {
         this.model.attachment.splice(i, 1)
     }
 
- //    updateDevelopment(){
-	// 	this.contractService.update(this.contract)
-	// 	.then(
-	// 		response => {
- //                this.alertService.success('Update development successful', true);
- //                this.router.navigate(['/development']);
- //            },
- //            error => {
- //            	this.alertService.error(error);
- //            }
- //        );
-	// }
+    updateContract(id:any){
+        this.contract.attachment = this.model.attachment
+        console.log(this.contract)
+		this.contractService.update(this.contract)
+		.then(
+			response => {
+                this.alertService.success('Update contract successful', true);
+                this.router.navigate([this.name.default_development.name + '/contract/view', id ]);
+            },
+            error => {
+            	this.alertService.error(error);
+            }
+        );
+	}
+
+    cancel(){
+        this.router.navigate([this.name.default_development.name + '/contract' ]);
+    }
+
+    back(id:any){
+        this.router.navigate([this.name.default_development.name + '/contract/view', id ]);
+    }
 }

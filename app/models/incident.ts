@@ -24,11 +24,19 @@ export var Incidents: any[] = [{
   reference_no:'1',
   title:'rumah rusak',
   development: '',
-  property:'mungkin itu',
+  property : {
+      _id: "1", 
+      address : {
+          unit_no : '01',
+          unit_no_2 : '10',
+      }
+    },
   incident_type:'general',
   contract: '',
   remark: 'tolong di perbaiki dong',
   status: 'new',
+  archive: true,
+  starred_by: '1',
   created_by: 'akh siaaaaaaaaaaaaaaaaaaaaaaaaaa aaaaaaaaaaaaaaaaaaaaaaaaaaaa aaaaaaaaaaaaaaaaaaaaaaaaaaaaa aaaaaaaaaaaaaaaaaaaaaaaaaaaaal',
   updated_at: 'tidak mungkin',
   created_at: 'mungkin aja',
@@ -37,11 +45,19 @@ export var Incidents: any[] = [{
   reference_no:'12',
   title:'tangga rusak',
   development: '',
-  property:'mungkin itu',
+  property : {
+      _id: "2", 
+      address : {
+          unit_no : '01',
+          unit_no_2 : '11',
+      }
+    },
   incident_type:'general',
-  contract: '',
+  contract: 'asd',
   remark: 'tolong di perbaiki dong',
   status: 'reviewing',
+  archive: true,
+  starred_by: '2',
   created_by: 'akh sial',
   updated_at: 'tidak mungkin',
   created_at: 'mungkin aja',
@@ -50,11 +66,19 @@ export var Incidents: any[] = [{
   reference_no:'123',
   title:'lift rusak',
   development: '',
-  property:'mungkin itu',
-  incident_type:'general',
+  property : {
+      _id: "3", 
+      address : {
+          unit_no : '01',
+          unit_no_2 : '12',
+      }
+    },
+  incident_type:'hygiene',
   contract: '',
   remark: 'tolong di perbaiki dong',
   status: 'inprogress',
+  archive: false,
+  starred_by: '1',
   created_by: 'akh sial',
   updated_at: 'tidak mungkin',
   created_at: 'mungkin aja',
@@ -63,9 +87,16 @@ export var Incidents: any[] = [{
   reference_no:'1234',
   title:'jendela pecah',
   development: '',
-  property:'mungkin itu',
-  incident_type:'general',
+  property : {
+      _id: "4", 
+      address : {
+          unit_no : '01',
+          unit_no_2 : '13',
+      }
+    },
+  incident_type:'repair',
   contract: '',
+  archive: false,
   remark: 'tolong di perbaiki dong',
   status: 'resolved',
   created_by: 'akh sial',
@@ -76,7 +107,13 @@ export var Incidents: any[] = [{
   reference_no:'12345',
   title:'toilet rusak',
   development: '',
-  property:'mungkin itu',
+  property : {
+      _id: "5", 
+      address : {
+          unit_no : '01',
+          unit_no_2 : '14',
+      }
+    },
   incident_type:'general',
   attachment: '',
   contract: '',

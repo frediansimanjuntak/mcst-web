@@ -9,6 +9,7 @@ import '../../rxjs-operators';
 
 @Component({
     // moduleId: module.id,
+    selector: 'edit-user',
     templateUrl: 'app/templates/edit-user.html',
 })
 
@@ -19,9 +20,10 @@ export class EditUserComponent implements OnInit {
     model: any = {};
     id: string;
     developmentID = "585b36585d3cc41224fe518a";
-    unit: Development;
+    units: any[] = [];
     myForm: FormGroup;
     public submitted: boolean;
+    name: any;
     // developmentID: string;
 
     constructor(private router: Router,
@@ -34,6 +36,11 @@ export class EditUserComponent implements OnInit {
 
 
     ngOnInit(): void {
+        this.userService.getByToken()
+        .subscribe(name => {
+            this.name = name;
+            this.unitService.getAll(name.default_development.name).subscribe(units => {this.units = units.properties;})
+        })
         this.myForm = this.formbuilder.group({
             username : ['', Validators.required],
             email : ['', Validators.required],
@@ -50,26 +57,20 @@ export class EditUserComponent implements OnInit {
                 development: [''],
                 property: ['']
             }),
-            owned_property: this.formbuilder.array([]),
-            authorized_property: this.formbuilder.array([]),
+            owned_property: this.formbuilder.array([this.initOwned()]),
+            authorized_property: this.formbuilder.array([this.initAuthorized()]),
             active: ['', Validators.required],
-            default_development: [''],
-            authorized_development: ['']
 
         });
-        let self = this;
-        this.unitService.getDevelopment("1")
-            .then(unit => {
-                self.unit = unit;
-            });
         this.route.params.subscribe(params => {
             this.id = params['id'];
         });
 
         if( this.id != null) {
-            this.userService.getUser(this.id)
-            .then(user => {
+            this.userService.getById(this.id)
+            .subscribe(user => {
                 this.user = user;
+                console.log(this.user)
                 this.myForm = this.formbuilder.group({
                     _id : [''],
                     username : ['', Validators.required],
@@ -82,16 +83,6 @@ export class EditUserComponent implements OnInit {
                         property: ['', Validators.required],
                         role : ['', Validators.required]
                     }),
-                    details : this.formbuilder.group({
-                        first_name : [''],
-                        last_name : [''],
-                        identification_type : [''],
-                        identification_no : [''],
-                        identification_proof : this.formbuilder.group({
-                          front : [''],
-                          back : ['']
-                        })
-                    }),
                     rented_property: this.formbuilder.group({
                         development: [''],
                         property: ['']
@@ -99,10 +90,9 @@ export class EditUserComponent implements OnInit {
                     owned_property: this.formbuilder.array([]),
                     authorized_property: this.formbuilder.array([]),
                     active: ['', Validators.required],
-                    default_development: [''],
-                    authorized_development: [''],
-                    user_group : [''],
-                    created_at : [''],
+                    default_development: [],
+                    salt: [],
+                    __v: [],
                 });
                 for (let entry of this.user.owned_property) {
                     const control = <FormArray>this.myForm.controls['owned_property'];
@@ -123,6 +113,7 @@ export class EditUserComponent implements OnInit {
 
     initOwned() {
         return this.formbuilder.group({
+            _id: [],
             development: ['585b36585d3cc41224fe518a'],
             property: ['']
         });
@@ -130,6 +121,7 @@ export class EditUserComponent implements OnInit {
 
     initAuthorized() {
         return this.formbuilder.group({
+            _id: [],
             development: ['585b36585d3cc41224fe518a'],
             property: ['']
         });
@@ -170,34 +162,30 @@ export class EditUserComponent implements OnInit {
     }
 
     createUser(model:User , isValid: boolean) {
-        this.submitted = true;
         console.log(model)
-        Users.push(model);
-        this.router.navigate(['/user']);
-        // this.userService.create(model)
-        // .then(
-        //     data => {
-        //         this.alertService.success('Create user successful', true);
-        //         this.router.navigate(['/user']);
-        //     },
-        //     error => {
-        //         this.alertService.error(error);
-        //     }
-        // );
+        this.userService.create(model)
+        .then(
+            data => {
+                this.alertService.success('Create user successful', true);
+                this.router.navigate([this.name.default_development.name + '/user']);
+            },
+            error => {
+                this.alertService.error(error);
+            }
+        );
     }
 
     updateUser(user:User){
-        console.log(user);
-		// this.userService.update(this.user)
-		// .then(
-        //     response => {
-        //         this.alertService.success('Update User successful', true);
-        //         this.router.navigate(['/user']);
-	       //  },
-        //     error=> {
-        //     	this.alertService.error(error);
-        //     }
-        // );
+		this.userService.update(this.user)
+		.then(
+            response => {
+                this.alertService.success('Update User successful', true);
+                this.router.navigate([this.name.default_development.name + '/user']);
+	        },
+            error=> {
+            	this.alertService.error(error);
+            }
+        );
 	}
 
     number(event: any) {
@@ -206,6 +194,10 @@ export class EditUserComponent implements OnInit {
         if (!pattern.test(inputChar)) {
             event.preventDefault();
         }
+    }
+
+    cancel(){
+        this.router.navigate([this.name.default_development.name + '/user' ]);
     }
 
     text(event: any) {

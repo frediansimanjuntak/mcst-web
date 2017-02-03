@@ -9,16 +9,17 @@ import '../../rxjs-operators';
 @Component({
   // moduleId: module.id,
   selector: 'edit-payment',
-  template: ``,
+  templateUrl: 'app/templates/edit-payment.html',
 })
 
-export class EditPaymentComponent implements OnInit {
+export class EditPaymentComponent implements OnInit{
 	payment: Payment;
     payments: Payment[] = [];
     model: any = {};
     myForm: FormGroup;
     user: User;
     development : Development;
+    name: any;
 
     constructor(private router: Router,
     	private paymentService: PaymentService,
@@ -30,17 +31,17 @@ export class EditPaymentComponent implements OnInit {
         // this.user = JSON.parse(localStorage.getItem('user'));
     }
 
-    ngOnInit() {
-
+    ngOnInit():void{ 
+        this.userService.getByToken().subscribe(name => {this.name = name;})
     }
 
     createPayment() {
         console.log(this.model);
         this.paymentService.create(this.model)
-        .subscribe(
+        .then(
             data => {
                 this.alertService.success('Create payment successful', true);
-                this.router.navigate(['/booking']);
+                this.router.navigate([this.name.default_development.name + '/payment']);
             },
             error => {
                 console.log(error);
@@ -51,10 +52,14 @@ export class EditPaymentComponent implements OnInit {
 
     onChange(event: any) {
        let files = [].slice.call(event.target.files);
-       this.model.attachment = files;
+       this.model.payment_proof = files;
     }
 
     remove(i: any){
-        this.model.attachment.splice(i, 1)
+        this.model.payment_proof.splice(i, 1)
+    }
+
+    cancel(){
+        this.router.navigate([this.name.default_development.name + '/payment' ]);
     }
 }

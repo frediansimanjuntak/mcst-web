@@ -2,7 +2,7 @@ import { Component, OnInit, Input } from '@angular/core';
 import { Router, Params, ActivatedRoute } from '@angular/router';
 import { FormBuilder, FormControl, FormGroup, FormArray, Validators, ReactiveFormsModule  } from '@angular/forms';
 import { Facility,Facilities } from '../../models/index';
-import { FacilityService, AlertService } from '../../services/index';
+import { FacilityService, AlertService, UserService } from '../../services/index';
 import '../../rxjs-operators';
 import 'rxjs/add/operator/switchMap';
 
@@ -18,6 +18,7 @@ export class EditFacilityComponent  {
     id: string;
     myForm: FormGroup;
     start_time:any;
+    name: any;
 
     days = [
         { value: 'monday', name: 'Monday' },
@@ -33,21 +34,20 @@ export class EditFacilityComponent  {
     	private facilityService: FacilityService,
     	private alertService: AlertService,
         private formbuilder: FormBuilder,
-        private route: ActivatedRoute,) {}
+        private route: ActivatedRoute,
+        private userService: UserService) {}
 
     ngOnInit(): void {
+        this.userService.getByToken().subscribe(name => {this.name = name;})
         this.myForm = this.formbuilder.group({
-            _id : [''],
             name : ['', Validators.required],
-            development : ['123123', Validators.required],
             description : ['', Validators.required],
             facility_type : ['', Validators.required],
             payment_type : ['', Validators.required],
             booking_type : ['', Validators.required],
-            schedule: this.formbuilder.array([]),
+            booking_fee : ['', Validators.required],
+            schedule: this.formbuilder.array([this.initSchedule()]),
             status: ['', Validators.required],
-            maintenance_start : [''],
-            maintenance_end : [''],
             created_by : [''],
             created_at : ['']
         });
@@ -55,9 +55,46 @@ export class EditFacilityComponent  {
             this.id = params['id'];
         });
         if( this.id != null) {
-            this.facilityService.getFacility(this.id)
-            .then(facility => {
+            this.facilityService.getById(this.id)
+            .subscribe(facility => {
                 this.facility = facility;
+                this.myForm = this.formbuilder.group({
+                    _id: [''],
+                    name : ['', Validators.required],
+                    development : [''],
+                    description : ['', Validators.required],
+                    facility_type : ['', Validators.required],
+                    payment_type : ['', Validators.required],
+                    booking_type : ['', Validators.required],
+                    booking_fee : ['', Validators.required],
+                    schedule: this.formbuilder.array([]),
+                    status: ['', Validators.required],
+                    maintenance: [''],
+                    created_by : [''],
+                    created_at : [''],
+                    __v : [''],
+                });
+                if(this.facility.maintenance.length) {
+                    this.myForm = this.formbuilder.group({
+                        _id: [''],
+                        name : ['', Validators.required],
+                        development : [''],
+                        description : ['', Validators.required],
+                        facility_type : ['', Validators.required],
+                        payment_type : ['', Validators.required],
+                        booking_type : ['', Validators.required],
+                        booking_fee : ['', Validators.required],
+                        schedule: this.formbuilder.array([]),
+                        status: ['', Validators.required],
+                        maintenance: this.formbuilder.group({
+                            start_date: [''],
+                            end_date: ['']
+                        }),
+                        created_by : [''],
+                        created_at : [''],
+                        __v : [''],
+                    });
+                }
                 for (let entry of this.facility.schedule) {
                     const control = <FormArray>this.myForm.controls['schedule'];
                     control.push(this.initSchedule());
@@ -69,6 +106,7 @@ export class EditFacilityComponent  {
 
     initSchedule() {
         return this.formbuilder.group({
+            _id : [],
             day : [''],
             start_time : [this.start_time],
             end_time : ['']
@@ -87,35 +125,34 @@ export class EditFacilityComponent  {
     }
 
     createFacility(model:Facility) {
-        console.log('model=',this.model)
-        Facilities.push(this.model);
-        console.log('facilities=',Facilities);
-        this.router.navigate(['/facility']);
-        // console.log(model)
-        // this.facilityService.create(model)
-        // .then(
-        //     response => {
-        //         this.alertService.success('Update facility successful', true);
-        //         this.router.navigate(['/facility']);
-        //     },
-        //     error => {
-        //         this.alertService.error(error);
-        //     }
-        // );
+        console.log(model)
+        this.facilityService.create(model)
+        .then(
+            response => {
+                this.alertService.success('Create facility successful', true);
+                this.router.navigate([this.name.default_development.name + '/facility']);
+            },
+            error => {
+                this.alertService.error(error);
+            }
+        );
     }
 
 
     updateFacility(facility:Facility){
-        console.log(facility)
 		this.facilityService.update(facility)
 		.then(
 			response => {
                 this.alertService.success('Update development successful', true);
-                this.router.navigate(['/development']);
+                this.router.navigate([this.name.default_development.name + '/facility']);
             },
             error => {
             	this.alertService.error(error);
             }
         );
 	}
+
+    cancel(){
+        this.router.navigate([this.name.default_development.name + '/facility' ]);
+    }
 }

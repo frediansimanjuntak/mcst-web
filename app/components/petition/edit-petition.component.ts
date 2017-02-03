@@ -1,8 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { Router, Params, ActivatedRoute } from '@angular/router';
 import { Petition, Petitions } from '../../models/index';
-import { PetitionService, AlertService } from '../../services/index';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { UnitService, PetitionService, AlertService, UserService } from '../../services/index';
+import { FormBuilder, FormControl, FormGroup, FormArray, Validators } from '@angular/forms';
 import { FileUploader } from 'ng2-file-upload';
 
 import '../../rxjs-operators';
@@ -15,11 +15,16 @@ import 'rxjs/add/operator/switchMap';
 })
 
 export class EditPetitionComponent implements OnInit {
+    public items:Array<any> = [];
 	petition: Petition;
     petitions: Petition[] = [];
+    units: any = [];
+    unit: any = {};
     model: any = {};
     id: string;
     myForm: FormGroup;
+    myOptions: Array<any>;
+    public developmentId;
     public uploader:FileUploader = new FileUploader({url:'http://localhost:3001/upload'});
     types = [
         { value: 'Maintenance', name: 'Maintenance' },
@@ -29,56 +34,122 @@ export class EditPetitionComponent implements OnInit {
 
     ];
     selectedType = '';
-
+    public submitted: boolean; // keep track on whether form is submitted
+    public events: any[] = []; // use later to display form changes
+    name: any;
 
     constructor(private router: Router,
     	private petitionService: PetitionService,
+        private unitService: UnitService,
     	private alertService: AlertService,
-        private route: ActivatedRoute) {
+        private route: ActivatedRoute,
+        private formbuilder: FormBuilder,
+        private userService: UserService) {
         // this.user = JSON.parse(localStorage.getItem('user'));
     }
 
     ngOnInit(): void {
-    	this.selectedType = 'Maintenance';
         this.route.params.subscribe(params => {
             this.id = params['id'];
         });
-        if( this.id != null) {
-            this.petitionService.getPetition(this.id).then(petition => {this.petition = petition;});
+        this.userService.getByToken()
+                            .subscribe(name => {
+                                this.name = name;
+                                this.loadAllUnits();
+                                if( this.id != null) {
+                                    this.petitionService.getPetition(this.id).then(petition => {this.petition = petition;});
+                                }
+                            })
+        this.selectedType = 'Maintenance';
+        
+        this.myForm = this.formbuilder.group({
+            reference_no : [''],
+            development : [''],
+            property: [''],
+            petition_type: [''],
+            attachment: this.formbuilder.array([]),
+            contract: [''],
+            remark: [''],
+            status: [''],
+            created_by : [''],
+            updated_at : [''],
+            archieved : [''],
+            created_at : ['']
+        });
+    }
+
+    createPetition(model: any, isValid: boolean) {
+        this.submitted = true;
+        if(isValid || this.unit){
+            console.log(this.unit);
+            model.property = this.unit.id;
+            model.attachment = this.model.attachment;
+            model.updated_at = new Date();
+            Petitions.push(model);
+            console.log(model);
+
+            // this.router.navigate([this.name.default_development.name + '/petition']);
+            this.petitionService.create(model)
+            .then(
+                data => {
+                    this.alertService.success('Create petition successful', true);
+                    this.router.navigate(['/petition']);
+                },
+                error => {
+                    this.alertService.error(error);
+                }
+            );
         }
     }
 
-    createPetition() {
-    	this.model.petition_type = this.selectedType;
-        Petitions.push(this.model);
-        console.log(this.model)
-        this.router.navigate(['/petition']);
+    private loadAllUnits(): void {
+        this.unitService.getAll(this.name.default_development.name)
+            .subscribe((data)=> {
+                setTimeout(()=> {
+                    this.units = data.properties;
 
-        // this.petitionService.create(this.model)
-        // .then(
-        //     data => {
-        //         this.alertService.success('Create Petition successful', true);
-        //         this.router.navigate(['/incident']);
-        //     },
-        //     error => {
-        //         console.log(error);
-        //         alert(`The petition could not be save, server Error.`);
-        //     }
-        // );
+                    console.log(this.units);
+                    let numOptions =  this.units.length;
+                    let opts = new Array(numOptions);
+
+                    for (let i = 0; i < numOptions; i++) {
+                        opts[i] = {
+                            id: this.units[i]._id,
+                            text: '#' + this.units[i].address.unit_no + '-' + this.units[i].address.unit_no_2
+                        };
+                    }
+                    this.myOptions = opts.slice(0);
+                    this.items = this.myOptions;
+                }, 1000);
+            });
     }
 
-    updateIncident(){
+    public refreshValueUnit(value:any):void {
+        this.unit = value;
+        console.log(value);
+    }
+
+
+    public selected(value:any):void {
+        // console.log('Selected value is: ', value);
+    }
+
+    public removed(value:any):void {
+        // console.log('Removed value is: ', value);
+    }
+
+    updatePetition(){
     	console.log(this.petition);
-		// this.petitionService.update(this.petition)
-		// .then(
-		// 	response => {
-  //               this.alertService.success('Update incident successful', true);
-  //               this.router.navigate(['/incident']);
-  //           },
-  //           error => {
-  //           	this.alertService.error(error);
-  //           }
-  //       );
+		this.petitionService.update(this.petition)
+		.then(
+			response => {
+                this.alertService.success('Update incident successful', true);
+                this.router.navigate(['/incident']);
+            },
+            error => {
+            	this.alertService.error(error);
+            }
+        );
 	}
 
     onChange(event: any) {
@@ -90,5 +161,8 @@ export class EditPetitionComponent implements OnInit {
         this.model.attachment.splice(i, 1)
     }
 
+    goToPetition(){
+      this.router.navigate([this.name.default_development.name + '/petition']);  
+    }
 
 }

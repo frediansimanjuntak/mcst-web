@@ -1,6 +1,7 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import '../rxjs-operators';
 import {SlimLoadingBarService} from 'ng2-slim-loading-bar';
+import { UserService } from '../services/index';
 import {
     Event as RouterEvent,
     NavigationStart,
@@ -14,12 +15,11 @@ import {
   moduleId: module.id,
   selector: 'my-app',
   template: `
-  	<headers></headers>
-  	<navbar></navbar>
-  	
-    
+    <div *ngIf="authToken">
+  	  <headers></headers>
+  	  <navbar></navbar>
+  	</div>
     <ng2-slim-loading-bar></ng2-slim-loading-bar>
-	  
    	<router-outlet></router-outlet>
 
   	
@@ -51,19 +51,24 @@ import {
 	`]
 })
 
-export class AppComponent  { 
+export class AppComponent implements OnInit { 
 	loading: boolean = true;
-
+  authToken : any;
+  name: any;
     constructor(
-        private slimLoadingBarService: SlimLoadingBarService,private router: Router) {
+        private slimLoadingBarService: SlimLoadingBarService,private router: Router, private userService:UserService) {
         router.events.subscribe((event: RouterEvent) => {
             this.navigationInterceptor(event);
         });
+        
     }
 
-    
+    ngOnInit(): void {
+        this.authToken = JSON.parse(localStorage.getItem('authToken'));
+        this.userService.getByToken().subscribe(name => {this.name = name;})
+    }
 
-  start() {
+    start() {
         this.slimLoadingBarService.start(() => {
             console.log('Loading complete');
         });

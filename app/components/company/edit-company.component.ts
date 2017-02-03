@@ -3,6 +3,7 @@ import { Router, Params, ActivatedRoute } from '@angular/router';
 import { FormBuilder, FormControl, FormGroup, FormArray, Validators } from '@angular/forms';
 import { Company, Companies, Contractor, Contractors } from '../../models/index';
 import { CompanyService, UserService, ContractorService, AlertService } from '../../services/index';
+import { Observable} from 'rxjs/Observable';
 import '../../rxjs-operators';
 import 'rxjs/add/operator/switchMap';
 
@@ -81,11 +82,6 @@ export class EditCompanyComponent implements OnInit {
                         this.chief.id = this.company.chief;
                         this.chiefField = true;
 
-                        // for (let i = 0; i < this.usergroup.users.length; i++) {
-                        //     this.user[i].text = this.users.find(myObj => myObj._id ===  this.usergroup.users[i] ).username;
-                        //     this.user[i].id = this.usergroup.users[i];
-                        // }
-
                         let numOptions =  this.company.employee.length;
                         let opts = new Array(numOptions);
 
@@ -99,6 +95,29 @@ export class EditCompanyComponent implements OnInit {
                         this.contractor = opts.slice(0);
                        
                     });
+
+            // this.companyService.getById(this.id)
+            //     .subscribe((data)=> {
+            //         setTimeout(()=> {
+            //             this.company = data;
+                    
+            //             this.chief.text = this.contractors.find(myObj => myObj._id ===  this.company.chief ).username;
+            //             this.chief.id = this.company.chief;
+            //             this.chiefField = true;
+
+            //             let numOptions =  this.company.employee.length;
+            //             let opts = new Array(numOptions);
+
+            //             for (let i = 0; i < numOptions; i++) {
+            //                 opts[i] = {
+            //                     id: this.company.employee[i], 
+            //                     text: this.contractors.find(myObj => myObj._id ===  this.company.employee[i] ).username,
+            //                 };
+            //              }
+
+            //             this.contractor = opts.slice(0);
+            //         }, 1000);
+            //     });
         };
 
     }
@@ -162,6 +181,25 @@ export class EditCompanyComponent implements OnInit {
             this.myOptions = opts.slice(0);
             this.items = this.myOptions;
         });
+
+        // this.contractorService.getAll()
+        //     .subscribe((data)=> {
+        //         setTimeout(()=> {
+        //             this.contractors          = data;
+        //             let numOptions =  this.contractors.length;
+        //             let opts = new Array(numOptions);
+
+        //             for (let i = 0; i < numOptions; i++) {
+        //                 opts[i] = {
+        //                     id: this.contractors[i]._id, 
+        //                     text: this.contractors[i].username
+        //                 };
+        //             }
+
+        //             this.myOptions = opts.slice(0);
+        //             this.items = this.myOptions;
+        //         }, 1000);
+        //     });
     }
 
 
@@ -213,18 +251,20 @@ export class EditCompanyComponent implements OnInit {
 			model.active = this.model.active;
 			Companies.push(model);
 
+            // this.companyService.create(model)
+            // .subscribe(
+            //     data => {
+            //         this.alertService.success('Create company successful', true);
+            //         this.router.navigate(['/company']);
+            //     },
+            //     error => {
+            //         console.log(error);
+            //         alert(`The COmpany could not be save, server Error.`);
+            //     }
+            // );
+
 	        this.router.navigate(['/company']);
-	        //   this.userGroupService.create(model)
-	        // .then(
-	        //     data => {
-	        //         this.alertService.success('Create usergroup successful', true);
-	        //         this.router.navigate(['/user']);
-	        //     },
-	        //     error => {
-	        //         this.alertService.error(error);
-	        //     }
-	        // );
-    	}
+	    }
 	}
 
     updateCompany(){
@@ -235,17 +275,20 @@ export class EditCompanyComponent implements OnInit {
             }
             this.company.chief = this.chief.id;
             console.log(this.company);
+
+            // this.companyService.update(this.company)
+            // .subscribe(
+            //     data => {
+            //         this.alertService.success('Update company successful', true);
+            //         this.router.navigate(['/company']);
+            //     },
+            //     error => {
+            //         console.log(error);
+            //         alert(`The company could not be update, server Error.`);
+            //     }
+            // );
+
             this.router.navigate(['/company']);
         }
-    //     this.companyService.update(this.usergroup)
-    //     .then(
-    //         response => {
-    //             this.alertService.success('Update Usergroup successful', true);
-    //             this.router.navigate(['/user']);
-    //         },
-    //         error=> {
-    //             this.alertService.error(error);
-    //         }
-    //     );
     }
 }

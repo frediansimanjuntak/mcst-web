@@ -2,47 +2,53 @@ import { Injectable } from '@angular/core';
 import { Http, Headers, RequestOptions, Response } from '@angular/http';
 import { Observable } from 'rxjs/Rx';
 import { Quotation } from '../models/index';
+import { AuthenticationService } from '../services/index';
+import { url } from '../global';
+import 'rxjs/add/operator/toPromise';
+ 
  
 @Injectable()
 export class QuotationService {
-    constructor(private http: Http) {}
+    private headers = new Headers({ 'Authorization': 'Bearer ' + this.authenticationService.token });
+    private options = new RequestOptions({ headers: this.headers });
+    constructor(private http: Http, private authenticationService: AuthenticationService) {}
 
     getAll(){
-        return this.http.get('https://192.168.10.73:3333/api/quotations')
+        return this.http.get(url + 'api/quotations', this.options)
             .map((res:Response) => res.json())
             .catch((error:any) => Observable.throw(error.json().error || 'Server error'));
     }
 
     getById(id:string){
-        return this.http.get('https://192.168.10.73:3333/api/quotations' + id)
+        return this.http.get(url + 'api/quotations/' + id, this.options)
             .map((res:Response) => res.json())
             .catch((error:any) => Observable.throw(error.json().error || 'Server error'));
     }
 
-    create(body:Quotation){
-        let options = new RequestOptions({
-            headers: new Headers({ 'Content-Type': 'application/json;charset=UTF-8' }) 
-        });
-        return this.http.post('https://192.168.10.73:3333/api/quotations',body, options)
-            .map((res:Response) => res.json())
-            .catch((error:any) => Observable.throw(error.json().error || 'Server error'));
+    create(body:any): Promise<Quotation> {
+        console.log(body);
+        return this.http.post(url +  'api/quotations', JSON.stringify(body), this.options)
+            .toPromise()
+            .then(res => res.json().data)
+            .catch(this.handleError);
     }
 
-    update(body:Quotation){
-        let options = new RequestOptions({
-            headers: new Headers({ 'Content-Type': 'application/json;charset=UTF-8' }) 
-        });
-        return this.http.put('https://192.168.10.73:3333/api/quotations' + body._id,body, options)
-            .map((res:Response) => res.json())
-            .catch((error:any) => Observable.throw(error.json().error || 'Server error'));
+    update(body:Quotation): Promise<Quotation> {
+        return this.http.post(url + 'api/quotations/update/' + body._id,body, this.options)
+            .toPromise()
+            .then(res => res.json().data)
+            .catch(this.handleError);
     }
 
-    delete(id:string){
-        let options = new RequestOptions({
-            headers: new Headers({ 'Content-Type': 'application/json;charset=UTF-8' }) 
-        });
-        return this.http.delete('https://192.168.10.73:3333/api/quotations' + id, options)
-            .map((res:Response) => res.json())
-            .catch((error:any) => Observable.throw(error.json().error || 'Server error'));
+    delete(id: string): Promise<void> {
+    return this.http.delete(url + 'api/quotations/' + id, this.options)
+      .toPromise()
+      .then(() => null)
+      .catch(this.handleError);
+    }
+
+    private handleError(error: any): Promise<any> {
+        console.error('An error occurred', error);
+        return Promise.reject(error.message || error);
     }
 }

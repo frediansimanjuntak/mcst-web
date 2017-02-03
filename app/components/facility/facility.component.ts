@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, Params, ActivatedRoute } from '@angular/router';
 import { Facility } from '../../models/index';
-import { FacilityService, AlertService } from '../../services/index';
+import { FacilityService, AlertService, UserService } from '../../services/index';
 import '../../rxjs-operators';
 import { Observable} from 'rxjs/Observable';
 
@@ -16,10 +16,16 @@ export class FacilityComponent implements OnInit {
     facilities: Facility[] = [];
     model: any = {};
     id: string;
+    name: any;
 
-    constructor(private router: Router,private facilityService: FacilityService,private alertService: AlertService,private route: ActivatedRoute) {}
+    constructor(private router: Router,
+        private facilityService: FacilityService,
+        private alertService: AlertService,
+        private route: ActivatedRoute,
+        private userService: UserService) {}
 
     ngOnInit() {
+        this.userService.getByToken().subscribe(name => {this.name = name;})
         this.route.params.subscribe(params => {
             this.id = params['id'];
         });
@@ -31,8 +37,6 @@ export class FacilityComponent implements OnInit {
     }
 
     deleteFacility(facility: Facility) {
-        console.log(facility);
-
         this.facilityService.delete(facility._id)
         .then(
 			response => {
@@ -50,18 +54,18 @@ export class FacilityComponent implements OnInit {
     }
 
     private loadAllFacilities() {
-        this.facilityService.getFacilities().then(facilities => { this.facilities = facilities; });
+        this.facilityService.getAll().subscribe(facilities => { this.facilities = facilities; });
     }
 
     add(){
-        this.router.navigate(['/facility/add']);
+        this.router.navigate([this.name.default_development.name + '/facility/add']);
     }
 
     edit(facility: Facility){
-        this.router.navigate(['/facility/edit', facility._id]);
+        this.router.navigate([this.name.default_development.name + '/facility/edit', facility._id]);
     }
 
     view(facility: Facility){
-        this.router.navigate(['/facility/view', facility._id]);
+        this.router.navigate([this.name.default_development.name + '/facility/view', facility._id]);
     }
 }

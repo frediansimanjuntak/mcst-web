@@ -1,13 +1,13 @@
 <div class="container">
 	<div class="main">
 		<div class="title">
-			AGM & CIRCULAR
+			EGM/AGM & CIRCULAR
 		</div>
-		Home > AGM & Circular
+		Home > EGM/AGM & Circular
 		<div class="row">
 			<div class="col-md-4 pull-right">
-					  		<a class="btn btn-default pull-right" [routerLink]="['/newsletter/add']">
-					  		<i class="fa fa-plus" aria-hidden="true"></i>&nbsp;Upload AGM / Circular</a>
+					  		<a class="btn btn-default pull-right" (click)="add()">
+					  		<i class="fa fa-plus" aria-hidden="true"></i>&nbsp;Upload EGM/AGM or Circular</a>
 					  		
 			</div>
 		</div>
@@ -23,13 +23,34 @@
 				            <span [style.color]="data[col.field]">{{data[col.field]}}</span>
 				        </template>
 				    </p-column>
-				    <p-column field="created_by" header="Uploaded by" sortable="true" [filter]="true" filterPlaceholder="Search Uploaded by"></p-column>
+				    <p-column field="created_by.username" header="Uploaded by" sortable="true" [filter]="true" filterPlaceholder="Search Created by"></p-column>
 				     <p-column field="attachment" header="Attachment" sortable="true" [filter]="true" filterPlaceholder="Search Attachment"></p-column>
 				    <!-- </p-column> -->
 				    <p-column styleClass="col-button">
-				    	<template let-dataAgm="rowData" pTemplate="body">
-				    	<button  *ngIf="dataAgm.released == false" type="button" (click)="releaseNewsletter(dataAgm)">Release</button>
-				        <button class="pull-right" type="button" (click)="deleteNewsletter(dataAgm)">Delete</button>
+				    	<template let-dataAgm="rowData" class="pull-right" pTemplate="body">
+				    	<button  class="btn btn-primary" *ngIf="dataAgm.released == false" type="button" (click)="openModal(dataAgm) || firstModal.open()">Release</button>
+				        <button type="button" (click)="deleteNewsletter(dataAgm)"><i class="fa fa-trash" aria-hidden="true"></i></button>
+				    	</template>
+				    </p-column>
+				</p-dataTable>
+		    </tab>
+		     <tab heading="EGM">
+		    	<p-dataTable [value]="dataEgm" [rows]="10" [paginator]="true">
+				    <p-column field="created_at" header="Date" sortable="true" [filter]="true" filterPlaceholder="Search date"></p-column>
+				    <p-column field="title" header="Title" sortable="true" [filter]="true" filterPlaceholder="Search Title"></p-column>
+				    <!-- <p-column field="description" header="Description" sortable="true" [filter]="true" filterPlaceholder="Search"> -->
+				    <p-column field="created_at" header="Uploaded on" sortable="true" [filter]="true" filterPlaceholder="Search Uploaded on">
+				        <template let-col let-data="rowData" pTemplate="body">
+				            <span [style.color]="data[col.field]">{{data[col.field]}}</span>
+				        </template>
+				    </p-column>
+				    <p-column field="created_by.username" header="Uploaded by" sortable="true" [filter]="true" filterPlaceholder="Search Created by"></p-column>
+				     <p-column field="attachment" header="Attachment" sortable="true" [filter]="true" filterPlaceholder="Search Attachment"></p-column>
+				    <!-- </p-column> -->
+				    <p-column styleClass="col-button">
+				    	<template let-dataEgm="rowData" class="pull-right" pTemplate="body">
+				    	<button  class="btn btn-primary" *ngIf="dataEgm.released == false" type="button" (click)="openModal(dataEgm) || firstModal.open()">Release</button>
+				        <button type="button" (click)="deleteNewsletter(dataEgm)"><i class="fa fa-trash" aria-hidden="true"></i></button>
 				    	</template>
 				    </p-column>
 				</p-dataTable>
@@ -44,18 +65,41 @@
 				            <span [style.color]="data[col.field]">{{data[col.field]}}</span>
 				        </template>
 				    </p-column>
-				    <p-column field="uploaded_by" header="Uploaded by" sortable="true" [filter]="true" filterPlaceholder="Search Uploaded by"></p-column>
+				    <p-column field="created_by.username" header="Uploaded by" sortable="true" [filter]="true" filterPlaceholder="Search created by by"></p-column>
 				     <p-column field="attachment" header="Attachment" sortable="true" [filter]="true" filterPlaceholder="Search Attachment"></p-column>
 				    <!-- </p-column> -->
 				    <p-column styleClass="col-button">
-				    	<template let-dataCircular="rowData" pTemplate="body">
-				    	 	<button  *ngIf="dataCircular.released == false" type="button" (click)="releaseNewsletter(dataCircular)">Release</button>
-				        	<button class="pull-right" type="button" (click)="deleteNewsletter(dataCircular)">Delete</button>
+				    	<template let-dataCircular="rowData" class="pull-right" pTemplate="body">
+				    	 	<button class="btn btn-primary" *ngIf="dataCircular.released == false" type="button" (click)="openModal(dataCircular) || firstModal.open()">Release</button>
+				        	<button type="button" (click)="deleteNewsletter(dataCircular)"><i class="fa fa-trash" aria-hidden="true"></i></button>
 				    	</template>
 				    </p-column>
 				</p-dataTable>
 		    </tab>	
 		  </tabset>
 		</div>	
+
+		<div class="row">
+		    
+		    <modal #firstModal>
+		        <modal-header>
+		            <h5>Release Newsletter</h5>
+		        </modal-header>
+		        <modal-content>
+
+		           <div *ngIf="newsletter">
+		              
+		           		Release this newsletter ?	
+		              
+		                <div class="pull-right">
+		                    <button  type="button" class="btn btn-primary" (click)="releaseNewsletter()">Release</button>
+		                    <button class="btn btn-default" (click)="firstModal.close()">Cancel</button>
+		                </div>
+		             
+		           </div>
+		        </modal-content>
+		        
+		    </modal>
+		</div>
 	</div>
 </div>

@@ -14,13 +14,26 @@ export class Contract {
   purchase_order : string;
   start_time : string;
   end_time : string;
-  schedule : [
-    {
+  schedule : [{
       days : string,
       start_time : string,
       end_time : string,
+  }];
+  contract_note : [{
+      note_remark : string;
+      attachment : Attachment[];
+      posted_by : User;
+      posted_on : string;
     }
   ];
+  contract_notice : [{
+      title : string;
+      start_time : string,
+      end_time : string,
+      description: string;
+      attachment : Attachment[];
+      publish : boolean;
+  }];
   tracking_document : Attachment[];
   remark : string;
   status : string;

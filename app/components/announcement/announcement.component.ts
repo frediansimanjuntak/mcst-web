@@ -1,9 +1,8 @@
-import { Component, OnInit, ViewContainerRef, ViewEncapsulation } from '@angular/core';
+import { Component, OnInit, ViewContainerRef, ViewEncapsulation, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
-import { Announcement, } from '../../models/index';
-import { AnnouncementService, AlertService} from '../../services/index';
+import { Announcement, Announcements} from '../../models/index';
+import { AnnouncementService, AlertService, UserService} from '../../services/index';
 import '../../rxjs-operators';
-import { NG_TABLE_DIRECTIVES }    from 'ng2-table/ng2-table'
 import { Observable} from 'rxjs/Observable';
 import * as $ from "jquery";
 // import { Overlay } from 'angular2-modal';
@@ -18,8 +17,9 @@ import * as $ from "jquery";
 })
 
 export class AnnouncementComponent implements OnInit {
-	  announcement: Announcement;
-    announcements: Announcement[] = [];
+    @ViewChild('firstModal') firstModal;
+	announcement: Announcement;
+    announcements: any[] = [];
     validTillDateOptions: any = {};
     model: any = {};
     cols: any[];
@@ -33,16 +33,24 @@ export class AnnouncementComponent implements OnInit {
     public sortOrder = "asc";
     valid_tillStatus: string;
     stickyStatus: string;
+    name: any;
+    
     constructor(
                 private router: Router,
                 private announcementService: AnnouncementService,
                 private alertService: AlertService,
+                private userService: UserService
                 ) {
 
     }
 
     ngOnInit(): void {
-
+        this.userService.getByToken()
+                            .subscribe(name => {
+                                this.name = name;
+                                this.loadAllAnnouncements();
+                            })
+        this.model.publish = false;                              
         this.validTillDateOptions = {
             todayBtnTxt: 'Today',
             dateFormat: 'yyyy-mm-dd',
@@ -52,43 +60,31 @@ export class AnnouncementComponent implements OnInit {
             width: '260px',
             inline: false,
             customPlaceholderTxt: 'Forever (default)',
-            // disableUntil: {year: 2016, month: 8, day: 10},
+            // disableUntil: {year: 2016, month: 8, day: 10}
             selectionTxtFontSize: '16px'
         };
-
-
-        this.developmentId = '585b36585d3cc41224fe518a';
-        this.loadAllAnnouncements();
-    }
-
-    public toInt(num: string) {
-        return +num;
-    }
-
-    public sortByWordLength = (a: any) => {
-        return a.city.length;
     }
 
     deleteAnnouncement(announcement) {
       console.log(announcement);
-        // this.announcementService.delete(announcement._id)
-        //   .then(
-        //     response => {
-        //       if(response) {
-        //         console.log(response);
-        //         // console.log(response.error());
-        //         alert(`The Newsletter could not be deleted, server Error.`);
-        //       } else {
-        //         this.alertService.success('Create user successful', true);
-        //         alert(`Delete Newsletter successful`);
-        //         this.ngOnInit()
-        //       }
-        //     },
-        //     error=> {
-        //       console.log(error);
-        //         alert(`The Newsletter could not be deleted, server Error.`);
-        //     }
-        // );
+        this.announcementService.delete(announcement._id)
+          .then(
+            response => {
+              if(response) {
+                console.log(response);
+                // console.log(response.error());
+                alert(`The Announcement could not be deleted, server Error.`);
+              } else {
+                
+                alert(`Delete announcement successful`);
+                this.ngOnInit()
+              }
+            },
+            error=> {
+              console.log(error);
+                alert(`The Announcement could not be deleted, server Error.`);
+            }
+        );
     }
 
 
@@ -113,7 +109,25 @@ export class AnnouncementComponent implements OnInit {
 
         this.announcement.sticky = this.stickyStatus;
         this.announcement.publish = true;
-        console.log(this.announcement);
+
+        this.announcementService.publish(this.announcement._id)
+          .then(
+            response => {
+              if(response) {
+                alert(`The Announcement could not be publish, server Error.`);
+              } else {
+                alert(`Delete Newsletter successful`);
+                this.firstModal.close();
+                this.ngOnInit()
+              }
+            },
+            error=> {
+              console.log(error);
+                alert(`The Announcement could not be deleted, server Error.`);
+            }
+        );
+
+        this.firstModal.close();
         this.ngOnInit();
     }
 
@@ -123,38 +137,24 @@ export class AnnouncementComponent implements OnInit {
     }
 
     private loadAllAnnouncements() {
-        //---------------------------Call To Api-------------- //
-        // this.announcementService.getAll()
-        //     .subscribe((data)=> {
-        //         setTimeout(()=> {
-        //             this.data          = data.find(data => data._id === this.developmentId );
-        //             this.dataAgm       = this.data.newsletter.filter(data => data.type === 'agm' );
-        //             this.dataCircular  = this.data.newsletter.filter(data => data.type === 'circular' );
-        //             console.log(this.dataAgm);
-        //         }, 1000);
-        //     });
-
-        this.announcementService.getAnnouncements().then(data => {
-            this.announcements            = data;
-            this.announcementsDrafted     = this.announcements.filter(data => data.publish === false );
-            this.announcementsPublished   = this.announcements.filter(data => data.publish === true );
-        });
+        this.announcementService.getAll()
+            .subscribe((data)=> {
+                setTimeout(()=> {
+                    console.log(data);
+                          this.announcements            = data.filter(data => data.development._id === this.name.default_development._id );
+                          this.announcementsDrafted     = this.announcements.filter(data => data.publish == 'false' );
+                          this.announcementsPublished   = this.announcements.filter(data => data.publish == 'true' );
+                }, 1000);
+            });
     }
 
-    public tabs:Array<any> = [
-        {title: 'Dynamic Title 1', content: ''},
-        {title: 'Dynamic Title 2', content: 'Dynamic content 2', disabled: true},
-        {title: 'Dynamic Title 3', content: 'Dynamic content 3', removable: true},
-        {title: 'Dynamic Title 4', content: 'Dynamic content 4', customClass: 'customClass'}
-    ];
-
-    public setActiveTab(index:number):void {
-        this.tabs[index].active = true;
-    };
-
+    add(){
+        this.router.navigate([this.name.default_development.name + '/announcement/add']);  
+    }
 
     editAnnouncement(anouncement: Announcement){
-        this.router.navigate(['/announcement/edit', anouncement._id]);
+        console.log(anouncement);
+        this.router.navigate([this.name.default_development.name + '/announcement/edit', anouncement._id]);
     }
 
 }
