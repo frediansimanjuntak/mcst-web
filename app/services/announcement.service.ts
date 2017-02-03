@@ -59,8 +59,9 @@ export class AnnouncementService {
           .catch(this.handleError);
     }
     
-    publish(id: string): Promise<void> {
-        return this.http.post(url + 'api/announcements/publish/' + id,'', this.options)
+    publish(id: string, body:any): Promise<void> {
+        console.log(body)
+        return this.http.post(url + 'api/announcements/publish/' + id, body, this.options)
           .toPromise()
           .then(() => null)
           .catch(this.handleError);

@@ -110,7 +110,7 @@ export class AnnouncementComponent implements OnInit {
         this.announcement.sticky = this.stickyStatus;
         this.announcement.publish = true;
 
-        this.announcementService.publish(this.announcement._id)
+        this.announcementService.publish(this.announcement._id , this.announcement)
           .then(
             response => {
               if(response) {
