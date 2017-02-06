@@ -71,6 +71,13 @@
                         <span *ngIf="f.submitted && !remark.valid" class="help-block">Remark is required</span>
                     </div>
                 </div>
+               <!--  <div class="form-group">
+                    <label class="control-label col-sm-4" for="status">Mark as Urgent :</label>
+                    <div class="col-sm-8">
+                        <label><input type="radio" name="status" [checked]="status == 'urgent'" [(ngModel)]="model.status" #status="ngModel" value='urgent'>Mark</label>
+                        <label><input type="radio" name="status" [checked]="status == null" [(ngModel)]="model.status" #status="ngModel" value=null >Unmark</label>     
+                    </div>
+                </div> -->
                 <div class="form-group" >
                     <label class="control-label col-sm-4" for="attachment">Attachment :</label>
                     <div class="col-sm-8">

@@ -241,6 +241,7 @@ import {
     VisitService,
     LostFoundService,
     TestService,
+    EditContractComponent,
   ],
   bootstrap:    [ AppComponent ],
   // entryComponents: [ PublishAnnouncementModalComponent ] 

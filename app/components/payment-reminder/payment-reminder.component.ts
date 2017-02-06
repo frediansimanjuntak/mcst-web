@@ -64,8 +64,8 @@ export class PaymentReminderComponent implements OnInit {
 	private loadAllPaymentReminder() {
 		this.paymentreminderService.getPaymentReminders()
         .then(paymentreminders => {
-            this.published = paymentreminders.filter(data => data.publish == true );
-            this.draft   = paymentreminders.filter(data => data.publish == false );
+            this.published = paymentreminders.filter(data => data.publish === true );
+            this.draft   = paymentreminders.filter(data => data.publish === false );
             console.log(this.published)
             for (var i = 0; i < this.published.length; ++i) {
                 this.published[i].auto_issue_on = this.published[i].auto_issue_on.slice(0,10);

@@ -171,7 +171,7 @@ export class VisitComponent implements OnInit {
     checkOut(model: any, isValid: boolean){
         this.checkOutSsubmitted = true;
 
-        if(isValid == true){
+        if(isValid === true){
             this.loading = true;
             this.visitService.checkOut(this.visitOut._id)
                 .then(
@@ -212,7 +212,7 @@ export class VisitComponent implements OnInit {
 
     checkIn(model: any, isValid: boolean) {
         this.checkInSsubmitted = true;
-        if(isValid == true){
+        if(isValid === true){
             this.loading = true;
             this.visitService.checkIn(this.visit._id)
                 .then(
@@ -237,14 +237,14 @@ export class VisitComponent implements OnInit {
         this.addSubmitted = true;
         // model.properties.created_by = '583e4e9dd97c97149884fef5';
         // this.model.pinned.rank = 0;
-        if(model.check_in == true){
+        if(model.check_in === true){
         	model.check_in = new Date();
         }else{
             model.check_in = ''
         }
         console.log(model);
         model.visit_date =  this.visitDateCreate;
-        if(isValid == true){
+        if(isValid === true){
             this.loading = true;
             this.visitService.create(model)
             .then(

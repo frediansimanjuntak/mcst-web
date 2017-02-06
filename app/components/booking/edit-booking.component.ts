@@ -52,6 +52,7 @@ export var Binformation: any[] = []
 
 export class EditBookingComponent implements OnInit  { 
 	public dt: Date = new Date();
+    public minDate: Date = void 0;
     private opened: boolean = false;
 	booking: Booking;
     bookings: Booking[] = [];
@@ -94,7 +95,9 @@ export class EditBookingComponent implements OnInit  {
         private formbuilder: FormBuilder,
 		private route: ActivatedRoute,
         private userService: UserService,
-        private unitService: UnitService){}
+        private unitService: UnitService){
+        (this.minDate = new Date()).setDate(this.minDate.getDate());
+    }
 
 	ngOnInit() {
         this.route.params.subscribe(params => {
@@ -246,6 +249,7 @@ export class EditBookingComponent implements OnInit  {
     public archieveSelected(start:any[],end:any[],min:any,name:any,type:any){
         this.tstart.push(start)
         this.tend.push(end)
+        console.log(this.tstart);
         var time_start = Math.min.apply(Math,this.tstart);
         var time_end = Math.max.apply(Math,this.tend);
         let booking_fee = this.model.booking_fee * (time_end - time_start);

@@ -63,7 +63,7 @@ export class EditPaymentReminderComponent implements OnInit{
                 this.paymentreminder = paymentreminder; 
                 this.paymentreminder.auto_issue_on = this.paymentreminder.auto_issue_on.slice(0,10);
                 this.paymentreminder.due_on = this.paymentreminder.due_on.slice(0,10);
-                for (let entry of this.paymentreminder.notification_list) {
+                for (let i = 0; i < this.paymentreminder.notification_list.length; i++) {
                     const control = <FormArray>this.myForm.controls['notification_list'];
                     control.push(this.initNotification_list());
                 }

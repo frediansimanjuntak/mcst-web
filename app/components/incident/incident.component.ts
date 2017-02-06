@@ -1,6 +1,7 @@
 import { Component, OnInit, EventEmitter } from '@angular/core';
 import { Router, Params, ActivatedRoute } from '@angular/router';
 import { Incident } from '../../models/index';
+import { EditContractComponent } from '../index';
 import { IncidentService, AlertService, UserService, UnitService } from '../../services/index';
 import '../../rxjs-operators';
 import { Observable } from 'rxjs/Observable';
@@ -35,7 +36,8 @@ export class IncidentComponent implements OnInit {
         private alertService: AlertService,
         private route: ActivatedRoute,
         private userService: UserService,
-        private unitService: UnitService) {}
+        private unitService: UnitService,
+        private editcontractComponent: EditContractComponent,) {}
 
     ngOnInit(): void {
         this.userService.getByToken().subscribe(name => {this.name = name;})
@@ -83,35 +85,19 @@ export class IncidentComponent implements OnInit {
 
 	private loadAllIncident() {
 		this.incidentService.getAll().subscribe(incidents => {
-					this.incidents = incidents ;
-                    console.log(this.incidents)
-                    this.dataInProgress = this.incidents.filter(incidents => incidents.status === 'inprogress' );
-                    this.dataResolved   = this.incidents.filter(incidents => incidents.status === 'resolved' );
-                    for (var i = 0; i < this.incidents.length; ++i) {
-                        this.incidents[i].created_at = this.incidents[i].created_at.slice(0,10);
-                    }
-                    for (var i = 0; i < this.dataInProgress.length; ++i) {
-                        this.dataInProgress[i].created_at = this.dataInProgress[i].created_at.slice(0,10);
-                    }
-                    for (var i = 0; i < this.dataResolved.length; ++i) {
-                        this.dataResolved[i].created_at = this.dataResolved[i].created_at.slice(0,10);
-                    }
-                    this.unitService.getAll(this.name.default_development.name)
-                    .subscribe(units => {
-                        this.units = units.properties;
-                        for (var i = 0; i < this.incidents.length; ++i) {
-                            let a = this.units.find(data => data._id == this.incidents[i].property);
-                            this.incidents[i].property = '#'+a.address.unit_no +'-'+ a.address.unit_no_2;
-                        }
-                        for (var i = 0; i < this.dataInProgress.length; ++i) {
-                            let a = this.units.find(data => data._id == this.dataInProgress[i].property);
-                            this.dataInProgress[i].property = '#'+a.address.unit_no +'-'+ a.address.unit_no_2;
-                        }
-                        for (var i = 0; i < this.dataResolved.length; ++i) {
-                            let a = this.units.find(data => data._id == this.dataResolved[i].property);
-                            this.dataResolved[i].property = '#'+a.address.unit_no +'-'+ a.address.unit_no_2;
-                        }
-                    })
+	        this.incidents = incidents ;
+            console.log(this.incidents)
+            this.dataInProgress = this.incidents.filter(incidents => incidents.status === 'inprogress' );
+            this.dataResolved   = this.incidents.filter(incidents => incidents.status === 'resolved' );
+            for (var i = 0; i < this.incidents.length; ++i) {
+                this.incidents[i].created_at = this.incidents[i].created_at.slice(0,10);
+            }
+            for (var i = 0; i < this.dataInProgress.length; ++i) {
+                this.dataInProgress[i].created_at = this.dataInProgress[i].created_at.slice(0,10);
+            }
+            for (var i = 0; i < this.dataResolved.length; ++i) {
+                this.dataResolved[i].created_at = this.dataResolved[i].created_at.slice(0,10);
+            }
 		});
     }
 
@@ -127,16 +113,17 @@ export class IncidentComponent implements OnInit {
         this.router.navigate([this.name.default_development.name + '/incident/add']);
     }
 
-    add_project(reference_no:any){
+    add_project(reference_no:any, id:any){
+        this.editcontractComponent.getType('incident', id);
         this.router.navigate([this.name.default_development.name + '/contract/add',reference_no]);    
     }
 
-    archive(incident:Incident){
+    public archieve(incident:Incident){
         this.incidentService.archieve(incident._id);
         this.ngOnInit()
     }
 
-    unarchive(incident:Incident){
+    public unarchieve(incident:Incident){
         this.incidentService.unarchieve(incident._id);
         this.ngOnInit()
     }

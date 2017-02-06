@@ -255,7 +255,6 @@ export class TestComponent implements OnInit{
     }
 
     onChange(event: any, input: any, a:any) {
-        let files = [].slice.call(event.target.files);
         this.model.attachment = this.src;
         console.log(this.model);
     }
@@ -289,7 +288,6 @@ fileChange(event) {
         // headers.append('Content-Type', 'multipart/form-data');
         headers.append('Accept', 'application/json');
         console.log(headers);
-        let options = new RequestOptions({ headers: headers });
         console.log(formData);
         this.http.post(`${url + 'api/attachments'}`, formData, this.pilihan)
             .map(res => res.json())

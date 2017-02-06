@@ -69,7 +69,7 @@ export class HeaderComponent implements OnInit{
     onNotificationClick(){
     	this.unreadNotificationTotal = 0;
         
-        if(this.NotificationClicked == false){
+        if(this.NotificationClicked === false){
             this.notificationService.read(this.notificationsIds, this.name._id)
         }
         
