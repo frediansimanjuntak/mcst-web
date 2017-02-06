@@ -60,8 +60,8 @@ export class FeedbackComponent implements OnInit {
 
 	private loadAllFeedback() {
 		this.feedbackService.getFeedbacks().then(feedbacks => {
-			this.feedbacks     = feedbacks.filter(feedbacks => feedbacks.archive == false );
-            this.published     = feedbacks.filter(feedbacks => feedbacks.status === 'published' && feedbacks.archive == false );
+			this.feedbacks     = feedbacks.filter(feedbacks => feedbacks.archive === false );
+            this.published     = feedbacks.filter(feedbacks => feedbacks.status === 'published' && feedbacks.archive === false );
 		});
     }
 
@@ -88,14 +88,14 @@ export class FeedbackComponent implements OnInit {
     viewArchived(){
         this.feedbackService.getFeedbacks().then(feedbacks => {
             this.feedbacks = feedbacks ;
-            this.archived  = this.feedbacks.filter(feedbacks => feedbacks.archive == true );
+            this.archived  = this.feedbacks.filter(feedbacks => feedbacks.archive === true );
         });
     }
 
     viewUnarchived(){
         this.feedbackService.getFeedbacks().then(feedbacks => {
-            this.feedbacks     = feedbacks.filter(feedbacks => feedbacks.archive == false );
-            this.published     = feedbacks.filter(feedbacks => feedbacks.status === 'published' && feedbacks.archive == false );
+            this.feedbacks     = feedbacks.filter(feedbacks => feedbacks.archive === false );
+            this.published     = feedbacks.filter(feedbacks => feedbacks.status === 'published' && feedbacks.archive === false );
         });       
         this.archived = '';
     }

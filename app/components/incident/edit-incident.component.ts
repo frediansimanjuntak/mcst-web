@@ -19,6 +19,7 @@ export class EditIncidentComponent implements OnInit {
     model: any = {};
     id: string;
     name: any;
+    refno: any[] = [];
     filesToUpload: Array<File>;
     myForm: FormGroup;
     public uploader:FileUploader = new FileUploader({url:'http://localhost:3001/upload'});
@@ -39,6 +40,15 @@ export class EditIncidentComponent implements OnInit {
     }
 
     ngOnInit(): void {
+        this.incidentService.getAll().subscribe(incidents => {
+            this.incidents = incidents ;
+            for (var i = 0; i < incidents.length; ++i) {
+                this.refno.push(incidents[i].reference_no)
+                console.log(this.refno)
+            };
+        });
+        var no = Math.max.apply(Math,this.refno) + 1;
+        console.log(no)
         this.userService.getByToken().subscribe(name => {this.name = name;})
     	this.selectedType = 'general';
         this.route.params.subscribe(params => {
@@ -50,12 +60,21 @@ export class EditIncidentComponent implements OnInit {
     }
 
     createIncident(event: any) {
+        this.incidentService.getAll().subscribe(incidents => {
+            this.incidents = incidents ;
+            for (var i = 0; i < incidents.length; ++i) {
+                this.refno.push(incidents[i].reference_no)
+                console.log(this.refno)
+            };
+        });
+        var no = Math.max.apply(Math,this.refno) + 1;
+        this.model.reference_no = no;
         let formData:FormData = new FormData();
         
-        for (var i = 0; i < this.model.photo.length; i++) {
-            formData.append("attachment[]", this.model.attachment[i]);
+        for (var i = 0; i < this.model.attachment.length; i++) {
+            formData.append("attachment", this.model.attachment[i]);
         }
-
+        formData.append("reference_no", this.model.reference_no);
         formData.append("incident_type", this.model.incident_type);
         formData.append("title", this.model.title);
         formData.append("remark", this.model.remark);
@@ -95,7 +114,7 @@ export class EditIncidentComponent implements OnInit {
 
     onChange(fileInput: any){
         this.filesToUpload = <Array<File>> fileInput.target.files;
-        this.model.photo = this.filesToUpload;
+        this.model.attachment = this.filesToUpload;
     }
 
     // onChange(event: any) {

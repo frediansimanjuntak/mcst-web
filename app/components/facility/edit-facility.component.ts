@@ -95,7 +95,8 @@ export class EditFacilityComponent  {
                         __v : [''],
                     });
                 }
-                for (let entry of this.facility.schedule) {
+
+                for (let i = 0; i < this.facility.schedule.length; i++) {
                     const control = <FormArray>this.myForm.controls['schedule'];
                     control.push(this.initSchedule());
                 }

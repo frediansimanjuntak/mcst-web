@@ -67,11 +67,6 @@
 						    <p-column field="reference_no" header="Report No." sortable="true" [filter]="true" filterPlaceholder="Search Report No."></p-column>
 						    <p-column [style]="{'text-transform': 'capitalize'}" field="incident_type" header="Type" sortable="true" [filter]="true" filterPlaceholder="Search Type"></p-column>
 						    <p-column field="created_by.username" header="Reported by" sortable="true" [filter]="true" filterPlaceholder="Search Reported by"></p-column>
-						    <p-column field="property" header="Unit No." sortable="true" [filter]="true" filterPlaceholder="Search unit no">
-						    	<!-- <template let-data="rowData" pTemplate="body">
-						    		{{data.property.address.unit_no}}-{{data.property.address.unit_no_2}}
-						    	</template> -->
-						    </p-column>
 						    <p-column field="created_at" header="Report time" sortable="true" [filter]="true" filterPlaceholder="Search Report time"></p-column>
 						    <p-column field="title" header="Title" sortable="true" [filter]="true" filterPlaceholder="Search Title"></p-column>
 						    <p-column field="remark" header="Message" sortable="true" [filter]="true" filterPlaceholder="Search Message"></p-column>
@@ -90,7 +85,7 @@
 						    	<template let-data="rowData" pTemplate="body">
 						    		<a type="button" style="text-decoration: underline;cursor:pointer" (click)="view(data)">View</a>
 						    		<img *ngIf="data.starred_by.length < 1" title="starred" src="../../assets/image/star_filled.png" width="24px" height="28px" (click)="starred(data)" />
-						    		<img *ngIf="data.starred_by > 0" title="unstarred" src="../../assets/image/icon_star_active@3x.png" width="24px" height="28px" (click)="unstarred(data)" />
+						    		<img *ngIf="data.starred_by.length > 0" title="unstarred" src="../../assets/image/icon_star_active@3x.png" width="24px" height="28px" (click)="unstarred(data)" />
 									<img *ngIf="data.archive == false" title="archived" src="../../assets/image/icon_archived.png" (click)="archived(data)" />
 									<img *ngIf="data.archive == true" title="unarchived" src="../../assets/image/icon_archived.png" (click)="unarchived(data)" />
 						    	</template>
@@ -103,11 +98,6 @@
 						   <p-column field="reference_no" header="Report No." sortable="true" [filter]="true" filterPlaceholder="Search Report No."></p-column>
 						    <p-column [style]="{'text-transform': 'capitalize'}" field="incident_type" header="Type" sortable="true" [filter]="true" filterPlaceholder="Search Type"></p-column>
 						    <p-column field="created_by" header="Reported by" sortable="true" [filter]="true" filterPlaceholder="Search Reported by"></p-column>
-						    <p-column field="" header="Unit No." sortable="true" [filter]="true" filterPlaceholder="Search unit no">
-						    	<template let-data="rowData" pTemplate="body">
-						    		{{data.property.address.unit_no}}-{{data.property.address.unit_no_2}}
-						    	</template>
-						    </p-column>
 						    <p-column field="created_at" header="Report time" sortable="true" [filter]="true" filterPlaceholder="Search Report time"></p-column>
 						    <p-column field="title" header="Title" sortable="true" [filter]="true" filterPlaceholder="Search Title"></p-column>
 						    <p-column field="remark" header="Message" sortable="true" [filter]="true" filterPlaceholder="Search Message"></p-column>
@@ -139,11 +129,6 @@
 						    <p-column field="reference_no" header="Report No." sortable="true" [filter]="true" filterPlaceholder="Search Report No."></p-column>
 						    <p-column [style]="{'text-transform': 'capitalize'}" field="incident_type" header="Type" sortable="true" [filter]="true" filterPlaceholder="Search Type"></p-column>
 						    <p-column field="created_by" header="Reported by" sortable="true" [filter]="true" filterPlaceholder="Search Reported by"></p-column>
-						    <p-column field="" header="Unit No." sortable="true" [filter]="true" filterPlaceholder="Search unit no">
-						    	<template let-data="rowData" pTemplate="body">
-						    		{{data.property.address.unit_no}}-{{data.property.address.unit_no_2}}
-						    	</template>
-						    </p-column>
 						    <p-column field="created_at" header="Report time" sortable="true" [filter]="true" filterPlaceholder="Search Report time"></p-column>
 						    <p-column field="title" header="Title" sortable="true" [filter]="true" filterPlaceholder="Search Title"></p-column>
 						    <p-column field="remark" header="Message" sortable="true" [filter]="true" filterPlaceholder="Search Message"></p-column>
@@ -175,11 +160,6 @@
 						    <p-column field="reference_no" header="Report No." sortable="true" [filter]="true" filterPlaceholder="Search Report No."></p-column>
 						    <p-column [style]="{'text-transform': 'capitalize'}" field="incident_type" header="Type" sortable="true" [filter]="true" filterPlaceholder="Search Type"></p-column>
 						    <p-column field="created_by" header="Reported by" sortable="true" [filter]="true" filterPlaceholder="Search Reported by"></p-column>
-						    <p-column field="" header="Unit No." sortable="true" [filter]="true" filterPlaceholder="Search unit no">
-						    	<template let-data="rowData" pTemplate="body">
-						    		{{data.property.unit_no}}-{{data.property.unit_no_2}}
-						    	</template>
-						    </p-column>
 						    <p-column field="created_at" header="Report time" sortable="true" [filter]="true" filterPlaceholder="Search Report time"></p-column>
 						    <p-column field="title" header="Title" sortable="true" [filter]="true" filterPlaceholder="Search Title"></p-column>
 						    <p-column field="remark" header="Message" sortable="true" [filter]="true" filterPlaceholder="Search Message"></p-column>
