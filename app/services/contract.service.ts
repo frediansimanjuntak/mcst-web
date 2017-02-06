@@ -8,7 +8,7 @@ import 'rxjs/add/operator/toPromise';
  
 @Injectable()
 export class ContractService {
-    private headers = new Headers({'Content-Type': 'application/json', 'Authorization': 'Bearer ' + this.authenticationService.token });
+    private headers = new Headers({'Authorization': 'Bearer ' + this.authenticationService.token });
     private options = new RequestOptions({ headers: this.headers });
     constructor(private http: Http, private authenticationService: AuthenticationService) {}
 
@@ -36,7 +36,7 @@ export class ContractService {
 
    create(body:any): Promise<Contract> {
         console.log(body);
-        return this.http.post(url +  'api/contracts', JSON.stringify(body), this.options)
+        return this.http.post(url +  'api/contracts', body, this.options)
             .toPromise()
             .then(res => res.json().data)
             .catch(this.handleError);
