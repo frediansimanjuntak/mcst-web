@@ -3,6 +3,7 @@ import { Router, Params, ActivatedRoute } from '@angular/router';
 import { Announcement, Announcements } from '../../models/index';
 import { AnnouncementService, AlertService, UserService } from '../../services/index';
 import { FormBuilder, FormGroup, FormControl, FormArray, Validators } from '@angular/forms';
+import {IMyOptions} from 'mydatepicker';
 import '../../rxjs-operators';
 import 'rxjs/add/operator/switchMap';
 
@@ -13,15 +14,40 @@ import 'rxjs/add/operator/switchMap';
 })
 
 export class EditAnnouncementComponent  {
+
+    private autoPostOnDateOptions: IMyOptions = {
+            todayBtnTxt: 'Today',
+            dateFormat: 'yyyy-mm-dd',
+            firstDayOfWeek: 'mo',
+            sunHighlight: true,
+            height: '34px',
+            width: '260px',
+            inline: false,    
+            disableUntil: {year: 0, month: 0, day: 0},
+            editableDateField: false,
+            selectionTxtFontSize: '16px'
+        };
+
+    private validTillDateOptions: IMyOptions = {
+            todayBtnTxt: 'Today',
+            dateFormat: 'yyyy-mm-dd',
+            firstDayOfWeek: 'mo',
+            sunHighlight: true,
+            height: '34px',
+            width: '260px',
+            inline: false,
+            disableUntil: {year: 0, month: 0, day: 0},
+            editableDateField: false,
+            selectionTxtFontSize: '16px'
+        };
+
     @Input('group')
 	announcement: Announcement;
     model: any = {};
     myForm: FormGroup;
     id: string;
-    autoPostOnDateOptions: any = {};
-    validTillDateOptions: any = {};
+    selectedValidDate: any;
     name: any;
-
     constructor(private router: Router,
     	private anouncementService: AnnouncementService,
     	private alertService: AlertService,
@@ -31,41 +57,30 @@ export class EditAnnouncementComponent  {
 
         // this.user = JSON.parse(localStorage.getItem('user'));
     }
+    private autoPostOnDateTxt: string = 'No auto post (default)';
+    private validTillDateTxt: string = 'Forever (default)';
 
     ngOnInit() {
         this.route.params.subscribe(params => {
             this.id = params['id'];
         });
 
+        let copy: IMyOptions = this.getCopyOfAutoPostDateOptions();
+        let today = new Date();
+        let month = today.getUTCMonth() + 1; //months from 1-12
+        let day = today.getUTCDate();
+        let year = today.getUTCFullYear();
+        copy.disableUntil = {
+            year: year,
+            month: month,
+            day: day
+        };
+
+        this.autoPostOnDateOptions = copy;
+        this.validTillDateOptions = copy;
         
-        this.autoPostOnDateOptions = {
-            todayBtnTxt: 'Today',
-            dateFormat: 'yyyy-mm-dd',
-            firstDayOfWeek: 'mo',
-            sunHighlight: true,
-            height: '34px',
-            width: '260px',
-            inline: false,
-            customPlaceholderTxt: 'No auto post (default)',
-            // disableUntil: {year: 2016, month: 8, day: 10},
-            selectionTxtFontSize: '16px'
-        };
-
-        this.validTillDateOptions = {
-            todayBtnTxt: 'Today',
-            dateFormat: 'yyyy-mm-dd',
-            firstDayOfWeek: 'mo',
-            sunHighlight: true,
-            height: '34px',
-            width: '260px',
-            inline: false,
-            customPlaceholderTxt: 'Forever (default)',
-            // disableUntil: {year: 2016, month: 8, day: 10},
-            selectionTxtFontSize: '16px'
-        };
-
-        this.model.auto_post_on = "no"
-        this.model.valid_till = "forever"
+        this.model.auto_post_on = ""
+        this.model.valid_till = ""
         this.model.publish = false;
         this.model.sticky = 'no';
         
@@ -78,28 +93,14 @@ export class EditAnnouncementComponent  {
                                             .subscribe(announcement => {
                                                 console.log(announcement);
                                                 this.announcement = announcement;
-                                                if(this.announcement.auto_post_on != "no"){
-                                                   this.model.auto_post_on = this.announcement.auto_post_on;
-                                                }else{
-                                                    this.model.auto_post_on = "";
-                                                }
-                                                if(this.announcement.valid_till != "forever"){
-                                                   this.model.valid_till = this.announcement.valid_till;
-                                                }else{
-                                                    this.model.valid_till = "";
-                                                }
+                                                this.model.auto_post_on = this.announcement.auto_post_on;
+                                                this.model.valid_till = this.announcement.valid_till;
                                             });
                                 };
                             })
     }
 
     createAnnouncement() {
-        if(this.model.auto_post_on == ""){
-            this.model.auto_post_on = "no"
-        }
-        if(this.model.valid_till == ""){
-            this.model.valid_till = "forever"
-        }
         console.log(this.model);
         this.anouncementService.create(this.model)
         .then(
@@ -114,9 +115,35 @@ export class EditAnnouncementComponent  {
         );
     }
 
+    getCopyOfValidTillDateOptions(): IMyOptions {
+        return JSON.parse(JSON.stringify(this.validTillDateOptions));
+    }
+
+    getCopyOfAutoPostDateOptions(): IMyOptions {
+        return JSON.parse(JSON.stringify(this.autoPostOnDateOptions));
+    }
+
     autoPostOnDateChanged(event:any) {
       // console.log('onDateChanged(): ', event.date, ' - jsdate: ', new Date(event.jsdate).toLocaleDateString(), ' - formatted: ', event.formatted, ' - epoc timestamp: ', event.epoc);
-      this.model.auto_post_on = event.formatted.replace(/-/g, "/");;
+        this.model.auto_post_on = event.formatted.replace(/-/g, "/");
+        if(this.model.auto_post_on){
+            (this.selectedValidDate = new Date()).setDate(event.jsdate.getDate() + 1);
+            this.selectedValidDate = this.convertDate(this.selectedValidDate)
+            let copy: IMyOptions = this.getCopyOfValidTillDateOptions();
+            copy.disableUntil = event.date;
+            this.validTillDateOptions = copy;
+        }
+    }
+
+    convertDate(date) {
+      var yyyy = date.getFullYear().toString();
+      var mm = (date.getMonth()+1).toString();
+      var dd  = date.getDate().toString();
+
+      var mmChars = mm.split('');
+      var ddChars = dd.split('');
+
+      return yyyy + '-' + (mmChars[1]?mm:"0"+mmChars[0]) + '-' + (ddChars[1]?dd:"0"+ddChars[0]);
     }
 
     validTillDateChanged(event:any) {
@@ -125,20 +152,10 @@ export class EditAnnouncementComponent  {
     }
 
     updateAnnouncement(){
-        if(this.model.auto_post_on == ""){
-            this.announcement.auto_post_on  = "no";
-        }else{
-            this.announcement.auto_post_on  = this.model.auto_post_on;
-        }
-
-        if(this.model.valid_till == ""){
-           this.announcement.valid_till = "forever";
-        }else{
-            this.announcement.valid_till = this.model.valid_till;
-        }
-        console.log(this.announcement);
-
-		this.anouncementService.update(this.announcement)
+        this.announcement.auto_post_on  = this.model.auto_post_on;
+        this.announcement.valid_till = this.model.valid_till;
+        
+        this.anouncementService.update(this.announcement)
 		.then(
 			response => {
 				if(response) {

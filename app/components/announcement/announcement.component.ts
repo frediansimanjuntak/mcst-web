@@ -4,6 +4,7 @@ import { Announcement, Announcements} from '../../models/index';
 import { AnnouncementService, AlertService, UserService} from '../../services/index';
 import '../../rxjs-operators';
 import { Observable} from 'rxjs/Observable';
+import {IMyOptions} from 'mydatepicker';
 import * as $ from "jquery";
 // import { Overlay } from 'angular2-modal';
 // import { Modal } from 'angular2-modal/plugins/bootstrap';
@@ -17,11 +18,25 @@ import * as $ from "jquery";
 })
 
 export class AnnouncementComponent implements OnInit {
+     private validTillDateOptions: IMyOptions = {
+            todayBtnTxt: 'Today',
+            dateFormat: 'yyyy-mm-dd',
+            firstDayOfWeek: 'mo',
+            sunHighlight: true,
+            height: '34px',
+            width: '260px',
+            inline: false,    
+            disableUntil: {year: 0, month: 0, day: 0},
+            editableDateField: false,
+            selectionTxtFontSize: '16px'
+        };
+
+
     @ViewChild('firstModal') firstModal;
 	announcement: Announcement;
     announcements: any[] = [];
-    validTillDateOptions: any = {};
     model: any = {};
+    publishData: any = {};
     cols: any[];
     public developmentId;
     public data;
@@ -43,6 +58,8 @@ export class AnnouncementComponent implements OnInit {
                 ) {
 
     }
+    
+    private validTillDateTxt: string = 'Forever (default)';
 
     ngOnInit(): void {
         this.userService.getByToken()
@@ -50,19 +67,23 @@ export class AnnouncementComponent implements OnInit {
                                 this.name = name;
                                 this.loadAllAnnouncements();
                             })
-        this.model.publish = false;                              
-        this.validTillDateOptions = {
-            todayBtnTxt: 'Today',
-            dateFormat: 'yyyy-mm-dd',
-            firstDayOfWeek: 'mo',
-            sunHighlight: true,
-            height: '34px',
-            width: '260px',
-            inline: false,
-            customPlaceholderTxt: 'Forever (default)',
-            // disableUntil: {year: 2016, month: 8, day: 10}
-            selectionTxtFontSize: '16px'
+        let copy: IMyOptions = this.getCopyOfValidTillDateOptions();
+        let today = new Date();
+        let month = today.getUTCMonth() + 1; //months from 1-12
+        let day = today.getUTCDate();
+        let year = today.getUTCFullYear();
+        copy.disableUntil = {
+            year: year,
+            month: month,
+            day: day
         };
+        this.validTillDateOptions = copy;
+
+        this.model.publish = false;                              
+    }
+
+    getCopyOfValidTillDateOptions(): IMyOptions {
+        return JSON.parse(JSON.stringify(this.validTillDateOptions));
     }
 
     deleteAnnouncement(announcement) {
@@ -91,13 +112,13 @@ export class AnnouncementComponent implements OnInit {
 
     openModal(announcement){
         this.announcement = announcement;
+    console.log(this.announcement);
         this.valid_tillStatus = announcement.valid_till;
         this.stickyStatus = announcement.sticky;
 
-        if(this.valid_tillStatus == "forever"){
+        if(this.valid_tillStatus == ""){
               this.valid_tillStatus = "";
         }
-        console.log(this.announcement);
     }
 
     publishAnnouncement(){
@@ -107,16 +128,18 @@ export class AnnouncementComponent implements OnInit {
              this.announcement.valid_till = this.valid_tillStatus;
         }
 
-        this.announcement.sticky = this.stickyStatus;
-        this.announcement.publish = true;
+        
+        this.publishData.sticky = this.stickyStatus;
+        this.publishData.valid_till = this.announcement.valid_till;
+        console.log(this.model);
 
-        this.announcementService.publish(this.announcement._id , this.announcement)
+        this.announcementService.publish(this.announcement._id , this.publishData)
           .then(
             response => {
               if(response) {
                 alert(`The Announcement could not be publish, server Error.`);
               } else {
-                alert(`Delete Newsletter successful`);
+                alert(`Publish Announcement successful`);
                 this.firstModal.close();
                 this.ngOnInit()
               }

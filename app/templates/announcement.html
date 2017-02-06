@@ -14,11 +14,11 @@
 		<div class="row">
 		  <tabset>
 		    <tab heading="Draft">
-		    	<p-dataTable [value]="announcementsDrafted" [rows]="10"  resizableColumns="true" [paginator]="true">
-				    <p-column field="title" header="Title" sortable="true" [filter]="true" filterPlaceholder="Search title"></p-column>
-				    <p-column field="message" header="Message" sortable="true" [filter]="true" filterPlaceholder="Search Message"></p-column>
-				    <p-column field="sticky" header="Sticky" sortable="true" [filter]="true"></p-column>
-				    <p-column field="auto_post_on" header="Auto post on" sortable="true" [filter]="true" filterPlaceholder="Search Date "></p-column>
+		    	<p-dataTable [value]="announcementsDrafted" [rows]="10" [paginator]="true">
+				    <p-column [style]="{'width':'200px'}" field="title" header="Title" sortable="true" [filter]="true" filterPlaceholder="Search title"></p-column>
+				    <p-column [style]="{'width':'300px'}" field="message" header="Message" sortable="true" [filter]="true" filterPlaceholder="Search Message"></p-column>
+				    <p-column [style]="{'width':'70px'}" field="sticky" header="Sticky" sortable="true"></p-column>
+				    <p-column field="auto_post_on" header="Auto post on" sortable="true" filterPlaceholder="Search Date "></p-column>
 				    <p-column header="Valid till" sortable="true">
 						    	<template let-announcementsDrafted="rowData" pTemplate="body">
 						            <span>{{announcementsDrafted.valid_till | date:'y/M/d'}}</span>
@@ -29,7 +29,7 @@
 						            <span>{{announcementsDrafted.created_at | date:'y/M/d'}}</span>
 						        </template>
 					</p-column>
-					<p-column [style]="{'width':'300px'}" styleClass="col-button" header="action">
+					<p-column [style]="{'width':'200px'}" styleClass="col-button">
 				    	<template class="pull-right" let-announcementsDrafted="rowData" pTemplate="body">
 				    	<a type="button" style="cursor:pointer" (click)="editAnnouncement(announcementsDrafted)"><i class="fa fa-edit" aria-hidden="true"></i>&nbsp;Edit</a>
 				    	<button type="button" class="btn btn-primary btn-xs" (click)="openModal(announcementsDrafted) || firstModal.open()">Publish</button>
@@ -39,10 +39,10 @@
 				</p-dataTable>
 		    </tab>	
 		    <tab heading="Published">
-		    	<p-dataTable [value]="announcementsPublished" [rows]="10"  resizableColumns="true" [paginator]="true">
-				    <p-column field="title" header="Title" sortable="true" [filter]="true" filterPlaceholder="Search title"></p-column>
-				    <p-column field="message" header="Message" sortable="true" [filter]="true" filterPlaceholder="Search Message"></p-column>
-				    <p-column field="sticky" header="Sticky" sortable="true" [filter]="true"></p-column>
+		    	<p-dataTable [value]="announcementsPublished" [rows]="10" [paginator]="true">
+				    <p-column [style]="{'width':'200px'}" field="title" header="Title" sortable="true" [filter]="true" filterPlaceholder="Search title"></p-column>
+				    <p-column [style]="{'width':'300px'}" field="message" header="Message" sortable="true" [filter]="true" filterPlaceholder="Search Message"></p-column>
+				    <p-column field="sticky" [style]="{'width':'70px'}" header="Sticky" sortable="true"></p-column>
 				     <p-column header="Valid till" sortable="true">
 						    	<template let-announcementsPublished="rowData" pTemplate="body">
 						            <span>{{announcementsPublished.valid_till | date:'y/M/d'}}</span>
@@ -58,7 +58,7 @@
 				            <span>{{announcementsPublished.created_by.username}}</span>
 				        </template>
 				    </p-column>
-				    <p-column styleClass="col-button">
+				    <p-column [style]="{'width':'40px'}" styleClass="col-button">
 				    	<template class="pull-right" let-announcementsPublished="rowData" pTemplate="body">
 				        <button  type="button" (click)="deleteAnnouncement(announcementsPublished)"><i class="fa fa-trash" aria-hidden="true"></i></button>
 				        </template>
@@ -83,14 +83,18 @@
 		                <div class="form-group">
 		                    <label class="control-label col-sm-4" for="sticky">Sticky? :</label>
 		                    <div class="col-sm-8">
-		                        <label><input type="radio" name="sticky" [checked]="stickyStatus == 'yes'" [(ngModel)]="stickyStatus" value='yes'>Yes</label>
-		                        <label><input type="radio" name="sticky" [checked]="stickyStatus == 'no'" [(ngModel)]="stickyStatus" value='no'>No</label>     
+		                    	<div class="col-sm-2">
+		                    		<label><input type="radio" name="sticky" [checked]="stickyStatus == 'yes'" [(ngModel)]="stickyStatus" value='yes'>Yes</label>	
+		                    	</div>
+		                    	<div class="col-sm-2">
+		                    		<label><input type="radio" name="sticky" [checked]="stickyStatus == 'no'" [(ngModel)]="stickyStatus" value='no'>No</label>     	
+		                    	</div>
 		                    </div>
 		                </div>
 		                <div class="form-group" >
 		                    <label class="control-label col-sm-4" for="valid_till">Valid till :</label>
 		                    <div class="col-sm-8">
-		                    <my-date-picker [options]="validTillDateOptions"
+		                    <my-date-picker [options]="validTillDateOptions" [placeholder]="validTillDateTxt"
                             [selDate]="valid_tillStatus" (dateChanged)="validTillDateChanged($event)"></my-date-picker>
 		                       
 		                    </div>

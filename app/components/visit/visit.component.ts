@@ -316,7 +316,6 @@ export class VisitComponent implements OnInit {
         this.visitActive  = [];
     	(this.activeDate = new Date()).setDate(this.activeDateFull.getDate() + 1);
     	this.activeDateFull = this.activeDate;
-    	console.log(this.activeDateFull);
     	this.ngOnInit();
     }
 
