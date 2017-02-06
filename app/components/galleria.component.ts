@@ -202,14 +202,12 @@ export class Galleria implements AfterViewChecked,AfterViewInit,OnDestroy {
 
     select(index, reposition) {
         if(index !== this.activeIndex) {
-            let oldPanel = this.panels[this.activeIndex],
-            newPanel = this.panels[index];
+            let newPanel = this.panels[index];
 
             this.domHandler.fadeIn(newPanel, 500);
 
             if(this.showFilmstrip) {
-                let oldFrame = this.frames[this.activeIndex],
-                newFrame = this.frames[index];
+                let newFrame = this.frames[index];
 
                 if(reposition === undefined || reposition === true) {
                     let frameLeft = newFrame.offsetLeft,

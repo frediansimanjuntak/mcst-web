@@ -114,11 +114,11 @@ export class LostFoundComponent implements OnInit {
             .subscribe((data)=> {
                 setTimeout(()=> {
                     this.lostFounds      = data.filter(data => data.development._id == this.name.default_development._id);
-                    this.archieveds      = this.lostFounds.filter(data => data.archieve == true );
+                    this.archieveds      = this.lostFounds.filter(data => data.archieve === true );
                     this.archievedLosts = this.archieveds.filter(data => data.type == 'lost');
                     this.archievedFounds= this.archieveds.filter(data => data.type == 'found');
 
-                    this.all             = this.lostFounds.filter(data => data.archieve == false );
+                    this.all             = this.lostFounds.filter(data => data.archieve === false );
                     this.losts           = this.all.filter(data => data.type == 'lost');
                     this.founds          = this.all.filter(data => data.type == 'found');
                     console.log(this.lostFounds);

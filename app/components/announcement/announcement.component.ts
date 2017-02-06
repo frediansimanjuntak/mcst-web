@@ -142,8 +142,8 @@ export class AnnouncementComponent implements OnInit {
                 setTimeout(()=> {
                     console.log(data);
                           this.announcements            = data.filter(data => data.development._id === this.name.default_development._id );
-                          this.announcementsDrafted     = this.announcements.filter(data => data.publish == 'false' );
-                          this.announcementsPublished   = this.announcements.filter(data => data.publish == 'true' );
+                          this.announcementsDrafted     = this.announcements.filter(data => data.publish == false );
+                          this.announcementsPublished   = this.announcements.filter(data => data.publish == true );
                 }, 1000);
             });
     }

@@ -71,7 +71,7 @@ export class EditNewsletterComponent  {
         }
 
         this.model.attachment = formData;
-        if(this.model.released == true){
+        if(this.model.released === true){
             this.model.released_at =  Date.now();
         } else {
             this.model.released_by = '';

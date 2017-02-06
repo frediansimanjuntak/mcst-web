@@ -1,0 +1,108 @@
+.main {
+  padding: 0 50px !important;
+}
+
+.title {
+  text-transform: uppercase;
+  font-weight: bold;
+  font-size: 20px;
+  padding-top: 20px ;
+}
+
+.header-component{
+	background-color: #30333c;
+  margin-bottom: 0 !important;
+  border-radius: 0 !important;
+}
+
+.navbar-component, .dropdown-menu {
+	background-color: #c1baa7 !important;
+}
+
+.nav, .dropdown-menu {
+      margin-bottom: 0;
+      border-radius: 0;
+      font-size: 12px !important;
+}
+
+.navbar-brand-centered {
+      position: absolute;
+      left: 45%;
+      display: block;
+      width: 160px;
+      text-align: center;
+      font-size: 250%;
+}
+
+.navbar>.container .navbar-brand-centered, 
+.navbar>.container-fluid .navbar-brand-centered {
+    margin-left: -80px;
+}
+
+.header-component > div > h1 {
+  color: #ffffff !important;
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 250%;
+}
+
+.header-component {
+  color: #ffffff;
+}
+
+.control-label {
+    text-align: left !important;
+    padding: 0 !important;
+}
+
+.form-control {
+  border-radius: 0 !important;
+}
+
+.btn {
+  border-radius: 0 !important;
+  min-width: 150px ;
+  height: 35px;
+  border-bottom-width: 4px !important;
+  border-bottom-style: solid;
+  font-weight: bold !important;
+  display: inline !important;
+}
+
+.form-control {
+  display: inline !important;
+}
+
+.btn-primary {
+  background-color: rgb(181,173,150) !important;
+  color: white;
+  border-right-color: rgb(181,173,150) !important;
+  border-top-color: rgb(181,173,150) !important;
+  border-left-color: rgb(181,173,150) !important;
+  border-bottom-color: rgb(154,141,107) !important;
+}
+
+.btn-default {
+  background-color: rgb(240,240,240) !important;
+  color: rgb(109,110,114) !important;
+  border-bottom-color: rgb(222,222,222);
+}
+
+.btn-info {
+  background-color: white !important;
+  color: rgb(109,110,114) !important;
+  border-color: rgb(222,222,222) !important;
+}
+
+.btn-underline {
+  text-decoration: underline;
+  cursor:pointer;
+}
+
+.upload{
+  color: white;
+}
+
+.img-btn{
+  width: 15px;
+  height: 15px;
+}

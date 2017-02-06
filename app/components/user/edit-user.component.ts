@@ -94,11 +94,11 @@ export class EditUserComponent implements OnInit {
                     salt: [],
                     __v: [],
                 });
-                for (let entry of this.user.owned_property) {
+                for (let i = 0; i < this.user.owned_property.length; i++) {
                     const control = <FormArray>this.myForm.controls['owned_property'];
                     control.push(this.initOwned());
                 }
-                for (let entry of this.user.authorized_property) {
+                for (let i = 0; i < this.user.authorized_property.length; i++) {
                     const control = <FormArray>this.myForm.controls['authorized_property'];
                     control.push(this.initAuthorized());
                 }
