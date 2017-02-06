@@ -8,7 +8,7 @@ import 'rxjs/add/operator/toPromise';
  
 @Injectable()
 export class NewsletterService {
-    private headers = new Headers({'Content-Type': 'application/json', 'Authorization': 'Bearer ' + this.authenticationService.token });
+    private headers = new Headers({'Authorization': 'Bearer ' + this.authenticationService.token });
     private options = new RequestOptions({ headers: this.headers });
     constructor(private http: Http, private authenticationService: AuthenticationService) {}
 
@@ -33,8 +33,8 @@ export class NewsletterService {
             .catch((error:any) => Observable.throw(error.json().error || 'Server error'));
     }
 
-    create(body:any, name:string): Promise<any> {
-        return this.http.post(url + 'api/newsletters/' + name, JSON.stringify(body), this.options)
+    create(formData:any, name:string): Promise<any> {
+        return this.http.post(`${url + 'api/newsletters/' + name}`, formData, this.options)
             .toPromise()
             .then(res => res.json().data)
             .catch(this.handleError);

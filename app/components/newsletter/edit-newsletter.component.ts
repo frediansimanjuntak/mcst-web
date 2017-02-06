@@ -64,22 +64,26 @@ export class EditNewsletterComponent  {
     }
 
     createNewsletter() {
-        var formData: any = new FormData();
+        let formData:FormData = new FormData();
         
-        for(var i = 0; i < this.model.attachment.length; i++) {
-            formData.append("attachment[]", this.model.attachment.length[i], this.model.attachment.length[i].name);
+        for (var i = 0; i < this.model.attachment.length; i++) {
+            formData.append("attachment[]", this.model.attachment[i]);
         }
 
-        this.model.attachment = formData;
+        formData.append("title", this.model.title);
+        formData.append("description", this.model.description);
+        formData.append("type", this.model.type);
+        formData.append("released", this.model.released);
+        
         if(this.model.released == true){
             this.model.released_at =  Date.now();
-        } else {
-            this.model.released_by = '';
-            this.model.released_at = '';
-        }
-        console.log(this.model);
-       
-        this.newsletterService.create(this.model, this.name.default_development.name)
+            console.log(this.model.release_at)
+            formData.append("released", this.model.released);
+            formData.append("release_at", this.model.released_at);
+        } 
+
+        console.log(formData)
+        this.newsletterService.create(formData, this.name.default_development.name)
         .then(
             data => {
                 this.alertService.success('Create newsletter successful', true);
