@@ -129,3 +129,5 @@ gulp.task('build:dev', gulp.series(['clean', 'compile:ts', 'copy:templates', 'co
 
 /** this runs the above in order. uses gulp4 */
 gulp.task('build', gulp.series(['clean', 'compile:ts', 'copy:templates', 'copy:assets', 'bundle', 'bundle:libs']));
+
+gulp.task('pre-build', gulp.series(['copy:templates', 'copy:assets']));
