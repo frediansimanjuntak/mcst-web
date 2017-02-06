@@ -24,11 +24,11 @@
 	        		</div>
 	        		<div class="row">
 	        			<div class="col-md-4">Status :</div>
-	        			<div class="col-md-8"><p>{{ incident.status }}</p></div>
+	        			<div class="col-md-8"><p style="text-transform: capitalize;">{{ incident.status }}</p></div>
 	        		</div>
 	        		<div class="row">
 	        			<div class="col-md-4">Order :</div>
-	        			<div class="col-md-8"><p><span *ngIf="!incident.contract"><img src="assets/image/menu_manageproject.png" width="14px" height="12px"> <a (click)="add_project(incident.reference_no)" style="text-decoration: underline;cursor:pointer">Create Project</a></span>
+	        			<div class="col-md-8"><p><span *ngIf="!incident.contract"><img src="assets/image/menu_manageproject.png" width="14px" height="12px"> <a (click)="add_project(incident.reference_no,incident._id)" style="text-decoration: underline;cursor:pointer">Create Project</a></span>
 	        			<span *ngIf="incident.contract">aaa</span></p></div>
 	        		</div>
 	        		<div class="row">
@@ -64,19 +64,19 @@
 			  <!-- ALL -->
 				    <tab heading="All">
 				    	<p-dataTable [value]="incidents" [rows]="10" [paginator]="true">
-						    <p-column field="reference_no" header="Report No." sortable="true" [filter]="true" filterPlaceholder="Search Report No."></p-column>
-						    <p-column [style]="{'text-transform': 'capitalize'}" field="incident_type" header="Type" sortable="true" [filter]="true" filterPlaceholder="Search Type"></p-column>
-						    <p-column field="created_by.username" header="Reported by" sortable="true" [filter]="true" filterPlaceholder="Search Reported by"></p-column>
-						    <p-column field="created_at" header="Report time" sortable="true" [filter]="true" filterPlaceholder="Search Report time"></p-column>
-						    <p-column field="title" header="Title" sortable="true" [filter]="true" filterPlaceholder="Search Title"></p-column>
-						    <p-column field="remark" header="Message" sortable="true" [filter]="true" filterPlaceholder="Search Message"></p-column>
+						    <p-column filterMatchMode="contains" field="reference_no" header="Report No." sortable="true" [filter]="true" filterPlaceholder="Search Report No."></p-column>
+						    <p-column filterMatchMode="contains" [style]="{'text-transform': 'capitalize'}" field="incident_type" header="Type" sortable="true" [filter]="true" filterPlaceholder="Search Type"></p-column>
+						    <p-column filterMatchMode="contains" field="created_by.username" header="Reported by" sortable="true" [filter]="true" filterPlaceholder="Search Reported by"></p-column>
+						    <p-column filterMatchMode="contains" field="created_at" header="Report time" sortable="true" [filter]="true" filterPlaceholder="Search Report time"></p-column>
+						    <p-column filterMatchMode="contains" field="title" header="Title" sortable="true" [filter]="true" filterPlaceholder="Search Title"></p-column>
+						    <p-column filterMatchMode="contains" field="remark" header="Message" sortable="true" [filter]="true" filterPlaceholder="Search Message"></p-column>
 						    <p-column [style]="{'width':'75px'}" header="Photo">
 						    	<template let-data="rowData" pTemplate="body">
 						    		<a *ngIf="data.attachment != null" style="text-decoration: underline;cursor:pointer" (click)="view(data)">View</a>
 						    		<a *ngIf="data.attachment == null">-</a>
 						    	</template>
 						    </p-column>
-						    <p-column [style]="{'text-transform': 'capitalize'}" field="status" header="Status" sortable="true" [filter]="true" filterPlaceholder="Search Status">
+						    <p-column [style]="{'text-transform': 'capitalize'}" field="status" header="Status" sortable="true" [filter]="true" filterMatchMode="contains" filterPlaceholder="Search Status">
 						        <template let-col let-data="rowData" pTemplate="body">
 						            <span [style.color]="data[col.field]">{{data[col.field]}}</span>
 						        </template>
@@ -86,8 +86,8 @@
 						    		<a type="button" style="text-decoration: underline;cursor:pointer" (click)="view(data)">View</a>
 						    		<img *ngIf="data.starred_by.length < 1" title="starred" src="../../assets/image/star_filled.png" width="24px" height="28px" (click)="starred(data)" />
 						    		<img *ngIf="data.starred_by.length > 0" title="unstarred" src="../../assets/image/icon_star_active@3x.png" width="24px" height="28px" (click)="unstarred(data)" />
-									<img *ngIf="data.archive == false" title="archived" src="../../assets/image/icon_archived.png" (click)="archived(data)" />
-									<img *ngIf="data.archive == true" title="unarchived" src="../../assets/image/icon_archived.png" (click)="unarchived(data)" />
+									<img *ngIf="data.archieve === false" title="archived" src="../../assets/image/icon_archived.png" (click)="archived(data)" />
+									<img *ngIf="data.archieve === true" title="unarchived" src="../../assets/image/icon_archived.png" (click)="unarchived(data)" />
 						    	</template>
 						    </p-column>
 						</p-dataTable>
@@ -95,19 +95,19 @@
 				    <!-- NEW -->
 				    <tab heading="New">
 				    	<p-dataTable [value]="dataNew" [rows]="10" [paginator]="true">
-						   <p-column field="reference_no" header="Report No." sortable="true" [filter]="true" filterPlaceholder="Search Report No."></p-column>
-						    <p-column [style]="{'text-transform': 'capitalize'}" field="incident_type" header="Type" sortable="true" [filter]="true" filterPlaceholder="Search Type"></p-column>
-						    <p-column field="created_by" header="Reported by" sortable="true" [filter]="true" filterPlaceholder="Search Reported by"></p-column>
-						    <p-column field="created_at" header="Report time" sortable="true" [filter]="true" filterPlaceholder="Search Report time"></p-column>
-						    <p-column field="title" header="Title" sortable="true" [filter]="true" filterPlaceholder="Search Title"></p-column>
-						    <p-column field="remark" header="Message" sortable="true" [filter]="true" filterPlaceholder="Search Message"></p-column>
+						    <p-column filterMatchMode="contains" field="reference_no" header="Report No." sortable="true" [filter]="true" filterPlaceholder="Search Report No."></p-column>
+						    <p-column filterMatchMode="contains" [style]="{'text-transform': 'capitalize'}" field="incident_type" header="Type" sortable="true" [filter]="true" filterPlaceholder="Search Type"></p-column>
+						    <p-column filterMatchMode="contains" field="created_by.username" header="Reported by" sortable="true" [filter]="true" filterPlaceholder="Search Reported by"></p-column>
+						    <p-column filterMatchMode="contains" field="created_at" header="Report time" sortable="true" [filter]="true" filterPlaceholder="Search Report time"></p-column>
+						    <p-column filterMatchMode="contains" field="title" header="Title" sortable="true" [filter]="true" filterPlaceholder="Search Title"></p-column>
+						    <p-column filterMatchMode="contains" field="remark" header="Message" sortable="true" [filter]="true" filterPlaceholder="Search Message"></p-column>
 						    <p-column [style]="{'width':'75px'}" header="Photo">
 						    	<template let-data="rowData" pTemplate="body">
 						    		<a *ngIf="data.attachment != null" style="text-decoration: underline;cursor:pointer" (click)="view(data)">View</a>
 						    		<a *ngIf="data.attachment == null">-</a>
 						    	</template>
 						    </p-column>
-						    <p-column [style]="{'text-transform': 'capitalize'}" field="status" header="Status" sortable="true" [filter]="true" filterPlaceholder="Search Status">
+						    <p-column filterMatchMode="contains" [style]="{'text-transform': 'capitalize'}" field="status" header="Status" sortable="true" [filter]="true" filterMatchMode="containss" filterPlaceholder="Search Status">
 						        <template let-col let-data="rowData" pTemplate="body">
 						            <span [style.color]="data[col.field]">{{data[col.field]}}</span>
 						        </template>
@@ -126,19 +126,19 @@
 				    <!-- IN PROGRESS -->
 				    <tab heading="In-Progress">
 				    	<p-dataTable [value]="dataInProgress" [rows]="10" [paginator]="true">
-						    <p-column field="reference_no" header="Report No." sortable="true" [filter]="true" filterPlaceholder="Search Report No."></p-column>
-						    <p-column [style]="{'text-transform': 'capitalize'}" field="incident_type" header="Type" sortable="true" [filter]="true" filterPlaceholder="Search Type"></p-column>
-						    <p-column field="created_by" header="Reported by" sortable="true" [filter]="true" filterPlaceholder="Search Reported by"></p-column>
-						    <p-column field="created_at" header="Report time" sortable="true" [filter]="true" filterPlaceholder="Search Report time"></p-column>
-						    <p-column field="title" header="Title" sortable="true" [filter]="true" filterPlaceholder="Search Title"></p-column>
-						    <p-column field="remark" header="Message" sortable="true" [filter]="true" filterPlaceholder="Search Message"></p-column>
+						    <p-column filterMatchMode="contains" field="reference_no" header="Report No." sortable="true" [filter]="true" filterPlaceholder="Search Report No."></p-column>
+						    <p-column filterMatchMode="contains" [style]="{'text-transform': 'capitalize'}" field="incident_type" header="Type" sortable="true" [filter]="true" filterPlaceholder="Search Type"></p-column>
+						    <p-column filterMatchMode="contains" field="created_by.username" header="Reported by" sortable="true" [filter]="true" filterPlaceholder="Search Reported by"></p-column>
+						    <p-column filterMatchMode="contains" field="created_at" header="Report time" sortable="true" [filter]="true" filterPlaceholder="Search Report time"></p-column>
+						    <p-column filterMatchMode="contains" field="title" header="Title" sortable="true" [filter]="true" filterPlaceholder="Search Title"></p-column>
+						    <p-column filterMatchMode="contains" field="remark" header="Message" sortable="true" [filter]="true" filterPlaceholder="Search Message"></p-column>
 						    <p-column [style]="{'width':'75px'}" header="Photo">
 						    	<template let-data="rowData" pTemplate="body">
 						    		<a *ngIf="data.attachment != null" style="text-decoration: underline;cursor:pointer" (click)="view(data)">View</a>
 						    		<a *ngIf="data.attachment == null">-</a>
 						    	</template>
 						    </p-column>
-						    <p-column [style]="{'text-transform': 'capitalize'}" field="status" header="Status" sortable="true" [filter]="true" filterPlaceholder="Search Status">
+						    <p-column filterMatchMode="contains" [style]="{'text-transform': 'capitalize'}" field="status" header="Status" sortable="true" [filter]="true" filterPlaceholder="Search Status">
 						        <template let-col let-data="rowData" pTemplate="body">
 						            <span [style.color]="data[col.field]">{{data[col.field]}}</span>
 						        </template>
@@ -157,19 +157,19 @@
 				    <!-- RESOLVED -->
 				    <tab heading="Resolved">
 				    	<p-dataTable [value]="dataResolved" [rows]="10" [paginator]="true">
-						    <p-column field="reference_no" header="Report No." sortable="true" [filter]="true" filterPlaceholder="Search Report No."></p-column>
-						    <p-column [style]="{'text-transform': 'capitalize'}" field="incident_type" header="Type" sortable="true" [filter]="true" filterPlaceholder="Search Type"></p-column>
-						    <p-column field="created_by" header="Reported by" sortable="true" [filter]="true" filterPlaceholder="Search Reported by"></p-column>
-						    <p-column field="created_at" header="Report time" sortable="true" [filter]="true" filterPlaceholder="Search Report time"></p-column>
-						    <p-column field="title" header="Title" sortable="true" [filter]="true" filterPlaceholder="Search Title"></p-column>
-						    <p-column field="remark" header="Message" sortable="true" [filter]="true" filterPlaceholder="Search Message"></p-column>
+						    <p-column filterMatchMode="contains" field="reference_no" header="Report No." sortable="true" [filter]="true" filterPlaceholder="Search Report No."></p-column>
+						    <p-column filterMatchMode="contains" [style]="{'text-transform': 'capitalize'}" field="incident_type" header="Type" sortable="true" [filter]="true" filterPlaceholder="Search Type"></p-column>
+						    <p-column filterMatchMode="contains" field="created_by.username" header="Reported by" sortable="true" [filter]="true" filterPlaceholder="Search Reported by"></p-column>
+						    <p-column filterMatchMode="contains" field="created_at" header="Report time" sortable="true" [filter]="true" filterPlaceholder="Search Report time"></p-column>
+						    <p-column filterMatchMode="contains" field="title" header="Title" sortable="true" [filter]="true" filterPlaceholder="Search Title"></p-column>
+						    <p-column filterMatchMode="contains" field="remark" header="Message" sortable="true" [filter]="true" filterPlaceholder="Search Message"></p-column>
 						    <p-column [style]="{'width':'75px'}" header="Photo">
 						    	<template let-data="rowData" pTemplate="body">
 						    		<a *ngIf="data.attachment != null" style="text-decoration: underline;cursor:pointer" (click)="view(data)">View</a>
 						    		<a *ngIf="data.attachment == null">-</a>
 						    	</template>
 						    </p-column>
-						    <p-column [style]="{'text-transform': 'capitalize'}" field="status" header="Status" sortable="true" [filter]="true" filterPlaceholder="Search Status">
+						    <p-column filterMatchMode="contains" [style]="{'text-transform': 'capitalize'}" field="status" header="Status" sortable="true" [filter]="true" filterPlaceholder="Search Status">
 						        <template let-col let-data="rowData" pTemplate="body">
 						            <span [style.color]="data[col.field]">{{data[col.field]}}</span>
 						        </template>
