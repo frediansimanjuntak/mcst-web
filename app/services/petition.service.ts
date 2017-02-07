@@ -56,7 +56,7 @@ export class PetitionService {
     }     
 
     archive(body:any): Promise<Petition> {
-        return this.http.post(url + 'api/petitions/archieve/' ,body, this.options)
+        return this.http.post(url + 'api/petitions/archieve/' , body , this.options)
             .toPromise()
             .then(res => res.json().data)
             .catch(this.handleError);
