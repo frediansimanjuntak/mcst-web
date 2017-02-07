@@ -69,14 +69,14 @@ export class IncidentService {
     }
 
     archieve(id: string): Promise<Incident> {
-        return this.http.post(url + 'api/incidents/achieve/' + id,'', this.options)
+        return this.http.post(url + 'api/incidents/archieve/' + id,'', this.options)
             .toPromise()
             .then(res => res.json().data)
             .catch(this.handleError);
     }
 
     unarchieve(id: string): Promise<Incident> {
-        return this.http.put(url + 'api/incidents/achieve/' + id,'', this.options)
+        return this.http.put(url + 'api/incidents/archieve/' + id,'', this.options)
             .toPromise()
             .then(res => res.json().data)
             .catch(this.handleError);
