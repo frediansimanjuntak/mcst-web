@@ -91,7 +91,7 @@
 	                </div>
 	            </div>
 	            <div class="row" style="border: 1px solid grey;min-height: 100px">
-	                <div class="row">
+	                <div *ngIf="!contractnotices" class="row">
 	                	<div class="col-md-12">
 	                    	<div style="text-align: center;">
 	                    		No Project Notice.
@@ -143,7 +143,7 @@
 	                </div>
 	            </div>
 	            <div class="row" style="border: 1px solid grey;min-height: 100px">
-	                <div class="row">
+	                <div *ngIf="!contractnote" class="row">
 	                	<div class="col-md-12">
 	                    	<div style="text-align: center;">
 	                    		No note created yet.
