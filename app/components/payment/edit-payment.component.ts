@@ -36,7 +36,6 @@ export class EditPaymentComponent implements OnInit{
     }
 
     createPayment() {
-        console.log(this.model);
         this.paymentService.create(this.model)
         .then(
             data => {

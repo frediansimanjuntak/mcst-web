@@ -100,7 +100,7 @@ export class EditFacilityComponent  {
                     const control = <FormArray>this.myForm.controls['schedule'];
                     control.push(this.initSchedule());
                 }
-                this.myForm.setValue(this.facility);
+                this.myForm.patchValue(this.facility);
             });
         }
     }
@@ -126,7 +126,6 @@ export class EditFacilityComponent  {
     }
 
     createFacility(model:Facility) {
-        console.log(model)
         this.facilityService.create(model)
         .then(
             response => {

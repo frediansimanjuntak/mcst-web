@@ -33,7 +33,6 @@ export class AccessControlComponent implements OnInit {
     }
 
     deleteAccessControl(accesscontrol: AccessControl) {
-        console.log(accesscontrol)
         this.accesscontrolService.delete(accesscontrol._id)
         // .subscribe(() => { this.loadAllUsers() });
         .then(

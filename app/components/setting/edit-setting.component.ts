@@ -37,9 +37,7 @@ export class EditSettingComponent {
     updateSetting(){
         this.user.details.identification_proof.front = this.model.front;
         this.user.details.identification_proof.back = this.model.back;
-
-            console.log(this.user);
-		    this.userService.update(this.user)
+		this.userService.update(this.user)
 		    .then(response => {
                   this.alertService.success('Update User successful', true);
                   this.router.navigate([this.name.default_development.name + '/user']);

@@ -26,7 +26,6 @@ export class QuotationService {
     }
 
     create(body:any): Promise<Quotation> {
-        console.log(body);
         return this.http.post(url +  'api/quotations', JSON.stringify(body), this.options)
             .toPromise()
             .then(res => res.json().data)

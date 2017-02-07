@@ -34,7 +34,6 @@ export class FeedbackService {
     }
 
     create(body:any): Promise<Feedback> {
-        console.log(body);
         return this.http.post(url +  'api/feedback', JSON.stringify(body), this.options)
             .toPromise()
             .then(res => res.json().data)

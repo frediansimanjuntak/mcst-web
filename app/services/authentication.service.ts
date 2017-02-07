@@ -41,9 +41,9 @@ export class AuthenticationService {
     }
 
     checkCredentials(){
-        if (localStorage.getItem("user") === null){
+        if (localStorage.getItem("authToken") === null){
             this._router.navigate(['Login']);
-        }; console.log(localStorage.getItem("user"));
+        };
     }
 
     handleError(error: Response) {

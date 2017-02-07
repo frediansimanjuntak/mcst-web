@@ -69,10 +69,7 @@ export class AppComponent implements OnInit {
     }
 
     start() {
-        this.slimLoadingBarService.start(() => {
-            console.log('Loading complete');
-        });
-        console.log('aaa')
+        this.slimLoadingBarService.start(() => {});
     }
 
 

@@ -70,7 +70,6 @@ export class EditUserComponent implements OnInit {
             this.userService.getById(this.id)
             .subscribe(user => {
                 this.user = user;
-                console.log(this.user)
                 this.myForm = this.formbuilder.group({
                     _id : [''],
                     username : ['', Validators.required],
@@ -102,7 +101,7 @@ export class EditUserComponent implements OnInit {
                     const control = <FormArray>this.myForm.controls['authorized_property'];
                     control.push(this.initAuthorized());
                 }
-                this.myForm.setValue(this.user);
+                this.myForm.patchValue(this.user);
             });
         };
 
@@ -114,7 +113,7 @@ export class EditUserComponent implements OnInit {
     initOwned() {
         return this.formbuilder.group({
             _id: [],
-            development: ['585b36585d3cc41224fe518a'],
+            development: [''],
             property: ['']
         });
     }
@@ -122,7 +121,7 @@ export class EditUserComponent implements OnInit {
     initAuthorized() {
         return this.formbuilder.group({
             _id: [],
-            development: ['585b36585d3cc41224fe518a'],
+            development: [''],
             property: ['']
         });
     }
@@ -162,7 +161,7 @@ export class EditUserComponent implements OnInit {
     }
 
     createUser(model:User , isValid: boolean) {
-        console.log(model)
+        this.submitted = true;
         this.userService.create(model)
         .then(
             data => {

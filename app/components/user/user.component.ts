@@ -18,10 +18,7 @@ export class UserComponent implements OnInit {
     developmentID = "1";
     name: any;
 
-    constructor(private router: Router,private userService: UserService,private alertService: AlertService) {
-        // this.user = JSON.parse(localStorage.getItem('user'));
-        // console.log(this.user)
-    }
+    constructor(private router: Router,private userService: UserService,private alertService: AlertService) {}
 
     ngOnInit() {
         this.userService.getByToken().subscribe(name => {this.name = name;})
