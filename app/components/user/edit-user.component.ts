@@ -70,7 +70,6 @@ export class EditUserComponent implements OnInit {
             this.userService.getById(this.id)
             .subscribe(user => {
                 this.user = user;
-                console.log(this.user)
                 this.myForm = this.formbuilder.group({
                     _id : [''],
                     username : ['', Validators.required],
@@ -162,7 +161,6 @@ export class EditUserComponent implements OnInit {
     }
 
     createUser(model:User , isValid: boolean) {
-        console.log(model)
         this.userService.create(model)
         .then(
             data => {

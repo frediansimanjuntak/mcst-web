@@ -38,23 +38,21 @@ export class PaymentComponent implements OnInit {
     }
 
     deletePayment(payment: Payment) {
-    	console.log(payment._id)
         this.paymentService.delete(payment._id)
           .then(
             response => {
               if(response) {
                 console.log(response);
-                // console.log(response.error());
-                alert(`The Newsletter could not be deleted, server Error.`);
+                alert(`The Payment could not be deleted, server Error.`);
               } else {
                 this.alertService.success('Create user successful', true);
-                alert(`Delete Newsletter successful`);
+                alert(`Delete Payment successful`);
                 this.ngOnInit()
               }
             },
             error=> {
               console.log(error);
-                alert(`The Newsletter could not be deleted, server Error.`);
+                alert(`The Payment could not be deleted, server Error.`);
             }
         );
     }
@@ -62,10 +60,6 @@ export class PaymentComponent implements OnInit {
 	private loadAllPayment() {
 		this.paymentService.getPayments().then(payments => this.payments = payments);
     }
-
-    // edit(incident: Incident){
-    //     this.router.navigate(['/incident/edit', incident._id]);
-    // }
 
     view(payment: Payment){
         this.router.navigate([this.name.default_development.name + '/payment/view', payment._id]);

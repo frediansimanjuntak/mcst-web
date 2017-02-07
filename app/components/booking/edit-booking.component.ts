@@ -116,7 +116,6 @@ export class EditBookingComponent implements OnInit  {
         })
         this.step = 1;
         this.day = this.days[this.dt.getDay()];
-        console.log(this.day)
 		this.facilityService.getAll()
 		.subscribe(facilities => {
 			this.facilities = facilities;
@@ -168,7 +167,6 @@ export class EditBookingComponent implements OnInit  {
 
     createBooking() { 
         this.model.reference_no = this.model.serial_no
-        console.log(this.model)
         this.bookingService.create(this.model)
         .then(
             data => {
@@ -242,14 +240,12 @@ export class EditBookingComponent implements OnInit  {
                     this.timeEnd.push(data.start)
                 }
             }
-            console.log(this.filtered)
         });
     }
 
     public archieveSelected(start:any[],end:any[],min:any,name:any,type:any){
         this.tstart.push(start)
         this.tend.push(end)
-        console.log(this.tstart);
         var time_start = Math.min.apply(Math,this.tstart);
         var time_end = Math.max.apply(Math,this.tend);
         let booking_fee = this.model.booking_fee * (time_end - time_start);
@@ -288,7 +284,6 @@ export class EditBookingComponent implements OnInit  {
         this.model.serial_no = this.ref_no.toString();
         this.model.sender = "Mr. Nice";
         this.step = 2;
-        console.log(this.model)
     }
 
     change(){

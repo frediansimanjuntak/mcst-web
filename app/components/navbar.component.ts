@@ -19,8 +19,6 @@ export class NavbarComponent implements OnInit {
 	}
 
 	start() {
-        this.slimLoadingBarService.start(() => {
-            console.log('Loading complete');
-        });
+        this.slimLoadingBarService.start(() => {});
     }
 }

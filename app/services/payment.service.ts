@@ -34,7 +34,6 @@ export class PaymentService {
     }
 
     create(body:any): Promise<Payment> {
-        console.log(body);
         return this.http.post(url +  'api/payments', JSON.stringify(body), this.options)
             .toPromise()
             .then(res => res.json().data)

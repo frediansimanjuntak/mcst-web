@@ -126,7 +126,6 @@ export class EditFacilityComponent  {
     }
 
     createFacility(model:Facility) {
-        console.log(model)
         this.facilityService.create(model)
         .then(
             response => {

@@ -17,10 +17,7 @@ export class SettingComponent implements OnInit {
     name: any;
     model: any = {};
 
-    constructor(private router: Router,private userService: UserService,private alertService: AlertService) {
-        // this.user = JSON.parse(localStorage.getItem('user'));
-        // console.log(this.user)
-    }
+    constructor(private router: Router,private userService: UserService,private alertService: AlertService) {}
 
     ngOnInit() {
         this.userService.getByToken().subscribe(name => {this.name = name;})
@@ -28,7 +25,7 @@ export class SettingComponent implements OnInit {
     }
 
     private loadSetting() {
-        this.userService.getUser("1").then(user => { this.user = user; console.log(user) });
+        this.userService.getUser("1").then(user => this.user = user);
     }
 
     edit(user: User){

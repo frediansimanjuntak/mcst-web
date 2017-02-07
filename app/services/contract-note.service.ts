@@ -25,7 +25,6 @@ export class ContractNoteService {
     }
 
    create(body:any, id:string): Promise<Contract> {
-        console.log(body);
         return this.http.post(url +  'api/contracts_note/' + id, JSON.stringify(body), this.options)
             .toPromise()
             .then(res => res.json().data)

@@ -28,10 +28,7 @@ export class EditPaymentReminderComponent implements OnInit{
     	private userService: UserService,
     	private alertService: AlertService,
         private route: ActivatedRoute,
-        private formbuilder: FormBuilder ) {
-
-        // this.user = JSON.parse(localStorage.getItem('user'));
-    }
+        private formbuilder: FormBuilder ) {}
 
     ngOnInit():void{ 
         this.userService.getByToken().subscribe(name => {this.name = name;})
@@ -68,7 +65,6 @@ export class EditPaymentReminderComponent implements OnInit{
                     control.push(this.initNotification_list());
                 }
                 this.myForm.setValue(this.paymentreminder);
-                console.log(this.paymentreminder)
             });
         }
     }
@@ -94,32 +90,30 @@ export class EditPaymentReminderComponent implements OnInit{
     }
 
     createPaymentReminder(paymentreminder:PaymentReminder) {
-        console.log(paymentreminder);
-        // this.paymentreminderService.create(this.model)
-        // .then(
-        //     data => {
-        //         this.alertService.success('Create payment successful', true);
-        //         this.router.navigate([this.name.default_development.name + '/payment_reminder']);
-        //     },
-        //     error => {
-        //         console.log(error);
-        //         alert(`The payment could not be save, server Error.`);
-        //     }
-        // );
+        this.paymentreminderService.create(this.model)
+        .then(
+            data => {
+                this.alertService.success('Create payment successful', true);
+                this.router.navigate([this.name.default_development.name + '/payment_reminder']);
+            },
+            error => {
+                console.log(error);
+                alert(`The payment could not be save, server Error.`);
+            }
+        );
     }
 
     updatePaymentReminder(paymentreminder:PaymentReminder){
-        console.log(paymentreminder);
-        // this.paymentreminderService.update(paymentreminder)
-        // .then(
-        //     response => {
-        //         this.alertService.success('Update payment reminder successful', true);
-        //         this.router.navigate([this.name.default_development.name + '/payment_reminder']);
-        //     },
-        //     error => {
-        //         this.alertService.error(error);
-        //     }
-        // );
+        this.paymentreminderService.update(paymentreminder)
+        .then(
+            response => {
+                this.alertService.success('Update payment reminder successful', true);
+                this.router.navigate([this.name.default_development.name + '/payment_reminder']);
+            },
+            error => {
+                this.alertService.error(error);
+            }
+        );
     }
 
     

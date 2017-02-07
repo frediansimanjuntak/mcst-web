@@ -64,7 +64,6 @@ export class ContractNoticeComponent implements OnInit  {
     }
 
     view(contract: Contract){
-        console.log(contract)
         this.router.navigate(['/contract/view', contract._id]);
     }
 
