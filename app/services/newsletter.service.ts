@@ -34,7 +34,6 @@ export class NewsletterService {
     }
 
     create(body:any, name:string): Promise<any> {
-        console.log(body);
         return this.http.post(`${url + 'api/newsletters/' + name}`, body, this.options)
             .toPromise()
             .then(res => res.json().data)

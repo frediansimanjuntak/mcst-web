@@ -89,16 +89,12 @@ export class EditPetitionComponent implements OnInit {
                 this.no = +this.petitions[a].reference_no + 1
                 if(this.no > 1 && this.no < 10) {
                     this.model.reference_no = '000' + this.no.toString();
-                    console.log(this.model.reference_no)
                 }if(this.no > 10 && this.no < 100) {
                     this.model.reference_no = '00' + this.no.toString();
-                    console.log(this.model.reference_no)
                 }if(this.no > 100 && this.no < 1000) { 
                     this.model.reference_no = '0' + this.no.toString();
-                    console.log(this.model.reference_no)
                 }if(this.no > 1000) {
                     this.model.reference_no = this.no.toString();
-                    console.log(this.model.reference_no)
                 }
             } else {
                 this.model.reference_no = '0001'
@@ -145,7 +141,6 @@ export class EditPetitionComponent implements OnInit {
                 setTimeout(()=> {
                     this.units = data.properties;
 
-                    console.log(this.units);
                     let numOptions =  this.units.length;
                     let opts = new Array(numOptions);
 
@@ -163,7 +158,6 @@ export class EditPetitionComponent implements OnInit {
 
     public refreshValueUnit(value:any):void {
         this.unit = value;
-        console.log(value);
     }
 
 
@@ -176,7 +170,6 @@ export class EditPetitionComponent implements OnInit {
     }
 
     updatePetition(){
-    	console.log(this.petition);
 		this.petitionService.update(this.petition)
 		.then(
 			response => {
