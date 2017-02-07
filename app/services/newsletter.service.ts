@@ -33,8 +33,9 @@ export class NewsletterService {
             .catch((error:any) => Observable.throw(error.json().error || 'Server error'));
     }
 
-    create(formData:any, name:string): Promise<any> {
-        return this.http.post(`${url + 'api/newsletters/' + name}`, formData, this.options)
+    create(body:any, name:string): Promise<any> {
+        console.log(body);
+        return this.http.post(`${url + 'api/newsletters/' + name}`, body, this.options)
             .toPromise()
             .then(res => res.json().data)
             .catch(this.handleError);
