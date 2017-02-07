@@ -55,7 +55,6 @@ export class LostFoundService {
     }
 
     archieve(id: string): Promise<LostFound> {
-        console.log(this.options);
         return this.http.post(url + 'api/lost_found/archieve/' + id, '', this.options)
           .toPromise()
           .then(() => null)

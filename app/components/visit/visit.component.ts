@@ -242,7 +242,6 @@ export class VisitComponent implements OnInit {
         }else{
             model.check_in = ''
         }
-        console.log(model);
         model.visit_date =  this.visitDateCreate;
         if(isValid === true){
             this.loading = true;
@@ -277,8 +276,6 @@ export class VisitComponent implements OnInit {
                         let visiting = this.dataUnit.find(data => data._id ==  this.visitActive[i].property);
                         this.visitActive[i].visiting = '#' + visiting.address.unit_no + '-' + visiting.address.unit_no_2;
                     }
-
-                    console.log(this.visitActive[0]);
                     this.loading = false;
                 }, 1000);
             });

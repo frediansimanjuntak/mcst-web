@@ -54,8 +54,6 @@ export class EditAnnouncementComponent  {
         private formbuilder: FormBuilder,
         private route: ActivatedRoute,
         private userService: UserService ) {
-
-        // this.user = JSON.parse(localStorage.getItem('user'));
     }
     private autoPostOnDateTxt: string = 'No auto post (default)';
     private validTillDateTxt: string = 'Forever (default)';
@@ -91,7 +89,6 @@ export class EditAnnouncementComponent  {
                                     this.anouncementService
                                             .getById(this.id)
                                             .subscribe(announcement => {
-                                                console.log(announcement);
                                                 this.announcement = announcement;
                                                 this.model.auto_post_on = this.announcement.auto_post_on;
                                                 this.model.valid_till = this.announcement.valid_till;
@@ -101,7 +98,6 @@ export class EditAnnouncementComponent  {
     }
 
     createAnnouncement() {
-        console.log(this.model);
         this.anouncementService.create(this.model)
         .then(
             data => {
@@ -124,8 +120,7 @@ export class EditAnnouncementComponent  {
     }
 
     autoPostOnDateChanged(event:any) {
-      // console.log('onDateChanged(): ', event.date, ' - jsdate: ', new Date(event.jsdate).toLocaleDateString(), ' - formatted: ', event.formatted, ' - epoc timestamp: ', event.epoc);
-        this.model.auto_post_on = event.formatted.replace(/-/g, "/");
+         this.model.auto_post_on = event.formatted.replace(/-/g, "/");
         if(this.model.auto_post_on){
             (this.selectedValidDate = new Date()).setDate(event.jsdate.getDate() + 1);
             this.selectedValidDate = this.convertDate(this.selectedValidDate)
@@ -147,7 +142,6 @@ export class EditAnnouncementComponent  {
     }
 
     validTillDateChanged(event:any) {
-      // console.log('onDateChanged(): ', event.date, ' - jsdate: ', new Date(event.jsdate).toLocaleDateString(), ' - formatted: ', event.formatted, ' - epoc timestamp: ', event.epoc);
       this.model.valid_till = event.formatted.replace(/-/g, "/");;
     }
 
@@ -161,8 +155,7 @@ export class EditAnnouncementComponent  {
 				if(response) {
 	                this.alertService.error('Update announcement failed');
 	            } else {
-	                // EmitterService.get(this.userList).emit(response.users);
-                     this.alertService.success('Update announcement successful', true);
+	                 this.alertService.success('Update announcement successful', true);
                      this.router.navigate([this.name.default_development.name + '/announcement']);
 	            }
             },

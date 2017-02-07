@@ -54,17 +54,14 @@ export class CompanyComponent implements OnInit {
     }
 
     deleteCompany(company) {
-      console.log(company);
         this.companyService.delete(company._id)
           .then(
             response => {
               if(response) {
                 console.log(response);
-                // console.log(response.error());
                 alert(`The Company could not be deleted, server Error.`);
               } else {
                 this.alertService.success('Delete company successful', true);
-                alert(`Delete Company successful`);
                 this.ngOnInit()
               }
             },
@@ -80,26 +77,24 @@ export class CompanyComponent implements OnInit {
     }
 
     activate(){
-    	this.company.active = true;
-    	this.activeModal.close();
-        // this.companyService.activation(this.company._id)
-        //   .then(
-        //     response => {
-        //       if(response) {
-        //         alert(`The Company could not be activated, server Error.`);
-        //       } else {
-        //         this.alertService.success('Activate company successful', true);
-        //         alert(`Activated Company successful`);
-        //         this.activeModal.close();
-        //         this.ngOnInit()
-        //       }
-        //     },
-        //     error=> {
-        //       console.log(error);
-        //       this.activeModal.close();
-        //         alert(`The Company could not be Activated, server Error.`);
-        //     }
-        // );
+        this.companyService.activation(this.company._id)
+          .then(
+            response => {
+              if(response) {
+                alert(`The Company could not be activated, server Error.`);
+              } else {
+                this.alertService.success('Activate company successful', true);
+                alert(`Activated Company successful`);
+                this.activeModal.close();
+                this.ngOnInit()
+              }
+            },
+            error=> {
+              console.log(error);
+              this.activeModal.close();
+                alert(`The Company could not be Activated, server Error.`);
+            }
+        );
     }
 
     deactivate(){
@@ -108,17 +103,12 @@ export class CompanyComponent implements OnInit {
     }
 
     private loadAllCompanies() {
-        //---------------------------Call To Api-------------- //
-        // this.companyService.getAll()
-        //     .subscribe((data)=> {
-        //         setTimeout(()=> {
-        //             this.companies          = data;
-        //         }, 1000);
-        //     });
-
-        this.companyService.getCompanies().then(data => {
-            this.companies = data;
-        });
+        this.companyService.getAll()
+            .subscribe((data)=> {
+                setTimeout(()=> {
+                    this.companies          = data;
+                }, 1000);
+            });
     }
 
     editCompany(company: Company){

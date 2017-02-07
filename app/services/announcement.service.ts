@@ -60,7 +60,6 @@ export class AnnouncementService {
     }
     
     publish(id: string, body:any): Promise<void> {
-        console.log(body)
         return this.http.post(url + 'api/announcements/publish/' + id, body, this.options)
           .toPromise()
           .then(() => null)

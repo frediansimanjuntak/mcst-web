@@ -87,13 +87,10 @@ export class AnnouncementComponent implements OnInit {
     }
 
     deleteAnnouncement(announcement) {
-      console.log(announcement);
         this.announcementService.delete(announcement._id)
           .then(
             response => {
               if(response) {
-                console.log(response);
-                // console.log(response.error());
                 alert(`The Announcement could not be deleted, server Error.`);
               } else {
                 
@@ -102,7 +99,6 @@ export class AnnouncementComponent implements OnInit {
               }
             },
             error=> {
-              console.log(error);
                 alert(`The Announcement could not be deleted, server Error.`);
             }
         );
@@ -112,7 +108,6 @@ export class AnnouncementComponent implements OnInit {
 
     openModal(announcement){
         this.announcement = announcement;
-    console.log(this.announcement);
         this.valid_tillStatus = announcement.valid_till;
         this.stickyStatus = announcement.sticky;
 
@@ -131,7 +126,6 @@ export class AnnouncementComponent implements OnInit {
         
         this.publishData.sticky = this.stickyStatus;
         this.publishData.valid_till = this.announcement.valid_till;
-        console.log(this.model);
 
         this.announcementService.publish(this.announcement._id , this.publishData)
           .then(
@@ -145,7 +139,6 @@ export class AnnouncementComponent implements OnInit {
               }
             },
             error=> {
-              console.log(error);
                 alert(`The Announcement could not be deleted, server Error.`);
             }
         );
@@ -155,7 +148,6 @@ export class AnnouncementComponent implements OnInit {
     }
 
     validTillDateChanged(event:any) {
-      // console.log('onDateChanged(): ', event.date, ' - jsdate: ', new Date(event.jsdate).toLocaleDateString(), ' - formatted: ', event.formatted, ' - epoc timestamp: ', event.epoc);
        this.valid_tillStatus = event.formatted.replace(/-/g, "/");;
     }
 
@@ -163,7 +155,6 @@ export class AnnouncementComponent implements OnInit {
         this.announcementService.getAll()
             .subscribe((data)=> {
                 setTimeout(()=> {
-                    console.log(data);
                           this.announcements            = data.filter(data => data.development._id === this.name.default_development._id );
                           this.announcementsDrafted     = this.announcements.filter(data => data.publish == false );
                           this.announcementsPublished   = this.announcements.filter(data => data.publish == true );
@@ -176,7 +167,6 @@ export class AnnouncementComponent implements OnInit {
     }
 
     editAnnouncement(anouncement: Announcement){
-        console.log(anouncement);
         this.router.navigate([this.name.default_development.name + '/announcement/edit', anouncement._id]);
     }
 

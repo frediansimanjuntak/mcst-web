@@ -39,13 +39,11 @@ export class UnitComponent implements OnInit {
     }
 
     deleteUnit(unit: any) {
-      console.log(unit);
         this.unitservice.delete(unit._id, this.developmentId)
           .then(
             response => {
               if(response) {
                 console.log(response);
-                // console.log(response.error());
                 alert(`The Unit could not be deleted, server Error.`);
               } else {
                 this.alertService.success('Delete Unit successful', true);
@@ -65,7 +63,6 @@ export class UnitComponent implements OnInit {
             .subscribe((data)=> {
                 setTimeout(()=> {
                     this.dataUnit = data.properties;
-                    console.log(this.dataUnit);
                     this.loading = false;
                 }, 1000);
             });

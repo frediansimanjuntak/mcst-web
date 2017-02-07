@@ -90,15 +90,11 @@ export class PollComponent implements OnInit {
                     this.pollsDraft = this.polls.filter(data => data.status == "draft" );
                     this.pollsActive = this.polls.filter(data => data.status == "active" );
                     this.pollsResult= this.polls.filter(data => data.status == "result" );
-                    console.log(this.today);
-                    console.log(this.nextDay);
-                    console.log(this.pollsActive[0].end_time);
                 }, 1000);
         });
 	}
 
 	deletePoll(poll) {
-        console.log(poll)
         this.pollService.delete(poll._id)
           .then(
             response => {
