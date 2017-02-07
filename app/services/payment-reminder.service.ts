@@ -34,7 +34,7 @@ export class PaymentReminderService {
     }
 
     create(body:any): Promise<PaymentReminder> {
-        return this.http.post(url +  'api/payment_reminder', JSON.stringify(body), this.options)
+        return this.http.post(url +  'api/payment_reminder', body, this.options)
             .toPromise()
             .then(res => res.json().data)
             .catch(this.handleError);

@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, Params, ActivatedRoute } from '@angular/router';
 import { Contract } from '../../models/index';
-import { ContractService, AlertService, UserService } from '../../services/index';
+import { ContractService, AlertService, UserService, ContractNoteService, ContractNoticeService } from '../../services/index';
 import '../../rxjs-operators';
 import { Observable} from 'rxjs/Observable';
 import { FileUploader } from 'ng2-file-upload';
@@ -15,6 +15,8 @@ import { FileUploader } from 'ng2-file-upload';
 export class ContractComponent implements OnInit  {
 	contract: Contract;
     contracts: Contract[] = [];
+    contractnotes: any[];
+    contractnotices: any[];
     model: any = {};
     images: any[];
     id: string;
@@ -26,7 +28,9 @@ export class ContractComponent implements OnInit  {
         private contractService: ContractService, 
         private alertService: AlertService,
         private route: ActivatedRoute,
-        private userService: UserService) {}
+        private userService: UserService,
+        private contractnoteService:ContractNoteService,
+        private contractnoticeService:ContractNoticeService) {}
 
     ngOnInit(): void {
         this.userService.getByToken().subscribe(name => {this.name = name;})
@@ -50,6 +54,18 @@ export class ContractComponent implements OnInit  {
                     this.images.push({source:this.contract.attachment[i].url});
                 };
             });
+            this.contractnoteService.getAll(this.id)
+            .subscribe(contractnotes => {
+                if(contractnotes[0].contract_note.length > 0) { 
+                    this.contractnotes = contractnotes;
+                } 
+            })
+            this.contractnoticeService.getAll(this.id)
+            .subscribe(contractnotices => {
+                if(contractnotices[0].contract_notice.length > 0) {
+                    this.contractnotices = contractnotices
+                }
+            })
         }
     }
 

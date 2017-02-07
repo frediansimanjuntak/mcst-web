@@ -55,12 +55,12 @@
             <div class="title"> 
                 Create a Project notice
             </div>
-            <p>Home > Manage Project > {{contract.title}}Create > Create a Project notice</p>
+            <p>Home > Manage Project > {{contract.title}} > Create a Project notice</p>
             <form class="form-horizontal col-md-6" name="form" (ngSubmit)="f.form.valid && createContractNote(contract._id)" #f="ngForm" novalidate>
                 <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !status.valid }">
                      <label class="control-label col-sm-4" for="status">Project Status :</label>
                     <div class="col-sm-8">
-                        <input type="text" class="form-control" name="status" [(ngModel)]="contract.status" #status="ngModel" required placeholder="Input project status here" />
+                        <input type="text" class="form-control" name="status" [(ngModel)]="model.status" #status="ngModel" required placeholder="Input project status here" />
                         <span *ngIf="f.submitted && !status.valid" class="help-block">Project status is required</span>
                     </div>
                 </div>
@@ -74,7 +74,7 @@
                 <div class="form-group" >
                     <label class="control-label col-sm-4" for="attachment">Attachment :</label>
                     <div class="col-sm-8">
-                        <input type="file" multiple class="upload" value="Add media" name="attachment" (change)="onChange($event)" />
+                        <input type="file" multiple class="upload" name="attachment" (change)="onChange($event)" />
                         <p *ngFor="let item of model.attachment; let i=index ">
                             <img src="assets/image/icon_media_image.png" width="14px" height="12px">&nbsp;  
                             <span style="text-decoration: underline;">{{ item.name }}_{{item.size/1024 | number:'1.0-0' }}kb</span> &nbsp;   

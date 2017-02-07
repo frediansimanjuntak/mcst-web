@@ -23,6 +23,7 @@ export class ContractNoteComponent implements OnInit  {
     public close;
     loading = false;
     name: any;
+    filesToUpload: Array<File>;
 
     constructor(private router: Router,
         private contractService: ContractService,
@@ -33,22 +34,18 @@ export class ContractNoteComponent implements OnInit  {
 
     ngOnInit(): void {
         this.userService.getByToken().subscribe(name => {this.name = name;})
-        this.images = [];
-        this.images.push({source:'/assets/image/1.png'});
-        this.images.push({source:'/assets/image/2.png'});
-        this.images.push({source:'/assets/image/3.png'});
-        this.images.push({source:'/assets/image/4.png'});
-        this.images.push({source:'/assets/image/5.png'});
         this.route.params.subscribe(params => {
             this.id = params['id'];
             this._id = params['_id'];
         });
-        this.contractnoteService.getById(this.id,this._id).subscribe(contract => {this.contract = contract;});
-        // if( this._id == null) {
-        //     this.loadContractNotice();
-        // }else{
-        // 	this.contractService.getContract(this._id).then(contract => {this.contract = contract;});
-        // }
+        // this.contractnoteService.getById(this.id,this._id).subscribe(contract => {this.contract = contract;});
+        if( this.id != null) {
+            this.contractService.getById(this.id)
+            .subscribe(contract => {
+                this.contract = contract;
+                this.model.status = this.contract.status;
+            });
+        }
     }
 
 	private loadContractNote() {
@@ -68,15 +65,21 @@ export class ContractNoteComponent implements OnInit  {
     }
 
     createContractNote(id:any) {
+        let formData:FormData = new FormData();
+        for (var i = 0; i < this.model.attachment.length; i++) {
+            formData.append("attachment", this.model.attachment[i]);
+        }
+        formData.append("status", this.model.status);
+        formData.append("note_remark", this.model.note_remark);
         this.route.params.subscribe(params => {
             this.id = params['id'];
             this._id = params['_id'];
         });
-        this.contractnoteService.create(this.model, this.id)
+        this.contractnoteService.create(formData, this.id)
         .then(
             response => {
                 this.alertService.success('Create contract notice successful', true);
-                this.router.navigate([this.name.development.name , 'contract/view', id]);
+                this.router.navigate([this.name.default_development.name , 'contract/view', id]);
             },
             error => {
                 this.alertService.error(error);
@@ -109,9 +112,9 @@ export class ContractNoteComponent implements OnInit  {
         );
     }
 
-    onChange(event: any) {
-       let files = [].slice.call(event.target.files);
-       this.model.attachment = files;
+    onChange(fileInput: any){
+        this.filesToUpload = <Array<File>> fileInput.target.files;
+        this.model.attachment = this.filesToUpload;
     }
 
     remove(i: any){
