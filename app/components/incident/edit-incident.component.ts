@@ -43,17 +43,21 @@ export class EditIncidentComponent implements OnInit {
     ngOnInit(): void {
         this.incidentService.getAll().subscribe(incidents => {
             this.incidents = incidents ;
-            var a = this.incidents.length - 1;
-            this.no = +this.incidents[a].reference_no + 1
-            if(this.no > 1 && this.no < 10) {
-                this.model.reference_no = '000' + this.no.toString();
-            }if(this.no > 10 && this.no < 100) {
-                this.model.reference_no = '00' + this.no.toString();
-            }if(this.no > 100 && this.no < 1000) { 
-                this.model.reference_no = '0' + this.no.toString();
-            }if(this.no > 1000) {
-                this.model.reference_no = this.no.toString();
-            }
+            if(incidents.length > 0) { 
+                var a = this.incidents.length - 1;
+                this.no = +this.incidents[a].reference_no + 1
+                if(this.no > 1 && this.no < 10) {
+                    this.model.reference_no = '000' + this.no.toString();
+                }if(this.no > 10 && this.no < 100) {
+                    this.model.reference_no = '00' + this.no.toString();
+                }if(this.no > 100 && this.no < 1000) { 
+                    this.model.reference_no = '0' + this.no.toString();
+                }if(this.no > 1000) {
+                    this.model.reference_no = this.no.toString();
+                }
+            }else {
+                this.model.reference_no = '0001'
+            }  
         });
         this.userService.getByToken().subscribe(name => {this.name = name;})
     	this.selectedType = 'general';

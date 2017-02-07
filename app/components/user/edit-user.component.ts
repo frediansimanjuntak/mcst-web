@@ -112,7 +112,6 @@ export class EditUserComponent implements OnInit {
 
     initOwned() {
         return this.formbuilder.group({
-            _id: [],
             development: [''],
             property: ['']
         });
@@ -120,7 +119,6 @@ export class EditUserComponent implements OnInit {
 
     initAuthorized() {
         return this.formbuilder.group({
-            _id: [],
             development: [''],
             property: ['']
         });
