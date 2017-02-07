@@ -101,7 +101,7 @@ export class EditUserComponent implements OnInit {
                     const control = <FormArray>this.myForm.controls['authorized_property'];
                     control.push(this.initAuthorized());
                 }
-                this.myForm.setValue(this.user);
+                this.myForm.patchValue(this.user);
             });
         };
 

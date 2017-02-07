@@ -64,7 +64,7 @@ export class EditPaymentReminderComponent implements OnInit{
                     const control = <FormArray>this.myForm.controls['notification_list'];
                     control.push(this.initNotification_list());
                 }
-                this.myForm.setValue(this.paymentreminder);
+                this.myForm.patchValue(this.paymentreminder);
             });
         }
     }
