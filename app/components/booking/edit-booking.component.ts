@@ -256,7 +256,6 @@ export class EditBookingComponent implements OnInit  {
             this.facility_name = facility.name;
             this.facility_type = facility.facility_type;
             this.model.booking_fee = facility.booking_fee;
-            console.log(this.model.booking_fee)
              this.timeStart = [];
              this.timeEnd = [];
             if(data.choice == "all" ) {
@@ -289,16 +288,14 @@ export class EditBookingComponent implements OnInit  {
         var time_start = Math.min.apply(Math,this.tstart);
         var time_end = Math.max.apply(Math,this.tend);
         let booking_fee = this.model.booking_fee * (time_end - time_start);
-        console.log(booking_fee)
-        this.model.fees = [
-           { deposit_fee : "80" ,
+        this.model.fees = [{
+            deposit_fee : "80" ,
             booking_fee : booking_fee ,
-            admin_fee : "0" }
-        ]
+            admin_fee : "0" 
+        }]
         var deposit = +this.model.fees[0].deposit_fee;
         var booking = +this.model.fees[0].booking_fee;
         var admin_fee = +this.model.fees[0].admin_fee;
-        console.log(deposit, booking, admin_fee)
         this.model.total_amount = deposit + booking + admin_fee;
         this.model.start_time = time_start+min;
         this.model.end_time = time_end+min;
