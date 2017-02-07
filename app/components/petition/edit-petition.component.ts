@@ -109,12 +109,12 @@ export class EditPetitionComponent implements OnInit {
             model.updated_at = new Date();
 
             let formData:FormData = new FormData();
-        
-            for (var i = 0; i < this.model.attachment.length; i++) {
-                formData.append("attachment[]", this.model.attachment[i]);
+            if(this.model.attachment){
+                for (var i = 0; i < this.model.attachment.length; i++) {
+                    formData.append("attachment[]", this.model.attachment[i]);
+                }
             }
-
-             
+                
             formData.append("reference_no", this.model.reference_no);
             formData.append("property", this.unit.id);
             formData.append("petition_type", model.petition_type);

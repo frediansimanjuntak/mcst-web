@@ -97,7 +97,8 @@ export class PetitionComponent implements OnInit {
         this.petitionService.getAll()
             .subscribe((data)=> {
                 setTimeout(()=> {
-                    this.petitions = data.filter(data => data.archieve === false && data.development == this.name.default_development._id );
+                    console.log(data);
+                    this.petitions = data.filter(data => data.archieve === false && data.development._id == this.name.default_development._id );
                 }, 1000);
         });
     }
