@@ -34,7 +34,6 @@ export class BookingService {
     }
 
     create(body:any): Promise<Booking> {
-        console.log(body)
         return this.http.post(url +  'api/booking', body, this.options)
             .toPromise()
             .then(res => res.json().data)
