@@ -65,7 +65,20 @@ export class ViewUnitComponent implements OnInit {
                                         .getById(this.id, this.name.default_development.name)
                                            .subscribe(unit => {
                                                this.unit = unit.properties[0];
-                                               console.log(unit.properties);
+
+                                               this.unitservice
+                                                .getTenants(this.id, this.name.default_development.name)
+                                                   .subscribe(data => {
+                                                       console.log(data);
+                                                       this.residents = data[0].properties[0].tenant;
+                                                });
+
+                                               this.unitservice
+                                                .getRegVehicles(this.id, this.name.default_development.name)
+                                                   .subscribe(data => {
+                                                       console.log(data);
+                                                       this.vehicles = data[0].properties[0].registered_vehicle;
+                                                });
                                         });
                                 }
                             });
@@ -88,36 +101,6 @@ export class ViewUnitComponent implements OnInit {
                 registered_on: [''],
                 remarks: [''],
         });
-
-        
-        
-            // this.unitservice
-            //     .getDevelopments()
-            //        .then(development => {
-            //            this.units = development[0].properties
-            //            this.unit = this.units.find(unit => unit._id === this.id);
-            //            this.unit.owner = this.users.find(myObj => myObj._id ===  this.unit.landlord ).username;
-
-            //            this.residents = this.unit.tenant;
-            //            this.vehicles  = this.unit.registered_vehicle;
-
-            //             for (var i = 0; i < this.residents.length; i++) {
-            //                 this.residents[i].resident_name = this.users.find(myObj => myObj._id ===  this.residents[i].resident ).username;
-            //                 this.residents[i].phone         = this.users.find(myObj => myObj._id ===  this.residents[i].resident ).phone;
-            //                 this.residents[i].email         = this.users.find(myObj => myObj._id ===  this.residents[i].resident ).email;
-            //                 this.residents[i].id            = this.residents[i].resident;
-            //                 this.residents[i].text          = this.residents[i].resident_name;
-            //                 this.residents[i].i = i+1;
-            //             }
-
-            //             for (var i = 0; i < this.vehicles.length; i++) {
-            //                 this.vehicles[i].owner_name = this.users.find(myObj => myObj._id ===  this.vehicles[i].owner ).username;
-            //                 this.vehicles[i].i = i+1;
-            //             }
-
-            //         });
-
-            
     }
 
     getUsers(): void {
@@ -135,10 +118,6 @@ export class ViewUnitComponent implements OnInit {
 
             this.myOptions = opts.slice(0);
             this.items = this.myOptions;
-
-
-
-
         });
     }
 
@@ -146,14 +125,11 @@ export class ViewUnitComponent implements OnInit {
         this.selectedResident = value;
     }
 
-     public selected(value:any):void {
+    public selected(value:any):void {
         // console.log('Selected value is: ', value);
     }
 
-
-
-     updateUnit(){
-         console.log(this.unit);
+    updateUnit(){
         // this.unitservice.update(model)
         // .then(
         //     response => {
@@ -190,22 +166,11 @@ export class ViewUnitComponent implements OnInit {
          this.addSubmitted = true;
          model.resident = this.selectedResident.id;
          model.added_on = new Date();
-        if(isValid && this.selectedResident){
+         if(isValid && this.selectedResident){
             this.unit.tenant.push(model);
             this.firstModal.close();
-            // this.firstModal.close();
-            // console.log(model);
-            // this.visitService.create(model)
-            // .subscribe(
-            //     data => {
-            //         this.alertService.success('Add guest successful', true);
-            //         this.router.navigate(['/unit']);
-            //     },
-            //     error => {
-            //         console.log(error);
-            //         alert(`Guest register could not be save, server Error.`);
-            //     }
-            // );
+            
+
             this.addSubmitted = false;
             this.ngOnInit();
         }

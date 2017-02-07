@@ -1,7 +1,7 @@
 import { Component, OnInit, ViewContainerRef, ViewEncapsulation, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { Contractor, Contractors } from '../../models/index';
-import { ContractorService, AlertService} from '../../services/index';
+import { ContractorService, AlertService, UserService} from '../../services/index';
 import '../../rxjs-operators';
 import { Observable} from 'rxjs/Observable';
 import * as $ from "jquery";
@@ -21,28 +21,26 @@ export class ContractorComponent implements OnInit {
 	@ViewChild('activeModal') activeModal;
 	contractor: Contractor;
     contractors: Contractor[] = [];
-    validTillDateOptions: any = {};
     model: any = {};
-    cols: any[];
     public developmentId;
     public data;
-    public filterQuery = "";
-    public rowsOnPage = 10;
-    public sortBy = "email";
-    public sortOrder = "asc";
-    valid_tillStatus: string;
-    stickyStatus: string;
+      name: any;
     constructor(
                 private router: Router,
                 private contractorService: ContractorService,
                 private alertService: AlertService,
+                private userService: UserService,
                 ) {
 
     }
 
     ngOnInit(): void {
-		this.developmentId = '585b36585d3cc41224fe518a';
-        this.loadAllContractors();
+		  this.userService.getByToken()
+          .subscribe(name => {
+            this.name = name;
+           this.loadAllContractors();
+          })
+        
     }
 
     public toInt(num: string) {
@@ -54,25 +52,23 @@ export class ContractorComponent implements OnInit {
     }
 
     deleteContractor(contractor) {
-        console.log(contractor);
-        // this.contractorService.delete(contractor._id)
-        //   .then(
-        //     response => {
-        //       if(response) {
-        //         console.log(response);
-        //         // console.log(response.error());
-        //         alert(`The contractor could not be deleted, server Error.`);
-        //       } else {
-        //         this.alertService.success('Delete contractor successful', true);
-        //         alert(`Delete Contractor successful`);
-        //         this.ngOnInit()
-        //       }
-        //     },
-        //     error=> {
-        //       console.log(error);
-        //         alert(`The Contractor could not be deleted, server Error.`);
-        //     }
-        // );
+        this.contractorService.delete(contractor._id)
+          .then(
+            response => {
+              if(response) {
+                console.log(response);
+                alert(`The contractor could not be deleted, server Error.`);
+              } else {
+                this.alertService.success('Delete contractor successful', true);
+                alert(`Delete Contractor successful`);
+                this.ngOnInit()
+              }
+            },
+            error=> {
+              console.log(error);
+                alert(`The Contractor could not be deleted, server Error.`);
+            }
+        );
     }
 
     openModal(contractor: Contractor){
@@ -80,26 +76,24 @@ export class ContractorComponent implements OnInit {
     }
 
     activate(){
-        this.contractor.active = true;
-        this.activeModal.close();
-        // this.contractorService.activation(this.contractor._id)
-        //   .then(
-        //     response => {
-        //       if(response) {
-        //         alert(`The Contractor could not be activated, server Error.`);
-        //       } else {
-        //         this.alertService.success('Activate Contractor successful', true);
-        //         alert(`Activated Contractor successful`);
-        //         this.activeModal.close();
-        //         this.ngOnInit()
-        //       }
-        //     },
-        //     error=> {
-        //       console.log(error);
-        //       this.activeModal.close();
-        //         alert(`The Contractor could not be Activated, server Error.`);
-        //     }
-        // );
+        this.contractorService.activation(this.contractor._id)
+          .then(
+            response => {
+              if(response) {
+                alert(`The Contractor could not be activated, server Error.`);
+              } else {
+                this.alertService.success('Activate Contractor successful', true);
+                alert(`Activated Contractor successful`);
+                this.activeModal.close();
+                this.ngOnInit()
+              }
+            },
+            error=> {
+              console.log(error);
+              this.activeModal.close();
+                alert(`The Contractor could not be Activated, server Error.`);
+            }
+        );
     }
 
     deactivate(){
@@ -108,21 +102,20 @@ export class ContractorComponent implements OnInit {
     }
 
     private loadAllContractors() {
-        //---------------------------Call To Api-------------- //
-        // this.contractorService.getAll()
-        //     .subscribe((data)=> {
-        //         setTimeout(()=> {
-        //             this.contractors = data;
-        //         }, 1000);
-        //     });
+        this.contractorService.getAll()
+            .subscribe((data)=> {
+                setTimeout(()=> {
+                    this.contractors = data;
+                }, 1000);
+            });
+    }
 
-        this.contractorService.getContractors().then(data => {
-            this.contractors = data;
-        });
+    add(){
+        this.router.navigate([this.name.default_development.name + '/contractor/add']);
     }
 
     editContractor(contractor: Contractor){
-        this.router.navigate(['/contractor/edit', contractor._id]);
+        this.router.navigate([this.name.default_development.name + '/contractor/edit', contractor._id]);
     }
 
 }
