@@ -100,13 +100,10 @@ export class PetitionComponent implements OnInit {
         this.petitionService.getAll()
             .subscribe((data)=> {
                 setTimeout(()=> {
-                    this.petitions = data.filter(data => data.archived === false && data.development._id == this.name.default_development._id );
+                    console.log(data);
+                    this.petitions = data.filter(data => data.archieve === false && data.development == this.name.default_development._id );
                 }, 1000);
         });
-
-  //       this.petitionService.getPetitions().then(data => {
-  //           this.petitions         = data.filter(data => data.archived === false && data.development === this.name.default_development.name );
-		// });
     }
 
     viewPetition(petition: Petition){
@@ -127,7 +124,8 @@ export class PetitionComponent implements OnInit {
 
     archieveSelected(){
         console.log(this.selectedValues);
-        this.petitionService.archive(this.selectedValues)
+        this.model.ids = this.selectedValues;
+        this.petitionService.archive(this.model)
         this.ngOnInit();
     }
 
