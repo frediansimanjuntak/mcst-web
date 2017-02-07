@@ -21,6 +21,7 @@ export class IncidentComponent implements OnInit {
     model: any = {};
     images: any[];
     id: string;
+    _id: string;
     name: any;
     units: any;
     isFavorite = false;
@@ -43,26 +44,32 @@ export class IncidentComponent implements OnInit {
         this.userService.getByToken().subscribe(name => {this.name = name;})
         this.route.params.subscribe(params => {
             this.id = params['id'];
+            this._id = params['_id'];
         });
-        if( this.id == null) {
+        if( this.id == null && this._id == null) {
             this.loadAllIncident();
+        }if(this._id != null) {
+            this.incidentService.getById(this._id)
+            .subscribe(incident => {
+                this.images = [];
+                for (var i = 0; i < incident.attachment.length; ++i) {
+                    this.images.push({source:incident.attachment[i].url});
+                };
+            });
         }else{
         	this.incidentService.getById(this.id)
             .subscribe(incident => {
                 this.incident = incident;
                 this.images = [];
-                this.images.push({source:incident.attachment.url}); 
                 this.incident.created_at = this.incident.created_at.slice(0,10);
-                // for (var i = 0; i < this.incident.attachment.length; ++i) {
-                //     this.images.push({source:this.incident.attachment[i].url});
-                // };
-
+                for (var i = 0; i < this.incident.attachment.length; ++i) {
+                    this.images.push({source:this.incident.attachment[i].url});
+                };
             });
         }
     }
 
     deleteIncident(incident: Incident) {
-    	console.log(incident._id)
         this.incidentService.delete(incident._id)
           .then(
             response => {
@@ -86,7 +93,6 @@ export class IncidentComponent implements OnInit {
 	private loadAllIncident() {
 		this.incidentService.getAll().subscribe(incidents => {
 	        this.incidents = incidents ;
-            console.log(this.incidents)
             this.dataInProgress = this.incidents.filter(incidents => incidents.status === 'inprogress' );
             this.dataResolved   = this.incidents.filter(incidents => incidents.status === 'resolved' );
             for (var i = 0; i < this.incidents.length; ++i) {
@@ -101,12 +107,12 @@ export class IncidentComponent implements OnInit {
 		});
     }
 
-    // edit(incident: Incident){
-    //     this.router.navigate(['/incident/edit', incident._id]);
-    // }
-
     view(incident: Incident){
         this.router.navigate([this.name.default_development.name + '/incident/view', incident._id]);
+    }
+
+    viewPhoto(incident: Incident){
+        this.router.navigate([this.name.default_development.name + '/incident/view/photo', incident._id]);
     }
 
     add(){

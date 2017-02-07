@@ -67,7 +67,6 @@ export class EditIncidentComponent implements OnInit {
 
     createIncident(event: any) {
         let formData:FormData = new FormData();
-        
         for (var i = 0; i < this.model.attachment.length; i++) {
             formData.append("attachment", this.model.attachment[i]);
         }
@@ -76,9 +75,6 @@ export class EditIncidentComponent implements OnInit {
         formData.append("incident_type", this.model.incident_type);
         formData.append("title", this.model.title);
         formData.append("remark", this.model.remark);
-        console.log(this.model)
-        console.log(formData);
-        
         this.incidentService.create(formData)
         .then(
             data => {
@@ -93,7 +89,6 @@ export class EditIncidentComponent implements OnInit {
     }
 
     updateIncident(){
-    	console.log(this.incident);
 		this.incidentService.update(this.incident)
 		.then(
 			response => {
@@ -106,21 +101,10 @@ export class EditIncidentComponent implements OnInit {
         );
 	}
 
-    // fileChangeEvent(fileInput: any){
-    //     this.filesToUpload = <Array<File>> fileInput.target.files;
-    //     this.model.attachment = this.filesToUpload;
-    //     console.log(this.model.attachment)
-    // }
-
     onChange(fileInput: any){
         this.filesToUpload = <Array<File>> fileInput.target.files;
         this.model.attachment = this.filesToUpload;
     }
-
-    // onChange(event: any) {
-    //    let files = [].slice.call(event.target.files);
-    //    this.model.attachment = files;
-    // }
 
     remove(i: any){
         this.model.attachment.splice(i, 1)

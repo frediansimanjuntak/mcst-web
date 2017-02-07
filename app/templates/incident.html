@@ -1,6 +1,6 @@
 <div class="container">
     <div class="main">
-        <div *ngIf="incident">
+        <div *ngIf="incident && images">
             <div class="title">
                 {{incident.reference_no}} {{incident.title}}
             </div>
@@ -48,7 +48,34 @@
 	        </div>
         </div>
 
-        <div *ngIf="!incident">
+        <div *ngIf="images && !incident">
+             <div class="title">
+                {{incident.reference_no}} {{incident.title}}
+            </div>
+            <p>Home > Incident Reports > {{incident.reference_no}} {{incident.title}}</p>
+	        <div class="row">
+	        	<div class="col-lg-6">
+	        		<p-galleria [images]="images" panelWidth="500" panelHeight="313"></p-galleria>
+	        	</div>
+	        	<div class="col-lg-6">
+	        		<div class="row">
+	        			<div class="col-md-4">Reported by :</div>
+	        			<div class="col-md-8"> <p>{{ incident.created_by.username }}</p></div>
+	        		</div>
+	        		<div class="row">
+	        			<div class="col-md-4"><p>Action :</p></div>
+	        		</div>
+	        		<div class="row">	
+	        			<div class="col-md-12">
+	        				<span *ngIf="!incident.contract"><a class="btn btn-primary" (click)="add_project(incident.reference_no)" style="cursor:pointer"><img src="assets/image/menu_manageproject.png" width="14px" height="12px"> Create Project</a></span>
+	        				<a class="btn btn-primary" (click)="archive(incident._id)" style="cursor:pointer"><img src="assets/image/icon_archived.png" width="14px" height="12px"> Archive Report</a>
+	        			</div>
+	        		</div>
+	        	</div>
+	        </div>
+        </div>
+
+        <div *ngIf="!incident && !images">
             <div class="title">
 				Incident Reports
 			</div>
@@ -72,7 +99,7 @@
 						    <p-column filterMatchMode="contains" field="remark" header="Message" sortable="true" [filter]="true" filterPlaceholder="Search Message"></p-column>
 						    <p-column [style]="{'width':'75px'}" header="Photo">
 						    	<template let-data="rowData" pTemplate="body">
-						    		<a *ngIf="data.attachment != null" style="text-decoration: underline;cursor:pointer" (click)="view(data)">View</a>
+						    		<a *ngIf="data.attachment != null" style="text-decoration: underline;cursor:pointer" (click)="viewPhoto(data)">View</a>
 						    		<a *ngIf="data.attachment == null">-</a>
 						    	</template>
 						    </p-column>
@@ -102,7 +129,7 @@
 						    <p-column filterMatchMode="contains" field="remark" header="Message" sortable="true" [filter]="true" filterPlaceholder="Search Message"></p-column>
 						    <p-column [style]="{'width':'75px'}" header="Photo">
 						    	<template let-data="rowData" pTemplate="body">
-						    		<a *ngIf="data.attachment != null" style="text-decoration: underline;cursor:pointer" (click)="view(data)">View</a>
+						    		<a *ngIf="data.attachment != null" style="text-decoration: underline;cursor:pointer" (click)="viewPhoto(data)">View</a>
 						    		<a *ngIf="data.attachment == null">-</a>
 						    	</template>
 						    </p-column>
@@ -132,7 +159,7 @@
 						    <p-column filterMatchMode="contains" field="remark" header="Message" sortable="true" [filter]="true" filterPlaceholder="Search Message"></p-column>
 						    <p-column [style]="{'width':'75px'}" header="Photo">
 						    	<template let-data="rowData" pTemplate="body">
-						    		<a *ngIf="data.attachment != null" style="text-decoration: underline;cursor:pointer" (click)="view(data)">View</a>
+						    		<a *ngIf="data.attachment != null" style="text-decoration: underline;cursor:pointer" (click)="viewPhoto(data)">View</a>
 						    		<a *ngIf="data.attachment == null">-</a>
 						    	</template>
 						    </p-column>
@@ -162,7 +189,7 @@
 						    <p-column filterMatchMode="contains" field="remark" header="Message" sortable="true" [filter]="true" filterPlaceholder="Search Message"></p-column>
 						    <p-column [style]="{'width':'75px'}" header="Photo">
 						    	<template let-data="rowData" pTemplate="body">
-						    		<a *ngIf="data.attachment != null" style="text-decoration: underline;cursor:pointer" (click)="view(data)">View</a>
+						    		<a *ngIf="data.attachment != null" style="text-decoration: underline;cursor:pointer" (click)="viewPhoto(data)">View</a>
 						    		<a *ngIf="data.attachment == null">-</a>
 						    	</template>
 						    </p-column>
