@@ -77,10 +77,9 @@ export class NewsletterComponent implements OnInit {
         );
     }
 
-    releaseNewsletter(newsletter: any){
-      console.log(newsletter);
-      this.newsletter.released = true;
-      this.newsletterservice.release(newsletter._id, this.name.default_development.name)
+    releaseNewsletter(){
+      
+      this.newsletterservice.release(this.newsletter._id, this.name.default_development.name)
           .then(
             response => {
               if(response) {
@@ -116,8 +115,9 @@ export class NewsletterComponent implements OnInit {
             });
     }
 
-    openModal(newsletter){
+    openModal(newsletter:any){
       this.newsletter = newsletter;
+      console.log(this.newsletter);
     }
 
     getUsers(): void {

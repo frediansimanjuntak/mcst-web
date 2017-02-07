@@ -69,14 +69,12 @@ export class ViewUnitComponent implements OnInit {
                                                this.unitservice
                                                 .getTenants(this.id, this.name.default_development.name)
                                                    .subscribe(data => {
-                                                       console.log(data);
                                                        this.residents = data[0].properties[0].tenant;
                                                 });
 
                                                this.unitservice
                                                 .getRegVehicles(this.id, this.name.default_development.name)
                                                    .subscribe(data => {
-                                                       console.log(data);
                                                        this.vehicles = data[0].properties[0].registered_vehicle;
                                                 });
                                         });
@@ -126,7 +124,6 @@ export class ViewUnitComponent implements OnInit {
     }
 
     public selected(value:any):void {
-        // console.log('Selected value is: ', value);
     }
 
     updateUnit(){
@@ -147,7 +144,6 @@ export class ViewUnitComponent implements OnInit {
     }
 
     deleteResident(resident){
-        console.log(resident);
     }
 
     openResidentDetail(resident: any){
@@ -185,7 +181,6 @@ export class ViewUnitComponent implements OnInit {
             this.unit.registered_vehicle.push(model);
             this.secondModal.close();
             // this.firstModal.close();
-            // console.log(model);
             // this.visitService.create(model)
             // .subscribe(
             //     data => {
