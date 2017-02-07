@@ -133,11 +133,9 @@ export class BookingComponent implements OnInit {
                     for (var i = 0; i < this.selectedDay.length; ++i) {
                         let a = this.units.find(data => data._id == this.selectedDay[i].property);
                         this.selectedDay[i].unit = '#'+a.address.unit_no +'-'+ a.address.unit_no_2;
-                        console.log(this.selectedDay.unit)
                     }
                 })
             })
-            console.log(this.bookings)
         });
         
 
@@ -165,7 +163,6 @@ export class BookingComponent implements OnInit {
         }else{
             var end   = booking.end.toString() + ":00"
         }
-        console.log(booking);
         
         this.bookingService.getAll()
         .subscribe(bookings => {
@@ -177,7 +174,6 @@ export class BookingComponent implements OnInit {
                     data.end_time <= end &&
                     data.facility.name == booking.name 
                 );
-                console.log("1")
             };
             if(booking.status == "all" && booking.type == "all") {
                 this.filtered = this.bookings.filter(data => 
@@ -186,7 +182,6 @@ export class BookingComponent implements OnInit {
                     data.end_time <= end &&
                     data.facility.name == booking.name 
                 );
-                console.log("2")
             };
             if(booking.status != "all" && booking.type == "all") {
                 this.filtered = this.bookings.filter(data => 
@@ -195,7 +190,6 @@ export class BookingComponent implements OnInit {
                     data.end_time >= end &&
                     data.facility.name == booking.name 
                 );
-                console.log("3")
             }
             if(booking.status != "all" && booking.type != "all") {
                 this.filtered = this.bookings.filter(data => 
@@ -203,11 +197,9 @@ export class BookingComponent implements OnInit {
                     data.start_time >= start && 
                     data.end_time <= end &&
                     data.facility.name == booking.name 
-                    
+                
                 );
-                console.log("4")
             };
-            console.log(this.filtered,booking,start,end)
         });
     }
 

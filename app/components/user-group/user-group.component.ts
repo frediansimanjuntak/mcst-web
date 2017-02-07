@@ -60,9 +60,7 @@ export class UserGroupComponent implements OnInit {
     }
 
     deleteUserGroup(usergroup: UserGroup) {
-        console.log(usergroup);
         this.userGroupService.delete(usergroup._id)
-        // .subscribe(() => { this.loadAllUsers() });
         .then(
             response => {
                 if(response) {
@@ -73,7 +71,7 @@ export class UserGroupComponent implements OnInit {
                 }
             },
             error=> {
-                alert(`The USergroup could not be deleted, server Error.`);
+                alert(`The Usergroup could not be deleted, server Error.`);
             }
         );
     }

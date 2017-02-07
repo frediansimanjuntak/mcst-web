@@ -6,7 +6,6 @@ import { LostFoundService, AlertService, UserService, UnitService } from '../../
 import { FormBuilder, FormGroup, FormControl, FormArray, Validators } from '@angular/forms';
 import { FileUploader } from 'ng2-file-upload';
 import { Observable} from 'rxjs/Observable';
-import { url } from '../../global';
 import '../../rxjs-operators';
 import 'rxjs/add/operator/switchMap';
 
@@ -17,10 +16,7 @@ import 'rxjs/add/operator/switchMap';
 })
 
 export class EditLostFoundComponent  {
-       public headers: Headers;
-    public token: string;
-    public pilihan: RequestOptions;
-
+  
     @Input('group')
 	lostFound: LostFound;
     filesToUpload: Array<File>;
@@ -43,10 +39,6 @@ export class EditLostFoundComponent  {
         private unitService: UnitService,
         private http: Http, 
          ) {
-        var authToken = JSON.parse(localStorage.getItem('authToken'));
-        this.token = authToken && authToken.token;
-        this.headers = new Headers({ 'Accept': 'application/json', 'Authorization': 'Bearer ' + this.token });
-        this.pilihan = new RequestOptions({ headers: this.headers });
 
         // this.user = JSON.parse(localStorage.getItem('user'));
     }
@@ -68,7 +60,6 @@ export class EditLostFoundComponent  {
     fileChange(event) {
         let fileList: FileList = event.target.files;
         this.model.photo = fileList;
-        console.log(this.model.photo);
     }
 
     createReport(event: any) {
@@ -108,18 +99,10 @@ export class EditLostFoundComponent  {
         this.unitService.getAll(this.name.default_development.name)
             .subscribe((data)=> {
                 setTimeout(()=> {
-                    console.log(data);
                     this.dataUnit      = data.properties;
-                    console.log(this.dataUnit);
                 }, 1000);
             });
     }
-
-
-    // onChange(event: any) {
-    //    let files = [].slice.call(event.target.files);
-    //    this.model.photo = files;
-    // }
 
     remove(i: any){
         this.model.photo.splice(i, 1)

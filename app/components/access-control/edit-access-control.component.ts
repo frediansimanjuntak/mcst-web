@@ -31,12 +31,10 @@ export class EditAccessControlComponent implements OnInit {
         this.unitService.getDevelopment("1")
             .then(unit => {
                 this.unit = unit;
-                console.log(unit);
             });
         this.userService.getUsers()
             .then(users => {
                 this.users = users;
-                console.log(users);
             });
         this.route.params.subscribe(params => {
             this.id = params['id'];
@@ -47,7 +45,6 @@ export class EditAccessControlComponent implements OnInit {
     }
 
     createAccessControl() {
-        console.log(this.model)
         this.accesscontrolService.create(this.model)
         .then(
             response => {
@@ -61,7 +58,6 @@ export class EditAccessControlComponent implements OnInit {
     }
 
     updateAccessControl(){
-        console.log(this.accesscontrol);
 		this.accesscontrolService.update(this.accesscontrol)
 		.then(
 			response => {

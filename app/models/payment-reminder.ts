@@ -21,7 +21,7 @@ export class PaymentReminder {
 export var PaymentReminders: any[] = [
   {
     _id : "1",
-    developemnt : '1',
+    development : '1',
     title : 'bayar',
     auto_issue_on : '2017-01-20T03:00:00',
     due_on : '2017-01-30T03:00:00',
@@ -37,7 +37,7 @@ export var PaymentReminders: any[] = [
     created_at: '2017-01-10T03:00:00',
   },{
     _id : "2",
-    developemnt : '2',
+    development : '2',
     title : 'pay',
     auto_issue_on : '2017-01-15T03:00:00',
     due_on : '2017-01-25T03:00:00',

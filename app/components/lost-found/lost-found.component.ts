@@ -88,8 +88,7 @@ export class LostFoundComponent implements OnInit {
     	this.lostFoundforModal = lostFound;
     }
 
-    archieve(id) {
-        console.log(id);        
+    archieve(id) {      
         this.lostFoundService.archieve(id)
             .then(
                 data => {
@@ -121,7 +120,6 @@ export class LostFoundComponent implements OnInit {
                     this.all             = this.lostFounds.filter(data => data.archieve === false );
                     this.losts           = this.all.filter(data => data.type == 'lost');
                     this.founds          = this.all.filter(data => data.type == 'found');
-                    console.log(this.lostFounds);
                 }, 1000);
             });
     }

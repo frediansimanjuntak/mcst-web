@@ -22,34 +22,33 @@ export class PaymentService {
     }
 
     getAll(){
-        return this.http.get(url + 'api/payments', this.options)
+        return this.http.get(url + 'api/payment_booking', this.options)
             .map((res:Response) => res.json())
             .catch((error:any) => Observable.throw(error.json().error || 'Server error'));
     }
 
     getById(id:string){
-        return this.http.get(url + 'api/payments/' + id, this.options)
+        return this.http.get(url + 'api/payment_booking/' + id, this.options)
             .map((res:Response) => res.json())
             .catch((error:any) => Observable.throw(error.json().error || 'Server error'));
     }
 
     create(body:any): Promise<Payment> {
-        console.log(body);
-        return this.http.post(url +  'api/payments', JSON.stringify(body), this.options)
+        return this.http.post(url +  'api/payment_booking', JSON.stringify(body), this.options)
             .toPromise()
             .then(res => res.json().data)
             .catch(this.handleError);
     }
 
     update(body:Payment): Promise<Payment> {
-        return this.http.post(url + 'api/payments/update/' + body._id,body, this.options)
+        return this.http.post(url + 'api/payment_booking/update/' + body._id,body, this.options)
             .toPromise()
             .then(res => res.json().data)
             .catch(this.handleError);
     }
 
     delete(id: string): Promise<void> {
-        return this.http.delete(url + 'api/payments/' + id, this.options)
+        return this.http.delete(url + 'api/payment_booking/' + id, this.options)
             .toPromise()
             .then(() => null)
             .catch(this.handleError);

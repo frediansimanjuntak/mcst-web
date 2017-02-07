@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import { Router, Params, ActivatedRoute } from '@angular/router';
 import { Booking, Facility, Bookings } from '../../models/index';
-import { BookingService, AlertService, FacilityService, UserService, UnitService } from '../../services/index';
+import { BookingService, AlertService, FacilityService, UserService, UnitService, PaymentService } from '../../services/index';
 import '../../rxjs-operators';
 import { Observable} from 'rxjs/Observable';
 import * as moment from 'moment';
@@ -52,11 +52,14 @@ export var Binformation: any[] = []
 
 export class EditBookingComponent implements OnInit  { 
 	public dt: Date = new Date();
+    public minDate: Date = void 0;
     private opened: boolean = false;
 	booking: Booking;
     bookings: Booking[] = [];
     facilities: Facility[] = [];
     facility: Facility;
+    payments: any;
+    no: any;
     units: any[] = [];
     facility_id: any;
     model: any = {};
@@ -83,6 +86,7 @@ export class EditBookingComponent implements OnInit  {
     step: number;
     day : any;
     myForm: FormGroup;
+    filesToUpload: Array<File>;
     days : any[] = ["sunday","monday","tuesday","wednesday","thursday","friday","saturday"];
     name: any;
 
@@ -94,9 +98,31 @@ export class EditBookingComponent implements OnInit  {
         private formbuilder: FormBuilder,
 		private route: ActivatedRoute,
         private userService: UserService,
-        private unitService: UnitService){}
+        private unitService: UnitService,
+        private paymentService: PaymentService){
+        (this.minDate = new Date()).setDate(this.minDate.getDate());
+    }
 
 	ngOnInit() {
+        this.paymentService.getAll().subscribe(payments => {
+            this.payments = payments ;
+            if(payments.length > 0) { 
+                var a = this.payments.length - 1;
+                this.no = +this.payments[a].serial_no + 1
+                if(this.no > 1 && this.no < 10) {
+                    this.model.serial_no = '000' + this.no.toString();
+                }if(this.no > 10 && this.no < 100) {
+                    this.model.serial_no = '00' + this.no.toString();
+                }if(this.no > 100 && this.no < 1000) { 
+                    this.model.serial_no = '0' + this.no.toString();
+                }if(this.no > 1000) {
+                    this.model.serial_no = this.no.toString();
+                }
+            } else {
+                this.model.serial_no = '0001'
+            }
+            
+        });
         this.route.params.subscribe(params => {
             this.id = params['id'];
         });
@@ -113,7 +139,6 @@ export class EditBookingComponent implements OnInit  {
         })
         this.step = 1;
         this.day = this.days[this.dt.getDay()];
-        console.log(this.day)
 		this.facilityService.getAll()
 		.subscribe(facilities => {
 			this.facilities = facilities;
@@ -164,9 +189,24 @@ export class EditBookingComponent implements OnInit  {
     }
 
     createBooking() { 
-        this.model.reference_no = this.model.serial_no
-        console.log(this.model)
-        this.bookingService.create(this.model)
+        let formData:FormData = new FormData();
+        for (var i = 0; i < this.model.payment_proof.length; i++) {
+            formData.append("payment_proof[]", this.model.payment_proof[i]);
+        }
+        formData.append("reference_no", this.model.serial_no);
+        formData.append("serial_no", this.model.serial_no);
+        formData.append("total_amount", this.model.total_amount);
+        formData.append("start_time", this.model.start_time);
+        formData.append("end_time", this.model.end_time);
+        formData.append("name", this.model.name);
+        formData.append("facility_type", this.model.facility_type);
+        formData.append("fees", this.model.fees);
+        formData.append("booking_date", this.model.booking_date);
+        formData.append("payment_type", this.model.payment_type);
+        formData.append("sender", this.model.sender);
+        formData.append("property", this.model.property);
+        formData.append("facility", this.model.facility);
+        this.bookingService.create(formData)
         .then(
             data => {
                 this.alertService.success('Create booking successful', true);
@@ -216,6 +256,7 @@ export class EditBookingComponent implements OnInit  {
             this.facility_name = facility.name;
             this.facility_type = facility.facility_type;
             this.model.booking_fee = facility.booking_fee;
+            console.log(this.model.booking_fee)
              this.timeStart = [];
              this.timeEnd = [];
             if(data.choice == "all" ) {
@@ -239,7 +280,6 @@ export class EditBookingComponent implements OnInit  {
                     this.timeEnd.push(data.start)
                 }
             }
-            console.log(this.filtered)
         });
     }
 
@@ -249,14 +289,16 @@ export class EditBookingComponent implements OnInit  {
         var time_start = Math.min.apply(Math,this.tstart);
         var time_end = Math.max.apply(Math,this.tend);
         let booking_fee = this.model.booking_fee * (time_end - time_start);
-        this.model.fees = [{
-            deposit_fee : "80",
-            booking_fee : booking_fee,
-            admin_fee : "0"
-        }]
+        console.log(booking_fee)
+        this.model.fees = [
+           { deposit_fee : "80" ,
+            booking_fee : booking_fee ,
+            admin_fee : "0" }
+        ]
         var deposit = +this.model.fees[0].deposit_fee;
         var booking = +this.model.fees[0].booking_fee;
         var admin_fee = +this.model.fees[0].admin_fee;
+        console.log(deposit, booking, admin_fee)
         this.model.total_amount = deposit + booking + admin_fee;
         this.model.start_time = time_start+min;
         this.model.end_time = time_end+min;
@@ -280,33 +322,32 @@ export class EditBookingComponent implements OnInit  {
     }
 
     next(){ 
-        this.generate()
-        this.model.serial_no = this.ref_no.toString();
+        // this.generate()
+        // this.model.serial_no = this.ref_no.toString();
         this.model.sender = "Mr. Nice";
         this.step = 2;
-        console.log(this.model)
     }
 
     change(){
         this.step = 1
     }
 
-    onChange(event: any) {
-       let files = [].slice.call(event.target.files); 
-       this.model.payment_proof = files;
+    onChange(fileInput: any){
+        this.filesToUpload = <Array<File>> fileInput.target.files;
+        this.model.payment_proof = this.filesToUpload;
     }
 
     remove(i: any){ 
         this.model.payment_proof.splice(i, 1)
     }
 
-    getRandomInt(min, max) {
-        return Math.floor(Math.random() * (max - min + 1)) + min;
-    }
+    // getRandomInt(min, max) {
+    //     return Math.floor(Math.random() * (max - min + 1)) + min;
+    // }
 
-    generate(){
-        this.ref_no = this.getRandomInt(1, 9999999);
-    }
+    // generate(){
+    //     this.ref_no = this.getRandomInt(1, 9999999);
+    // }
 
     cancel(){
         this.router.navigate([this.name.default_development.name + '/booking' ]);

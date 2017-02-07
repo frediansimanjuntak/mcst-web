@@ -35,21 +35,25 @@
                 <div class="form-group">
                     <label class="control-label col-sm-4" for="publish">Publish :</label>
                     <div class="col-sm-8">
-                        <label><input type="radio" name="publish" [checked]="model.publish === 'true'" [(ngModel)]="announcement.publish" [value]=true>Yes</label>
-                        <label><input type="radio" name="publish" [checked]="model.publish === 'false'" [(ngModel)]="announcement.publish" [value]=false>No</label>     
+                        <div class="col-sm-2 radio">
+                            Yes<label><input type="radio" name="publish" [checked]="model.publish === 'true'" [(ngModel)]="announcement.publish" [value]=true></label>    
+                        </div>
+                        <div class="col-sm-2 radio">
+                            No&nbsp;<label><input type="radio" name="publish" [checked]="model.publish === 'false'" [(ngModel)]="announcement.publish" [value]=false></label>             
+                        </div>
                     </div>
                 </div>
                 <div class="form-group">
                     <label class="control-label col-sm-4" for="auto_post_on">Auto post on :</label>
                     <div class="col-sm-8">
-                            <my-date-picker [options]="autoPostOnDateOptions"
+                            <my-date-picker [options]="autoPostOnDateOptions" [placeholder]="autoPostOnDateTxt"
                             [selDate]="this.model.auto_post_on" (dateChanged)="autoPostOnDateChanged($event)"></my-date-picker>
                     </div>
                 </div>
                 <div class="form-group" >
                     <label class="control-label col-sm-4" for="valid_till">Valid till :</label>
                     <div class="col-sm-8">
-                        <my-date-picker [options]="validTillDateOptions"
+                        <my-date-picker [options]="validTillDateOptions" [placeholder]="validTillDateTxt"
                             [selDate]="this.model.valid_till" (dateChanged)="validTillDateChanged($event)"></my-date-picker>
                     </div>
                 </div>
@@ -60,7 +64,7 @@
                 <div class="form-group pull-right">
                     <button [disabled]="loading" class="btn btn-primary">Save</button>
                     <img *ngIf="loading" src="data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA==" />
-                    <a (click)="toAnnouncement()" class="btn btn-info">Cancel</a>
+                    <button (click)="toAnnouncement()" class="btn btn-info">Cancel</button>
                 </div>
             </form>     
         </div>
@@ -100,28 +104,26 @@
                 <div class="form-group">
                     <label class="control-label col-sm-4" for="publish">Publish :</label>
                     <div class="col-sm-8">
-                        <label><input type="radio" name="publish" [(ngModel)]="model.publish" [value]=true>Yes</label>
-                        <label><input type="radio" [checked]="model.publish==false" name="publish" [(ngModel)]="model.publish" [value]=false>No</label>     
+                        <div class="col-sm-2 radio">
+                            Yes&nbsp;<label><input type="radio" name="publish" [(ngModel)]="model.publish" [value]=true></label>    
+                        </div>
+                        <div class="col-sm-2 radio">
+                            No&nbsp;<label><input type="radio" [checked]="model.publish==false" name="publish" [(ngModel)]="model.publish" [value]=false></label>         
+                        </div>
                     </div>
                 </div>
                 <div class="form-group" *ngIf="!model.publish">
                     <label class="control-label col-sm-4" for="auto_post_on">Auto post on :</label>
                     <div class="col-sm-8">
-                        <!--  <input type="text" class="form-control" name="auto_post_on" [(ngModel)]="model.auto_post_on" #auto_post_on="ngModel" required />
-                        <span *ngIf="f.submitted && !auto_post_on.valid" class="help-block">auto_post_on is required</span> -->
-                        <my-date-picker [options]="autoPostOnDateOptions"
-                            [selDate]="selectedDate" (dateChanged)="autoPostOnDateChanged($event)"></my-date-picker>
-                         <!--   <ng2-datepicker [(ngModel)]="model.auto_post_on"></ng2-datepicker> -->
+                        <my-date-picker [options]="autoPostOnDateOptions" [placeholder]="autoPostOnDateTxt"
+                             (dateChanged)="autoPostOnDateChanged($event)"></my-date-picker>
                     </div>
                 </div>
                 <div class="form-group">
                     <label class="control-label col-sm-4" for="valid_till">Valid till :</label>
                     <div class="col-sm-8">
-                        <!-- <input type="text" class="form-control" name="valid_till" [(ngModel)]="model.valid_till" #valid_till="ngModel" required />
-                        <span *ngIf="f.submitted && !valid_till.valid" class="help-block">valid_till is required</span> -->
-                        <my-date-picker [options]="validTillDateOptions"
-                            (dateChanged)="validTillDateChanged($event)"></my-date-picker>
-                         <!--   <ng2-datepicker [(ngModel)]="model.valid_till"></ng2-datepicker> -->
+                        <my-date-picker [options]="validTillDateOptions" [placeholder]="validTillDateTxt"
+                            [selDate]="selectedValidDate" (dateChanged)="validTillDateChanged($event)"></my-date-picker>
                     </div>
                 </div>
 
@@ -131,7 +133,7 @@
                 <div class="form-group pull-right">
                     <button [disabled]="loading" class="btn btn-primary">Create</button>
                     <img *ngIf="loading" src="data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA==" />
-                    <a (click)="toAnnouncement()" class="btn btn-info">Cancel</a>
+                    <button (click)="toAnnouncement()" class="btn btn-info">Cancel</button>
                 </div>
             </form>     
         </div>

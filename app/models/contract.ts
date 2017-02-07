@@ -1,14 +1,15 @@
 import { Development, Attachment, User, Quotation } from './index'
 
 export class Contract {
+  type: string;
   _id : string;
   reference_no : string;
   development : Development;
   property : string;
   title : string;
   contract_type : string;
-  // reference_type : string; not sure how to make
-  // reference_id : string; 
+  reference_type : string;
+  reference_id : string; 
   attachment : Attachment[];
   quotations : Quotation[];
   purchase_order : string;

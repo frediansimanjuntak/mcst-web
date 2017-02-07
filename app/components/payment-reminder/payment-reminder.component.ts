@@ -40,7 +40,6 @@ export class PaymentReminderComponent implements OnInit {
     }
 
     deletePaymentReminder(paymentreminder: PaymentReminder) {
-    	console.log(paymentreminder._id)
         this.paymentreminderService.delete(paymentreminder._id)
           .then(
             response => {
@@ -66,7 +65,6 @@ export class PaymentReminderComponent implements OnInit {
         .then(paymentreminders => {
             this.published = paymentreminders.filter(data => data.publish === true );
             this.draft   = paymentreminders.filter(data => data.publish === false );
-            console.log(this.published)
             for (var i = 0; i < this.published.length; ++i) {
                 this.published[i].auto_issue_on = this.published[i].auto_issue_on.slice(0,10);
                 this.published[i].due_on = this.published[i].due_on.slice(0,10);

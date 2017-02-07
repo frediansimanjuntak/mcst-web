@@ -21,23 +21,6 @@ export class EditDevelopmentComponent implements OnInit {
     	private alertService: AlertService,
         private route: ActivatedRoute,) {}
 
-
-    // ngOnInit(): void {
-    //     this.route.params
-    //   .switchMap((params: Params) => this.developmentService.getById(params['name']))
-    //   .subscribe(development => this.development = development);
-    //   console.log(this.route.params);
-    //    // this.developmentService.getById(name).then(development => { this.development = development; console.log(development) });
-    //     // this.onChangeTable(this.config);
-    // }
-
-    // ngOnInit() {
-        // this.route.params.subscribe((params: Params) => {
-            // this.developmentService.getById(params['id'])
-            // .subscribe(development => {this.development = development; console.log(development);});
-        // });
-    // }
-
     ngOnInit(): void {
         this.route.params.subscribe(params => {
             this.id = params['id'];

@@ -37,7 +37,6 @@ export class FeedbackComponent implements OnInit {
     }
 
     deleteFeedback(feedback: Feedback) {
-    	console.log(feedback._id)
         this.feedbackService.delete(feedback._id)
           .then(
             response => {
@@ -67,22 +66,20 @@ export class FeedbackComponent implements OnInit {
 
     openModal(feedback){
         this.feedback = feedback;
-        this.feedback_reply = feedback.feedback_reply;    
-        console.log(this.feedback);
+        this.feedback_reply = feedback.feedback_reply;   
     }
 
     replyFeedback(){
-        console.log(this.feedback)
-        // this.feedbackService.reply(this.feedback)
-        // .then(
-        //     response => {
-        //         this.alertService.success('Update User successful', true);
-        //         this.router.navigate([this.name.default_development.name + '/user']);
-        //     },
-        //     error=> {
-        //         this.alertService.error(error);
-        //     }
-        // );
+        this.feedbackService.reply(this.feedback)
+        .then(
+            response => {
+                this.alertService.success('Update User successful', true);
+                this.router.navigate([this.name.default_development.name + '/user']);
+            },
+            error=> {
+                this.alertService.error(error);
+            }
+        );
     }
 
     viewArchived(){

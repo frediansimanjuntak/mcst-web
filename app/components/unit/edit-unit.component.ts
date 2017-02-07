@@ -99,7 +99,6 @@ export class EditUnitComponent implements OnInit {
         this.submitted = true;
         
         if(isValid){
-            console.log(model);
             this.unitservice.create(model, this.name.default_development.name)
             .then(
                 data => {
@@ -123,7 +122,6 @@ export class EditUnitComponent implements OnInit {
     }
 
     updateUnit(){
-         console.log(this.unit);
         this.unitservice.update(this.unit, this.name.default_development.name)
         .then(
             response => {

@@ -8,7 +8,7 @@ import 'rxjs/add/operator/toPromise';
 
 @Injectable()
 export class PetitionService {
-    private headers = new Headers({ 'Authorization': 'Bearer ' + this.authenticationService.token });
+    private headers = new Headers({ 'Accept': 'application/json', 'Authorization': 'Bearer ' + this.authenticationService.token });
     private options = new RequestOptions({ headers: this.headers });
     constructor(private http: Http, private authenticationService: AuthenticationService) {}
     
@@ -34,8 +34,8 @@ export class PetitionService {
             .catch((error:any) => Observable.throw(error.json().error || 'Server error'));
     }
 
-    create(body:Petition): Promise<Petition> {
-        return this.http.post(url + 'api/petitions',JSON.stringify(body), this.options)
+    create(formData:any): Promise<Petition> {
+        return this.http.post(`${url + 'api/petitions'}`, formData, this.options)
              .toPromise()
             .then(res => res.json().data)
             .catch(this.handleError);
@@ -56,7 +56,7 @@ export class PetitionService {
     }     
 
     archive(body:any): Promise<Petition> {
-        return this.http.post(url + 'api/petitions/archieve/' ,body, this.options)
+        return this.http.post(url + 'api/petitions/archieve/' , body , this.options)
             .toPromise()
             .then(res => res.json().data)
             .catch(this.handleError);

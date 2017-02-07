@@ -46,16 +46,14 @@ export class ContractComponent implements OnInit  {
             .subscribe(contract => {
                 this.contract = contract;
                 this.images = [];
-                this.images.push({source:contract.attachment.url}); 
-                // for (var i = 0; i < this.contract.attachment.length; ++i) {
-                //     this.images.push({source:this.contract.attachment[i].url});
-                // };
+                for (var i = 0; i < this.contract.attachment.length; ++i) {
+                    this.images.push({source:this.contract.attachment[i].url});
+                };
             });
         }
     }
 
     deleteContract(contract: Contract) {
-    	console.log(contract)
         this.contractService.delete(contract._id)
           .then(
             response => {
