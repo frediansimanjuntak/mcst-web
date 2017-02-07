@@ -200,7 +200,7 @@ export class EditBookingComponent implements OnInit  {
         formData.append("end_time", this.model.end_time);
         formData.append("name", this.model.name);
         formData.append("facility_type", this.model.facility_type);
-        formData.append("fees[]", this.model.fees);
+        formData.append("fees", this.model.fees);
         formData.append("booking_date", this.model.booking_date);
         formData.append("payment_type", this.model.payment_type);
         formData.append("sender", this.model.sender);
