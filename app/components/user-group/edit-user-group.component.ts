@@ -99,11 +99,9 @@ export class EditUserGroupComponent implements OnInit {
     }
 
     public selected(value:any):void {
-        // console.log('Selected value is: ', value);
     }
 
     public removed(value:any):void {
-        // console.log('Removed value is: ', value);
     }
 
     public refreshValueUser(value:any):void {
@@ -156,10 +154,6 @@ export class EditUserGroupComponent implements OnInit {
 
         control.push(userCtrl);
 
-        /* subscribe to individual address value changes */
-        // addrCtrl.valueChanges.subscribe(x => {
-        //   console.log(x);
-        // })
     }
 
     removeUser(i: number) {
@@ -175,7 +169,6 @@ export class EditUserGroupComponent implements OnInit {
         this.model.chief = this.chief.id;
 
         UserGroups.push(this.model);
-        console.log(this.model)
         this.router.navigate([this.name.default_development.name + '/user_group']);
          
         this.userGroupService.create(this.model)
@@ -201,7 +194,6 @@ export class EditUserGroupComponent implements OnInit {
                 this.usergroup.users[i] =this.user[i].id ;
             }
             this.usergroup.chief = this.chief.id;
-             console.log(this.usergroup);
         }
     //     this.userGroupService.update(this.usergroup)
     //     .then(

@@ -33,10 +33,34 @@ export class UnitService {
             .catch((error:any) => Observable.throw(error.json().error || 'Server error'));
     }
 
-    create(body:any, name:string): Promise<any> {
+    getTenants(id:string, name:string){
+        return this.http.get( url + 'api/properties/' + name + '/tenant/' + id, this.options)
+            .map((res:Response) => res.json())
+            .catch((error:any) => Observable.throw(error.json().error || 'Server error'));
+    }
 
-        console.log(body);
+    getRegVehicles(id:string, name:string){
+        return this.http.get( url + 'api/properties/' + name + '/register_vehicle/' + id, this.options)
+            .map((res:Response) => res.json())
+            .catch((error:any) => Observable.throw(error.json().error || 'Server error'));
+    }
+
+    create(body:any, name:string): Promise<any> {
         return this.http.post(url +  'api/properties/' + name, JSON.stringify(body), this.options)
+            .toPromise()
+            .then(res => res.json().data)
+            .catch(this.handleError);
+    }
+
+    createTenant(body:any, name:string, id:string): Promise<any> {
+        return this.http.post(url +  'api/properties/' + name + '/tenant/' + id, JSON.stringify(body), this.options)
+            .toPromise()
+            .then(res => res.json().data)
+            .catch(this.handleError);
+    }
+
+    createRegVehicle(body:any, name:string, id:string): Promise<any> {
+        return this.http.post(url +  'api/properties/' + name + '/register_vehicle/' + id, JSON.stringify(body), this.options)
             .toPromise()
             .then(res => res.json().data)
             .catch(this.handleError);
@@ -51,6 +75,20 @@ export class UnitService {
 
     delete(id: string, name: string): Promise<void> {
         return this.http.delete( url + 'api/properties/' + name + '/' + id, this.options)
+          .toPromise()
+          .then(() => null)
+          .catch(this.handleError);
+    }
+
+    deleteTenant(idTenant:string, idUnit: string, name: string): Promise<void> {
+        return this.http.delete( url + 'api/properties/' + name + '/' + idUnit + '/tenant/' + idTenant, this.options)
+          .toPromise()
+          .then(() => null)
+          .catch(this.handleError);
+    }
+
+    deleteRegVehicle(idRegVehicle:string, idUnit: string, name: string): Promise<void> {
+        return this.http.delete( url + 'api/properties/' + name + '/' + idUnit + '/register_vehicle/' + idRegVehicle, this.options)
           .toPromise()
           .then(() => null)
           .catch(this.handleError);

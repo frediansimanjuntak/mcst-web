@@ -2,7 +2,7 @@ import { Component, OnInit, Input } from '@angular/core';
 import { Router, Params, ActivatedRoute } from '@angular/router';
 import { FormBuilder, FormControl, FormGroup, FormArray, Validators } from '@angular/forms';
 import { Company, Companies, Contractor, Contractors } from '../../models/index';
-import { CompanyService, ContractorService, AlertService } from '../../services/index';
+import { CompanyService, ContractorService, AlertService, UserService } from '../../services/index';
 import '../../rxjs-operators';
 import 'rxjs/add/operator/switchMap';
 
@@ -15,7 +15,7 @@ import 'rxjs/add/operator/switchMap';
 
 export class EditContractorComponent implements OnInit {
     public items:Array<any> = [];
-
+    filesToUpload: Array<File>;
     private companyList:any = [];
     private company :any = {};
     public companyField: boolean;
@@ -32,7 +32,7 @@ export class EditContractorComponent implements OnInit {
     options1: Array<any> = [];
     mySelectCompanies: Array<string>;
     selection: Array<string>;
-
+    name: any;
     public submitted: boolean; // keep track on whether form is submitted
     public events: any[] = []; // use later to display form changes
 
@@ -41,11 +41,17 @@ export class EditContractorComponent implements OnInit {
     	private contractorService: ContractorService,
     	private alertService: AlertService,
     	private formbuilder: FormBuilder,
+        private userService: UserService,
         private route: ActivatedRoute,) {
     }
 
     ngOnInit(): void {
-        this.getCompanies();
+        this.userService.getByToken()
+          .subscribe(name => {
+            this.name = name;
+             this.getCompanies();
+          })
+      
         this.myForm = this.formbuilder.group({
         	username : ['', Validators.required],
         	password : ['', Validators.required],
@@ -192,34 +198,50 @@ export class EditContractorComponent implements OnInit {
         control.removeAt(i);
     }
 
-    onChange(event: any) {
-       this.model.profile_picture = event.target.files[0];
+   onChange(fileInput: any){
+        this.filesToUpload = <Array<File>> fileInput.target.files;
+        this.model.profile_picture = this.filesToUpload;
     }
 
     remove(i: any){
-        this.model.profile_picture = "";
+        this.model.profile_picture.splice(i, 1)
     }
 
     createContractor(model: Contractor, isValid: boolean) {
     	this.submitted = true;
     	if(isValid || this.companyField){
-			model.company = this.company.id;
-			model.profile_picture = this.model.profile_picture;
-			model.active = this.model.active;
-			Contractors.push(model);
-    		console.log(model);
+            let formData:FormData = new FormData();
+        
+            for (var i = 0; i < this.model.profile_picture.length; i++) {
+                formData.append("profile_picture[]", this.model.profile_picture[i]);
+            }
 
-            // this.contractorService.create(model)
-            // .subscribe(
-            //     data => {
-            //         this.alertService.success('Create contractor successful', true);
-            //         this.router.navigate(['/contractor']);
-            //     },
-            //     error => {
-            //         console.log(error);
-            //         alert(`The contractor could not be save, server Error.`);
-            //     }
-            // );
+            formData.append("username", model.username);
+            formData.append("password", model.password);
+            formData.append("phone", model.phone);
+            formData.append("email", model.email);
+            formData.append("address.street_name", model.address.street_name);
+            formData.append("address.block_no", model.address.block_no);
+            formData.append("address.postal_code", model.address.postal_code);
+            formData.append("address.country", model.address.country);
+            formData.append("address.full_address", model.address.full_address);
+            formData.append("description", model.description);
+            formData.append("company", this.company.id);
+            formData.append("position", model.position);
+            formData.append("role", model.role);
+            formData.append("active", this.model.active);
+
+			this.contractorService.create(formData)
+            .then(
+                data => {
+                    this.alertService.success('Create contractor successful', true);
+                    this.router.navigate(['/contractor']);
+                },
+                error => {
+                    console.log(error);
+                    alert(`The contractor could not be save, server Error.`);
+                }
+            );
 
 	        this.router.navigate(['/contractor']);
 	        

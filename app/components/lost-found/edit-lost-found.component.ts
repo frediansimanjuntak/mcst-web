@@ -60,7 +60,6 @@ export class EditLostFoundComponent  {
     fileChange(event) {
         let fileList: FileList = event.target.files;
         this.model.photo = fileList;
-        console.log(this.model.photo);
     }
 
     createReport(event: any) {
@@ -100,18 +99,10 @@ export class EditLostFoundComponent  {
         this.unitService.getAll(this.name.default_development.name)
             .subscribe((data)=> {
                 setTimeout(()=> {
-                    console.log(data);
                     this.dataUnit      = data.properties;
-                    console.log(this.dataUnit);
                 }, 1000);
             });
     }
-
-
-    // onChange(event: any) {
-    //    let files = [].slice.call(event.target.files);
-    //    this.model.photo = files;
-    // }
 
     remove(i: any){
         this.model.photo.splice(i, 1)

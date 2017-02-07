@@ -98,7 +98,6 @@ export class EditPollComponent  {
         if (this.model.poll_type == 'yes_or_no'){
             this.model.choices = ['yes', 'no'];
         }
-        console.log(this.model);
         this.pollService.create(this.model)
         .then(
             data => {
@@ -145,12 +144,10 @@ export class EditPollComponent  {
 
     addChoice() {
         this.model.choices.push('choice');
-        console.log(this.model.choices);
     }
 
     removeChoice(i: number) {
         this.model.choices.splice(i,1);
-        console.log(this.model.choices);
     }
 
     toPoll(){

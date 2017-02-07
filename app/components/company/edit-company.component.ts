@@ -274,19 +274,18 @@ export class EditCompanyComponent implements OnInit {
                 this.company.employee[i] =this.contractor[i].id ;
             }
             this.company.chief = this.chief.id;
-            console.log(this.company);
 
-            // this.companyService.update(this.company)
-            // .subscribe(
-            //     data => {
-            //         this.alertService.success('Update company successful', true);
-            //         this.router.navigate(['/company']);
-            //     },
-            //     error => {
-            //         console.log(error);
-            //         alert(`The company could not be update, server Error.`);
-            //     }
-            // );
+            this.companyService.update(this.company)
+            .then(
+                data => {
+                    this.alertService.success('Update company successful', true);
+                    this.router.navigate(['/company']);
+                },
+                error => {
+                    console.log(error);
+                    alert(`The company could not be update, server Error.`);
+                }
+            );
 
             this.router.navigate(['/company']);
         }
