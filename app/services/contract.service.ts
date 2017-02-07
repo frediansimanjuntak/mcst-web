@@ -35,7 +35,6 @@ export class ContractService {
     }
 
    create(body:any): Promise<Contract> {
-        console.log(body);
         return this.http.post(url +  'api/contracts', body, this.options)
             .toPromise()
             .then(res => res.json().data)
