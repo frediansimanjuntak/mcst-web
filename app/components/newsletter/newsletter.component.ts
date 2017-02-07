@@ -10,7 +10,7 @@ import { Observable} from 'rxjs/Observable';
   // moduleId: module.id,
   selector: 'newsletter',
   templateUrl: 'app/templates/newsletter.html',
-  styleUrls: [ 'app/templates/styles/newsletter.css' ]
+  // styleUrls: [ 'app/templates/styles/newsletter.css' ]
 })
 
 export class NewsletterComponent implements OnInit {
@@ -78,7 +78,7 @@ export class NewsletterComponent implements OnInit {
     }
 
     releaseNewsletter(newsletter: any){
-
+      console.log(newsletter);
       this.newsletter.released = true;
       this.newsletterservice.release(newsletter._id, this.name.default_development.name)
           .then(
@@ -106,6 +106,7 @@ export class NewsletterComponent implements OnInit {
         this.newsletterservice.getAll(this.name.default_development.name)
             .subscribe((data)=> {
                 setTimeout(()=> {
+                  console.log(data);
                   this.data = data.newsletter;
                   this.dataAgm       = this.data.filter(data => data.type === 'agm' );
                   this.dataEgm       = this.data.filter(data => data.type === 'egm' );

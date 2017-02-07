@@ -77,17 +77,15 @@ export class EditNewsletterComponent  {
         
         if(this.model.released == true){
             this.model.released_at =  Date.now();
-            console.log(this.model.release_at)
             formData.append("released", this.model.released);
             formData.append("release_at", this.model.released_at);
         } 
 
-        console.log(formData)
         this.newsletterService.create(formData, this.name.default_development.name)
         .then(
             data => {
                 this.alertService.success('Create newsletter successful', true);
-                this.router.navigate([this.name.default_development.name,'/newsletter']);
+                this.router.navigate([this.name.default_development.name + '/newsletter']);
             },
             error => {
                 console.log(error);

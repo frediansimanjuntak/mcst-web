@@ -67,17 +67,14 @@ export class PetitionComponent implements OnInit {
     }
 
     private logCheckbox(element: HTMLInputElement): void {
-        console.log( `Checkbox ${element.value} was ${element.checked ? '' : 'un'}checked\n`);
     }
 
     deletePetition(petition) {
-      console.log(petition);
         this.petitionService.delete(petition._id)
           .then(
             response => {
               if(response) {
                 console.log(response);
-                // console.log(response.error());
                 alert(`The Petition could not be deleted, server Error.`);
               } else {
                 this.alertService.success('Delete Petition successful', true);
@@ -100,7 +97,6 @@ export class PetitionComponent implements OnInit {
         this.petitionService.getAll()
             .subscribe((data)=> {
                 setTimeout(()=> {
-                    console.log(data);
                     this.petitions = data.filter(data => data.archieve === false && data.development == this.name.default_development._id );
                 }, 1000);
         });
@@ -123,7 +119,6 @@ export class PetitionComponent implements OnInit {
   	}
 
     archieveSelected(){
-        console.log(this.selectedValues);
         this.model.ids = this.selectedValues;
         this.petitionService.archive(this.model)
         this.ngOnInit();
