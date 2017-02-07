@@ -35,7 +35,7 @@ export class PaymentReminderComponent implements OnInit {
         if( this.id == null) {
             this.loadAllPaymentReminder();
         }else{
-        	this.paymentreminderService.getPaymentReminder(this.id).then(paymentreminder => {this.paymentreminder = paymentreminder;});
+        	this.paymentreminderService.getById(this.id).subscribe(paymentreminder => {this.paymentreminder = paymentreminder});
         }
     }
 
@@ -61,8 +61,8 @@ export class PaymentReminderComponent implements OnInit {
     }
 
 	private loadAllPaymentReminder() {
-		this.paymentreminderService.getPaymentReminders()
-        .then(paymentreminders => {
+		this.paymentreminderService.getAll()
+        .subscribe(paymentreminders => {
             this.published = paymentreminders.filter(data => data.publish === true );
             this.draft   = paymentreminders.filter(data => data.publish === false );
             for (var i = 0; i < this.published.length; ++i) {
