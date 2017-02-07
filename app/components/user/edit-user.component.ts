@@ -113,7 +113,7 @@ export class EditUserComponent implements OnInit {
     initOwned() {
         return this.formbuilder.group({
             _id: [],
-            development: ['585b36585d3cc41224fe518a'],
+            development: [''],
             property: ['']
         });
     }
@@ -121,7 +121,7 @@ export class EditUserComponent implements OnInit {
     initAuthorized() {
         return this.formbuilder.group({
             _id: [],
-            development: ['585b36585d3cc41224fe518a'],
+            development: [''],
             property: ['']
         });
     }
@@ -161,6 +161,7 @@ export class EditUserComponent implements OnInit {
     }
 
     createUser(model:User , isValid: boolean) {
+        this.submitted = true;
         this.userService.create(model)
         .then(
             data => {
