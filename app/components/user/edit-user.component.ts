@@ -19,6 +19,7 @@ export class EditUserComponent implements OnInit {
     users: User[] = [];
     model: any = {};
     id: string;
+    type: string;
     developmentID = "585b36585d3cc41224fe518a";
     units: any[] = [];
     myForm: FormGroup;
@@ -49,12 +50,10 @@ export class EditUserComponent implements OnInit {
             phone : ['', Validators.required],
             role : ['', Validators.required],
             default_property: this.formbuilder.group({
-                development: [''],
                 property: [''],
                 role : ['']
             }),
             rented_property: this.formbuilder.group({
-                development: [''],
                 property: ['']
             }),
             owned_property: this.formbuilder.array([this.initOwned()]),
@@ -64,9 +63,10 @@ export class EditUserComponent implements OnInit {
         });
         this.route.params.subscribe(params => {
             this.id = params['id'];
+            this.type = params['type'];
         });
 
-        if( this.id != null) {
+        if( this.id != null &&  this.type == null) {
             this.userService.getById(this.id)
             .subscribe(user => {
                 this.user = user;
@@ -103,18 +103,62 @@ export class EditUserComponent implements OnInit {
                 }
                 this.myForm.patchValue(this.user);
             });
-        };
-
-
-
-        // this.developmentService.getAll().subscribe(developments => { this.developments = developments; });
+        }else if( this.id != null &&  this.type != null){
+            if(this.type == 'tenant'){
+                this.myForm = this.formbuilder.group({
+                    username : ['', Validators.required],
+                    email : ['', Validators.required],
+                    password : ['', Validators.required],
+                    confirmpassword : ['', Validators.required],
+                    phone : ['', Validators.required],
+                    role : ['', Validators.required],
+                    default_property: this.formbuilder.group({
+                        property: [''],
+                        role : ['']
+                    }),
+                    rented_property: this.formbuilder.group({
+                        property: [this.id]
+                    }),
+                    owned_property: this.formbuilder.array([this.initOwned()]),
+                    authorized_property: this.formbuilder.array([this.initAuthorized()]),
+                    active: ['', Validators.required],
+                    });    
+            }else if(this.type == 'landlord'){
+                     this.myForm = this.formbuilder.group({
+                    username : ['', Validators.required],
+                    email : ['', Validators.required],
+                    password : ['', Validators.required],
+                    confirmpassword : ['', Validators.required],
+                    phone : ['', Validators.required],
+                    role : ['', Validators.required],
+                    default_property: this.formbuilder.group({
+                        property: [''],
+                        role : ['']
+                    }),
+                    rented_property: this.formbuilder.group({
+                        property: ['']
+                    }),
+                    owned_property: this.formbuilder.array([this.initOwned()]),
+                    authorized_property: this.formbuilder.array([this.initAuthorized()]),
+                    active: ['', Validators.required],
+                    });    
+            }
+            
+        }
+     // this.developmentService.getAll().subscribe(developments => { this.developments = developments; });
     }
 
     initOwned() {
-        return this.formbuilder.group({
-            development: [''],
-            property: ['']
-        });
+        if(this.type == null || this.type == 'tenant'){
+            return this.formbuilder.group({
+                property: ['']
+            });    
+        }else if(this.type != null && this.type == 'landlord'){
+            return this.formbuilder.group({
+                property: [this.id]
+            }); 
+        }
+        
     }
 
     initAuthorized() {
@@ -159,6 +203,7 @@ export class EditUserComponent implements OnInit {
     }
 
     createUser(model:User , isValid: boolean) {
+        console.log(model);
         this.submitted = true;
         this.userService.create(model)
         .then(
