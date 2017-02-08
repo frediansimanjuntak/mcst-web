@@ -44,20 +44,11 @@ export class IncidentComponent implements OnInit {
         this.userService.getByToken().subscribe(name => {this.name = name;})
         this.route.params.subscribe(params => {
             this.id = params['id'];
-            this._id = params['_id'];
         });
-        if( this.id == null && this._id == null) {
+        if( this.id == null) {
             this.loadAllIncident();
-        }if(this._id != null) {
-            this.incidentService.getById(this._id)
-            .subscribe(incident => {
-                this.images = [];
-                for (var i = 0; i < incident.attachment.length; ++i) {
-                    this.images.push({source:incident.attachment[i].url});
-                };
-            });
-        }else{
-        	this.incidentService.getById(this.id)
+        }if(this.id != null) {
+            this.incidentService.getById(this.id)
             .subscribe(incident => {
                 this.incident = incident;
                 this.images = [];
