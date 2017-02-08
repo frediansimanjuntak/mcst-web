@@ -109,47 +109,20 @@
                     <h5>Adding a Resident</h5>
                 </modal-header>
                 <modal-content>
-                    <form name="form" [formGroup]="myForm" novalidate>
-                        <div class="form-group" [ngClass]="{ 'has-error': addSubmitted && !resident }">
-                            <label class="control-label col-sm-4" for="chief">Resident :</label>
+                     <form name="form">
+                        <div class="form-group">
+                            <label class="control-label col-sm-4" for="sticky">Type :</label>
                             <div class="col-sm-8">
-                                <div style="width: 300px; margin-bottom: 20px;">
-                                    <ng-select 
-                                            
-                                              [allowClear]="true"
-                                              [items]="items"
-                                              [disabled]="disabled"
-                                              (data)="refreshValueResident($event)"
-                                              (selected)="selected($event)"
-                                              (removed)="removed($event)"
-                                              placeholder="No Resident selected">
-                                    </ng-select>
-                                    <span *ngIf="addSubmitted && !selectedResident" class="help-block">Resident is required</span>
+                                <div class="col-sm-2">
+                                    <label><input type="radio" name="type" [checked]="model.type == 'tenant'" [(ngModel)]="model.type" value='tenant'>tenant</label>   
+                                </div>
+                                <div class="col-sm-2"  *ngIf="!hasLandlord">
+                                    <label><input type="radio" name="type" [checked]="model.type == 'landlord'" [(ngModel)]="model.type" value='landlord'>landlord</label>      
                                 </div>
                             </div>
                         </div>
-                        <div class="form-group" [ngClass]="{ 'has-error': addSubmitted && !myForm.controls.type.valid }">
-                            <label  class="control-label col-sm-4" for="type">Type :</label>
-                            <div class="col-sm-8">
-                                <input type="text" class="form-control" name="type" formControlName="type">
-                                <small style="color: red" [hidden]="myForm.controls.type.valid || (myForm.controls.type.pristine && !addSubmitted)">Type is required</small>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label  class="control-label col-sm-4" for="full_name">Social Page :</label>
-                            <div class="col-sm-8">
-                                <label><input type="radio" formControlName="social_page" name="social_page" [value]="yes">Yes</label>
-                                <label><input type="radio" formControlName="social_page" [checked]=true name="social_page" [value]="no">No</label>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label  class="control-label col-sm-4" for="full_name">Remarks :</label>
-                            <div class="col-sm-8">
-                                <textarea  type="text" class="form-control" name="remarks" formControlName="remarks" placeholder="Remarks here if any"></textarea>
-                            </div>
-                        </div>
                         <div class="pull-right">
-                            <button  class="btn btn-primary" (click)="addResident(myForm.value, myForm.valid)">Add</button>
+                            <button  class="btn btn-primary" (click)="addResident()">Go to Form</button>
                             <button class="btn btn-default" (click)="firstModal.close()">Cancel</button>
                         </div>
                     </form>   

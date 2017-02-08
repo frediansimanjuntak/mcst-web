@@ -33,7 +33,7 @@ export class ViewUnitComponent implements OnInit {
     vehicles : any;
     vehicle :any = {};
     id: string;
-    
+    hasLandlord: boolean;
     myForm: FormGroup;
     myForm2: FormGroup;
     myOptions: Array<any>;
@@ -65,7 +65,12 @@ export class ViewUnitComponent implements OnInit {
                                         .getById(this.id, this.name.default_development.name)
                                            .subscribe(unit => {
                                                this.unit = unit.properties[0];
-
+                                               if(this.unit.landlord){
+                                                   this.hasLandlord = true;
+                                               }else{
+                                                   this.hasLandlord = false;
+                                               }
+                                               console.log(this.hasLandlord);
                                                this.unitservice
                                                 .getTenants(this.id, this.name.default_development.name)
                                                    .subscribe(data => {
@@ -144,6 +149,11 @@ export class ViewUnitComponent implements OnInit {
     }
 
     deleteResident(resident){
+        this.unitservice.deleteTenant(resident._id, this.unit._id, this.name.default_development.name)
+    }
+
+    deleteVehicle(vehicle){
+         this.unitservice.deleteRegVehicle(vehicle._id, this.unit._id, this.name.default_development.name)   
     }
 
     openResidentDetail(resident: any){
@@ -158,18 +168,8 @@ export class ViewUnitComponent implements OnInit {
         this.router.navigate([this.name.default_development.name + '/unit']);  
     }
 
-    addResident(model: any, isValid: boolean){
-         this.addSubmitted = true;
-         model.resident = this.selectedResident.id;
-         model.added_on = new Date();
-         if(isValid && this.selectedResident){
-            this.unit.tenant.push(model);
-            this.firstModal.close();
-            
-
-            this.addSubmitted = false;
-            this.ngOnInit();
-        }
+    addResident(){
+        this.router.navigate([this.name.default_development.name + '/user/add', this.unit._id, this.model.type]);  
     }
 
 
@@ -178,20 +178,17 @@ export class ViewUnitComponent implements OnInit {
          model.owner = this.selectedResident.id;
          model.registered_on = new Date();
         if(isValid && this.selectedResident){
-            this.unit.registered_vehicle.push(model);
-            this.secondModal.close();
-            // this.firstModal.close();
-            // this.visitService.create(model)
-            // .subscribe(
-            //     data => {
-            //         this.alertService.success('Add guest successful', true);
-            //         this.router.navigate(['/unit']);
-            //     },
-            //     error => {
-            //         console.log(error);
-            //         alert(`Guest register could not be save, server Error.`);
-            //     }
-            // );
+            this.unitservice.createRegVehicle(model, this.name.default_development.name, this.unit._id)
+            .then(
+                data => {
+                    this.alertService.success('Add guest successful', true);
+                    this.router.navigate(['/unit']);
+                },
+                error => {
+                    console.log(error);
+                    alert(`Guest register could not be save, server Error.`);
+                }
+            );
             this.vehicleSubmitted = false;
             this.ngOnInit();
         }
