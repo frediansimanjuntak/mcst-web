@@ -37,11 +37,11 @@
 			        		</div>
 			        		<div class="row">
 			        			<div class="col-md-4">Created on :</div>
-			        			<div class="col-md-8"><p>{{ contract.created_at }}</p></div>
+			        			<div class="col-md-8"><p>{{ contract.created_at | date:'d/M/y' }}</p></div>
 			        		</div>
 			        		<div class="row">
 			        			<div class="col-md-4">Last updated on :</div>
-			        			<div class="col-md-8"><p>{{ contract.updated_at }}</p></div>
+			        			<div class="col-md-8"><p>{{ contract.updated_at | date:'d/M/y' }}</p></div>
 			        		</div>
 			        		<div class="row">
 			        			<div class="col-md-4">Linked incident report :</div>
@@ -55,7 +55,7 @@
 			        			<div class="col-md-8"><p>{{ contract.status }}</p></div>
 			        		</div>
 			        		<div class="row">
-			        			<div class="col-md-4">Description of Project :</div>
+			        			<div class="col-md-4"><p>Description of Project :</p></div>
 			        		</div>
 			        		<div class="row">
 			        			<div class="col-md-12"><p>{{ contract.remark }}</p></div>
@@ -104,6 +104,39 @@
 	                    	</div>
 	                    </div>
 	                </div>
+	                <div *ngIf="contractnotices">
+		                <p-dataTable [value]="contractnotices" [rows]="10" [paginator]="true">
+						    <p-column filterMatchMode="contains" field="title" header="Title" sortable="true" [filter]="true" filterPlaceholder="Search title"></p-column>
+						    <p-column filterMatchMode="contains" field="start_time" header="Commence date" sortable="true" [filter]="true" filterPlaceholder="Search commence date">
+						    	<template let-data="rowData" pTemplate="body">
+						    		{{data.start_time | date:'d/M/y'}}
+						    	</template>
+						    </p-column>
+						    <p-column filterMatchMode="contains" field="end_time" header="Estimated date of completion" sortable="true" [filter]="true" filterPlaceholder="Search estimated date of completion">
+						    	<template let-data="rowData" pTemplate="body">
+						    		{{data.end_time | date:'d/M/y'}}
+						    	</template>
+						    </p-column>
+						    <p-column filterMatchMode="contains" field="description" header="Project description" sortable="true" [filter]="true" filterPlaceholder="Search description"></p-column>
+						    <p-column field="attachment" header="Attachment">
+						    	<template let-data="rowData" pTemplate="body">
+						    		<span *ngIf="data.attachment != null">Yes</span>
+						    		<span *ngIf="data.attachment == null">No</span>
+						    	</template>
+						    </p-column>
+						    <p-column header="Last Updated on" sortable="true" [filter]="true" filterPlaceholder="Search last updated on">
+						    	<template let-data="rowData" pTemplate="body">
+						    		<span *ngIf="data.updated_at != null">{{data.updated_at | date:'d/M/y'}}</span>
+						    		<span *ngIf="data.updated_at == null">{{data.created_at | date:'d/M/y'}}</span>
+						    	</template>
+						    </p-column>
+						    <p-column styleClass="col-button" header="Action">
+						    	<template let-data="rowData" pTemplate="body">
+						    		<a type="button" style="cursor:pointer" (click)="viewNotice(contract._id,data)">View</a>
+						    	</template>
+						    </p-column>
+						</p-dataTable>
+					</div>
 	            </div>
             </div><br/>
             <!--Contractor Visiting List -->
@@ -143,7 +176,7 @@
 	                </div>
 	            </div>
 	            <div class="row" style="border: 1px solid grey;min-height: 100px">
-	                <div *ngIf="!contractnote" class="row">
+	                <div *ngIf="!contractnotes" class="row">
 	                	<div class="col-md-12">
 	                    	<div style="text-align: center;">
 	                    		No note created yet.
@@ -156,6 +189,29 @@
 	                    	</div>
 	                    </div>
 	                </div>
+	                <div *ngIf="contractnotes">
+		                <p-dataTable [value]="contractnotes" [rows]="10" [paginator]="true">
+						    <p-column filterMatchMode="contains" field="posted_by.username" header="Posted by" sortable="true" [filter]="true" filterPlaceholder="Search posted by"></p-column>
+						    <p-column filterMatchMode="contains" field="posted_on" header="Posted on" sortable="true" [filter]="true" filterPlaceholder="Search posted on">
+						    	<template let-data="rowData" pTemplate="body">
+						    		{{data.posted_on | date:'d/M/y'}}
+						    	</template>
+						    </p-column>
+						    <p-column filterMatchMode="contains" field="note_remark" header="Remarks" sortable="true" [filter]="true" filterPlaceholder="Search remark"></p-column>
+						    <p-column field="attachment" header="Attachment">
+						    	<template let-data="rowData" pTemplate="body">
+						    		<span *ngIf="data.attachment != null">Yes</span>
+						    		<span *ngIf="data.attachment == null">No</span>
+						    	</template>
+						    </p-column>
+						    <p-column styleClass="col-button" header="Action">
+						    	<template let-data="rowData" pTemplate="body">
+						    		<a type="button" style="cursor:pointer" (click)="viewNote(data)">View</a>
+						    		<button type="button" (click)="deleteNote(data)"><i class="fa fa-trash" aria-hidden="true"></i></button>
+						    	</template>
+						    </p-column>
+						</p-dataTable>
+					</div>
 	            </div>
             </div><br/>
     	</div>

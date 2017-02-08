@@ -15,6 +15,7 @@ import { Observable} from 'rxjs/Observable';
 export class ContractNoticeComponent implements OnInit  {
 	contract: Contract;
     contracts: Contract[] = [];
+    contractnotice:any;
     model: any = {};
     images: any[];
     id: string;
@@ -39,8 +40,19 @@ export class ContractNoticeComponent implements OnInit  {
             this._id = params['_id'];
         });
         // this.contractnoticeService.getById(this.id,this._id).subscribe(contract => {this.contract = contract;});
-        if( this.id != null) {
+        if( this.id != null && this._id == null ) {
             this.contractService.getById(this.id).subscribe(contract => {this.contract = contract;});
+        }
+        if( this.id != null && this._id != null) {
+            this.contractService.getById(this.id).subscribe(contract => {this.contract = contract;});
+            this.contractnoticeService.getById(this.id,this._id)
+            .subscribe(contractnotice => {
+                this.contractnotice = contractnotice.contract_notice[0];
+                this.images = [];
+                for (var i = 0; i < this.contractnotice.attachment.length; ++i) {
+                    this.images.push({source:this.contractnotice.attachment[i].url});
+                };
+            });
         }
     }
 
@@ -80,7 +92,7 @@ export class ContractNoticeComponent implements OnInit  {
         .then(
             response => {
                 this.alertService.success('Create contract notice successful', true);
-                this.router.navigate([this.name.default_development.name , 'contract/view', id]);
+                this.router.navigate([this.name.default_development.name + '/contract/view', id ]);
             },
             error => {
                 this.alertService.error(error);
@@ -108,7 +120,7 @@ export class ContractNoticeComponent implements OnInit  {
         .then(
             response => {
                 this.alertService.success('Create contract notice successful', true);
-                this.router.navigate([this.name.default_development.name , 'contract/view', id]);
+                this.router.navigate([this.name.default_development.name + '/contract/view', id ]);
             },
             error => {
                 this.alertService.error(error);
