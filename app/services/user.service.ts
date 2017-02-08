@@ -40,6 +40,7 @@ export class UserService {
     }
 
     create(body:any): Promise<User> {
+        console.log(body);
         return this.http.post(url +  'api/users', body, this.options)
             .toPromise()
             .then(res => res.json().data)

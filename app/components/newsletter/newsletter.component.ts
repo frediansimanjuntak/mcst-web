@@ -84,7 +84,6 @@ export class NewsletterComponent implements OnInit {
             response => {
               if(response) {
                 console.log(response);
-                // console.log(response.error());
                 alert(`The Newsletter could not be release, server Error.`);
               } else {
                 this.alertService.success('Release Newsletter successful', true);
@@ -105,7 +104,6 @@ export class NewsletterComponent implements OnInit {
         this.newsletterservice.getAll(this.name.default_development.name)
             .subscribe((data)=> {
                 setTimeout(()=> {
-                  console.log(data);
                   this.data = data.newsletter;
                   this.dataAgm       = this.data.filter(data => data.type === 'agm' );
                   this.dataEgm       = this.data.filter(data => data.type === 'egm' );

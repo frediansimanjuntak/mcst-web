@@ -117,6 +117,7 @@ export class EditUserComponent implements OnInit {
                         role : ['']
                     }),
                     rented_property: this.formbuilder.group({
+                        development: [''],
                         property: [this.id]
                     }),
                     owned_property: this.formbuilder.array([this.initOwned()]),
@@ -136,6 +137,7 @@ export class EditUserComponent implements OnInit {
                         role : ['']
                     }),
                     rented_property: this.formbuilder.group({
+                        development: [''],
                         property: ['']
                     }),
                     owned_property: this.formbuilder.array([this.initOwned()]),
@@ -151,10 +153,12 @@ export class EditUserComponent implements OnInit {
     initOwned() {
         if(this.type == null || this.type == 'tenant'){
             return this.formbuilder.group({
+                development: [''],
                 property: ['']
             });    
         }else if(this.type != null && this.type == 'landlord'){
             return this.formbuilder.group({
+                development: [''],
                 property: [this.id]
             }); 
         }
@@ -202,9 +206,10 @@ export class EditUserComponent implements OnInit {
         control.removeAt(i);
     }
 
-    createUser(model:User , isValid: boolean) {
-        console.log(model);
-        this.submitted = true;
+    createUser(model:any , isValid: boolean) {
+       model.rented_property.development = this.name.default_development._id;
+       this.submitted = true;
+       console.log(model);
         this.userService.create(model)
         .then(
             data => {

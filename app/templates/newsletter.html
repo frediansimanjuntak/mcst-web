@@ -15,12 +15,15 @@
 		  <tabset>
 		    <tab heading="AGM">
 		    	<p-dataTable [value]="dataAgm" [rows]="10" [paginator]="true">
-				    <p-column field="created_at" header="Date" sortable="true" [filter]="true" filterPlaceholder="Search date"></p-column>
+				    <p-column header="Date" [filter]="true" filterPlaceholder="Search Uploaded on">
+				        <template let-dataAgm="rowData" pTemplate="body">
+				            <span>{{dataAgm.created_at | date:'d/M/y'}}</span>
+				        </template>
+				    </p-column>
 				    <p-column field="title" header="Title" sortable="true" [filter]="true" filterPlaceholder="Search Title"></p-column>
-				    <!-- <p-column field="description" header="Description" sortable="true" [filter]="true" filterPlaceholder="Search"> -->
-				    <p-column field="created_at" header="Uploaded on" sortable="true" [filter]="true" filterPlaceholder="Search Uploaded on">
-				        <template let-col let-data="rowData" pTemplate="body">
-				            <span [style.color]="data[col.field]">{{data[col.field]}}</span>
+				    <p-column header="Uploaded on" sortable="true">
+				        <template let-dataAgm="rowData" pTemplate="body">
+				            <span>{{dataAgm.created_at | date:'d/M/y'}}</span>
 				        </template>
 				    </p-column>
 				    <p-column field="created_by.username" header="Uploaded by" sortable="true" [filter]="true" filterPlaceholder="Search Created by"></p-column>
@@ -36,12 +39,15 @@
 		    </tab>
 		     <tab heading="EGM">
 		    	<p-dataTable [value]="dataEgm" [rows]="10" [paginator]="true">
-				    <p-column field="created_at" header="Date" sortable="true" [filter]="true" filterPlaceholder="Search date"></p-column>
+				    <p-column header="Date" [filter]="true" filterPlaceholder="Search Uploaded on">
+				        <template let-dataEgm="rowData" pTemplate="body">
+				            <span>{{dataEgm.created_at | date:'d/M/y'}}</span>
+				        </template>
+				    </p-column>
 				    <p-column field="title" header="Title" sortable="true" [filter]="true" filterPlaceholder="Search Title"></p-column>
-				    <!-- <p-column field="description" header="Description" sortable="true" [filter]="true" filterPlaceholder="Search"> -->
-				    <p-column field="created_at" header="Uploaded on" sortable="true" [filter]="true" filterPlaceholder="Search Uploaded on">
-				        <template let-col let-data="rowData" pTemplate="body">
-				            <span [style.color]="data[col.field]">{{data[col.field]}}</span>
+				    <p-column header="Uploaded on" sortable="true">
+				        <template let-dataEgm="rowData" pTemplate="body">
+				            <span>{{dataEgm.created_at | date:'d/M/y'}}</span>
 				        </template>
 				    </p-column>
 				    <p-column field="created_by.username" header="Uploaded by" sortable="true" [filter]="true" filterPlaceholder="Search Created by"></p-column>
@@ -57,12 +63,15 @@
 		    </tab>
 		    <tab heading="Circular">
 		    	<p-dataTable [value]="dataCircular" [rows]="10" [paginator]="true">
-				    <p-column field="created_at" header="Date" sortable="true" [filter]="true" filterPlaceholder="Search date"></p-column>
+				    <p-column header="Date" [filter]="true" filterPlaceholder="Search Uploaded on">
+				        <template let-dataCircular="rowData" pTemplate="body">
+				            <span>{{dataCircular.created_at | date:'d/M/y'}}</span>
+				        </template>
+				    </p-column>
 				    <p-column field="title" header="Title" sortable="true" [filter]="true" filterPlaceholder="Search Title"></p-column>
-				    <!-- <p-column field="description" header="Description" sortable="true" [filter]="true" filterPlaceholder="Search"> -->
-				    <p-column field="created_at" header="Uploaded on" sortable="true" [filter]="true" filterPlaceholder="Search Uploaded on">
-				        <template let-col let-data="rowData" pTemplate="body">
-				            <span [style.color]="data[col.field]">{{data[col.field]}}</span>
+				    <p-column header="Uploaded on" sortable="true">
+				        <template let-dataCircular="rowData" pTemplate="body">
+				            <span>{{dataCircular.created_at | date:'d/M/y'}}</span>
 				        </template>
 				    </p-column>
 				    <p-column field="created_by.username" header="Uploaded by" sortable="true" [filter]="true" filterPlaceholder="Search created by by"></p-column>

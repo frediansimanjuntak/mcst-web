@@ -75,7 +75,7 @@
                         <h5>Registered Vehicle</h5>
                     </div>
                     <div class="col-md-6">
-                        <a class="btn btn-default pull-right" (click)="secondModal.open()"><img class="img-btn" src="../../assets/image/icon_addresident.png" />&nbsp;Register Vehicle</a>
+                        <button [disabled]="!hasLandlord" class="btn btn-default pull-right" (click)="secondModal.open()"><img class="img-btn" src="../../assets/image/icon_addresident.png" />&nbsp;Register Vehicle</button>
                     </div>
                 </div>
                 <div class="row">
@@ -144,21 +144,13 @@
                                 <small style="color: red" [hidden]="myForm2.controls.license_plate.valid || (myForm2.controls.license_plate.pristine && !addSubmitted)">License Plate is required</small>
                             </div>
                         </div>
-                        <div class="form-group" [ngClass]="{ 'has-error': vehicleSubmitted && !selectedresident }">
-                            <label class="control-label col-sm-4" for="chief">Owner :</label>
+                         <div class="form-group" [ngClass]="{ 'has-error': vehicleSubmitted && !!selectedresident }">
+                            <label class="control-label col-sm-4" for="unit_no">Owner :</label>
                             <div class="col-sm-8">
-                                <div style="width: 300px; margin-bottom: 20px;">
-                                    <ng-select 
-                                             [allowClear]="true"
-                                              [items]="residents"
-                                              [disabled]="disabled"
-                                              (data)="refreshValueResident($event)"
-                                              (selected)="selected($event)"
-                                              (removed)="removed($event)"
-                                              placeholder="No Resident selected">
-                                    </ng-select>
-                                    <span *ngIf="vehicleSubmitted && !selectedResident" class="help-block">Resident is required</span>
-                                </div>
+                                <select class="form-control" formControlName="owner" name="property">
+                                     <option *ngFor="let u of residents" [ngValue]="u._id">u.id</option>
+                                </select>
+                               <span *ngIf="vehicleSubmitted && !selectedResident" class="help-block">Resident is required</span>
                             </div>
                         </div>
                         <div class="form-group">
