@@ -11,22 +11,29 @@
 	        			<div class="col-md-8"> <p>:  #{{petition.reference_no}}</p></div>
 	        		</div>
 	        		<div class="row">
-	        			<div class="col-md-4">Development Id</div>
-	        			<div class="col-md-8"><p>: {{ petition.development }}</p></div>
+	        			<div class="col-md-4">Development </div>
+	        			<div class="col-md-8"><p>: {{ petition.development.name }}</p></div>
 	        		</div>
 	        		<div class="row">
-	        			<div class="col-md-4">Property Id </div>
-	        			<div class="col-md-8"><p>: {{ petition.property }}</p></div>
+	        			<div class="col-md-4">Unit No </div>
+	        			<div class="col-md-8"><p>: {{ petition.unit_no }}</p></div>
 	        		</div>
 	        		<div class="row">
 	        			<div class="col-md-4">Attachment </div>
 	        			<div class="col-md-8">
-	        				:<a href="#" *ngFor="let a of petition.attachment"> {{a}}&nbsp; </a>
+	        				:<a [attr.href]="a.url" *ngFor="let a of petition.attachment"> {{a.name}},&nbsp; </a>
 	        			</div>
 	        		</div>
 	        		<div class="row">
 	        			<div class="col-md-4">Contract </div>
 	        			<div class="col-md-8"><p>: {{ petition.contract }}</p></div>
+	        		</div>
+	        		<div class="row">
+	        			<div class="col-md-4">Type </div>
+	        			<div *ngIf="petition.petition_type == 'maintenance'" class="col-md-8"><p>: Maintenance</p></div>
+	        			<div *ngIf="petition.petition_type == 'moving_in'" class="col-md-8"><p>: Moving-in</p></div>
+	        			<div *ngIf="petition.petition_type == 'renovation'" class="col-md-8"><p>: Renovation</p></div>
+	        			<div *ngIf="petition.petition_type == 'add_tenant/family'" class="col-md-8"><p>: Add Tenant/family</p></div>
 	        		</div>
 	        		<div class="row">
 	        			<div class="col-md-4">Remark </div>
@@ -38,15 +45,15 @@
 	        		</div>
 	        		<div class="row">
 	        			<div class="col-md-4">Requested By </div>
-	        			<div class="col-md-8"><p>: {{ petition.created_by }}</p></div>
+	        			<div class="col-md-8"><p>: {{ petition.created_by.username }}</p></div>
 	        		</div>
 	        		<div class="row">
 	        			<div class="col-md-4">Since </div>
-	        			<div class="col-md-8"><p>: {{ petition.created_at }}</p></div>
+	        			<div class="col-md-8"><p>: {{ petition.created_at | date:'longDate' }}</p></div>
 	        		</div>
 	        		<div class="row">
 	        			<div class="col-md-4">Last Updated on </div>
-	        			<div class="col-md-8"><p>: {{ petition.updated_at }}</p></div>
+	        			<div class="col-md-8"><p>: {{ petition.updated_at | date:'longDate'}}</p></div>
 	        		</div>
         </div>
 
@@ -64,24 +71,35 @@
 			
 			<div (click)="$event.preventDefault()">
 			
-			    	<p-dataTable [value]="petitions" [rows]="10"  resizableColumns="true" [paginator]="true">
+			    	<p-dataTable [value]="petitions" [rows]="10" [paginator]="true">
 					    <p-column header="Ticket Number" [filter]="true" filterPlaceholder="Search Ticket Number">
 					    	<template let-petitions="rowData" pTemplate="body">
 					            <span>#{{petitions.reference_no}}</span>
 					        </template>
 						</p-column>
-					    <p-column field="petition_type" header="Type" sortable="true" [filter]="true" filterPlaceholder="Search Type"></p-column>
+					    <p-column header="Type" sortable="true">
+					    	<template let-petitions="rowData" pTemplate="body">
+					            <span *ngIf="petitions.petition_type == 'maintenance'">Maintenance</span>
+					            <span *ngIf="petitions.petition_type == 'moving_in'">Moving-in</span>
+					            <span *ngIf="petitions.petition_type == 'renovation'">Renovation</span>
+					            <span *ngIf="petitions.petition_type == 'add_tenant/family'"> Add Tenant/family</span>
+					        </template>
+						</p-column>
 					    <p-column header="Requested by" >
 					    	<template let-petitions="rowData" pTemplate="body">
 					            <span class="btn-underline">{{petitions.created_by.username}}</span><br>
 					            <span>on {{petitions.created_at | date:'shortTime'}}</span><br>
 					        </template>
 						</p-column>
-					    <p-column field="updated_at" header="Last Updated on" sortable="true" [filter]="true" ></p-column>
+					    <p-column header="Last Updated on" >
+					    	<template let-petitions="rowData" pTemplate="body">
+					            <span>{{petitions.updated_at | date:'d/M/y'}}</span><br>
+					        </template>
+						</p-column>
 					    <p-column header="Attachment">
 					        <template let-petitions="rowData" pTemplate="body">
 					        	<span *ngIf="petitions.attachment.length === 0">No Files</span>
-					            <span *ngFor="let t of petitions.attachment">{{t}},</span>
+					            <span *ngIf="petitions.attachment.length > 0">Yes</span>
 					        </template>
 				    	</p-column>
 						<p-column [style]="{'width':'300px'}" styleClass="col-button" header="action">
