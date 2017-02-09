@@ -14,7 +14,7 @@ import { Observable} from 'rxjs/Observable';
 
 export class UserGroupComponent implements OnInit {
 	usergroup: any;
-    usergroups: UserGroup[] = [];
+    usergroups: any = [];
     users: User[] = [];
 	model: any = {};
     cols: any[];
@@ -36,27 +36,31 @@ export class UserGroupComponent implements OnInit {
     }
 
     ngOnInit(): void {
-        this.userService.getByToken().subscribe(name => {this.name = name;})
-        this.loadAllUserGroup();
-        this.getUsers();
-
-        // for (var i = 0; i < this.usergroups.length ; i++) {
-        // 	Things[i]
-        // }
+        this.userService.getByToken()
+                        .subscribe(name => {
+                            this.name = name;
+                            this.getUsers();
+                        })
     }
 
     getUsers(): void {
-    	this.userService.getUsers().then(users => this.users = users);
-  	}
+        this.userService.getAll().subscribe(users => {
+            this.users = users.filter(data => data.default_development == this.name.default_development._id);
+            this.loadAllUserGroup();
+        });
+    }
 
-	loadAllUserGroup(): void {
-    	this.userGroupService.getUserGroups().then(usergroups => this.usergroups = usergroups);
-        // this.userGroupService.getAll()
-        //     .subscribe((data)=> {
-        //         setTimeout(()=> {
-        //             this.usergroups          = data;
-        //         }, 1000);
-        //     });
+    loadAllUserGroup(): void {
+        this.userGroupService.getAll()
+            .subscribe((data)=> {
+                setTimeout(()=> {
+                    this.usergroups          = data;
+                    for (var i = 0; i < this.usergroups.users.length; i++) {
+                        let user = this.users.find(data => data._id ==  this.usergroups.users[i]);
+                        this.usergroups.user[i] = user.username;
+                    }
+                }, 1000);
+            });
     }
 
     deleteUserGroup(usergroup: UserGroup) {

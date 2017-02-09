@@ -215,21 +215,5 @@ export class ViewUnitComponent implements OnInit {
             this.ngOnInit();
         }
     }
- //    updateNewsletter(){
-	// 	this.unitservice.update(this.model)
-	// 	.subscribe(
-	// 		response => {
-	// 			if(response.error) {
-	//                 this.alertService.error(response.error);
-	//             } else {
-	//                 // EmitterService.get(this.userList).emit(response.users);
- //                     this.alertService.success('Update newsletter successful', true);
- //                     this.router.navigate(['/newsletter']);
-	//             }
- //            },
- //            error=> {
- //            	this.alertService.error(error);
- //            }
- //        );
-	// }
+
 }

@@ -15,10 +15,10 @@
 		  
 		    	<p-dataTable [value]="usergroups" [rows]="10" [paginator]="true">
 				    <p-column field="description" header="Description" sortable="true" [filter]="true" filterPlaceholder="Search description"></p-column>
-				    <p-column field="chief" header="Chief" sortable="true" [filter]="true" filterPlaceholder="Search Chief"></p-column>
+				    <p-column field="chief.username" header="Chief" sortable="true" [filter]="true" filterPlaceholder="Search Chief"></p-column>
 				    <p-column field="users" header="Users" sortable="true">
 				        <template let-usergroups="rowData" pTemplate="body">
-				            <span *ngFor="let t of usergroups.users">{{t}},</span>
+				            <span *ngFor="let t of usergroups.users">{{t.username}},</span>
 				        </template>
 				    </p-column>
 				   	<p-column styleClass="col-button">
