@@ -8,8 +8,6 @@ import 'rxjs/add/operator/toPromise';
  
 @Injectable()
 export class UserService {
-    private headers = new Headers({'Content-Type': 'application/json', 'Authorization': 'Bearer ' + this.authenticationService.token });
-    private options = new RequestOptions({ headers: this.headers });
     constructor(private http: Http, private authenticationService: AuthenticationService) {}
 
     getUsers(): Promise<User[]> {
@@ -22,39 +20,39 @@ export class UserService {
     }
 
     getAll(){
-        return this.http.get(url + 'api/users', this.options)
+        return this.http.get(url + 'api/users', this.jwt())
             .map((res:Response) => res.json())
             .catch((error:any) => Observable.throw(error.json().error || 'Server error'));
     }
 
     getById(id:string){    
-        return this.http.get(url + 'api/users/' + id, this.options)
+        return this.http.get(url + 'api/users/' + id, this.jwt())
             .map((res:Response) => res.json())
             .catch((error:any) => Observable.throw(error.json().error || 'Server error'));
     }
 
     getByToken(){    
-        return this.http.get(url + 'me', this.options)
+        return this.http.get(url + 'me', this.jwt())
             .map((res:Response) => res.json())
             .catch((error:any) => Observable.throw(error.json().error || 'Server error'));
     }
 
     create(body:any): Promise<User> {
-        return this.http.post(url +  'api/users', JSON.stringify(body), this.options)
+        return this.http.post(url +  'api/users', body, this.jwt())
             .toPromise()
             .then(res => res.json().data)
             .catch(this.handleError);
     }
 
     update(body:User): Promise<User> {
-        return this.http.post(url + 'api/users/update/' + body._id,body, this.options)
+        return this.http.post(url + 'api/users/update/' + body._id,body, this.jwt())
             .toPromise()
             .then(res => res.json().data)
             .catch(this.handleError);
     }
 
     delete(id: string): Promise<void> {
-        return this.http.delete(url + 'api/users/' + id, this.options)
+        return this.http.delete(url + 'api/users/' + id, this.jwt())
           .toPromise()
           .then(() => null)
           .catch(this.handleError);
@@ -63,6 +61,15 @@ export class UserService {
     private handleError(error: any): Promise<any> {
         console.error('An error occurred', error);
         return Promise.reject(error.message || error);
+    }
+
+    private jwt() {
+        // create authorization header with jwt token
+        let currentUser = JSON.parse(localStorage.getItem('authToken'));
+        if (currentUser && currentUser.token) {
+            let headers = new Headers({ 'Authorization': 'Bearer ' + currentUser.token });
+            return new RequestOptions({ headers: headers });
+        }
     }
 
 }

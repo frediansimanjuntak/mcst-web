@@ -11,43 +11,23 @@ import { url } from '../global';
 export class AuthenticationService {
     public headers: Headers;
     public token: string;
-    constructor(private http: Http,private _router: Router) {
-        // set token if saved in local storage
-        var authToken = JSON.parse(localStorage.getItem('authToken'));
-        this.token = authToken && authToken.token;
-        this.headers = new Headers();
-        this.headers.append('Content-Type', 'application/json');
-    }
+    constructor(private http: Http,private _router: Router) {}
  
-    logout() {
-        localStorage.removeItem("authToken");
-        this._router.navigate(['login']);
+    logout(): void {
+        // clear token remove user from local storage to log user out
+        localStorage.removeItem('authToken');
+        this._router.navigate(['/']);
     }
-
-    login(username: string, password: string): Observable<boolean> {
-        return this.http.post(url + 'auth/local', JSON.stringify({ username: username, password: password }), { headers: this.headers })
+    
+    login(username: string, password: string): Observable<void> {
+        return this.http.post(url + 'auth/local', { username: username, password: password })
             .map((response: Response) => {
-                // login successful if there's a jwt token in the response
-                let token = response.json() && response.json().token;
-                if (token) {
-                    this.token = token;
-                    localStorage.setItem('authToken', JSON.stringify({ username: username, token: token }));
-                    this._router.navigate(['/user']);
-                    return true;
-                } else {
-                    return false;
+                 // login successful if there's a jwt token in the response
+                let user = response.json();
+                if (user && user.token) {
+                    // store user details and jwt token in local storage to keep user logged in between page refreshes
+                    localStorage.setItem('authToken', JSON.stringify(user));
                 }
             });
     }
-
-    checkCredentials(){
-        if (localStorage.getItem("authToken") === null){
-            this._router.navigate(['Login']);
-        };
-    }
-
-    handleError(error: Response) {
-        console.error(error);
-        return Observable.throw(error.json().error || 'Server error');
-    } 
 }

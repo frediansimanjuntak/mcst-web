@@ -49,8 +49,6 @@
 					    <p-column field="created_at" header="Created on" sortable="true" [filter]="true" filterPlaceholder="Search created date"></p-column>
 					    <p-column styleClass="col-button" header="action">
 					    	<template let-published="rowData" pTemplate="body">
-					    		<a type="button" style="cursor:pointer" (click)="edit(published)"><i class="fa fa-edit" aria-hidden="true"></i>&nbsp;Edit</a>
-					    		<button [disabled]="published.publish == true" style="text-decoration: underline;cursor:pointer" (click)="publish(published)">Publish</button>
 								<button type="button" (click)="deletePaymentReminder(published)"><i class="fa fa-trash" aria-hidden="true"></i></button>
 					    	</template>
 					    </p-column>

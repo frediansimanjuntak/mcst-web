@@ -28,7 +28,7 @@
 				            <span>#{{dataUnit.address.unit_no}}-{{dataUnit.address.unit_no_2}}</span>
 				        </template>
 				    </p-column>
-				    <p-column field="" header="Owner" sortable="true" [filter]="true" filterPlaceholder="Search Lanlord"></p-column>
+				    <p-column field="landlord.username" header="Owner" sortable="true" [filter]="true" filterPlaceholder="Search Lanlord"></p-column>
 				    <p-column field="status" header="Status" sortable="true" [filter]="true" filterPlaceholder="Search Status"></p-column>
 				    <p-column sortable="true" header="No. of Tenant">
 				        <template let-dataUnit="rowData" pTemplate="body">

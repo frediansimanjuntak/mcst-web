@@ -64,11 +64,11 @@
             <div class="title">
                 Add User Group
             </div>
-            <p>Home > User Group > Add > </p>
+            <p>Home > User Group > Add </p>
 
             <form class="form-horizontal col-md-6" name="form" (ngSubmit)="f.form.valid && chiefField && createUserGroup()" #f="ngForm" novalidate>
                 <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !description.valid }">
-                    <label class="control-label col-sm-4" for="description">description :</label>
+                    <label class="control-label col-sm-4" for="description">Description :</label>
                     <div class="col-sm-8">
                         <input type="text" class="form-control" name="description" [(ngModel)]="model.description" #description="ngModel" required placeholder="Input description here" />
                         <span *ngIf="f.submitted && !description.valid" class="help-block">Description is required</span>
@@ -88,7 +88,7 @@
                                       (removed)="removed($event)"
                                       placeholder="No chief selected">
                             </ng-select>
-                            <span *ngIf="f.submitted && !chiefField" class="help-block">Chef is required</span>
+                            <span *ngIf="f.submitted && !chiefField" class="help-block">Chief is required</span>
                         </div>
                     </div>
                 </div>

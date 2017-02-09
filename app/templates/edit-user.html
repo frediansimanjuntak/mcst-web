@@ -83,7 +83,7 @@
                         </div>
                     </div>
                 </div>
-                <div formGroupName="rented_property"> 
+                <div *ngIf="type == 'tenant'" formGroupName="rented_property"> 
                     <div class="panel panel-default">
                         <div class="panel-heading">
                             <span>Rented Property</span>
@@ -103,7 +103,7 @@
                     </div>
                 </div>
                 <!--owned-->
-                <div formArrayName="owned_property">          
+                <div *ngIf="type == 'landlord'" formArrayName="owned_property">          
                     <div *ngFor="let owned of myForm.controls.owned_property.controls; let i=index" class="panel panel-default">
                         <div class="panel-heading">
                             <span>Owned Property {{i + 1}}</span>
@@ -272,7 +272,7 @@
                         </div>
                     </div>
                 </div>
-                <div formGroupName="rented_property"> 
+                <div [hidden]="type == 'landlord'" *ngIf="type == 'tenant'" formGroupName="rented_property"> 
                     <div class="panel panel-default">
                         <div class="panel-heading">
                             <span>Rented Property</span>
@@ -282,7 +282,7 @@
                                 <label class="control-label" for="property">Unit No :</label>
                                 <div *ngIf="units">
                                     <select class="form-control" name="property" id="property" formControlName="property" placeholder="Choose property">              
-                                        <option *ngFor="let unit of units" [ngValue]="unit._id">
+                                        <option *ngFor="let unit of units" [selected]="id == unit._id" [ngValue]="unit._id">
                                             #{{unit.address.unit_no}}-{{unit.address.unit_no_2}}
                                         </option>
                                     </select>
@@ -292,7 +292,7 @@
                     </div>
                 </div>
                 <!--owned-->
-                <div formArrayName="owned_property">          
+                <div [hidden]="type == 'tenant'" *ngIf="type == 'landlord'" formArrayName="owned_property">          
                     <div *ngFor="let owned of myForm.controls.owned_property.controls; let i=index" class="panel panel-default">
                         <div class="panel-heading">
                             <span>Owned Property {{i + 1}}</span>
@@ -303,7 +303,7 @@
                                 <label class="control-label" for="property">Unit No :</label>
                                 <div *ngIf="units">
                                     <select class="form-control" name="property" id="property" formControlName="property" placeholder="Choose property">              
-                                        <option *ngFor="let unit of units" [ngValue]="unit._id">
+                                        <option *ngFor="let unit of units" [selected]="id == unit._id" [ngValue]="unit._id">
                                             #{{unit.address.unit_no}}-{{unit.address.unit_no_2}}
                                         </option>
                                     </select>
@@ -312,7 +312,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="margin-20">
+                <div *ngIf="!type" class="margin-20">
                     <a (click)="addOwned()" style="cursor: default">
                         Add another Owned Property +
                     </a>

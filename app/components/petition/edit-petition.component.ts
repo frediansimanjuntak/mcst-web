@@ -38,7 +38,6 @@ export class EditPetitionComponent implements OnInit {
     public submitted: boolean; // keep track on whether form is submitted
     public events: any[] = []; // use later to display form changes
     name: any;
-    filesToUpload: Array<File>;
 
     constructor(private router: Router,
     	private petitionService: PetitionService,
@@ -89,16 +88,12 @@ export class EditPetitionComponent implements OnInit {
                 this.no = +this.petitions[a].reference_no + 1
                 if(this.no > 1 && this.no < 10) {
                     this.model.reference_no = '000' + this.no.toString();
-                    console.log(this.model.reference_no)
                 }if(this.no > 10 && this.no < 100) {
                     this.model.reference_no = '00' + this.no.toString();
-                    console.log(this.model.reference_no)
                 }if(this.no > 100 && this.no < 1000) { 
                     this.model.reference_no = '0' + this.no.toString();
-                    console.log(this.model.reference_no)
                 }if(this.no > 1000) {
                     this.model.reference_no = this.no.toString();
-                    console.log(this.model.reference_no)
                 }
             } else {
                 this.model.reference_no = '0001'
@@ -113,12 +108,12 @@ export class EditPetitionComponent implements OnInit {
             model.updated_at = new Date();
 
             let formData:FormData = new FormData();
-        
-            for (var i = 0; i < this.model.attachment.length; i++) {
-                formData.append("attachment[]", this.model.attachment[i]);
+            if(this.model.attachment){
+                for (var i = 0; i < this.model.attachment.length; i++) {
+                    formData.append("attachment[]", this.model.attachment[i]);
+                }
             }
-
-             
+                
             formData.append("reference_no", this.model.reference_no);
             formData.append("property", this.unit.id);
             formData.append("petition_type", model.petition_type);
@@ -145,7 +140,6 @@ export class EditPetitionComponent implements OnInit {
                 setTimeout(()=> {
                     this.units = data.properties;
 
-                    console.log(this.units);
                     let numOptions =  this.units.length;
                     let opts = new Array(numOptions);
 
@@ -163,20 +157,16 @@ export class EditPetitionComponent implements OnInit {
 
     public refreshValueUnit(value:any):void {
         this.unit = value;
-        console.log(value);
     }
 
 
     public selected(value:any):void {
-        // console.log('Selected value is: ', value);
     }
 
     public removed(value:any):void {
-        // console.log('Removed value is: ', value);
     }
 
     updatePetition(){
-    	console.log(this.petition);
 		this.petitionService.update(this.petition)
 		.then(
 			response => {
@@ -189,9 +179,9 @@ export class EditPetitionComponent implements OnInit {
         );
 	}
 
-    onChange(fileInput: any){
-        this.filesToUpload = <Array<File>> fileInput.target.files;
-        this.model.attachment = this.filesToUpload;
+    onChange(event: any) {
+       let files = [].slice.call(event.target.files);
+       this.model.attachment = files;
     }
 
     remove(i: any){

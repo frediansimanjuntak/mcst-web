@@ -27,13 +27,15 @@ export class ViewUnitComponent implements OnInit {
     units: any;
     users: any;
     model: any = {};
+    filesToUpload: Array<File>;
     residents :any;
     resident :any = {};
     selectedResident : any = {};
     vehicles : any;
     vehicle :any = {};
     id: string;
-    
+    hasLandlord: boolean;
+    hasTenants: boolean;
     myForm: FormGroup;
     myForm2: FormGroup;
     myOptions: Array<any>;
@@ -65,18 +67,23 @@ export class ViewUnitComponent implements OnInit {
                                         .getById(this.id, this.name.default_development.name)
                                            .subscribe(unit => {
                                                this.unit = unit.properties[0];
+                                               this.residents = this.unit.tenant;
 
-                                               this.unitservice
-                                                .getTenants(this.id, this.name.default_development.name)
-                                                   .subscribe(data => {
-                                                       console.log(data);
-                                                       this.residents = data[0].properties[0].tenant;
-                                                });
+                                               if(this.unit.landlord){
+                                                   this.hasLandlord = true;
+                                               }else{
+                                                   this.hasLandlord = false;
+                                               }
 
-                                               this.unitservice
+                                               if(this.residents){
+                                                   this.hasTenants = true;
+                                               }else{
+                                                   this.hasTenants = false;
+                                               }
+
+                                                this.unitservice
                                                 .getRegVehicles(this.id, this.name.default_development.name)
                                                    .subscribe(data => {
-                                                       console.log(data);
                                                        this.vehicles = data[0].properties[0].registered_vehicle;
                                                 });
                                         });
@@ -126,7 +133,6 @@ export class ViewUnitComponent implements OnInit {
     }
 
     public selected(value:any):void {
-        // console.log('Selected value is: ', value);
     }
 
     updateUnit(){
@@ -146,8 +152,12 @@ export class ViewUnitComponent implements OnInit {
         this.location.back();
     }
 
-    deleteResident(resident){
-        console.log(resident);
+    deleteResident(resident: any){
+        this.unitservice.deleteTenant(resident._id, this.unit._id, this.name.default_development.name)
+    }
+
+    deleteVehicle(vehicle: any){
+         this.unitservice.deleteRegVehicle(vehicle._id, this.unit._id, this.name.default_development.name)   
     }
 
     openResidentDetail(resident: any){
@@ -162,41 +172,45 @@ export class ViewUnitComponent implements OnInit {
         this.router.navigate([this.name.default_development.name + '/unit']);  
     }
 
-    addResident(model: any, isValid: boolean){
-         this.addSubmitted = true;
-         model.resident = this.selectedResident.id;
-         model.added_on = new Date();
-         if(isValid && this.selectedResident){
-            this.unit.tenant.push(model);
-            this.firstModal.close();
-            
-
-            this.addSubmitted = false;
-            this.ngOnInit();
-        }
+    addResident(){
+        this.router.navigate([this.name.default_development.name + '/user/add', this.unit._id, this.model.type]);  
     }
 
+    onChange(fileInput: any){
+        this.filesToUpload = <Array<File>> fileInput.target.files;
+        this.model.document = this.filesToUpload;
+    }
+
+    remove(i: any){
+        this.model.document.splice(i, 1)
+    }
 
     addVehicle(model: any, isValid: boolean){
          this.vehicleSubmitted = true;
-         model.owner = this.selectedResident.id;
          model.registered_on = new Date();
+
         if(isValid && this.selectedResident){
-            this.unit.registered_vehicle.push(model);
-            this.secondModal.close();
-            // this.firstModal.close();
-            // console.log(model);
-            // this.visitService.create(model)
-            // .subscribe(
-            //     data => {
-            //         this.alertService.success('Add guest successful', true);
-            //         this.router.navigate(['/unit']);
-            //     },
-            //     error => {
-            //         console.log(error);
-            //         alert(`Guest register could not be save, server Error.`);
-            //     }
-            // );
+            let formData:FormData = new FormData();
+                for (var i = 0; i < this.model.document.length; i++) {
+                    formData.append("document[]", this.model.document[i]);
+                }
+            
+            formData.append("license_plate", model.license_plate);
+            formData.append("owner", model.owner);
+            formData.append("transponder", model.transponder);
+            formData.append("remarks", model.remarks);
+
+            this.unitservice.createRegVehicle(formData, this.name.default_development.name, this.unit._id)
+            .then(
+                data => {
+                    this.alertService.success('Add guest successful', true);
+                    this.router.navigate([this.name.default_development.name + '/unit']);
+                },
+                error => {
+                    console.log(error);
+                    alert(`Guest register could not be save, server Error.`);
+                }
+            );
             this.vehicleSubmitted = false;
             this.ngOnInit();
         }

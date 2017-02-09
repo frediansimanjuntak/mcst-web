@@ -1,6 +1,5 @@
 export * from './access-control.service';
 export * from './alert.service';
-export * from './attachment.service';
 export * from './announcement.service';
 export * from './authentication.service';
 export * from './booking.service';
