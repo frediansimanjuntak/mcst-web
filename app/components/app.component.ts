@@ -12,9 +12,9 @@ import {
 } from '@angular/router'
 
 @Component({
-    moduleId: module.id,
-    selector: 'my-app',
-    template: `
+  moduleId: module.id,
+  selector: 'my-app',
+  template: `
     <div *ngIf="authToken">
   	  <headers></headers>
   	  <navbar></navbar>
@@ -53,8 +53,8 @@ import {
 
 export class AppComponent implements OnInit { 
 	loading: boolean = true;
-    authToken : any;
-    name: any;
+  authToken : any;
+  name: any;
     constructor(
         private slimLoadingBarService: SlimLoadingBarService,private router: Router, private userService:UserService) {
         router.events.subscribe((event: RouterEvent) => {
@@ -64,7 +64,8 @@ export class AppComponent implements OnInit {
     }
 
     ngOnInit(): void {
-        
+        this.authToken = JSON.parse(localStorage.getItem('authToken'));
+        this.userService.getByToken().subscribe(name => {this.name = name;})
     }
 
     start() {
@@ -88,9 +89,5 @@ export class AppComponent implements OnInit {
         if (event instanceof NavigationError) {
             this.loading = false;
         }
-    }    
-
-    getToken(){
-        this.authToken = JSON.parse(localStorage.getItem('authToken' || null));
     }
 }
