@@ -51,8 +51,11 @@
                         </p-column>
                         <p-column header="Type" sortable="true" field="type">
                         </p-column>
-                        <p-column header="Added on" sortable="true" field="created_at">
-                        </p-column>
+                        <p-column header="Added on" sortable="true">
+                            <template let-residents="rowData" pTemplate="body">
+                                <span>{{residents.created_at | date:'d/M/y'}}</span>
+                            </template>
+                        </p-column> 
                         <p-column header="Social page" sortable="true" field="social_page">
                         </p-column>
                         <p-column header="Contact No." >
@@ -78,7 +81,7 @@
                         <h5>Registered Vehicle</h5>
                     </div>
                     <div class="col-md-6">
-                        <button [disabled]="!hasLandlord" class="btn btn-default pull-right" (click)="secondModal.open()"><img class="img-btn" src="../../assets/image/icon_addresident.png" />&nbsp;Register Vehicle</button>
+                        <button [disabled]="!hasLandlord && !hasTenants" class="btn btn-default pull-right" (click)="secondModal.open()"><img class="img-btn" src="../../assets/image/icon_addresident.png" />&nbsp;Register Vehicle</button>
                     </div>
                 </div>
                 <div class="row">
@@ -93,8 +96,11 @@
                         </p-column>
                         <p-column header="Document" field="document">
                         </p-column>
-                        <p-column header="Registered On" field="registered_on">
-                        </p-column>
+                         <p-column header="Registered On" sortable="true">
+                            <template let-vehicles="rowData" pTemplate="body">
+                                <span>{{vehicles.created_at | date:'d/M/y'}}</span>
+                            </template>
+                        </p-column> 
                         <p-column header="Remarks" field="remarks">
                         </p-column>
                         <p-column styleClass="col-button" >
@@ -119,7 +125,7 @@
                                 <div class="col-sm-2">
                                     <label><input type="radio" name="type" [checked]="model.type == 'tenant'" [(ngModel)]="model.type" value='tenant'>Tenant</label>   
                                 </div>
-                                <div class="col-sm-2"  *ngIf="!hasLandlord">
+                                <div class="col-sm-2" *ngIf="!hasLandlord">
                                     <label><input type="radio" name="type" [checked]="model.type == 'landlord'" [(ngModel)]="model.type" value='landlord'>Landlord</label>      
                                 </div>
                             </div>
@@ -151,7 +157,7 @@
                             <label class="control-label col-sm-4" for="unit_no">Owner :</label>
                             <div class="col-sm-8">
                                 <select class="form-control" formControlName="owner" name="property">
-                                     <option *ngFor="let u of residents" [ngValue]="u._id">u.id</option>
+                                     <option *ngFor="let u of residents" [ngValue]="u.resident._id">{{u.resident.username}}</option>
                                 </select>
                                <span *ngIf="vehicleSubmitted && !selectedResident" class="help-block">Resident is required</span>
                             </div>

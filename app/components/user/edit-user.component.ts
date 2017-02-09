@@ -120,7 +120,6 @@ export class EditUserComponent implements OnInit {
                         development: [''],
                         property: [this.id]
                     }),
-                    owned_property: this.formbuilder.array([this.initOwned()]),
                     authorized_property: this.formbuilder.array([this.initAuthorized()]),
                     active: ['', Validators.required],
                     });    
@@ -135,10 +134,6 @@ export class EditUserComponent implements OnInit {
                     default_property: this.formbuilder.group({
                         property: [''],
                         role : ['']
-                    }),
-                    rented_property: this.formbuilder.group({
-                        development: [''],
-                        property: ['']
                     }),
                     owned_property: this.formbuilder.array([this.initOwned()]),
                     authorized_property: this.formbuilder.array([this.initAuthorized()]),
@@ -209,10 +204,18 @@ export class EditUserComponent implements OnInit {
     createUser(model:any , isValid: boolean) {
        if(model.rented_property.property){
            model.rented_property.development = this.name.default_development._id;
+          
        }
        if(model.owned_property[0].property){
-           model.owned_property[0].development = this.name.default_development._id;
-       }
+           // model.owned_property[0].development = this.name.default_development._id;
+         
+           let numOptions =  model.owned_property.length;
+
+            for (let i = 0; i < numOptions; i++) {
+                 model.owned_property[i].development = this.name.default_development._id;
+            }
+
+        }
 
        this.submitted = true;
        console.log(model);

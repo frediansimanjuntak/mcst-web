@@ -34,6 +34,7 @@ export class ViewUnitComponent implements OnInit {
     vehicle :any = {};
     id: string;
     hasLandlord: boolean;
+    hasTenants: boolean;
     myForm: FormGroup;
     myForm2: FormGroup;
     myOptions: Array<any>;
@@ -65,20 +66,23 @@ export class ViewUnitComponent implements OnInit {
                                         .getById(this.id, this.name.default_development.name)
                                            .subscribe(unit => {
                                                this.unit = unit.properties[0];
+                                               this.residents = this.unit.tenant;
+
                                                if(this.unit.landlord){
                                                    this.hasLandlord = true;
                                                }else{
                                                    this.hasLandlord = false;
                                                }
+
+                                               if(this.residents){
+                                                   this.hasTenants = true;
+                                               }else{
+                                                   this.hasTenants = false;
+                                               }
                                                console.log(this.unit);
                                                console.log(this.hasLandlord);
-                                               this.unitservice
-                                                .getTenants(this.id, this.name.default_development.name)
-                                                   .subscribe(data => {
-                                                       this.residents = data[0].properties[0].tenant;
-                                                });
 
-                                               this.unitservice
+                                                this.unitservice
                                                 .getRegVehicles(this.id, this.name.default_development.name)
                                                    .subscribe(data => {
                                                        this.vehicles = data[0].properties[0].registered_vehicle;
@@ -149,11 +153,12 @@ export class ViewUnitComponent implements OnInit {
         this.location.back();
     }
 
-    deleteResident(resident){
+    deleteResident(resident: any){
+        console.log(resident)
         this.unitservice.deleteTenant(resident._id, this.unit._id, this.name.default_development.name)
     }
 
-    deleteVehicle(vehicle){
+    deleteVehicle(vehicle: any){
          this.unitservice.deleteRegVehicle(vehicle._id, this.unit._id, this.name.default_development.name)   
     }
 
@@ -176,7 +181,7 @@ export class ViewUnitComponent implements OnInit {
 
     addVehicle(model: any, isValid: boolean){
          this.vehicleSubmitted = true;
-         model.owner = this.selectedResident.id;
+         model.owner = model;
          model.registered_on = new Date();
         if(isValid && this.selectedResident){
             this.unitservice.createRegVehicle(model, this.name.default_development.name, this.unit._id)
