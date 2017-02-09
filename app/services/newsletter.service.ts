@@ -10,6 +10,7 @@ import 'rxjs/add/operator/toPromise';
 export class NewsletterService {
     private headers = new Headers({'Authorization': 'Bearer ' + this.authenticationService.token });
     private options = new RequestOptions({ headers: this.headers });
+    private options2 = new RequestOptions({ headers: new Headers({'Content-Type': 'application/json', 'Authorization': 'Bearer ' + this.authenticationService.token }) });
     constructor(private http: Http, private authenticationService: AuthenticationService) {}
 
     getDevelopments(): Promise<Development[]> {
@@ -48,7 +49,7 @@ export class NewsletterService {
     }
 
     release(id: string, name: string): Promise<void> {
-        return this.http.post( url + 'api/newsletters/' + name + '/release/' + id, this.options)
+        return this.http.post( url + 'api/newsletters/' + name + '/release/' + id, '', this.options2)
             .toPromise()
             .then(res => res.json().data)
             .catch(this.handleError);
