@@ -3,5 +3,6 @@ module.exports = {
     middleware: [
         require('compression')() 
     ]
-  }
+  },
+  ghostMode: false
 };
