@@ -24,7 +24,6 @@ export class EditNewsletterComponent  {
     public developmentId;
     public uploader:FileUploader = new FileUploader({url:'http://localhost:3001/upload'});
     name: any;
-    filesToUpload: Array<File>;
 
     constructor(private router: Router,
     	private newsletterService: NewsletterService,

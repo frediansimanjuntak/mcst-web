@@ -16,6 +16,8 @@ import { FileUploader } from 'ng2-file-upload';
 })
 
 export class IncidentComponent implements OnInit {
+    reference_type: any; 
+    reference_id: any; 
 	incident: Incident;
     incidents: Incident[] = [];
     model: any = {};
@@ -111,8 +113,9 @@ export class IncidentComponent implements OnInit {
     }
 
     add_project(reference_no:any, id:any){
-        this.editcontractComponent.getType('incident', id);
-        this.router.navigate([this.name.default_development.name + '/contract/add',reference_no]);    
+        this.reference_id = id;
+        this.reference_type = 'incident';
+        this.router.navigate([this.name.default_development.name + '/add/contract/' + this.reference_type ,id ,reference_no]);    
     }
 
     public archieve(incident:Incident){

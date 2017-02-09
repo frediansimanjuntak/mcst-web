@@ -38,7 +38,6 @@ export class EditPetitionComponent implements OnInit {
     public submitted: boolean; // keep track on whether form is submitted
     public events: any[] = []; // use later to display form changes
     name: any;
-    filesToUpload: Array<File>;
 
     constructor(private router: Router,
     	private petitionService: PetitionService,
@@ -182,9 +181,9 @@ export class EditPetitionComponent implements OnInit {
         );
 	}
 
-    onChange(fileInput: any){
-        this.filesToUpload = <Array<File>> fileInput.target.files;
-        this.model.attachment = this.filesToUpload;
+    onChange(event: any) {
+       let files = [].slice.call(event.target.files);
+       this.model.attachment = files;
     }
 
     remove(i: any){
