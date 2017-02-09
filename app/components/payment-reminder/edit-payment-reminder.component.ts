@@ -55,8 +55,8 @@ export class EditPaymentReminderComponent implements OnInit{
                 created_by : [''],
                 created_at : [''],
             });
-            this.paymentreminderService.getPaymentReminder(this.id)
-            .then(paymentreminder => {
+            this.paymentreminderService.getById(this.id)
+            .subscribe(paymentreminder => {
                 this.paymentreminder = paymentreminder; 
                 this.paymentreminder.auto_issue_on = this.paymentreminder.auto_issue_on.slice(0,10);
                 this.paymentreminder.due_on = this.paymentreminder.due_on.slice(0,10);
@@ -89,12 +89,13 @@ export class EditPaymentReminderComponent implements OnInit{
         control.removeAt(i);
     }
 
-    createPaymentReminder(paymentreminder:PaymentReminder) {
-        this.paymentreminderService.create(this.model)
+    createPaymentReminder(model:PaymentReminder, isVaild:boolean) {
+        console.log(model)
+        this.paymentreminderService.create(model)
         .then(
             data => {
                 this.alertService.success('Create payment successful', true);
-                this.router.navigate([this.name.default_development.name + '/payment_reminder']);
+                this.router.navigate([this.name.default_development.name + '/payment_system']);
             },
             error => {
                 console.log(error);
@@ -108,7 +109,7 @@ export class EditPaymentReminderComponent implements OnInit{
         .then(
             response => {
                 this.alertService.success('Update payment reminder successful', true);
-                this.router.navigate([this.name.default_development.name + '/payment_reminder']);
+                this.router.navigate([this.name.default_development.name + '/payment_system']);
             },
             error => {
                 this.alertService.error(error);

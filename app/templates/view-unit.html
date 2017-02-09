@@ -22,8 +22,8 @@
                                 <b>Block :</b>{{unit.address.block_no}}
                             </div>
                             <div class="col-md-4">
-                                <b>Owner :</b>{{unit.owner}}<br>
-                                <b>Status :</b>{{unit.status}}
+                                <span *ngIf="hasLandlord"><b>Owner :</b>{{unit.landlord.username}}<br>
+                                <b>Status :</b>{{unit.status}}</span>
                             </div>
                             <div class="col-md-4">
                                 <b>No of Tenant :</b>{{ unit.tenant.length }}<br>
@@ -44,18 +44,24 @@
                    <p-dataTable [value]="residents">
                         <p-column header="no" [style]="{'width':'42px'}" field="i">
                         </p-column>
-                        <p-column header="Resident" field="resident">
+                        <p-column header="Resident" >
+                            <template let-residents="rowData" pTemplate="body">
+                                <span *ngIf="residents.resident.username">{{residents.resident.username}}</span>
+                            </template>
                         </p-column>
                         <p-column header="Type" sortable="true" field="type">
                         </p-column>
-                        <p-column header="Added on" sortable="true" field="added_on">
-                        </p-column>
+                        <p-column header="Added on" sortable="true">
+                            <template let-residents="rowData" pTemplate="body">
+                                <span>{{residents.created_at | date:'d/M/y'}}</span>
+                            </template>
+                        </p-column> 
                         <p-column header="Social page" sortable="true" field="social_page">
                         </p-column>
                         <p-column header="Contact No." >
                             <template let-residents="rowData" pTemplate="body">
-                                <span *ngIf="residents.phone">{{residents.phone}}<br></span>
-                                <span *ngIf="residents.email">{{residents.email}}<br></span>
+                                <span *ngIf="residents.resident.phone">{{residents.resident.phone}}<br></span>
+                                <span *ngIf="residents.resident.email">{{residents.resident.email}}<br></span>
                             </template>
                         </p-column>
                         <p-column header="Remarks" field="remarks">
@@ -75,7 +81,7 @@
                         <h5>Registered Vehicle</h5>
                     </div>
                     <div class="col-md-6">
-                        <a class="btn btn-default pull-right" (click)="secondModal.open()"><img class="img-btn" src="../../assets/image/icon_addresident.png" />&nbsp;Register Vehicle</a>
+                        <button [disabled]="!hasLandlord && !hasTenants" class="btn btn-default pull-right" (click)="secondModal.open()"><img class="img-btn" src="../../assets/image/icon_addresident.png" />&nbsp;Register Vehicle</button>
                     </div>
                 </div>
                 <div class="row">
@@ -90,8 +96,11 @@
                         </p-column>
                         <p-column header="Document" field="document">
                         </p-column>
-                        <p-column header="Registered On" field="registered_on">
-                        </p-column>
+                         <p-column header="Registered On" sortable="true">
+                            <template let-vehicles="rowData" pTemplate="body">
+                                <span>{{vehicles.created_at | date:'d/M/y'}}</span>
+                            </template>
+                        </p-column> 
                         <p-column header="Remarks" field="remarks">
                         </p-column>
                         <p-column styleClass="col-button" >
@@ -109,47 +118,20 @@
                     <h5>Adding a Resident</h5>
                 </modal-header>
                 <modal-content>
-                    <form name="form" [formGroup]="myForm" novalidate>
-                        <div class="form-group" [ngClass]="{ 'has-error': addSubmitted && !resident }">
-                            <label class="control-label col-sm-4" for="chief">Resident :</label>
+                     <form name="form">
+                        <div class="form-group">
+                            <label class="control-label col-sm-4" for="sticky">Type :</label>
                             <div class="col-sm-8">
-                                <div style="width: 300px; margin-bottom: 20px;">
-                                    <ng-select 
-                                            
-                                              [allowClear]="true"
-                                              [items]="items"
-                                              [disabled]="disabled"
-                                              (data)="refreshValueResident($event)"
-                                              (selected)="selected($event)"
-                                              (removed)="removed($event)"
-                                              placeholder="No Resident selected">
-                                    </ng-select>
-                                    <span *ngIf="addSubmitted && !selectedResident" class="help-block">Resident is required</span>
+                                <div class="col-sm-2" *ngIf="hasLandlord">
+                                    <label><input type="radio" name="type" [checked]="model.type == 'tenant'" [(ngModel)]="model.type" value='tenant'>Tenant</label>   
+                                </div>
+                                <div class="col-sm-2" *ngIf="!hasLandlord">
+                                    <label><input type="radio" name="type" [checked]="model.type == 'landlord'" [(ngModel)]="model.type" value='landlord'>Landlord</label>      
                                 </div>
                             </div>
                         </div>
-                        <div class="form-group" [ngClass]="{ 'has-error': addSubmitted && !myForm.controls.type.valid }">
-                            <label  class="control-label col-sm-4" for="type">Type :</label>
-                            <div class="col-sm-8">
-                                <input type="text" class="form-control" name="type" formControlName="type">
-                                <small style="color: red" [hidden]="myForm.controls.type.valid || (myForm.controls.type.pristine && !addSubmitted)">Type is required</small>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label  class="control-label col-sm-4" for="full_name">Social Page :</label>
-                            <div class="col-sm-8">
-                                <label><input type="radio" formControlName="social_page" name="social_page" [value]="yes">Yes</label>
-                                <label><input type="radio" formControlName="social_page" [checked]=true name="social_page" [value]="no">No</label>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label  class="control-label col-sm-4" for="full_name">Remarks :</label>
-                            <div class="col-sm-8">
-                                <textarea  type="text" class="form-control" name="remarks" formControlName="remarks" placeholder="Remarks here if any"></textarea>
-                            </div>
-                        </div>
                         <div class="pull-right">
-                            <button  class="btn btn-primary" (click)="addResident(myForm.value, myForm.valid)">Add</button>
+                            <button  class="btn btn-primary" (click)="addResident()">Go to Form</button>
                             <button class="btn btn-default" (click)="firstModal.close()">Cancel</button>
                         </div>
                     </form>   
@@ -171,21 +153,13 @@
                                 <small style="color: red" [hidden]="myForm2.controls.license_plate.valid || (myForm2.controls.license_plate.pristine && !addSubmitted)">License Plate is required</small>
                             </div>
                         </div>
-                        <div class="form-group" [ngClass]="{ 'has-error': vehicleSubmitted && !selectedresident }">
-                            <label class="control-label col-sm-4" for="chief">Owner :</label>
+                         <div class="form-group" [ngClass]="{ 'has-error': vehicleSubmitted && !!selectedresident }">
+                            <label class="control-label col-sm-4" for="unit_no">Owner :</label>
                             <div class="col-sm-8">
-                                <div style="width: 300px; margin-bottom: 20px;">
-                                    <ng-select 
-                                             [allowClear]="true"
-                                              [items]="residents"
-                                              [disabled]="disabled"
-                                              (data)="refreshValueResident($event)"
-                                              (selected)="selected($event)"
-                                              (removed)="removed($event)"
-                                              placeholder="No Resident selected">
-                                    </ng-select>
-                                    <span *ngIf="vehicleSubmitted && !selectedResident" class="help-block">Resident is required</span>
-                                </div>
+                                <select class="form-control" formControlName="owner" name="owner">
+                                     <option *ngFor="let u of residents" [ngValue]="u.resident._id">{{u.resident.username}}</option>
+                                </select>
+                               <span *ngIf="vehicleSubmitted && !selectedResident" class="help-block">Resident is required</span>
                             </div>
                         </div>
                         <div class="form-group">
@@ -194,10 +168,15 @@
                                 <input  type="text" class="form-control" name="transponder" formControlName="transponder" placeholder="">
                             </div>
                         </div>
-                        <div class="form-group">
-                            <label  class="control-label col-sm-4" for="document">Document :</label>
+                        <div class="form-group" >
+                            <label class="control-label col-sm-4" for="document">Document :</label>
                             <div class="col-sm-8">
-                                <input  type="text" class="form-control" name="document" formControlName="document" placeholder="">
+                                <input type="file" multiple class="upload" name="document" (change)="onChange($event)" />
+                                <p *ngFor="let item of model.document; let i=index ">
+                                    <img src="assets/image/icon_media_image.png" width="14px" height="12px">&nbsp;  
+                                    <span style="text-decoration: underline;">{{ item.name }}_{{item.size/1024 | number:'1.0-0' }}kb</span> &nbsp;   
+                                    <span style="cursor:pointer" (click)="remove(i)"><img src="assets/image/icon_close_black.png" width="14px" height="12px"></span>
+                                </p>
                             </div>
                         </div>
                          <div class="form-group">

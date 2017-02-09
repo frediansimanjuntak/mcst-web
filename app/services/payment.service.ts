@@ -8,8 +8,6 @@ import 'rxjs/add/operator/toPromise';
  
 @Injectable()
 export class PaymentService {
-    private headers = new Headers({ 'Authorization': 'Bearer ' + this.authenticationService.token });
-    private options = new RequestOptions({ headers: this.headers });
     constructor(private http: Http, private authenticationService: AuthenticationService) {}
 
     getPayments(): Promise<Payment[]> {
@@ -22,33 +20,33 @@ export class PaymentService {
     }
 
     getAll(){
-        return this.http.get(url + 'api/payment_booking', this.options)
+        return this.http.get(url + 'api/payment_booking', this.jwt())
             .map((res:Response) => res.json())
             .catch((error:any) => Observable.throw(error.json().error || 'Server error'));
     }
 
     getById(id:string){
-        return this.http.get(url + 'api/payment_booking/' + id, this.options)
+        return this.http.get(url + 'api/payment_booking/' + id, this.jwt())
             .map((res:Response) => res.json())
             .catch((error:any) => Observable.throw(error.json().error || 'Server error'));
     }
 
     create(body:any): Promise<Payment> {
-        return this.http.post(url +  'api/payment_booking', JSON.stringify(body), this.options)
+        return this.http.post(url +  'api/payment_booking', JSON.stringify(body), this.jwt())
             .toPromise()
             .then(res => res.json().data)
             .catch(this.handleError);
     }
 
     update(body:Payment): Promise<Payment> {
-        return this.http.post(url + 'api/payment_booking/update/' + body._id,body, this.options)
+        return this.http.post(url + 'api/payment_booking/update/' + body._id,body, this.jwt())
             .toPromise()
             .then(res => res.json().data)
             .catch(this.handleError);
     }
 
     delete(id: string): Promise<void> {
-        return this.http.delete(url + 'api/payment_booking/' + id, this.options)
+        return this.http.delete(url + 'api/payment_booking/' + id, this.jwt())
             .toPromise()
             .then(() => null)
             .catch(this.handleError);
@@ -59,4 +57,12 @@ export class PaymentService {
         return Promise.reject(error.message || error);
     }
 
+    private jwt() {
+        // create authorization header with jwt token
+        let currentUser = JSON.parse(localStorage.getItem('authToken'));
+        if (currentUser && currentUser.token) {
+            let headers = new Headers({ 'Authorization': 'Bearer ' + currentUser.token });
+            return new RequestOptions({ headers: headers });
+        }
+    }
 }

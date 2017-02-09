@@ -75,14 +75,17 @@ export class EditBookingComponent implements OnInit  {
     timeEnd : any[] = [];
     end : any; 
     min : any;
+    status: any;
     filtered: any;
     facility_name : any;
     facility_type: any;
-    booking_status: any
+    booking_status: any[] = [];
+    booking_fee: any;
     id: string;
     ref_no: string;
     _id: number = 0;
-    selectedDay: any;
+    selectedDay: any[] = [];
+    selectedFacility: any[] = [];
     step: number;
     day : any;
     myForm: FormGroup;
@@ -131,47 +134,62 @@ export class EditBookingComponent implements OnInit  {
             this.name = name;
             this.unitService.getAll(name.default_development.name).subscribe(units => {this.units = units.properties})
         })
-        this.myForm = this.formbuilder.group({
-            id : [''],
-            choice : ['All'],
-            start : [0],
-            end : [23]
-        })
         this.step = 1;
         this.day = this.days[this.dt.getDay()];
 		this.facilityService.getAll()
 		.subscribe(facilities => {
 			this.facilities = facilities;
-            this.selectedDay = this.facilities[this._id].schedule.filter(data => data.day == this.day); 
-            if (this.selectedDay.length > 0) { 
+            for (let a = 0; a < facilities.length; ++a) {
+                for (let b = 0; b < facilities[a].schedule.length; ++b) {
+                    this.selectedFacility = this.facilities.filter(data => data.schedule[b].day == this.day); 
+                }   
+            }
+            if (this.selectedFacility.length > 0) { 
+                this.model.facility = this.selectedFacility[0]._id;
+                this.facilityService.getById(this.model.facility)
+                .subscribe(facility => {
+                    this.facility = facility;
+                    this.facility_name = facility.name;
+                    this.facility_type = facility.facility_type;
+                    this.model.booking_fee = facility.booking_fee;
+                this.selectedDay = this.facility.schedule.filter(data => data.day == this.day); 
     			this.start = this.selectedDay[0].start_time.slice(0,2);
-        			let start = +this.start
-        			this.end = this.selectedDay[0].end_time.slice(0,2);
-        			let end = +this.end
-        			this.min =	":00"
-        			for (var i = start; i < end; ++i) {
-        			    this.times_start.push(i)
-        			}
-            		while(start < end){       
-               			start += 1;
-               			this.times_end.push(start)
-            		}
+        		let start = +this.start
+        		this.end = this.selectedDay[0].end_time.slice(0,2);
+        		let end = +this.end
+        		this.min =	":00"
+        		for (var i = start; i < end; ++i) {
+        		    this.times_start.push(i)
+        		}
+            	while(start < end){       
+               		start += 1;
+               		this.times_end.push(start)
+            	}
+                let booking_date;
+                    booking_date     = new Date(this.dt.getTime());
+                    booking_date     = this.convertDate1(booking_date);
+                    this.bookingService.getAll()
+                    .subscribe(bookings => {
+                            for (let b = 0; b < this.times_start.length; ++b) {
+                                this.bookings = bookings.filter(data => 
+                                    data.booking_date.slice(0,10) == booking_date &&
+                                    data.start_time == this.times_start[b]+this.min &&
+                                    data.end_time == this.times_end[b]+this.min )
+                                    if(this.bookings.length > 0) {
+                                        this.booking_status.push("Not Available")
+                                    }else{
+                                        this.booking_status.push("Available")
+                                    } 
+                            }
+                    })
+                });
             }
 		});
-        let booking_date;
-        booking_date     = new Date(this.dt.getTime());
-        booking_date     = this.convertDate1(booking_date);
-        this.bookingService.getAll()
-        .subscribe(bookings => {
-            this.bookings = bookings.filter(data => 
-                data.booking_date == booking_date && 
-                data.start_time == this.times_end &&
-                data.end_time == this.times_start )
-            if(this.bookings != null) {
-                this.booking_status = "Not Available"
-            }else{
-                this.booking_status = "Available"
-            }
+        this.myForm = this.formbuilder.group({
+            id : [this.model.facility],
+            choice : ['All'],
+            start : [0],
+            end : [23]
         })
         for (var a = 0; a < 24; ++a) {
             this.period.push(a)
@@ -200,7 +218,12 @@ export class EditBookingComponent implements OnInit  {
         formData.append("end_time", this.model.end_time);
         formData.append("name", this.model.name);
         formData.append("facility_type", this.model.facility_type);
-        formData.append("fees", this.model.fees);
+        // for (var i = 0; i < this.model.fees.length; i++) {
+        //     formData.append("fees[]", this.model.fees[i]);
+        // }
+        formData.append("fees.deposit_fee", this.model.fees[0].deposit_fee);
+        formData.append("fees.booking_fee", this.model.fees[0].booking_fee);
+        formData.append("fees.admin_fee", this.model.fees[0].admin_fee);
         formData.append("booking_date", this.model.booking_date);
         formData.append("payment_type", this.model.payment_type);
         formData.append("sender", this.model.sender);
@@ -238,6 +261,7 @@ export class EditBookingComponent implements OnInit  {
     }
 
 	filter(data: any){
+        console.log(this.model.booking_fee)
         this.day = this.days[this.dt.getDay()];
         if(data.start < 10) {
             var start = "0" + data.start.toString() + ":00"
@@ -261,7 +285,8 @@ export class EditBookingComponent implements OnInit  {
             if(data.choice == "all" ) {
                 this.filtered = this.facility.schedule.filter(data => 
                     data.start_time <= start && 
-                    data.end_time >= end        
+                    data.end_time >= end 
+
                 );
             }else{
                 this.filtered = this.facility.schedule.filter(data => 
@@ -329,11 +354,11 @@ export class EditBookingComponent implements OnInit  {
         this.step = 1
     }
 
-    onChange(fileInput: any){
-        this.filesToUpload = <Array<File>> fileInput.target.files;
-        this.model.payment_proof = this.filesToUpload;
+    onChange(event: any) {
+       let files = [].slice.call(event.target.files);
+       this.model.payment_proof = files;
     }
-
+    
     remove(i: any){ 
         this.model.payment_proof.splice(i, 1)
     }

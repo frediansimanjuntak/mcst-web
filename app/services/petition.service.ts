@@ -8,8 +8,6 @@ import 'rxjs/add/operator/toPromise';
 
 @Injectable()
 export class PetitionService {
-    private headers = new Headers({ 'Accept': 'application/json', 'Authorization': 'Bearer ' + this.authenticationService.token });
-    private options = new RequestOptions({ headers: this.headers });
     constructor(private http: Http, private authenticationService: AuthenticationService) {}
     
 
@@ -23,47 +21,47 @@ export class PetitionService {
     }
 
     getAll(){
-        return this.http.get(url + 'api/petitions', this.options)
+        return this.http.get(url + 'api/petitions', this.jwt())
             .map((res:Response) => res.json())
             .catch((error:any) => Observable.throw(error.json().error || 'Server error'));
     }
 
     getById(id:string){
-        return this.http.get( url + 'api/petitions/' + id, this.options)
+        return this.http.get( url + 'api/petitions/' + id, this.jwt())
             .map((res:Response) => res.json())
             .catch((error:any) => Observable.throw(error.json().error || 'Server error'));
     }
 
     create(formData:any): Promise<Petition> {
-        return this.http.post(`${url + 'api/petitions'}`, formData, this.options)
+        return this.http.post(`${url + 'api/petitions'}`, formData, this.jwt())
              .toPromise()
             .then(res => res.json().data)
             .catch(this.handleError);
     }
 
     update(body:Petition): Promise<Petition> {
-        return this.http.post(url + 'api/petitions/update/' + body._id,body, this.options)
+        return this.http.post(url + 'api/petitions/update/' + body._id,body, this.jwt())
             .toPromise()
             .then(res => res.json().data)
             .catch(this.handleError);
     }
 
     delete(id: string): Promise<void> {
-        return this.http.delete( url + 'api/petitions/' + id, this.options)
+        return this.http.delete( url + 'api/petitions/' + id, this.jwt())
           .toPromise()
           .then(() => null)
           .catch(this.handleError);
     }     
 
     archive(body:any): Promise<Petition> {
-        return this.http.post(url + 'api/petitions/archieve/' , body , this.options)
+        return this.http.post(url + 'api/petitions/archieve/' , body , this.jwt())
             .toPromise()
             .then(res => res.json().data)
             .catch(this.handleError);
     } 
 
     unarchive(id: string): Promise<void> {
-        return this.http.put( url + 'api/petitions/archieve/' + id, this.options)
+        return this.http.put( url + 'api/petitions/archieve/' + id, this.jwt())
           .toPromise()
           .then(res => res.json().data)
           .catch(this.handleError);    
@@ -72,5 +70,14 @@ export class PetitionService {
     private handleError(error: any): Promise<any> {
         console.error('An error occurred', error); // for demo purposes only
         return Promise.reject(error.message || error);
+    }
+
+    private jwt() {
+        // create authorization header with jwt token
+        let currentUser = JSON.parse(localStorage.getItem('authToken'));
+        if (currentUser && currentUser.token) {
+            let headers = new Headers({ 'Accept': 'application/json', 'Authorization': 'Bearer ' + currentUser.token });
+            return new RequestOptions({ headers: headers });
+        }
     }
 }

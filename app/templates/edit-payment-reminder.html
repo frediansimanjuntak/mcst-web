@@ -93,7 +93,7 @@
                 ADD PAYMENT SYSTEM
             </div>
             <p>Home > Payment system > Add </p>
-            <form [formGroup]="myForm" class="form-horizontal" name="form" (ngSubmit)="f.form.valid && createPaymentReminder(myForm.value)" #f="ngForm" novalidate>
+            <form [formGroup]="myForm" class="form-horizontal" name="form" (ngSubmit)="createPaymentReminder(myForm.value, myForm.valid)" #f="ngForm" novalidate>
                 <div class="col-md-6">
                     <div class="form-group">
                         <label class="control-label col-sm-4" for="title">Title :</label>

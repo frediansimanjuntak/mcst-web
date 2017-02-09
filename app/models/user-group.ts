@@ -6,6 +6,7 @@ export class UserGroup {
   chief : User;
   users : User[];
   created_at : string;
+  development : string;
 }
 
 export var UserGroups: any[] = [
