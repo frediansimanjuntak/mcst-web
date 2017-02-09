@@ -8,9 +8,6 @@ import 'rxjs/add/operator/toPromise';
  
 @Injectable()
 export class NewsletterService {
-    private headers = new Headers({'Authorization': 'Bearer ' + this.authenticationService.token });
-    private options = new RequestOptions({ headers: this.headers });
-    private options2 = new RequestOptions({ headers: new Headers({'Content-Type': 'application/json', 'Authorization': 'Bearer ' + this.authenticationService.token }) });
     constructor(private http: Http, private authenticationService: AuthenticationService) {}
 
     getDevelopments(): Promise<Development[]> {
@@ -23,40 +20,40 @@ export class NewsletterService {
     }
 
     getAll(name: string){
-        return this.http.get(url + 'api/newsletters/' + name, this.options)
+        return this.http.get(url + 'api/newsletters/' + name, this.jwt())
             .map((res:Response) => res.json())
             .catch((error:any) => Observable.throw(error.json().error || 'Server error'));
     }
 
     getById(id:string, name:string){
-        return this.http.get( url + 'api/newsletters/' + name + '/' + id, this.options)
+        return this.http.get( url + 'api/newsletters/' + name + '/' + id, this.jwt())
             .map((res:Response) => res.json())
             .catch((error:any) => Observable.throw(error.json().error || 'Server error'));
     }
 
     create(body:any, name:string): Promise<any> {
-        return this.http.post(`${url + 'api/newsletters/' + name}`, body, this.options)
+        return this.http.post(`${url + 'api/newsletters/' + name}`, body, this.jwt())
             .toPromise()
             .then(res => res.json().data)
             .catch(this.handleError);
     }
 
     update(body:any, name:string): Promise<any> {
-        return this.http.post(url + 'api/newsletters/' + name + '/update/' + body._id ,body, this.options)
+        return this.http.post(url + 'api/newsletters/' + name + '/update/' + body._id ,body, this.jwt())
             .toPromise()
             .then(res => res.json().data)
             .catch(this.handleError);
     }
 
     release(id: string, name: string): Promise<void> {
-        return this.http.post( url + 'api/newsletters/' + name + '/release/' + id, '', this.options2)
+        return this.http.post( url + 'api/newsletters/' + name + '/release/' + id, '', this.jwt())
             .toPromise()
             .then(res => res.json().data)
             .catch(this.handleError);
     }
 
     delete(id: string, name: string): Promise<void> {
-        return this.http.delete( url + 'api/newsletters/' + name + '/' + id,  this.options)
+        return this.http.delete( url + 'api/newsletters/' + name + '/' + id,  this.jwt())
           .toPromise()
           .then(() => null)
           .catch(this.handleError);
@@ -65,6 +62,15 @@ export class NewsletterService {
     private handleError(error: any): Promise<any> {
         console.error('An error occurred', error); // for demo purposes only
         return Promise.reject(error.message || error);
+    }
+
+    private jwt() {
+        // create authorization header with jwt token
+        let currentUser = JSON.parse(localStorage.getItem('authToken'));
+        if (currentUser && currentUser.token) {
+            let headers = new Headers({ 'Authorization': 'Bearer ' + currentUser.token });
+            return new RequestOptions({ headers: headers });
+        }
     }
 
 }
