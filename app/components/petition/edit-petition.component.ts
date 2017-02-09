@@ -161,11 +161,9 @@ export class EditPetitionComponent implements OnInit {
 
 
     public selected(value:any):void {
-        // console.log('Selected value is: ', value);
     }
 
     public removed(value:any):void {
-        // console.log('Removed value is: ', value);
     }
 
     updatePetition(){

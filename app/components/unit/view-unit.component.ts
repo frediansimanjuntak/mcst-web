@@ -80,8 +80,6 @@ export class ViewUnitComponent implements OnInit {
                                                }else{
                                                    this.hasTenants = false;
                                                }
-                                               console.log(this.unit);
-                                               console.log(this.hasLandlord);
 
                                                 this.unitservice
                                                 .getRegVehicles(this.id, this.name.default_development.name)
@@ -155,7 +153,6 @@ export class ViewUnitComponent implements OnInit {
     }
 
     deleteResident(resident: any){
-        console.log(resident)
         this.unitservice.deleteTenant(resident._id, this.unit._id, this.name.default_development.name)
     }
 

@@ -62,7 +62,6 @@ export class NewsletterComponent implements OnInit {
             response => {
               if(response) {
                 console.log(response);
-                // console.log(response.error());
                 alert(`The Newsletter could not be deleted, server Error.`);
               } else {
                 this.alertService.success('Create newsletter successful', true);
@@ -115,7 +114,6 @@ export class NewsletterComponent implements OnInit {
 
     openModal(newsletter:any){
       this.newsletter = newsletter;
-      console.log(this.newsletter);
     }
 
     getUsers(): void {

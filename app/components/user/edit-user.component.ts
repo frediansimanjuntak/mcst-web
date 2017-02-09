@@ -175,10 +175,6 @@ export class EditUserComponent implements OnInit {
 
         control.push(ownedCtrl);
 
-        /* subscribe to individual address value changes */
-        // addrCtrl.valueChanges.subscribe(x => {
-        //   console.log(x);
-        // })
     }
 
     removeOwned(i: number) {
@@ -192,10 +188,6 @@ export class EditUserComponent implements OnInit {
 
         control.push(authCtrl);
 
-        /* subscribe to individual address value changes */
-        // addrCtrl.valueChanges.subscribe(x => {
-        //   console.log(x);
-        // })
     }
 
     removeAuthorized(i: number) {
@@ -220,7 +212,6 @@ export class EditUserComponent implements OnInit {
         }
 
        this.submitted = true;
-       console.log(model);
         this.userService.create(model)
         .then(
             data => {
