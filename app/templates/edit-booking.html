@@ -108,8 +108,8 @@
 									<td>
 										{{booking_status[i]}}
 									</td>
-									<p-checkbox *ngIf="booking_status[i] == 'Not Available'" disabled="true" name="archive" (click)="archieveSelected(timeStart[i],timeEnd[i],min,facility_name,facility_type)" [(ngModel)]="selectedValues"></p-checkbox>
-									<p-checkbox *ngIf="booking_status[i] == 'Available'" name="archive" (click)="archieveSelected(timeStart[i],timeEnd[i],min,facility_name,facility_type)" [(ngModel)]="selectedValues"></p-checkbox>
+									<p-checkbox *ngIf="booking_status[i] == 'Not Available'" disabled="true" name="archive" (click)="archieveSelected(times_start[i],times_end[i],min,facility_name,facility_type)" [(ngModel)]="selectedValues"></p-checkbox>
+									<p-checkbox *ngIf="booking_status[i] == 'Available'" name="archive" (click)="archieveSelected(times_start[i],times_end[i],min,facility_name,facility_type)" [(ngModel)]="selectedValues"></p-checkbox>
 								</tr>
 						    </tbody>
 						</table>
@@ -123,7 +123,7 @@
 									<td>
 										{{booking_status[i]}}
 									</td>
-									<p-checkbox disabled="true" name="archive" (click)="archieveSelected(timeStart[i],timeEnd[i],min,facility_name,facility_type)" [(ngModel)]="selectedValues"></p-checkbox>
+									<p-checkbox *ngIf="booking_status[i] == 'Not Available'" disabled="true" name="archive" (click)="archieveSelected(timeStart[i],timeEnd[i],min,facility_name,facility_type)" [(ngModel)]="selectedValues"></p-checkbox>
 									<p-checkbox *ngIf="booking_status[i] == 'Available'" name="archive" (click)="archieveSelected(timeStart[i],timeEnd[i],min,facility_name,facility_type)" [(ngModel)]="selectedValues"></p-checkbox>
 								</tr>
 						    </tbody>
