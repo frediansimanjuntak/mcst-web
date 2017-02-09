@@ -122,8 +122,8 @@
                         <div class="form-group">
                             <label class="control-label col-sm-4" for="sticky">Type :</label>
                             <div class="col-sm-8">
-                                <div class="col-sm-2">
-                                    <label><input *ngIf="hasLandlord" type="radio" name="type" [checked]="model.type == 'tenant'" [(ngModel)]="model.type" value='tenant'>Tenant</label>   
+                                <div class="col-sm-2" *ngIf="hasLandlord">
+                                    <label><input type="radio" name="type" [checked]="model.type == 'tenant'" [(ngModel)]="model.type" value='tenant'>Tenant</label>   
                                 </div>
                                 <div class="col-sm-2" *ngIf="!hasLandlord">
                                     <label><input type="radio" name="type" [checked]="model.type == 'landlord'" [(ngModel)]="model.type" value='landlord'>Landlord</label>      
