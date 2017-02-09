@@ -63,7 +63,7 @@
 				       			<div class="col-md-9">
 				       				<p>
 				       					<select name="name" class="form-control" formControlName="id" style="width: 237px">
-					                    	<option [selected]="facility._id == '1'" *ngFor="let facility of facilities" (change)="onChange(facility)" [ngValue]="facility._id">{{facility.name}}</option>
+					                    	<option [selected]="facility._id == '1'" *ngFor="let facility of selectedFacility" (change)="onChange(facility)" [ngValue]="facility._id">{{facility.name}}</option>
 					                    </select>
 				        			</p>
 				        		</div>
@@ -74,8 +74,8 @@
 				       				<p>
 				       					<select name="choice" class="form-control" formControlName="choice" style="width: 237px">
 						                   	<option value="all">All</option>
-						                   	<option value="available">Available</option>
-						                   	<option value="unavailable">Not Available</option>
+						                   	<option value="Available">Available</option>
+						                   	<option value="Not Available">Not Available</option>
 					                    </select>	
 				       				</p>
 				       			</div>
@@ -102,15 +102,14 @@
 		        		<div *ngIf="start && !filtered">
 						<table class="tableSection table-striped">
 						    <tbody>
-						        <tr *ngFor="let tstart of times_start; let i=index ; let tend of times_end">
+						        <tr *ngFor="let tstart of times_start; let i=index ; let tend of times_end; let c of booking_status">
 									<td>{{times_start[i]}}{{min}} - {{times_end[i]}}{{min}}</td>
-									<td>BBQ A</td>
+									<td>{{facility_name}} {{facility_type}}</td>
 									<td>
-										{{booking_status}}
-										<!-- <span *ngIf="bookings.start_time == timeStart[i]">available</span> -->
-										<!-- <span *ngIf="bookings.start_time != timeStart[i]">not available</span> -->
+										{{booking_status[i]}}
 									</td>
-									<p-checkbox name="archive" (click)="archieveSelected(times_start[i],times_end[i],min,'BBQ','A')" [(ngModel)]="selectedValues"></p-checkbox>
+									<p-checkbox *ngIf="booking_status[i] == 'Not Available'" disabled="true" name="archive" (click)="archieveSelected(timeStart[i],timeEnd[i],min,facility_name,facility_type)" [(ngModel)]="selectedValues"></p-checkbox>
+									<p-checkbox *ngIf="booking_status[i] == 'Available'" name="archive" (click)="archieveSelected(timeStart[i],timeEnd[i],min,facility_name,facility_type)" [(ngModel)]="selectedValues"></p-checkbox>
 								</tr>
 						    </tbody>
 						</table>
@@ -118,15 +117,14 @@
 						<div *ngIf="filtered">
 						<table class="tableSection table-striped">
 						    <tbody>
-						        <tr *ngFor="let a of timeStart; let i=index ; let b of timeEnd">
+						        <tr *ngFor="let a of timeStart; let i=index ; let b of timeEnd; let c of booking_status">
 									<td>{{timeStart[i]}}{{min}} - {{timeEnd[i]}}{{min}}</td>
 									<td>{{facility_name}} {{facility_type}}</td>
 									<td>
-										{{booking_status}}
-										<!-- <span *ngIf="bookings.start_time == timeStart[i]">available</span> -->
-										<!-- <span *ngIf="bookings.start_time != timeStart[i]">not available</span> -->
+										{{booking_status[i]}}
 									</td>
-									<p-checkbox name="archive" (click)="archieveSelected(timeStart[i],timeEnd[i],min,facility_name,facility_type)" [(ngModel)]="selectedValues"></p-checkbox>
+									<p-checkbox disabled="true" name="archive" (click)="archieveSelected(timeStart[i],timeEnd[i],min,facility_name,facility_type)" [(ngModel)]="selectedValues"></p-checkbox>
+									<p-checkbox *ngIf="booking_status[i] == 'Available'" name="archive" (click)="archieveSelected(timeStart[i],timeEnd[i],min,facility_name,facility_type)" [(ngModel)]="selectedValues"></p-checkbox>
 								</tr>
 						    </tbody>
 						</table>
@@ -136,7 +134,7 @@
 						</div>
 						<div class="row">
 							<div class="col-md-4 pull-right">
-								<a class="btn btn-default pull-right" (click)="next()">
+								<a class="btn btn-default" (click)="next()">
 								Next</a>
 								<a (click)="cancel()" class="btn btn-info">Cancel</a>
 							</div>

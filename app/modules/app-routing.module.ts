@@ -73,7 +73,6 @@ const routes: Routes = [
   { path: ':name/incident',   component: IncidentComponent, canActivate: [AuthGuard] },
   { path: ':name/incident/add',   component: EditIncidentComponent, canActivate: [AuthGuard] },
   { path: ':name/incident/view/:id',   component: IncidentComponent, canActivate: [AuthGuard] },
-  { path: ':name/incident/view/photo/:_id',   component: IncidentComponent, canActivate: [AuthGuard] },
   { path: ':name/payment',   component: PaymentComponent, canActivate: [AuthGuard] },
   { path: ':name/payment/add',   component: EditPaymentComponent, canActivate: [AuthGuard] },
   { path: ':name/payment/view/:id',   component: PaymentComponent, canActivate: [AuthGuard] },

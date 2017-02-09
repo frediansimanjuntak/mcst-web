@@ -57,13 +57,13 @@ export class ContractComponent implements OnInit  {
             this.contractnoteService.getAll(this.id)
             .subscribe(contractnotes => {
                 if(contractnotes[0].contract_note.length > 0) { 
-                    this.contractnotes = contractnotes;
-                } 
+                    this.contractnotes = contractnotes[0].contract_note;
+                }
             })
             this.contractnoticeService.getAll(this.id)
             .subscribe(contractnotices => {
                 if(contractnotices[0].contract_notice.length > 0) {
-                    this.contractnotices = contractnotices
+                    this.contractnotices = contractnotices[0].contract_notice;
                 }
             })
         }
@@ -100,6 +100,14 @@ export class ContractComponent implements OnInit  {
 
     view(contract: Contract){
         this.router.navigate([this.name.default_development.name + '/contract/view', contract._id]);
+    }
+
+    viewNotice(id: any, contractnotice:any){
+        this.router.navigate([this.name.default_development.name + '/contract/notice/' + id + '/view' , contractnotice._id]);
+    }
+
+    viewNote(id: any, contractnote:any){
+        this.router.navigate([this.name.default_development.name + '/contract/note/' + id + '/view' , contractnote._id]);
     }
 
     edit(id: any){

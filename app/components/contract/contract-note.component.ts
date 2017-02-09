@@ -15,6 +15,7 @@ import { Observable} from 'rxjs/Observable';
 export class ContractNoteComponent implements OnInit  {
 	contract: Contract;
     contracts: Contract[] = [];
+    contractnote: any;
     model: any = {};
     images: any[];
     id: string;
@@ -39,11 +40,22 @@ export class ContractNoteComponent implements OnInit  {
             this._id = params['_id'];
         });
         // this.contractnoteService.getById(this.id,this._id).subscribe(contract => {this.contract = contract;});
-        if( this.id != null) {
+        if( this.id != null && this._id == null ) {
             this.contractService.getById(this.id)
             .subscribe(contract => {
                 this.contract = contract;
                 this.model.status = this.contract.status;
+            });
+        }
+        if( this.id != null && this._id != null) {
+            this.contractService.getById(this.id).subscribe(contract => {this.contract = contract;});
+            this.contractnoteService.getById(this.id,this._id)
+            .subscribe(contractnotice => {
+                this.contractnote = contractnotice.contract_notice[0];
+                this.images = [];
+                for (var i = 0; i < this.contractnote.attachment.length; ++i) {
+                    this.images.push({source:this.contractnote.attachment[i].url});
+                };
             });
         }
     }
@@ -79,7 +91,7 @@ export class ContractNoteComponent implements OnInit  {
         .then(
             response => {
                 this.alertService.success('Create contract notice successful', true);
-                this.router.navigate([this.name.default_development.name , 'contract/view', id]);
+                this.router.navigate([this.name.default_development.name + '/contract/view', id ]);
             },
             error => {
                 this.alertService.error(error);
@@ -100,7 +112,7 @@ export class ContractNoteComponent implements OnInit  {
                 // console.log(response.error());
                 alert(`The Contract could not be deleted, server Error.`);
               } else {
-                this.alertService.success('Create contract successful', true);
+                this.alertService.success('Delete contract successful', true);
                 alert(`Delete Contarct successful`);
                 this.ngOnInit()
               }
