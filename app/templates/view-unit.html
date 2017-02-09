@@ -44,18 +44,21 @@
                    <p-dataTable [value]="residents">
                         <p-column header="no" [style]="{'width':'42px'}" field="i">
                         </p-column>
-                        <p-column header="Resident" field="resident">
+                        <p-column header="Resident" >
+                            <template let-residents="rowData" pTemplate="body">
+                                <span *ngIf="residents.resident.username">{{residents.resident.username}}</span>
+                            </template>
                         </p-column>
                         <p-column header="Type" sortable="true" field="type">
                         </p-column>
-                        <p-column header="Added on" sortable="true" field="added_on">
+                        <p-column header="Added on" sortable="true" field="created_at">
                         </p-column>
                         <p-column header="Social page" sortable="true" field="social_page">
                         </p-column>
                         <p-column header="Contact No." >
                             <template let-residents="rowData" pTemplate="body">
-                                <span *ngIf="residents.phone">{{residents.phone}}<br></span>
-                                <span *ngIf="residents.email">{{residents.email}}<br></span>
+                                <span *ngIf="residents.resident.phone">{{residents.resident.phone}}<br></span>
+                                <span *ngIf="residents.resident.email">{{residents.resident.email}}<br></span>
                             </template>
                         </p-column>
                         <p-column header="Remarks" field="remarks">
@@ -114,10 +117,10 @@
                             <label class="control-label col-sm-4" for="sticky">Type :</label>
                             <div class="col-sm-8">
                                 <div class="col-sm-2">
-                                    <label><input type="radio" name="type" [checked]="model.type == 'tenant'" [(ngModel)]="model.type" value='tenant'>tenant</label>   
+                                    <label><input type="radio" name="type" [checked]="model.type == 'tenant'" [(ngModel)]="model.type" value='tenant'>Tenant</label>   
                                 </div>
                                 <div class="col-sm-2"  *ngIf="!hasLandlord">
-                                    <label><input type="radio" name="type" [checked]="model.type == 'landlord'" [(ngModel)]="model.type" value='landlord'>landlord</label>      
+                                    <label><input type="radio" name="type" [checked]="model.type == 'landlord'" [(ngModel)]="model.type" value='landlord'>Landlord</label>      
                                 </div>
                             </div>
                         </div>

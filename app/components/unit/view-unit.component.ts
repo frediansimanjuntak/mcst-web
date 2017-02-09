@@ -70,6 +70,7 @@ export class ViewUnitComponent implements OnInit {
                                                }else{
                                                    this.hasLandlord = false;
                                                }
+                                               console.log(this.unit);
                                                console.log(this.hasLandlord);
                                                this.unitservice
                                                 .getTenants(this.id, this.name.default_development.name)

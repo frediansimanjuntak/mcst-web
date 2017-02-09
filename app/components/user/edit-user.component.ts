@@ -207,7 +207,13 @@ export class EditUserComponent implements OnInit {
     }
 
     createUser(model:any , isValid: boolean) {
-       model.rented_property.development = this.name.default_development._id;
+       if(model.rented_property.property){
+           model.rented_property.development = this.name.default_development._id;
+       }
+       if(model.owned_property[0].property){
+           model.owned_property[0].development = this.name.default_development._id;
+       }
+
        this.submitted = true;
        console.log(model);
         this.userService.create(model)
