@@ -83,7 +83,7 @@
                         </div>
                     </div>
                 </div>
-                <div formGroupName="rented_property"> 
+                <div *ngIf="type == 'tenant'" formGroupName="rented_property"> 
                     <div class="panel panel-default">
                         <div class="panel-heading">
                             <span>Rented Property</span>
@@ -103,7 +103,7 @@
                     </div>
                 </div>
                 <!--owned-->
-                <div formArrayName="owned_property">          
+                <div *ngIf="type == 'landlord'" formArrayName="owned_property">          
                     <div *ngFor="let owned of myForm.controls.owned_property.controls; let i=index" class="panel panel-default">
                         <div class="panel-heading">
                             <span>Owned Property {{i + 1}}</span>
@@ -272,7 +272,7 @@
                         </div>
                     </div>
                 </div>
-                <div [hidden]="type == 'landlord'" formGroupName="rented_property"> 
+                <div [hidden]="type == 'landlord'" *ngIf="type == 'tenant'" formGroupName="rented_property"> 
                     <div class="panel panel-default">
                         <div class="panel-heading">
                             <span>Rented Property</span>
@@ -292,7 +292,7 @@
                     </div>
                 </div>
                 <!--owned-->
-                <div [hidden]="type == 'tenant'" formArrayName="owned_property">          
+                <div [hidden]="type == 'tenant'" *ngIf="type == 'landlord'" formArrayName="owned_property">          
                     <div *ngFor="let owned of myForm.controls.owned_property.controls; let i=index" class="panel panel-default">
                         <div class="panel-heading">
                             <span>Owned Property {{i + 1}}</span>

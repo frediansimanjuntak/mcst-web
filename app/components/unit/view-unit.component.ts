@@ -27,6 +27,7 @@ export class ViewUnitComponent implements OnInit {
     units: any;
     users: any;
     model: any = {};
+    filesToUpload: Array<File>;
     residents :any;
     resident :any = {};
     selectedResident : any = {};
@@ -178,13 +179,31 @@ export class ViewUnitComponent implements OnInit {
         this.router.navigate([this.name.default_development.name + '/user/add', this.unit._id, this.model.type]);  
     }
 
+    onChange(fileInput: any){
+        this.filesToUpload = <Array<File>> fileInput.target.files;
+        this.model.document = this.filesToUpload;
+    }
+
+    remove(i: any){
+        this.model.document.splice(i, 1)
+    }
 
     addVehicle(model: any, isValid: boolean){
          this.vehicleSubmitted = true;
-         model.owner = model;
          model.registered_on = new Date();
+
         if(isValid && this.selectedResident){
-            this.unitservice.createRegVehicle(model, this.name.default_development.name, this.unit._id)
+            let formData:FormData = new FormData();
+                for (var i = 0; i < this.model.document.length; i++) {
+                    formData.append("document[]", this.model.document[i]);
+                }
+            
+            formData.append("license_plate", model.license_plate);
+            formData.append("owner", model.owner);
+            formData.append("transponder", model.transponder);
+            formData.append("remarks", model.remarks);
+
+            this.unitservice.createRegVehicle(formData, this.name.default_development.name, this.unit._id)
             .then(
                 data => {
                     this.alertService.success('Add guest successful', true);

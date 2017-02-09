@@ -42,6 +42,11 @@ export class EditUserComponent implements OnInit {
             this.name = name;
             this.unitService.getAll(name.default_development.name).subscribe(units => {this.units = units.properties;})
         })
+        this.route.params.subscribe(params => {
+            this.id = params['id'];
+            this.type = params['type'];
+        });
+        if(this.id == null){
         this.myForm = this.formbuilder.group({
             username : ['', Validators.required],
             email : ['', Validators.required],
@@ -61,11 +66,8 @@ export class EditUserComponent implements OnInit {
             active: ['', Validators.required],
 
         });
-        this.route.params.subscribe(params => {
-            this.id = params['id'];
-            this.type = params['type'];
-        });
-
+    }
+        
         if( this.id != null &&  this.type == null) {
             this.userService.getById(this.id)
             .subscribe(user => {
@@ -202,18 +204,18 @@ export class EditUserComponent implements OnInit {
     }
 
     createUser(model:any , isValid: boolean) {
-       if(model.rented_property.property){
+       if(this.type=='tenant'){
            model.rented_property.development = this.name.default_development._id;
-          
+           
        }
-       if(model.owned_property[0].property){
-           // model.owned_property[0].development = this.name.default_development._id;
-         
-           let numOptions =  model.owned_property.length;
+       if(this.type=='landlord'){
+           model.owned_property[0].development = this.name.default_development._id;
+           // delete model.rented_property;
+           // let numOptions =  model.owned_property.length;
 
-            for (let i = 0; i < numOptions; i++) {
-                 model.owned_property[i].development = this.name.default_development._id;
-            }
+            // for (let i = 0; i < numOptions; i++) {
+            //      model.owned_property[i].development = this.name.default_development._id;
+            // }
 
         }
 

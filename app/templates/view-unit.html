@@ -22,7 +22,7 @@
                                 <b>Block :</b>{{unit.address.block_no}}
                             </div>
                             <div class="col-md-4">
-                                <b>Owner :</b>{{unit.owner}}<br>
+                                <b>Owner :</b>{{unit.landlord.username}}<br>
                                 <b>Status :</b>{{unit.status}}
                             </div>
                             <div class="col-md-4">
@@ -156,7 +156,7 @@
                          <div class="form-group" [ngClass]="{ 'has-error': vehicleSubmitted && !!selectedresident }">
                             <label class="control-label col-sm-4" for="unit_no">Owner :</label>
                             <div class="col-sm-8">
-                                <select class="form-control" formControlName="owner" name="property">
+                                <select class="form-control" formControlName="owner" name="owner">
                                      <option *ngFor="let u of residents" [ngValue]="u.resident._id">{{u.resident.username}}</option>
                                 </select>
                                <span *ngIf="vehicleSubmitted && !selectedResident" class="help-block">Resident is required</span>
@@ -168,10 +168,15 @@
                                 <input  type="text" class="form-control" name="transponder" formControlName="transponder" placeholder="">
                             </div>
                         </div>
-                        <div class="form-group">
-                            <label  class="control-label col-sm-4" for="document">Document :</label>
+                        <div class="form-group" >
+                            <label class="control-label col-sm-4" for="document">Document :</label>
                             <div class="col-sm-8">
-                                <input  type="text" class="form-control" name="document" formControlName="document" placeholder="">
+                                <input type="file" multiple class="upload" name="document" (change)="onChange($event)" />
+                                <p *ngFor="let item of model.document; let i=index ">
+                                    <img src="assets/image/icon_media_image.png" width="14px" height="12px">&nbsp;  
+                                    <span style="text-decoration: underline;">{{ item.name }}_{{item.size/1024 | number:'1.0-0' }}kb</span> &nbsp;   
+                                    <span style="cursor:pointer" (click)="remove(i)"><img src="assets/image/icon_close_black.png" width="14px" height="12px"></span>
+                                </p>
                             </div>
                         </div>
                          <div class="form-group">

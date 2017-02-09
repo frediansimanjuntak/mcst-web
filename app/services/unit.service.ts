@@ -10,6 +10,8 @@ import 'rxjs/add/operator/toPromise';
 export class UnitService {
     private headers = new Headers({'Content-Type': 'application/json', 'Authorization': 'Bearer ' + this.authenticationService.token });
     private options = new RequestOptions({ headers: this.headers });
+    private headers2 = new Headers({'Authorization': 'Bearer ' + this.authenticationService.token });
+    private options2 = new RequestOptions({ headers: this.headers });
     constructor(private http: Http, private authenticationService: AuthenticationService) {}
 
     getDevelopments(): Promise<Development[]> {
@@ -60,7 +62,7 @@ export class UnitService {
     }
 
     createRegVehicle(body:any, name:string, id:string): Promise<any> {
-        return this.http.post(url +  'api/properties/' + name + '/register_vehicle/' + id, JSON.stringify(body), this.options)
+        return this.http.post(url +  'api/properties/' + name + '/register_vehicle/' + id, body, this.options2)
             .toPromise()
             .then(res => res.json().data)
             .catch(this.handleError);
