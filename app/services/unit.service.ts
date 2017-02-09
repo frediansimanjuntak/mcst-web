@@ -58,7 +58,7 @@ export class UnitService {
     }
 
     createRegVehicle(body:any, name:string, id:string): Promise<any> {
-        return this.http.post(url +  'api/properties/' + name + '/register_vehicle/' + id, JSON.stringify(body), this.jwt())
+        return this.http.post(url +  'api/properties/' + name + '/register_vehicle/' + id, body, this.jwt2())
             .toPromise()
             .then(res => res.json().data)
             .catch(this.handleError);
@@ -102,6 +102,15 @@ export class UnitService {
         let currentUser = JSON.parse(localStorage.getItem('authToken'));
         if (currentUser && currentUser.token) {
             let headers = new Headers({ 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + currentUser.token });
+            return new RequestOptions({ headers: headers });
+        }
+    }
+
+    private jwt2() {
+        // create authorization header with jwt token
+        let currentUser = JSON.parse(localStorage.getItem('authToken'));
+        if (currentUser && currentUser.token) {
+            let headers = new Headers({ 'Authorization': 'Bearer ' + currentUser.token });
             return new RequestOptions({ headers: headers });
         }
     }

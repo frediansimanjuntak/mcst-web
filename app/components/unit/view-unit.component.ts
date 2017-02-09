@@ -207,7 +207,7 @@ export class ViewUnitComponent implements OnInit {
             .then(
                 data => {
                     this.alertService.success('Add guest successful', true);
-                    this.router.navigate(['/unit']);
+                    this.router.navigate([this.name.default_development.name + '/unit']);
                 },
                 error => {
                     console.log(error);
