@@ -23,33 +23,34 @@ export class ContractService {
     }
 
     getAll(){
-        return this.http.get( url + 'api/contracts', this.jwt())
+        return this.http.get( url + 'api/contracts', this.options)
             .map((res:Response) => res.json())
             .catch((error:any) => Observable.throw(error.json().error || 'Server error'));
     }
 
     getById(id:string){
-        return this.http.get( url + 'api/contracts/' + id, this.jwt())
+        return this.http.get( url + 'api/contracts/' + id, this.options)
             .map((res:Response) => res.json())
             .catch((error:any) => Observable.throw(error.json().error || 'Server error'));
     }
 
    create(body:any): Promise<Contract> {
-        return this.http.post(url +  'api/contracts', body, this.jwt())
+        console.log(body);
+        return this.http.post(url +  'api/contracts', body, this.options)
             .toPromise()
             .then(res => res.json().data)
             .catch(this.handleError);
     }
 
     update(body:Contract): Promise<Contract> {
-        return this.http.post(url + 'api/contracts/update/' + body._id,body, this.jwt())
+        return this.http.post(url + 'api/contracts/update/' + body._id,body, this.options)
             .toPromise()
             .then(res => res.json().data)
             .catch(this.handleError);
     }
 
     delete(id: string): Promise<void> {
-        return this.http.delete(url + 'api/contracts/' + id, this.jwt())
+        return this.http.delete(url + 'api/contracts/' + id, this.options)
             .toPromise()
             .then(() => null)
             .catch(this.handleError);
@@ -58,14 +59,5 @@ export class ContractService {
     private handleError(error: any): Promise<any> {
         console.error('An error occurred', error);
         return Promise.reject(error.message || error);
-    }
-
-    private jwt() {
-        // create authorization header with jwt token
-        let currentUser = JSON.parse(localStorage.getItem('authToken'));
-        if (currentUser && currentUser.token) {
-            let headers = new Headers({ 'Authorization': 'Bearer ' + currentUser.token });
-            return new RequestOptions({ headers: headers });
-        }
     }
 }

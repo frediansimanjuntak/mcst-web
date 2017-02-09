@@ -18,9 +18,10 @@ export class EditContractComponent  implements OnInit {
     incident: any[] = [];
     model: any = {};
     id: string;
-    refno: string;
+    _id: string;
     loading = false;
     name: any;
+    filesToUpload: Array<File>;
 
     constructor(private router: Router,
     	private contractService: ContractService,
@@ -33,11 +34,9 @@ export class EditContractComponent  implements OnInit {
         this.userService.getByToken().subscribe(name => {this.name = name;})
         this.route.params.subscribe(params => {
             this.id = params['id'];
-            this.refno = params['refno'];
-            this.reference_id = params['refid'];
-            this.reference_type = params['type']
+            this._id = params['_id'];
         });
-        this.model.reference_no = this.refno;
+        this.model.reference_no = this._id;
         if( this.id != null) {
             this.contractService.getById(this.id).subscribe(contract => this.contract = contract);
         }
@@ -50,11 +49,12 @@ export class EditContractComponent  implements OnInit {
             formData.append("attachment[]", this.model.attachment[i]);
         }
         formData.append("reference_no", this.model.reference_no);
-        formData.append("reference_type", this.reference_type);
-        formData.append("reference_id", this.reference_id);
+        formData.append("reference_type", this.model.reference_type);
+        formData.append("reference_id", this.model.reference_id);
         formData.append("contract_type", this.model.contract_type);
         formData.append("title", this.model.title);
         formData.append("remark", this.model.remark);
+        console.log(formData)
         this.contractService.create(formData)
         .then(
             response => {
@@ -67,9 +67,9 @@ export class EditContractComponent  implements OnInit {
         );
     }
 
-    onChange(event: any) {
-       let files = [].slice.call(event.target.files);
-       this.model.attachment = files;
+    onChange(fileInput: any){
+        this.filesToUpload = <Array<File>> fileInput.target.files;
+        this.model.attachment = this.filesToUpload;
     }
 
     remove(i: any){

@@ -8,6 +8,8 @@ import 'rxjs/add/operator/toPromise';
  
 @Injectable()
 export class CompanyService {
+    private headers = new Headers({ 'Authorization': 'Bearer ' + this.authenticationService.token });
+    private options = new RequestOptions({ headers: this.headers });
     constructor(private http: Http, private authenticationService: AuthenticationService) {}
 
      getCompanies(): Promise<Company[]> {
@@ -20,40 +22,40 @@ export class CompanyService {
     }
 
     getAll(){
-        return this.http.get(url + 'api/company', this.jwt())
+        return this.http.get(url + 'api/company', this.options)
             .map((res:Response) => res.json())
             .catch((error:any) => Observable.throw(error.json().error || 'Server error'));
     }
 
     getById(id:string){
-        return this.http.get(url + 'api/company/' + id, this.jwt())
+        return this.http.get(url + 'api/company/' + id, this.options)
             .map((res:Response) => res.json())
             .catch((error:any) => Observable.throw(error.json().error || 'Server error'));
     }
 
     create(body:any): Promise<Company> {
-        return this.http.post(url +  'api/company', JSON.stringify(body), this.jwt())
+        return this.http.post(url +  'api/company', JSON.stringify(body), this.options)
             .toPromise()
             .then(res => res.json().data)
             .catch(this.handleError);
     }
 
     update(body:Company): Promise<Company> {
-        return this.http.post(url + 'api/company/update/' + body._id,body, this.jwt())
+        return this.http.post(url + 'api/company/update/' + body._id,body, this.options)
             .toPromise()
             .then(res => res.json().data)
             .catch(this.handleError);
     }
 
     delete(id: string): Promise<void> {
-        return this.http.delete(url + 'api/company/' + id, this.jwt())
+        return this.http.delete(url + 'api/company/' + id, this.options)
           .toPromise()
           .then(() => null)
           .catch(this.handleError);
     }
 
     activation(id: string): Promise<void> {
-        return this.http.post( url + 'api/company/activation/' + id, this.jwt())
+        return this.http.post( url + 'api/company/activation/' + id, this.options)
           .toPromise()
           .then(() => null)
           .catch(this.handleError);
@@ -62,14 +64,5 @@ export class CompanyService {
     private handleError(error: any): Promise<any> {
         console.error('An error occurred', error); // for demo purposes only
         return Promise.reject(error.message || error);
-    }
-
-    private jwt() {
-        // create authorization header with jwt token
-        let currentUser = JSON.parse(localStorage.getItem('authToken'));
-        if (currentUser && currentUser.token) {
-            let headers = new Headers({ 'Authorization': 'Bearer ' + currentUser.token });
-            return new RequestOptions({ headers: headers });
-        }
     }
 }

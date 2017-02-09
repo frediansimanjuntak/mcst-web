@@ -1,7 +1,7 @@
 import { Component, OnInit, ViewContainerRef, ViewEncapsulation, ViewChild } from '@angular/core';
 import { Router, Params, ActivatedRoute } from '@angular/router';
 import { LostFound, LostFounds } from '../../models/index';
-import { LostFoundService, AlertService, UserService, UnitService} from '../../services/index';
+import { LostFoundService, AlertService, UserService} from '../../services/index';
 import '../../rxjs-operators';
 import { Observable} from 'rxjs/Observable';
 import { Location }               from '@angular/common';
@@ -28,7 +28,7 @@ export class LostFoundComponent implements OnInit {
     losts: any[] = [];
     founds: any[] = [];
     archieveds: any[] = [];
-    dataUnit: any[]=[];
+
     archievedLosts: any[] = [];
     archievedFounds: any[] = [];
 
@@ -47,22 +47,30 @@ export class LostFoundComponent implements OnInit {
                 private route: ActivatedRoute,
                 private location: Location,
                 private formbuilder: FormBuilder,
-                private userService: UserService,
-                private unitService: UnitService,
+                 private userService: UserService
                 ) {
     }
 
     ngOnInit(): void {
-		this.userService.getByToken()
-                        .subscribe(name => {
-                            this.name = name;
-                            this.loadAllUnits();
-                        })
+		this.userService.getByToken().subscribe(name => {this.name = name;})
         this.buttonViewArchive = false;
         this.images = [];
         this.route.params.subscribe(params => {
             this.id = params['id'];
         });
+        if( this.id == null) {
+            this.loadLostFounds();
+        }else{
+            this.lostFoundService.getById(this.id)
+                .subscribe(lostFound => {
+                    this.lostFound = lostFound;
+                    if(this.lostFound.photo.length > 0){
+                        for (var i = 0; i < this.lostFound.photo.length; i++) {
+                            this.images.push({source: this.lostFound.photo[i].url});   
+                        }
+                    }
+                });
+        }
     }
 
     convertDate(date) {
@@ -105,40 +113,13 @@ export class LostFoundComponent implements OnInit {
             .subscribe((data)=> {
                 setTimeout(()=> {
                     this.lostFounds      = data.filter(data => data.development._id == this.name.default_development._id);
-                    
                     this.archieveds      = this.lostFounds.filter(data => data.archieve === true );
-                    for (var i = 0; i < this.archieveds.length; i++) {
-                        let unit = this.dataUnit.find(data => data._id ==  this.archieveds[i].property);
-                        this.archieveds[i].unit_no = '#' + unit.address.unit_no + '-' + unit.address.unit_no_2;
-                    }
                     this.archievedLosts = this.archieveds.filter(data => data.type == 'lost');
-                    for (var i = 0; i < this.archievedLosts.length; i++) {
-                        let unit = this.dataUnit.find(data => data._id ==  this.archievedLosts[i].property);
-                        this.archievedLosts[i].unit_no = '#' + unit.address.unit_no + '-' + unit.address.unit_no_2;
-                    }
                     this.archievedFounds= this.archieveds.filter(data => data.type == 'found');
-                    for (var i = 0; i < this.archievedFounds.length; i++) {
-                        let unit = this.dataUnit.find(data => data._id ==  this.archievedFounds[i].property);
-                        this.archievedFounds[i].unit_no = '#' + unit.address.unit_no + '-' + unit.address.unit_no_2;
-                    }
-
-
 
                     this.all             = this.lostFounds.filter(data => data.archieve === false );
-                    for (var i = 0; i < this.all.length; i++) {
-                        let unit = this.dataUnit.find(data => data._id ==  this.all[i].property);
-                        this.all[i].unit_no = '#' + unit.address.unit_no + '-' + unit.address.unit_no_2;
-                    }
                     this.losts           = this.all.filter(data => data.type == 'lost');
-                    for (var i = 0; i < this.losts.length; i++) {
-                        let unit = this.dataUnit.find(data => data._id ==  this.losts[i].property);
-                        this.losts[i].unit_no = '#' + unit.address.unit_no + '-' + unit.address.unit_no_2;
-                    }
                     this.founds          = this.all.filter(data => data.type == 'found');
-                    for (var i = 0; i < this.founds.length; i++) {
-                        let unit = this.dataUnit.find(data => data._id ==  this.founds[i].property);
-                        this.founds[i].unit_no = '#' + unit.address.unit_no + '-' + unit.address.unit_no_2;
-                    }
                 }, 1000);
             });
     }
@@ -149,28 +130,6 @@ export class LostFoundComponent implements OnInit {
 
     add(){
       this.router.navigate([this.name.default_development.name + '/lost_found/add']);  
-    }
-
-    private loadAllUnits(): void {
-        this.unitService.getAll(this.name.default_development.name)
-            .subscribe((data)=> {
-                setTimeout(()=> {
-                    this.dataUnit      = data.properties;
-                    if( this.id == null) {
-                        this.loadLostFounds();
-                    }else{
-                        this.lostFoundService.getById(this.id)
-                            .subscribe(lostFound => {
-                                this.lostFound = lostFound;
-                                if(this.lostFound.photo.length > 0){
-                                    for (var i = 0; i < this.lostFound.photo.length; i++) {
-                                        this.images.push({source: this.lostFound.photo[i].url});   
-                                    }
-                                }
-                            });
-                    }
-                }, 1000);
-            });
     }
 
     viewLostFound(lostfound: LostFound){

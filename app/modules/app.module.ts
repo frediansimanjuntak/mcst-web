@@ -90,6 +90,7 @@ import {
 import {
   AccessControlService,
   AlertService,
+  AttachmentService,
   AnnouncementService,
   AuthenticationService,
   BookingService,
@@ -213,6 +214,7 @@ import {
   providers: [ 
     AccessControlService,
     AlertService,
+    AttachmentService,
     AnnouncementService,
     AuthenticationService,
     AuthGuard,

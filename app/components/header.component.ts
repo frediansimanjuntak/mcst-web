@@ -39,6 +39,7 @@ export class HeaderComponent implements OnInit{
     }
 
     ngOnInit(){
+        this.authToken = JSON.parse(localStorage.getItem('authToken'));
     	this.userService.getByToken()
                             .subscribe(name => {
                                 this.name = name;
@@ -110,6 +111,6 @@ export class HeaderComponent implements OnInit{
 
     logout(){
         this.authService.logout()
-        this.appComponent.getToken();
+        this.appComponent.ngOnInit();
     }
 }

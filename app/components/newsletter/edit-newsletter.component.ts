@@ -22,7 +22,9 @@ export class EditNewsletterComponent  {
     myForm: FormGroup;
     user: User;
     public developmentId;
+    public uploader:FileUploader = new FileUploader({url:'http://localhost:3001/upload'});
     name: any;
+    filesToUpload: Array<File>;
 
     constructor(private router: Router,
     	private newsletterService: NewsletterService,
@@ -56,6 +58,11 @@ export class EditNewsletterComponent  {
         })
     }
 
+    fileChangeEvent(fileInput: any){
+        this.filesToUpload = <Array<File>> fileInput.target.files;
+        this.model.attachment = this.filesToUpload;
+    }
+
     createNewsletter() {
         let formData:FormData = new FormData();
         
@@ -70,15 +77,17 @@ export class EditNewsletterComponent  {
         
         if(this.model.released == true){
             this.model.released_at =  Date.now();
+            console.log(this.model.release_at)
             formData.append("released", this.model.released);
             formData.append("release_at", this.model.released_at);
         } 
 
+        console.log(formData)
         this.newsletterService.create(formData, this.name.default_development.name)
         .then(
             data => {
                 this.alertService.success('Create newsletter successful', true);
-                this.router.navigate([this.name.default_development.name + '/newsletter']);
+                this.router.navigate([this.name.default_development.name,'/newsletter']);
             },
             error => {
                 console.log(error);

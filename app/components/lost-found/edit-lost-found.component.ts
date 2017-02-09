@@ -19,6 +19,7 @@ export class EditLostFoundComponent  {
   
     @Input('group')
 	lostFound: LostFound;
+    filesToUpload: Array<File>;
     model: any = {};
     myForm: FormGroup;
     attachment: any = [];
@@ -51,9 +52,9 @@ export class EditLostFoundComponent  {
         
     }
 
-    onChange(event: any) {
-       let files = [].slice.call(event.target.files);
-       this.model.photo = files;
+    onChange(fileInput: any){
+        this.filesToUpload = <Array<File>> fileInput.target.files;
+        this.model.photo = this.filesToUpload;
     }
 
     fileChange(event) {

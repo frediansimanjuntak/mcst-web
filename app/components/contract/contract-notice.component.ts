@@ -15,7 +15,6 @@ import { Observable} from 'rxjs/Observable';
 export class ContractNoticeComponent implements OnInit  {
 	contract: Contract;
     contracts: Contract[] = [];
-    contractnotice:any;
     model: any = {};
     images: any[];
     id: string;
@@ -34,25 +33,22 @@ export class ContractNoticeComponent implements OnInit  {
 
     ngOnInit(): void {
         this.userService.getByToken().subscribe(name => {this.name = name;})
+        this.images = [];
+        this.images.push({source:'/assets/image/1.png'});
+        this.images.push({source:'/assets/image/2.png'});
+        this.images.push({source:'/assets/image/3.png'});
+        this.images.push({source:'/assets/image/4.png'});
+        this.images.push({source:'/assets/image/5.png'});
         this.route.params.subscribe(params => {
             this.id = params['id'];
             this._id = params['_id'];
         });
-        // this.contractnoticeService.getById(this.id,this._id).subscribe(contract => {this.contract = contract;});
-        if( this.id != null && this._id == null ) {
-            this.contractService.getById(this.id).subscribe(contract => {this.contract = contract;});
-        }
-        if( this.id != null && this._id != null) {
-            this.contractService.getById(this.id).subscribe(contract => {this.contract = contract;});
-            this.contractnoticeService.getById(this.id,this._id)
-            .subscribe(contractnotice => {
-                this.contractnotice = contractnotice.contract_notice[0];
-                this.images = [];
-                for (var i = 0; i < this.contractnotice.attachment.length; ++i) {
-                    this.images.push({source:this.contractnotice.attachment[i].url});
-                };
-            });
-        }
+        this.contractnoticeService.getById(this.id,this._id).subscribe(contract => {this.contract = contract;});
+        // if( this._id == null) {
+        //     this.loadContractNotice();
+        // }else{
+        // 	this.contractService.getContract(this._id).then(contract => {this.contract = contract;});
+        // }
     }
 
 	private loadContractNotice() {
@@ -72,26 +68,16 @@ export class ContractNoticeComponent implements OnInit  {
     }
 
     createContractNotice(id:any) {
-        this.model.publish = false;
-        let formData:FormData = new FormData();
-        for (var i = 0; i < this.model.attachment.length; i++) {
-            formData.append("attachment", this.model.attachment[i]);
-        }
-        formData.append("start_time", this.model.start_time);
-        formData.append("end_time", this.model.end_time);
-        formData.append("title", this.model.title);
-        formData.append("description", this.model.description);
-        formData.append("status", this.model.status);
-        formData.append("publish", this.model.publish);
         this.route.params.subscribe(params => {
             this.id = params['id'];
             this._id = params['_id'];
         });
-        this.contractnoticeService.create(formData, this.id)
+        this.model.publish = false;
+        this.contractnoticeService.create(this.model, this.id)
         .then(
             response => {
                 this.alertService.success('Create contract notice successful', true);
-                this.router.navigate([this.name.default_development.name + '/contract/view', id ]);
+                this.router.navigate([this.name.development.name , 'contract/view', id]);
             },
             error => {
                 this.alertService.error(error);
@@ -105,21 +91,11 @@ export class ContractNoticeComponent implements OnInit  {
             this._id = params['_id'];
         });
         this.model.publish = true;
-        let formData:FormData = new FormData();
-        for (var i = 0; i < this.model.attachment.length; i++) {
-            formData.append("attachment", this.model.attachment[i]);
-        }
-        formData.append("start_time", this.model.start_time);
-        formData.append("end_time", this.model.end_time);
-        formData.append("title", this.model.title);
-        formData.append("description", this.model.description);
-        formData.append("status", this.model.status);
-        formData.append("publish", this.model.publish);
-        this.contractnoticeService.create(formData, this.id)
+        this.contractnoticeService.create(this.model, this.id)
         .then(
             response => {
                 this.alertService.success('Create contract notice successful', true);
-                this.router.navigate([this.name.default_development.name + '/contract/view', id ]);
+                this.router.navigate([this.name.development.name , 'contract/view', id]);
             },
             error => {
                 this.alertService.error(error);

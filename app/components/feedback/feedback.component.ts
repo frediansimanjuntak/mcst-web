@@ -58,7 +58,7 @@ export class FeedbackComponent implements OnInit {
     }
 
 	private loadAllFeedback() {
-		this.feedbackService.getAll().subscribe(feedbacks => {
+		this.feedbackService.getFeedbacks().then(feedbacks => {
 			this.feedbacks     = feedbacks.filter(feedbacks => feedbacks.archive === false );
             this.published     = feedbacks.filter(feedbacks => feedbacks.status === 'published' && feedbacks.archive === false );
 		});
@@ -73,7 +73,7 @@ export class FeedbackComponent implements OnInit {
         this.feedbackService.reply(this.feedback)
         .then(
             response => {
-                this.alertService.success('Update Feedback successful', true);
+                this.alertService.success('Update User successful', true);
                 this.router.navigate([this.name.default_development.name + '/user']);
             },
             error=> {

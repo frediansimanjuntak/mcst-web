@@ -10,7 +10,7 @@ import { Observable} from 'rxjs/Observable';
   // moduleId: module.id,
   selector: 'newsletter',
   templateUrl: 'app/templates/newsletter.html',
-  // styleUrls: [ 'app/templates/styles/newsletter.css' ]
+  styleUrls: [ 'app/templates/styles/newsletter.css' ]
 })
 
 export class NewsletterComponent implements OnInit {
@@ -62,6 +62,7 @@ export class NewsletterComponent implements OnInit {
             response => {
               if(response) {
                 console.log(response);
+                // console.log(response.error());
                 alert(`The Newsletter could not be deleted, server Error.`);
               } else {
                 this.alertService.success('Create newsletter successful', true);
@@ -76,13 +77,15 @@ export class NewsletterComponent implements OnInit {
         );
     }
 
-    releaseNewsletter(){
-      
-      this.newsletterservice.release(this.newsletter._id, this.name.default_development.name)
+    releaseNewsletter(newsletter: any){
+
+      this.newsletter.released = true;
+      this.newsletterservice.release(newsletter._id, this.name.default_development.name)
           .then(
             response => {
               if(response) {
                 console.log(response);
+                // console.log(response.error());
                 alert(`The Newsletter could not be release, server Error.`);
               } else {
                 this.alertService.success('Release Newsletter successful', true);
@@ -112,7 +115,7 @@ export class NewsletterComponent implements OnInit {
             });
     }
 
-    openModal(newsletter:any){
+    openModal(newsletter){
       this.newsletter = newsletter;
     }
 

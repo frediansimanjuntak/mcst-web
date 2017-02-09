@@ -43,12 +43,8 @@ export class EditUserGroupComponent implements OnInit {
     }
 
     ngOnInit(): void {
-        this.userService.getByToken()
-                        .subscribe(name => {
-                            this.name = name;
-                            this.getUsers();
-                        })
-        
+        this.userService.getByToken().subscribe(name => {this.name = name;})
+        this.getUsers();
         this.myForm = this.formbuilder.group({
             description : ['', Validators.required],
             chief : [''],
@@ -134,8 +130,8 @@ export class EditUserGroupComponent implements OnInit {
     }
 
     getUsers(): void {
-        this.userService.getAll().subscribe(users => {
-            this.users = users.filter(data => data.default_development == this.name.default_development._id);
+        this.userService.getUsers().then(users => {
+            this.users = users;
             let numOptions =  this.users.length;
             let opts = new Array(numOptions);
 
@@ -172,6 +168,9 @@ export class EditUserGroupComponent implements OnInit {
         }
         this.model.chief = this.chief.id;
 
+        UserGroups.push(this.model);
+        this.router.navigate([this.name.default_development.name + '/user_group']);
+         
         this.userGroupService.create(this.model)
         .then(
             data => {
@@ -195,17 +194,16 @@ export class EditUserGroupComponent implements OnInit {
                 this.usergroup.users[i] =this.user[i].id ;
             }
             this.usergroup.chief = this.chief.id;
-            this.userGroupService.update(this.usergroup)
-                .then(
-                    response => {
-                        this.alertService.success('Update Usergroup successful', true);
-                        this.router.navigate([this.name.default_development.name + '/user_group']);
-                    },
-                    error=> {
-                        this.alertService.error(error);
-                    }
-                );
         }
-        
+    //     this.userGroupService.update(this.usergroup)
+    //     .then(
+    //         response => {
+    //             this.alertService.success('Update Usergroup successful', true);
+    //             this.router.navigate([this.name.default_development.name + '/user_group']);
+    //         },
+    //         error=> {
+    //             this.alertService.error(error);
+    //         }
+    //     );
     }
 }

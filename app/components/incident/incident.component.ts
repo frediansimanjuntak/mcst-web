@@ -16,8 +16,6 @@ import { FileUploader } from 'ng2-file-upload';
 })
 
 export class IncidentComponent implements OnInit {
-    reference_type: any; 
-    reference_id: any; 
 	incident: Incident;
     incidents: Incident[] = [];
     model: any = {};
@@ -46,11 +44,20 @@ export class IncidentComponent implements OnInit {
         this.userService.getByToken().subscribe(name => {this.name = name;})
         this.route.params.subscribe(params => {
             this.id = params['id'];
+            this._id = params['_id'];
         });
-        if( this.id == null) {
+        if( this.id == null && this._id == null) {
             this.loadAllIncident();
-        }if(this.id != null) {
-            this.incidentService.getById(this.id)
+        }if(this._id != null) {
+            this.incidentService.getById(this._id)
+            .subscribe(incident => {
+                this.images = [];
+                for (var i = 0; i < incident.attachment.length; ++i) {
+                    this.images.push({source:incident.attachment[i].url});
+                };
+            });
+        }else{
+        	this.incidentService.getById(this.id)
             .subscribe(incident => {
                 this.incident = incident;
                 this.images = [];
@@ -113,9 +120,8 @@ export class IncidentComponent implements OnInit {
     }
 
     add_project(reference_no:any, id:any){
-        this.reference_id = id;
-        this.reference_type = 'incident';
-        this.router.navigate([this.name.default_development.name + '/add/contract/' + this.reference_type ,id ,reference_no]);    
+        this.editcontractComponent.getType('incident', id);
+        this.router.navigate([this.name.default_development.name + '/contract/add',reference_no]);    
     }
 
     public archieve(incident:Incident){

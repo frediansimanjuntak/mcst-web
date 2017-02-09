@@ -21,7 +21,9 @@ export class EditIncidentComponent implements OnInit {
     name: any;
     refno: any[] = [];
     no:any
+    filesToUpload: Array<File>;
     myForm: FormGroup;
+    public uploader:FileUploader = new FileUploader({url:'http://localhost:3001/upload'});
     types = [
         { value: 'General', name: 'General' },
         { value: 'Hygiene', name: 'Hygiene' },
@@ -103,9 +105,9 @@ export class EditIncidentComponent implements OnInit {
         );
 	}
 
-    onChange(event: any) {
-       let files = [].slice.call(event.target.files);
-       this.model.attachment = files;
+    onChange(fileInput: any){
+        this.filesToUpload = <Array<File>> fileInput.target.files;
+        this.model.attachment = this.filesToUpload;
     }
 
     remove(i: any){
