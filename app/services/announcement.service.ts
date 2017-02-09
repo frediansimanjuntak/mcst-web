@@ -22,13 +22,13 @@ export class AnnouncementService {
     }
  
     getAll(){
-        return this.http.get(url + 'api/announcements', this.options)
+        return this.http.get(url + 'api/announcements', this.jwt())
             .map((res:Response) => res.json())
             .catch((error:any) => Observable.throw(error.json().error || 'Server error'));
     }
 
     getById(id:string){    
-        return this.http.get(url + 'api/announcements/' + id, this.options)
+        return this.http.get(url + 'api/announcements/' + id, this.jwt())
             .map((res:Response) => res.json())
             .catch((error:any) => Observable.throw(error.json().error || 'Server error'));
     }
