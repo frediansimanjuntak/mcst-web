@@ -10,12 +10,7 @@ export class AnnouncementService {
     public headers: Headers;
     public token: string;
     public options: RequestOptions;
-    constructor(private http: Http) {
-        var authToken = JSON.parse(localStorage.getItem('authToken'));
-        this.token = authToken && authToken.token;
-        this.headers = new Headers({  'Content-Type': 'application/json', 'Authorization': 'Bearer ' + this.token });
-        this.options = new RequestOptions({ headers: this.headers });
-    }
+    constructor(private http: Http) {}
 
     getAnnouncements(): Promise<Announcement[]> {
         return Promise.resolve(Announcements);
@@ -39,28 +34,28 @@ export class AnnouncementService {
     }
 
     create(body:any): Promise<Announcement> {
-        return this.http.post(url +  'api/announcements', JSON.stringify(body), this.options)
+        return this.http.post(url +  'api/announcements', JSON.stringify(body), this.jwt())
             .toPromise()
             .then(res => res.json().data)
             .catch(this.handleError);
     }
 
     update(body:any): Promise<Announcement> {
-        return this.http.post(url + 'api/announcements/update/' + body._id,body, this.options)
+        return this.http.post(url + 'api/announcements/update/' + body._id,body, this.jwt())
             .toPromise()
             .then(res => res.json().data)
             .catch(this.handleError);
     }
 
     delete(id: string): Promise<void> {
-        return this.http.delete(url + 'api/announcements/' + id, this.options)
+        return this.http.delete(url + 'api/announcements/' + id, this.jwt())
           .toPromise()
           .then(() => null)
           .catch(this.handleError);
     }
     
     publish(id: string, body:any): Promise<void> {
-        return this.http.post(url + 'api/announcements/publish/' + id, body, this.options)
+        return this.http.post(url + 'api/announcements/publish/' + id, body, this.jwt())
           .toPromise()
           .then(() => null)
           .catch(this.handleError);
@@ -69,6 +64,15 @@ export class AnnouncementService {
     private handleError(error: any): Promise<any> {
         console.error('An error occurred', error); // for demo purposes only
         return Promise.reject(error.message || error);
+    }
+
+    private jwt() {
+        // create authorization header with jwt token
+        let currentUser = JSON.parse(localStorage.getItem('authToken'));
+        if (currentUser && currentUser.token) {
+            let headers = new Headers({ 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + currentUser.token });
+            return new RequestOptions({ headers: headers });
+        }
     }
 
 }

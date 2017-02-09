@@ -354,11 +354,11 @@ export class EditBookingComponent implements OnInit  {
         this.step = 1
     }
 
-    onChange(fileInput: any){
-        this.filesToUpload = <Array<File>> fileInput.target.files;
-        this.model.payment_proof = this.filesToUpload;
+    onChange(event: any) {
+       let files = [].slice.call(event.target.files);
+       this.model.payment_proof = files;
     }
-
+    
     remove(i: any){ 
         this.model.payment_proof.splice(i, 1)
     }

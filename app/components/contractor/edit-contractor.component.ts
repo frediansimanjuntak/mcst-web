@@ -15,7 +15,6 @@ import 'rxjs/add/operator/switchMap';
 
 export class EditContractorComponent implements OnInit {
     public items:Array<any> = [];
-    filesToUpload: Array<File>;
     private companyList:any = [];
     private company :any = {};
     public companyField: boolean;
@@ -198,9 +197,9 @@ export class EditContractorComponent implements OnInit {
         control.removeAt(i);
     }
 
-   onChange(fileInput: any){
-        this.filesToUpload = <Array<File>> fileInput.target.files;
-        this.model.profile_picture = this.filesToUpload;
+    onChange(event: any) {
+       let files = [].slice.call(event.target.files);
+       this.model.attachment = files;
     }
 
     remove(i: any){

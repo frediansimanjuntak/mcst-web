@@ -24,7 +24,6 @@ export class ContractNoteComponent implements OnInit  {
     public close;
     loading = false;
     name: any;
-    filesToUpload: Array<File>;
 
     constructor(private router: Router,
         private contractService: ContractService,
@@ -83,6 +82,7 @@ export class ContractNoteComponent implements OnInit  {
         }
         formData.append("status", this.model.status);
         formData.append("note_remark", this.model.note_remark);
+        formData.append("reference_id", this.contract.reference_id);
         this.route.params.subscribe(params => {
             this.id = params['id'];
             this._id = params['_id'];
@@ -124,12 +124,13 @@ export class ContractNoteComponent implements OnInit  {
         );
     }
 
-    onChange(fileInput: any){
-        this.filesToUpload = <Array<File>> fileInput.target.files;
-        this.model.attachment = this.filesToUpload;
+    onChange(event: any) {
+       let files = [].slice.call(event.target.files);
+       this.model.attachment = files;
     }
 
     remove(i: any){
+        console.log(this.model.attachment)
         this.model.attachment.splice(i, 1)
     }
 

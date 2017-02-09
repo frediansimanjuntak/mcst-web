@@ -29,7 +29,7 @@
 	        		<div class="row">
 	        			<div class="col-md-4">Order :</div>
 	        			<div class="col-md-8"><p><span *ngIf="!incident.contract"><img src="assets/image/menu_manageproject.png" width="14px" height="12px"> <a (click)="add_project(incident.reference_no,incident._id)" style="text-decoration: underline;cursor:pointer">Create Project</a></span>
-	        			<span *ngIf="incident.contract">aaa</span></p></div>
+	        			<span *ngIf="incident.contract"><b>#{{incident.contract._id}}</b></span></p></div>
 	        		</div>
 	        		<div class="row">
 	        			<div class="col-md-4">Message :</div>

@@ -8,47 +8,36 @@ import 'rxjs/add/operator/toPromise';
 
 @Injectable()
 export class PollService {
-    private headers = new Headers( {'Content-Type': 'application/json', 'Authorization': 'Bearer ' + this.authenticationService.token });
-    private options = new RequestOptions({ headers: this.headers });
     constructor(private http: Http, private authenticationService: AuthenticationService) {}
 
-    // getPolls(): Promise<Poll[]> {
-    //     return Promise.resolve(Polls);
-    // }
-
-    // getPoll(id: string): Promise<Poll> {
-    //     return this.getPolls()
-    //         .then(polls => polls.find(polls => polls._id === id));
-    // }
-
     getAll(){
-        return this.http.get(url + 'api/polls', this.options)
+        return this.http.get(url + 'api/polls', this.jwt())
             .map((res:Response) => res.json())
             .catch((error:any) => Observable.throw(error.json().error || 'Server error'));
     }
 
     getById(id:string){    
-        return this.http.get(url + 'api/polls/' + id, this.options)
+        return this.http.get(url + 'api/polls/' + id, this.jwt())
             .map((res:Response) => res.json())
             .catch((error:any) => Observable.throw(error.json().error || 'Server error'));
     }
 
     create(body:any): Promise<Poll> {
-        return this.http.post(url +  'api/polls', JSON.stringify(body), this.options)
+        return this.http.post(url +  'api/polls', JSON.stringify(body), this.jwt())
             .toPromise()
             .then(res => res.json().data)
             .catch(this.handleError);
     }
 
     update(body:Poll): Promise<Poll> {
-        return this.http.post(url + 'api/polls/update/' + body._id,body, this.options)
+        return this.http.post(url + 'api/polls/update/' + body._id,body, this.jwt())
             .toPromise()
             .then(res => res.json().data)
             .catch(this.handleError);
     }
 
     delete(id: string): Promise<void> {
-        return this.http.delete(url + 'api/polls/' + id, this.options)
+        return this.http.delete(url + 'api/polls/' + id, this.jwt())
           .toPromise()
           .then(() => null)
           .catch(this.handleError);
@@ -56,7 +45,7 @@ export class PollService {
 
 
     start(id: string): Promise<void> {
-        return this.http.post(url + 'api/polls/start_poll/' + id, '', this.options)
+        return this.http.post(url + 'api/polls/start_poll/' + id, '', this.jwt())
           .toPromise()
           .then(() => null)
           .catch(this.handleError);
@@ -66,5 +55,14 @@ export class PollService {
     private handleError(error: any): Promise<any> {
         console.error('An error occurred', error); // for demo purposes only
         return Promise.reject(error.message || error);
+    }
+
+    private jwt() {
+        // create authorization header with jwt token
+        let currentUser = JSON.parse(localStorage.getItem('authToken'));
+        if (currentUser && currentUser.token) {
+            let headers = new Headers({ 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + currentUser.token });
+            return new RequestOptions({ headers: headers });
+        }
     }
 }

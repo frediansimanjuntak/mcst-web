@@ -8,10 +8,6 @@ import 'rxjs/add/operator/toPromise';
  
 @Injectable()
 export class UnitService {
-    private headers = new Headers({'Content-Type': 'application/json', 'Authorization': 'Bearer ' + this.authenticationService.token });
-    private options = new RequestOptions({ headers: this.headers });
-    private headers2 = new Headers({'Authorization': 'Bearer ' + this.authenticationService.token });
-    private options2 = new RequestOptions({ headers: this.headers });
     constructor(private http: Http, private authenticationService: AuthenticationService) {}
 
     getDevelopments(): Promise<Development[]> {
@@ -24,73 +20,73 @@ export class UnitService {
     }
 
     getAll(name:string){
-        return this.http.get( url + 'api/properties/' + name, this.options)
+        return this.http.get( url + 'api/properties/' + name, this.jwt())
             .map((res:Response) => res.json())
             .catch((error:any) => Observable.throw(error.json().error || 'Server error'));
     }
 
     getById(id:string, name:string){
-        return this.http.get( url + 'api/properties/' + name + '/' + id,  this.options)
+        return this.http.get( url + 'api/properties/' + name + '/' + id,  this.jwt())
             .map((res:Response) => res.json())
             .catch((error:any) => Observable.throw(error.json().error || 'Server error'));
     }
 
     getTenants(id:string, name:string){
-        return this.http.get( url + 'api/properties/' + name + '/tenant/' + id, this.options)
+        return this.http.get( url + 'api/properties/' + name + '/tenant/' + id, this.jwt())
             .map((res:Response) => res.json())
             .catch((error:any) => Observable.throw(error.json().error || 'Server error'));
     }
 
     getRegVehicles(id:string, name:string){
-        return this.http.get( url + 'api/properties/' + name + '/register_vehicle/' + id, this.options)
+        return this.http.get( url + 'api/properties/' + name + '/register_vehicle/' + id, this.jwt())
             .map((res:Response) => res.json())
             .catch((error:any) => Observable.throw(error.json().error || 'Server error'));
     }
 
     create(body:any, name:string): Promise<any> {
-        return this.http.post(url +  'api/properties/' + name, JSON.stringify(body), this.options)
+        return this.http.post(url +  'api/properties/' + name, JSON.stringify(body), this.jwt())
             .toPromise()
             .then(res => res.json().data)
             .catch(this.handleError);
     }
 
     createTenant(body:any, name:string, id:string): Promise<any> {
-        return this.http.post(url +  'api/properties/' + name + '/tenant/' + id, JSON.stringify(body), this.options)
+        return this.http.post(url +  'api/properties/' + name + '/tenant/' + id, JSON.stringify(body), this.jwt())
             .toPromise()
             .then(res => res.json().data)
             .catch(this.handleError);
     }
 
     createRegVehicle(body:any, name:string, id:string): Promise<any> {
-        return this.http.post(url +  'api/properties/' + name + '/register_vehicle/' + id, body, this.options2)
+        return this.http.post(url +  'api/properties/' + name + '/register_vehicle/' + id, JSON.stringify(body), this.jwt())
             .toPromise()
             .then(res => res.json().data)
             .catch(this.handleError);
     }
 
     update(body:any, name:string): Promise<any> {
-        return this.http.post(url + 'api/properties/' + name + '/update/' + body._id,body, this.options)
+        return this.http.post(url + 'api/properties/' + name + '/update/' + body._id,body, this.jwt())
             .toPromise()
             .then(res => res.json().data)
             .catch(this.handleError);
     }
 
     delete(id: string, name: string): Promise<void> {
-        return this.http.delete( url + 'api/properties/' + name + '/' + id, this.options)
+        return this.http.delete( url + 'api/properties/' + name + '/' + id, this.jwt())
           .toPromise()
           .then(() => null)
           .catch(this.handleError);
     }
 
     deleteTenant(idTenant:string, idUnit: string, name: string): Promise<void> {
-        return this.http.delete( url + 'api/properties/' + name + '/' + idUnit + '/tenant/' + idTenant, this.options)
+        return this.http.delete( url + 'api/properties/' + name + '/' + idUnit + '/tenant/' + idTenant, this.jwt())
           .toPromise()
           .then(() => null)
           .catch(this.handleError);
     }
 
     deleteRegVehicle(idRegVehicle:string, idUnit: string, name: string): Promise<void> {
-        return this.http.delete( url + 'api/properties/' + name + '/' + idUnit + '/register_vehicle/' + idRegVehicle, this.options)
+        return this.http.delete( url + 'api/properties/' + name + '/' + idUnit + '/register_vehicle/' + idRegVehicle, this.jwt())
           .toPromise()
           .then(() => null)
           .catch(this.handleError);
@@ -101,4 +97,12 @@ export class UnitService {
         return Promise.reject(error.message || error);
     }
 
+    private jwt() {
+        // create authorization header with jwt token
+        let currentUser = JSON.parse(localStorage.getItem('authToken'));
+        if (currentUser && currentUser.token) {
+            let headers = new Headers({ 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + currentUser.token });
+            return new RequestOptions({ headers: headers });
+        }
+    }
 }

@@ -24,7 +24,6 @@ export class ContractNoticeComponent implements OnInit  {
     public close;
     loading = false;
     name: any;
-    filesToUpload: Array<File>;
 
     constructor(private router: Router, 
         private contractService: ContractService, 
@@ -137,9 +136,9 @@ export class ContractNoticeComponent implements OnInit  {
         this.ngOnInit()
     }
 
-    onChange(fileInput: any){
-        this.filesToUpload = <Array<File>> fileInput.target.files;
-        this.model.attachment = this.filesToUpload;
+    onChange(event: any) {
+       let files = [].slice.call(event.target.files);
+       this.model.attachment = files;
     }
 
     remove(i: any){

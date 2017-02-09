@@ -8,8 +8,6 @@ import 'rxjs/add/operator/toPromise';
  
 @Injectable()
 export class PaymentReminderService {
-    private headers = new Headers({ 'Authorization': 'Bearer ' + this.authenticationService.token });
-    private options = new RequestOptions({ headers: this.headers });
     constructor(private http: Http, private authenticationService: AuthenticationService) {}
 
     getPaymentReminders(): Promise<PaymentReminder[]> {
@@ -22,40 +20,40 @@ export class PaymentReminderService {
     }
 
     getAll(){
-        return this.http.get(url + 'api/payment_reminder', this.options)
+        return this.http.get(url + 'api/payment_reminder', this.jwt())
             .map((res:Response) => res.json())
             .catch((error:any) => Observable.throw(error.json().error || 'Server error'));
     }
 
     getById(id:string){
-        return this.http.get(url + 'api/payment_reminder/' + id, this.options)
+        return this.http.get(url + 'api/payment_reminder/' + id, this.jwt())
             .map((res:Response) => res.json())
             .catch((error:any) => Observable.throw(error.json().error || 'Server error'));
     }
 
     create(body:any): Promise<PaymentReminder> {
-        return this.http.post(url +  'api/payment_reminder', body, this.options)
+        return this.http.post(url +  'api/payment_reminder', body, this.jwt())
             .toPromise()
             .then(res => res.json().data)
             .catch(this.handleError);
     }
 
     update(body:PaymentReminder): Promise<PaymentReminder> {
-        return this.http.post(url + 'api/payment_reminder/update/' + body._id,body, this.options)
+        return this.http.post(url + 'api/payment_reminder/update/' + body._id,body, this.jwt())
             .toPromise()
             .then(res => res.json().data)
             .catch(this.handleError);
     }
 
     delete(id: string): Promise<void> {
-        return this.http.delete(url + 'api/payment_reminder/' + id, this.options)
+        return this.http.delete(url + 'api/payment_reminder/' + id, this.jwt())
             .toPromise()
             .then(() => null)
             .catch(this.handleError);
     }
 
     publish(id: string): Promise<PaymentReminder> {
-        return this.http.post(url + 'api/payment_reminder/publish/' + id,'', this.options)
+        return this.http.post(url + 'api/payment_reminder/publish/' + id,'', this.jwt())
             .toPromise()
             .then(res => res.json().data)
             .catch(this.handleError);
@@ -66,4 +64,12 @@ export class PaymentReminderService {
         return Promise.reject(error.message || error);
     }
 
+    private jwt() {
+        // create authorization header with jwt token
+        let currentUser = JSON.parse(localStorage.getItem('authToken'));
+        if (currentUser && currentUser.token) {
+            let headers = new Headers({ 'Authorization': 'Bearer ' + currentUser.token });
+            return new RequestOptions({ headers: headers });
+        }
+    }
 }

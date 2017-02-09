@@ -20,6 +20,7 @@ export class ContractComponent implements OnInit  {
     model: any = {};
     images: any[];
     id: string;
+    _id: any;
     public open;
     public close;
     name: any;
@@ -81,6 +82,46 @@ export class ContractComponent implements OnInit  {
                 this.alertService.success('Create contract successful', true);
                 alert(`Delete Contarct successful`);
                 this.ngOnInit()
+              }
+            },
+            error=> {
+              console.log(error);
+                alert(`The Newsletter could not be deleted, server Error.`);
+            }
+        );
+    }
+
+    deleteContractNote(contractnote: any , id:any) {
+        this.contractnoteService.delete(id,contractnote._id)
+          .then(
+            response => {
+              if(response) {
+                console.log(response);
+                // console.log(response.error());
+                alert(`The Contract could not be deleted, server Error.`);
+              } else {
+                this.alertService.success('Delete contract successful', true);
+                alert(`Delete Contarct successful`);
+                this.contractService.getById(id)
+                .subscribe(contract => {
+                    this.contract = contract;
+                    this.images = [];
+                    for (var i = 0; i < this.contract.attachment.length; ++i) {
+                        this.images.push({source:this.contract.attachment[i].url});
+                    };
+                });
+                this.contractnoteService.getAll(id)
+                .subscribe(contractnotes => {
+                    if(contractnotes[0].contract_note.length > 0) { 
+                        this.contractnotes = contractnotes[0].contract_note;
+                    }
+                })
+                this.contractnoticeService.getAll(id)
+                .subscribe(contractnotices => {
+                    if(contractnotices[0].contract_notice.length > 0) {
+                        this.contractnotices = contractnotices[0].contract_notice;
+                    }
+                })
               }
             },
             error=> {

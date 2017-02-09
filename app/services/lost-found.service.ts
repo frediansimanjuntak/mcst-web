@@ -8,8 +8,6 @@ import 'rxjs/add/operator/toPromise';
  
 @Injectable()
 export class LostFoundService {
-    private headers = new Headers({ 'Accept': 'application/json', 'Authorization': 'Bearer ' + this.authenticationService.token });
-    private options = new RequestOptions({ headers: this.headers });
     constructor(private http: Http, private authenticationService: AuthenticationService) {}
 
     getLostFounds(): Promise<LostFound[]> {
@@ -22,40 +20,40 @@ export class LostFoundService {
     }
 
     getAll(){
-        return this.http.get(url + 'api/lost_found', this.options)
+        return this.http.get(url + 'api/lost_found', this.jwt())
             .map((res:Response) => res.json())
             .catch((error:any) => Observable.throw(error.json().error || 'Server error'));
     }
 
     getById(id:string){    
-        return this.http.get(url + 'api/lost_found/' + id, this.options)
+        return this.http.get(url + 'api/lost_found/' + id, this.jwt())
             .map((res:Response) => res.json())
             .catch((error:any) => Observable.throw(error.json().error || 'Server error'));
     }
 
     create(formData:any): Promise<any> {
-        return this.http.post(`${url + 'api/lost_found'}`, formData, this.options)
+        return this.http.post(`${url + 'api/lost_found'}`, formData, this.jwt())
             .toPromise()
             .then(res => res.json().data)
             .catch(this.handleError);
     }
 
     update(body:any): Promise<LostFound> {
-        return this.http.post(url + 'api/lost_found/update/' + body._id,body, this.options)
+        return this.http.post(url + 'api/lost_found/update/' + body._id,body, this.jwt())
             .toPromise()
             .then(res => res.json().data)
             .catch(this.handleError);
     }
 
     delete(id: string): Promise<void> {
-        return this.http.delete(url + 'api/lost_found/' + id, this.options)
+        return this.http.delete(url + 'api/lost_found/' + id, this.jwt())
           .toPromise()
           .then(() => null)
           .catch(this.handleError);
     }
 
     archieve(id: string): Promise<LostFound> {
-        return this.http.post(url + 'api/lost_found/archieve/' + id, '', this.options)
+        return this.http.post(url + 'api/lost_found/archieve/' + id, '', this.jwt())
           .toPromise()
           .then(() => null)
           .catch(this.handleError);
@@ -64,5 +62,14 @@ export class LostFoundService {
     private handleError(error: any): Promise<any> {
         console.error('An error occurred', error); // for demo purposes only
         return Promise.reject(error.message || error);
+    }
+
+    private jwt() {
+        // create authorization header with jwt token
+        let currentUser = JSON.parse(localStorage.getItem('authToken'));
+        if (currentUser && currentUser.token) {
+            let headers = new Headers({ 'Accept': 'application/json', 'Authorization': 'Bearer ' + currentUser.token });
+            return new RequestOptions({ headers: headers });
+        }
     }
 }

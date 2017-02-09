@@ -22,9 +22,7 @@ export class EditNewsletterComponent  {
     myForm: FormGroup;
     user: User;
     public developmentId;
-    public uploader:FileUploader = new FileUploader({url:'http://localhost:3001/upload'});
     name: any;
-    filesToUpload: Array<File>;
 
     constructor(private router: Router,
     	private newsletterService: NewsletterService,
@@ -56,11 +54,6 @@ export class EditNewsletterComponent  {
                 // }
             })
         })
-    }
-
-    fileChangeEvent(fileInput: any){
-        this.filesToUpload = <Array<File>> fileInput.target.files;
-        this.model.attachment = this.filesToUpload;
     }
 
     createNewsletter() {
