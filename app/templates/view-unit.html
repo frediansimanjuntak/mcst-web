@@ -22,8 +22,8 @@
                                 <b>Block :</b>{{unit.address.block_no}}
                             </div>
                             <div class="col-md-4">
-                                <b>Owner :</b>{{unit.landlord.username}}<br>
-                                <b>Status :</b>{{unit.status}}
+                                <span *ngIf="hasLandlord"><b>Owner :</b>{{unit.landlord.username}}<br>
+                                <b>Status :</b>{{unit.status}}</span>
                             </div>
                             <div class="col-md-4">
                                 <b>No of Tenant :</b>{{ unit.tenant.length }}<br>
@@ -123,7 +123,7 @@
                             <label class="control-label col-sm-4" for="sticky">Type :</label>
                             <div class="col-sm-8">
                                 <div class="col-sm-2">
-                                    <label><input type="radio" name="type" [checked]="model.type == 'tenant'" [(ngModel)]="model.type" value='tenant'>Tenant</label>   
+                                    <label><input *ngIf="hasLandlord" type="radio" name="type" [checked]="model.type == 'tenant'" [(ngModel)]="model.type" value='tenant'>Tenant</label>   
                                 </div>
                                 <div class="col-sm-2" *ngIf="!hasLandlord">
                                     <label><input type="radio" name="type" [checked]="model.type == 'landlord'" [(ngModel)]="model.type" value='landlord'>Landlord</label>      

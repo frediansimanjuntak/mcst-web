@@ -35,7 +35,7 @@ export class UserGroupService {
 
     create(body:any): Promise<UserGroup> {
         console.log(body)
-        return this.http.post(url +  'api/usergroups', JSON.stringify(body), this.jwt())
+        return this.http.post(url +  'api/usergroups', body, this.jwt())
             .toPromise()
             .then(res => res.json().data)
             .catch(this.handleError);
@@ -64,7 +64,7 @@ export class UserGroupService {
         // create authorization header with jwt token
         let currentUser = JSON.parse(localStorage.getItem('authToken'));
         if (currentUser && currentUser.token) {
-            let headers = new Headers({ 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + currentUser.token });
+            let headers = new Headers({ 'Authorization': 'Bearer ' + currentUser.token });
             return new RequestOptions({ headers: headers });
         }
     }
