@@ -54,7 +54,6 @@ export class EditContractComponent  implements OnInit {
         formData.append("contract_type", this.model.contract_type);
         formData.append("title", this.model.title);
         formData.append("remark", this.model.remark);
-        console.log(formData)
         this.contractService.create(formData)
         .then(
             response => {
