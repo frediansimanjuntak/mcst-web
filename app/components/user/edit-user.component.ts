@@ -19,6 +19,7 @@ export class EditUserComponent implements OnInit {
     users: User[] = [];
     model: any = {};
     id: string;
+    type: string;
     developmentID = "585b36585d3cc41224fe518a";
     units: any[] = [];
     myForm: FormGroup;
@@ -41,6 +42,11 @@ export class EditUserComponent implements OnInit {
             this.name = name;
             this.unitService.getAll(name.default_development.name).subscribe(units => {this.units = units.properties;})
         })
+        this.route.params.subscribe(params => {
+            this.id = params['id'];
+            this.type = params['type'];
+        });
+        if(this.id == null){
         this.myForm = this.formbuilder.group({
             username : ['', Validators.required],
             email : ['', Validators.required],
@@ -49,12 +55,10 @@ export class EditUserComponent implements OnInit {
             phone : ['', Validators.required],
             role : ['', Validators.required],
             default_property: this.formbuilder.group({
-                development: [''],
                 property: [''],
                 role : ['']
             }),
             rented_property: this.formbuilder.group({
-                development: [''],
                 property: ['']
             }),
             owned_property: this.formbuilder.array([this.initOwned()]),
@@ -62,11 +66,9 @@ export class EditUserComponent implements OnInit {
             active: ['', Validators.required],
 
         });
-        this.route.params.subscribe(params => {
-            this.id = params['id'];
-        });
-
-        if( this.id != null) {
+    }
+        
+        if( this.id != null &&  this.type == null) {
             this.userService.getById(this.id)
             .subscribe(user => {
                 this.user = user;
@@ -103,18 +105,61 @@ export class EditUserComponent implements OnInit {
                 }
                 this.myForm.patchValue(this.user);
             });
-        };
-
-
-
-        // this.developmentService.getAll().subscribe(developments => { this.developments = developments; });
+        }else if( this.id != null &&  this.type != null){
+            if(this.type == 'tenant'){
+                this.myForm = this.formbuilder.group({
+                    username : ['', Validators.required],
+                    email : ['', Validators.required],
+                    password : ['', Validators.required],
+                    confirmpassword : ['', Validators.required],
+                    phone : ['', Validators.required],
+                    role : ['', Validators.required],
+                    default_property: this.formbuilder.group({
+                        property: [''],
+                        role : ['']
+                    }),
+                    rented_property: this.formbuilder.group({
+                        development: [''],
+                        property: [this.id]
+                    }),
+                    authorized_property: this.formbuilder.array([this.initAuthorized()]),
+                    active: ['', Validators.required],
+                    });    
+            }else if(this.type == 'landlord'){
+                     this.myForm = this.formbuilder.group({
+                    username : ['', Validators.required],
+                    email : ['', Validators.required],
+                    password : ['', Validators.required],
+                    confirmpassword : ['', Validators.required],
+                    phone : ['', Validators.required],
+                    role : ['', Validators.required],
+                    default_property: this.formbuilder.group({
+                        property: [''],
+                        role : ['']
+                    }),
+                    owned_property: this.formbuilder.array([this.initOwned()]),
+                    authorized_property: this.formbuilder.array([this.initAuthorized()]),
+                    active: ['', Validators.required],
+                    });    
+            }
+            
+        }
+     // this.developmentService.getAll().subscribe(developments => { this.developments = developments; });
     }
 
     initOwned() {
-        return this.formbuilder.group({
-            development: [''],
-            property: ['']
-        });
+        if(this.type == null || this.type == 'tenant'){
+            return this.formbuilder.group({
+                development: [''],
+                property: ['']
+            });    
+        }else if(this.type != null && this.type == 'landlord'){
+            return this.formbuilder.group({
+                development: [''],
+                property: [this.id]
+            }); 
+        }
+        
     }
 
     initAuthorized() {
@@ -130,10 +175,6 @@ export class EditUserComponent implements OnInit {
 
         control.push(ownedCtrl);
 
-        /* subscribe to individual address value changes */
-        // addrCtrl.valueChanges.subscribe(x => {
-        //   console.log(x);
-        // })
     }
 
     removeOwned(i: number) {
@@ -147,10 +188,6 @@ export class EditUserComponent implements OnInit {
 
         control.push(authCtrl);
 
-        /* subscribe to individual address value changes */
-        // addrCtrl.valueChanges.subscribe(x => {
-        //   console.log(x);
-        // })
     }
 
     removeAuthorized(i: number) {
@@ -158,8 +195,23 @@ export class EditUserComponent implements OnInit {
         control.removeAt(i);
     }
 
-    createUser(model:User , isValid: boolean) {
-        this.submitted = true;
+    createUser(model:any , isValid: boolean) {
+       if(this.type=='tenant'){
+           model.rented_property.development = this.name.default_development._id;
+           
+       }
+       if(this.type=='landlord'){
+           model.owned_property[0].development = this.name.default_development._id;
+           // delete model.rented_property;
+           // let numOptions =  model.owned_property.length;
+
+            // for (let i = 0; i < numOptions; i++) {
+            //      model.owned_property[i].development = this.name.default_development._id;
+            // }
+
+        }
+
+       this.submitted = true;
         this.userService.create(model)
         .then(
             data => {

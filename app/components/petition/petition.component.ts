@@ -1,7 +1,7 @@
 import { Component, OnInit, ViewContainerRef, ViewEncapsulation } from '@angular/core';
 import { Router, Params, ActivatedRoute } from '@angular/router';
 import { Petition } from '../../models/index';
-import { PetitionService, AlertService, UserService} from '../../services/index';
+import { PetitionService, AlertService, UnitService, UserService} from '../../services/index';
 import '../../rxjs-operators';
 import { Observable} from 'rxjs/Observable';
 import { Location }               from '@angular/common';
@@ -18,7 +18,7 @@ import * as $ from "jquery";
 })
 
 export class PetitionComponent implements OnInit {
-	petition: Petition;
+	petition: any;
     petitions: Petition[] = [];
     validTillDateOptions: any = {};
     model: any = {};
@@ -27,6 +27,7 @@ export class PetitionComponent implements OnInit {
     checked: string[] = [];
     selectedValues: string[] = [];
     btnArchive: boolean = false;
+    dataUnit: any[]=[];
     public developmentId;
     public data;
     public petitionPending;
@@ -44,7 +45,8 @@ export class PetitionComponent implements OnInit {
                 private alertService: AlertService,
                 private route: ActivatedRoute,
                 private location: Location,
-                private userService: UserService
+                private userService: UserService,
+                private unitService: UnitService,
                 ) {}
 
     ngOnInit(): void {
@@ -55,29 +57,19 @@ export class PetitionComponent implements OnInit {
         this.userService.getByToken()
                             .subscribe(name => {
                                 this.name = name;
-                                if( this.id == null) {
-                                    this.loadAllPetitions();
-                                }else{
-                                    this.petitionService.getById(this.id)
-                                        .subscribe(petition => {
-                                            this.petition = petition;
-                                        });
-                                }
+                                this.loadAllUnits();
                             })
     }
 
     private logCheckbox(element: HTMLInputElement): void {
-        console.log( `Checkbox ${element.value} was ${element.checked ? '' : 'un'}checked\n`);
     }
 
     deletePetition(petition) {
-      console.log(petition);
         this.petitionService.delete(petition._id)
           .then(
             response => {
               if(response) {
                 console.log(response);
-                // console.log(response.error());
                 alert(`The Petition could not be deleted, server Error.`);
               } else {
                 this.alertService.success('Delete Petition successful', true);
@@ -96,12 +88,31 @@ export class PetitionComponent implements OnInit {
 
     }
 
+    private loadAllUnits(): void {
+        this.unitService.getAll(this.name.default_development.name)
+            .subscribe((data)=> {
+                setTimeout(()=> {
+                    this.dataUnit       = data.properties;
+                    if( this.id == null) {
+                                    this.loadAllPetitions();
+                                }else{
+                                    this.petitionService.getById(this.id)
+                                        .subscribe(petition => {
+                                            this.petition = petition;
+                                            let property = this.dataUnit.find(data => data._id ==  this.petition.property);
+                                            this.petition.unit_no = '#' + property.address.unit_no + '-' + property.address.unit_no_2;
+                                        });
+                                }
+                }, 1000);
+            });
+    }
+
 	private loadAllPetitions() {
         this.petitionService.getAll()
             .subscribe((data)=> {
                 setTimeout(()=> {
-                    console.log(data);
-                    this.petitions = data.filter(data => data.archieve === false && data.development == this.name.default_development._id );
+                    this.petitions = data.filter(data => data.archieve === false && data.development._id == this.name.default_development._id );
+                    
                 }, 1000);
         });
     }
@@ -123,7 +134,6 @@ export class PetitionComponent implements OnInit {
   	}
 
     archieveSelected(){
-        console.log(this.selectedValues);
         this.model.ids = this.selectedValues;
         this.petitionService.archive(this.model)
         this.ngOnInit();
