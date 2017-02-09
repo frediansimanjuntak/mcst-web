@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { AuthenticationService } from '../../services/index';
+import { AuthenticationService, UserService } from '../../services/index';
 import { Router } from '@angular/router';
-import { AppComponent,} from '../index';
+import { AppComponent } from '../index';
 
 @Component({
     // moduleId: module.id,
@@ -91,38 +91,37 @@ import { AppComponent,} from '../index';
 export class LoginComponent implements OnInit {
     model: any = {};
     loading = false;
+    error = '';
+    name:any;
+    authToken:any;
     public errorMsg = '';
 
     constructor(
         private router: Router,
-        private AuhtService: AuthenticationService,
+        private AuthService: AuthenticationService,
         private appComponent: AppComponent,
-           ) { }
+        private userService: UserService   ) { }
 
     ngOnInit() {
         // reset login status
-        this.AuhtService.logout();
-        this.appComponent.ngOnInit();
+        this.AuthService.logout();
     }
 
     login() {
         this.loading = true;
-        this.AuhtService.login(this.model.username, this.model.password)
-            .subscribe(result => {
-                if (result === true) {
-                    // login successful
-                    this.appComponent.ngOnInit();
-                    this.router.navigate([this.appComponent.name.default_development.name , 'dashboard']);
-                }
-                else {
-                    // login failed
-                    this.errorMsg = 'Username or password is incorrect';
+        this.AuthService.login(this.model.username, this.model.password)
+            .subscribe(
+                data => {
+                    this.userService.getByToken()
+                    .subscribe(name => {
+                        this.name = name;
+                        this.appComponent.getToken()
+                        this.router.navigate([this.name.default_development.name, 'dashboard']);
+                    })
+                },
+                error => {
+                    this.error = 'Username or password is incorrect';
                     this.loading = false;
-                }
-            });
-    }
-
-    logError(err: any) {
-        console.log(err);
+                });
     }
 }
