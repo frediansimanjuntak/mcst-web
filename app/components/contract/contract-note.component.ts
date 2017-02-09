@@ -82,7 +82,7 @@ export class ContractNoteComponent implements OnInit  {
         }
         formData.append("status", this.model.status);
         formData.append("note_remark", this.model.note_remark);
-        // formData.append("reference_id", this.contract.reference_id);
+        formData.append("reference_id", this.contract.reference_id);
         this.route.params.subscribe(params => {
             this.id = params['id'];
             this._id = params['_id'];
