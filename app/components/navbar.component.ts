@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { MENUS } from '../models/menu';
 import { UserService } from '../services/index';
-import {SlimLoadingBarService, SlimLoadingBarComponent} from 'ng2-slim-loading-bar';
+import {SlimLoadingBarService, SlimLoadingBarComponent} from 'ng2-slim-progress-bar';
 @Component({
 	// moduleId: module.id,
 	selector: 'navbar',

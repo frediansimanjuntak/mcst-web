@@ -170,11 +170,14 @@ export class EditBookingComponent implements OnInit  {
                     booking_date     = this.convertDate1(booking_date);
                     this.bookingService.getAll()
                     .subscribe(bookings => {
+                        console.log(bookings)
                             for (let b = 0; b < this.times_start.length; ++b) {
                                 this.bookings = bookings.filter(data => 
                                     data.booking_date.slice(0,10) == booking_date &&
+                                    data.facility._id == this.selectedFacility[0]._id &&
                                     data.start_time == this.times_start[b]+this.min &&
                                     data.end_time == this.times_end[b]+this.min )
+                                console.log(this.selectedFacility[0]._id)
                                     if(this.bookings.length > 0) {
                                         this.booking_status.push("Not Available")
                                     }else{
@@ -286,7 +289,6 @@ export class EditBookingComponent implements OnInit  {
                 this.filtered = this.facility.schedule.filter(data => 
                     data.start_time <= start && 
                     data.end_time >= end 
-
                 );
             }else{
                 this.filtered = this.facility.schedule.filter(data => 
@@ -352,6 +354,7 @@ export class EditBookingComponent implements OnInit  {
 
     change(){
         this.step = 1
+        this.selectedValues = []
     }
 
     onChange(event: any) {
