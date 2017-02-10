@@ -201,16 +201,16 @@ export class EditUserComponent implements OnInit {
            
        }
        if(this.type=='landlord'){
-           model.owned_property[0].development = this.name.default_development._id;
+           // model.owned_property[0].development = this.name.default_development._id;
            // delete model.rented_property;
-           // let numOptions =  model.owned_property.length;
+           let numOptions =  model.owned_property.length;
 
-            // for (let i = 0; i < numOptions; i++) {
-            //      model.owned_property[i].development = this.name.default_development._id;
-            // }
+            for (let i = 0; i < numOptions; i++) {
+                 model.owned_property[i].development = this.name.default_development._id;
+            }
 
         }
-
+        console.log(model);
        this.submitted = true;
         this.userService.create(model)
         .then(

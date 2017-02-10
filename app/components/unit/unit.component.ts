@@ -63,6 +63,7 @@ export class UnitComponent implements OnInit {
             .subscribe((data)=> {
                 setTimeout(()=> {
                     this.dataUnit = data.properties;
+                    console.log(this.dataUnit)
                     this.loading = false;
                 }, 1000);
             });

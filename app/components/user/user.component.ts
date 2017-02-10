@@ -26,9 +26,13 @@ export class UserComponent implements OnInit {
     }
 
     deleteUser(user:User) {
-        this.userService.delete(user._id)
+        this.model.development = this.name.default_development._id;
+        if(user.user_group){
+            this.model.user_group = user.user_group; 
+        }
+        this.userService.delete(user._id, this.model)
         .then(response => {
-                  this.alertService.success('Create user successful', true);
+                  this.alertService.success('Delete user successful', true);
 	                this.loadAllUsers()
               },
               error => {
@@ -39,7 +43,10 @@ export class UserComponent implements OnInit {
 
 
     private loadAllUsers() {
-        this.userService.getAll().subscribe(users => { this.users = users });
+        this.userService.getAll().subscribe(users => { 
+                                            this.users = users;
+                                            console.log(users) ;
+                                        });
     }
 
     add(){

@@ -40,7 +40,7 @@ export class User {
       property : string
     }
   ];
-  active : string;
+  active : boolean;
   default_development : Development;
   authorized_development : string[];
   user_group : UserGroup; /*one or many?*/

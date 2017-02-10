@@ -67,6 +67,7 @@ export class ViewUnitComponent implements OnInit {
                                         .getById(this.id, this.name.default_development.name)
                                            .subscribe(unit => {
                                                this.unit = unit.properties[0];
+                                               console.log(this.unit)
                                                this.residents = this.unit.tenant;
 
                                                if(this.unit.landlord){
