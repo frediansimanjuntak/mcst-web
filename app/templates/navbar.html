@@ -21,7 +21,7 @@
 			      		</a>
 			      		<ul *ngIf="menu.sub" class="dropdown-menu">
 				          <li>
-				          	<a *ngFor="let sub of menu.sub" [routerLink]="[name.default_development.name + sub.link]"><strong>{{ sub.name }}</strong></a>
+				          	<a *ngFor="let sub of menu.sub" (click)="start()" [routerLink]="[name.default_development.name + sub.link]"><strong>{{ sub.name }}</strong></a>
 				          </li>
 				        </ul>
 			      	</li>

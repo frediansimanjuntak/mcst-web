@@ -229,3 +229,18 @@
 .capitalize{
   text-transform: capitalize;
 }
+
+.aaa{
+    position: fixed;
+    left: 0px;
+    top: 0px;
+    width: 100%;
+    height: 100%;
+    z-index: 9999;
+    background-image: url("loading.gif");
+    background-repeat: no-repeat;
+    background-position: center; 
+    background-color: #fff;
+    background-size: 80px 80px;
+    opacity: 0.5;
+}
