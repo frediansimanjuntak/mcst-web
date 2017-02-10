@@ -51,8 +51,8 @@ export class UserService {
             .catch(this.handleError);
     }
 
-    delete(id: string): Promise<void> {
-        return this.http.delete(url + 'api/users/' + id, this.jwt())
+    delete(id: string, body: any): Promise<void> {
+        return this.http.put(url + 'api/users/' + id, body, this.jwt())
           .toPromise()
           .then(() => null)
           .catch(this.handleError);

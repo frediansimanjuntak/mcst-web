@@ -81,7 +81,7 @@
                         <h5>Registered Vehicle</h5>
                     </div>
                     <div class="col-md-6">
-                        <button [disabled]="!hasLandlord && !hasTenants" class="btn btn-default pull-right" (click)="secondModal.open()"><img class="img-btn" src="../../assets/image/icon_addresident.png" />&nbsp;Register Vehicle</button>
+                        <button [disabled]="!hasTenants" class="btn btn-default pull-right" (click)="secondModal.open()"><img class="img-btn" src="../../assets/image/icon_addresident.png" />&nbsp;Register Vehicle</button>
                     </div>
                 </div>
                 <div class="row">
@@ -98,7 +98,7 @@
                         </p-column>
                          <p-column header="Registered On" sortable="true">
                             <template let-vehicles="rowData" pTemplate="body">
-                                <span>{{vehicles.created_at | date:'d/M/y'}}</span>
+                                <span>{{vehicles.registered_on | date:'d/M/y'}}</span>
                             </template>
                         </p-column> 
                         <p-column header="Remarks" field="remarks">

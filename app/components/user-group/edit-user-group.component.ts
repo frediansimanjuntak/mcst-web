@@ -15,6 +15,7 @@ import 'rxjs/add/operator/switchMap';
 
 export class EditUserGroupComponent implements OnInit {
     public items:Array<any> = [];
+    public items2:Array<any> = [];
 
     private user:any = [];
     private chief :any = {};
@@ -28,7 +29,9 @@ export class EditUserGroupComponent implements OnInit {
     id: string;
     myForm: FormGroup;
     users: any;
+    usersForMember: any;
     myOptions: Array<any>;
+    myOptions2: Array<any>;
     options1: Array<any> = [];
     mySelectUsers: Array<string>;
     selection: Array<string>;
@@ -136,6 +139,8 @@ export class EditUserGroupComponent implements OnInit {
     getUsers(): void {
         this.userService.getAll().subscribe(users => {
             this.users = users.filter(data => data.default_development == this.name.default_development._id);
+            this.usersForMember = this.users.filter(data => !data.user_group);
+
             let numOptions =  this.users.length;
             let opts = new Array(numOptions);
 
@@ -148,6 +153,19 @@ export class EditUserGroupComponent implements OnInit {
 
             this.myOptions = opts.slice(0);
             this.items = this.myOptions;
+
+            let numOptions2 =  this.usersForMember.length;
+            let opts2 = new Array(numOptions);
+
+            for (let i = 0; i < numOptions2; i++) {
+                opts2[i] = {
+                    id: this.usersForMember[i]._id,
+                    text: this.usersForMember[i].username
+                };
+            }
+
+            this.myOptions2 = opts.slice(0);
+            this.items2 = this.myOptions2;
         });
     }
 
