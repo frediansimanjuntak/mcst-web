@@ -69,6 +69,7 @@ export class ViewUnitComponent implements OnInit {
                                                this.unit = unit.properties[0];
                                                console.log(this.unit)
                                                this.residents = this.unit.tenant;
+                                               this.vehicles = this.unit.registered_vehicle;
 
                                                if(this.unit.landlord){
                                                    this.hasLandlord = true;
@@ -78,15 +79,18 @@ export class ViewUnitComponent implements OnInit {
 
                                                if(this.residents){
                                                    this.hasTenants = true;
+                                                   for (var i = 0; i < this.residents.length; i++) {
+                                                       this.residents[i].i = i + 1;
+                                                   }
                                                }else{
                                                    this.hasTenants = false;
                                                }
 
-                                                this.unitservice
-                                                .getRegVehicles(this.id, this.name.default_development.name)
-                                                   .subscribe(data => {
-                                                       this.vehicles = data[0].properties[0].registered_vehicle;
-                                                });
+                                               if(this.vehicles){
+                                                   for (var i = 0; i < this.vehicles.length; i++) {
+                                                       this.vehicles[i].i = i + 1;
+                                                   }
+                                               }
                                         });
                                 }
                             });
@@ -205,7 +209,8 @@ export class ViewUnitComponent implements OnInit {
             .then(
                 data => {
                     this.alertService.success('Add guest successful', true);
-                    this.router.navigate([this.name.default_development.name + '/unit']);
+                    this.secondModal.close();
+                    this.ngOnInit();
                 },
                 error => {
                     console.log(error);
