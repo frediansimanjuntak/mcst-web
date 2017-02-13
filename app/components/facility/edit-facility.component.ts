@@ -130,7 +130,7 @@ export class EditFacilityComponent  {
         .then(
             response => {
                 this.alertService.success('Create facility successful', true);
-                this.router.navigate([this.name.default_development.name + '/facility']);
+                this.router.navigate([this.name.default_development.name_url + '/facility']);
             },
             error => {
                 this.alertService.error(error);
@@ -144,7 +144,7 @@ export class EditFacilityComponent  {
 		.then(
 			response => {
                 this.alertService.success('Update development successful', true);
-                this.router.navigate([this.name.default_development.name + '/facility']);
+                this.router.navigate([this.name.default_development.name_url + '/facility']);
             },
             error => {
             	this.alertService.error(error);
@@ -153,6 +153,6 @@ export class EditFacilityComponent  {
 	}
 
     cancel(){
-        this.router.navigate([this.name.default_development.name + '/facility' ]);
+        this.router.navigate([this.name.default_development.name_url + '/facility' ]);
     }
 }

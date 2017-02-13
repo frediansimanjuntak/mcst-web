@@ -148,11 +148,11 @@ export class LostFoundComponent implements OnInit {
   	}
 
     add(){
-      this.router.navigate([this.name.default_development.name + '/lost_found/add']);  
+      this.router.navigate([this.name.default_development.name_url + '/lost_found/add']);  
     }
 
     private loadAllUnits(): void {
-        this.unitService.getAll(this.name.default_development.name)
+        this.unitService.getAll(this.name.default_development.name_url)
             .subscribe((data)=> {
                 setTimeout(()=> {
                     this.dataUnit      = data.properties;
@@ -174,6 +174,6 @@ export class LostFoundComponent implements OnInit {
     }
 
     viewLostFound(lostfound: LostFound){
-        this.router.navigate([this.name.default_development.name + '/lost_found/view', lostfound._id]);
+        this.router.navigate([this.name.default_development.name_url + '/lost_found/view', lostfound._id]);
     }
 }

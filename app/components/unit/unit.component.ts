@@ -59,7 +59,7 @@ export class UnitComponent implements OnInit {
     }
 
     private loadAllUnits(): void {
-        this.unitservice.getAll(this.name.default_development.name)
+        this.unitservice.getAll(this.name.default_development.name_url)
             .subscribe((data)=> {
                 setTimeout(()=> {
                     this.dataUnit = data.properties;
@@ -76,10 +76,10 @@ export class UnitComponent implements OnInit {
     }
 
     view(unit: any){
-        this.router.navigate([this.name.default_development.name + '/unit/view', unit._id]);
+        this.router.navigate([this.name.default_development.name_url + '/unit/view', unit._id]);
     }
 
     add(){
-        this.router.navigate([this.name.default_development.name + '/unit/add']);  
+        this.router.navigate([this.name.default_development.name_url + '/unit/add']);  
     }
 }

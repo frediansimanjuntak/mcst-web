@@ -115,8 +115,9 @@ export class LoginComponent implements OnInit {
                     this.userService.getByToken()
                     .subscribe(name => {
                         this.name = name;
+                        console.log(name);
                         this.appComponent.getToken()
-                        this.router.navigate([this.name.default_development.name, 'dashboard']);
+                        this.router.navigate([this.name.default_development.name_url, 'dashboard']);
                     })
                 },
                 error => {

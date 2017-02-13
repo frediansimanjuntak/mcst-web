@@ -91,7 +91,7 @@ export class ContractNoticeComponent implements OnInit  {
         .then(
             response => {
                 this.alertService.success('Create contract notice successful', true);
-                this.router.navigate([this.name.default_development.name + '/contract/view', id ]);
+                this.router.navigate([this.name.default_development.name_url + '/contract/view', id ]);
             },
             error => {
                 this.alertService.error(error);
@@ -119,7 +119,7 @@ export class ContractNoticeComponent implements OnInit  {
         .then(
             response => {
                 this.alertService.success('Create contract notice successful', true);
-                this.router.navigate([this.name.default_development.name + '/contract/view', id ]);
+                this.router.navigate([this.name.default_development.name_url + '/contract/view', id ]);
             },
             error => {
                 this.alertService.error(error);
@@ -146,6 +146,6 @@ export class ContractNoticeComponent implements OnInit  {
     }
 
     cancel(id:any){
-        this.router.navigate([this.name.default_development.name + '/contract/view', id ]);
+        this.router.navigate([this.name.default_development.name_url + '/contract/view', id ]);
     }
 }

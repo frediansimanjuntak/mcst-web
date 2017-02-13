@@ -139,8 +139,9 @@ export class EditUserGroupComponent implements OnInit {
     getUsers(): void {
         this.userService.getAll().subscribe(users => {
             this.users = users.filter(data => data.default_development == this.name.default_development._id);
-            this.usersForMember = this.users.filter(data => !data.user_group);
-
+            console.log(users)
+            this.usersForMember = this.users.filter(data => data.user_group == false);
+            console.log(this.usersForMember)
             let numOptions =  this.users.length;
             let opts = new Array(numOptions);
 
@@ -194,7 +195,7 @@ export class EditUserGroupComponent implements OnInit {
         .then(
             data => {
                 this.alertService.success('Create usergroup successful', true);
-                this.router.navigate([this.name.default_development.name + '/user_group']);
+                this.router.navigate([this.name.default_development.name_url + '/user_group']);
             },
             error => {
                 this.alertService.error(error);
@@ -203,7 +204,7 @@ export class EditUserGroupComponent implements OnInit {
     }
 
     goToUserGroup(){
-        this.router.navigate([this.name.default_development.name + '/user_group']);  
+        this.router.navigate([this.name.default_development.name_url + '/user_group']);  
     }
 
     updateUserGroup(){
@@ -217,7 +218,7 @@ export class EditUserGroupComponent implements OnInit {
                 .then(
                     response => {
                         this.alertService.success('Update Usergroup successful', true);
-                        this.router.navigate([this.name.default_development.name + '/user_group']);
+                        this.router.navigate([this.name.default_development.name_url + '/user_group']);
                     },
                     error=> {
                         this.alertService.error(error);

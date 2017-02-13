@@ -102,7 +102,7 @@ export class EditAnnouncementComponent  {
         .then(
             data => {
                 this.alertService.success('Create announcement successful', true);
-                this.router.navigate([this.name.default_development.name + '/announcement']);
+                this.router.navigate([this.name.default_development.name_url + '/announcement']);
             },
             error => {
                 console.log(error);
@@ -156,7 +156,7 @@ export class EditAnnouncementComponent  {
 	                this.alertService.error('Update announcement failed');
 	            } else {
 	                 this.alertService.success('Update announcement successful', true);
-                     this.router.navigate([this.name.default_development.name + '/announcement']);
+                     this.router.navigate([this.name.default_development.name_url + '/announcement']);
 	            }
             },
             error=> {
@@ -166,7 +166,7 @@ export class EditAnnouncementComponent  {
 	}
 
     toAnnouncement(){
-         this.router.navigate([this.name.default_development.name + '/announcement']);
+         this.router.navigate([this.name.default_development.name_url + '/announcement']);
     }
 
 

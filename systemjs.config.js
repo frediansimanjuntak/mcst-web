@@ -45,7 +45,7 @@
       "ngx-modal": "node_modules/ngx-modal",
       'angular2-modal/plugins/bootstrap': 'npm:angular2-modal/bundles/angular2-modal.bootstrap.umd.js',
       'ng2-imageupload': 'node_modules/ng2-imageupload',
-      'ng2-slim-loading-bar': 'node_modules/ng2-slim-loading-bar/bundles/index.umd.js',
+      'ng2-slim-progress-bar': 'node_modules/ng2-slim-progress-bar/bundles/index.umd.js',
       'angular2-notifications': 'node_modules/angular2-notifications',
     },
     // packages tells the System loader how to load when no filename and/or no extension

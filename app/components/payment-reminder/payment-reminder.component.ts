@@ -83,11 +83,11 @@ export class PaymentReminderComponent implements OnInit {
     // }
 
     edit(paymentreminder: PaymentReminder){
-        this.router.navigate([this.name.default_development.name + '/payment_system/edit', paymentreminder._id]);
+        this.router.navigate([this.name.default_development.name_url + '/payment_system/edit', paymentreminder._id]);
     }
 
     add(){
-        this.router.navigate([this.name.default_development.name + '/payment_system/add']);
+        this.router.navigate([this.name.default_development.name_url + '/payment_system/add']);
     }
 
     publish(paymentreminder:PaymentReminder){

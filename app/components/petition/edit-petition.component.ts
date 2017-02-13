@@ -125,7 +125,7 @@ export class EditPetitionComponent implements OnInit {
             .then(
                 data => {
                     this.alertService.success('Create petition successful', true);
-                    this.router.navigate([this.name.default_development.name + '/petition']);
+                    this.router.navigate([this.name.default_development.name_url + '/petition']);
                 },
                 error => {
                     this.alertService.error(error);
@@ -135,7 +135,7 @@ export class EditPetitionComponent implements OnInit {
     }
 
     private loadAllUnits(): void {
-        this.unitService.getAll(this.name.default_development.name)
+        this.unitService.getAll(this.name.default_development.name_url)
             .subscribe((data)=> {
                 setTimeout(()=> {
                     this.units = data.properties;
@@ -189,7 +189,7 @@ export class EditPetitionComponent implements OnInit {
     }
 
     goToPetition(){
-      this.router.navigate([this.name.default_development.name + '/petition']);  
+      this.router.navigate([this.name.default_development.name_url + '/petition']);  
     }
 
 }

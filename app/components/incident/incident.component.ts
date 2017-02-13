@@ -101,21 +101,21 @@ export class IncidentComponent implements OnInit {
     }
 
     view(incident: Incident){
-        this.router.navigate([this.name.default_development.name + '/incident/view', incident._id]);
+        this.router.navigate([this.name.default_development.name_url + '/incident/view', incident._id]);
     }
 
     viewPhoto(incident: Incident){
-        this.router.navigate([this.name.default_development.name + '/incident/view/photo', incident._id]);
+        this.router.navigate([this.name.default_development.name_url + '/incident/view/photo', incident._id]);
     }
 
     add(){
-        this.router.navigate([this.name.default_development.name + '/incident/add']);
+        this.router.navigate([this.name.default_development.name_url + '/incident/add']);
     }
 
     add_project(reference_no:any, id:any){
         this.reference_id = id;
         this.reference_type = 'incident';
-        this.router.navigate([this.name.default_development.name + '/add/contract/' + this.reference_type ,id ,reference_no]);    
+        this.router.navigate([this.name.default_development.name_url + '/add/contract/' + this.reference_type ,id ,reference_no]);    
     }
 
     public archieve(incident:Incident){

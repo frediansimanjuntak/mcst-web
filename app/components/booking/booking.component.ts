@@ -127,7 +127,7 @@ export class BookingComponent implements OnInit {
             this.userService.getByToken()
             .subscribe(name => {
                 this.name = name;
-                this.unitService.getAll(this.name.default_development.name)
+                this.unitService.getAll(this.name.default_development.name_url)
                 .subscribe(units => {
                     this.units = units.properties;
                     for (var i = 0; i < this.selectedDay.length; ++i) {
@@ -142,12 +142,12 @@ export class BookingComponent implements OnInit {
     }
 
     add(){
-        this.router.navigate([this.name.default_development.name + '/booking/add']);
+        this.router.navigate([this.name.default_development.name_url + '/booking/add']);
         
     }
 
     view(booking: Booking){
-        this.router.navigate([this.name.default_development.name + '/booking/edit', booking._id]);
+        this.router.navigate([this.name.default_development.name_url + '/booking/edit', booking._id]);
     }
 
     filter(booking: any){

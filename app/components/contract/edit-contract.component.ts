@@ -59,7 +59,7 @@ export class EditContractComponent  implements OnInit {
         .then(
             response => {
                 this.alertService.success('Create contract successful', true);
-                this.router.navigate([this.name.default_development.name + '/contract' ]);
+                this.router.navigate([this.name.default_development.name_url + '/contract' ]);
             },
             error => {
                 this.alertService.error(error);
@@ -82,7 +82,7 @@ export class EditContractComponent  implements OnInit {
 		.then(
 			response => {
                 this.alertService.success('Update contract successful', true);
-                this.router.navigate([this.name.default_development.name + '/contract/view', id ]);
+                this.router.navigate([this.name.default_development.name_url + '/contract/view', id ]);
             },
             error => {
             	this.alertService.error(error);
@@ -91,11 +91,11 @@ export class EditContractComponent  implements OnInit {
 	}
 
     cancel(){
-        this.router.navigate([this.name.default_development.name + '/contract' ]);
+        this.router.navigate([this.name.default_development.name_url + '/contract' ]);
     }
 
     back(id:any){
-        this.router.navigate([this.name.default_development.name + '/contract/view', id ]);
+        this.router.navigate([this.name.default_development.name_url + '/contract/view', id ]);
     }
 
     public getType(type:any, id:any){

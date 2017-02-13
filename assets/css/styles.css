@@ -229,3 +229,58 @@
 .capitalize{
   text-transform: capitalize;
 }
+
+.aaa{
+    position: fixed;
+    left: 0px;
+    top: 0px;
+    width: 100%;
+    height: 100%;
+    z-index: 9999;
+    background-image: url("loading.gif");
+    background-repeat: no-repeat;
+    background-position: center; 
+    background-color: #fff;
+    background-size: 80px 80px;
+    opacity: 0.5;
+}
+
+.fa-bell-o, .fa-power-off {
+    font-size: 1.8em;
+    color: white !important;
+}
+
+a {
+  color: white;
+  text-decoration: underline;
+}
+
+li : hover {
+  background-color: transparent !important;  
+}
+
+.nav > li > a {
+    padding: 10px 0px !important;
+    color: #5b595c;
+}
+
+.dropdown-menu {
+  border-radius: 0 !important;
+}
+
+.nav > li > a.active {
+  background-color: #eee;
+}
+
+.mydp .btnclear, .mydp .btnpicker {
+    color: #fff !important;
+}
+
+.mydp .btnclear, .mydp .btnpicker {
+    background: #2f3034 !important;
+}
+
+.mydp, .mydp .headertodaybtn, .mydp .monthinput, .mydp .yearinput {
+    border: none !important;
+}
+

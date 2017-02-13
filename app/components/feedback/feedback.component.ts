@@ -74,7 +74,7 @@ export class FeedbackComponent implements OnInit {
         .then(
             response => {
                 this.alertService.success('Update Feedback successful', true);
-                this.router.navigate([this.name.default_development.name + '/user']);
+                this.router.navigate([this.name.default_development.name_url + '/user']);
             },
             error=> {
                 this.alertService.error(error);

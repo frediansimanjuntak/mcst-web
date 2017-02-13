@@ -17,6 +17,8 @@ export class Incident {
   created_by : User;
   updated_at : string;
   created_at : string; 
+  resolved_at : string;
+  resolved_by : string;
 }
 
 export var Incidents: any[] = [{ 

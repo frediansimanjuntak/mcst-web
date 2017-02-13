@@ -163,11 +163,11 @@ export class AnnouncementComponent implements OnInit {
     }
 
     add(){
-        this.router.navigate([this.name.default_development.name + '/announcement/add']);  
+        this.router.navigate([this.name.default_development.name_url + '/announcement/add']);  
     }
 
     editAnnouncement(anouncement: Announcement){
-        this.router.navigate([this.name.default_development.name + '/announcement/edit', anouncement._id]);
+        this.router.navigate([this.name.default_development.name_url + '/announcement/edit', anouncement._id]);
     }
 
 }

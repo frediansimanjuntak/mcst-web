@@ -102,7 +102,7 @@ export class EditPollComponent  {
         .then(
             data => {
                 this.alertService.success('Create Poll successful', true);
-                this.router.navigate([this.name.default_development.name + '/poll']);
+                this.router.navigate([this.name.default_development.name_url + '/poll']);
             },
             error => {
                 console.log(error);
@@ -133,7 +133,7 @@ export class EditPollComponent  {
 	                this.alertService.error('Failed Update . server error');
 	            } else {
                     this.alertService.success('Update Poll successful', true);
-                    this.router.navigate([this.name.default_development.name + '/poll']);
+                    this.router.navigate([this.name.default_development.name_url + '/poll']);
 	            }
             },
             error=> {
@@ -151,6 +151,6 @@ export class EditPollComponent  {
     }
 
     toPoll(){
-         this.router.navigate([this.name.default_development.name + '/poll']);
+         this.router.navigate([this.name.default_development.name_url + '/poll']);
     }
 }

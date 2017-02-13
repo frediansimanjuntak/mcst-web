@@ -58,14 +58,14 @@ export class FacilityComponent implements OnInit {
     }
 
     add(){
-        this.router.navigate([this.name.default_development.name + '/facility/add']);
+        this.router.navigate([this.name.default_development.name_url + '/facility/add']);
     }
 
     edit(facility: Facility){
-        this.router.navigate([this.name.default_development.name + '/facility/edit', facility._id]);
+        this.router.navigate([this.name.default_development.name_url + '/facility/edit', facility._id]);
     }
 
     view(facility: Facility){
-        this.router.navigate([this.name.default_development.name + '/facility/view', facility._id]);
+        this.router.navigate([this.name.default_development.name_url + '/facility/view', facility._id]);
     }
 }
