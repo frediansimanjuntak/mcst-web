@@ -40,7 +40,7 @@ export class EditSettingComponent {
 		this.userService.update(this.user)
 		    .then(response => {
                   this.alertService.success('Update User successful', true);
-                  this.router.navigate([this.name.default_development.name + '/user']);
+                  this.router.navigate([this.name.default_development.name_url + '/user']);
 	            },
               error=> {
             	    this.alertService.error(error);
@@ -83,6 +83,6 @@ export class EditSettingComponent {
     }
 
     cancel(){
-        this.router.navigate([this.name.default_development.name + '/setting' ]);
+        this.router.navigate([this.name.default_development.name_url + '/setting' ]);
     }
 }

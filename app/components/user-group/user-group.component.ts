@@ -83,10 +83,10 @@ export class UserGroupComponent implements OnInit {
     }
 
     add(){
-        this.router.navigate([this.name.default_development.name + '/user_group/add']);
+        this.router.navigate([this.name.default_development.name_url + '/user_group/add']);
     }
 
     editUserGroup(usergroup: UserGroup){
-        this.router.navigate([this.name.default_development.name + '/user_group/edit', usergroup._id]);
+        this.router.navigate([this.name.default_development.name_url + '/user_group/edit', usergroup._id]);
     }
 }

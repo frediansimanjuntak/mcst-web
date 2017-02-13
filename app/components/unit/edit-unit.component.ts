@@ -70,7 +70,7 @@ export class EditUnitComponent implements OnInit {
 
         if( this.id != null) {
             this.unitservice
-                .getById(this.id, this.name.default_development.name)
+                .getById(this.id, this.name.default_development.name_url)
                    .subscribe(unit => {
                        this.unit = unit.propeties;
                     });
@@ -99,11 +99,11 @@ export class EditUnitComponent implements OnInit {
         this.submitted = true;
         
         if(isValid){
-            this.unitservice.create(model, this.name.default_development.name)
+            this.unitservice.create(model, this.name.default_development.name_url)
             .then(
                 data => {
                     this.alertService.success('Create Unit successful', true);
-                    this.router.navigate([this.name.default_development.name + '/unit']);
+                    this.router.navigate([this.name.default_development.name_url + '/unit']);
                 },
                 error => {
                     console.log(error);
@@ -122,11 +122,11 @@ export class EditUnitComponent implements OnInit {
     }
 
     updateUnit(){
-        this.unitservice.update(this.unit, this.name.default_development.name)
+        this.unitservice.update(this.unit, this.name.default_development.name_url)
         .then(
             response => {
                 this.alertService.success('Update unit successful', true);
-                this.router.navigate([this.name.default_development.name + '/unit']);
+                this.router.navigate([this.name.default_development.name_url + '/unit']);
             },
             error => {
                 this.alertService.error(error);
@@ -139,6 +139,6 @@ export class EditUnitComponent implements OnInit {
     }
 
     goToUnit(){
-        this.router.navigate([this.name.default_development.name + '/unit']);  
+        this.router.navigate([this.name.default_development.name_url + '/unit']);  
     }
 }

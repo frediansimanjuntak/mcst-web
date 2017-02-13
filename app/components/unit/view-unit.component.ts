@@ -64,12 +64,16 @@ export class ViewUnitComponent implements OnInit {
                                 this.name = name;
                                 if( this.id != null) {
                                     this.unitservice
-                                        .getById(this.id, this.name.default_development.name)
+                                        .getById(this.id, this.name.default_development.name_url)
                                            .subscribe(unit => {
                                                this.unit = unit.properties[0];
-                                               console.log(this.unit)
                                                this.residents = this.unit.tenant;
-                                               this.vehicles = this.unit.registered_vehicle;
+
+                                               this.unitservice.getRegVehicles(this.unit._id, this.name.default_development.name_url)
+                                                   .subscribe(data => {
+                                                       console.log(data)
+                                                       this.vehicles = data;
+                                                   })
 
                                                if(this.unit.landlord){
                                                    this.hasLandlord = true;
@@ -158,11 +162,11 @@ export class ViewUnitComponent implements OnInit {
     }
 
     deleteResident(resident: any){
-        this.unitservice.deleteTenant(resident._id, this.unit._id, this.name.default_development.name)
+        this.unitservice.deleteTenant(resident._id, this.unit._id, this.name.default_development.name_url)
     }
 
     deleteVehicle(vehicle: any){
-         this.unitservice.deleteRegVehicle(vehicle._id, this.unit._id, this.name.default_development.name)   
+         this.unitservice.deleteRegVehicle(vehicle._id, this.unit._id, this.name.default_development.name_url)   
     }
 
     openResidentDetail(resident: any){
@@ -174,11 +178,11 @@ export class ViewUnitComponent implements OnInit {
     }
 
     goToUnit(){
-        this.router.navigate([this.name.default_development.name + '/unit']);  
+        this.router.navigate([this.name.default_development.name_url + '/unit']);  
     }
 
     addResident(){
-        this.router.navigate([this.name.default_development.name + '/user/add', this.unit._id, this.model.type]);  
+        this.router.navigate([this.name.default_development.name_url + '/user/add', this.unit._id, this.model.type]);  
     }
 
     onChange(fileInput: any){
@@ -205,7 +209,7 @@ export class ViewUnitComponent implements OnInit {
             formData.append("transponder", model.transponder);
             formData.append("remarks", model.remarks);
 
-            this.unitservice.createRegVehicle(formData, this.name.default_development.name, this.unit._id)
+            this.unitservice.createRegVehicle(formData, this.name.default_development.name_url, this.unit._id)
             .then(
                 data => {
                     this.alertService.success('Add guest successful', true);

@@ -282,7 +282,7 @@ export class VisitComponent implements OnInit {
     }
 
     private loadAllUnits(): void {
-        this.unitService.getAll(this.name.default_development.name)
+        this.unitService.getAll(this.name.default_development.name_url)
             .subscribe((data)=> {
                 setTimeout(()=> {
                     this.dataUnit       = data.properties;

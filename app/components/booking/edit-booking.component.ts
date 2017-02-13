@@ -132,7 +132,7 @@ export class EditBookingComponent implements OnInit  {
         this.userService.getByToken()
         .subscribe(name => {
             this.name = name;
-            this.unitService.getAll(name.default_development.name).subscribe(units => {this.units = units.properties})
+            this.unitService.getAll(name.default_development.name_url).subscribe(units => {this.units = units.properties})
         })
         this.step = 1;
         this.day = this.days[this.dt.getDay()];
@@ -236,7 +236,7 @@ export class EditBookingComponent implements OnInit  {
         .then(
             data => {
                 this.alertService.success('Create booking successful', true);
-                this.router.navigate([this.name.default_development.name + '/booking']);
+                this.router.navigate([this.name.default_development.name_url + '/booking']);
             },
             error => {
                 console.log(error);
@@ -375,7 +375,7 @@ export class EditBookingComponent implements OnInit  {
     // }
 
     cancel(){
-        this.router.navigate([this.name.default_development.name + '/booking' ]);
+        this.router.navigate([this.name.default_development.name_url + '/booking' ]);
     }
 	
 }

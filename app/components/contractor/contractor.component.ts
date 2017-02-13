@@ -111,11 +111,11 @@ export class ContractorComponent implements OnInit {
     }
 
     add(){
-        this.router.navigate([this.name.default_development.name + '/contractor/add']);
+        this.router.navigate([this.name.default_development.name_url + '/contractor/add']);
     }
 
     editContractor(contractor: Contractor){
-        this.router.navigate([this.name.default_development.name + '/contractor/edit', contractor._id]);
+        this.router.navigate([this.name.default_development.name_url + '/contractor/edit', contractor._id]);
     }
 
 }

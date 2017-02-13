@@ -81,7 +81,7 @@ export class EditIncidentComponent implements OnInit {
         .then(
             data => {
                 this.alertService.success('Create incident report successful', true);
-                this.router.navigate([this.name.default_development.name + '/incident']);
+                this.router.navigate([this.name.default_development.name_url + '/incident']);
             },
             error => {
                 console.log(error);
@@ -95,7 +95,7 @@ export class EditIncidentComponent implements OnInit {
 		.then(
 			response => {
                 this.alertService.success('Update incident successful', true);
-                this.router.navigate([this.name.default_development.name + '/incident']);
+                this.router.navigate([this.name.default_development.name_url + '/incident']);
             },
             error => {
             	this.alertService.error(error);
@@ -113,6 +113,6 @@ export class EditIncidentComponent implements OnInit {
     }
 
     cancel(){
-        this.router.navigate([this.name.default_development.name + '/incident' ]);
+        this.router.navigate([this.name.default_development.name_url + '/incident' ]);
     }
 }

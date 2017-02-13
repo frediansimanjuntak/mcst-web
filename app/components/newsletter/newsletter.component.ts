@@ -57,7 +57,7 @@ export class NewsletterComponent implements OnInit {
     }
 
     deleteNewsletter(newsletter: any) {
-        this.newsletterservice.delete(newsletter._id, this.name.default_development.name)
+        this.newsletterservice.delete(newsletter._id, this.name.default_development.name_url)
           .then(
             response => {
               if(response) {
@@ -78,7 +78,7 @@ export class NewsletterComponent implements OnInit {
 
     releaseNewsletter(){
       
-      this.newsletterservice.release(this.newsletter._id, this.name.default_development.name)
+      this.newsletterservice.release(this.newsletter._id, this.name.default_development.name_url)
           .then(
             response => {
               if(response) {
@@ -100,7 +100,7 @@ export class NewsletterComponent implements OnInit {
     }
 
     private loadAllNewsletters() {
-        this.newsletterservice.getAll(this.name.default_development.name)
+        this.newsletterservice.getAll(this.name.default_development.name_url)
             .subscribe((data)=> {
                 setTimeout(()=> {
                   this.data = data.newsletter;
@@ -130,7 +130,7 @@ export class NewsletterComponent implements OnInit {
     }
 
     add(){
-      this.router.navigate([this.name.default_development.name + '/newsletter/add']);  
+      this.router.navigate([this.name.default_development.name_url + '/newsletter/add']);  
     }
 
 }

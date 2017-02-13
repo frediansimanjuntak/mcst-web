@@ -80,7 +80,7 @@ export class EditLostFoundComponent  {
         .then(
             data => {
                 this.alertService.success('Create Report successful', true);
-                this.router.navigate([this.name.default_development.name + '/lost_found']);
+                this.router.navigate([this.name.default_development.name_url + '/lost_found']);
             },
             error => {
                 console.log(error);
@@ -90,12 +90,12 @@ export class EditLostFoundComponent  {
     }
 
     toLostFound(){
-         this.router.navigate([this.name.default_development.name + '/lost_found']);
+         this.router.navigate([this.name.default_development.name_url + '/lost_found']);
     }
 
     private loadAllUnits(): void {
       
-        this.unitService.getAll(this.name.default_development.name)
+        this.unitService.getAll(this.name.default_development.name_url)
             .subscribe((data)=> {
                 setTimeout(()=> {
                     this.dataUnit      = data.properties;
@@ -108,7 +108,7 @@ export class EditLostFoundComponent  {
     }
 
     goToLostFound(){
-      this.router.navigate([this.name.default_development.name + '/lost_found']);  
+      this.router.navigate([this.name.default_development.name_url + '/lost_found']);  
     }
 
 }

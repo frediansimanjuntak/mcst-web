@@ -195,7 +195,7 @@ export class EditUserGroupComponent implements OnInit {
         .then(
             data => {
                 this.alertService.success('Create usergroup successful', true);
-                this.router.navigate([this.name.default_development.name + '/user_group']);
+                this.router.navigate([this.name.default_development.name_url + '/user_group']);
             },
             error => {
                 this.alertService.error(error);
@@ -204,7 +204,7 @@ export class EditUserGroupComponent implements OnInit {
     }
 
     goToUserGroup(){
-        this.router.navigate([this.name.default_development.name + '/user_group']);  
+        this.router.navigate([this.name.default_development.name_url + '/user_group']);  
     }
 
     updateUserGroup(){
@@ -218,7 +218,7 @@ export class EditUserGroupComponent implements OnInit {
                 .then(
                     response => {
                         this.alertService.success('Update Usergroup successful', true);
-                        this.router.navigate([this.name.default_development.name + '/user_group']);
+                        this.router.navigate([this.name.default_development.name_url + '/user_group']);
                     },
                     error=> {
                         this.alertService.error(error);

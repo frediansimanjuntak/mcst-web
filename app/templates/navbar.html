@@ -11,7 +11,7 @@
      		<span *ngIf="name">
 			    <ul class="nav nav-nav nav-justified">
 			      	<li *ngFor="let menu of menus" [class.dropdown]="menu.sub" class="active" >
-			      		<a routerLinkActive="active" *ngIf="menu.link" (click)="start()" [routerLink]="['/' + name.default_development.name + menu.link]" [class.dropdown-toggle]="menu.sub"
+			      		<a routerLinkActive="active" *ngIf="menu.link" (click)="start()" [routerLink]="['/' + name.default_development.name_url + menu.link]" [class.dropdown-toggle]="menu.sub"
 			      			data-toggle="dropdown">
 			      			<strong>{{ menu.name }}</strong><span class="caret" *ngIf="menu.sub"></span>
 			      		</a>
@@ -21,7 +21,7 @@
 			      		</a>
 			      		<ul *ngIf="menu.sub" class="dropdown-menu">
 				          <li>
-				          	<a *ngFor="let sub of menu.sub" (click)="start()" [routerLink]="[name.default_development.name + sub.link]"><strong>{{ sub.name }}</strong></a>
+				          	<a *ngFor="let sub of menu.sub" (click)="start()" [routerLink]="[name.default_development.name_url + sub.link]"><strong>{{ sub.name }}</strong></a>
 				          </li>
 				        </ul>
 			      	</li>

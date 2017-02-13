@@ -74,11 +74,11 @@ export class EditNewsletterComponent  {
             formData.append("release_at", this.model.released_at);
         } 
 
-        this.newsletterService.create(formData, this.name.default_development.name)
+        this.newsletterService.create(formData, this.name.default_development.name_url)
         .then(
             data => {
                 this.alertService.success('Create newsletter successful', true);
-                this.router.navigate([this.name.default_development.name + '/newsletter']);
+                this.router.navigate([this.name.default_development.name_url + '/newsletter']);
             },
             error => {
                 console.log(error);
@@ -88,7 +88,7 @@ export class EditNewsletterComponent  {
     }
 
     updateNewsletter(){
-		this.newsletterService.update(this.model, this.name.default_development.name)
+		this.newsletterService.update(this.model, this.name.default_development.name_url)
 		.then(
 			response => {
 				if(response.error) {
@@ -96,7 +96,7 @@ export class EditNewsletterComponent  {
 	            } else {
 	                // EmitterService.get(this.userList).emit(response.users);
                      this.alertService.success('Update newsletter successful', true);
-                     this.router.navigate([this.name.default_development.name, '/newsletter']);
+                     this.router.navigate([this.name.default_development.name_url, '/newsletter']);
 	            }
             },
             error=> {
@@ -115,6 +115,6 @@ export class EditNewsletterComponent  {
     }
 
     goToNewsletters(){
-        this.router.navigate([this.name.default_development.name + '/newsletter']);  
+        this.router.navigate([this.name.default_development.name_url + '/newsletter']);  
     }
 }

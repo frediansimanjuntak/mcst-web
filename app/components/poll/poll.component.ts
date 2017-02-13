@@ -136,11 +136,11 @@ export class PollComponent implements OnInit {
     }
 
 	viewPoll(poll: Poll){
-        this.router.navigate([this.name.default_development.name + '/poll/view', poll._id]);
+        this.router.navigate([this.name.default_development.name_url + '/poll/view', poll._id]);
     }
 
     editPoll(poll: Poll){
-        this.router.navigate([this.name.default_development.name + '/poll/edit', poll._id]);
+        this.router.navigate([this.name.default_development.name_url + '/poll/edit', poll._id]);
     }
 
 	goBack(): void {
@@ -148,7 +148,7 @@ export class PollComponent implements OnInit {
   	}
 
     add(){
-      this.router.navigate([this.name.default_development.name + '/poll/add']);  
+      this.router.navigate([this.name.default_development.name_url + '/poll/add']);  
     }
 
 }

@@ -140,34 +140,34 @@ export class ContractComponent implements OnInit  {
     }
 
     view(contract: Contract){
-        this.router.navigate([this.name.default_development.name + '/contract/view', contract._id]);
+        this.router.navigate([this.name.default_development.name_url + '/contract/view', contract._id]);
     }
 
     viewNotice(id: any, contractnotice:any){
-        this.router.navigate([this.name.default_development.name + '/contract/notice/' + id + '/view' , contractnotice._id]);
+        this.router.navigate([this.name.default_development.name_url + '/contract/notice/' + id + '/view' , contractnotice._id]);
     }
 
     viewNote(id: any, contractnote:any){
-        this.router.navigate([this.name.default_development.name + '/contract/note/' + id + '/view' , contractnote._id]);
+        this.router.navigate([this.name.default_development.name_url + '/contract/note/' + id + '/view' , contractnote._id]);
     }
 
     edit(id: any){
-        this.router.navigate([this.name.default_development.name + '/contract/edit', id]);
+        this.router.navigate([this.name.default_development.name_url + '/contract/edit', id]);
     }
 
     add_note(id: any){
-        this.router.navigate([this.name.default_development.name + '/contract/add/note', id]);
+        this.router.navigate([this.name.default_development.name_url + '/contract/add/note', id]);
     }
 
     add_notice(id: any){
-        this.router.navigate([this.name.default_development.name + '/contract/add/notice', id]);
+        this.router.navigate([this.name.default_development.name_url + '/contract/add/notice', id]);
     }
 
     add(){
-        this.router.navigate([this.name.default_development.name + '/contract/add']);
+        this.router.navigate([this.name.default_development.name_url + '/contract/add']);
     }
 
     back(){
-        this.router.navigate([this.name.default_development.name + '/contract']);
+        this.router.navigate([this.name.default_development.name_url + '/contract']);
     }
 }
