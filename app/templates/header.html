@@ -1,44 +1,48 @@
-       <nav class="navbar header-component" role="navigation">
-    	  <div class="container">
-		    <!-- Brand and toggle get grouped for better mobile display -->
-		    <div class="navbar-header">
-		      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar-brand-centered">
-		        <span class="sr-only">Toggle navigation</span>
-		        <span class="icon-bar"></span>
-		        <span class="icon-bar"></span>
-		        <span class="icon-bar"></span>
-		      </button>
-		      <div class="navbar-brand navbar-brand-centered"><a href="#"><img style="width:70%;" src="assets/image/logo1.png"></a></div>
+<nav class="navbar header-component" role="navigation">
+  <div class="container">
+    <!-- Brand and toggle get grouped for better mobile display -->
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar-brand-centered">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <div class="navbar-brand navbar-brand-centered">
+        <a href="#"><img style="width:70%;" src="assets/image/logo1.png"></a>
+      </div>
 
-		    </div>
+    </div>
 
-		    <!-- Collect the nav links, forms, and other content for toggling -->
-		    <div class="collapse navbar-collapse" id="navbar-brand-centered">
-		    	   
-		  
-		      	<ul  class="nav navbar-nav navbar-right">
-		        	<p class="navbar-text">Welcome, <a class="" href="#"><strong><span *ngIf="name">{{name.username}}</span></strong></a><br><a *ngIf="name" class="pull-right" [routerLink]="['/' + name.default_development.name + '/setting']">Settings</a> </p>
-		        	<li>
-		        		<!-- [popover]="myPopover"  -->
-		        		<template #popTemplate style="color: black">
-		        			  <table class="tableSection table-striped">
-							    <tbody>
-							        <tr *ngFor="let u of unreadNotificationsToShow">
-										<td (click)="goToPage(u)" style="cursor: pointer">
-											<b>{{ u.message }}</b><br>
-										    <small>{{ u.created_at | date:'medium'}}</small>
-										</td>
-									</tr>
-							    </tbody>
-							</table>
-							<a *ngIf="name" style="color: black" [routerLink]="'/' + name.default_development.name_url + '/notification'">See more Notifications</a>
-						</template>
-		        		<a style="cursor: pointer" placement="bottom" [popover]="popTemplate" popoverTitle="New Notifications" (click)="onNotificationClick()"><i class="fa fa-bell-o" aria-hidden="true"></i><span *ngIf="unreadNotificationTotal > 0" class="badge badge-danger">{{ unreadNotificationTotal }}</span></a>
-		        		<!-- <popover-content style="color: black" #myPopover 	
-				            title="New Notifications" 
-				            [animation]="true" 
+    <!-- Collect the nav links, forms, and other content for toggling -->
+    <div class="collapse navbar-collapse" id="navbar-brand-centered">
+
+
+      <ul class="nav navbar-nav navbar-right">
+        <p class="navbar-text">Welcome, <a class="" href="#"><strong><span *ngIf="name">{{name.username}}</span></strong></a>
+          <br><a *ngIf="name" class="pull-right" [routerLink]="['/' + name.default_development.name + '/setting']">Settings</a> </p>
+        <li>
+          <!-- [popover]="myPopover"  -->
+          <template #popTemplate>
+            <table class="tableSection table-striped">
+              <tbody>
+                <tr *ngFor="let u of unreadNotificationsToShow">
+                  <td (click)="goToPage(u)" style="cursor: pointer">
+                    <b>{{ u.message }}</b>
+                    <br>
+                    <small>{{ u.created_at | date:'medium'}}</small>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+            <a *ngIf="name" style="color: black" [routerLink]="'/' + name.default_development.name + '/notification'">See more Notifications</a>
+          </template>
+          <a style="cursor: pointer" placement="bottom" [popover]="popTemplate" popoverTitle="New Notifications" (click)="onNotificationClick()"><i class="fa fa-bell-o" aria-hidden="true"></i><span *ngIf="unreadNotificationTotal > 0" class="badge badge-danger">{{ unreadNotificationTotal }}</span></a>
+          <!-- <popover-content style="color: black" #myPopover
+				            title="New Notifications"
+				            [animation]="true"
 				            [closeOnClickOutside]="true" >
-						    
+
 						    <table class="tableSection table-striped">
 							    <tbody>
 							        <tr *ngFor="let u of unreadNotificationsToShow">
@@ -51,19 +55,19 @@
 							</table>
 							<a *ngIf="name" style="color: black" [routerLink]="'/' + name.default_development.name + '/notification'">See more Notifications</a>
 						</popover-content> -->
-					</li>
-		        	<li>
-		        		<a (click)="logout()" title="Logout"><i class="fa fa-power-off" aria-hidden="true"></i></a>
-		        	</li>	
+        </li>
+        <li>
+          <a style="cursor: pointer" (click)="logout()" title="Logout"><i class="fa fa-power-off" aria-hidden="true"></i></a>
+        </li>
 
-		      	</ul>
-		      	
+      </ul>
 
-		  
-		       
-		    </div><!-- /.navbar-collapse -->
-		  </div><!-- /.container-fluid -->
 
-		</nav>
 
-	
+
+    </div>
+    <!-- /.navbar-collapse -->
+  </div>
+  <!-- /.container-fluid -->
+
+</nav>
