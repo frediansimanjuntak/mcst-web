@@ -20,7 +20,7 @@
 		        	<p class="navbar-text">Welcome, <a class="" href="#"><strong><span *ngIf="name">{{name.username}}</span></strong></a><br><a *ngIf="name" class="pull-right" [routerLink]="['/' + name.default_development.name + '/setting']">Settings</a> </p>
 		        	<li>
 		        		<!-- [popover]="myPopover"  -->
-		        		<template #popTemplate>
+		        		<template #popTemplate style="color: black">
 		        			  <table class="tableSection table-striped">
 							    <tbody>
 							        <tr *ngFor="let u of unreadNotificationsToShow">
@@ -31,9 +31,9 @@
 									</tr>
 							    </tbody>
 							</table>
-							<a *ngIf="name" style="color: black" [routerLink]="'/' + name.default_development.name + '/notification'">See more Notifications</a>
+							<a *ngIf="name" style="color: black" [routerLink]="'/' + name.default_development.name_url + '/notification'">See more Notifications</a>
 						</template>
-		        		<button type="button" style="cursor: pointer" placement="bottom" [popover]="popTemplate" popoverTitle="New Notifications" (click)="onNotificationClick()"><i class="fa fa-bell-o" aria-hidden="true"></i><span *ngIf="unreadNotificationTotal > 0" class="badge badge-danger">{{ unreadNotificationTotal }}</span></button>
+		        		<a style="cursor: pointer" placement="bottom" [popover]="popTemplate" popoverTitle="New Notifications" (click)="onNotificationClick()"><i class="fa fa-bell-o" aria-hidden="true"></i><span *ngIf="unreadNotificationTotal > 0" class="badge badge-danger">{{ unreadNotificationTotal }}</span></a>
 		        		<!-- <popover-content style="color: black" #myPopover 	
 				            title="New Notifications" 
 				            [animation]="true" 
