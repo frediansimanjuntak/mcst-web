@@ -1,0 +1,11 @@
+.nav> li> a {
+  padding: 10px 0px !important;
+  color: #fff;
+}
+.dropdown-menu {
+  border-radius: 0 !important;
+}
+.nav> li> a.active {
+  background-color: #2f3034;
+  color: #fff
+}

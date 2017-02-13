@@ -67,13 +67,9 @@ export class ViewUnitComponent implements OnInit {
                                         .getById(this.id, this.name.default_development.name_url)
                                            .subscribe(unit => {
                                                this.unit = unit.properties[0];
+                                               console.log(this.unit)
                                                this.residents = this.unit.tenant;
-
-                                               this.unitservice.getRegVehicles(this.unit._id, this.name.default_development.name_url)
-                                                   .subscribe(data => {
-                                                       console.log(data)
-                                                       this.vehicles = data;
-                                                   })
+                                               this.vehicles = this.unit.registered_vehicle;
 
                                                if(this.unit.landlord){
                                                    this.hasLandlord = true;

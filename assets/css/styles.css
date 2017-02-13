@@ -1,72 +1,61 @@
 .main {
   padding: 0 50px !important;
 }
-
 .title {
   text-transform: uppercase;
   font-weight: bold;
   font-size: 20px;
-  padding-top: 20px ;
+  padding-top: 20px;
 }
-  
-.header-component{
-	background-color: #30333c;
+.header-component {
+  background-color: #414247;
   margin-bottom: 0 !important;
   border-radius: 0 !important;
 }
-
 .navbar-component, .dropdown-menu {
-	background-color: #c1baa7 !important;
+  background-color: #2f3034 !important;
 }
-
 .nav, .dropdown-menu {
-      margin-bottom: 0;
-      border-radius: 0;
-      font-size: 12px !important;
+  margin-bottom: 0;
+  border-radius: 0;
+  font-size: 12px !important;
 }
-
 .navbar-brand-centered {
-      position: absolute;
-      left: 45%;
-      display: block;
-      width: 160px;
-      text-align: center;
-      font-size: 250%;
-    }
-.navbar>.container .navbar-brand-centered, 
-.navbar>.container-fluid .navbar-brand-centered {
-    margin-left: -80px;
+  position: absolute;
+  left: 45%;
+  display: block;
+  width: 160px;
+  text-align: center;
+  font-size: 250%;
 }
-
-.header-component > div > h1 {
+.navbar>.container .navbar-brand-centered, .navbar>.container-fluid .navbar-brand-centered {
+  margin-left: -80px;
+}
+.header-component> div> h1 {
   color: #ffffff !important;
   font-family: Arial, Helvetica, sans-serif;
   font-size: 250%;
 }
-
 .header-component {
+  height: 64px;
   color: #ffffff;
 }
-
 .control-label {
-    text-align: left !important;
-    padding: 0 !important;
+  text-align: left !important;
+  padding: 0 !important;
 }
-
 .form-control {
   border-radius: 0 !important;
 }
-
 .btn {
   border-radius: 0 !important;
-  min-width: 45px !important; 
+  min-width: 45px !important;
   height: 35px;
   border-bottom-width: 4px !important;
   border-bottom-style: solid;
   /*font-weight: bold !important;*/
   display: inline !important;
 }
-
 .form-control {
   display: inline !important;
 }
@@ -80,11 +69,13 @@
   border-bottom-color: rgb(154,141,107) !important;
 }*/
 
+
 /*.btn-default {
   background-color: rgb(240,240,240) !important;
   color: rgb(109,110,114) !important;
   border-bottom-color: rgb(222,222,222);
 }*/
+
 
 /*.btn-info {
   background-color: white !important;
@@ -95,39 +86,32 @@
 
 .btn-underline {
   text-decoration: underline;
-  cursor:pointer;
+  cursor: pointer;
 }
-
-.upload{
+.upload {
   color: white;
 }
-
-.img-btn{
+.img-btn {
   width: 15px;
   height: 15px;
 }
-
 .bg-dark {
   background-color: #2f3034;
   color: #ffffff;
 }
-
 .bg-grey {
   background-color: #F4F4F4;
   color: black;
   font-size: 13px;
   font-weight: bold;
 }
-
 .nav {
-  height: 44px;
+  height: 38px;
 }
-
 .steps {
   /*margin: 40px;*/
   padding: 0;
-  overflow: hidden
-  color: #FFF;
+  overflow: hidden color: #FFF;
 }
 .steps a {
   color: #FFF;
@@ -143,51 +127,81 @@
 .steps li {
   float: left;
   margin-left: 0;
-  width: 384px; /* 100 / number of steps */
-  height: 44px; /* total height */
+  width: 384px;
+  /* 100 / number of steps */
+  height: 44px;
+  /* total height */
   list-style-type: none;
-  padding: 5px 5px 5px 30px; /* padding around text, last should include arrow width */
-  border-right: 3px; /* width: gap between arrows, color: background of document */
+  padding: 5px 5px 5px 30px;
+  /* padding around text, last should include arrow width */
+  border-right: 3px;
+  /* width: gap between arrows, color: background of document */
   position: relative;
 }
+
 /* remove extra padding on the first object since it doesn't have an arrow to the left */
+
 .steps li:first-child {
   padding-left: 5px;
 }
+
 /* white arrow to the left to "erase" background (starting from the 2nd object) */
+
+
 /*.steps li:nth-child(n+1)::before {
   position: absolute;
   top:0;
   left:0;*/
-  /*display: block;  width: arrow width, color: background of document */
-  /*border-top: 22px solid transparent; /* width: half height */
-  /*border-bottom: 22px solid transparent; /* width: half height */
-  /*width: 0;
+
+
+/*display: block;  width: arrow width, color: background of document */
+
+
+/*border-top: 22px solid transparent; /* width: half height */
+
+
+/*border-bottom: 22px solid transparent; /* width: half height */
+
+
+/*width: 0;
   height: 0;
   content: " ";
 }*/
+
+
 /* colored arrow to the right */
+
 .steps li::after {
-  z-index: 1; /* need to bring this above the next item */
+  z-index: 1;
+  /* need to bring this above the next item */
   position: absolute;
   top: 0;
-  right: -20px; /* arrow width (negated) */
+  right: -20px;
+  /* arrow width (negated) */
   display: block;
-  border-left: 20px solid #2F3033; /* width: arrow width */
-  border-top: 20px solid transparent; /* width: half height */
-  border-bottom: 20px solid transparent; /* width: half height */
-  width:0;
-  height:0;
+  border-left: 20px solid #2F3033;
+  /* width: arrow width */
+  border-top: 20px solid transparent;
+  /* width: half height */
+  border-bottom: 20px solid transparent;
+  /* width: half height */
+  width: 0;
+  height: 0;
   content: " ";
 }
 
 /* Setup colors (both the background and the arrow) */
 
-/* Completed */
-.steps li { background-color: #2F3033; }
-.steps li::after { border-left-color: #2F3033; }
 
-.abc{
+/* Completed */
+
+.steps li {
+  background-color: #2F3033;
+}
+.steps li::after {
+  border-left-color: #2F3033;
+}
+.abc {
   background-color: #404248;
   color: #FFF;
   width: : 780px;
@@ -196,91 +210,70 @@
   font-weight: bold;
   font-family: Arial, Helvetica, sans-serif;
 }
-
-.bookinginformation{
+.bookinginformation {
   width: 360px;
   height: 522px;
   background-color: #F4F4F4;
 }
-
-.fee{
+.fee {
   font-size: 13px;
   font-weight: bold;
   font-family: Arial, Helvetica, sans-serif;
   color: #4a4a4a;
 }
-
-.information{
+.information {
   font-size: 13px !important;
   font-family: Arial, Helvetica, sans-serif !important;
   color: #4a4a4a !important;
 }
-
-.deposit{
+.deposit {
   font-size: 13px !important;
   font-family: Arial, Helvetica, sans-serif !important;
   color: #6D6E71 !important;
 }
-
-.badge-danger{
+.badge-danger {
   background-color: red !important;
 }
-
-.capitalize{
+.capitalize {
   text-transform: capitalize;
 }
-
-.aaa{
-    position: fixed;
-    left: 0px;
-    top: 0px;
-    width: 100%;
-    height: 100%;
-    z-index: 9999;
-    background-image: url("loading.gif");
-    background-repeat: no-repeat;
-    background-position: center; 
-    background-color: #fff;
-    background-size: 80px 80px;
-    opacity: 0.5;
+.aaa {
+  position: fixed;
+  left: 0px;
+  top: 0px;
+  width: 100%;
+  height: 100%;
+  z-index: 9999;
+  background-image: url("loading.gif");
+  background-repeat: no-repeat;
+  background-position: center;
+  background-color: #fff;
+  background-size: 80px 80px;
+  opacity: 0.5;
 }
 
-.fa-bell-o, .fa-power-off {
-    font-size: 1.8em;
-    color: white !important;
-}
+/*costumize*/
 
-a {
-  color: white;
-  text-decoration: underline;
+@media (min-width: 768px) {
+  .navbar-text {
+    float: left;
+    margin-left: 20px;
+    margin-right: 20px;
+  }
+  .navbar-nav>li {
+    float: left;
+    margin: 7px 10px 0;
+  }
 }
-
-li : hover {
-  background-color: transparent !important;  
+.nav>li>a:focus, .nav>li>a:hover {
+  text-decoration: none;
+  background-color: #2f3034;
+  color: #fff;
 }
-
-.nav > li > a {
-    padding: 10px 0px !important;
-    color: #5b595c;
+.dropdown-menu>li>a {
+  font-weight: 400;
+  color: #fff;
 }
-
-.dropdown-menu {
-  border-radius: 0 !important;
+.nav .open>a, .nav .open>a:focus, .nav .open>a:hover {
+  background-color: #2f3034;
 }
-
-.nav > li > a.active {
-  background-color: #eee;
-}
-
-.mydp .btnclear, .mydp .btnpicker {
-    color: #fff !important;
-}
-
-.mydp .btnclear, .mydp .btnpicker {
-    background: #2f3034 !important;
-}
-
-.mydp, .mydp .headertodaybtn, .mydp .monthinput, .mydp .yearinput {
-    border: none !important;
-}
-
