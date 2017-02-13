@@ -13,7 +13,7 @@
   border-radius: 0 !important;
 }
 .navbar-component, .dropdown-menu {
-  background-color: #2f3034 !important;
+  background-color: #2f3033 !important;
 }
 .nav, .dropdown-menu {
   margin-bottom: 0;
@@ -29,7 +29,7 @@
   font-size: 250%;
 }
 .navbar>.container .navbar-brand-centered, .navbar>.container-fluid .navbar-brand-centered {
-  margin-left: -80px;
+  margin-left: -65px;
 }
 .header-component> div> h1 {
   color: #ffffff !important;
@@ -107,6 +107,7 @@
 }
 .nav {
   height: 38px;
+  margin: 0;
 }
 .steps {
   /*margin: 40px;*/
@@ -264,6 +265,14 @@
     float: left;
     margin: 7px 10px 0;
   }
+  .navbar-nav>li>a {
+    padding-top: 15px;
+    padding-bottom: 10px;
+  }
+  .nav-justified>li, .nav-tabs.nav-justified>li {
+    display: table-cell;
+    width: 0;
+  }
 }
 .nav>li>a:focus, .nav>li>a:hover {
   text-decoration: none;
@@ -276,4 +285,71 @@
 }
 .nav .open>a, .nav .open>a:focus, .nav .open>a:hover {
   background-color: #2f3034;
+}
+.id-location {
+  color: #6d6e71;
+  margin-top: 25px;
+  margin-bottom: 35px;
+  font-size: 13px;
+  font-family: arial;
+}
+p {
+  margin: 10px 0 5px;
+}
+
+/*style of dasbord*/
+
+dashboard .title {
+  display: none;
+}
+.field-box {
+  background-color: #e8e8e8;
+  padding: 1px 10px;
+  border: 1px solid #dedede;
+  font-weight: bold;
+}
+.field-box p {
+  padding-left: 20px;
+}
+dashboard .main ol, ul {
+  margin-bottom: 10px;
+  list-style: none;
+  margin-left: -40px;
+}
+.content-box {
+  margin: 15px 0;
+  box-shadow: 0px 0px 2px 4px #f9f9f9;
+}
+.content-box a {
+  font-family: arial;
+  font-weight: bold;
+  font-size: 15px;
+  color: #4a4a4a;
+}
+.content-box a:focus {
+  outline: dotted thin;
+  outline: none;
+  outline-offset: -2px;
+}
+.content-box a:focus, a:hover {
+  text-decoration: none;
+}
+.content-box p {
+  font-family: arial;
+  font-size: 13px;
+  font-weight: normal;
+  color: #4a4a4a;
+}
+.margin-content {
+  padding: 15px 15px;
+}
+i.fa.fa-chevron-right.fa-1x {
+  margin: 50px 0px;
+}
+.col-lg-1.text-center {
+  background: #f9f9f9;
+  height: auto;
+  width: 46px;
+  float: right;
+  margin: -20px 0;
 }
