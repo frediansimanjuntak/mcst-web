@@ -33,7 +33,7 @@
 							</table>
 							<a *ngIf="name" style="color: black" [routerLink]="'/' + name.default_development.name + '/notification'">See more Notifications</a>
 						</template>
-		        		<button type="button" style="cursor: pointer"  [popover]="popTemplate" popoverTitle="New Notifications" (click)="onNotificationClick()"><i class="fa fa-bell-o" aria-hidden="true"></i><span *ngIf="unreadNotificationTotal > 0" class="badge badge-danger">{{ unreadNotificationTotal }}</span></button>
+		        		<button type="button" style="cursor: pointer" placement="bottom" [popover]="popTemplate" popoverTitle="New Notifications" (click)="onNotificationClick()"><i class="fa fa-bell-o" aria-hidden="true"></i><span *ngIf="unreadNotificationTotal > 0" class="badge badge-danger">{{ unreadNotificationTotal }}</span></button>
 		        		<!-- <popover-content style="color: black" #myPopover 	
 				            title="New Notifications" 
 				            [animation]="true" 
