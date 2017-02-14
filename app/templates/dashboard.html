@@ -19,9 +19,101 @@
 										<img src="../../assets/image/menu_request.png" class="img-responsive" alt="" />
 									</div>
 									<div class="col-lg-9">
-										<strong>{{menu1.name}}</strong>
+										<strong>{{menus1[0].name}}</strong>
 										<br>
 										<p>{{menu1.description}}</p>
+									</div>
+									<div class="col-lg-1 text-center">
+										<i class="fa fa-chevron-right fa-1x" aria-hidden="true"></i>
+									</div>
+								</div>
+							</div>
+						</li>
+
+						<li>
+							<div class="content-box">
+								<div class="row margin-content">
+									<div class="col-lg-2 text-center icon-content">
+										<img [src]="menus1[1].img" class="img-responsive" alt="" />
+									</div>
+									<div class="col-lg-9">
+										<strong>{{menus1[1].name}}</strong>
+										<br>
+										<p>{{menus1[1].description}}</p>
+										
+										<img [src]="menus1[0].sub[1].img" style="height:10px; width:10px;" class="img-responsive" alt="" />
+										<a>Add Booking</a>
+										
+										<img [src]="menus1[0].sub[2].img" style="height:10px; width:10px;" class="img-responsive" alt="" />
+										<a>Search Reference no</a>
+										
+									</div>
+									<div class="col-lg-1 text-center">
+										<i class="fa fa-chevron-right fa-1x" aria-hidden="true"></i>
+									</div>
+								</div>
+							</div>
+						</li>
+
+						<li>
+							<div class="content-box">
+								<div class="row margin-content">
+									<div class="col-lg-2 text-center icon-content">
+										<img [src]="menus1[2].img" class="img-responsive" alt="" />
+									</div>
+									<div class="col-lg-9">
+										<strong>{{menus1[2].name}}</strong>
+										<br>
+										<p>{{menus1[2].description}}</p>
+									</div>
+									<div class="col-lg-1 text-center">
+										<i class="fa fa-chevron-right fa-1x" aria-hidden="true"></i>
+									</div>
+								</div>
+							</div>
+						</li>
+
+						<li>
+							<div class="content-box">
+								<div class="row margin-content">
+									<div class="col-lg-2 text-center icon-content">
+										<img [src]="menus1[3].img" class="img-responsive" alt="" />
+									</div>
+									<div class="col-lg-9">
+										<strong>{{menus1[3].name}}</strong>
+										<br>
+										<p>{{menus1[3].description}}</p>
+										
+										<img src="../../assets/image/icon_accesscontrol.png" style="height:10px; width:10px;" class="img-responsive" alt="" />
+										<a>Access control</a>
+									</div>
+									<div class="col-lg-1 text-center">
+										<i class="fa fa-chevron-right fa-1x" aria-hidden="true"></i>
+									</div>
+								</div>
+							</div>
+						</li>
+
+						<li>
+							<div class="content-box">
+								<div class="row margin-content">
+									<div class="col-lg-2 text-center icon-content">
+										<img [src]="menus1[4].img" class="img-responsive" alt="" />
+									</div>
+									<div class="col-lg-9">
+										<strong>{{menus1[4].name}}</strong>
+										<br>
+										<p>{{menus1[4].description}}</p>
+										
+										<img [src]="menus1[4].sub[0].img" style="height:10px; width:10px;" class="img-responsive" alt="" />
+										<a>{{ menus1[4].sub[0].name }}</a>
+										
+										<img [src]="menus1[4].sub[2].img" style="height:10px; width:10px;" class="img-responsive" alt="" />
+										<a>{{ menus1[4].sub[2].name }}</a>
+
+										<img [src]="menus1[4].sub[3].img" style="height:10px; width:10px;" class="img-responsive" alt="" />
+										<a>{{ menus1[4].sub[3].name }}</a>
+										
 									</div>
 									<div class="col-lg-1 text-center">
 										<i class="fa fa-chevron-right fa-1x" aria-hidden="true"></i>
@@ -48,7 +140,7 @@
 										<img src="../../assets/image/menu_request.png" class="img-responsive" alt="" />
 									</div>
 									<div class="col-lg-8">
-										<strong>Lorem ipsum dollor</strong>
+										<strong>{{ menu2.name}}</strong>
 										<br>
 										<p>Lorem ipsum dolor sit amet, consectetur adipisicing....</p>
 									</div>
@@ -73,9 +165,26 @@
 										<img src="../../assets/image/menu_request.png" class="img-responsive" alt="" />
 									</div>
 									<div class="col-lg-8">
-										<strong>Lorem ipsum dollor</strong>
+										<strong>{{ menus3[0].name}}</strong>
 										<br>
 										<p>Lorem ipsum dolor sit amet, consectetur adipisicing....</p>
+									</div>
+									<div class="col-lg-1 text-center">
+										<i class="fa fa-chevron-right fa-1x" aria-hidden="true"></i>
+									</div>
+								</div>
+							</div>
+						</li>
+						<li>
+							<div class="content-box">
+								<div class="row margin-content">
+									<div class="col-lg-2 text-center icon-content">
+										<img [src]="menus3[1].img" class="img-responsive" alt="" />
+									</div>
+									<div class="col-lg-8">
+										<strong>{{ menus3[1].name}}</strong>
+										<br>
+										<p>{{ menus3[1].description}}</p>
 									</div>
 									<div class="col-lg-1 text-center">
 										<i class="fa fa-chevron-right fa-1x" aria-hidden="true"></i>
