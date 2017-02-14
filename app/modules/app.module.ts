@@ -7,7 +7,7 @@ import { SimpleNotificationsModule }    from 'angular2-notifications';
 import { FileDropDirective }            from 'ng2-file-upload';
 import { ReactiveFormsModule }			    from '@angular/forms';
 import { HttpModule }                   from '@angular/http';
-import { Ng2BootstrapModule, PaginationModule, DatepickerModule, TabsModule, PopoverModule } from 'ng2-bootstrap';
+import { Ng2BootstrapModule, PaginationModule, DatepickerModule, TabsModule, PopoverModule, ProgressbarModule  } from 'ng2-bootstrap';
 import { SelectModule }                 from 'ng2-select/ng2-select';
 import { MyDatePickerModule }           from 'mydatepicker';
 import { SignaturePadModule }           from 'angular2-signaturepad';
@@ -83,7 +83,7 @@ import {
   NotificationComponent,
   LostFoundComponent,
   EditLostFoundComponent,
-
+  FooterComponent,
   SignaturePadPage,
 } from '../components/index';
 
@@ -149,6 +149,7 @@ import {
     ImageUploadModule,
     MomentModule,
     SlimLoadingBarModule.forRoot(),
+    ProgressbarModule.forRoot()
   ],
   declarations: [ 
     AccessControlComponent,
@@ -208,8 +209,9 @@ import {
     NotificationComponent,
     LostFoundComponent,
     EditLostFoundComponent,
+    FooterComponent,
     SignaturePadPage,
-  ],
+],
   providers: [ 
     AccessControlService,
     AlertService,

@@ -38,23 +38,7 @@
             <a *ngIf="name" style="color: black" [routerLink]="'/' + name.default_development.name + '/notification'">See more Notifications</a>
           </template>
           <a style="cursor: pointer" placement="bottom" [popover]="popTemplate" popoverTitle="New Notifications" (click)="onNotificationClick()"><i class="fa fa-bell-o" aria-hidden="true"></i><span *ngIf="unreadNotificationTotal > 0" class="badge badge-danger">{{ unreadNotificationTotal }}</span></a>
-          <!-- <popover-content style="color: black" #myPopover
-				            title="New Notifications"
-				            [animation]="true"
-				            [closeOnClickOutside]="true" >
-
-						    <table class="tableSection table-striped">
-							    <tbody>
-							        <tr *ngFor="let u of unreadNotificationsToShow">
-										<td (click)="goToPage(u)" style="cursor: pointer">
-											<b>{{ u.message }}</b><br>
-										    <small>{{ u.created_at | date:'medium'}}</small>
-										</td>
-									</tr>
-							    </tbody>
-							</table>
-							<a *ngIf="name" style="color: black" [routerLink]="'/' + name.default_development.name + '/notification'">See more Notifications</a>
-						</popover-content> -->
+         
         </li>
         <li>
           <a style="cursor: pointer" (click)="logout()" title="Logout"><i class="fa fa-power-off" aria-hidden="true"></i></a>

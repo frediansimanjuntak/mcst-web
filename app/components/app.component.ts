@@ -21,10 +21,12 @@ import {
   	</div>
     <ng2-slim-loading-bar></ng2-slim-loading-bar>
    	<router-outlet></router-outlet>
+    <footers *ngIf="authToken"></footers>
     <div class="loading-overlay" *ngIf="loading">
         <div class="aaa"></div>
         <button *ngIf="!loading" (click)="stop()"></button>
     </div>
+
 
   	
   	
