@@ -5,7 +5,8 @@
   text-transform: uppercase;
   font-weight: bold;
   font-size: 20px;
-  padding-top: 20px;
+  padding-top: 25px;
+  margin-bottom: -15px;
 }
 .header-component {
   background-color: #414247;
@@ -182,9 +183,9 @@
   display: block;
   border-left: 20px solid #2F3033;
   /* width: arrow width */
-  border-top: 20px solid transparent;
+  border-top: 22px solid transparent;
   /* width: half height */
-  border-bottom: 20px solid transparent;
+  border-bottom: 22px solid transparent;
   /* width: half height */
   width: 0;
   height: 0;
@@ -289,7 +290,7 @@
 .id-location {
   color: #6d6e71;
   margin-top: 25px;
-  margin-bottom: 35px;
+  margin-bottom: 25px;
   font-size: 13px;
   font-family: arial;
 }
@@ -311,7 +312,7 @@ dashboard .title {
 .field-box p {
   padding-left: 20px;
 }
-dashboard .main ol, ul {
+.no-bullet {
   margin-bottom: 10px;
   list-style: none;
   margin-left: -40px;
@@ -352,4 +353,68 @@ i.fa.fa-chevron-right.fa-1x {
   width: 46px;
   float: right;
   margin: -20px 0;
+}
+
+/*style of add booking page*/
+
+.row-li-1 {
+  /*arrow point 1*/
+  padding-left: 15px;
+  margin-top: 8px;
+}
+.row-li-2 {
+  /*arrow point 2*/
+  float: left;
+  padding: 3px 0 0 45px;
+}
+.well.well-sm.bg-faded.p-a.card {
+  padding: 0;
+  margin-top: 15px;
+  border-radius: 0;
+}
+.well.well-sm table {
+  width: 100%;
+}
+button.btn.btn-default.btn-secondary.btn-sm.pull-left {
+  background-color: #e8e8e8;
+  width: 100%;
+  border: 0;
+}
+button.btn.btn-default.btn-secondary.btn-sm {
+  border: 0;
+  background-color: #e8e8e8;
+  margin-bottom: 7px;
+}
+button.btn.btn-default.btn-secondary.btn-sm.pull-right {
+  background-color: #e8e8e8;
+  width: 100%;
+  border: 0;
+}
+table .text-center {
+  text-align: center;
+  height: 35px;
+}
+button.btn.btn-sm.btn-default {
+  border-bottom: none;
+  width: 100%;
+  font-weight: bold;
+}
+.text-info {
+  color: #333;
+  font-weight: bold;
+}
+.btn-info.active, .btn-info:active, .btn-info:hover, .open>.btn-info.dropdown-toggle {
+  color: #333;
+  background-color: #fff;
+  border: 2px solid #d1c2af;
+}
+p.pull-down {
+  padding: 7px 0;
+}
+#booking-system .btn-primary {
+  color: #333;
+  background-color: #f0f0f0;
+  font-weight: bold;
+  border-color: #dedede;
+  margin-top: 10px;
 }
