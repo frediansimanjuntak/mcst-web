@@ -76,7 +76,7 @@ export class EditBookingComponent implements OnInit  {
     end : any; 
     min : any;
     status: any;
-    filtered: any;
+    filtered: any = null;
     facility_name : any;
     facility_type: any;
     booking_status: any[] = [];
@@ -165,26 +165,6 @@ export class EditBookingComponent implements OnInit  {
                		start += 1;
                		this.times_end.push(start)
             	}
-                let booking_date;
-                    booking_date     = new Date(this.dt.getTime());
-                    booking_date     = this.convertDate1(booking_date);
-                    this.bookingService.getAll()
-                    .subscribe(bookings => {
-                        console.log(bookings)
-                            for (let b = 0; b < this.times_start.length; ++b) {
-                                this.bookings = bookings.filter(data => 
-                                    data.booking_date.slice(0,10) == booking_date &&
-                                    data.facility._id == this.selectedFacility[0]._id &&
-                                    data.start_time == this.times_start[b]+this.min &&
-                                    data.end_time == this.times_end[b]+this.min )
-                                console.log(this.selectedFacility[0]._id)
-                                    if(this.bookings.length > 0) {
-                                        this.booking_status.push("Not Available")
-                                    }else{
-                                        this.booking_status.push("Available")
-                                    } 
-                            }
-                    })
                 });
             }
 		});
@@ -263,7 +243,43 @@ export class EditBookingComponent implements OnInit  {
         return yyyy + '-' + (mmChars[1]?mm:"0"+mmChars[0]) + '-' + (ddChars[1]?dd:"0"+ddChars[0]);
     }
 
+    time(id:any){
+        this.facilityService.getAll()
+        .subscribe(facilities => {
+            this.facilities = facilities;
+            for (let a = 0; a < facilities.length; ++a) {
+                for (let b = 0; b < facilities[a].schedule.length; ++b) {
+                    this.selectedFacility = this.facilities.filter(data => data.schedule[b].day == this.day); 
+                }   
+            }
+            if (this.selectedFacility.length > 0) { 
+                this.model.facility = id;
+                this.facilityService.getById(this.model.facility)
+                .subscribe(facility => {
+                    this.facility = facility;
+                    this.facility_name = facility.name;
+                    this.facility_type = facility.facility_type;
+                    this.model.booking_fee = facility.booking_fee;
+                this.selectedDay = this.facility.schedule.filter(data => data.day == this.day); 
+                this.start = this.selectedDay[0].start_time.slice(0,2);
+                let start = +this.start
+                this.end = this.selectedDay[0].end_time.slice(0,2);
+                let end = +this.end
+                this.min =    ":00"
+                for (var i = start; i < end; ++i) {
+                    this.times_start.push(i)
+                }
+                while(start < end){       
+                       start += 1;
+                       this.times_end.push(start)
+                }
+                });
+            }
+        });
+    }
+
 	filter(data: any){
+        this.booking_status = [];
         console.log(this.model.booking_fee)
         this.day = this.days[this.dt.getDay()];
         if(data.start < 10) {
@@ -280,20 +296,22 @@ export class EditBookingComponent implements OnInit  {
         this.facilityService.getById(data.id)
         .subscribe(facility => {
             this.facility = facility;
+            console.log(facility)
             this.facility_name = facility.name;
             this.facility_type = facility.facility_type;
             this.model.booking_fee = facility.booking_fee;
              this.timeStart = [];
              this.timeEnd = [];
             if(data.choice == "all" ) {
-                this.filtered = this.facility.schedule.filter(data => 
-                    data.start_time <= start && 
-                    data.end_time >= end 
+                this.filtered = this.facility.schedule.filter(facility => 
+                    facility.start_time <= start && 
+                    facility.end_time >= end
                 );
             }else{
-                this.filtered = this.facility.schedule.filter(data => 
-                    data.start_time <= start && 
-                    data.end_time >= end 
+                let Selectedfacility = facility.filter(facility => facility.type = data.choice);
+                this.filtered = Selectedfacility.schedule.filter(facility => 
+                    facility.start_time <= start && 
+                    facility.end_time >= end 
                 );
             };
             if (this.filtered.length > 0) {   
@@ -307,7 +325,27 @@ export class EditBookingComponent implements OnInit  {
                 }
             }
         });
+        let booking_date;
+            booking_date     = new Date(this.dt.getTime());
+            booking_date     = this.convertDate1(booking_date);
+            this.bookingService.getAll()
+            .subscribe(bookings => {
+                for (let b = 0; b < this.timeStart.length; ++b) {
+                    this.bookings = bookings.filter(data => 
+                        data.booking_date.slice(0,10) == booking_date &&
+                        data.facility._id == this.selectedFacility[0]._id &&
+                        data.start_time == this.timeStart[b]+this.min &&
+                        data.end_time == this.timeEnd[b]+this.min )
+                        if(this.bookings.length > 0) {
+                            this.booking_status.push("Not Available")
+                        }else{
+                            this.booking_status.push("Available")
+                        } 
+                        console.log(this.booking_status)
+                }
+            })
     }
+    
 
     public archieveSelected(start:any[],end:any[],min:any,name:any,type:any){
         this.tstart.push(start)
@@ -330,7 +368,7 @@ export class EditBookingComponent implements OnInit  {
         this.model.facility_type = type;
     }
 
-    public test() {  
+    public selectedDate() {  
         let date;
         date     = new Date(this.dt.getTime());
         date     = this.convertDate(date);
@@ -342,6 +380,8 @@ export class EditBookingComponent implements OnInit  {
         this.day = this.days[this.dt.getDay()];
         this.times_start = [];
         this.times_end   = [];
+        this.filtered = null;
+        console.log(this.filtered);
         this.ngOnInit();
     }
 

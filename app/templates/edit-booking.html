@@ -54,7 +54,7 @@
 		        	<div class="col-lg-4">
 		        		<div>
 						    <div style="width:335px;">
-						    	<datepicker (click)="test()" [style]="{'width':'300px'}" [(ngModel)]="dt" [minDate]="minDate" [showWeeks]="false" ></datepicker>
+						    	<datepicker (click)="selectedDate()" [style]="{'width':'300px'}" [(ngModel)]="dt" [minDate]="minDate" [showWeeks]="false" ></datepicker>
 						    </div>  
 						</div>
 						<form [formGroup]="myForm" name="form" (ngSubmit)="f.form.valid && filter(myForm.value)" #f="ngForm" novalidate>
@@ -63,7 +63,7 @@
 				       			<div class="col-md-9">
 				       				<p>
 				       					<select name="name" class="form-control" formControlName="id" style="width: 237px">
-					                    	<option [selected]="facility._id == '1'" *ngFor="let facility of selectedFacility" (change)="onChange(facility)" [ngValue]="facility._id">{{facility.name}}</option>
+					                    	<option *ngFor="let facility of selectedFacility" (change)="time(facility._id)" [ngValue]="facility._id">{{facility.name}}</option>
 					                    </select>
 				        			</p>
 				        		</div>
@@ -85,10 +85,10 @@
 				       			<div class="col-md-9">
 				       				<p>
 				       					<select name="start" class="form-control" formControlName="start" style="width: 116.5px">
-					                    	<option *ngFor="let start of period" [ngValue]="start"><span *ngIf="start < 10">0</span>{{start}}{{min}}</option>
+					                    	<option *ngFor="let start of times_start" [ngValue]="start"><span *ngIf="start < 10">0</span>{{start}}{{min}}</option>
 					                    </select>
 					                    <select name="end" class="form-control" formControlName="end" style="width: 116.5px">
-					                    	<option *ngFor="let end of period" [ngValue]="end"><span *ngIf="end < 10">0</span>{{end}}{{min}}</option>
+					                    	<option *ngFor="let end of times_end" [ngValue]="end"><span *ngIf="end < 10">0</span>{{end}}{{min}}</option>
 					                    </select>
 			        				</p>
 			        			</div>
@@ -99,22 +99,7 @@
 		        		</form>	
 		        	</div>
 		        	<div class="col-lg-8">
-		        		<div *ngIf="start && !filtered">
-						<table class="tableSection table-striped">
-						    <tbody>
-						        <tr *ngFor="let tstart of times_start; let i=index ; let tend of times_end; let c of booking_status">
-									<td>{{times_start[i]}}{{min}} - {{times_end[i]}}{{min}}</td>
-									<td>{{facility_name}} {{facility_type}}</td>
-									<td>
-										{{booking_status[i]}}
-									</td>
-									<p-checkbox *ngIf="booking_status[i] == 'Not Available'" disabled="true" name="archive" (click)="archieveSelected(times_start[i],times_end[i],min,facility_name,facility_type)" [(ngModel)]="selectedValues"></p-checkbox>
-									<p-checkbox *ngIf="booking_status[i] == 'Available'" name="archive" (click)="archieveSelected(times_start[i],times_end[i],min,facility_name,facility_type)" [(ngModel)]="selectedValues"></p-checkbox>
-								</tr>
-						    </tbody>
-						</table>
-						</div>
-						<div *ngIf="filtered">
+						<div *ngIf="filtered != null">
 						<table class="tableSection table-striped">
 						    <tbody>
 						        <tr *ngFor="let a of timeStart; let i=index ; let b of timeEnd; let c of booking_status">
@@ -128,16 +113,15 @@
 								</tr>
 						    </tbody>
 						</table>
-						</div>
-						<div *ngIf="!start && !filtered">
-						Data not found
-						</div>
 						<div class="row">
-							<div class="col-md-4 pull-right">
-								<a class="btn btn-default" (click)="next()">
-								Next</a>
-								<a (click)="cancel()" class="btn btn-info">Cancel</a>
-							</div>
+			                <div class="col-md-4 pull-right">
+			                  	<a (click)="cancel()" class="btn btn-info">Cancel</a>
+			                  	<a class="btn btn-default" (click)="next()">Next</a>
+			                </div>
+			            </div>
+						</div>
+						<div *ngIf="filtered == null">
+						Data not found
 						</div>
 		        	</div>
 		        </div>

@@ -99,6 +99,10 @@
 	        	</div>
 	        	<div class="col-lg-8">
 	        		<div class="row">
+	        			<div class="col-md-8">
+	        				Results generated for
+	        				<P><b>{{ day }}<span *ngIf="type">, {{ type }}</span> <span *ngIf="facility">{{ facility }},</span> <span *ngIf="status">{{ status }} Status,</span> <span *ngIf="period1 && period2">Period {{ period1 }} to {{ period2 }}</span></b></P>
+	        			</div>
 						<div class="col-md-4 pull-right">
 							<p><a class="btn btn-default pull-right" (click)="add()">
 							<img src="../../assets/image/icon_addbooking.png" width="15px" height="15px" />&nbsp;Add Booking</a></p>
