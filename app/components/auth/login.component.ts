@@ -104,7 +104,15 @@ export class LoginComponent implements OnInit {
 
     ngOnInit() {
         // reset login status
-        this.AuthService.logout();
+        if (localStorage.getItem('authToken')) {
+            this.userService.getByToken()
+            .subscribe(name => {
+                this.name = name;
+                console.log(name);
+                this.appComponent.getToken()
+                this.router.navigate([this.name.default_development.name_url, 'dashboard']);
+            })
+        }
     }
 
     login() {

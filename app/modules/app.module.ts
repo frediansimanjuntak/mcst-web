@@ -22,10 +22,11 @@ import { EqualValidator }               from '../components/user/equal-validator
 import { ImageUploadModule }            from 'ng2-imageupload';
 import { ModalModule }                  from "ngx-modal";
 import { BootstrapModalModule }         from 'angular2-modal/plugins/bootstrap';
-import { SlimLoadingBarModule } from 'ng2-slim-progress-bar';
+import { SlimLoadingBarModule }         from 'ng2-slim-progress-bar';
 import { MomentModule }                 from 'angular2-moment';
 
 import { 
+  TokenComponent,
   AccessControlComponent,
   EditAccessControlComponent,
   AlertComponent,
@@ -152,6 +153,7 @@ import {
     ProgressbarModule.forRoot()
   ],
   declarations: [ 
+    TokenComponent,
     AccessControlComponent,
     EditAccessControlComponent,
     EqualValidator,
