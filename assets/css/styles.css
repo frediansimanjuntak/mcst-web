@@ -427,6 +427,11 @@ button.btn.btn-sm.btn-default {
   width: 100%;
   font-weight: bold;
 }
+.btn-info.active.focus:hover {
+  color: #333;
+  background-color: #ffffff;
+  border-color: #cccccc;
+}
 .text-info {
   color: #333;
   font-weight: bold;
@@ -445,4 +450,17 @@ p.pull-down {
   font-weight: bold;
   border-color: #dedede;
   margin-top: 10px;
+}
+.table-spacing {
+  margin: 15px 0;
+}
+.table-tags {
+  background: #f4f4f4;
+  padding: 10px 30px;
+}
+.table-tags p {
+  margin: 5px 0 5px;
+}
+.ui-chkbox {
+  margin: 17px;
 }
