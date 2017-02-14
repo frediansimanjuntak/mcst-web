@@ -55,18 +55,20 @@ import {
   EditPetitionComponent,
   TestComponent,
   LostFoundComponent,
-  EditLostFoundComponent
+  EditLostFoundComponent,
+  TokenComponent,
   
 } from '../components/index';
+
 const routes: Routes = [
-  { path: '', redirectTo: '/login', pathMatch: 'full' },
-  { path: 'login',  component: LoginComponent},
-  { path: 'register', component: RegisterComponent},
+  { path: '', component: TokenComponent },
+  { path: 'login',  component: LoginComponent },
+  { path: 'register', component: RegisterComponent },
   { path: ':name/user',     component: UserComponent, canActivate: [AuthGuard] },
   { path: ':name/user/add',   component: EditUserComponent, canActivate: [AuthGuard] },
   { path: ':name/user/add/:id/:type',   component: EditUserComponent, canActivate: [AuthGuard] },
   { path: ':name/user/edit/:id',   component: EditUserComponent, canActivate: [AuthGuard] },
-  { path: ':name/dashboard',     component: DashboardComponent},
+  { path: ':name/dashboard',     component: DashboardComponent, canActivate: [AuthGuard] },
   { path: ':name/newsletter',   component: NewsletterComponent, canActivate: [AuthGuard] },
   { path: ':name/newsletter/add',   component: EditNewsletterComponent, canActivate: [AuthGuard] },
   { path: ':name/newsletter/edit/:id',   component: EditNewsletterComponent, canActivate: [AuthGuard] },

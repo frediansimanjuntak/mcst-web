@@ -10,6 +10,8 @@ import { MENUS } from '../models/menu';
 export class DashboardComponent {
   menus = MENUS;
   menus1: any = [];
+  menus2: any = [];
+  menus3: any = [];
   today: number = Date.now();
 
   ngOnInit(): void {
@@ -18,5 +20,8 @@ export class DashboardComponent {
     this.menus1[2] = this.menus[4];
     this.menus1[3] = this.menus[5];
     this.menus1[4] = this.menus[6];
+
+    this.menus2 = this.menus[1].sub;
+    this.menus3 = this.menus[7].sub;
   }
 }

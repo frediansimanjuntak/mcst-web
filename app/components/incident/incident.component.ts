@@ -108,6 +108,10 @@ export class IncidentComponent implements OnInit {
         this.router.navigate([this.name.default_development.name_url + '/incident/view/photo', incident._id]);
     }
 
+    viewContract(id: any){
+        this.router.navigate([this.name.default_development.name_url + '/contract/view', id]);
+    }
+
     add(){
         this.router.navigate([this.name.default_development.name_url + '/incident/add']);
     }

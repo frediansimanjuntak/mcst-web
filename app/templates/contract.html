@@ -47,7 +47,7 @@
 			        			<div class="col-md-4">Linked incident report :</div>
 			        			<div class="col-md-8">
 			        				<span *ngIf="!contract.reference_no"><p>-</p></span>
-			        				<span *ngIf="contract.reference_no"><p>{{ contract.reference_no }}</p></span>
+			        				<span *ngIf="contract.reference_no"><p><a style="text-decoration: underline;cursor:pointer" (click)="viewIncident(contract.reference_id)">#{{ contract.reference_no }}</a></p></span>
 			        			</div>
 			        		</div>
 			        		<div class="row">
