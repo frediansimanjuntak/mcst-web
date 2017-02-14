@@ -60,6 +60,9 @@
 .form-control {
   display: inline !important;
 }
+.row-nomargin {
+  margin: 0;
+}
 
 /*.btn-primary {
   background-color: rgb(181,173,150) !important;
@@ -340,11 +343,10 @@ dashboard .title {
 }
 .content-box {
   margin: 15px 0;
-  box-shadow: 0px 0px 2px 4px #f9f9f9;
+  box-shadow: 0px 4px 2px #f9f9f9;
 }
-.content-box a {
+.content-box strong {
   font-family: arial;
-  font-weight: bold;
   font-size: 15px;
   color: #4a4a4a;
 }
@@ -450,6 +452,11 @@ p.pull-down {
   font-weight: bold;
   border-color: #dedede;
   margin-top: 10px;
+  outline-style: none;
+  height: 44px;
+}
+#booking-system .btn-primary:hover, .btn-primary:focus, .btn-primary:active, .btn-primary:active:hover, .btn-primary:active:focus {
+  background-color: #f7f7f7;
 }
 .table-spacing {
   margin: 15px 0;
@@ -463,4 +470,45 @@ p.pull-down {
 }
 .ui-chkbox {
   margin: 17px;
+}
+.time-slots-table {
+  height: 355px;
+}
+.space-left {
+  padding-left: 15px;
+}
+.btn-false {
+  background-color: #f0f0f0;
+  border: 1px solid #dedede;
+  color: #4a4a4a;
+  height: 44px;
+  width: 130px;
+  font-weight: bold;
+  font-size: 13px;
+  font-family: arial;
+  margin-right: 10px;
+  padding: 10px;
+}
+.btn-false:active, .btn-false:hover, .btn-false:focus, .btn-false:active:hover, .btn-false:active:focus {
+  color: #4a4a4a;
+  background-color: #f7f7f7;
+  border: 1px solid #dedede;
+  outline-style: none;
+}
+.btn-true {
+  background-color: #b6ad96;
+  border: 1px solid #9a8d6b;
+  color: #fff;
+  font-weight: bold;
+  height: 44px;
+  width: 130px;
+  font-size: 13px;
+  font-family: arial;
+  padding: 10px;
+}
+.btn-true:active, .btn-true:hover, .btn-true:focus, .btn-true:active:hover, .btn-true:active:focus {
+  background-color: #d4cab1;
+  border: 1px solid #9a8d6b;
+  color: #fff;
+  outline-style: none;
 }
