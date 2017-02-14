@@ -256,6 +256,9 @@
 
 /*costumize*/
 
+
+/*header*/
+
 @media (min-width: 768px) {
   .navbar-text {
     float: left;
@@ -287,6 +290,24 @@
 .nav .open>a, .nav .open>a:focus, .nav .open>a:hover {
   background-color: #2f3034;
 }
+
+/*header*/
+
+
+/*footer*/
+
+.footer {
+  font-family: arial;
+  font-size: 10px;
+  font-weight: normal;
+  color: #6d6e71;
+  background: #f7f7f7;
+  margin-top: 60px;
+  padding: 10px;
+}
+
+/*footer*/
+
 .id-location {
   color: #6d6e71;
   margin-top: 25px;
