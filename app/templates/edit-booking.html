@@ -124,7 +124,18 @@
               </form>
             </div>
             <div class="col-lg-8">
-              <div *ngIf="start && !filtered">
+              <div *ngIf="start && !filtered" class="table-spacing">
+                <div class="table-tags">
+                  <p>
+                    Showing slots for <b>4th of October</b>
+                  </p>
+                  <p>
+                    Facility <b>BBQ Pits</b>
+                  </p>
+                  <p>
+                    <b>10 of 18</b> Slot available
+                  </p>
+                </div>
                 <table class="tableSection table-striped">
                   <tbody>
                     <tr *ngFor="let tstart of times_start; let i=index ; let tend of times_end; let c of booking_status">
