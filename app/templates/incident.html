@@ -29,7 +29,7 @@
 	        		<div class="row">
 	        			<div class="col-md-4">Order :</div>
 	        			<div class="col-md-8"><p><span *ngIf="!incident.contract"><img src="assets/image/menu_manageproject.png" width="14px" height="12px"> <a (click)="add_project(incident.reference_no,incident._id)" style="text-decoration: underline;cursor:pointer">Create Project</a></span>
-	        			<span *ngIf="incident.contract"><b>#{{incident.contract._id}}</b></span></p></div>
+	        			<span *ngIf="incident.contract"><b><a (click)="viewContract(incident.contract._id)" style="text-decoration: underline;cursor:pointer">#{{incident.contract._id}}</a></b></span></p></div>
 	        		</div>
 	        		<div class="row">
 	        			<div class="col-md-4">Message :</div>
@@ -40,7 +40,7 @@
 	        		</div>
 	        		<div class="row">	
 	        			<div class="col-md-12">
-	        				<span *ngIf="!incident.contract"><a class="btn btn-primary" (click)="add_project(incident.reference_no)" style="cursor:pointer"><img src="assets/image/menu_manageproject.png" width="14px" height="12px"> Create Project</a></span>
+	        				<!-- <span *ngIf="!incident.contract"><a class="btn btn-primary" (click)="add_project(incident.reference_no)" style="cursor:pointer"><img src="assets/image/menu_manageproject.png" width="14px" height="12px"> Create Project</a></span> -->
 	        				<a class="btn btn-primary" (click)="archive(incident._id)" style="cursor:pointer"><img src="assets/image/icon_archived.png" width="14px" height="12px"> Archive Report</a>
 	        			</div>
 	        		</div>

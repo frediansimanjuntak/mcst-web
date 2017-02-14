@@ -151,6 +151,10 @@ export class ContractComponent implements OnInit  {
         this.router.navigate([this.name.default_development.name_url + '/contract/note/' + id + '/view' , contractnote._id]);
     }
 
+    viewIncident(id: any){
+        this.router.navigate([this.name.default_development.name_url + '/incident/view', id]);
+    }
+
     edit(id: any){
         this.router.navigate([this.name.default_development.name_url + '/contract/edit', id]);
     }
