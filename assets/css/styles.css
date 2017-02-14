@@ -427,6 +427,11 @@ button.btn.btn-sm.btn-default {
   width: 100%;
   font-weight: bold;
 }
+.btn-info.active.focus:hover {
+  color: #333;
+  background-color: #ffffff;
+  border-color: #cccccc;
+}
 .text-info {
   color: #333;
   font-weight: bold;
