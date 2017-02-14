@@ -155,7 +155,7 @@
                     <tr *ngFor="let a of timeStart; let i=index ; let b of timeEnd; let c of booking_status">
                       <td class="space-left">{{timeStart[i]}}{{min}} - {{timeEnd[i]}}{{min}}</td>
                       <td>{{facility_name}} {{facility_type}}</td>
-                      <td> h {{booking_status[i]}}
+                      <td> <i class="fa fa-circle circle-red" aria-hidden="true"></i> {{booking_status[i]}}
                       </td>
                       <p-checkbox *ngIf="booking_status[i] == 'Not Available'" disabled="true" name="archive" (click)="archieveSelected(timeStart[i],timeEnd[i],min,facility_name,facility_type)" [(ngModel)]="selectedValues"></p-checkbox>
                       <p-checkbox *ngIf="booking_status[i] == 'Available'" name="archive" (click)="archieveSelected(timeStart[i],timeEnd[i],min,facility_name,facility_type)" [(ngModel)]="selectedValues"></p-checkbox>
