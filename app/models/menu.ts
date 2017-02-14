@@ -6,9 +6,24 @@ export const MENUS: any[] = [
   {
   	name: 'Operations',
   	sub : [
-  		{ name: 'Guest, Visitor & Contractors', link: '/visit', img: '../../assets/image/menu_guestvisitor.png'  },
-  		{ name: 'Incident Reports', link: '/incident', img: '../../assets/image/menu_incidentreport.png' },
-  		{ name: 'Manage Project', link: '/contract', img: '../../assets/image/menu_manageproject.png' },
+  		{ 
+        name: 'Guest, Visitor & Contractors', 
+        link: '/visit', 
+        description: 'View List of expecting guest, visitors and contractors in the compound',
+        img: '../../assets/image/menu_guestvisitor.png'  
+      },
+  		{  
+        name: 'Incident Reports', 
+        link: '/incident', 
+        description: 'Manage Incident Reports',
+        img: '../../assets/image/menu_incidentreport.png' 
+      }, 
+  		{ 
+        name: 'Manage Project', 
+        link: '/contract', 
+        img: '../../assets/image/menu_manageproject.png',
+        description: 'Create & Update project status',
+      },
   	]
   },
   {
@@ -50,15 +65,25 @@ export const MENUS: any[] = [
   	sub : [
   		{ name : 'Manage Announcement', link: '/announcement' , img: '../../assets/image/icon_announcement.png'},
   		{ name : 'E-voting', link: '/poll' },
-  		{ name : 'Manage Feedbacks', link: '/feedback', img: '../../assets/image/icon_announcement.png' },
+  		{ name : 'Manage Feedbacks', link: '/feedback', img: '../../assets/image/icon_feedbacks.png' },
   		{ name : 'Lost & Found', link: '/lost_found', img: '../../assets/image/icon_lost&found.png' },
   	]
   },
   {
   	name: 'Useful Information',
   	sub : [
-  		{ name : 'AGM & Circular', link: '/newsletter' , img: '../../assets/image/menu_agmegm.png'},
-  		{ name : 'Contact Directory', link: '', img: '../../assets/image/icon_feedbacks.png' },
+  		{ 
+        name : 'AGM & Circular', 
+        link: '/newsletter' , 
+        img: '../../assets/image/menu_agmegm.png',
+        description: 'Current and previous AGM/EGM and circular',
+      },
+  		{ 
+        name : 'Contact Directory', 
+        link: '', 
+        img: '../../assets/image/menu_contact.png',
+        description: 'Useful and often used contact numbers',
+      },
       { name : 'User', link: '/user' },
       { name : 'User Group', link: '/user_group' },
       { name : 'Development', link: '/development' },

@@ -12,16 +12,23 @@
 						<p>{{today | date:'fullDate'}}, {{today | date:'shortTime'}}</p>
 					</div>
 					<ul class="no-bullet">
-						<li *ngFor="let menu1 of menus1">
+						<li>
 							<div class="content-box">
 								<div class="row margin-content">
 									<div class="col-lg-2 text-center icon-content">
-										<img src="../../assets/image/menu_request.png" class="img-responsive" alt="" />
+										<img [src]="menus1[0].img" class="img-responsive" alt="" />
 									</div>
 									<div class="col-lg-9">
 										<strong>{{menus1[0].name}}</strong>
 										<br>
-										<p>{{menu1.description}}</p>
+										<p>{{menus1[0].description}}</p>
+										
+										<img [src]="menus1[0].sub[1].img" style="height:10px; width:10px;" class="img-responsive" alt="" />
+										<a>{{ menus1[0].sub[1].name }}</a>
+										
+										<img [src]="menus1[0].sub[2].img" style="height:10px; width:10px;" class="img-responsive" alt="" />
+										<a>{{ menus1[0].sub[2].name }}</a>
+										
 									</div>
 									<div class="col-lg-1 text-center">
 										<i class="fa fa-chevron-right fa-1x" aria-hidden="true"></i>
@@ -130,19 +137,19 @@
 
 					<!-- Operations content -->
 					<div class="field-box">
-						<p>Lorem ipsum dollor</p>
+						<p>Operations</p>
 					</div>
 					<ul class="no-bullet">
-						<li>
+						<li *ngFor="let menu2 of menus2">
 							<div class="content-box">
 								<div class="row margin-content">
 									<div class="col-lg-2 text-center icon-content">
-										<img src="../../assets/image/menu_request.png" class="img-responsive" alt="" />
+										<img [src]="menu2.img" class="img-responsive" alt="" />
 									</div>
 									<div class="col-lg-8">
 										<strong>{{ menu2.name}}</strong>
 										<br>
-										<p>Lorem ipsum dolor sit amet, consectetur adipisicing....</p>
+										<p>{{ menu2.description}}</p>
 									</div>
 									<div class="col-lg-1 text-center">
 										<i class="fa fa-chevron-right fa-1x" aria-hidden="true"></i>
@@ -155,19 +162,19 @@
 
 					<!-- useful informations content -->
 					<div class="field-box">
-						<p>Lorem ipsum dollor</p>
+						<p>Useful Informations</p>
 					</div>
 					<ul class="no-bullet">
 						<li>
 							<div class="content-box">
 								<div class="row margin-content">
 									<div class="col-lg-2 text-center icon-content">
-										<img src="../../assets/image/menu_request.png" class="img-responsive" alt="" />
+										<img [src]="menus3[0].img" class="img-responsive" alt="" />
 									</div>
 									<div class="col-lg-8">
 										<strong>{{ menus3[0].name}}</strong>
 										<br>
-										<p>Lorem ipsum dolor sit amet, consectetur adipisicing....</p>
+										<p>{{ menus3[0].description}}</p>
 									</div>
 									<div class="col-lg-1 text-center">
 										<i class="fa fa-chevron-right fa-1x" aria-hidden="true"></i>
