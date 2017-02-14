@@ -1,92 +1,210 @@
-<div class="container">
-	<div class="main">
-		<div class="title">
-			Dashboard
-		</div>
-		<p class="id-location">Home > Dashboard</p>
-		<div class="row">
-			<!-- left main content -->
-			<div class="col-md-7">
-				<div class="field-box">
-					<p>{{today | date:'fullDate'}}, {{today | date:'shortTime'}}</p>
-				</div>
-				<ul>
-					<li *ngFor="let menu1 of menus1">
-						<div class="content-box">
-							<div class="row margin-content">
-								<div class="col-lg-2 text-center">
-									<i class="fa fa-inbox fa-5x" aria-hidden="true"></i>
-								</div>
-								<div class="col-lg-9">
-									<a>{{menu1.name}}</a>
-									<br>
-									<p>{{menu1.description}}</p>
-								</div>
-								<div class="col-lg-1 text-center">
-									<i class="fa fa-chevron-right fa-1x" aria-hidden="true"></i>
-								</div>
-							</div>
-						</div>
-					</li>
-				</ul>
+<section id="dashboard">
+	<div class="container">
+		<div class="main">
+			<div class="title">
+				Dashboard
 			</div>
-			<!-- left main content -->
-
-			<!-- right content -->
-			<div class="col-md-5">
-
-				<!-- Operations content -->
-				<div class="field-box">
-					<p>Lorem ipsum dollor</p>
-				</div>
-				<ul>
-					<li>
-						<div class="content-box">
-							<div class="row margin-content">
-								<div class="col-lg-2 text-center">
-									<i class="fa fa-inbox fa-5x" aria-hidden="true"></i>
-								</div>
-								<div class="col-lg-8">
-									<a>Lorem ipsum dollor</a>
-									<br>
-									<p>Lorem ipsum dolor sit amet, consectetur adipisicing....</p>
-								</div>
-								<div class="col-lg-1 text-center">
-									<i class="fa fa-chevron-right fa-1x" aria-hidden="true"></i>
-								</div>
-							</div>
-						</div>
-					</li>
-				</ul>
-				<!-- Operations content -->
-
-				<!-- useful informations content -->
-				<div class="field-box">
-					<p>Lorem ipsum dollor</p>
-				</div>
-				<ul>
-					<li>
-						<div class="content-box">
-							<div class="row margin-content">
-								<div class="col-lg-2 text-center">
-									<i class="fa fa-inbox fa-5x" aria-hidden="true"></i>
-								</div>
-								<div class="col-lg-8">
-									<a>Lorem ipsum dollor</a>
-									<br>
-									<p>Lorem ipsum dolor sit amet, consectetur adipisicing....</p>
-								</div>
-								<div class="col-lg-1 text-center">
-									<i class="fa fa-chevron-right fa-1x" aria-hidden="true"></i>
+			<p class="id-location">Home > Dashboard</p>
+			<div class="row">
+				<!-- left main content -->
+				<div class="col-md-7">
+					<div class="field-box">
+						<p>{{today | date:'fullDate'}}, {{today | date:'shortTime'}}</p>
+					</div>
+					<ul class="no-bullet">
+						<li>
+							<div class="content-box">
+								<div class="row margin-content">
+									<div class="col-lg-2 text-center icon-content">
+										<img [src]="menus1[0].img" class="img-responsive" alt="" />
+									</div>
+									<div class="col-lg-9">
+										<strong>{{menus1[0].name}}</strong>
+										<br>
+										<p>{{menus1[0].description}}</p>
+										
+										<img [src]="menus1[0].sub[1].img" style="height:10px; width:10px;" class="img-responsive" alt="" />
+										<a>{{ menus1[0].sub[1].name }}</a>
+										
+										<img [src]="menus1[0].sub[2].img" style="height:10px; width:10px;" class="img-responsive" alt="" />
+										<a>{{ menus1[0].sub[2].name }}</a>
+										
+									</div>
+									<div class="col-lg-1 text-center">
+										<i class="fa fa-chevron-right fa-1x" aria-hidden="true"></i>
+									</div>
 								</div>
 							</div>
-						</div>
-					</li>
-				</ul>
-				<!-- useful informations content -->
+						</li>
+
+						<li>
+							<div class="content-box">
+								<div class="row margin-content">
+									<div class="col-lg-2 text-center icon-content">
+										<img [src]="menus1[1].img" class="img-responsive" alt="" />
+									</div>
+									<div class="col-lg-9">
+										<strong>{{menus1[1].name}}</strong>
+										<br>
+										<p>{{menus1[1].description}}</p>
+										
+										<img [src]="menus1[0].sub[1].img" style="height:10px; width:10px;" class="img-responsive" alt="" />
+										<a>Add Booking</a>
+										
+										<img [src]="menus1[0].sub[2].img" style="height:10px; width:10px;" class="img-responsive" alt="" />
+										<a>Search Reference no</a>
+										
+									</div>
+									<div class="col-lg-1 text-center">
+										<i class="fa fa-chevron-right fa-1x" aria-hidden="true"></i>
+									</div>
+								</div>
+							</div>
+						</li>
+
+						<li>
+							<div class="content-box">
+								<div class="row margin-content">
+									<div class="col-lg-2 text-center icon-content">
+										<img [src]="menus1[2].img" class="img-responsive" alt="" />
+									</div>
+									<div class="col-lg-9">
+										<strong>{{menus1[2].name}}</strong>
+										<br>
+										<p>{{menus1[2].description}}</p>
+									</div>
+									<div class="col-lg-1 text-center">
+										<i class="fa fa-chevron-right fa-1x" aria-hidden="true"></i>
+									</div>
+								</div>
+							</div>
+						</li>
+
+						<li>
+							<div class="content-box">
+								<div class="row margin-content">
+									<div class="col-lg-2 text-center icon-content">
+										<img [src]="menus1[3].img" class="img-responsive" alt="" />
+									</div>
+									<div class="col-lg-9">
+										<strong>{{menus1[3].name}}</strong>
+										<br>
+										<p>{{menus1[3].description}}</p>
+										
+										<img src="../../assets/image/icon_accesscontrol.png" style="height:10px; width:10px;" class="img-responsive" alt="" />
+										<a>Access control</a>
+									</div>
+									<div class="col-lg-1 text-center">
+										<i class="fa fa-chevron-right fa-1x" aria-hidden="true"></i>
+									</div>
+								</div>
+							</div>
+						</li>
+
+						<li>
+							<div class="content-box">
+								<div class="row margin-content">
+									<div class="col-lg-2 text-center icon-content">
+										<img [src]="menus1[4].img" class="img-responsive" alt="" />
+									</div>
+									<div class="col-lg-9">
+										<strong>{{menus1[4].name}}</strong>
+										<br>
+										<p>{{menus1[4].description}}</p>
+										
+										<img [src]="menus1[4].sub[0].img" style="height:10px; width:10px;" class="img-responsive" alt="" />
+										<a>{{ menus1[4].sub[0].name }}</a>
+										
+										<img [src]="menus1[4].sub[2].img" style="height:10px; width:10px;" class="img-responsive" alt="" />
+										<a>{{ menus1[4].sub[2].name }}</a>
+
+										<img [src]="menus1[4].sub[3].img" style="height:10px; width:10px;" class="img-responsive" alt="" />
+										<a>{{ menus1[4].sub[3].name }}</a>
+										
+									</div>
+									<div class="col-lg-1 text-center">
+										<i class="fa fa-chevron-right fa-1x" aria-hidden="true"></i>
+									</div>
+								</div>
+							</div>
+						</li>
+					</ul>
+				</div>
+				<!-- left main content -->
+
+				<!-- right content -->
+				<div class="col-md-5">
+
+					<!-- Operations content -->
+					<div class="field-box">
+						<p>Operations</p>
+					</div>
+					<ul class="no-bullet">
+						<li *ngFor="let menu2 of menus2">
+							<div class="content-box">
+								<div class="row margin-content">
+									<div class="col-lg-2 text-center icon-content">
+										<img [src]="menu2.img" class="img-responsive" alt="" />
+									</div>
+									<div class="col-lg-8">
+										<strong>{{ menu2.name}}</strong>
+										<br>
+										<p>{{ menu2.description}}</p>
+									</div>
+									<div class="col-lg-1 text-center">
+										<i class="fa fa-chevron-right fa-1x" aria-hidden="true"></i>
+									</div>
+								</div>
+							</div>
+						</li>
+					</ul>
+					<!-- Operations content -->
+
+					<!-- useful informations content -->
+					<div class="field-box">
+						<p>Useful Informations</p>
+					</div>
+					<ul class="no-bullet">
+						<li>
+							<div class="content-box">
+								<div class="row margin-content">
+									<div class="col-lg-2 text-center icon-content">
+										<img [src]="menus3[0].img" class="img-responsive" alt="" />
+									</div>
+									<div class="col-lg-8">
+										<strong>{{ menus3[0].name}}</strong>
+										<br>
+										<p>{{ menus3[0].description}}</p>
+									</div>
+									<div class="col-lg-1 text-center">
+										<i class="fa fa-chevron-right fa-1x" aria-hidden="true"></i>
+									</div>
+								</div>
+							</div>
+						</li>
+						<li>
+							<div class="content-box">
+								<div class="row margin-content">
+									<div class="col-lg-2 text-center icon-content">
+										<img [src]="menus3[1].img" class="img-responsive" alt="" />
+									</div>
+									<div class="col-lg-8">
+										<strong>{{ menus3[1].name}}</strong>
+										<br>
+										<p>{{ menus3[1].description}}</p>
+									</div>
+									<div class="col-lg-1 text-center">
+										<i class="fa fa-chevron-right fa-1x" aria-hidden="true"></i>
+									</div>
+								</div>
+							</div>
+						</li>
+					</ul>
+					<!-- useful informations content -->
+				</div>
+				<!-- right content -->
+
 			</div>
-			<!-- right content -->
-
 		</div>
 	</div>
-</div>
+</section>

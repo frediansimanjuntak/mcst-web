@@ -28,11 +28,13 @@
 	        			<div class="col-md-8"> <p>:  {{poll.votes.length}}</p></div>
 	        		</div>
 	        		<div class="row">
-	        			<div class="col-md-4">Progress </div>
+	        			<div class="col-md-4">Answers Progress </div>
 	        			<div class="col-md-8">
-	        				<progressbar *ngFor="let a of poll.answers" [max]="max" [value]="a.progress">
-							 {{a.choice}}&nbsp; <span style="color:white; white-space:nowrap;">{{a.progress}} / {{max}}</span>
-							</progressbar>
+	        				<div *ngFor="let a of poll.answers" >
+	        					<progressbar [max]="max" [value]="a.progress">
+							 		{{a.choice}}&nbsp;:	 <span style="color:white; white-space:nowrap;">{{a.progress}} / {{max}}</span>
+								</progressbar>		
+							</div>
 	        			</div>
 	        		</div>
 	        		<div class="row">

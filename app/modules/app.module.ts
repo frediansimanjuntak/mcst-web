@@ -84,7 +84,7 @@ import {
   NotificationComponent,
   LostFoundComponent,
   EditLostFoundComponent,
-
+  FooterComponent,
   SignaturePadPage,
 } from '../components/index';
 
@@ -211,8 +211,9 @@ import {
     NotificationComponent,
     LostFoundComponent,
     EditLostFoundComponent,
+    FooterComponent,
     SignaturePadPage,
-  ],
+],
   providers: [ 
     AccessControlService,
     AlertService,

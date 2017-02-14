@@ -74,7 +74,7 @@ export class EditAnnouncementComponent  {
             day: day
         };
 
-        this.autoPostOnDateOptions = copy;
+        // this.autoPostOnDateOptions = copy;
         this.validTillDateOptions = copy;
         
         this.model.auto_post_on = ""
@@ -98,6 +98,7 @@ export class EditAnnouncementComponent  {
     }
 
     createAnnouncement() {
+        console.log(this.model)
         this.anouncementService.create(this.model)
         .then(
             data => {
@@ -129,6 +130,7 @@ export class EditAnnouncementComponent  {
             this.validTillDateOptions = copy;
         }
     }
+
 
     convertDate(date) {
       var yyyy = date.getFullYear().toString();
