@@ -119,7 +119,7 @@
                   </div>
                 </div>
                 <div class="form-group">
-                  <button style="width: 327px" class="btn btn-primary">Filter</button>
+                  <button style="width: 327px" class="btn btn-filter">Filter</button>
                 </div>
               </form>
             </div>
@@ -141,8 +141,7 @@
                     <tr *ngFor="let tstart of times_start; let i=index ; let tend of times_end; let c of booking_status">
                       <td class="space-left">{{times_start[i]}}{{min}} - {{times_end[i]}}{{min}}</td>
                       <td>{{facility_name}} {{facility_type}}</td>
-                      <td>
-                        {{booking_status[i]}}
+                      <td> <i class="fa fa-circle circle-green" aria-hidden="true"></i> {{booking_status[i]}}
                       </td>
                       <p-checkbox *ngIf="booking_status[i] == 'Not Available'" disabled="true" name="archive" (click)="archieveSelected(times_start[i],times_end[i],min,facility_name,facility_type)" [(ngModel)]="selectedValues"></p-checkbox>
                       <p-checkbox *ngIf="booking_status[i] == 'Available'" name="archive" (click)="archieveSelected(times_start[i],times_end[i],min,facility_name,facility_type)" [(ngModel)]="selectedValues"></p-checkbox>
@@ -156,8 +155,7 @@
                     <tr *ngFor="let a of timeStart; let i=index ; let b of timeEnd; let c of booking_status">
                       <td class="space-left">{{timeStart[i]}}{{min}} - {{timeEnd[i]}}{{min}}</td>
                       <td>{{facility_name}} {{facility_type}}</td>
-                      <td>
-                        {{booking_status[i]}}
+                      <td> <i class="fa fa-circle circle-red" aria-hidden="true"></i> {{booking_status[i]}}
                       </td>
                       <p-checkbox *ngIf="booking_status[i] == 'Not Available'" disabled="true" name="archive" (click)="archieveSelected(timeStart[i],timeEnd[i],min,facility_name,facility_type)" [(ngModel)]="selectedValues"></p-checkbox>
                       <p-checkbox *ngIf="booking_status[i] == 'Available'" name="archive" (click)="archieveSelected(timeStart[i],timeEnd[i],min,facility_name,facility_type)" [(ngModel)]="selectedValues"></p-checkbox>
@@ -170,8 +168,8 @@
               </div>
               <div class="row">
                 <div class="col-md-12">
-                  <a class="btn btn-default btn-true pull-right" (click)="next()">Next</a>
-                  <a (click)="cancel()" class="btn btn-info btn-false pull-right">Cancel</a>
+                  <a class="btn btn-default btn-brown pull-right" (click)="next()">Next</a>
+                  <a (click)="cancel()" class="btn btn-info btn-gray pull-right">Cancel</a>
                 </div>
               </div>
             </div>
@@ -180,81 +178,90 @@
         <div *ngIf="step == 2">
           <div class="abc">
             <ul class="steps steps-5">
-              <li><em>3. Booking Information</em></li>
+              <li>
+                <p class="row-li-1">3. Booking Information</p>
+              </li>
             </ul>
-            <font style="padding: 30px;">4. User & Payment Information</font>
+            <ul class="no-bullet">
+              <li>
+                <p class="row-li-2">4. User & Payment Information</p>
+              </li>
+            </ul>
           </div>
           <div>
             <br/>
           </div>
           <div class="row">
-            <div class="col-lg-6">
+            <div class="col-lg-5">
               <div class="bookinginformation">
-                <div class="row" style="margin-left: 5px; margin-top: 10px">`
-                  <div class="col-md-6">
-                    <label>Date :</label>
+                <div class="block-booking-information">
+                  <div class="row">`
+                    <div class="col-md-6">
+                      <label>Date :</label>
+                    </div>
+                    <div class="col-md-5 pull-right text-right text-content">{{model.date}}</div>
                   </div>
-                  <div class="col-md-5" style="text-align: right;border-right: 5px">{{model.date}}</div>
-                </div>
-                <div class="row" style="margin-left: 5px; margin-top: 10px">
-                  <div class="col-md-6">
-                    <label>Facility :</label>
+                  <div class="row">
+                    <div class="col-md-6">
+                      <label>Facility :</label>
+                    </div>
+                    <div class="col-md-6 pull-right text-right text-content">{{model.name}}</div>
                   </div>
-                  <div class="col-md-5" style="text-align: right;border-right: 5px">{{model.name}}</div>
-                </div>
-                <div class="row" style="margin-left: 5px; margin-top: 10px">
-                  <div class="col-md-6">
-                    <label>Facility Type :</label>
+                  <div class="row">
+                    <div class="col-md-6">
+                      <label>Facility Type :</label>
+                    </div>
+                    <div class="col-md-6 pull-right text-right text-content">{{model.facility_type}}</div>
                   </div>
-                  <div class="col-md-5" style="text-align: right;border-right: 5px">{{model.facility_type}}</div>
-                </div>
-                <div class="row" style="margin-left: 5px; margin-top: 10px">
-                  <div class="col-md-6">
-                    <label>Time Slot :</label>
+                  <div class="row">
+                    <div class="col-md-6">
+                      <label>Time Slot :</label>
+                    </div>
+                    <div class="col-md-6 pull-right text-right text-content">{{model.start_time}} - {{model.end_time}}</div>
                   </div>
-                  <div class="col-md-5" style="text-align: right;border-right: 5px">{{model.start_time}} - {{model.end_time}}</div>
                 </div>
                 <div class="form-group">
                   <br/>
-                  <button style="width: 320px; margin-left: 20px" (click)="change()" class="btn btn-primary">Change Booking</button>
+                  <button (click)="change()" class="btn btn-white" style="width:324px">Change Booking</button>
                   <br/>
-                  <hr style="width: 320px; margin-left: 20px; border-color: black;">
+                  <hr>
                 </div>
-                <div class="row" style="margin-left: 5px; margin-top: 10px">
-                  <div class="col-md-6">
-                    <label>Deposit Fee* :</label>
+                <div class="block-booking-information">
+                  <div class="row">
+                    <div class="col-md-6">
+                      <label>Deposit Fee* :</label>
+                    </div>
+                    <div class="col-md-5 pull-right text-right text-content">{{model.fees[0].deposit_fee}}.00 SGD</div>
                   </div>
-                  <div class="col-md-5" style="text-align: right;border-right: 5px">{{model.fees[0].deposit_fee}}.00 SGD</div>
-                </div>
-                <div class="row" style="margin-left: 5px; margin-top: 10px">
-                  <div class="col-md-6">
-                    <label>Booking Fee :</label>
+                  <div class="row">
+                    <div class="col-md-6">
+                      <label>Booking Fee :</label>
+                    </div>
+                    <div class="col-md-5 pull-right text-right text-content">{{model.fees[0].booking_fee}}.00 SGD</div>
                   </div>
-                  <div class="col-md-5" style="text-align: right;border-right: 5px">{{model.fees[0].booking_fee}}.00 SGD</div>
-                </div>
-                <div class="row" style="margin-left: 5px; margin-top: 10px">
-                  <div class="col-md-6">
-                    <label>Admin Fee :</label>
+                  <div class="row">
+                    <div class="col-md-6">
+                      <label>Admin Fee :</label>
+                    </div>
+                    <div class="col-md-5 pull-right text-right text-content">{{model.fees[0].admin_fee}}.00 SGD</div>
                   </div>
-                  <div class="col-md-5" style="text-align: right;border-right: 5px">{{model.fees[0].admin_fee}}.00 SGD</div>
-                </div>
-                <div class="row" style="margin-left: 5px; margin-top: 10px">
-                  <div class="col-md-5">
-                    <label>
-                      <h4>TOTAL :</h4></label>
+                  <div class="row">
+                    <div class="col-md-5">
+                      <label>
+                        <h4>TOTAL :</h4></label>
+                    </div>
+                    <div class="col-md-6 pull-right text-right text-content">
+                      <h4>{{model.total_amount}}.00 SGD</h4></div>
                   </div>
-                  <div class="col-md-6" style="text-align: right;border-right: 5px">
-                    <h4>{{model.total_amount}}.00 SGD</h4></div>
-                </div>
-                <div class="row" style="margin-left: 5px; margin-top: 20px">
-                  <div class="col-md-12 deposit">
-                    <p>*Deposit Fee will only be incurred in the case of user infringed the <a>terms of usage</a> and <a>houserule</a></p>
+                  <div class="row">
+                    <div class="col-md-12 deposit">
+                      <p>*Deposit Fee will only be incurred in the case of user infringed the <a>terms of usage</a> and <a>houserule</a></p>
+                    </div>
                   </div>
-
                 </div>
               </div>
             </div>
-            <div class="col-lg-6">
+            <div class="col-lg-7">
               <form class="form-horizontal" name="form" (ngSubmit)="f.form.valid && createBooking()" #f="ngForm" novalidate>
                 <div class="form-group">
                   <label class="control-label col-sm-4" for="serial_no">Booking Ref.no :</label>
@@ -301,10 +308,10 @@
                   </div>
                 </div>
                 <div class="form-group pull-right">
-                  <button [disabled]="loading" class="btn btn-primary">Confirm</button>
+                  <button [disabled]="loading" class="btn btn-default btn-brown pull-right">Confirm</button>
                   <img *ngIf="loading" src="data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA=="
                   />
-                  <a (click)="cancel()" class="btn btn-info">Cancel</a>
+                  <a (click)="cancel()" class="btn btn-info btn-gray pull-right">Cancel</a>
                 </div>
               </form>
             </div>
