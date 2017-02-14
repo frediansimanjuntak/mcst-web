@@ -1,92 +1,94 @@
-<div class="container">
-	<div class="main">
-		<div class="title">
-			Dashboard
-		</div>
-		<p class="id-location">Home > Dashboard</p>
-		<div class="row">
-			<!-- left main content -->
-			<div class="col-md-7">
-				<div class="field-box">
-					<p>{{today | date:'fullDate'}}, {{today | date:'shortTime'}}</p>
-				</div>
-				<ul>
-					<li *ngFor="let menu1 of menus1">
-						<div class="content-box">
-							<div class="row margin-content">
-								<div class="col-lg-2 text-center">
-									<i class="fa fa-inbox fa-5x" aria-hidden="true"></i>
-								</div>
-								<div class="col-lg-9">
-									<a>{{menu1.name}}</a>
-									<br>
-									<p>{{menu1.description}}</p>
-								</div>
-								<div class="col-lg-1 text-center">
-									<i class="fa fa-chevron-right fa-1x" aria-hidden="true"></i>
-								</div>
-							</div>
-						</div>
-					</li>
-				</ul>
+<section id="dashboard">
+	<div class="container">
+		<div class="main">
+			<div class="title">
+				Dashboard
 			</div>
-			<!-- left main content -->
-
-			<!-- right content -->
-			<div class="col-md-5">
-
-				<!-- Operations content -->
-				<div class="field-box">
-					<p>Lorem ipsum dollor</p>
-				</div>
-				<ul>
-					<li>
-						<div class="content-box">
-							<div class="row margin-content">
-								<div class="col-lg-2 text-center">
-									<i class="fa fa-inbox fa-5x" aria-hidden="true"></i>
-								</div>
-								<div class="col-lg-8">
-									<a>Lorem ipsum dollor</a>
-									<br>
-									<p>Lorem ipsum dolor sit amet, consectetur adipisicing....</p>
-								</div>
-								<div class="col-lg-1 text-center">
-									<i class="fa fa-chevron-right fa-1x" aria-hidden="true"></i>
-								</div>
-							</div>
-						</div>
-					</li>
-				</ul>
-				<!-- Operations content -->
-
-				<!-- useful informations content -->
-				<div class="field-box">
-					<p>Lorem ipsum dollor</p>
-				</div>
-				<ul>
-					<li>
-						<div class="content-box">
-							<div class="row margin-content">
-								<div class="col-lg-2 text-center">
-									<i class="fa fa-inbox fa-5x" aria-hidden="true"></i>
-								</div>
-								<div class="col-lg-8">
-									<a>Lorem ipsum dollor</a>
-									<br>
-									<p>Lorem ipsum dolor sit amet, consectetur adipisicing....</p>
-								</div>
-								<div class="col-lg-1 text-center">
-									<i class="fa fa-chevron-right fa-1x" aria-hidden="true"></i>
+			<p class="id-location">Home > Dashboard</p>
+			<div class="row">
+				<!-- left main content -->
+				<div class="col-md-7">
+					<div class="field-box">
+						<p>{{today | date:'fullDate'}}, {{today | date:'shortTime'}}</p>
+					</div>
+					<ul class="no-bullet">
+						<li *ngFor="let menu1 of menus1">
+							<div class="content-box">
+								<div class="row margin-content">
+									<div class="col-lg-2 text-center">
+										<i class="fa fa-inbox fa-5x" aria-hidden="true"></i>
+									</div>
+									<div class="col-lg-9">
+										<a>{{menu1.name}}</a>
+										<br>
+										<p>{{menu1.description}}</p>
+									</div>
+									<div class="col-lg-1 text-center">
+										<i class="fa fa-chevron-right fa-1x" aria-hidden="true"></i>
+									</div>
 								</div>
 							</div>
-						</div>
-					</li>
-				</ul>
-				<!-- useful informations content -->
+						</li>
+					</ul>
+				</div>
+				<!-- left main content -->
+
+				<!-- right content -->
+				<div class="col-md-5">
+
+					<!-- Operations content -->
+					<div class="field-box">
+						<p>Lorem ipsum dollor</p>
+					</div>
+					<ul class="no-bullet">
+						<li>
+							<div class="content-box">
+								<div class="row margin-content">
+									<div class="col-lg-2 text-center">
+										<i class="fa fa-inbox fa-5x" aria-hidden="true"></i>
+									</div>
+									<div class="col-lg-8">
+										<a>Lorem ipsum dollor</a>
+										<br>
+										<p>Lorem ipsum dolor sit amet, consectetur adipisicing....</p>
+									</div>
+									<div class="col-lg-1 text-center">
+										<i class="fa fa-chevron-right fa-1x" aria-hidden="true"></i>
+									</div>
+								</div>
+							</div>
+						</li>
+					</ul>
+					<!-- Operations content -->
+
+					<!-- useful informations content -->
+					<div class="field-box">
+						<p>Lorem ipsum dollor</p>
+					</div>
+					<ul class="no-bullet">
+						<li>
+							<div class="content-box">
+								<div class="row margin-content">
+									<div class="col-lg-2 text-center">
+										<i class="fa fa-inbox fa-5x" aria-hidden="true"></i>
+									</div>
+									<div class="col-lg-8">
+										<a>Lorem ipsum dollor</a>
+										<br>
+										<p>Lorem ipsum dolor sit amet, consectetur adipisicing....</p>
+									</div>
+									<div class="col-lg-1 text-center">
+										<i class="fa fa-chevron-right fa-1x" aria-hidden="true"></i>
+									</div>
+								</div>
+							</div>
+						</li>
+					</ul>
+					<!-- useful informations content -->
+				</div>
+				<!-- right content -->
+
 			</div>
-			<!-- right content -->
-
 		</div>
 	</div>
-</div>
+</section>
