@@ -618,7 +618,7 @@ p.pull-down {
   padding: 0;
   font-weight: bold;
 }
-.btn-in:hover, .btn-in:active, .btn-in:focus, , .btn-in:active:focus, .btn-in:active:hover {
+.btn-in:hover, .btn-in:active, .btn-in:focus {
   background-color: #dcdcdc;
   border-color: #b9b9b9;
 }
@@ -633,7 +633,7 @@ p.pull-down {
   padding: 0;
   font-weight: bold;
 }
-.btn-out:hover, .btn-out:active, .btn-out:focus, , .btn-out:active:focus, .btn-out:active:hover {
+.btn-out:hover, .btn-out:active, .btn-out:focus {
   background-color: #bbbbbb;
   border: 1px solid #b9b9b9;
   border-bottom: 1px;
