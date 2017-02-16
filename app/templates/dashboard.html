@@ -1,4 +1,4 @@
-<section id="dashboard">
+<section id="dashboard" *ngIf="name">
 	<div class="container">
 		<div class="main">
 			<div class="title">
@@ -23,17 +23,17 @@
 									<div class="col-lg-9">
 										<div class="content-left">
 											<strong>{{menus1[0].name}}</strong>
+											<span *ngIf="unreadPetitionTotal > 0" class="badge">
+												{{ unreadPetitionTotal}}
+											</span>
 											<br>
 											<p>{{menus1[0].description}}</p>
 
 											<img [src]="menus1[0].sub[1].img" class="img-responsive small-icon" alt="" />
-											<a class="pull-left">{{ menus1[0].sub[1].name }}</a>
-
-											<img [src]="menus1[0].sub[2].img" class="img-responsive small-icon" alt="" />
-											<a class="pull-left">{{ menus1[0].sub[2].name }}</a>
+											<a style="cursor: pointer;" (click)="start('/petition/add')" class="pull-left">{{ menus1[0].sub[1].name }}</a>
 										</div>
 									</div>
-									<div class="col-lg-1">
+									<div class="col-lg-1" style="cursor: pointer;" (click)="start(menus1[0].sub[0].link)">
 										<div class="arrow-box-left">
 											<img src="../../assets/image/icon_arrowright_black.png" class="img-responsive arrow-box" alt="" />
 										</div>
@@ -53,17 +53,17 @@
 									<div class="col-lg-9">
 										<div class="content-left">
 											<strong>{{menus1[1].name}}</strong>
+											<span *ngIf="unreadBookingTotal > 0" class="badge">
+												{{ unreadBookingTotal}}
+											</span>
 											<br>
 											<p>{{menus1[1].description}}</p>
 
 											<img [src]="menus1[0].sub[1].img" class="img-responsive small-icon" alt="" />
-											<a class="pull-left">Add Booking</a>
-
-											<img [src]="menus1[0].sub[2].img" class="img-responsive small-icon" alt="" />
-											<a class="pull-left">Search Reference no</a>
+											<a class="pull-left" style="cursor: pointer;" (click)="start('/booking/add')">Add Booking</a>
 										</div>
 									</div>
-									<div class="col-lg-1">
+									<div class="col-lg-1"  style="cursor: pointer;" (click)="start(menus1[1].link)">
 										<div class="arrow-box-left">
 											<img src="../../assets/image/icon_arrowright_black.png" class="img-responsive arrow-box" alt="" />
 										</div>
@@ -87,7 +87,7 @@
 											<p>{{menus1[2].description}}</p>
 										</div>
 									</div>
-									<div class="col-lg-1 text-center">
+									<div class="col-lg-1 text-center" style="cursor: pointer;" (click)="start(menus1[2].link)">
 										<div class="arrow-box-left">
 											<img src="../../assets/image/icon_arrowright_black.png" class="img-responsive arrow-box" alt="" />
 										</div>
@@ -109,12 +109,9 @@
 											<strong>{{menus1[3].name}}</strong>
 											<br>
 											<p>{{menus1[3].description}}</p>
-
-											<img src="../../assets/image/icon_accesscontrol.png" class="img-responsive small-icon" alt="" />
-											<a class="pull-left">Access control</a>
 										</div>
 									</div>
-									<div class="col-lg-1">
+									<div class="col-lg-1" style="cursor: pointer;" (click)="start(menus1[3].sub[0].link)">
 										<div class="arrow-box-left">
 											<img src="../../assets/image/icon_arrowright_black.png" class="img-responsive arrow-box" alt="" />
 										</div>
@@ -138,13 +135,13 @@
 											<p>{{menus1[4].description}}</p>
 
 											<img [src]="menus1[4].sub[0].img" class="img-responsive small-icon" alt="" />
-											<a class="pull-left">{{ menus1[4].sub[0].name }}</a>
+											<a style="cursor: pointer;" (click)="start(menus1[4].sub[0].link)" class="pull-left">{{ menus1[4].sub[0].name }}</a>
 
 											<img [src]="menus1[4].sub[2].img" class="img-responsive small-icon" alt="" />
-											<a class="pull-left">{{ menus1[4].sub[2].name }}</a>
+											<a class="pull-left"  style="cursor: pointer;" (click)="start(menus1[4].sub[2].link)">{{ menus1[4].sub[2].name }}</a>
 											<br>
 											<img [src]="menus1[4].sub[3].img" class="img-responsive small-icon" alt="" />
-											<a class="pull-left">{{ menus1[4].sub[3].name }}</a>
+											<a class="pull-left"  style="cursor: pointer;" (click)="start(menus1[4].sub[3].link)">{{ menus1[4].sub[3].name }}</a>
 										</div>
 									</div>
 									<div class="col-lg-1">
@@ -178,11 +175,14 @@
 									<div class="col-lg-8">
 										<div class="content-right">
 											<strong>{{ menu2.name}}</strong>
+											<span *ngIf="menu2.link == '/incident' && menu2.notifTOtal > 0" class="badge">
+												{{ menu2.notifTOtal}}
+											</span>
 											<br>
 											<p>{{ menu2.description}}</p>
 										</div>
 									</div>
-									<div class="col-lg-1">
+									<div class="col-lg-1"  style="cursor: pointer;" (click)="start(menu2.link)">
 										<div class="arrow-box-right">
 											<img src="../../assets/image/icon_arrowright_black.png" class="img-responsive arrow-box" alt="" />
 										</div>
@@ -213,8 +213,8 @@
 											<p>{{ menus3[0].description}}</p>
 										</div>
 									</div>
-									<div class="col-lg-1">
-										<div class="arrow-box-right">
+									<div class="col-lg-1" >
+										<div class="arrow-box-right" style="cursor: pointer;" (click)="start(menus3[0].link)">
 											<img src="../../assets/image/icon_arrowright_black.png" class="img-responsive arrow-box" alt="" />
 										</div>
 									</div>
@@ -236,7 +236,7 @@
 											<p>{{ menus3[1].description}}</p>
 										</div>
 									</div>
-									<div class="col-lg-1">
+									<div class="col-lg-1" style="cursor: pointer;" (click)="start(menus3[1].link)">
 										<div class="arrow-box-right">
 											<img src="../../assets/image/icon_arrowright_black.png" class="img-responsive arrow-box" alt="" />
 										</div>
