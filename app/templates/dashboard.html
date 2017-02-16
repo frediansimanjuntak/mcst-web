@@ -15,23 +15,28 @@
 						<li>
 							<div class="content-box">
 								<div class="row margin-content">
-									<div class="col-lg-2 text-center icon-content">
-										<img [src]="menus1[0].img" class="img-responsive" alt="" />
+									<div class="col-lg-2">
+										<div class="img-content">
+											<img [src]="menus1[0].img" class="img-responsive icon-dashboard" alt="" />
+										</div>
 									</div>
 									<div class="col-lg-9">
-										<strong>{{menus1[0].name}}</strong>
-										<br>
-										<p>{{menus1[0].description}}</p>
-										
-										<img [src]="menus1[0].sub[1].img" style="height:10px; width:10px;" class="img-responsive" alt="" />
-										<a>{{ menus1[0].sub[1].name }}</a>
-										
-										<img [src]="menus1[0].sub[2].img" style="height:10px; width:10px;" class="img-responsive" alt="" />
-										<a>{{ menus1[0].sub[2].name }}</a>
-										
+										<div class="content-left">
+											<strong>{{menus1[0].name}}</strong>
+											<br>
+											<p>{{menus1[0].description}}</p>
+
+											<img [src]="menus1[0].sub[1].img" class="img-responsive small-icon" alt="" />
+											<a class="pull-left">{{ menus1[0].sub[1].name }}</a>
+
+											<img [src]="menus1[0].sub[2].img" class="img-responsive small-icon" alt="" />
+											<a class="pull-left">{{ menus1[0].sub[2].name }}</a>
+										</div>
 									</div>
-									<div class="col-lg-1 text-center">
-										<i class="fa fa-chevron-right fa-1x" aria-hidden="true"></i>
+									<div class="col-lg-1">
+										<div class="arrow-box-left">
+											<img src="../../assets/image/icon_arrowright_black.png" class="img-responsive arrow-box" alt="" />
+										</div>
 									</div>
 								</div>
 							</div>
@@ -40,23 +45,28 @@
 						<li>
 							<div class="content-box">
 								<div class="row margin-content">
-									<div class="col-lg-2 text-center icon-content">
-										<img [src]="menus1[1].img" class="img-responsive" alt="" />
+									<div class="col-lg-2">
+										<div class="img-content">
+											<img [src]="menus1[1].img" class="img-responsive icon-dashboard" alt="" />
+										</div>
 									</div>
 									<div class="col-lg-9">
-										<strong>{{menus1[1].name}}</strong>
-										<br>
-										<p>{{menus1[1].description}}</p>
-										
-										<img [src]="menus1[0].sub[1].img" style="height:10px; width:10px;" class="img-responsive" alt="" />
-										<a>Add Booking</a>
-										
-										<img [src]="menus1[0].sub[2].img" style="height:10px; width:10px;" class="img-responsive" alt="" />
-										<a>Search Reference no</a>
-										
+										<div class="content-left">
+											<strong>{{menus1[1].name}}</strong>
+											<br>
+											<p>{{menus1[1].description}}</p>
+
+											<img [src]="menus1[0].sub[1].img" class="img-responsive small-icon" alt="" />
+											<a class="pull-left">Add Booking</a>
+
+											<img [src]="menus1[0].sub[2].img" class="img-responsive small-icon" alt="" />
+											<a class="pull-left">Search Reference no</a>
+										</div>
 									</div>
-									<div class="col-lg-1 text-center">
-										<i class="fa fa-chevron-right fa-1x" aria-hidden="true"></i>
+									<div class="col-lg-1">
+										<div class="arrow-box-left">
+											<img src="../../assets/image/icon_arrowright_black.png" class="img-responsive arrow-box" alt="" />
+										</div>
 									</div>
 								</div>
 							</div>
@@ -65,16 +75,22 @@
 						<li>
 							<div class="content-box">
 								<div class="row margin-content">
-									<div class="col-lg-2 text-center icon-content">
-										<img [src]="menus1[2].img" class="img-responsive" alt="" />
+									<div class="col-lg-2">
+										<div class="img-content">
+											<img [src]="menus1[2].img" class="img-responsive icon-dashboard" alt="" />
+										</div>
 									</div>
 									<div class="col-lg-9">
-										<strong>{{menus1[2].name}}</strong>
-										<br>
-										<p>{{menus1[2].description}}</p>
+										<div class="content-left">
+											<strong>{{menus1[2].name}}</strong>
+											<br>
+											<p>{{menus1[2].description}}</p>
+										</div>
 									</div>
 									<div class="col-lg-1 text-center">
-										<i class="fa fa-chevron-right fa-1x" aria-hidden="true"></i>
+										<div class="arrow-box-left">
+											<img src="../../assets/image/icon_arrowright_black.png" class="img-responsive arrow-box" alt="" />
+										</div>
 									</div>
 								</div>
 							</div>
@@ -83,19 +99,25 @@
 						<li>
 							<div class="content-box">
 								<div class="row margin-content">
-									<div class="col-lg-2 text-center icon-content">
-										<img [src]="menus1[3].img" class="img-responsive" alt="" />
+									<div class="col-lg-2">
+										<div class="img-content">
+											<img [src]="menus1[3].img" class="img-responsive icon-dashboard" alt="" />
+										</div>
 									</div>
 									<div class="col-lg-9">
-										<strong>{{menus1[3].name}}</strong>
-										<br>
-										<p>{{menus1[3].description}}</p>
-										
-										<img src="../../assets/image/icon_accesscontrol.png" style="height:10px; width:10px;" class="img-responsive" alt="" />
-										<a>Access control</a>
+										<div class="content-left">
+											<strong>{{menus1[3].name}}</strong>
+											<br>
+											<p>{{menus1[3].description}}</p>
+
+											<img src="../../assets/image/icon_accesscontrol.png" class="img-responsive small-icon" alt="" />
+											<a class="pull-left">Access control</a>
+										</div>
 									</div>
-									<div class="col-lg-1 text-center">
-										<i class="fa fa-chevron-right fa-1x" aria-hidden="true"></i>
+									<div class="col-lg-1">
+										<div class="arrow-box-left">
+											<img src="../../assets/image/icon_arrowright_black.png" class="img-responsive arrow-box" alt="" />
+										</div>
 									</div>
 								</div>
 							</div>
@@ -104,26 +126,31 @@
 						<li>
 							<div class="content-box">
 								<div class="row margin-content">
-									<div class="col-lg-2 text-center icon-content">
-										<img [src]="menus1[4].img" class="img-responsive" alt="" />
+									<div class="col-lg-2">
+										<div class="img-content">
+											<img [src]="menus1[4].img" class="img-responsive icon-dashboard" alt="" />
+										</div>
 									</div>
 									<div class="col-lg-9">
-										<strong>{{menus1[4].name}}</strong>
-										<br>
-										<p>{{menus1[4].description}}</p>
-										
-										<img [src]="menus1[4].sub[0].img" style="height:10px; width:10px;" class="img-responsive" alt="" />
-										<a>{{ menus1[4].sub[0].name }}</a>
-										
-										<img [src]="menus1[4].sub[2].img" style="height:10px; width:10px;" class="img-responsive" alt="" />
-										<a>{{ menus1[4].sub[2].name }}</a>
+										<div class="content-left">
+											<strong>{{menus1[4].name}}</strong>
+											<br>
+											<p>{{menus1[4].description}}</p>
 
-										<img [src]="menus1[4].sub[3].img" style="height:10px; width:10px;" class="img-responsive" alt="" />
-										<a>{{ menus1[4].sub[3].name }}</a>
-										
+											<img [src]="menus1[4].sub[0].img" class="img-responsive small-icon" alt="" />
+											<a class="pull-left">{{ menus1[4].sub[0].name }}</a>
+
+											<img [src]="menus1[4].sub[2].img" class="img-responsive small-icon" alt="" />
+											<a class="pull-left">{{ menus1[4].sub[2].name }}</a>
+											<br>
+											<img [src]="menus1[4].sub[3].img" class="img-responsive small-icon" alt="" />
+											<a class="pull-left">{{ menus1[4].sub[3].name }}</a>
+										</div>
 									</div>
-									<div class="col-lg-1 text-center">
-										<i class="fa fa-chevron-right fa-1x" aria-hidden="true"></i>
+									<div class="col-lg-1">
+										<div class="arrow-box-left">
+											<img src="../../assets/image/icon_arrowright_black.png" class="img-responsive arrow-box" alt="" />
+										</div>
 									</div>
 								</div>
 							</div>
@@ -143,16 +170,22 @@
 						<li *ngFor="let menu2 of menus2">
 							<div class="content-box">
 								<div class="row margin-content">
-									<div class="col-lg-2 text-center icon-content">
-										<img [src]="menu2.img" class="img-responsive" alt="" />
+									<div class="col-lg-2">
+										<div class="img-content">
+											<img [src]="menu2.img" class="img-responsive icon-dashboard" alt="" />
+										</div>
 									</div>
 									<div class="col-lg-8">
-										<strong>{{ menu2.name}}</strong>
-										<br>
-										<p>{{ menu2.description}}</p>
+										<div class="content-right">
+											<strong>{{ menu2.name}}</strong>
+											<br>
+											<p>{{ menu2.description}}</p>
+										</div>
 									</div>
-									<div class="col-lg-1 text-center">
-										<i class="fa fa-chevron-right fa-1x" aria-hidden="true"></i>
+									<div class="col-lg-1">
+										<div class="arrow-box-right">
+											<img src="../../assets/image/icon_arrowright_black.png" class="img-responsive arrow-box" alt="" />
+										</div>
 									</div>
 								</div>
 							</div>
@@ -168,16 +201,22 @@
 						<li>
 							<div class="content-box">
 								<div class="row margin-content">
-									<div class="col-lg-2 text-center icon-content">
-										<img [src]="menus3[0].img" class="img-responsive" alt="" />
+									<div class="col-lg-2">
+										<div class="img-content">
+											<img [src]="menus3[0].img" class="img-responsive icon-dashboard" alt="" />
+										</div>
 									</div>
 									<div class="col-lg-8">
-										<strong>{{ menus3[0].name}}</strong>
-										<br>
-										<p>{{ menus3[0].description}}</p>
+										<div class="content-right">
+											<strong>{{ menus3[0].name}}</strong>
+											<br>
+											<p>{{ menus3[0].description}}</p>
+										</div>
 									</div>
-									<div class="col-lg-1 text-center">
-										<i class="fa fa-chevron-right fa-1x" aria-hidden="true"></i>
+									<div class="col-lg-1">
+										<div class="arrow-box-right">
+											<img src="../../assets/image/icon_arrowright_black.png" class="img-responsive arrow-box" alt="" />
+										</div>
 									</div>
 								</div>
 							</div>
@@ -185,16 +224,22 @@
 						<li>
 							<div class="content-box">
 								<div class="row margin-content">
-									<div class="col-lg-2 text-center icon-content">
-										<img [src]="menus3[1].img" class="img-responsive" alt="" />
+									<div class="col-lg-2">
+										<div class="img-content">
+											<img [src]="menus3[1].img" class="img-responsive icon-dashboard" alt="" />
+										</div>
 									</div>
 									<div class="col-lg-8">
-										<strong>{{ menus3[1].name}}</strong>
-										<br>
-										<p>{{ menus3[1].description}}</p>
+										<div class="content-right">
+											<strong>{{ menus3[1].name}}</strong>
+											<br>
+											<p>{{ menus3[1].description}}</p>
+										</div>
 									</div>
-									<div class="col-lg-1 text-center">
-										<i class="fa fa-chevron-right fa-1x" aria-hidden="true"></i>
+									<div class="col-lg-1">
+										<div class="arrow-box-right">
+											<img src="../../assets/image/icon_arrowright_black.png" class="img-responsive arrow-box" alt="" />
+										</div>
 									</div>
 								</div>
 							</div>
