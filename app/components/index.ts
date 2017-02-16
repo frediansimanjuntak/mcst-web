@@ -11,6 +11,7 @@ export * from './booking/booking.component';
 export * from './booking/edit-booking.component';
 export * from './company/company.component';
 export * from './company/edit-company.component';
+export * from './contact/contact.component';
 export * from './contract/contract.component';
 export * from './contract/edit-contract.component';
 export * from './contract/contract-notice.component';

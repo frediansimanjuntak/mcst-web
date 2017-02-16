@@ -2,9 +2,9 @@ import { Component } from '@angular/core';
 import '../../rxjs-operators';
 
 @Component({
-  moduleId: module.id,
   selector: 'contact',
-  template: ``,
+  templateUrl: 'app/templates/contact.html'
+
 })
 
 export class ContactComponent  { 
