@@ -701,6 +701,9 @@ p.pull-down {
 .bg-dark .mydp {
   border: 0;
 }
+
+/*popover*/
+
 .close-popover {
   float: right;
   margin: 0 10px;
@@ -723,7 +726,7 @@ p.pull-down {
 .popover.top {
   margin-left: 125px;
 }
-.popover .pull-bottom-right {
+.pull-bottom-right {
   position: absolute;
   bottom: 0;
   right: 0;
@@ -735,4 +738,45 @@ p.pull-down {
 }
 .add-bottom-10px {
   margin-bottom: 10px;
+}
+
+/*costumize datepicker*/
+
+.mydp .btnpickerenabled {
+  background-color: #2f3034 !important;
+  padding-top: 5px;
+  color: #fff;
+}
+.mydp .btnpickerenabled:hover {
+  background-color: #2f3034 !important;
+}
+.mydp .icon {
+  color: #fff;
+}
+
+/*costumize modal*/
+
+.modal-content .close {
+  font-size: 30px;
+  line-height: 1;
+  color: #fff;
+  padding: 3px 0;
+}
+.form-group .control-label {
+  text-align: left !important;
+  padding: 0 !important;
+  margin-bottom: 10px
+}
+.modal-header {
+  padding: 10px 15px;
+  border-bottom: 1px solid #e5e5e5;
+  background-color: #333;
+  color: #fff;
+  border-radius: 4px 4px 0 0;
+}
+.modal-body {
+  height: 670px;
+}
+.modal-footer {
+  border-top: 0;
 }
