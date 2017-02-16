@@ -50,18 +50,18 @@
 						<p-column header="Visiting" field="" filterPlaceholder="Search unit no">
 					    	<template let-visitActive="rowData" pTemplate="body">
 					            <span *ngIf="visitActive.property==''">N/A</span>
-                                <template #popTemplate>
+                                <template #popTemplate >
                                     Resident : <span *ngIf="unit.landlord">
                                                     {{ unit.landlord.username}}
                                                 </span>
-                                                <img src="../../assets/image/icon_close_black.png" style="height:10px; width:10px;" />
+                                                <img (click)="popTemplate.hide()" src="../../assets/image/icon_close_black.png" style="height:10px; width:10px;" />
                                                 
                                                 <br>
                                     Type : <span *ngIf="unit.status">{{ unit.status}}</span><br>
                                     Floor & Unit : <span *ngIf="unit.landlord">{{ visitActive.visiting}}</span><br>
                                     Unit Contact : <span *ngIf="unit.landlord">{{ unit.landlord.phone}}</span><br>
                                     Mobile Contact : <span *ngIf="unit.landlord">{{ unit.landlord.phone}}</span><br>
-                                    <a *ngIf="name" class="btn-underline" style="color: black" [routerLink]="'/' + name.default_development.name + '/unit/view/' + unit._id">View resident details</a>
+                                    <a *ngIf="name" class="btn-underline" style="color: black" [routerLink]="'/' + name.default_development.name_url + '/unit/view/' + unit._id">View resident details</a>
                                 </template>
                                 <a style="cursor: pointer" class="btn-underline"[popover]="popTemplate" (click)="onUnitClick(visitActive.property)">{{visitActive.visiting}}</a>
 					        </template>
