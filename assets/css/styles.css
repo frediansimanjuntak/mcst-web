@@ -608,8 +608,39 @@ p.pull-down {
   width: 323px;
   border-top: 1px solid #dedede;
 }
+.btn-in {
+  background-color: #f0f0f0;
+  border: 1px solid;
+  border-color: #dedede;
+  width: 50px;
+  height: 45px;
+  text-align: center;
+  padding: 0;
+  font-weight: bold;
+}
+.btn-in:hover, .btn-in:active, .btn-in:focus, , .btn-in:active:focus, .btn-in:active:hover {
+  background-color: #dcdcdc;
+  border-color: #b9b9b9;
+}
+.btn-out {
+  background-color: #9b9b9b;
+  border: 1px solid #dedede;
+  border-bottom: 1px;
+  border-top: 4px solid #7c7c7c;
+  width: 50px;
+  height: 45px;
+  text-align: center;
+  padding: 0;
+  font-weight: bold;
+}
+.btn-out:hover, .btn-out:active, .btn-out:focus, , .btn-out:active:focus, .btn-out:active:hover {
+  background-color: #bbbbbb;
+  border: 1px solid #b9b9b9;
+  border-bottom: 1px;
+  border-top: 4px solid #b3b2b2;
+}
 
-/*address of location file*/
+/*breadcrumb*/
 
 .id-location {
   color: #6d6e71;
@@ -630,4 +661,6 @@ p.pull-down {
   color: red;
   font-size: 13px;
   padding-right: 10px;
+}
+
 }
