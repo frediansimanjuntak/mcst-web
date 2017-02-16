@@ -8,7 +8,7 @@
 			{{ afterTomorrow}}
 			<div class="row">
                 <div class="col-md-8">
-                    
+                      <input type="text" class="form-control" placeholder="Search name, vehicle no., unit no." name="filter">
                 </div>
 				<div class="col-md-4 pull-right">
 								<a class="btn btn-default pull-right" ><img class="img-btn" src="../../assets/image/icon_print.png" (click)="print()" />&nbsp;Print</a>
@@ -50,7 +50,20 @@
 						<p-column header="Visiting" field="" filterPlaceholder="Search unit no">
 					    	<template let-visitActive="rowData" pTemplate="body">
 					            <span *ngIf="visitActive.property==''">N/A</span>
-                                <span>{{visitActive.visiting}}</span>
+                                <template #popTemplate>
+                                    Resident : <span *ngIf="unit.landlord">
+                                                    {{ unit.landlord.username}}
+                                                </span>
+                                                <img src="../../assets/image/icon_close_black.png" style="height:10px; width:10px;" />
+                                                
+                                                <br>
+                                    Type : <span *ngIf="unit.status">{{ unit.status}}</span><br>
+                                    Floor & Unit : <span *ngIf="unit.landlord">{{ visitActive.visiting}}</span><br>
+                                    Unit Contact : <span *ngIf="unit.landlord">{{ unit.landlord.phone}}</span><br>
+                                    Mobile Contact : <span *ngIf="unit.landlord">{{ unit.landlord.phone}}</span><br>
+                                    <a *ngIf="name" class="btn-underline" style="color: black" [routerLink]="'/' + name.default_development.name + '/unit/view/' + unit._id">View resident details</a>
+                                </template>
+                                <a style="cursor: pointer" class="btn-underline"[popover]="popTemplate" (click)="onUnitClick(visitActive.property)">{{visitActive.visiting}}</a>
 					        </template>
 						</p-column>
 						<p-column field="purpose" header="Purpose of visit" ></p-column>
@@ -63,13 +76,13 @@
 					    <p-column header="Added by" field="" sortable="true">visitActive
 					    	<template let-visitActive="rowData" pTemplate="body">
 					            <span class="btn-underline">{{visitActive.created_by.username}}</span><br>
-					            <span class="btn-underline">on {{visitActive.created_at | date:'d/M/y'}}</span>
+					            <span>on {{visitActive.created_at | date:'d/M/y'}}</span>
 					        </template>
 						</p-column>
 						<p-column header="Card no" field="" sortable="true">
 					    	<template let-visitActive="rowData" pTemplate="body">
                                 <span *ngIf="visitActive.visitor.pass==''">-</span>
-					            <span class="btn-underline">{{visitActive.visitor.pass}}</span>
+					            <span>{{visitActive.visitor.pass}}</span>
 					        </template>
 						</p-column>
 					    <p-column [style]="{'width':'300px'}" styleClass="col-button" field="" header="Check in/out">
