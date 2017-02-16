@@ -6,12 +6,17 @@
 		Home > Guest & Visitors {{ tomorrow }}
 		<br> {{ afterTomorrow}}
 		<div class="row">
-			<div class="col-md-8">
-				<input type="text" class="form-control" placeholder="Search name, vehicle no., unit no." name="filter">
+			<div class="col-md-8 no-padding top-block">
+				<div class="input-group filter-search">
+					<input type="text" class="form-control input-search" placeholder="Search name, vehicle no., unit no." name="filter">
+					<span class="input-group-btn">
+						<button class="btn btn-secondary btn-search" type="button"><i class="fa fa-search fa-inverse" aria-hidden="true"></i></button>
+					</span>
+				</div>
 			</div>
-			<div class="col-md-4 pull-right">
-				<a class="btn btn-default pull-right"><img class="img-btn" src="../../assets/image/icon_print.png" (click)="print()" />&nbsp;Print</a>
-				<button type="button" class="btn btn-default pull-right" (click)="firstModal.open()"><img class="img-btn" src="../../assets/image/icon_add.png" />&nbsp;Add Visitor/Guest</button>
+			<div class="col-md-4 pull-right no-padding top-block">
+				<button type="button" class="btn btn-default btn-add pull-right" (click)="firstModal.open()"><img class="img-btn" src="../../assets/image/icon_add.png" />&nbsp;Add Visitor/Guest</button>
+				<a class="btn btn-default btn-print pull-right"><img class="img-btn" src="../../assets/image/icon_print.png" (click)="print()" />&nbsp;Print</a>
 			</div>
 		</div>
 
