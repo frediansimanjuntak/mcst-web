@@ -56,17 +56,61 @@
 					<template let-visitActive="rowData" pTemplate="body">
 						<span *ngIf="visitActive.property==''">N/A</span>
 						<template #popTemplate>
-							Resident : <span *ngIf="unit.landlord">
-                                                                {{ unit.landlord.username}}
-                                                            </span>
-							<img (click)="popTemplate.hide()" src="../../assets/image/icon_close_black.png" style="height:10px; width:10px;" />
-
-							<br> Type : <span *ngIf="unit.status">{{ unit.status}}</span>
-							<br> Floor & Unit : <span *ngIf="unit.landlord">{{ visitActive.visiting}}</span>
-							<br> Unit Contact : <span *ngIf="unit.landlord">{{ unit.landlord.phone}}</span>
-							<br> Mobile Contact : <span *ngIf="unit.landlord">{{ unit.landlord.phone}}</span>
+							<div class="row">
+								<img (click)="popTemplate.hide()" src="../../assets/image/icon_close_black.png" style="height:10px; width:10px;" class="close-popover" />
+							</div>
+							<div class="row add-bottom-10px">
+								<div class="col-md-5">
+									<strong>
+										Resident :
+									</strong>
+								</div>
+								<div class="col-md-7">
+									<span *ngIf="unit.landlord">{{ unit.landlord.username}}</span>
+								</div>
+							</div>
+							<div class="row add-bottom-10px">
+								<div class="col-md-5">
+									<strong>
+										Type :
+									</strong>
+								</div>
+								<div class="col-md-7">
+									<span *ngIf="unit.status">{{ unit.status}}</span>
+								</div>
+							</div>
+							<div class="row add-bottom-10px">
+								<div class="col-md-5">
+									<strong>
+										Floor & Unit :
+									</strong>
+								</div>
+								<div class="col-md-7">
+									<span *ngIf="unit.landlord">{{ visitActive.visiting}}</span>
+								</div>
+							</div>
+							<div class="row add-bottom-10px">
+								<div class="col-md-5">
+									<strong>
+										Unit Contact :
+									</strong>
+								</div>
+								<div class="col-md-7">
+									<span *ngIf="unit.landlord">{{ unit.landlord.phone}}</span>
+								</div>
+							</div>
+							<div class="row add-bottom-10px">
+								<div class="col-md-5">
+									<strong>
+										Mobile Contact :
+									</strong>
+								</div>
+								<div class="col-md-7">
+									<span *ngIf="unit.landlord">{{ unit.landlord.phone}}</span>
+								</div>
+							</div>
 							<br>
-							<a *ngIf="name" class="btn-underline" style="color: black" [routerLink]="'/' + name.default_development.name_url + '/unit/view/' + unit._id">View resident details</a>
+							<a *ngIf="name" class="btn-underline pull-bottom-right" style="color: black" [routerLink]="'/' + name.default_development.name_url + '/unit/view/' + unit._id">View resident details</a>
 						</template>
 						<a style="cursor: pointer" class="btn-underline" [popover]="popTemplate" (click)="onUnitClick(visitActive.property)">{{visitActive.visiting}}</a>
 					</template>

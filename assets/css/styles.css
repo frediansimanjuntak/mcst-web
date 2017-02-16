@@ -698,5 +698,41 @@ p.pull-down {
   font-size: 13px;
   padding-right: 10px;
 }
-
+.bg-dark .mydp {
+  border: 0;
+}
+.close-popover {
+  float: right;
+  margin: 0 10px;
+}
+.popover-content {
+  padding: 9px 14px;
+  width: 340px;
+  height: 210px;
+  background-color: #fff;
+  border-radius: 4px;
+  font-size: 13px;
+  font-weight: normal;
+}
+.popover {
+  max-width: 344px;
+}
+.popover.top>.arrow {
+  margin-left: -135px;
+}
+.popover.top {
+  margin-left: 125px;
+}
+.popover .pull-bottom-right {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  margin-bottom: 10px;
+  margin-right: 10px;
+}
+.popover-content strong {
+  margin: 5px;
+}
+.add-bottom-10px {
+  margin-bottom: 10px;
 }
