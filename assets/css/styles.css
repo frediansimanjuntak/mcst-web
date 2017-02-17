@@ -728,8 +728,8 @@ p.pull-down {
 }
 .pull-bottom-right {
   position: absolute;
-  bottom: 0;
-  right: 0;
+  bottom: -100px;
+  right: 7px;
   margin-bottom: 10px;
   margin-right: 10px;
 }
@@ -775,7 +775,8 @@ p.pull-down {
   border-radius: 4px 4px 0 0;
 }
 .modal-body {
-  height: 670px;
+  height: auto;
+  margin-bottom: 100px;
 }
 .modal-footer {
   border-top: 0;
