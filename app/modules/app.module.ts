@@ -24,7 +24,6 @@ import { ModalModule }                  from "ngx-modal";
 import { BootstrapModalModule }         from 'angular2-modal/plugins/bootstrap';
 import { SlimLoadingBarModule }         from 'ng2-slim-progress-bar';
 import { MomentModule }                 from 'angular2-moment';
-import { PdfViewerComponent }           from 'ng2-pdf-viewer';
 
 import { 
   TokenComponent,
@@ -217,7 +216,6 @@ import {
     EditLostFoundComponent,
     FooterComponent,
     SignaturePadPage,
-    PdfViewerComponent
 ],
   providers: [ 
     AccessControlService,
