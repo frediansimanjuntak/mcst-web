@@ -1,343 +1,343 @@
 <div class="container">
-  <div class="main">
-    <div *ngIf="contract">
-      <div class="title">
-        {{contract.title}}
-      </div>
-      <p class="id-location">Home > Manage Projects > {{contract.title}}</p>
-      <div class="row">
-        <div class="col-md-4">
-          <a style="text-decoration: underline;cursor: pointer;" (click)="back()">Back to last page</a>
-        </div>
-      </div>
-      <br/>
-      <!--PROJECT DETAIL -->
-      <div class="row" style="border-top: 10px">
-        <div class="row bg-dark">
-          <div class="col-md-6">
-            <h5>Project Details</h5>
-          </div>
-          <div class="col-md-6">
-            <a class="btn btn-default pull-right" (click)="edit(contract._id)"><img class="img-btn" src="../../assets/image/icon_edit_black.png" />&nbsp;Edit Project</a>
-          </div>
-        </div>
-        <div class="row bg-grey">
-          <div class="col-md-6">
-            <h5><b>{{ contract.title }}</b></h5>
-          </div>
-        </div>
-        <div class="row" style="border: 1px solid grey">
-          <div class="row">
-            <div class="col-lg-6">
-              <p-galleria [images]="images" panelWidth="500" panelHeight="313"></p-galleria>
+    <div class="main">
+        <div *ngIf="contract">
+            <div class="title">
+                {{contract.title}}
             </div>
-            <div class="col-lg-6">
-              <div class="row">
-                <div class="col-md-4">Project Type :</div>
-                <div class="col-md-8">
-                  <p>{{ contract.contract_type }}</p>
-                </div>
-              </div>
-              <div class="row">
-                <div class="col-md-4">Created on :</div>
-                <div class="col-md-8">
-                  <p>{{ contract.created_at | date:'d/M/y' }}</p>
-                </div>
-              </div>
-              <div class="row">
-                <div class="col-md-4">Last updated on :</div>
-                <div class="col-md-8">
-                  <p>{{ contract.updated_at | date:'d/M/y' }}</p>
-                </div>
-              </div>
-              <div class="row">
-                <div class="col-md-4">Linked incident report :</div>
-                <div class="col-md-8">
-                  <span *ngIf="!contract.reference_no"><p>-</p></span>
-                  <span *ngIf="contract.reference_no"><p><a style="text-decoration: underline;cursor:pointer" (click)="viewIncident(contract.reference_id)">#{{ contract.reference_no }}</a></p></span>
-                </div>
-              </div>
-              <div class="row">
-                <div class="col-md-4">Status :</div>
-                <div class="col-md-8">
-                  <p>{{ contract.status }}</p>
-                </div>
-              </div>
-              <div class="row">
+            <p class="id-location">Home > Manage Projects > {{contract.title}}</p>
+            <div class="row">
                 <div class="col-md-4">
-                  <p>Description of Project :</p>
+                    <a style="text-decoration: underline;cursor: pointer;" (click)="back()">Back to last page</a>
                 </div>
-              </div>
-              <div class="row">
-                <div class="col-md-12">
-                  <p>{{ contract.remark }}</p>
+            </div>
+            <br/>
+            <!--PROJECT DETAIL -->
+            <div class="row" style="border-top: 10px">
+                <div class="row bg-dark">
+                    <div class="col-md-6">
+                        <h5>Project Details</h5>
+                    </div>
+                    <div class="col-md-6">
+                        <a class="btn btn-default pull-right" (click)="edit(contract._id)"><img class="img-btn" src="../../assets/image/icon_edit_black.png" />&nbsp;Edit Project</a>
+                    </div>
                 </div>
-              </div>
+                <div class="row bg-grey">
+                    <div class="col-md-6">
+                        <h5><b>{{ contract.title }}</b></h5>
+                    </div>
+                </div>
+                <div class="row" style="border: 1px solid grey">
+                    <div class="row">
+                        <div class="col-lg-6">
+                            <p-galleria [images]="images" panelWidth="500" panelHeight="313"></p-galleria>
+                        </div>
+                        <div class="col-lg-6">
+                            <div class="row">
+                                <div class="col-md-4">Project Type :</div>
+                                <div class="col-md-8">
+                                    <p>{{ contract.contract_type }}</p>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-4">Created on :</div>
+                                <div class="col-md-8">
+                                    <p>{{ contract.created_at | date:'d/M/y' }}</p>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-4">Last updated on :</div>
+                                <div class="col-md-8">
+                                    <p>{{ contract.updated_at | date:'d/M/y' }}</p>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-4">Linked incident report :</div>
+                                <div class="col-md-8">
+                                    <span *ngIf="!contract.reference_no"><p>-</p></span>
+                                    <span *ngIf="contract.reference_no"><p><a style="text-decoration: underline;cursor:pointer" (click)="viewIncident(contract.reference_id)">#{{ contract.reference_no }}</a></p></span>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-4">Status :</div>
+                                <div class="col-md-8">
+                                    <p>{{ contract.status }}</p>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <p>Description of Project :</p>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <p>{{ contract.remark }}</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
-          </div>
-        </div>
-      </div>
-      <br/>
-      <!--Contractor -->
-      <div class="row" style="border-top: 10px">
-        <div class="row bg-dark" style="border-top: 10px">
-          <div class="col-md-6">
-            <h5>Contractor</h5>
-          </div>
-        </div>
-        <div class="row" style="border: 1px solid grey">
-          <div class="row">
-            <div class="col-md-12">
-              <b>Find and quote a Contractor</b>
-              <a class="btn btn-default pull-right"><b>View</b></a>
+            <br/>
+            <!--Contractor -->
+            <div class="row" style="border-top: 10px">
+                <div class="row bg-dark" style="border-top: 10px">
+                    <div class="col-md-6">
+                        <h5>Contractor</h5>
+                    </div>
+                </div>
+                <div class="row" style="border: 1px solid grey">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <b>Find and quote a Contractor</b>
+                            <a class="btn btn-default pull-right"><b>View</b></a>
+                        </div>
+                    </div>
+                </div>
             </div>
-          </div>
-        </div>
-      </div>
-      <br/>
-      <!--Project Notice -->
-      <div class="row" style="border-top: 10px">
-        <div class="row bg-dark" style="border-top: 10px">
-          <div class="col-md-6">
-            <h5>Project Notice</h5>
-          </div>
-          <div class="col-md-6">
-            <a class="btn btn-default pull-right" (click)="add_notice(contract._id)"><img class="img-btn" src="../../assets/image/icon_edit_black.png" />&nbsp;Create Project Notice</a>
-          </div>
-        </div>
-        <div class="row" style="border: 1px solid grey;min-height: 100px">
-          <div *ngIf="!contractnotices" class="row">
-            <div class="col-md-12">
-              <div style="text-align: center;">
-                No Project Notice.
-              </div>
-              <div style="text-align: center;">
-                <p>Create notice to inform the residents of the project</p>
-              </div>
-              <div style="text-align:center">
-                <a class="btn btn-default" (click)="add_notice(contract._id)"><b>Create Project Notice</b></a>
-              </div>
+            <br/>
+            <!--Project Notice -->
+            <div class="row" style="border-top: 10px">
+                <div class="row bg-dark" style="border-top: 10px">
+                    <div class="col-md-6">
+                        <h5>Project Notice</h5>
+                    </div>
+                    <div class="col-md-6">
+                        <a class="btn btn-default pull-right" (click)="add_notice(contract._id)"><img class="img-btn" src="../../assets/image/icon_edit_black.png" />&nbsp;Create Project Notice</a>
+                    </div>
+                </div>
+                <div class="row" style="border: 1px solid grey;min-height: 100px">
+                    <div *ngIf="!contractnotices" class="row">
+                        <div class="col-md-12">
+                            <div style="text-align: center;">
+                                No Project Notice.
+                            </div>
+                            <div style="text-align: center;">
+                                <p>Create notice to inform the residents of the project</p>
+                            </div>
+                            <div style="text-align:center">
+                                <a class="btn btn-default" (click)="add_notice(contract._id)"><b>Create Project Notice</b></a>
+                            </div>
+                        </div>
+                    </div>
+                    <div *ngIf="contractnotices">
+                        <p-dataTable [value]="contractnotices" [rows]="10" [paginator]="true">
+                            <p-column filterMatchMode="contains" field="title" header="Title" sortable="true" [filter]="true" filterPlaceholder="Search title"></p-column>
+                            <p-column filterMatchMode="contains" field="start_time" header="Commence date" sortable="true" [filter]="true" filterPlaceholder="Search commence date">
+                                <template let-data="rowData" pTemplate="body">
+                                    {{data.start_time | date:'d/M/y'}}
+                                </template>
+                            </p-column>
+                            <p-column filterMatchMode="contains" field="end_time" header="Estimated date of completion" sortable="true" [filter]="true" filterPlaceholder="Search estimated date of completion">
+                                <template let-data="rowData" pTemplate="body">
+                                    {{data.end_time | date:'d/M/y'}}
+                                </template>
+                            </p-column>
+                            <p-column filterMatchMode="contains" field="description" header="Project description" sortable="true" [filter]="true" filterPlaceholder="Search description"></p-column>
+                            <p-column field="attachment" header="Attachment">
+                                <template let-data="rowData" pTemplate="body">
+                                    <span *ngIf="data.attachment != null">Yes</span>
+                                    <span *ngIf="data.attachment == null">No</span>
+                                </template>
+                            </p-column>
+                            <p-column header="Last Updated on" sortable="true" [filter]="true" filterPlaceholder="Search last updated on">
+                                <template let-data="rowData" pTemplate="body">
+                                    <span *ngIf="data.updated_at != null">{{data.updated_at | date:'d/M/y'}}</span>
+                                    <span *ngIf="data.updated_at == null">{{data.created_at | date:'d/M/y'}}</span>
+                                </template>
+                            </p-column>
+                            <p-column styleClass="col-button" header="Action">
+                                <template let-data="rowData" pTemplate="body">
+                                    <a type="button" style="cursor:pointer" (click)="viewNotice(contract._id,data)">View</a>
+                                </template>
+                            </p-column>
+                        </p-dataTable>
+                    </div>
+                </div>
             </div>
-          </div>
-          <div *ngIf="contractnotices">
-            <p-dataTable [value]="contractnotices" [rows]="10" [paginator]="true">
-              <p-column filterMatchMode="contains" field="title" header="Title" sortable="true" [filter]="true" filterPlaceholder="Search title"></p-column>
-              <p-column filterMatchMode="contains" field="start_time" header="Commence date" sortable="true" [filter]="true" filterPlaceholder="Search commence date">
-                <template let-data="rowData" pTemplate="body">
-                  {{data.start_time | date:'d/M/y'}}
-                </template>
-              </p-column>
-              <p-column filterMatchMode="contains" field="end_time" header="Estimated date of completion" sortable="true" [filter]="true" filterPlaceholder="Search estimated date of completion">
-                <template let-data="rowData" pTemplate="body">
-                  {{data.end_time | date:'d/M/y'}}
-                </template>
-              </p-column>
-              <p-column filterMatchMode="contains" field="description" header="Project description" sortable="true" [filter]="true" filterPlaceholder="Search description"></p-column>
-              <p-column field="attachment" header="Attachment">
-                <template let-data="rowData" pTemplate="body">
-                  <span *ngIf="data.attachment != null">Yes</span>
-                  <span *ngIf="data.attachment == null">No</span>
-                </template>
-              </p-column>
-              <p-column header="Last Updated on" sortable="true" [filter]="true" filterPlaceholder="Search last updated on">
-                <template let-data="rowData" pTemplate="body">
-                  <span *ngIf="data.updated_at != null">{{data.updated_at | date:'d/M/y'}}</span>
-                  <span *ngIf="data.updated_at == null">{{data.created_at | date:'d/M/y'}}</span>
-                </template>
-              </p-column>
-              <p-column styleClass="col-button" header="Action">
-                <template let-data="rowData" pTemplate="body">
-                  <a type="button" style="cursor:pointer" (click)="viewNotice(contract._id,data)">View</a>
-                </template>
-              </p-column>
-            </p-dataTable>
-          </div>
-        </div>
-      </div>
-      <br/>
-      <!--Contractor Visiting List -->
-      <div class="row" style="border-top: 10px">
-        <div class="row bg-dark" style="border-top: 10px">
-          <div class="col-md-6">
-            <h5>Contractor Visiting List</h5>
-          </div>
-          <div class="col-md-6">
-            <a class="btn btn-default pull-right"><img class="img-btn" src="../../assets/image/icon_edit_black.png" (click)="generateCode(unit)" />&nbsp;Create List</a>
-          </div>
-        </div>
-        <div class="row" style="border: 1px solid grey;min-height: 100px">
-          <div class="row">
-            <div class="col-md-12">
-              <div style="text-align: center;">
-                No Contractor visit list yet.
-              </div>
-              <div style="text-align: center;">
-                <p>Create a list to track the Contractor accessing the building</p>
-              </div>
-              <div style="text-align:center">
-                <a class="btn btn-default"><b>Create List</b></a>
-              </div>
+            <br/>
+            <!--Contractor Visiting List -->
+            <div class="row" style="border-top: 10px">
+                <div class="row bg-dark" style="border-top: 10px">
+                    <div class="col-md-6">
+                        <h5>Contractor Visiting List</h5>
+                    </div>
+                    <div class="col-md-6">
+                        <a class="btn btn-default pull-right"><img class="img-btn" src="../../assets/image/icon_edit_black.png" (click)="generateCode(unit)" />&nbsp;Create List</a>
+                    </div>
+                </div>
+                <div class="row" style="border: 1px solid grey;min-height: 100px">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div style="text-align: center;">
+                                No Contractor visit list yet.
+                            </div>
+                            <div style="text-align: center;">
+                                <p>Create a list to track the Contractor accessing the building</p>
+                            </div>
+                            <div style="text-align:center">
+                                <a class="btn btn-default"><b>Create List</b></a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
-          </div>
-        </div>
-      </div>
-      <br/>
-      <!--Project Note-->
-      <div class="row" style="border-top: 10px">
-        <div class="row bg-dark" style="border-top: 10px">
-          <div class="col-md-6">
-            <h5>Project Note</h5>
-          </div>
-          <div class="col-md-6">
-            <a class="btn btn-default pull-right" (click)="add_note(contract._id)"><img class="img-btn" src="../../assets/image/icon_edit_black.png" />&nbsp;Post Note</a>
-          </div>
-        </div>
-        <div class="row" style="border: 1px solid grey;min-height: 100px">
-          <div *ngIf="!contractnotes" class="row">
-            <div class="col-md-12">
-              <div style="text-align: center;">
-                No note created yet.
-              </div>
-              <div style="text-align: center;">
-                <p>Use note to track project's progress</p>
-              </div>
-              <div style="text-align:center">
-                <a class="btn btn-default" (click)="add_note(contract._id)"><b>Post Note</b></a>
-              </div>
+            <br/>
+            <!--Project Note-->
+            <div class="row" style="border-top: 10px">
+                <div class="row bg-dark" style="border-top: 10px">
+                    <div class="col-md-6">
+                        <h5>Project Note</h5>
+                    </div>
+                    <div class="col-md-6">
+                        <a class="btn btn-default pull-right" (click)="add_note(contract._id)"><img class="img-btn" src="../../assets/image/icon_edit_black.png" />&nbsp;Post Note</a>
+                    </div>
+                </div>
+                <div class="row" style="border: 1px solid grey;min-height: 100px">
+                    <div *ngIf="!contractnotes" class="row">
+                        <div class="col-md-12">
+                            <div style="text-align: center;">
+                                No note created yet.
+                            </div>
+                            <div style="text-align: center;">
+                                <p>Use note to track project's progress</p>
+                            </div>
+                            <div style="text-align:center">
+                                <a class="btn btn-default" (click)="add_note(contract._id)"><b>Post Note</b></a>
+                            </div>
+                        </div>
+                    </div>
+                    <div *ngIf="contractnotes">
+                        <p-dataTable [value]="contractnotes" [rows]="10" [paginator]="true">
+                            <p-column filterMatchMode="contains" field="posted_by.username" header="Posted by" sortable="true" [filter]="true" filterPlaceholder="Search posted by"></p-column>
+                            <p-column filterMatchMode="contains" field="posted_on" header="Posted on" sortable="true" [filter]="true" filterPlaceholder="Search posted on">
+                                <template let-data="rowData" pTemplate="body">
+                                    {{data.posted_on | date:'d/M/y'}}
+                                </template>
+                            </p-column>
+                            <p-column filterMatchMode="contains" field="note_remark" header="Remarks" sortable="true" [filter]="true" filterPlaceholder="Search remark"></p-column>
+                            <p-column field="attachment" header="Attachment">
+                                <template let-data="rowData" pTemplate="body">
+                                    <span *ngIf="data.attachment != null">Yes</span>
+                                    <span *ngIf="data.attachment == null">No</span>
+                                </template>
+                            </p-column>
+                            <p-column styleClass="col-button" header="Action">
+                                <template let-data="rowData" pTemplate="body">
+                                    <a type="button" style="cursor:pointer" (click)="viewNote(data)">View</a>
+                                    <button type="button" (click)="deleteContractNote(data, contract._id)"><i class="fa fa-trash" aria-hidden="true"></i></button>
+                                </template>
+                            </p-column>
+                        </p-dataTable>
+                    </div>
+                </div>
             </div>
-          </div>
-          <div *ngIf="contractnotes">
-            <p-dataTable [value]="contractnotes" [rows]="10" [paginator]="true">
-              <p-column filterMatchMode="contains" field="posted_by.username" header="Posted by" sortable="true" [filter]="true" filterPlaceholder="Search posted by"></p-column>
-              <p-column filterMatchMode="contains" field="posted_on" header="Posted on" sortable="true" [filter]="true" filterPlaceholder="Search posted on">
-                <template let-data="rowData" pTemplate="body">
-                  {{data.posted_on | date:'d/M/y'}}
-                </template>
-              </p-column>
-              <p-column filterMatchMode="contains" field="note_remark" header="Remarks" sortable="true" [filter]="true" filterPlaceholder="Search remark"></p-column>
-              <p-column field="attachment" header="Attachment">
-                <template let-data="rowData" pTemplate="body">
-                  <span *ngIf="data.attachment != null">Yes</span>
-                  <span *ngIf="data.attachment == null">No</span>
-                </template>
-              </p-column>
-              <p-column styleClass="col-button" header="Action">
-                <template let-data="rowData" pTemplate="body">
-                  <a type="button" style="cursor:pointer" (click)="viewNote(data)">View</a>
-                  <button type="button" (click)="deleteContractNote(data, contract._id)"><i class="fa fa-trash" aria-hidden="true"></i></button>
-                </template>
-              </p-column>
-            </p-dataTable>
-          </div>
+            <br/>
         </div>
-      </div>
-      <br/>
+        <div *ngIf="!contract">
+            <div class="title">
+                MANAGE PROJECTS
+            </div>
+            <p class="id-location">Home > Manage Projects</p>
+            <div class="row">
+                <div class="col-md-4 pull-right">
+                    <a class="btn btn-default pull-right btn-gray" (click)="add()">
+                        <i class="fa fa-plus" aria-hidden="true"></i>&nbsp;Add Projects</a>
+                </div>
+            </div>
+            <div (click)="$event.preventDefault()">
+                <tabset>
+                    <!-- ALL -->
+                    <tab heading="All">
+                        <p-dataTable [value]="contracts" [rows]="10" [paginator]="true">
+                            <p-column filterMatchMode="contains" [style]="{'text-transform': 'capitalize'}" field="title" header="Project Title" sortable="true" [filter]="true" filterPlaceholder="Search Project Title"></p-column>
+                            <p-column filterMatchMode="contains" header="Commence on" sortable="true" [filter]="true" filterPlaceholder="Search Commence on">
+                                <template let-contracts="rowData" pTemplate="body">
+                                    <span>{{contracts.start_time | date:'d/M/y'}}</span>
+                                </template>
+                            </p-column>
+                            <p-column filterMatchMode="contains" header="Estimated Completion" sortable="true" [filter]="true" filterPlaceholder="Search Estimated Completion">
+                                <template let-contracts="rowData" pTemplate="body">
+                                    <span>{{contracts.end_time | date:'d/M/y'}}</span>
+                                </template>
+                            </p-column>
+                            <p-column filterMatchMode="contains" field="remark" header="Remarks" sortable="true" [filter]="true" filterPlaceholder="Search Remark"></p-column>
+                            <p-column filterMatchMode="contains" [style]="{'text-transform': 'capitalize'}" field="status" header="Status" sortable="true" [filter]="true" filterPlaceholder="Search Status"></p-column>
+                            <p-column filterMatchMode="contains" field="" header="Created/Update" sortable="true" [filter]="true" filterPlaceholder="Search Issued on">
+                                <template let-contracts="rowData" pTemplate="body">
+                                    <p>Created:{{contracts.created_at | date:'d/M/y'}}</p>
+                                    <p>Latest:{{contracts.updated_at | date:'d/M/y'}}</p>
+                                </template>
+                            </p-column>
+                            <p-column styleClass="col-button" header="Action">
+                                <template let-contracts="rowData" pTemplate="body">
+                                    <a type="button" style="cursor:pointer" (click)="view(contracts)">See Details</a>
+                                    <button type="button" (click)="deleteContract(contracts)">Remove</button>
+                                </template>
+                            </p-column>
+                        </p-dataTable>
+                    </tab>
+                    <!-- OPEN -->
+                    <tab heading="Open">
+                        <p-dataTable [value]="open" [rows]="10" [paginator]="true">
+                            <p-column filterMatchMode="contains" [style]="{'text-transform': 'capitalize'}" field="title" header="Project Title" sortable="true" [filter]="true" filterPlaceholder="Search Project Title"></p-column>
+                            <p-column filterMatchMode="contains" header="Commence on" sortable="true" [filter]="true" filterPlaceholder="Search Commence on">
+                                <template let-open="rowData" pTemplate="body">
+                                    <span>{{open.start_time | date:'d/M/y'}}</span>
+                                </template>
+                            </p-column>
+                            <p-column filterMatchMode="contains" header="Estimated Completion" sortable="true" [filter]="true" filterPlaceholder="Search Estimated Completion">
+                                <template let-open="rowData" pTemplate="body">
+                                    <span>{{open.end_time | date:'d/M/y'}}</span>
+                                </template>
+                            </p-column>
+                            <p-column filterMatchMode="contains" field="remark" header="Remarks" sortable="true" [filter]="true" filterPlaceholder="Search Remark"></p-column>
+                            <p-column filterMatchMode="contains" [style]="{'text-transform': 'capitalize'}" field="status" header="Status" sortable="true" [filter]="true" filterPlaceholder="Search Status"></p-column>
+                            <p-column filterMatchMode="contains" field="" header="Created/Update" sortable="true" [filter]="true" filterPlaceholder="Search Issued on">
+                                <template let-open="rowData" pTemplate="body">
+                                    <p>Created:{{open.created_at | date:'d/M/y'}}</p>
+                                    <p>Latest:{{open.updated_at | date:'d/M/y'}}</p>
+                                </template>
+                            </p-column>
+                            <p-column styleClass="col-button" header="Action">
+                                <template let-open="rowData" pTemplate="body">
+                                    <a type="button" style="cursor:pointer" (click)="view(open)">See Details</a>
+                                    <button type="button" (click)="deleteContract(open)">Remove</button>
+                                </template>
+                            </p-column>
+                        </p-dataTable>
+                    </tab>
+                    <!-- CLOSE -->
+                    <tab heading="Closed">
+                        <p-dataTable [value]="close" [rows]="10" [paginator]="true">
+                            <p-column filterMatchMode="contains" [style]="{'text-transform': 'capitalize'}" field="title" header="Project Title" sortable="true" [filter]="true" filterPlaceholder="Search Project Title"></p-column>
+                            <p-column filterMatchMode="contains" header="Commence on" sortable="true" [filter]="true" filterPlaceholder="Search Commence on">
+                                <template let-close="rowData" pTemplate="body">
+                                    <span>{{close.start_time | date:'d/M/y'}}</span>
+                                </template>
+                            </p-column>
+                            <p-column filterMatchMode="contains" header="Estimated Completion" sortable="true" [filter]="true" filterPlaceholder="Search Estimated Completion">
+                                <template let-close="rowData" pTemplate="body">
+                                    <span>{{close.end_time | date:'d/M/y'}}</span>
+                                </template>
+                            </p-column>
+                            <p-column filterMatchMode="contains" field="remark" header="Remarks" sortable="true" [filter]="true" filterPlaceholder="Search Remark"></p-column>
+                            <p-column filterMatchMode="contains" [style]="{'text-transform': 'capitalize'}" field="status" header="Status" sortable="true" [filter]="true" filterPlaceholder="Search Status"></p-column>
+                            <p-column filterMatchMode="contains" field="" header="Created/Update" sortable="true" [filter]="true" filterPlaceholder="Search Issued on">
+                                <template let-close="rowData" pTemplate="body">
+                                    <p>Created:{{close.created_at | date:'d/M/y'}}</p>
+                                    <p>Latest:{{close.updated_at | date:'d/M/y'}}</p>
+                                </template>
+                            </p-column>
+                            <p-column styleClass="col-button" header="Action">
+                                <template let-close="rowData" pTemplate="body">
+                                    <a type="button" style="cursor:pointer" (click)="view(close)">See Details</a>
+                                    <button type="button" (click)="deleteContract(close)">Remove</button>
+                                </template>
+                            </p-column>
+                        </p-dataTable>
+                    </tab>
+                </tabset>
+            </div>
+        </div>
     </div>
-    <div *ngIf="!contract">
-      <div class="title">
-        MANAGE PROJECTS
-      </div>
-      <p class="id-location">Home > Manage Projects</p>
-      <div class="row">
-        <div class="col-md-4 pull-right">
-          <a class="btn btn-default pull-right btn-gray" (click)="add()">
-            <i class="fa fa-plus" aria-hidden="true"></i>&nbsp;Add Projects</a>
-        </div>
-      </div>
-      <div (click)="$event.preventDefault()">
-        <tabset>
-          <!-- ALL -->
-          <tab heading="All">
-            <p-dataTable [value]="contracts" [rows]="10" [paginator]="true">
-              <p-column filterMatchMode="contains" [style]="{'text-transform': 'capitalize'}" field="title" header="Project Title" sortable="true" [filter]="true" filterPlaceholder="Search Project Title"></p-column>
-              <p-column filterMatchMode="contains" header="Commence on" sortable="true" [filter]="true" filterPlaceholder="Search Commence on">
-                <template let-contracts="rowData" pTemplate="body">
-                  <span>{{contracts.start_time | date:'d/M/y'}}</span>
-                </template>
-              </p-column>
-              <p-column filterMatchMode="contains" header="Estimated Completion" sortable="true" [filter]="true" filterPlaceholder="Search Estimated Completion">
-                <template let-contracts="rowData" pTemplate="body">
-                  <span>{{contracts.end_time | date:'d/M/y'}}</span>
-                </template>
-              </p-column>
-              <p-column filterMatchMode="contains" field="remark" header="Remarks" sortable="true" [filter]="true" filterPlaceholder="Search Remark"></p-column>
-              <p-column filterMatchMode="contains" [style]="{'text-transform': 'capitalize'}" field="status" header="Status" sortable="true" [filter]="true" filterPlaceholder="Search Status"></p-column>
-              <p-column filterMatchMode="contains" field="" header="Created/Update" sortable="true" [filter]="true" filterPlaceholder="Search Issued on">
-                <template let-contracts="rowData" pTemplate="body">
-                  <p>Created:{{contracts.created_at | date:'d/M/y'}}</p>
-                  <p>Latest:{{contracts.updated_at | date:'d/M/y'}}</p>
-                </template>
-              </p-column>
-              <p-column styleClass="col-button" header="Action">
-                <template let-contracts="rowData" pTemplate="body">
-                  <a type="button" style="cursor:pointer" (click)="view(contracts)">See Details</a>
-                  <button type="button" (click)="deleteContract(contracts)">Remove</button>
-                </template>
-              </p-column>
-            </p-dataTable>
-          </tab>
-          <!-- OPEN -->
-          <tab heading="Open">
-            <p-dataTable [value]="open" [rows]="10" [paginator]="true">
-              <p-column filterMatchMode="contains" [style]="{'text-transform': 'capitalize'}" field="title" header="Project Title" sortable="true" [filter]="true" filterPlaceholder="Search Project Title"></p-column>
-              <p-column filterMatchMode="contains" header="Commence on" sortable="true" [filter]="true" filterPlaceholder="Search Commence on">
-                <template let-open="rowData" pTemplate="body">
-                  <span>{{open.start_time | date:'d/M/y'}}</span>
-                </template>
-              </p-column>
-              <p-column filterMatchMode="contains" header="Estimated Completion" sortable="true" [filter]="true" filterPlaceholder="Search Estimated Completion">
-                <template let-open="rowData" pTemplate="body">
-                  <span>{{open.end_time | date:'d/M/y'}}</span>
-                </template>
-              </p-column>
-              <p-column filterMatchMode="contains" field="remark" header="Remarks" sortable="true" [filter]="true" filterPlaceholder="Search Remark"></p-column>
-              <p-column filterMatchMode="contains" [style]="{'text-transform': 'capitalize'}" field="status" header="Status" sortable="true" [filter]="true" filterPlaceholder="Search Status"></p-column>
-              <p-column filterMatchMode="contains" field="" header="Created/Update" sortable="true" [filter]="true" filterPlaceholder="Search Issued on">
-                <template let-open="rowData" pTemplate="body">
-                  <p>Created:{{open.created_at | date:'d/M/y'}}</p>
-                  <p>Latest:{{open.updated_at | date:'d/M/y'}}</p>
-                </template>
-              </p-column>
-              <p-column styleClass="col-button" header="Action">
-                <template let-open="rowData" pTemplate="body">
-                  <a type="button" style="cursor:pointer" (click)="view(open)">See Details</a>
-                  <button type="button" (click)="deleteContract(open)">Remove</button>
-                </template>
-              </p-column>
-            </p-dataTable>
-          </tab>
-          <!-- CLOSE -->
-          <tab heading="Closed">
-            <p-dataTable [value]="close" [rows]="10" [paginator]="true">
-              <p-column filterMatchMode="contains" [style]="{'text-transform': 'capitalize'}" field="title" header="Project Title" sortable="true" [filter]="true" filterPlaceholder="Search Project Title"></p-column>
-              <p-column filterMatchMode="contains" header="Commence on" sortable="true" [filter]="true" filterPlaceholder="Search Commence on">
-                <template let-close="rowData" pTemplate="body">
-                  <span>{{close.start_time | date:'d/M/y'}}</span>
-                </template>
-              </p-column>
-              <p-column filterMatchMode="contains" header="Estimated Completion" sortable="true" [filter]="true" filterPlaceholder="Search Estimated Completion">
-                <template let-close="rowData" pTemplate="body">
-                  <span>{{close.end_time | date:'d/M/y'}}</span>
-                </template>
-              </p-column>
-              <p-column filterMatchMode="contains" field="remark" header="Remarks" sortable="true" [filter]="true" filterPlaceholder="Search Remark"></p-column>
-              <p-column filterMatchMode="contains" [style]="{'text-transform': 'capitalize'}" field="status" header="Status" sortable="true" [filter]="true" filterPlaceholder="Search Status"></p-column>
-              <p-column filterMatchMode="contains" field="" header="Created/Update" sortable="true" [filter]="true" filterPlaceholder="Search Issued on">
-                <template let-close="rowData" pTemplate="body">
-                  <p>Created:{{close.created_at | date:'d/M/y'}}</p>
-                  <p>Latest:{{close.updated_at | date:'d/M/y'}}</p>
-                </template>
-              </p-column>
-              <p-column styleClass="col-button" header="Action">
-                <template let-close="rowData" pTemplate="body">
-                  <a type="button" style="cursor:pointer" (click)="view(close)">See Details</a>
-                  <button type="button" (click)="deleteContract(close)">Remove</button>
-                </template>
-              </p-column>
-            </p-dataTable>
-          </tab>
-        </tabset>
-      </div>
-    </div>
-  </div>
 </div>
