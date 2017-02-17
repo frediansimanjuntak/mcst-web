@@ -74,7 +74,7 @@ export class EditAnnouncementComponent  {
             day: day
         };
 
-        // this.autoPostOnDateOptions = copy;
+        this.autoPostOnDateOptions = copy;
         this.validTillDateOptions = copy;
         
         this.model.auto_post_on = ""

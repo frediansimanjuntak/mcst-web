@@ -308,14 +308,14 @@
 								<input type="text" class="form-control" placeholder="Enter Pass serial" name="pass" formControlName="pass">
 								<small style="color: red" [hidden]="checkInForm.controls.visitor.controls.pass.valid || (checkInForm.controls.visitor.controls.pass.pristine && !checkInSsubmitted)">Pass number is required</small>
 							</div>
-						</div>
+						</div><br>
 						<div class="pull-right">
-							<button class="btn btn-primary" [disabled]="loading" (click)="checkIn(checkInForm.value, checkInForm.valid)">Check-In
+							<button class="btn btn-primary btn-brown" [disabled]="loading" (click)="checkIn(checkInForm.value, checkInForm.valid)">Check-In
 								<span>
                                             <img *ngIf="loading" src="data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA==" />
                                         </span>
 							</button>
-							<button class="btn btn-default" (click)="checkInModal.close()">Cancel</button>
+							<button class="btn btn-default btn-gray" (click)="checkInModal.close()">Cancel</button>
 						</div>
 					</form>
 				</modal-content>
@@ -335,14 +335,14 @@
 								<input type="text" class="form-control" placeholder="Enter Pass serial" name="pass" formControlName="pass">
 								<small style="color: red" [hidden]="checkOutForm.controls.visitor.controls.pass.valid || (checkOutForm.controls.visitor.controls.pass.pristine && !checkInSsubmitted)">Pass number is required</small>
 							</div>
-						</div>
+						</div><br>
 						<div class="pull-right">
-							<button class="btn btn-primary" [disabled]="loading">Check-Out
+							<button class="btn btn-primary btn-brown" [disabled]="loading">Check-Out
 								<span>
                                             <img *ngIf="loading" src="data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA==" />
                                 </span>
 							</button>
-							<a class="btn btn-default" (click)="checkOutModal.close()">Cancel</a>
+							<a class="btn btn-default btn-gray" (click)="checkOutModal.close()">Cancel</a>
 						</div>
 					</form>
 				</modal-content>

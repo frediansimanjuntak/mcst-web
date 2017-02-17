@@ -90,7 +90,7 @@ export class AppComponent implements OnInit {
             this.loading = true;
         }
         if (event instanceof NavigationEnd) {
-           setTimeout(() => this.loading = false, 1000);
+           setTimeout(() => this.loading = false, 3000);
         }
 
         // Set loading state to false in both of the below events to hide the spinner in case a request fails

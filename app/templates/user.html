@@ -6,8 +6,7 @@
 		<p class="id-location">Home > User</p>
 		<div class="row">
 			<div class="col-md-4 pull-right">
-				<a class="btn btn-default pull-right" (click)="add()">
-					<i class="fa fa-plus" aria-hidden="true"></i>&nbsp;Add User</a>
+				<button class="btn btn-default pull-right btn-brown" (click)="add()"> <img class="img-btn" src="../../assets/image/icon_add.png" />&nbsp;Add User</button>
 			</div>
 		</div>
 		<p-dataTable [value]="users" [rows]="10" [paginator]="true">

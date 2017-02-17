@@ -106,66 +106,86 @@
 								</template>
 							</p-column>
 
-							<p-column field="" header="Open to" sortable="true" [filter]="true" filterPlaceholder="Search Type"></p-column>
-							<p-column header="Commence date" sortable="true">
-								<template let-pollsDraft="rowData" pTemplate="body">
-									<span>{{pollsDraft.start_time | date:'d/M/y'}}</span>
-								</template>
-							</p-column>
-							<p-column header="Result date" sortable="true">
-								<template let-pollsDraft="rowData" pTemplate="body">
-									<span>{{pollsDraft.end_time | date:'d/M/y'}}</span>
-								</template>
-							</p-column>
-							<p-column [style]="{'width':'300px'}" styleClass="col-button">
-								<template class="pull-right" let-pollsDraft="rowData" pTemplate="body">
-									<a type="button" style="cursor:pointer" (click)="editPoll(pollsDraft)"><i class="fa fa-edit" aria-hidden="true"></i>&nbsp;Edit</a>
-									<button type="button" class="btn btn-primary btn-xs" (click)="openModal(pollsDraft) || firstModal.open()">Start Poll</button>
-									<button type="button" (click)="deletePoll(pollsDraft)"><i class="fa fa-trash" aria-hidden="true"></i></button>
-								</template>
-							</p-column>
-						</p-dataTable>
-					</tab>
-					<tab heading="Active Poll">
-						<p-dataTable [value]="pollsActive" [rows]="10" [paginator]="true">
-							<p-column field="title" header="Poll Title" sortable="true" [filter]="true" filterPlaceholder="Search Title"></p-column>
-							<p-column field="description" header="Poll" sortable="true" [filter]="true" filterPlaceholder="Search Poll"></p-column>
-							<p-column header="no. of Poll" sortable="true">
-								<template let-pollsActive="rowData" pTemplate="body">
-									<span>{{pollsActive.votes.length}}</span>
-								</template>
-							</p-column>
-							<p-column header="Result date" sortable="true">
-								<template let-pollsActive="rowData" pTemplate="body">
-									<span>{{pollsActive.end_time | date:'d/M/y'}}</span>
-								</template>
-							</p-column>
-							<p-column header="Days Remaining" sortable="true">
-								<template let-pollsActive="rowData" pTemplate="body">
-									<span>{{pollsActive.end_time | amDifference: today :'days' : true}}
+					    <p-column field="" header="Open to" sortable="true" [filter]="true" filterPlaceholder="Search Type"></p-column>
+						<p-column header="Commence date" sortable="true">
+						    	<template let-pollsDraft="rowData" pTemplate="body">
+						            <span>{{pollsDraft.start_time | date:'d/M/y'}}</span>
+						        </template>
+						</p-column>
+						<p-column header="Result date" sortable="true">
+						    	<template let-pollsDraft="rowData" pTemplate="body">
+						            <span>{{pollsDraft.end_time | date:'d/M/y'}}</span>
+						        </template>
+						</p-column>
+						<p-column [style]="{'width':'300px'}" styleClass="col-button">
+					    	<template class="pull-right" let-pollsDraft="rowData" pTemplate="body">
+					    	<a type="button" style="cursor:pointer" (click)="editPoll(pollsDraft)"><i class="fa fa-edit" aria-hidden="true"></i>&nbsp;Edit</a>
+					    	<button type="button" class="btn btn-primary btn-brown btn-xs" (click)="openModal(pollsDraft) || firstModal.open()">Start Poll</button>
+					        <button  type="button" (click)="deletePoll(pollsDraft)"><i class="fa fa-trash" aria-hidden="true"></i></button>
+					    	</template>
+					    </p-column>
+					</p-dataTable>
+			    </tab>
+			    <tab heading="Active Poll">
+			    	<p-dataTable [value]="pollsActive" [rows]="10" [paginator]="true">
+					    <p-column field="title" header="Poll Title" sortable="true" [filter]="true" filterPlaceholder="Search Title"></p-column>
+					    <p-column field="description" header="Poll" sortable="true" [filter]="true" filterPlaceholder="Search Poll"></p-column>
+					    <p-column header="no. of Poll" sortable="true">
+						    	<template let-pollsActive="rowData" pTemplate="body">
+						            <span>{{pollsActive.votes.length}}</span>
+						        </template>
+						</p-column>
+						<p-column header="Result date" sortable="true">
+						    	<template let-pollsActive="rowData" pTemplate="body">
+						            <span>{{pollsActive.end_time | date:'d/M/y'}}</span>
+						        </template>
+						</p-column>
+						<p-column header="Days Remaining" sortable="true">
+						    	<template let-pollsActive="rowData" pTemplate="body">
+						            <span>{{pollsActive.end_time | amDifference: today :'days' : true}}
 						            </span>
-								</template>
-							</p-column>
-							<p-column [style]="{'width':'300px'}" styleClass="col-button">
-								<template class="pull-right" let-pollsActive="rowData" pTemplate="body">
-									<a type="button" style="cursor:pointer" (click)="viewPoll(pollsActive)">&nbsp;View Progress</a>
-								</template>
-							</p-column>
-						</p-dataTable>
-					</tab>
-					<tab heading="Poll Results">
-						<p-dataTable [value]="pollsResult" [rows]="10" [paginator]="true">
-							<p-column field="title" header="Poll Title" sortable="true" [filter]="true" filterPlaceholder="Search Title"></p-column>
-							<p-column field="description" header="Poll" sortable="true" [filter]="true" filterPlaceholder="Search Poll"></p-column>
-							<p-column field="poll_type" header="Poll Type" sortable="true" [filter]="true" filterPlaceholder="Search Type"></p-column>
-							<p-column field="" header="Open to" sortable="true" [filter]="true" filterPlaceholder="Search Type"></p-column>
-							<p-column header="no. of Poll" sortable="true">
-								<template let-pollsResult="rowData" pTemplate="body">
-									<span>{{pollsResult.votes.length}}</span>
-								</template>
-							</p-column>
-							<p-column field="start_time" header="Commence date" sortable="true"></p-column>
-							<p-column field="end_time" header="Result date" sortable="true"></p-column>
+						        </template>
+						</p-column>
+						<p-column [style]="{'width':'300px'}" styleClass="col-button">
+					    	<template class="pull-right" let-pollsActive="rowData" pTemplate="body">
+					    	<a type="button" class="btn-underline" style="cursor:pointer" (click)="viewPoll(pollsActive)">&nbsp;View Progress</a>
+					    	</template>
+					    </p-column>
+					</p-dataTable>
+			    </tab>
+			    <tab heading="Poll Results">
+			    	<p-dataTable [value]="pollsResult" [rows]="10" [paginator]="true">
+					    <p-column field="title" header="Poll Title" sortable="true" [filter]="true" filterPlaceholder="Search Title"></p-column>
+					    <p-column field="description" header="Poll" sortable="true" [filter]="true" filterPlaceholder="Search Poll"></p-column>
+					    <p-column field="poll_type" header="Poll Type" sortable="true" [filter]="true" filterPlaceholder="Search Type"></p-column>
+					    <p-column field="" header="Open to" sortable="true" [filter]="true" filterPlaceholder="Search Type"></p-column>
+					    <p-column header="no. of Poll" sortable="true">
+						    	<template let-pollsResult="rowData" pTemplate="body">
+						            <span>{{pollsResult.votes.length}}</span>
+						        </template>
+						</p-column>
+						<p-column field="start_time" header="Commence date" sortable="true"></p-column>
+						<p-column field="end_time" header="Result date" sortable="true"></p-column>
+					    
+						
+						<p-column header="Days Remaining" sortable="true">
+						    	<template let-pollsResult="rowData" pTemplate="body">
+						            <span></span>
+						        </template>
+						</p-column>
+						<p-column [style]="{'width':'300px'}" styleClass="col-button">
+					    	<template class="pull-right" let-pollsResult="rowData" pTemplate="body">
+					    	<a type="button" style="cursor:pointer" (click)="viewPoll(pollsResult)"><i class="fa fa-edit" aria-hidden="true"></i>&nbsp;View Result</a>
+					    	</template>
+					    </p-column>
+					</p-dataTable>
+			    </tab>
+			    <tab heading="Past Polls">
+			    	
+			    </tab>
+			   
+			  </tabset>
+			</div>	
 
 
 							<p-column header="Days Remaining" sortable="true">
@@ -189,25 +209,19 @@
 
 			<div class="row">
 
-				<modal #firstModal>
-					<modal-header>
-						<h5>Start Poll</h5>
-					</modal-header>
-					<modal-content>
-
-						<div *ngIf="pollStart">
-
-							Start this poll ?
-
-							<div class="pull-right">
-								<button type="button" class="btn btn-primary" (click)="startPoll()">Yes</button>
-								<button class="btn btn-default" (click)="firstModal.close()">Cancel</button>
-							</div>
-
-						</div>
-					</modal-content>
-
-				</modal>
+			           <div *ngIf="pollStart">
+			              
+			           		Start this poll ?	
+			              
+			                <div class="pull-right">
+			                    <button  type="button" class="btn btn-primary btn-brown" (click)="startPoll()">Yes</button>
+			                    <button class="btn btn-white" (click)="firstModal.close()">Cancel</button>
+			                </div>
+			             
+			           </div>
+			        </modal-content>
+			        
+			    </modal>
 			</div>
 		</div>
 	</div>
