@@ -98,6 +98,7 @@ export class EditAnnouncementComponent  {
     }
 
     createAnnouncement() {
+        console.log(this.model)
         this.anouncementService.create(this.model)
         .then(
             data => {
@@ -129,6 +130,7 @@ export class EditAnnouncementComponent  {
             this.validTillDateOptions = copy;
         }
     }
+
 
     convertDate(date) {
       var yyyy = date.getFullYear().toString();

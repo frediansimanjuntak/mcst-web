@@ -48,6 +48,11 @@ export class BookingComponent implements OnInit {
     selectedDay : any;
     days : any[] = ["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"];
     name: any;
+    facility: any;
+    type: any;
+    status: any;
+    period1: any;
+    period2: any
 
 	constructor(
 		private router: Router,
@@ -151,6 +156,9 @@ export class BookingComponent implements OnInit {
     }
 
     filter(booking: any){
+        this.facility = booking.name;
+        this.type = booking.type;
+        this.status = booking.status;
         this.day  = new Date(this.dt.getTime());
         this.day  = this.convertDate(this.day);
         if(booking.start < 10) {
@@ -163,7 +171,8 @@ export class BookingComponent implements OnInit {
         }else{
             var end   = booking.end.toString() + ":00"
         }
-        
+        this.period1 = start;
+        this.period2 = end;
         this.bookingService.getAll()
         .subscribe(bookings => {
             this.bookings = bookings;
