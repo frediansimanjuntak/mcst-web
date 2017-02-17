@@ -27,7 +27,7 @@
                             </div>
                             <div class="col-md-4">
                                 <b>No of Tenant :</b>{{ unit.tenant.length }}<br>
-                                <b>Vehicle :</b> <!-- {{unit.vehicle.length}} -->
+                                <b>Vehicle :</b> {{vehicles.length}}
                             </div>
                     </div>
                 </div><br>
@@ -131,8 +131,8 @@
                             </div>
                         </div>
                         <div class="pull-right">
-                            <button  class="btn btn-primary" (click)="addResident()">Go to Form</button>
-                            <button class="btn btn-default" (click)="firstModal.close()">Cancel</button>
+                            <button  class="btn btn-primary btn-brown" (click)="addResident()">Go to Form</button>
+                            <button class="btn btn-white" (click)="firstModal.close()">Cancel</button>
                         </div>
                     </form>   
                 </modal-content>
@@ -186,8 +186,8 @@
                             </div>
                         </div>
                         <div class="pull-right">
-                            <button  class="btn btn-primary" (click)="addVehicle(myForm2.value, myForm2.valid)">Add</button>
-                            <button class="btn btn-default" (click)="secondModal.close()">Cancel</button>
+                            <button  class="btn btn-primary btn-brown" (click)="addVehicle(myForm2.value, myForm2.valid)">Add</button>
+                            <button class="btn btn-white" (click)="secondModal.close()">Cancel</button>
                         </div>
                     </form>   
                 </modal-content>
