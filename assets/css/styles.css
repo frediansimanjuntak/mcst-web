@@ -824,3 +824,26 @@ p.pull-down {
   background: #e8e8e8;
   color: #646464;
 }
+.tab-container input.ui-column-filter.ui-inputtext.ui-corner-all.ui-state-default.ui-widget {
+  display: none;
+}
+.tab-container th.ui-state-default.ui-unselectable-text.ui-sortable-column {
+  height: 44px;
+  text-align: left;
+}
+.tab-container .ui-column-filter.ui-dropdown.ui-widget.ui-state-default.ui-corner-all.ui-helper-clearfix {
+  display: none;
+}
+.tab-container span.ui-sortable-column-icon.fa.fa-fw.fa-sort {
+  display: none;
+}
+.tab-container img {
+    width: 15px;
+    height: 15px;
+    float: right;
+    margin: 2px 5px;
+}
+.tab-container .col-button {
+    padding: 10px !important;
+    padding-right: 2px !important;
+}
