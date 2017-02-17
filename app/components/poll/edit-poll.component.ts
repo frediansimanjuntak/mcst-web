@@ -65,35 +65,7 @@ export class EditPollComponent  {
         this.model.choices  = [];
         this.model.choices[0] = '';
 
-    	this.startTimeOptions = {
-            todayBtnTxt: 'Today',
-            dateFormat: 'yyyy-mm-dd',
-            firstDayOfWeek: 'mo',
-            sunHighlight: true,
-            height: '34px',
-            width: '260px',
-            inline: false,
-            editableDateField: false,
-            customPlaceholderTxt: 'Select Commence Date',
-            // disableUntil: {year: 2016, month: 8, day: 10},
-            selectionTxtFontSize: '16px'
-        };
-
-        this.endTimeOptions = {
-            todayBtnTxt: 'Today',
-            dateFormat: 'yyyy-mm-dd',
-            firstDayOfWeek: 'mo',
-            sunHighlight: true,
-            height: '34px',
-            editableDateField: false,
-            width: '260px',
-            inline: false,
-            customPlaceholderTxt: 'Select Result Date',
-            // disableUntil: {year: 2016, month: 8, day: 10},
-            selectionTxtFontSize: '16px'
-        };
-
-        let copy: IMyOptions = this.getCopyOfstartTimeOptions();
+    	let copy: IMyOptions = this.getCopyOfstartTimeOptions();
         let today = new Date();
         let month = today.getUTCMonth() + 1; //months from 1-12
         let day = today.getUTCDate();
