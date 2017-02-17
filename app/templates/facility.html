@@ -21,7 +21,7 @@
       <div class="title">
         Facilities
       </div>
-      <p>Home > Facilities</p>
+      <p class="id-location">Home > Facilities</p>
       <div class="row">
         <div class="col-md-4 pull-right">
           <a class="btn btn-default btn-gray pull-right" (click)="add()">
@@ -32,7 +32,6 @@
         <p-dataTable [value]="facilities" [rows]="10" [paginator]="true">
           <p-column filterMatchMode="contains" field="name" header="Name" sortable="true" [filter]="true" filterPlaceholder="Search Name"></p-column>
           <p-column filterMatchMode="contains" field="description" header="Description" sortable="true" [filter]="true" filterPlaceholder="Search Description"></p-column>
-          <p-column filterMatchMode="contains" field="facility_type" header="Facility Type" sortable="true" [filter]="true" filterPlaceholder="Search Facility Type"></p-column>
           <p-column filterMatchMode="contains" field="payment_type" header="Payment Type" sortable="true" [filter]="true" filterPlaceholder="Search Payment Type"></p-column>
           <p-column filterMatchMode="contains" field="booking_type" header="Booking Type" sortable="true" [filter]="true" filterPlaceholder="Search Booking Type"></p-column>
           <p-column filterMatchMode="contains" field="booking_fee" header="Booking Fee" sortable="true" [filter]="true" filterPlaceholder="Search Booking Fee"></p-column>

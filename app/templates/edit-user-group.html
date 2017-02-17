@@ -1,9 +1,26 @@
 <div class="container">
-    <div class="main">
-<!-- Edit USER-GROUP -->
-        <div *ngIf="usergroup">
-            <div class="title">
-                Edit Usergroup
+  <div class="main">
+    <!-- Edit USER-GROUP -->
+    <div *ngIf="usergroup">
+      <div class="title">
+        Edit Usergroup
+      </div>
+      <p class="id-location">Home > Usergroup > Edit</p>
+      <form class="form-horizontal col-md-6" name="form" #f="ngForm" novalidate>
+        <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !description.valid }">
+          <label class="control-label col-sm-4" for="description">Description :</label>
+          <div class="col-sm-8">
+            <input type="text" class="form-control" name="description" [(ngModel)]="usergroup.description" #description="ngModel" required placeholder="Input description here" />
+            <span *ngIf="f.submitted && !description.valid" class="help-block">Description is required</span>
+          </div>
+        </div>
+        <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !chiefField }">
+          <label class="control-label col-sm-4" for="chief">Chief :</label>
+          <div class="col-sm-8">
+            <div style="width: 300px; margin-bottom: 20px;">
+              <ng-select [allowClear]="true" [items]="items" [disabled]="disabled" (data)="refreshValueChief($event)" (selected)="selected($event)" (removed)="removed($event)" [active]="[chief]" placeholder="No chief selected">
+              </ng-select>
+              <span *ngIf="f.submitted && !chiefField" class="help-block">Chef is required</span>
             </div>
             <p>Home > Usergroup > Edit</p>
             <form class="form-horizontal col-md-6" name="form" #f="ngForm" novalidate>
@@ -58,13 +75,58 @@
                 </div>
             </form>
         </div>
-<!-- ADD USER-GROUP -->
-
-        <div *ngIf="!usergroup">
-            <div class="title">
-                Add User Group
+        <div class="form-group">
+          <label class="control-label col-sm-4" for="chief">Users :</label>
+          <div class="col-sm-8">
+            <div style="width: 300px; margin-bottom: 20px;">
+              <ng-select [multiple]="true" [items]="items2" [disabled]="disabled" (data)="refreshValueUser($event)" (selected)="selected($event)" (removed)="removed($event)" [active]="user" placeholder="No user selected">
+              </ng-select>
             </div>
-            <p>Home > User Group > Add </p>
+          </div>
+        </div>
+        <div class="form-group pull-right">
+          <button [disabled]="loading" (click)="updateUserGroup()" class="btn btn-brown btn-primary">Save</button>
+          <img *ngIf="loading" src="data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA=="
+          />
+          <button (click)="goToUserGroup()" class="btn btn-white">Cancel</button>
+        </div>
+      </form>
+    </div>
+    <!-- ADD USER-GROUP -->
+
+    <div *ngIf="!usergroup">
+      <div class="title">
+        Add User Group
+      </div>
+      <p class="id-location">Home > User Group > Add </p>
+
+      <form class="form-horizontal col-md-6" name="form" (ngSubmit)="f.form.valid && chiefField && createUserGroup()" #f="ngForm" novalidate>
+        <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !description.valid }">
+          <label class="control-label col-sm-4" for="description">Description :</label>
+          <div class="col-sm-8">
+            <input type="text" class="form-control" name="description" [(ngModel)]="model.description" #description="ngModel" required placeholder="Input description here" />
+            <span *ngIf="f.submitted && !description.valid" class="help-block">Description is required</span>
+          </div>
+        </div>
+        <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !chiefField }">
+          <label class="control-label col-sm-4" for="chief">Chief :</label>
+          <div class="col-sm-8">
+            <div style="width: 300px; margin-bottom: 20px;">
+              <ng-select [allowClear]="true" [items]="items" [disabled]="disabled" (data)="refreshValueChief($event)" (selected)="selected($event)" (removed)="removed($event)" placeholder="No chief selected">
+              </ng-select>
+              <span *ngIf="f.submitted && !chiefField" class="help-block">Chief is required</span>
+            </div>
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="control-label col-sm-4" for="chief">Users :</label>
+          <div class="col-sm-8">
+            <div style="width: 300px; margin-bottom: 20px;">
+              <ng-select [multiple]="true" [items]="items2" [disabled]="disabled" (data)="refreshValueUser($event)" (selected)="selected($event)" (removed)="removed($event)" placeholder="No user selected">
+              </ng-select>
+            </div>
+          </div>
+        </div>
 
             <form class="form-horizontal col-md-6" name="form" (ngSubmit)="f.form.valid && chiefField && createUserGroup()" #f="ngForm" novalidate>
                 <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !description.valid }">
@@ -117,6 +179,7 @@
                 </div>
             </form>       
         </div>
+      </form>
     </div>
+  </div>
 </div>
-          

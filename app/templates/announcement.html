@@ -3,111 +3,112 @@
 		<div class="title">
 			Manage Announcement
 		</div>
-		<p>Home > Manage Announcement</p>
+		<p class="id-location">Home > Manage Announcement</p>
 		<div class="row">
 			<div class="col-md-4 pull-right">
-					  		<button class="btn btn-add btn-default pull-right" (click)="add()">
-					  		<img class="img-btn" src="../../assets/image/icon_announcement.png" width="15px" height="15px" />&nbsp;Make an Announcement</button>
-					  		
+				<button class="btn btn-add btn-default pull-right" (click)="add()">
+					<img class="img-btn" src="../../assets/image/icon_announcement.png" width="15px" height="15px" />&nbsp;Make an Announcement</button>
+
 			</div>
 		</div>
 		<div class="row">
-		  <tabset>
-		    <tab heading="Draft">
-		    	<p-dataTable [value]="announcementsDrafted" [rows]="10" [paginator]="true">
-				    <p-column [style]="{'width':'200px'}" field="title" header="Title" sortable="true" [filter]="true" filterPlaceholder="Search title"></p-column>
-				    <p-column [style]="{'width':'300px'}" field="message" header="Message" sortable="true" [filter]="true" filterPlaceholder="Search Message"></p-column>
-				    <p-column [style]="{'width':'70px'}" field="sticky" header="Sticky" sortable="true"></p-column>
-				    <p-column field="auto_post_on" header="Auto post on" sortable="true" filterPlaceholder="Search Date "></p-column>
-				    <p-column header="Valid till" sortable="true">
-						    	<template let-announcementsDrafted="rowData" pTemplate="body">
-						            <span>{{announcementsDrafted.valid_till | date:'y/M/d'}}</span>
-						        </template>
-					</p-column>
-					<p-column header="Created on" sortable="true">
-						    	<template let-announcementsDrafted="rowData" pTemplate="body">
-						            <span>{{announcementsDrafted.created_at | date:'y/M/d'}}</span>
-						        </template>
-					</p-column>
-					<p-column [style]="{'width':'200px'}" styleClass="col-button">
-				    	<template class="pull-right" let-announcementsDrafted="rowData" pTemplate="body">
-				    	<a type="button" style="cursor:pointer" (click)="editAnnouncement(announcementsDrafted)"><i class="fa fa-edit" aria-hidden="true"></i>&nbsp;Edit</a>
-				    	<button type="button" class="btn btn-primary btn-brown" (click)="openModal(announcementsDrafted) || firstModal.open()">Publish</button>
-				        <button  type="button" (click)="deleteAnnouncement(announcementsDrafted)"><i class="fa fa-trash" aria-hidden="true"></i></button>
-				    	</template>
-				    </p-column>
-				</p-dataTable>
-		    </tab>	
-		    <tab heading="Published">
-		    	<p-dataTable [value]="announcementsPublished" [rows]="10" [paginator]="true">
-				    <p-column [style]="{'width':'200px'}" field="title" header="Title" sortable="true" [filter]="true" filterPlaceholder="Search title"></p-column>
-				    <p-column [style]="{'width':'300px'}" field="message" header="Message" sortable="true" [filter]="true" filterPlaceholder="Search Message"></p-column>
-				    <p-column field="sticky" [style]="{'width':'70px'}" header="Sticky" sortable="true"></p-column>
-				     <p-column header="Valid till" sortable="true">
-						    	<template let-announcementsPublished="rowData" pTemplate="body">
-						            <span>{{announcementsPublished.valid_till | date:'y/M/d'}}</span>
-						        </template>
-					</p-column>
-					<p-column header="Created on" sortable="true">
-						    	<template let-announcementsPublished="rowData" pTemplate="body">
-						            <span>{{announcementsPublished.created_at | date:'y/M/d'}}</span>
-						        </template>
-					</p-column>
-				    <p-column filterPlaceholder="Search Created by" header="Created by">
-				        <template let-announcementsPublished="rowData" pTemplate="body">
-				            <span>{{announcementsPublished.created_by.username}}</span>
-				        </template>
-				    </p-column>
-				    <p-column [style]="{'width':'40px'}" styleClass="col-button">
-				    	<template class="pull-right" let-announcementsPublished="rowData" pTemplate="body">
-				        <button  type="button" (click)="deleteAnnouncement(announcementsPublished)"><i class="fa fa-trash" aria-hidden="true"></i></button>
-				        </template>
-				    </p-column>
-				</p-dataTable>
-		    </tab>	
-		  </tabset>
+			<tabset>
+				<tab heading="Draft">
+					<p-dataTable [value]="announcementsDrafted" [rows]="10" [paginator]="true">
+						<p-column [style]="{'width':'200px'}" field="title" header="Title" sortable="true" [filter]="true" filterPlaceholder="Search title"></p-column>
+						<p-column [style]="{'width':'300px'}" field="message" header="Message" sortable="true" [filter]="true" filterPlaceholder="Search Message"></p-column>
+						<p-column [style]="{'width':'70px'}" field="sticky" header="Sticky" sortable="true"></p-column>
+						<p-column field="auto_post_on" header="Auto post on" sortable="true" filterPlaceholder="Search Date "></p-column>
+						<p-column header="Valid till" sortable="true">
+							<template let-announcementsDrafted="rowData" pTemplate="body">
+								<span>{{announcementsDrafted.valid_till | date:'y/M/d'}}</span>
+							</template>
+						</p-column>
+						<p-column header="Created on" sortable="true">
+							<template let-announcementsDrafted="rowData" pTemplate="body">
+								<span>{{announcementsDrafted.created_at | date:'y/M/d'}}</span>
+							</template>
+						</p-column>
+						<p-column [style]="{'width':'200px'}" styleClass="col-button">
+							<template class="pull-right" let-announcementsDrafted="rowData" pTemplate="body">
+								<a type="button" style="cursor:pointer" (click)="editAnnouncement(announcementsDrafted)"><i class="fa fa-edit" aria-hidden="true"></i>&nbsp;Edit</a>
+								<button type="button" class="btn btn-primary btn-brown" (click)="openModal(announcementsDrafted) || firstModal.open()">Publish</button>
+								<button type="button" (click)="deleteAnnouncement(announcementsDrafted)"><i class="fa fa-trash" aria-hidden="true"></i></button>
+							</template>
+						</p-column>
+					</p-dataTable>
+				</tab>
+				<tab heading="Published">
+					<p-dataTable [value]="announcementsPublished" [rows]="10" [paginator]="true">
+						<p-column [style]="{'width':'200px'}" field="title" header="Title" sortable="true" [filter]="true" filterPlaceholder="Search title"></p-column>
+						<p-column [style]="{'width':'300px'}" field="message" header="Message" sortable="true" [filter]="true" filterPlaceholder="Search Message"></p-column>
+						<p-column field="sticky" [style]="{'width':'70px'}" header="Sticky" sortable="true"></p-column>
+						<p-column header="Valid till" sortable="true">
+							<template let-announcementsPublished="rowData" pTemplate="body">
+								<span>{{announcementsPublished.valid_till | date:'y/M/d'}}</span>
+							</template>
+						</p-column>
+						<p-column header="Created on" sortable="true">
+							<template let-announcementsPublished="rowData" pTemplate="body">
+								<span>{{announcementsPublished.created_at | date:'y/M/d'}}</span>
+							</template>
+						</p-column>
+						<p-column filterPlaceholder="Search Created by" header="Created by">
+							<template let-announcementsPublished="rowData" pTemplate="body">
+								<span>{{announcementsPublished.created_by.username}}</span>
+							</template>
+						</p-column>
+						<p-column [style]="{'width':'40px'}" styleClass="col-button">
+							<template class="pull-right" let-announcementsPublished="rowData" pTemplate="body">
+								<button type="button" (click)="deleteAnnouncement(announcementsPublished)"><i class="fa fa-trash" aria-hidden="true"></i></button>
+							</template>
+						</p-column>
+					</p-dataTable>
+				</tab>
+			</tabset>
 		</div>
 
 		<div class="row">
-		    
-		    <modal #firstModal>
-		        <modal-header>
-		            <h5>Publish Announcement</h5>
-		        </modal-header>
-		        <modal-content>
 
-		           <div *ngIf="announcement">
-		              
-		           		
-		              <form name="form">
-		                <div class="form-group">
-		                    <label class="control-label col-sm-4" for="sticky">Sticky? :</label>
-		                    <div class="col-sm-8">
-		                    	<div class="col-sm-2">
-		                    		<label><input type="radio" name="sticky" [checked]="stickyStatus == 'yes'" [(ngModel)]="stickyStatus" value='yes'>Yes</label>	
-		                    	</div>
-		                    	<div class="col-sm-2">
-		                    		<label><input type="radio" name="sticky" [checked]="stickyStatus == 'no'" [(ngModel)]="stickyStatus" value='no'>No</label>     	
-		                    	</div>
-		                    </div>
-		                </div>
-		                <div class="form-group" >
-		                    <label class="control-label col-sm-4" for="valid_till">Valid till :</label>
-		                    <div class="col-sm-8">
-		                    <my-date-picker [options]="validTillDateOptions" [placeholder]="validTillDateTxt"
-                            [selDate]="valid_tillStatus" (dateChanged)="validTillDateChanged($event)"></my-date-picker>
-		                       
-		                    </div>
-		                </div>
-		                <div class="pull-right">
-		                    <button  class="btn btn-primary btn-brown" (click)="publishAnnouncement()">Announce</button>
-		                    <button class="btn btn-default btn-gray" (click)="firstModal.close()">Cancel</button>
-		                </div>
-		            </form>   
-		           </div>
-		        </modal-content>
-		        
-		    </modal>
-		</div>	
+			<modal #firstModal>
+				<modal-header>
+					<h5>Publish Announcement</h5>
+				</modal-header>
+				<modal-content>
+
+					<div *ngIf="announcement">
+
+
+						<form name="form">
+							<div class="form-group">
+								<label class="control-label col-sm-4" for="sticky">Sticky? :</label>
+								<div class="col-sm-8">
+									<div class="col-sm-2">
+										<label>
+											<input type="radio" name="sticky" [checked]="stickyStatus == 'yes'" [(ngModel)]="stickyStatus" value='yes'>Yes</label>
+									</div>
+									<div class="col-sm-2">
+										<label>
+											<input type="radio" name="sticky" [checked]="stickyStatus == 'no'" [(ngModel)]="stickyStatus" value='no'>No</label>
+									</div>
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="control-label col-sm-4" for="valid_till">Valid till :</label>
+								<div class="col-sm-8">
+									<my-date-picker [options]="validTillDateOptions" [placeholder]="validTillDateTxt" [selDate]="valid_tillStatus" (dateChanged)="validTillDateChanged($event)"></my-date-picker>
+
+								</div>
+							</div>
+							<div class="pull-right">
+								<button class="btn btn-primary btn-brown" (click)="publishAnnouncement()">Announce</button>
+								<button class="btn btn-default btn-gray" (click)="firstModal.close()">Cancel</button>
+							</div>
+						</form>
+					</div>
+				</modal-content>
+
+			</modal>
+		</div>
 	</div>
 </div>

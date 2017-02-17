@@ -3,9 +3,9 @@
 		<div class="title">
 			Guest & Visitor
 		</div>
-		<p>Home > Guest & Visitors {{ tomorrow }}</p>
-		<br> {{ afterTomorrow}}
-		<div class="row">
+		<p class="id-location">Home > Guest & Visitors {{ tomorrow }}</p>
+		{{ afterTomorrow}}
+		<div class="row no-margin">
 			<div class="col-md-8 no-padding top-block">
 				<div class="input-group filter-search">
 					<input type="text" class="form-control input-search" placeholder="Search name, vehicle no., unit no." name="filter">
@@ -20,7 +20,7 @@
 			</div>
 		</div>
 
-		<div class="row bg-dark">
+		<div class="row bg-dark no-margin">
 			<div class="col-md-2 col-md-offset-2 btn-underline " (click)="previousDay()">
 				<span class="pull-right" style="margin-top: 10px"><img src="../../assets/image/icon_arrowleft_white.png" ></span>
 			</div>
@@ -37,7 +37,7 @@
 			</div>
 		</div>
 
-		<div class="row">
+		<div class="row no-margin">
 			<p-dataTable [value]="visitActive" scrollable="true" scrollHeight="360px">
 				<p-column header="No" [style]="{'width':'42px'}" field="i">
 				</p-column>

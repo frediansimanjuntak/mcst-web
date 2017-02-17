@@ -74,8 +74,10 @@ export class ContractNoticeComponent implements OnInit  {
     createContractNotice(id:any) {
         this.model.publish = false;
         let formData:FormData = new FormData();
-        for (var i = 0; i < this.model.attachment.length; i++) {
-            formData.append("attachment", this.model.attachment[i]);
+        if(this.model.attachment.length != 0) {
+            for (var i = 0; i < this.model.attachment.length; i++) {
+                formData.append("attachment", this.model.attachment[i]);
+            }
         }
         formData.append("start_time", this.model.start_time);
         formData.append("end_time", this.model.end_time);

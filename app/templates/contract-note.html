@@ -1,31 +1,37 @@
 <div class="container">
-    <div class="main">
-        <div *ngIf="contractnote && contract">
-            <div class="title">
-                {{ contractnote.posted_by }}
+  <div class="main">
+    <div *ngIf="contractnote && contract">
+      <div class="title">
+        {{ contractnote.posted_by }}
+      </div>
+      <p class="id-location">Home > Manage Projects > {{ contract.title }} > Contract Note > {{ contractnote.posted_by }}</p>
+      <div class="row">
+        <div class="col-lg-6">
+          <p-galleria [images]="images" panelWidth="500" panelHeight="313"></p-galleria>
+        </div>
+        <div class="col-lg-6">
+          <div class="row">
+            <div class="col-md-4">Posted by :</div>
+            <div class="col-md-8">
+              <p>{{ contractnote.posted_by }}</p>
             </div>
-            <p>Home > Manage Projects > {{ contract.title }} > Contract Note > {{ contractnote.posted_by }}</p>
-            <div class="row">
-                <div class="col-lg-6">
-                    <p-galleria [images]="images" panelWidth="500" panelHeight="313"></p-galleria>
-                </div>
-                <div class="col-lg-6">
-                    <div class="row">
-                        <div class="col-md-4">Posted by :</div>
-                        <div class="col-md-8"><p>{{ contractnote.posted_by }}</p></div>
-                    </div>
-                    <div class="row">
-                        <div class="col-md-4">Posted on :</div>
-                        <div class="col-md-8"><p>{{ contractnote.posted_on | date:'d/M/y' }}</p></div>
-                    </div>
-                    <div class="row">
-                        <div class="col-md-4"><p>Project note remark :</p></div>
-                    </div>
-                    <div class="row">
-                         <div class="col-md-12"><p>{{ contractnote.note_remark }}</p></div>
-                    </div>
-                </div>
+          </div>
+          <div class="row">
+            <div class="col-md-4">Posted on :</div>
+            <div class="col-md-8">
+              <p>{{ contractnote.posted_on | date:'d/M/y' }}</p>
             </div>
+          </div>
+          <div class="row">
+            <div class="col-md-4">
+              <p>Project note remark :</p>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-12">
+              <p>{{ contractnote.note_remark }}</p>
+            </div>
+          </div>
         </div>
         <div *ngIf="contract">
             <div class="title"> 
@@ -50,10 +56,11 @@
                         <span *ngIf="f.submitted && !note_remark.valid" class="help-block">Remark is required</span>
                     </div>
                 </div>
-                <div class="form-group" >
+                <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !attachment.valid }">
                     <label class="control-label col-sm-4" for="attachment">Attachment :</label>
                     <div class="col-sm-8">
-                        <input type="file" multiple class="upload" name="attachment" (change)="onChange($event)" />
+                        <input required type="file" multiple class="upload" [(ngModel)]="model.attachment" #attachment="ngModel" name="attachment" (change)="onChange($event)" />
+                        <span *ngIf="f.submitted && !attachment.valid" class="help-block">Attachment is required</span>
                         <p *ngFor="let item of model.attachment; let i=index ">
                             <img src="assets/image/icon_media_image.png" width="14px" height="12px">&nbsp;  
                             <span style="text-decoration: underline;">{{ item.name }}_{{item.size/1024 | number:'1.0-0' }}kb</span> &nbsp;   
@@ -62,9 +69,9 @@
                     </div>
                 </div>
                 <div class="form-group pull-right">
-                    <button [disabled]="loading" class="btn btn-brown btn-primary">Post</button>
+                    <button [disabled]="loading" class="btn btn-primary btn-brown">Post</button>
                     <img *ngIf="loading" src="data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA==" />
-                    <a (click)="cancel(contract._id)" class="btn btn-info btn-white">Cancel</a>
+                    <button (click)="cancel(contract._id)" class="btn btn-info btn-white">Cancel</button>
                 </div>
             </form>
         </div>	

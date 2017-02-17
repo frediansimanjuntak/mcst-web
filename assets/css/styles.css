@@ -561,7 +561,7 @@ p.pull-down {
   border: 1px solid #dedede;
   color: #4a4a4a;
   height: 44px;
-  width: 130px;
+  min-width: 130px !important;
   font-weight: bold;
   font-size: 13px;
   font-family: arial;
@@ -580,7 +580,7 @@ p.pull-down {
   color: #fff;
   font-weight: bold;
   height: 44px;
-  width: 130px;
+  min-width: 130px !important;
   font-size: 13px;
   font-family: arial;
   padding: 10px;
@@ -593,7 +593,8 @@ p.pull-down {
 }
 .btn-white {
   height: 44px;
-  border-bottom-color: #efefef;
+  min-width: 130px !important;
+  border: 1px solid #efefef;
   background-color: #ffffff;
   margin: 18px;
   color: #4a4a4a;
@@ -601,6 +602,7 @@ p.pull-down {
   outline-style: none;
   font-family: arial;
   font-size: 13px;
+  padding: 10px;
 }
 .btn-white:hover {
   background-color: #f9f9f9;
@@ -797,18 +799,22 @@ p.pull-down {
   color: #4a4a4a;
 }
 .tab-container li.nav-item {
-  width: 112px;
+  width: 117px;
   height: 44px;
 }
 .tab-container a.nav-link {
   height: 44px;
   border-radius: 0;
   color: #6d6e71;
+  font-weight: bold;
+  border: 1px solid #dfdfdf;
+  margin-right: 5px;
 }
 .tab-container .nav>li>a:focus, .tab-container .nav>li>a:hover {
   text-decoration: none;
   background-color: #e8e8e8;
   color: #4a4a4a;
+  font-weight: bold;
 }
 .tab-container .ui-datatable th.ui-state-default {
   background: #e8e8e8;

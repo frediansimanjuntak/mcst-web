@@ -5,11 +5,24 @@ import { Facility,Facilities } from '../../models/index';
 import { FacilityService, AlertService, UserService } from '../../services/index';
 import '../../rxjs-operators';
 import 'rxjs/add/operator/switchMap';
+import { TimepickerConfig } from 'ng2-bootstrap';
+
+export function getTimepickerConfig(): TimepickerConfig {
+  return Object.assign(new TimepickerConfig(), {
+    hourStep: 1,
+    minuteStep: 0,
+    showMeridian: false,
+    readonlyInput: false,
+    mousewheel: true,
+    arrowkeys: true
+  });
+}
 
 @Component({
   // moduleId: module.id,
   selector: 'edit-facility',
   templateUrl: 'app/templates/edit-facility.html',
+  providers: [{provide: TimepickerConfig, useFactory: getTimepickerConfig}]
 })
 
 export class EditFacilityComponent  {
@@ -19,6 +32,7 @@ export class EditFacilityComponent  {
     myForm: FormGroup;
     start_time:any;
     name: any;
+    time: any[] = [];
 
     days = [
         { value: 'monday', name: 'Monday' },
@@ -39,13 +53,17 @@ export class EditFacilityComponent  {
 
     ngOnInit(): void {
         this.userService.getByToken().subscribe(name => {this.name = name;})
+        for (let i = 0; i < 24; ++i) {
+            this.time.push(i+':00')
+        }
         this.myForm = this.formbuilder.group({
             name : ['', Validators.required],
             description : ['', Validators.required],
-            facility_type : ['', Validators.required],
             payment_type : ['', Validators.required],
             booking_type : ['', Validators.required],
+            deposit_fee : ['', Validators.required],
             booking_fee : ['', Validators.required],
+            admin_fee : ['', Validators.required],
             schedule: this.formbuilder.array([this.initSchedule()]),
             status: ['', Validators.required],
             created_by : [''],
@@ -63,10 +81,11 @@ export class EditFacilityComponent  {
                     name : ['', Validators.required],
                     development : [''],
                     description : ['', Validators.required],
-                    facility_type : ['', Validators.required],
                     payment_type : ['', Validators.required],
                     booking_type : ['', Validators.required],
+                    deposit_fee : ['', Validators.required],
                     booking_fee : ['', Validators.required],
+                    admin_fee : ['', Validators.required],
                     schedule: this.formbuilder.array([]),
                     status: ['', Validators.required],
                     maintenance: [''],
@@ -80,10 +99,11 @@ export class EditFacilityComponent  {
                         name : ['', Validators.required],
                         development : [''],
                         description : ['', Validators.required],
-                        facility_type : ['', Validators.required],
                         payment_type : ['', Validators.required],
                         booking_type : ['', Validators.required],
+                        deposit_fee : ['', Validators.required],
                         booking_fee : ['', Validators.required],
+                        admin_fee : ['', Validators.required],
                         schedule: this.formbuilder.array([]),
                         status: ['', Validators.required],
                         maintenance: this.formbuilder.group({
@@ -109,7 +129,7 @@ export class EditFacilityComponent  {
         return this.formbuilder.group({
             _id : [],
             day : [''],
-            start_time : [this.start_time],
+            start_time : [''],
             end_time : ['']
         });
     }
@@ -125,17 +145,18 @@ export class EditFacilityComponent  {
         control.removeAt(i);
     }
 
-    createFacility(model:Facility) {
-        this.facilityService.create(model)
-        .then(
-            response => {
-                this.alertService.success('Create facility successful', true);
-                this.router.navigate([this.name.default_development.name_url + '/facility']);
-            },
-            error => {
-                this.alertService.error(error);
-            }
-        );
+    createFacility(model:any) {
+        console.log(model)
+        // this.facilityService.create(model)
+        // .then(
+        //     response => {
+        //         this.alertService.success('Create facility successful', true);
+        //         this.router.navigate([this.name.default_development.name_url + '/facility']);
+        //     },
+        //     error => {
+        //         this.alertService.error(error);
+        //     }
+        // );
     }
 
 

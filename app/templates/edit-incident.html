@@ -12,7 +12,7 @@
                         <select name="selectedType" [(ngModel)]="incident.incident_type">
                           <option *ngFor="let type of types" [ngValue]="type.value">{{type.name}}</option>
                         </select>
-                  </div>  
+                  </div>
                 </div>
                 <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !title.valid }">
                     <label class="control-label col-sm-4" for="title">Title :</label>
@@ -31,7 +31,7 @@
                 <div class="form-group" >
                     <label class="control-label col-sm-4" for="attachment">Attachment :</label>
                     <div class="col-sm-8">
-                        <input type="file" name="single" ng2FileSelect [uploader]="uploader" multiple /> 
+                        <input type="file" name="single" ng2FileSelect [uploader]="uploader" multiple />
                     </div>
                 </div>
                 <div class="form-group pull-right">
@@ -46,16 +46,16 @@
             <div class="title">
             Create Report
             </div>
-            <p>Home > Incident Reports > Create Report</p>
+            <p class="id-location">Home > Incident Reports > Create Report</p>
             <form class="form-horizontal col-md-6" name="form" (ngSubmit)="f.form.valid && createIncident()" #f="ngForm" novalidate>
                 <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !incident_type.valid }">
                   <label class="control-label col-sm-4" for="type">Type of Report :</label>
                   <div class="col-sm-8">
-                        <select name="incident_type" [(ngModel)]="model.incident_type" #incident_type="ngModel">
+                        <select required name="incident_type" [(ngModel)]="model.incident_type" #incident_type="ngModel">
                           <option *ngFor="let type of types" [ngValue]="type.value">{{type.name}}</option>
                         </select>
                         <span *ngIf="f.submitted && !incident_type.valid" class="help-block">Title is required</span>
-                  </div>  
+                  </div>
                 </div>
                 <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !title.valid }">
                     <label class="control-label col-sm-4" for="title">Title :</label>
@@ -75,16 +75,17 @@
                     <label class="control-label col-sm-4" for="status">Mark as Urgent :</label>
                     <div class="col-sm-8">
                         <label><input type="radio" name="status" [checked]="status == 'urgent'" [(ngModel)]="model.status" #status="ngModel" value='urgent'>Mark</label>
-                        <label><input type="radio" name="status" [checked]="status == null" [(ngModel)]="model.status" #status="ngModel" value=null >Unmark</label>     
+                        <label><input type="radio" name="status" [checked]="status == null" [(ngModel)]="model.status" #status="ngModel" value=null >Unmark</label>
                     </div>
                 </div> -->
-                <div class="form-group" >
+                <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !attachment.valid }">
                     <label class="control-label col-sm-4" for="attachment">Attachment :</label>
                     <div class="col-sm-8">
-                        <input type="file" multiple class="upload" name="attachment" (change)="onChange($event)" />
+                        <input required type="file" multiple class="upload" [(ngModel)]="model.attachment" #attachment="ngModel" name="attachment" (change)="onChange($event)" />
+                        <span *ngIf="f.submitted && !attachment.valid" class="help-block">Attachment is required</span>
                         <p *ngFor="let item of model.attachment; let i=index ">
-                            <img src="assets/image/icon_media_image.png" width="14px" height="12px">&nbsp;  
-                            <span style="text-decoration: underline;">{{ item.name }}_{{item.size/1024 | number:'1.0-0' }}kb</span> &nbsp;   
+                            <img src="assets/image/icon_media_image.png" width="14px" height="12px">&nbsp;
+                            <span style="text-decoration: underline;">{{ item.name }}_{{item.size/1024 | number:'1.0-0' }}kb</span> &nbsp;
                             <span style="cursor:pointer" (click)="remove(i)"><img src="assets/image/icon_close_black.png" width="14px" height="12px"></span>
                         </p>
                     </div>
