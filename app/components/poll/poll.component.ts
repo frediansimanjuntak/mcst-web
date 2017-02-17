@@ -15,6 +15,7 @@ import '../../rxjs-operators';
 
 export class PollComponent implements OnInit { 
 	@ViewChild('firstModal') firstModal;
+    public max: number;
 	  poll: any;
     polls: 		Poll[] = [];
     pollsDraft:  Poll[] = [];
@@ -54,7 +55,8 @@ export class PollComponent implements OnInit {
                                     this.pollService.getById(this.id)
                                         .subscribe(poll => {
                                             this.poll = poll;
-
+                                            this.max = this.poll.votes.length;
+                                            
                                             let numOptions =  this.poll.choices.length;
                                             let opts = new Array(numOptions);
 
@@ -62,6 +64,7 @@ export class PollComponent implements OnInit {
                                                 opts[i] = {
                                                     choice: this.poll.choices[i],
                                                     progress: this.poll.votes.filter(data => data.answer == this.poll.choices[i] ).length,
+                                                    
                                                 };
                                             }
                                             this.poll.answers = opts.slice(0);

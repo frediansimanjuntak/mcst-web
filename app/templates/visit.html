@@ -1,272 +1,356 @@
 <div class="container">
 	<div class="main" id="print-section">
-        	<div class="title">
+		<div class="title">
 			Guest & Visitor
-			</div>
-			Home > Guest & Visitors
-			{{ tomorrow }}<br>
-			{{ afterTomorrow}}
-			<div class="row">
-                <div class="col-md-8">
-                    
-                </div>
-				<div class="col-md-4 pull-right">
-								<a class="btn btn-default pull-right" ><img class="img-btn" src="../../assets/image/icon_print.png" (click)="print()" />&nbsp;Print</a>
-						  		<button type="button" class="btn btn-default pull-right" (click)="firstModal.open()"><img class="img-btn" src="../../assets/image/icon_add.png"  />&nbsp;Add Visitor/Guest</button>
+		</div>
+		<p class="id-location">Home > Guest & Visitors {{ tomorrow }}</p>
+		{{ afterTomorrow}}
+		<div class="row no-margin">
+			<div class="col-md-8 no-padding top-block">
+				<div class="input-group filter-search">
+					<input type="text" class="form-control input-search" placeholder="Search name, vehicle no., unit no." name="filter">
+					<span class="input-group-btn">
+						<button class="btn btn-secondary btn-search" type="button"><i class="fa fa-search fa-inverse" aria-hidden="true"></i></button>
+					</span>
 				</div>
 			</div>
-			
-			<div class="row bg-dark">
-                <div class="col-md-2 col-md-offset-2 btn-underline " (click)="previousDay()">
-                    <span class="pull-right" style="margin-top: 10px"><img src="../../assets/image/icon_arrowleft_white.png" ></span>
-                </div>
-                <div class="col-md-4 text-center">
-    				<my-date-picker class="bg-dark" [options]="DateOptions" [selDate]="activeDate" (dateChanged)="onPickerClick($event)"></my-date-picker>
+			<div class="col-md-4 pull-right no-padding top-block">
+				<button type="button" class="btn btn-default btn-add pull-right" (click)="firstModal.open()"><img class="img-btn" src="../../assets/image/icon_add.png" />&nbsp;Add Visitor/Guest</button>
+				<a class="btn btn-default btn-print pull-right"><img class="img-btn" src="../../assets/image/icon_print.png" (click)="print()" />&nbsp;Print</a>
+			</div>
+		</div>
 
-                    <span  style="font-size: 16px; font-weight: 500px; position: relative;
+		<div class="row bg-dark no-margin">
+			<div class="col-md-2 col-md-offset-2 btn-underline " (click)="previousDay()">
+				<span class="pull-right" style="margin-top: 10px"><img src="../../assets/image/icon_arrowleft_white.png" ></span>
+			</div>
+			<div class="col-md-4 text-center">
+				<my-date-picker class="bg-dark" [options]="DateOptions" [selDate]="activeDate" (dateChanged)="onPickerClick($event)">a</my-date-picker>
+
+				<span style="font-size: 16px; font-weight: 500px; position: relative;
                         bottom: 10px;">
                         {{ activeDate | date:'fullDate'}}
     				</span>
-                </div>
-                <div class="col-md-2 btn-underline " (click)="nextDay()">
-                    <span class="pull-left" style="margin-top: 10px"><img src="../../assets/image/icon_arrowright_white.png" ></span>
-                </div>
 			</div>
-			<div class="row">
-			    	<p-dataTable [value]="visitActive" scrollable="true" scrollHeight="360px">
-					    <p-column header="No" [style]="{'width':'42px'}" field="i">
-						</p-column>
-						<p-column header="Visitor/Guest" field="" filterPlaceholder="Search Name">
-					    	<template let-visitActive="rowData" pTemplate="body">
-					            <span>{{visitActive.visitor.prefix}} {{visitActive.visitor.full_name}}</span>
-					        </template>
-						</p-column>
-						<p-column header="Vehicle" field="" filterPlaceholder="Search vehicle">
-					    	<template let-visitActive="rowData" pTemplate="body">
-                                <span *ngIf="visitActive.visitor.vehicle==''">N/A</span>
-					            <span>{{visitActive.visitor.vehicle}}</span>
-					        </template>
-						</p-column>
-						<p-column header="Visiting" field="" filterPlaceholder="Search unit no">
-					    	<template let-visitActive="rowData" pTemplate="body">
-					            <span *ngIf="visitActive.property==''">N/A</span>
-                                <span>{{visitActive.visiting}}</span>
-					        </template>
-						</p-column>
-						<p-column field="purpose" header="Purpose of visit" ></p-column>
-                        <p-column header="Remarks" field="">
-                            <template let-visitActive="rowData" pTemplate="body">
-                                <span *ngIf="visitActive.remarks==''">No remarks</span>
-                                <span>{{visitActive.remarks}}</span>
-                            </template>
-                        </p-column>
-					    <p-column header="Added by" field="" sortable="true">visitActive
-					    	<template let-visitActive="rowData" pTemplate="body">
-					            <span class="btn-underline">{{visitActive.created_by.username}}</span><br>
-					            <span class="btn-underline">on {{visitActive.created_at | date:'d/M/y'}}</span>
-					        </template>
-						</p-column>
-						<p-column header="Card no" field="" sortable="true">
-					    	<template let-visitActive="rowData" pTemplate="body">
-                                <span *ngIf="visitActive.visitor.pass==''">-</span>
-					            <span class="btn-underline">{{visitActive.visitor.pass}}</span>
-					        </template>
-						</p-column>
-					    <p-column [style]="{'width':'300px'}" styleClass="col-button" field="" header="Check in/out">
-					    	<template let-visitActive="rowData" pTemplate="body">
-                                <div class="row">
-                                    <div class="col-md-4">
-                                        <button *ngIf="(!visitActive.check_in && !visitActive.check_out) || (visitActive.check_in && visitActive.check_out)" [disabled]="visitActive.check_in != null && visitActive.check_out != null " type="button" class="btn btn-default" (click)="preCheckIn(visitActive) || checkInModal.open()">IN</button>
-                                        <button *ngIf="visitActive.check_in && !visitActive.check_out" type="button" class="btn btn-primary" (click)="preCheckOut(visitActive) || checkOutModal.open()">OUT</button>
-                                    </div>
-                                    <div class="col-md-8">
-                                        <small *ngIf="visitActive.check_in">in {{ visitActive.check_in | date:'mediumTime' }}&nbsp;{{ visitActive.check_in | date:'shortDate' }}</small><br>
-                                        <small *ngIf="visitActive.check_out">out {{ visitActive.check_out | date:'mediumTime' }}&nbsp;{{ visitActive.check_out | date:'shortDate' }}</small>
-                                    </div>
-                                </div>
-					    	
-					    	</template>
-					    </p-column>
-					</p-dataTable>
+			<div class="col-md-2 btn-underline " (click)="nextDay()">
+				<span class="pull-left" style="margin-top: 10px"><img src="../../assets/image/icon_arrowright_white.png" ></span>
 			</div>
-            <span>
-                    <img *ngIf="loading" src="data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA==" />
-            </span>
-       
+		</div>
+
+		<div class="row no-margin">
+			<p-dataTable [value]="visitActive" scrollable="true" scrollHeight="360px">
+				<p-column header="No" [style]="{'width':'42px'}" field="i">
+				</p-column>
+				<p-column header="Visitor/Guest" field="" filterPlaceholder="Search Name">
+					<template let-visitActive="rowData" pTemplate="body">
+						<span>{{visitActive.visitor.prefix}} {{visitActive.visitor.full_name}}</span>
+					</template>
+				</p-column>
+				<p-column header="Vehicle" field="" filterPlaceholder="Search vehicle">
+					<template let-visitActive="rowData" pTemplate="body">
+						<span *ngIf="visitActive.visitor.vehicle==''">N/A</span>
+						<span>{{visitActive.visitor.vehicle}}</span>
+					</template>
+				</p-column>
+				<p-column header="Visiting" field="" filterPlaceholder="Search unit no">
+					<template let-visitActive="rowData" pTemplate="body">
+						<span *ngIf="visitActive.property==''">N/A</span>
+						<template #popTemplate>
+							<div class="row">
+								<img (click)="popTemplate.hide()" src="../../assets/image/icon_close_black.png" style="height:10px; width:10px;" class="close-popover" />
+							</div>
+							<div class="row add-bottom-10px">
+								<div class="col-md-5">
+									<strong>
+										Resident :
+									</strong>
+								</div>
+								<div class="col-md-7">
+									<span *ngIf="unit.landlord">{{ unit.landlord.username}}</span>
+								</div>
+							</div>
+							<div class="row add-bottom-10px">
+								<div class="col-md-5">
+									<strong>
+										Type :
+									</strong>
+								</div>
+								<div class="col-md-7">
+									<span *ngIf="unit.status">{{ unit.status}}</span>
+								</div>
+							</div>
+							<div class="row add-bottom-10px">
+								<div class="col-md-5">
+									<strong>
+										Floor & Unit :
+									</strong>
+								</div>
+								<div class="col-md-7">
+									<span *ngIf="unit.landlord">{{ visitActive.visiting}}</span>
+								</div>
+							</div>
+							<div class="row add-bottom-10px">
+								<div class="col-md-5">
+									<strong>
+										Unit Contact :
+									</strong>
+								</div>
+								<div class="col-md-7">
+									<span *ngIf="unit.landlord">{{ unit.landlord.phone}}</span>
+								</div>
+							</div>
+							<div class="row add-bottom-10px">
+								<div class="col-md-5">
+									<strong>
+										Mobile Contact :
+									</strong>
+								</div>
+								<div class="col-md-7">
+									<span *ngIf="unit.landlord">{{ unit.landlord.phone}}</span>
+								</div>
+							</div>
+							<br>
+							<a *ngIf="name" class="btn-underline pull-bottom-right" style="color: black" [routerLink]="'/' + name.default_development.name_url + '/unit/view/' + unit._id">View resident details</a>
+						</template>
+						<a style="cursor: pointer" class="btn-underline" [popover]="popTemplate" (click)="onUnitClick(visitActive.property)">{{visitActive.visiting}}</a>
+					</template>
+				</p-column>
+				<p-column field="purpose" header="Purpose of visit"></p-column>
+				<p-column header="Remarks" field="">
+					<template let-visitActive="rowData" pTemplate="body">
+						<span *ngIf="visitActive.remarks==''">No remarks</span>
+						<span>{{visitActive.remarks}}</span>
+					</template>
+				</p-column>
+				<p-column header="Added by" field="" sortable="true">visitActive
+					<template let-visitActive="rowData" pTemplate="body">
+						<span class="btn-underline">{{visitActive.created_by.username}}</span>
+						<br>
+						<span>on {{visitActive.created_at | date:'d/M/y'}}</span>
+					</template>
+				</p-column>
+				<p-column header="Card no" field="" sortable="true">
+					<template let-visitActive="rowData" pTemplate="body">
+						<span *ngIf="visitActive.visitor.pass==''">-</span>
+						<span>{{visitActive.visitor.pass}}</span>
+					</template>
+				</p-column>
+				<p-column [style]="{'width':'300px'}" styleClass="col-button" field="" header="Check in/out">
+					<template let-visitActive="rowData" pTemplate="body">
+						<div class="row">
+							<div class="col-md-4">
+								<button *ngIf="(!visitActive.check_in && !visitActive.check_out) || (visitActive.check_in && visitActive.check_out)" [disabled]="visitActive.check_in != null && visitActive.check_out != null " type="button" class="btn btn-default btn-in" (click)="preCheckIn(visitActive) || checkInModal.open()">IN</button>
+								<button *ngIf="visitActive.check_in && !visitActive.check_out" type="button" class="btn btn-primary btn-out" (click)="preCheckOut(visitActive) || checkOutModal.open()">OUT</button>
+							</div>
+							<div class="col-md-8">
+								<small *ngIf="visitActive.check_in">in {{ visitActive.check_in | date:'mediumTime' }}&nbsp;{{ visitActive.check_in | date:'shortDate' }}</small>
+								<br>
+								<small *ngIf="visitActive.check_out">out {{ visitActive.check_out | date:'mediumTime' }}&nbsp;{{ visitActive.check_out | date:'shortDate' }}</small>
+							</div>
+						</div>
+
+					</template>
+				</p-column>
+			</p-dataTable>
+		</div>
+		<span>
+            <img *ngIf="loading" src="data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA==" />
+        </span>
+
 		<div class="row">
-		    <modal #firstModal>
-		        <modal-header>
-		            <h5>Adding Guest/Visitor</h5>
-		        </modal-header>
-		        <modal-content>
+			<modal #firstModal>
+				<modal-header>
+					<h5>Adding Guest/Visitor</h5>
+				</modal-header>
+				<modal-content>
 					<form name="form" [formGroup]="myForm" novalidate>
-                        <div class="form-group" [ngClass]="{ 'has-error': addSubmitted && !myForm.controls.visitor.controls.prefix.valid }" formGroupName="visitor">
-                            <label  class="control-label col-sm-4" for="prefix">Prefix :</label>
-                            <div class="col-sm-8">
-                                <input type="text" class="form-control" name="prefix" formControlName="prefix">
-                                <small style="color: red" [hidden]="myForm.controls.visitor.controls.prefix.valid || (myForm.controls.visitor.controls.prefix.pristine && !addSubmitted)">Prefix is required</small>
-                            </div>
-                        </div>
+						<div class="form-group" [ngClass]="{ 'has-error': addSubmitted && !myForm.controls.visitor.controls.prefix.valid }" formGroupName="visitor">
+							<div class="row no-margin">
+								<br>
+								<br>
+								<label class="control-label col-sm-4" for="prefix">Prefix :</label>
+								<div class="col-sm-8">
+									<input type="text" class="form-control" name="prefix" formControlName="prefix">
+									<small style="color: red" [hidden]="myForm.controls.visitor.controls.prefix.valid || (myForm.controls.visitor.controls.prefix.pristine && !addSubmitted)">Prefix is required</small>
+								</div>
+							</div>
+						</div>
 						<div class="form-group" [ngClass]="{ 'has-error': addSubmitted && !myForm.controls.visitor.controls.full_name.valid }" formGroupName="visitor">
-                            <label  class="control-label col-sm-4" for="full_name">Name of Guest/visitor :</label>
-                            <div class="col-sm-8">
-                                <input type="text" class="form-control" name="full_name" formControlName="full_name">
-                                <small style="color: red" [hidden]="myForm.controls.visitor.controls.full_name.valid || (myForm.controls.visitor.controls.full_name.pristine && !addSubmitted)">Name is required</small>
-                            </div>
-                        </div>
-                        <div class="form-group" formGroupName="visitor">
-                            <label  class="control-label col-sm-4" for="vehicle">Vehicle :</label>
-                            <div class="col-sm-8">
-                                <input type="text" class="form-control" placeholder="If any" name="vehicle" formControlName="vehicle">
-                            </div>
-                        </div>
-                        <div class="form-group" formGroupName="visitor">
-                            <label  class="control-label col-sm-4" for="vehicle">Visit date:</label>
-                            <div class="col-sm-8">
-                            <my-date-picker class="bg-dark" [options]="visitDateCreateOptions" [selDate]="visitDateCreate" (dateChanged)="visitDateCreateChanged($event)"></my-date-picker>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label class="control-label col-sm-4" for="purpose">Purpose of visit :</label>
-                            <div class="col-sm-8">
-                                <select class="form-control" formControlName="purpose" name="purpose">
-                                    <option selected="" value="house_visit">House Visit</option>
-                                    <option value="maintenance_work">Maintenance Work</option>
-                                </select>
-                            </div>
-                        </div>
-                        <div class="form-group" [ngClass]="{ 'has-error': addSubmitted && !myForm.controls.property.valid }">
-                            <label class="control-label col-sm-4" for="unit_no">Visiting :</label>
-                            <div class="col-sm-8">
-                                <select class="form-control" formControlName="property" name="property">
-                                     <option *ngFor="let u of dataUnit" [ngValue]="u._id">#{{u.address.unit_no}}-{{u.address.unit_no_2}}</option>
-                                </select>
-                                <small style="color: red" [hidden]="myForm.controls.property.valid || (myForm.controls.property.pristine && !addSubmitted)">Unit no is required</small>
-                            </div>
-                        </div>
-
-
-                        <div class="form-group">
-                            <label  class="control-label col-sm-4" for="full_name">Remarks :</label>
-                            <div class="col-sm-8">
-                                <textarea  type="text" class="form-control" name="remarks" formControlName="remarks" placeholder="Remarks here if any"></textarea>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label  class="control-label col-sm-4" for="full_name">Check-in: :</label>
-                            <div class="col-sm-8">
-                              	<label><input type="radio" formControlName="check_in" name="check_in" [value]=true>Yes</label>
-                        		<label><input type="radio" formControlName="check_in" [checked]=true name="check_in" [value]=false>No</label>
-                        	</div>
-                        </div>
-                       	<div class="form-group" formGroupName="visitor">
-                            <label  class="control-label col-sm-4" for="pass">Visitor Pass :</label>
-                            <div class="col-sm-8">
-                                <input type="text" class="form-control" placeholder="Enter Pass serial" name="pass" formControlName="pass">
-                            </div>
-                        </div>
-                        <div class="pull-right">
-                            <button  class="btn btn-primary" [disabled]="loading" (click)="addGuest(myForm.value, myForm.valid)">Add
-                                <span>
-                                    <img *ngIf="loading" src="data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA==" />
-                                </span>
-                            </button>
-                            <button class="btn btn-default" (click)="firstModal.close()">Cancel</button>
-                        </div>
-		            </form>   
-		        </modal-content>
-		    </modal>
-		</div>	
+							<div class="row no-margin">
+								<label class="control-label col-sm-4" for="full_name">Name of Guest/visitor :</label>
+								<div class="col-sm-8">
+									<input type="text" class="form-control" name="full_name" formControlName="full_name">
+									<small style="color: red" [hidden]="myForm.controls.visitor.controls.full_name.valid || (myForm.controls.visitor.controls.full_name.pristine && !addSubmitted)">Name is required</small>
+								</div>
+							</div>
+						</div>
+						<div class="form-group" formGroupName="visitor">
+							<div class="row no-margin">
+								<label class="control-label col-sm-4" for="vehicle">Vehicle :</label>
+								<div class="col-sm-8">
+									<input type="text" class="form-control" placeholder="If any" name="vehicle" formControlName="vehicle">
+								</div>
+							</div>
+						</div>
+						<div class="form-group" formGroupName="visitor">
+							<div class="row no-margin">
+								<label class="control-label col-sm-4" for="vehicle">Visit date:</label>
+								<div class="col-sm-8">
+									<my-date-picker class="bg-white" [options]="visitDateCreateOptions" [selDate]="visitDateCreate" (dateChanged)="visitDateCreateChanged($event)"></my-date-picker>
+								</div>
+							</div>
+						</div>
+						<div class="form-group">
+							<div class="row no-margin">
+								<label class="control-label col-sm-4" for="purpose">Purpose of visit :</label>
+								<div class="col-sm-8">
+									<select class="form-control" formControlName="purpose" name="purpose">
+										<option selected="" value="house_visit">House Visit</option>
+										<option value="maintenance_work">Maintenance Work</option>
+									</select>
+								</div>
+							</div>
+						</div>
+						<div class="form-group" [ngClass]="{ 'has-error': addSubmitted && !myForm.controls.property.valid }">
+							<div class="row no-margin">
+								<label class="control-label col-sm-4" for="unit_no">Visiting :</label>
+								<div class="col-sm-8">
+									<select class="form-control" formControlName="property" name="property">
+										<option *ngFor="let u of dataUnit" [ngValue]="u._id">#{{u.address.unit_no}}-{{u.address.unit_no_2}}</option>
+									</select>
+									<small style="color: red" [hidden]="myForm.controls.property.valid || (myForm.controls.property.pristine && !addSubmitted)">Unit no is required</small>
+								</div>
+							</div>
+						</div>
+						<div class="form-group">
+							<div class="row no-margin">
+								<label class="control-label col-sm-4" for="full_name">Remarks :</label>
+								<div class="col-sm-8">
+									<textarea type="text" class="form-control" name="remarks" formControlName="remarks" placeholder="Remarks here if any"></textarea>
+								</div>
+							</div>
+						</div>
+						<div class="form-group">
+							<div class="row no-margin">
+								<label class="control-label col-sm-4" for="full_name">Check-in: :</label>
+								<div class="col-sm-8">
+									<label>
+										<input type="radio" formControlName="check_in" name="check_in" [value]=true>Yes</label>
+									<label>
+										<input type="radio" formControlName="check_in" [checked]=true name="check_in" [value]=false>No</label>
+								</div>
+							</div>
+						</div>
+						<div class="form-group" formGroupName="visitor">
+							<div class="row no-margin">
+								<label class="control-label col-sm-4" for="pass">Visitor Pass :</label>
+								<div class="col-sm-8">
+									<input type="text" class="form-control" placeholder="Enter Pass serial" name="pass" formControlName="pass">
+								</div>
+							</div>
+						</div>
+						<div class="row no-margin pull-bottom-right">
+							<button class="btn btn-default btn-gray" (click)="firstModal.close()">Cancel</button>
+							<button class="btn btn-primary btn-brown" [disabled]="loading" (click)="addGuest(myForm.value, myForm.valid)">Add
+								<span>
+									<img *ngIf="loading" src="data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA==" />
+								</span>
+							</button>
+						</div>
+					</form>
+				</modal-content>
+			</modal>
+		</div>
 
 		<div class="row">
-		    <modal #checkInModal>
-                <modal-header *ngIf="visit">
-                    <h5>Check-in {{ visit.visitor.prefix }}&nbsp;{{ visit.visitor.full_name }}</h5>
-                </modal-header>
-                <modal-content *ngIf="visit">
-                    <form name="form" [formGroup]="checkInForm" novalidate>
-                        <div class="form-group" formGroupName="visitor">
-                            <label  class="control-label col-sm-4" for="full_name">Name of Guest/visitor :</label>
-                            <div class="col-sm-8">
-                                <input type="text" class="form-control" name="full_name" formControlName="full_name">
-                            </div>
-                        </div>
-                        <div class="form-group" formGroupName="visitor">
-                            <label  class="control-label col-sm-4" for="vehicle">Vehicle :</label>
-                            <div class="col-sm-8">
-                                <input type="text" class="form-control" placeholder="If any" name="vehicle" formControlName="vehicle">
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label class="control-label col-sm-4" for="purpose">Purpose of visit :</label>
-                            <div class="col-sm-8">
-                                <select class="form-control" formControlName="purpose" name="purpose">
-                                    <option [selected]="visit.purpose=='house_visit'" value="house_visit">House Visit</option>
-                                    <option [selected]="visit.purpose=='maintenance_work'" value="maintenance_work">Maintenance Work</option>
-                                </select>
-                            </div>
-                        </div>
-                        <div class="form-group" >
-                            <label  class="control-label col-sm-4" for="full_name">Visiting :</label>
-                            <div class="col-sm-8">
-                                <input type="text" class="form-control" name="property" formControlName="property">
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label  class="control-label col-sm-4" for="full_name">Remarks :</label>
-                            <div class="col-sm-8">
-                                <textarea  type="text" class="form-control" name="remarks" formControlName="remarks" placeholder="Remarks here if any"></textarea>
-                            </div>
-                        </div>
-                        <div class="form-group" [ngClass]="{ 'has-error': checkInSsubmitted && !checkInForm.controls.visitor.controls.pass.valid }" formGroupName="visitor">
-                            <label  class="control-label col-sm-4" for="pass">Visitor Pass :</label>
-                            <div class="col-sm-8">
-                                <input type="text" class="form-control" placeholder="Enter Pass serial" name="pass" formControlName="pass">
-                                <small style="color: red" [hidden]="checkInForm.controls.visitor.controls.pass.valid || (checkInForm.controls.visitor.controls.pass.pristine && !checkInSsubmitted)">Pass number is required</small>
-                            </div>
-                        </div>
-                        <div class="pull-right">
-                            <button  class="btn btn-primary" [disabled]="loading" (click)="checkIn(checkInForm.value, checkInForm.valid)">Check-In
-                                <span>
-                                    <img *ngIf="loading" src="data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA==" />
-                                </span>
-                            </button>
-                            <button class="btn btn-default" (click)="checkInModal.close()">Cancel</button>
-                        </div>
-                    </form>   
-                </modal-content>
-		    </modal>
-		</div>	
+			<modal #checkInModal>
+				<modal-header *ngIf="visit">
+					<h5>Check-in {{ visit.visitor.prefix }}&nbsp;{{ visit.visitor.full_name }}</h5>
+				</modal-header>
+				<modal-content *ngIf="visit">
+					<form name="form" [formGroup]="checkInForm" novalidate>
+						<div class="form-group" formGroupName="visitor">
+							<label class="control-label col-sm-4" for="full_name">Name of Guest/visitor :</label>
+							<div class="col-sm-8">
+								<input type="text" class="form-control" name="full_name" formControlName="full_name">
+							</div>
+						</div>
+						<div class="form-group" formGroupName="visitor">
+							<label class="control-label col-sm-4" for="vehicle">Vehicle :</label>
+							<div class="col-sm-8">
+								<input type="text" class="form-control" placeholder="If any" name="vehicle" formControlName="vehicle">
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="control-label col-sm-4" for="purpose">Purpose of visit :</label>
+							<div class="col-sm-8">
+								<select class="form-control" formControlName="purpose" name="purpose">
+									<option [selected]="visit.purpose=='house_visit'" value="house_visit">House Visit</option>
+									<option [selected]="visit.purpose=='maintenance_work'" value="maintenance_work">Maintenance Work</option>
+								</select>
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="control-label col-sm-4" for="full_name">Visiting :</label>
+							<div class="col-sm-8">
+								<input type="text" class="form-control" name="property" formControlName="property">
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="control-label col-sm-4" for="full_name">Remarks :</label>
+							<div class="col-sm-8">
+								<textarea type="text" class="form-control" name="remarks" formControlName="remarks" placeholder="Remarks here if any"></textarea>
+							</div>
+						</div>
+						<div class="form-group" [ngClass]="{ 'has-error': checkInSsubmitted && !checkInForm.controls.visitor.controls.pass.valid }" formGroupName="visitor">
+							<label class="control-label col-sm-4" for="pass">Visitor Pass :</label>
+							<div class="col-sm-8">
+								<input type="text" class="form-control" placeholder="Enter Pass serial" name="pass" formControlName="pass">
+								<small style="color: red" [hidden]="checkInForm.controls.visitor.controls.pass.valid || (checkInForm.controls.visitor.controls.pass.pristine && !checkInSsubmitted)">Pass number is required</small>
+							</div>
+						</div><br>
+						<div class="pull-right">
+							<button class="btn btn-primary btn-brown" [disabled]="loading" (click)="checkIn(checkInForm.value, checkInForm.valid)">Check-In
+								<span>
+                                            <img *ngIf="loading" src="data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA==" />
+                                        </span>
+							</button>
+							<button class="btn btn-default btn-gray" (click)="checkInModal.close()">Cancel</button>
+						</div>
+					</form>
+				</modal-content>
+			</modal>
+		</div>
 
-        <div class="row">
-            <modal #checkOutModal>
-                <modal-header *ngIf="visitOut">
-                    <h5>Check-out {{ visitOut.visitor.prefix }}&nbsp;{{ visitOut.visitor.full_name }}</h5>
-                </modal-header>
-                <modal-content *ngIf="visitOut">
-                    <form name="form" [formGroup]="checkOutForm" (ngSubmit)="checkOut(checkOutForm.value, checkOutForm.valid)" novalidate>
-                       <div class="form-group" [ngClass]="{ 'has-error': checkOutSsubmitted && !checkOutForm.controls.visitor.controls.pass.valid }" formGroupName="visitor">
-                            <label  class="control-label col-sm-4" for="pass">Visitor Pass :</label>
-                            <div class="col-sm-8">
-                                <input type="text" class="form-control" placeholder="Enter Pass serial" name="pass" formControlName="pass">
-                                <small style="color: red" [hidden]="checkOutForm.controls.visitor.controls.pass.valid || (checkOutForm.controls.visitor.controls.pass.pristine && !checkInSsubmitted)">Pass number is required</small>
-                            </div>
-                        </div>
-                        <div class="pull-right">
-                            <button  class="btn btn-primary" [disabled]="loading">Check-Out
-                                <span>
-                                    <img *ngIf="loading" src="data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA==" />
+		<div class="row">
+			<modal #checkOutModal>
+				<modal-header *ngIf="visitOut">
+					<h5>Check-out {{ visitOut.visitor.prefix }}&nbsp;{{ visitOut.visitor.full_name }}</h5>
+				</modal-header>
+				<modal-content *ngIf="visitOut">
+					<form name="form" [formGroup]="checkOutForm" (ngSubmit)="checkOut(checkOutForm.value, checkOutForm.valid)" novalidate>
+						<div class="form-group" [ngClass]="{ 'has-error': checkOutSsubmitted && !checkOutForm.controls.visitor.controls.pass.valid }" formGroupName="visitor">
+							<label class="control-label col-sm-4" for="pass">Visitor Pass :</label>
+							<div class="col-sm-8">
+								<input type="text" class="form-control" placeholder="Enter Pass serial" name="pass" formControlName="pass">
+								<small style="color: red" [hidden]="checkOutForm.controls.visitor.controls.pass.valid || (checkOutForm.controls.visitor.controls.pass.pristine && !checkInSsubmitted)">Pass number is required</small>
+							</div>
+						</div><br>
+						<div class="pull-right">
+							<button class="btn btn-primary btn-brown" [disabled]="loading">Check-Out
+								<span>
+                                            <img *ngIf="loading" src="data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA==" />
                                 </span>
-                            </button>
-                            <a class="btn btn-default" (click)="checkOutModal.close()">Cancel</a>
-                        </div>
-                    </form>   
-                </modal-content>
-            </modal>
-        </div>  
+							</button>
+							<a class="btn btn-default btn-gray" (click)="checkOutModal.close()">Cancel</a>
+						</div>
+					</form>
+				</modal-content>
+			</modal>
+		</div>
 	</div>
 </div>
 
-        <style>
-            @import "./styles/visit.css";
-        </style>
+<style>
+	@import "./styles/visit.css";
+</style>

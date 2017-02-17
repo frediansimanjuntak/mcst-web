@@ -29,6 +29,7 @@ export class IncidentComponent implements OnInit {
     isFavorite = false;
     isArchieved = false;
     change = new EventEmitter();
+    status: any;
     public data;
     public dataNew;
     public dataInProgress;
@@ -43,6 +44,11 @@ export class IncidentComponent implements OnInit {
         private editcontractComponent: EditContractComponent,) {}
 
     ngOnInit(): void {
+        this.status = [];
+        this.status.push({label: 'All Brands', value: null});
+        this.status.push({label: 'New', value: 'new'});
+        this.status.push({label: 'In Progress', value: 'in progress'});
+        this.status.push({label: 'Resolved', value: 'resolved'});
         this.userService.getByToken().subscribe(name => {this.name = name;})
         this.route.params.subscribe(params => {
             this.id = params['id'];
@@ -106,6 +112,10 @@ export class IncidentComponent implements OnInit {
 
     viewPhoto(incident: Incident){
         this.router.navigate([this.name.default_development.name_url + '/incident/view/photo', incident._id]);
+    }
+
+    viewContract(id: any){
+        this.router.navigate([this.name.default_development.name_url + '/contract/view', id]);
     }
 
     add(){

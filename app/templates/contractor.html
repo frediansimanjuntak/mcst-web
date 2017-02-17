@@ -3,162 +3,190 @@
 		<div class="title">
 			Manage Contractor
 		</div>
-		Home > Manage Contractor
+		<p class="id-location">Home > Manage Contractor</p>
 		<div class="row">
 			<div class="col-md-4 pull-right">
-					  		<a class="btn btn-default pull-right" (click)="add()">
-					  		<i class="fa fa-plus" aria-hidden="true"></i>&nbsp;Create a Contractor</a>
+					  		<button class="btn btn-default btn-add pull-right" (click)="add()">
+					  		 <img class="img-btn" src="../../assets/image/icon_add.png" />&nbsp;Create a Contractor</button>
 					  		
 			</div>
 		</div>
 		<div class="row">
-		  		<p-dataTable [value]="contractors" [rows]="10"  resizableColumns="true" [paginator]="true">
-				    <p-column field="username" header="Username" sortable="true" [filter]="true" filterPlaceholder="Search username"></p-column>
-				    <p-column field="password" header="Password" sortable="true"></p-column>
-				    <p-column field="phone" header="Phone" sortable="true"></p-column>
-				    <p-column field="phone" header="Phone" sortable="true" ></p-column>
-				    <p-column field="email" header="Email" sortable="true" ></p-column>
-				    <p-column header="Country" sortable="true" [filter]="true" filterPlaceholder="Search Country">
-					    	<template let-contractors="rowData" pTemplate="body">
-					            <span>{{contractors.address.country}}</span>
-					        </template>
-					</p-column>
-					<p-column header="Profile Picture">
-					    	<template let-contractors="rowData" pTemplate="body">
-					            <span *ngIf="contractors.profile_picture">{{contractors.profile_picture.name}}</span>
-					        </template>
-					</p-column>
-					<p-column field="description" header="Description" sortable="true" ></p-column>
-					<p-column field="company" header="Company" sortable="true" [filter]="true" filterPlaceholder="Search Company"></p-column>
-					<p-column field="position" header="Position" sortable="true" [filter]="true" filterPlaceholder="Search Position"></p-column>
-					<p-column field="role" header="Role" sortable="true" [filter]="true" filterPlaceholder="Search Role"></p-column>
-					<p-column header="Active">
-					    	<template let-contractors="rowData" pTemplate="body">
-					        	<span *ngIf="contractors.active" class="label label-success">Yes</span>
-					        	<span *ngIf="!contractors.active" class="label label-danger">No</span>
-					        </template>
-					</p-column>
-					<p-column [style]="{'width':'218px'}" styleClass="col-button" header="action">
-				    	<template class="pull-right" let-contractors="rowData" pTemplate="body">
-					    	<button type="button" class="btn btn-primary btn-xs" (click)="openModal(contractors) || firstModal.open()">View</button>
-					    	<button *ngIf="!contractors.active" type="button" class="btn btn-primary btn-xs" (click)="openModal(contractors) || activeModal.open()">Activate</button>
-						    <button *ngIf="contractors.active" type="button" class="btn btn-default btn-xs" (click)="openModal(contractors) || deactiveModal.open()">Deactivate</button>
-					    	<a type="button" style="cursor:pointer" (click)="editContractor(contractors)"><i class="fa fa-edit" aria-hidden="true"></i>&nbsp;Edit</a>
-					        <button  type="button" (click)="deleteContractor(contractors)"><i class="fa fa-trash" aria-hidden="true"></i></button>
-				    	</template>
-				    </p-column>
-				</p-dataTable>
-		</div> 
-
-		<div class="row">
-		    <modal #firstModal>
-                <modal-header *ngIf="contractor">
-                    <h5>Contractor {{ contractor.username }}</h5>
-                </modal-header>
-                <modal-content *ngIf="contractor">
-                   	<div class="row">
-	        			<div class="col-md-4">Username</div>
-	        			<div class="col-md-8"> <p>: {{ contractor.username }}</p></div>
-	        		</div>
-	        		<div class="row">
-	        			<div class="col-md-4">Password</div>
-	        			<div class="col-md-8"><p>: {{ contractor.password }}</p></div>
-	        		</div>
-	        		<div class="row">
-	        			<div class="col-md-4">Phone </div>
-	        			<div class="col-md-8"><p>: {{ contractor.phone }}</p></div>
-	        		</div>
-	        		<div class="row">
-	        			<div class="col-md-4">Email </div>
-	        			<div class="col-md-8"><p>: {{ contractor.email }}</p></div>
-	        		</div>
-	        		<div class="row">
-	        			<div class="col-md-4">Street Name </div>
-	        			<div class="col-md-8"><p>: {{ contractor.address.street_name }}</p></div>
-	        		</div>
-	        		<div class="row">
-	        			<div class="col-md-4">Block No </div>
-	        			<div class="col-md-8"><p>: {{ contractor.address.block_no }}</p></div>
-	        		</div>
-	        		<div class="row">
-	        			<div class="col-md-4">Postal Code </div>
-	        			<div class="col-md-8"><p>: {{ contractor.address.postal_code }}</p></div>
-	        		</div>
-	        		<div class="row">
-	        			<div class="col-md-4">Country </div>
-	        			<div class="col-md-8"><p>: {{ contractor.address.country }}</p></div>
-	        		</div>
-	        		<div class="row">
-	        			<div class="col-md-4">Full Address </div>
-	        			<div class="col-md-8"><p>: {{ contractor.address.full_address }}</p></div>
-	        		</div>
-	        		<div class="row">
-	        			<div class="col-md-4">Company Logo </div>
-	        			<div class="col-md-8"><p>: {{ contractor.profile_picture.name }}</p></div>
-	        		</div>
-	        		<div class="row">
-	        			<div class="col-md-4">Description </div>
-	        			<div class="col-md-8"><p>: {{ contractor.description }}</p></div>
-	        		</div>
-	        		<div class="row">
-	        			<div class="col-md-4">Company </div>
-	        			<div class="col-md-8"><p>: {{ contractor.company }}</p></div>
-	        		</div>
-	        		<div class="row">
-	        			<div class="col-md-4">Position </div>
-	        			<div class="col-md-8"><p>: {{ contractor.position }}</p></div>
-	        		</div>
-	        		<div class="row">
-	        			<div class="col-md-4">Role </div>
-	        			<div class="col-md-8"><p>: {{ contractor.role }}</p></div>
-	        		</div>
-	        		<div class="row">
-	        			<div class="col-md-4">Active </div>
-	        			<div class="col-md-8">
-	        				<p *ngIf="contractor.active==true">: Yes</p>
-	        				<p *ngIf="contractor.active==false">: No</p>
-	        			</div>
-	        		</div>
-	        	</modal-content>
-	        	<modal-footer>
-	        		  <button class="btn btn-default" (click)="firstModal.close()">Close</button>
-	        	</modal-footer>
-		    </modal>
-		</div>	
-
-		<div class="row">
-		    <modal #activeModal>
-		        <modal-header *ngIf="contractor">
-		            <h5>Activate contractor {{ contractor.username }}</h5>
-		        </modal-header>
-		        <modal-content  *ngIf="contractor">
-					<div>
-		            	Are you sure want to activate contractor {{ contractor.username }}
-		        	</div>
-		        </modal-content>
-		        <modal-footer>
-		            <button  class="btn btn-primary" (click)="activate()">Activate</button>
-		            <button class="btn btn-default" (click)="activeModal.close()">Cancel</button>
-		        </modal-footer>
-		    </modal>
-		</div>	
-
-		<div class="row">
-		    <modal #deactiveModal>
-		        <modal-header *ngIf="contractor">
-		            <h5>Deactive contractor {{ contractor.username }}</h5>
-		        </modal-header>
-		        <modal-content  *ngIf="contractor">
-					<div>
-		             	Are you sure want to deactivate contractor {{ contractor.username }}
-		        	</div>
-		        </modal-content>
-		        <modal-footer>
-		                <button  class="btn btn-primary" (click)="deactivate()">Deactivate</button>
-		                <button class="btn btn-default" (click)="deactiveModal.close()">Cancel</button>
-		        </modal-footer>
-		     </modal>
+			<p-dataTable [value]="contractors" [rows]="10" resizableColumns="true" [paginator]="true">
+				<p-column field="username" header="Username" sortable="true" [filter]="true" filterPlaceholder="Search username"></p-column>
+				<p-column field="password" header="Password" sortable="true"></p-column>
+				<p-column field="phone" header="Phone" sortable="true"></p-column>
+				<p-column field="phone" header="Phone" sortable="true"></p-column>
+				<p-column field="email" header="Email" sortable="true"></p-column>
+				<p-column header="Country" sortable="true" [filter]="true" filterPlaceholder="Search Country">
+					<template let-contractors="rowData" pTemplate="body">
+						<span>{{contractors.address.country}}</span>
+					</template>
+				</p-column>
+				<p-column header="Profile Picture">
+					<template let-contractors="rowData" pTemplate="body">
+						<span *ngIf="contractors.profile_picture">{{contractors.profile_picture.name}}</span>
+					</template>
+				</p-column>
+				<p-column field="description" header="Description" sortable="true"></p-column>
+				<p-column field="company" header="Company" sortable="true" [filter]="true" filterPlaceholder="Search Company"></p-column>
+				<p-column field="position" header="Position" sortable="true" [filter]="true" filterPlaceholder="Search Position"></p-column>
+				<p-column field="role" header="Role" sortable="true" [filter]="true" filterPlaceholder="Search Role"></p-column>
+				<p-column header="Active">
+					<template let-contractors="rowData" pTemplate="body">
+						<span *ngIf="contractors.active" class="label label-success">Yes</span>
+						<span *ngIf="!contractors.active" class="label label-danger">No</span>
+					</template>
+				</p-column>
+				<p-column [style]="{'width':'218px'}" styleClass="col-button" header="action">
+					<template class="pull-right" let-contractors="rowData" pTemplate="body">
+						<button type="button" class="btn btn-primary btn-xs" (click)="openModal(contractors) || firstModal.open()">View</button>
+						<button *ngIf="!contractors.active" type="button" class="btn btn-primary btn-xs" (click)="openModal(contractors) || activeModal.open()">Activate</button>
+						<button *ngIf="contractors.active" type="button" class="btn btn-default btn-xs" (click)="openModal(contractors) || deactiveModal.open()">Deactivate</button>
+						<a type="button" style="cursor:pointer" (click)="editContractor(contractors)"><i class="fa fa-edit" aria-hidden="true"></i>&nbsp;Edit</a>
+						<button type="button" (click)="deleteContractor(contractors)"><i class="fa fa-trash" aria-hidden="true"></i></button>
+					</template>
+				</p-column>
+			</p-dataTable>
 		</div>
-		
+
+		<div class="row">
+			<modal #firstModal>
+				<modal-header *ngIf="contractor">
+					<h5>Contractor {{ contractor.username }}</h5>
+				</modal-header>
+				<modal-content *ngIf="contractor">
+					<div class="row">
+						<div class="col-md-4">Username</div>
+						<div class="col-md-8">
+							<p>: {{ contractor.username }}</p>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-md-4">Password</div>
+						<div class="col-md-8">
+							<p>: {{ contractor.password }}</p>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-md-4">Phone </div>
+						<div class="col-md-8">
+							<p>: {{ contractor.phone }}</p>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-md-4">Email </div>
+						<div class="col-md-8">
+							<p>: {{ contractor.email }}</p>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-md-4">Street Name </div>
+						<div class="col-md-8">
+							<p>: {{ contractor.address.street_name }}</p>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-md-4">Block No </div>
+						<div class="col-md-8">
+							<p>: {{ contractor.address.block_no }}</p>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-md-4">Postal Code </div>
+						<div class="col-md-8">
+							<p>: {{ contractor.address.postal_code }}</p>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-md-4">Country </div>
+						<div class="col-md-8">
+							<p>: {{ contractor.address.country }}</p>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-md-4">Full Address </div>
+						<div class="col-md-8">
+							<p>: {{ contractor.address.full_address }}</p>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-md-4">Company Logo </div>
+						<div class="col-md-8">
+							<p>: {{ contractor.profile_picture.name }}</p>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-md-4">Description </div>
+						<div class="col-md-8">
+							<p>: {{ contractor.description }}</p>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-md-4">Company </div>
+						<div class="col-md-8">
+							<p>: {{ contractor.company }}</p>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-md-4">Position </div>
+						<div class="col-md-8">
+							<p>: {{ contractor.position }}</p>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-md-4">Role </div>
+						<div class="col-md-8">
+							<p>: {{ contractor.role }}</p>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-md-4">Active </div>
+						<div class="col-md-8">
+							<p *ngIf="contractor.active==true">: Yes</p>
+							<p *ngIf="contractor.active==false">: No</p>
+						</div>
+					</div>
+				</modal-content>
+				<modal-footer>
+					<button class="btn btn-default" (click)="firstModal.close()">Close</button>
+				</modal-footer>
+			</modal>
+		</div>
+
+		<div class="row">
+			<modal #activeModal>
+				<modal-header *ngIf="contractor">
+					<h5>Activate contractor {{ contractor.username }}</h5>
+				</modal-header>
+				<modal-content *ngIf="contractor">
+					<div>
+						Are you sure want to activate contractor {{ contractor.username }}
+					</div>
+				</modal-content>
+				<modal-footer>
+					<button class="btn btn-primary" (click)="activate()">Activate</button>
+					<button class="btn btn-default" (click)="activeModal.close()">Cancel</button>
+				</modal-footer>
+			</modal>
+		</div>
+
+		<div class="row">
+			<modal #deactiveModal>
+				<modal-header *ngIf="contractor">
+					<h5>Deactive contractor {{ contractor.username }}</h5>
+				</modal-header>
+				<modal-content *ngIf="contractor">
+					<div>
+						Are you sure want to deactivate contractor {{ contractor.username }}
+					</div>
+				</modal-content>
+				<modal-footer>
+					<button class="btn btn-primary" (click)="deactivate()">Deactivate</button>
+					<button class="btn btn-default" (click)="deactiveModal.close()">Cancel</button>
+				</modal-footer>
+			</modal>
+		</div>
+
 	</div>
 </div>

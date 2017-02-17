@@ -22,12 +22,12 @@
                                 <b>Block :</b>{{unit.address.block_no}}
                             </div>
                             <div class="col-md-4">
-                                <span *ngIf="hasLandlord"><b>Owner :</b>{{unit.landlord.username}}<br>
-                                <b>Status :</b>{{unit.status}}</span>
+                                <span *ngIf="hasLandlord"><b>Owner :</b>{{unit.landlord.username}}<br></span>
+                                <b>Status :</b>{{unit.status}}
                             </div>
                             <div class="col-md-4">
                                 <b>No of Tenant :</b>{{ unit.tenant.length }}<br>
-                                <b>Vehicle :</b> <!-- {{unit.vehicle.length}} -->
+                                <b>Vehicle :</b> {{vehicles.length}}
                             </div>
                     </div>
                 </div><br>
@@ -131,8 +131,8 @@
                             </div>
                         </div>
                         <div class="pull-right">
-                            <button  class="btn btn-primary" (click)="addResident()">Go to Form</button>
-                            <button class="btn btn-default" (click)="firstModal.close()">Cancel</button>
+                            <button  class="btn btn-primary btn-brown" (click)="addResident()">Go to Form</button>
+                            <button class="btn btn-white" (click)="firstModal.close()">Cancel</button>
                         </div>
                     </form>   
                 </modal-content>
@@ -150,16 +150,16 @@
                             <label  class="control-label col-sm-4" for="license_plate">License Plate :</label>
                             <div class="col-sm-8">
                                 <input license_plate="text" class="form-control" name="license_plate" formControlName="license_plate">
-                                <small style="color: red" [hidden]="myForm2.controls.license_plate.valid || (myForm2.controls.license_plate.pristine && !addSubmitted)">License Plate is required</small>
+                                <small style="color: red" [hidden]="myForm2.controls.license_plate.valid || (myForm2.controls.license_plate.pristine && !vehicleSubmitted)">License Plate is required</small>
                             </div>
                         </div>
-                         <div class="form-group" [ngClass]="{ 'has-error': vehicleSubmitted && !!selectedresident }">
+                         <div class="form-group" [ngClass]="{ 'has-error': vehicleSubmitted && !myForm2.controls.owner.valid }">
                             <label class="control-label col-sm-4" for="unit_no">Owner :</label>
                             <div class="col-sm-8">
                                 <select class="form-control" formControlName="owner" name="owner">
                                      <option *ngFor="let u of residents" [ngValue]="u.resident._id">{{u.resident.username}}</option>
                                 </select>
-                               <span *ngIf="vehicleSubmitted && !selectedResident" class="help-block">Resident is required</span>
+                               <small style="color: red" [hidden]="myForm2.controls.owner.valid || (myForm2.controls.owner.pristine && !vehicleSubmitted)">Owner is required</small>
                             </div>
                         </div>
                         <div class="form-group">
@@ -177,6 +177,7 @@
                                     <span style="text-decoration: underline;">{{ item.name }}_{{item.size/1024 | number:'1.0-0' }}kb</span> &nbsp;   
                                     <span style="cursor:pointer" (click)="remove(i)"><img src="assets/image/icon_close_black.png" width="14px" height="12px"></span>
                                 </p>
+                                <small style="color: red" [hidden]="model.document.length > 0 || (model.document.length == 0 && !vehicleSubmitted)">Document is required</small>
                             </div>
                         </div>
                          <div class="form-group">
@@ -186,8 +187,8 @@
                             </div>
                         </div>
                         <div class="pull-right">
-                            <button  class="btn btn-primary" (click)="addVehicle(myForm2.value, myForm2.valid)">Add</button>
-                            <button class="btn btn-default" (click)="secondModal.close()">Cancel</button>
+                            <button  class="btn btn-primary btn-brown" (click)="addVehicle(myForm2.value, myForm2.valid)">Add</button>
+                            <button class="btn btn-white" (click)="secondModal.close()">Cancel</button>
                         </div>
                     </form>   
                 </modal-content>

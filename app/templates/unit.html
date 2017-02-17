@@ -3,54 +3,73 @@
 		<div class="title">
 			Resident's Database
 		</div>
-		Home > Resident's Database
+		<p class="id-location">Home > Resident's Database</p>
 		<div class="row">
 			<div class="col-md-9">
 				<div class="row">
-						<div class="col-md-8">
-							
-						</div>
-						<div class="col-md-4">
-					  		<button class="btn btn-default pull-right" (click)="add()"><img class="img-btn" src="../../assets/image/icon_addresident.png" />&nbsp;Add Resident</button>
-					  		
-						</div>			
+					<div class="col-md-8">
+
+					</div>
+					<div class="col-md-4">
+						<button class="btn btn-default btn-add pull-right" (click)="add()"><img class="img-btn" src="../../assets/image/icon_addresident.png" />&nbsp;Add Resident</button>
+
+					</div>
 				</div>
 			</div>
 			<div class="col-md-3">
-				
-			</div> 
+
+			</div>
 		</div>
 		<div class="row">
 			<div class="col-md-9">
 				<p-dataTable [value]="dataUnit" [rows]="10" [paginator]="true">
 					<p-column filterPlaceholder="Search Unit No" header="Unit No">
-				        <template let-dataUnit="rowData" pTemplate="body">
-				            <span>#{{dataUnit.address.unit_no}}-{{dataUnit.address.unit_no_2}}</span>
-				        </template>
-				    </p-column>
-				    <p-column field="landlord.username" header="Owner" sortable="true" [filter]="true" filterPlaceholder="Search Lanlord"></p-column>
-				    <p-column field="status" header="Status" sortable="true" [filter]="true" filterPlaceholder="Search Status"></p-column>
-				    <p-column sortable="true" header="No. of Tenant">
-				        <template let-dataUnit="rowData" pTemplate="body">
-				            <span>{{dataUnit.tenant.length}}</span>
-				        </template>
-				    </p-column>
-					<p-column [style]="{'width':'300px'}" styleClass="col-button" header="action">
-					    <template class="pull-right" let-dataUnit="rowData" pTemplate="body">
-					    	<a type="button" class="btn-underline" (click)="view(dataUnit)">View unit details</a>
-					    	
-					    </template>
+						<template let-dataUnit="rowData" pTemplate="body">
+							<span>#{{dataUnit.address.unit_no}}-{{dataUnit.address.unit_no_2}}</span>
+						</template>
 					</p-column>
-				
+					<p-column field="landlord.username" header="Owner" sortable="true" [filter]="true" filterPlaceholder="Search Lanlord"></p-column>
+					<p-column field="status" header="Status" sortable="true" [filter]="true" filterPlaceholder="Search Status"></p-column>
+					<p-column sortable="true" header="No. of Tenant">
+						<template let-dataUnit="rowData" pTemplate="body">
+							<span>{{dataUnit.tenant.length}}</span>
+						</template>
+					</p-column>
+					<p-column [style]="{'width':'300px'}" styleClass="col-button" header="action">
+						<template class="pull-right" let-dataUnit="rowData" pTemplate="body">
+							<a type="button" class="btn-underline" (click)="view(dataUnit)">View unit details</a>
+
+						</template>
+					</p-column>
+
 				</p-dataTable>
 			</div>
 			<div class="col-md-3">
-				
+				<h4>Related Functions</h4>
+				<div>
+					<img src="../../assets/image/icon_accesscontrol.png" style="height:10px; width:10px;" class="img-responsive" alt="" />
+					<a>Resident Access control</a>
+				</div>
+				<div>
+					<img src="../../assets/image/menu_guestvisitor.png" style="height:10px; width:10px;" class="img-responsive" alt="" />
+					<a>Guest & Visitors</a>
+				</div>
+				<div>
+					<img src="../../assets/image/menu_request.png" style="height:10px; width:10px;" class="img-responsive" alt="" />
+					<a>Manage Request</a>
+				</div>
+				<div>
+					<img src="../../assets/image/menu_incidentreport.png" style="height:10px; width:10px;" class="img-responsive" alt="" />
+					<a>Incident Reports</a>
+				</div>
+				<div>
+					<img src="../../assets/image/icon_feedbacks.png" style="height:10px; width:10px;" class="img-responsive" alt="" />
+					<a>Manage Feedbacks</a>
+				</div>
 			</div>
-		</div> 
+		</div>
 		<span>
 	                            <img *ngIf="loading" src="data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA==" />
 	                        </span>
 	</div>
 </div>
-
