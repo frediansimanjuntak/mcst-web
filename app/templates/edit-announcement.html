@@ -116,13 +116,9 @@
                     <label class="control-label col-sm-4" for="auto_post_on">Auto post on :</label>
                     <div class="col-sm-8">
                         <my-date-picker [options]="autoPostOnDateOptions" [placeholder]="autoPostOnDateTxt"
-                             (dateChanged)="autoPostOnDateChanged($event)"></my-date-picker>
-
-                             <div class="ui-g-12 ui-md-4">
-                                <h3>Time</h3>
-                                <p-calendar [(ngModel)]="model.auto_post_on" [showTime]="true" [ngModelOptions]="{standalone: true}"></p-calendar> {{date6}}
-                            </div>
-
+                             (dateChanged)="autoPostOnDateChanged($event)">
+                                 
+                        </my-date-picker>
                     </div>
                 </div>
                 <div class="form-group">
@@ -137,9 +133,9 @@
 
             
                 <div class="form-group pull-right">
-                    <button [disabled]="loading" class="btn btn-primary">Create</button>
+                    <button [disabled]="loading" class="btn btn-primary btn-brown">Create</button>
                     <img *ngIf="loading" src="data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA==" />
-                    <button (click)="toAnnouncement()" class="btn btn-info">Cancel</button>
+                    <button (click)="toAnnouncement()" class="btn btn-white">Cancel</button>
                 </div>
             </form>     
         </div>

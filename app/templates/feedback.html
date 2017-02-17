@@ -4,10 +4,10 @@
     		<div class="title">
 				MANAGE FEEDBACK
 			</div>
-			Home > Manage Feedback
+			<p>Home > Manage Feedback</p>
 			<div class="row">
 				<div class="col-md-4 pull-right">
-					<a class="btn btn-default pull-right" (click)="viewArchived()">View Archived</a>	  		
+					<a class="btn btn-default pull-right btn-gray" (click)="viewArchived()">View Archived</a>	  		
 				</div>
 			</div>
 			<div (click)="$event.preventDefault()">
@@ -35,7 +35,7 @@
 						    <p-column [style]="{'width':'180px'}" styleClass="col-button" header="action">
 						    	<template let-feedback="rowData" pTemplate="body">
 						    		<a type="button" style="cursor:pointer" (click)="openModal(feedback) || firstModal.open()"><img src="../../assets/image/icon_reply.png" width="10px" height="10x">&nbsp;Reply</a>
-						    		<button disabled="feedback.status == unpublished" style="text-decoration: underline;cursor:pointer" (click)="publish(feedback)">Publish</button>
+						    		<button class="btn btn-brown" disabled="feedback.status == unpublished" style="text-decoration: underline;cursor:pointer" (click)="publish(feedback)">Publish</button>
 									<img *ngIf="feedback.archive == false" title="archived" src="../../assets/image/icon_archived.png" (click)="archived(feedback)" />
 									<img *ngIf="feedback.archive == true" title="unarchived" src="../../assets/image/icon_archived.png" (click)="unarchived(feedback)" />
 						    	</template>
@@ -103,10 +103,10 @@
     		<div class="title">
 				ARCHIVED FEEDBACK
 			</div>
-			Home > Manage Feedback > Archived Feedback
+			<p>Home > Manage Feedback > Archived Feedback</p>
 			<div class="row">
 				<div class="col-md-4 pull-right">
-					<a class="btn btn-default pull-right" (click)="viewUnarchived()">View Unarchived</a>	  		
+					<a class="btn btn-default pull-right btn-gray" (click)="viewUnarchived()">View Unarchived</a>	  		
 				</div>
 			</div>
 			<p-dataTable [value]="archived" [rows]="10" [paginator]="true">

@@ -12,30 +12,30 @@
 	        	<div class="col-lg-6">
 	        		<div class="row">
 	        			<div class="col-md-4">Reported by :</div>
-	        			<div class="col-md-8"> <p>{{ lostFound.created_by.username }}</p></div>
+	        			<div class="col-md-8"> {{ lostFound.created_by.username }}</div>
 	        		</div>
 	        		<div class="row">
 	        			<div class="col-md-4">Type :</div>
-	        			<div class="col-md-8"><p>{{ lostFound.type }}</p></div>
+	        			<div class="col-md-8">{{ lostFound.type }}</div>
 	        		</div>
 	        		<div class="row">
 	        			<div class="col-md-4">Report time :</div>
-	        			<div class="col-md-8"><p>{{ lostFound.created_at | date:'fullDate'}}</p></div>
+	        			<div class="col-md-8">{{ lostFound.created_at | date:'fullDate'}}</div>
 	        		</div>
 	        		<div class="row">
 	        			<div class="col-md-4">Description :</div>
-	        			<div class="col-md-8"><p>{{ lostFound.description }}</p></div>
+	        			<div class="col-md-8">{{ lostFound.description }}</div>
 	        		</div>
 	        		<div class="row">
 	        			<div class="col-md-4">Preferred method of contact :</div>
-	        			<div class="col-md-8"><p>{{ lostFound.preferred_method_of_contact }}</p></div>
+	        			<div class="col-md-8">{{ lostFound.preferred_method_of_contact }}</div>
 	        		</div>
 	        		<div class="row">
-	        			<div class="col-md-4"><p>Actions :</p></div>
-	        		</div>
+	        			<div class="col-md-4">Actions :</div>
+	        		</div><br>
 	        		<div class="row">	
 	        			<div class="col-md-12">
-	        				<span *ngIf="!lostFound.archieved"><a class="btn btn-primary" (click)="archieve(lostFound._id)" style="cursor:pointer"><img src="assets/image/icon_archived.png" width="14px" height="12px">&nbsp;Archive Report</a></span>
+	        				<span *ngIf="!lostFound.archieved"><a class="btn btn-gray btn-primary" (click)="archieve(lostFound._id)" style="cursor:pointer"><img src="assets/image/icon_archived.png" width="14px" height="12px">&nbsp;Archive Report</a></span>
 	        			</div>
 	        		</div>
 	        	</div>
@@ -47,14 +47,14 @@
 			<div class="title">
 				Manage Lost & Found
 			</div>
-			Home > Manage Lost & Found
+			<p>Home > Manage Lost & Found</p>
 			<div class="row">
 				<div class="col-md-4 pull-right">
-						  		<a class="btn btn-default pull-right" (click)="add()">
+								<a class="btn btn-default btn-gray pull-right" (click)="viewArchieved()">
+						  			<img class="img-btn" src="../../assets/image/icon_archived.png" />&nbsp;View Archived
+						  		</a>
+						  		<a class="btn btn-default pull-right btn-gray" (click)="add()">
 						  		<i class="fa fa-plus" aria-hidden="true"></i>&nbsp;Add Report</a>
-						  		<a class="btn btn-default pull-right" (click)="viewArchieved()">
-						  		<img class="img-btn" src="../../assets/image/icon_archived.png" />&nbsp;View Archived</a>
-						  		
 				</div>
 			</div>
 			<div (click)="$event.preventDefault()">

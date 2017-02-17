@@ -3,11 +3,11 @@
     	<div class="title">
 			PAYMENT SYSTEM
 		</div>
-		Home > Payment system
+		<p>Home > Payment system</p>
 		<div class="row">
 			<div class="col-md-4 pull-right">
-				<a class="btn btn-default pull-right" (click)="add()">
-				<i class="fa fa-plus" aria-hidden="true"></i>&nbsp;Create payment reminder</a>	  		
+				<button class="btn btn-default pull-right btn-add" (click)="add()">
+				<img class="img-btn" src="../../assets/image/icon_add.png" />&nbsp;Create payment reminder</button>	  		
 			</div>
 		</div>
 		<div (click)="$event.preventDefault()">
@@ -28,7 +28,7 @@
 					    <p-column styleClass="col-button" header="action">
 					    	<template let-draft="rowData" pTemplate="body">
 					    		<a type="button" style="cursor:pointer" (click)="edit(draft)"><i class="fa fa-edit" aria-hidden="true"></i>&nbsp;Edit</a>
-					    		<button [disabled]="draft.publish == true" style="text-decoration: underline;cursor:pointer" (click)="publish(draft)">Publish</button>
+					    		<button class="btn btn-brown" [disabled]="draft.publish == true" style="text-decoration: underline;cursor:pointer" (click)="publish(draft)">Publish</button>
 								<button type="button" (click)="deletePaymentReminder(draft)"><i class="fa fa-trash" aria-hidden="true"></i></button>
 					    	</template>
 					    </p-column>

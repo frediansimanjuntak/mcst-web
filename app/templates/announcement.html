@@ -3,11 +3,11 @@
 		<div class="title">
 			Manage Announcement
 		</div>
-		Home > Manage Announcement
+		<p>Home > Manage Announcement</p>
 		<div class="row">
 			<div class="col-md-4 pull-right">
-					  		<a class="btn btn-default pull-right" (click)="add()">
-					  		<i class="fa fa-plus" aria-hidden="true"></i>&nbsp;Make an Announcement</a>
+					  		<button class="btn btn-add btn-default pull-right" (click)="add()">
+					  		<img class="img-btn" src="../../assets/image/icon_announcement.png" width="15px" height="15px" />&nbsp;Make an Announcement</button>
 					  		
 			</div>
 		</div>
@@ -32,7 +32,7 @@
 					<p-column [style]="{'width':'200px'}" styleClass="col-button">
 				    	<template class="pull-right" let-announcementsDrafted="rowData" pTemplate="body">
 				    	<a type="button" style="cursor:pointer" (click)="editAnnouncement(announcementsDrafted)"><i class="fa fa-edit" aria-hidden="true"></i>&nbsp;Edit</a>
-				    	<button type="button" class="btn btn-primary btn-xs" (click)="openModal(announcementsDrafted) || firstModal.open()">Publish</button>
+				    	<button type="button" class="btn btn-primary btn-brown" (click)="openModal(announcementsDrafted) || firstModal.open()">Publish</button>
 				        <button  type="button" (click)="deleteAnnouncement(announcementsDrafted)"><i class="fa fa-trash" aria-hidden="true"></i></button>
 				    	</template>
 				    </p-column>
@@ -100,8 +100,8 @@
 		                    </div>
 		                </div>
 		                <div class="pull-right">
-		                    <button  class="btn btn-primary" (click)="publishAnnouncement()">Announce</button>
-		                    <button class="btn btn-default" (click)="firstModal.close()">Cancel</button>
+		                    <button  class="btn btn-primary btn-brown" (click)="publishAnnouncement()">Announce</button>
+		                    <button class="btn btn-default btn-gray" (click)="firstModal.close()">Cancel</button>
 		                </div>
 		            </form>   
 		           </div>

@@ -41,7 +41,7 @@
 	        		<div class="row">	
 	        			<div class="col-md-12">
 	        				<!-- <span *ngIf="!incident.contract"><a class="btn btn-primary" (click)="add_project(incident.reference_no)" style="cursor:pointer"><img src="assets/image/menu_manageproject.png" width="14px" height="12px"> Create Project</a></span> -->
-	        				<a class="btn btn-primary" (click)="archive(incident._id)" style="cursor:pointer"><img src="assets/image/icon_archived.png" width="14px" height="12px"> Archive Report</a>
+	        				<a class="btn btn-primary btn-gray" (click)="archive(incident._id)" style="cursor:pointer"><img src="assets/image/icon_archived.png" width="14px" height="12px"> Archive Report</a>
 	        			</div>
 	        		</div>
 	        	</div>
@@ -79,10 +79,10 @@
             <div class="title">
 				Incident Reports
 			</div>
-			Home > Incident Reports
+			<p>Home > Incident Reports</p>
 			<div class="row">
 				<div class="col-md-4 pull-right">
-					<a class="btn btn-default pull-right" (click)="add()">
+					<a class="btn btn-default pull-right btn-gray" (click)="add()">
 					<i class="fa fa-plus" aria-hidden="true"></i>&nbsp;Create Report</a>	  		
 				</div>
 			</div>

@@ -61,11 +61,11 @@
         	<div class="title">
 			Manage Request
 			</div>
-			Home > Manage Request
+			<p>Home > Manage Request</p>
 			<div class="row">
 				<div class="col-md-4 pull-right">
-								<a class="btn btn-default" (click)="add()"><img class="img-btn" src="../../assets/image/icon_add.png" />&nbsp;Add Request</a>
-						  		<button class="btn btn-default" [disabled]="!btnArchive" (click)="archieveSelected()"><img class="img-btn" src="../../assets/image/icon_archived.png" />&nbsp;Archive Selected</button>
+								<button class="btn btn-default btn-add pull-right" [disabled]="!btnArchive" (click)="archieveSelected()"><img class="img-btn" src="../../assets/image/icon_archived.png" />&nbsp;Archive Selected</button>
+								<a class="btn btn-default btn-gray pull-right" (click)="add()"><img class="img-btn" src="../../assets/image/icon_add.png" />&nbsp;Add Request</a>
 				</div>
 			</div>
 			
