@@ -3,6 +3,7 @@ body, p, h1, h2, h3, h4, h5, h6, span, div {
 }
 .main {
   padding: 0 50px !important;
+  min-height: 70vh;
 }
 .title {
   text-transform: uppercase;
@@ -780,4 +781,40 @@ p.pull-down {
 }
 .modal-footer {
   border-top: 0;
+}
+
+/*costumize Tabs/Pills*/
+
+.tab-container ul.nav.nav-tabs {
+  height: 44px;
+}
+.tab-container a.nav-link.active {
+  height: 44px;
+  border-radius: 0;
+  background-color: #e8e8e8;
+  border: 1px solid #dfdfdf;
+  border-bottom: 0;
+  color: #4a4a4a;
+}
+.tab-container li.nav-item {
+  width: 112px;
+  height: 44px;
+}
+.tab-container a.nav-link {
+  height: 44px;
+  border-radius: 0;
+  color: #6d6e71;
+}
+.tab-container .nav>li>a:focus, .tab-container .nav>li>a:hover {
+  text-decoration: none;
+  background-color: #e8e8e8;
+  color: #4a4a4a;
+}
+.tab-container .ui-datatable th.ui-state-default {
+  background: #e8e8e8;
+  border: 0;
+}
+.tab-container .ui-datatable th.ui-state-active {
+  background: #e8e8e8;
+  color: #646464;
 }
