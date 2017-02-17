@@ -90,7 +90,7 @@
 			  	<tabset>
 			  <!-- ALL -->
 				    <tab heading="All">
-				    	<p-dataTable [value]="incidents" [rows]="10" [paginator]="true">
+				    	<p-dataTable [value]="incidents" [rows]="10" [paginator]="true" #dt>
 						    <p-column filterMatchMode="contains" field="reference_no" header="Report No." sortable="true" [filter]="true" filterPlaceholder="Search Report No."></p-column>
 						    <p-column filterMatchMode="contains" [style]="{'text-transform': 'capitalize'}" field="incident_type" header="Type" sortable="true" [filter]="true" filterPlaceholder="Search Type"></p-column>
 						    <p-column filterMatchMode="contains" field="created_by.username" header="Reported by" sortable="true" [filter]="true" filterPlaceholder="Search Reported by"></p-column>
@@ -103,9 +103,9 @@
 						    		<a *ngIf="data.attachment == null">-</a>
 						    	</template>
 						    </p-column>
-						    <p-column [style]="{'text-transform': 'capitalize'}" field="status" header="Status" sortable="true" [filter]="true" filterMatchMode="contains" filterPlaceholder="Search Status">
-						        <template let-col let-data="rowData" pTemplate="body">
-						            <span [style.color]="data[col.field]">{{data[col.field]}}</span>
+						    <p-column [filter]="true" [style]="{'overflow':'visible'}" filterMatchMode="equals" field="status" header="Status" sortable="true">
+						        <template pTemplate="filter" let-col>
+						            <p-dropdown [options]="status" [style]="{'width':'100%'}" (onChange)="dt.filter($event.value,col.field,col.filterMatchMode)" styleClass="ui-column-filter"></p-dropdown>
 						        </template>
 						    </p-column>
 						    <p-column [style]="{'width':'150px'}" styleClass="col-button" header="Action">
@@ -133,9 +133,9 @@
 						    		<a *ngIf="data.attachment == null">-</a>
 						    	</template>
 						    </p-column>
-						    <p-column filterMatchMode="contains" [style]="{'text-transform': 'capitalize'}" field="status" header="Status" sortable="true" [filter]="true" filterMatchMode="containss" filterPlaceholder="Search Status">
-						        <template let-col let-data="rowData" pTemplate="body">
-						            <span [style.color]="data[col.field]">{{data[col.field]}}</span>
+						     <p-column [filter]="true" [style]="{'overflow':'visible'}" filterMatchMode="equals" field="status" header="Status" sortable="true">
+						        <template pTemplate="filter" let-col>
+						            <p-dropdown [options]="status" [style]="{'width':'100%'}" (onChange)="dt.filter($event.value,col.field,col.filterMatchMode)" styleClass="ui-column-filter"></p-dropdown>
 						        </template>
 						    </p-column>
 						    <p-column [style]="{'width':'150px'}" styleClass="col-button" header="Action">
@@ -150,7 +150,7 @@
 				    </tab>
 				    <!-- IN PROGRESS -->
 				    <tab heading="In-Progress">
-				    	<p-dataTable [value]="dataInProgress" [rows]="10" [paginator]="true">
+				    	<p-dataTable [value]="dataInProgress" [rows]="10" [paginator]="true" #dt>
 						    <p-column filterMatchMode="contains" field="reference_no" header="Report No." sortable="true" [filter]="true" filterPlaceholder="Search Report No."></p-column>
 						    <p-column filterMatchMode="contains" [style]="{'text-transform': 'capitalize'}" field="incident_type" header="Type" sortable="true" [filter]="true" filterPlaceholder="Search Type"></p-column>
 						    <p-column filterMatchMode="contains" field="created_by.username" header="Reported by" sortable="true" [filter]="true" filterPlaceholder="Search Reported by"></p-column>
@@ -163,9 +163,9 @@
 						    		<a *ngIf="data.attachment == null">-</a>
 						    	</template>
 						    </p-column>
-						    <p-column filterMatchMode="contains" [style]="{'text-transform': 'capitalize'}" field="status" header="Status" sortable="true" [filter]="true" filterPlaceholder="Search Status">
-						        <template let-col let-data="rowData" pTemplate="body">
-						            <span [style.color]="data[col.field]">{{data[col.field]}}</span>
+						     <p-column [filter]="true" [style]="{'overflow':'visible'}" filterMatchMode="equals" field="status" header="Status" sortable="true">
+						        <template pTemplate="filter" let-col>
+						            <p-dropdown [options]="status" [style]="{'width':'100%'}" (onChange)="dt.filter($event.value,col.field,col.filterMatchMode)" styleClass="ui-column-filter"></p-dropdown>
 						        </template>
 						    </p-column>
 						    <p-column [style]="{'width':'150px'}" styleClass="col-button" header="Action">
@@ -180,7 +180,7 @@
 				    </tab>	
 				    <!-- RESOLVED -->
 				    <tab heading="Resolved">
-				    	<p-dataTable [value]="dataResolved" [rows]="10" [paginator]="true">
+				    	<p-dataTable [value]="dataResolved" [rows]="10" [paginator]="true" #dt>
 						    <p-column filterMatchMode="contains" field="reference_no" header="Report No." sortable="true" [filter]="true" filterPlaceholder="Search Report No."></p-column>
 						    <p-column filterMatchMode="contains" [style]="{'text-transform': 'capitalize'}" field="incident_type" header="Type" sortable="true" [filter]="true" filterPlaceholder="Search Type"></p-column>
 						    <p-column filterMatchMode="contains" field="created_by.username" header="Reported by" sortable="true" [filter]="true" filterPlaceholder="Search Reported by"></p-column>
@@ -193,9 +193,9 @@
 						    		<a *ngIf="data.attachment == null">-</a>
 						    	</template>
 						    </p-column>
-						    <p-column filterMatchMode="contains" [style]="{'text-transform': 'capitalize'}" field="status" header="Status" sortable="true" [filter]="true" filterPlaceholder="Search Status">
-						        <template let-col let-data="rowData" pTemplate="body">
-						            <span [style.color]="data[col.field]">{{data[col.field]}}</span>
+						     <p-column [filter]="true" [style]="{'overflow':'visible'}" filterMatchMode="equals" field="status" header="Status" sortable="true">
+						        <template pTemplate="filter" let-col>
+						            <p-dropdown [options]="status" [style]="{'width':'100%'}" (onChange)="dt.filter($event.value,col.field,col.filterMatchMode)" styleClass="ui-column-filter"></p-dropdown>
 						        </template>
 						    </p-column>
 						    <p-column [style]="{'width':'150px'}" styleClass="col-button" header="Action">

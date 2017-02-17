@@ -5,7 +5,6 @@ export class Facility {
   name : string;
   development : Development;
   description : string;
-  facility_type : string;
   payment_type : string;
   booking_type : string;
   booking_fee : string;
