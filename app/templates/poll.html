@@ -102,7 +102,7 @@
 						<p-column [style]="{'width':'300px'}" styleClass="col-button">
 					    	<template class="pull-right" let-pollsDraft="rowData" pTemplate="body">
 					    	<a type="button" style="cursor:pointer" (click)="editPoll(pollsDraft)"><i class="fa fa-edit" aria-hidden="true"></i>&nbsp;Edit</a>
-					    	<button type="button" class="btn btn-primary btn-xs" (click)="openModal(pollsDraft) || firstModal.open()">Start Poll</button>
+					    	<button type="button" class="btn btn-primary btn-brown btn-xs" (click)="openModal(pollsDraft) || firstModal.open()">Start Poll</button>
 					        <button  type="button" (click)="deletePoll(pollsDraft)"><i class="fa fa-trash" aria-hidden="true"></i></button>
 					    	</template>
 					    </p-column>
@@ -130,7 +130,7 @@
 						</p-column>
 						<p-column [style]="{'width':'300px'}" styleClass="col-button">
 					    	<template class="pull-right" let-pollsActive="rowData" pTemplate="body">
-					    	<a type="button" style="cursor:pointer" (click)="viewPoll(pollsActive)">&nbsp;View Progress</a>
+					    	<a type="button" class="btn-underline" style="cursor:pointer" (click)="viewPoll(pollsActive)">&nbsp;View Progress</a>
 					    	</template>
 					    </p-column>
 					</p-dataTable>
@@ -182,8 +182,8 @@
 			           		Start this poll ?	
 			              
 			                <div class="pull-right">
-			                    <button  type="button" class="btn btn-primary" (click)="startPoll()">Yes</button>
-			                    <button class="btn btn-default" (click)="firstModal.close()">Cancel</button>
+			                    <button  type="button" class="btn btn-primary btn-brown" (click)="startPoll()">Yes</button>
+			                    <button class="btn btn-white" (click)="firstModal.close()">Cancel</button>
 			                </div>
 			             
 			           </div>

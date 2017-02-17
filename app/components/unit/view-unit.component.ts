@@ -96,7 +96,7 @@ export class ViewUnitComponent implements OnInit {
                             });
 
         this.getUsers();
-
+        this.model.document = [];
         this.myForm = this.formbuilder.group({
                 resident: [''],
                 type: ['', <any>Validators.required],
@@ -107,7 +107,7 @@ export class ViewUnitComponent implements OnInit {
 
         this.myForm2 = this.formbuilder.group({
                 license_plate: ['', <any>Validators.required],
-                owner: [''],
+                owner: ['', <any>Validators.required],
                 transponder: [''],
                 document: [''],
                 registered_on: [''],
@@ -194,7 +194,7 @@ export class ViewUnitComponent implements OnInit {
          this.vehicleSubmitted = true;
          model.registered_on = new Date();
 
-        if(isValid && this.selectedResident){
+        if(isValid && this.model.document.length > 0){
             let formData:FormData = new FormData();
                 for (var i = 0; i < this.model.document.length; i++) {
                     formData.append("document[]", this.model.document[i]);

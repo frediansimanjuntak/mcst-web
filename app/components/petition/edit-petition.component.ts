@@ -63,15 +63,15 @@ export class EditPetitionComponent implements OnInit {
                                 }
                             })
         this.selectedType = 'Maintenance';
-        
+        this.model.attachment = [];
         this.myForm = this.formbuilder.group({
             reference_no : [''],
             development : [''],
-            property: [''],
-            petition_type: [''],
+            property: ['', Validators.required],
+            petition_type: ['', Validators.required],
             attachment: this.formbuilder.array([]),
             contract: [''],
-            remark: [''],
+            remark: ['', Validators.required],
             status: [''],
             created_by : [''],
             updated_at : [''],
@@ -104,7 +104,7 @@ export class EditPetitionComponent implements OnInit {
 
     createPetition(model: any, isValid: boolean) {
         this.submitted = true;
-        if(isValid){
+        if(isValid && this.model.attachment.length > 0){
             model.updated_at = new Date();
 
             let formData:FormData = new FormData();
