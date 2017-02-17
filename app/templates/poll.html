@@ -186,41 +186,23 @@
 			   
 			  </tabset>
 			</div>	
-
-
-							<p-column header="Days Remaining" sortable="true">
-								<template let-pollsResult="rowData" pTemplate="body">
-									<span></span>
-								</template>
-							</p-column>
-							<p-column [style]="{'width':'300px'}" styleClass="col-button">
-								<template class="pull-right" let-pollsResult="rowData" pTemplate="body">
-									<a type="button" style="cursor:pointer" (click)="viewPoll(pollsResult)"><i class="fa fa-edit" aria-hidden="true"></i>&nbsp;View Result</a>
-								</template>
-							</p-column>
-						</p-dataTable>
-					</tab>
-					<tab heading="Past Polls">
-
-					</tab>
-
-				</tabset>
-			</div>
-
 			<div class="row">
-
-			           <div *ngIf="pollStart">
-			              
-			           		Start this poll ?	
-			              
-			                <div class="pull-right">
-			                    <button  type="button" class="btn btn-primary btn-brown" (click)="startPoll()">Yes</button>
-			                    <button class="btn btn-white" (click)="firstModal.close()">Cancel</button>
-			                </div>
-			             
-			           </div>
-			        </modal-content>
-			        
+				<modal #firstModal>
+					<modal-header>
+						<h5>Start Poll ?</h5>
+					</modal-header>
+					<modal-content *ngIf="visitOut">
+				           <div *ngIf="pollStart">
+				              
+				           		Start this poll ?	
+				              
+				                <div class="pull-right">
+				                    <button  type="button" class="btn btn-primary btn-brown" (click)="startPoll()">Yes</button>
+				                    <button class="btn btn-white" (click)="firstModal.close()">Cancel</button>
+				                </div>
+				             
+				           </div>
+				    </modal-content>
 			    </modal>
 			</div>
 		</div>

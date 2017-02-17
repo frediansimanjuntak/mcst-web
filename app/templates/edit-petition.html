@@ -5,19 +5,6 @@
     </div>
     <p class="id-location">Home > Manage Request > Add</p>
     <form class="form-horizontal col-md-6" name="form" [formGroup]="myForm" #f="ngForm" novalidate enctype="multipart/form-data">
-      <div class="form-group">
-        <label class="control-label col-sm-4" for="petition_type">Petition Type :</label>
-        <div class="col-sm-8">
-          <select class="form-control" name="petition_type" id="petition_type" formControlName="petition_type" placeholder="Choose Petition Type">
-            <option value="maintenance" selected>Maintenance</option>
-            <option value="moving_in">Moving In</option>
-            <option value="renovation">Renovation</option>
-            <option value="add_tenant/family">Add Tenant/Family</option>
-          </select>
-          <small style="color: red" [hidden]="myForm.controls.petition_type.valid || (myForm.controls.petition_type.pristine && !submitted)">petition_type is required</small>
-        </div>
-            <p>Home > Manage Request > Add</p>
-        <form class="form-horizontal col-md-6" name="form" [formGroup]="myForm" #f="ngForm" novalidate enctype="multipart/form-data">
                 <div class="form-group">
                     <label class="control-label col-sm-4" for="petition_type">Petition Type :</label>
                     <div class="col-sm-8">
