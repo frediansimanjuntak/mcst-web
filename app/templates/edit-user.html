@@ -1,357 +1,358 @@
 <div class="container">
-    <div class="main">
-        <div *ngIf="user">
-            <div class="title">
-                Edit User
-            </div>
-            <p>Home > User > Edit > {{user.username}}</p>
-            <form [formGroup]="myForm" class="form-horizontal col-md-6" name="form" (ngSubmit)="f.form.valid && updateUser(myForm.value)" #f="ngForm" novalidate>
-                <div class="form-group">
-                    <label class="control-label col-sm-2" for="username">Username :</label>
-                    <div class="col-sm-10">
-                        <input type="text" class="form-control" name="username" formControlName="username" required placeholder="Input username here" />
-                        <small *ngIf="f.submitted && !myForm.controls.username.valid" class="text-danger">
+  <div class="main">
+    <div *ngIf="user">
+      <div class="title">
+        Edit User
+      </div>
+      <p class="id-location">Home > User > Edit > {{user.username}}</p>
+      <form [formGroup]="myForm" class="form-horizontal col-md-6" name="form" (ngSubmit)="f.form.valid && updateUser(myForm.value)" #f="ngForm" novalidate>
+        <div class="form-group">
+          <label class="control-label col-sm-2" for="username">Username :</label>
+          <div class="col-sm-10">
+            <input type="text" class="form-control" name="username" formControlName="username" required placeholder="Input username here" />
+            <small *ngIf="f.submitted && !myForm.controls.username.valid" class="text-danger">
                         Name is required
                         </small>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label class="control-label col-sm-2" for="email">Email :</label>
-                    <div class="col-sm-10">
-                        <input type="email" class="form-control" name="email" formControlName="email" placeholder="Input email here"/>
-                        <small *ngIf="f.submitted && !myForm.controls.email.valid" class="text-danger">
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="control-label col-sm-2" for="email">Email :</label>
+          <div class="col-sm-10">
+            <input type="email" class="form-control" name="email" formControlName="email" placeholder="Input email here" />
+            <small *ngIf="f.submitted && !myForm.controls.email.valid" class="text-danger">
                         Email is required
                         </small>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label class="control-label col-sm-2" for="phone">Phone :</label>
-                    <div class="col-sm-10">
-                        <input (keypress)="number($event)" type="text" class="form-control" name="phone" formControlName="phone" required placeholder="Input phone number here"/>
-                        <small *ngIf="f.submitted && !myForm.controls.phone.valid" class="text-danger">
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="control-label col-sm-2" for="phone">Phone :</label>
+          <div class="col-sm-10">
+            <input (keypress)="number($event)" type="text" class="form-control" name="phone" formControlName="phone" required placeholder="Input phone number here" />
+            <small *ngIf="f.submitted && !myForm.controls.phone.valid" class="text-danger">
                             Phone is required
-                        </small>                    
-                    </div>
-                </div>
-                <div class="form-group">
-                  <label class="control-label col-sm-2" for="role">Role :</label>
-                  <div class="col-sm-10">
-                        <select class="form-control" name="role" id="role" formControlName="role" placeholder="Choose role">
-                            <option value="admin">Admin</option>
-                            <option value="user" selected>User</option>
-                        </select>
-                        <small *ngIf="f.submitted && !myForm.controls.role.valid" class="text-danger">
+                        </small>
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="control-label col-sm-2" for="role">Role :</label>
+          <div class="col-sm-10">
+            <select class="form-control" name="role" id="role" formControlName="role" placeholder="Choose role">
+              <option value="admin">Admin</option>
+              <option value="user" selected>User</option>
+            </select>
+            <small *ngIf="f.submitted && !myForm.controls.role.valid" class="text-danger">
                             Role is required
-                        </small> 
-                  </div>  
-                </div>
-                <div class="form-group">
-                    <label class="control-label col-sm-2" for="status">Status :</label>
-                    <div class="col-sm-10">
-                        <select required class="form-control" formControlName="active" name="active" id="active" placeholder="Choose status">
-                            <option value=true selected>Active</option>
-                            <option value=false>Inactive</option>
-                        </select>
-                        <small *ngIf="f.submitted && !myForm.controls.active.valid" class="text-danger">
+                        </small>
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="control-label col-sm-2" for="status">Status :</label>
+          <div class="col-sm-10">
+            <select required class="form-control" formControlName="active" name="active" id="active" placeholder="Choose status">
+              <option value=true selected>Active</option>
+              <option value=false>Inactive</option>
+            </select>
+            <small *ngIf="f.submitted && !myForm.controls.active.valid" class="text-danger">
                         Status is required
                         </small>
-                    </div>
+          </div>
+        </div>
+        <div formGroupName="default_property">
+          <div class="panel panel-default">
+            <div class="panel-heading">
+              <span>Default Property</span>
+            </div>
+            <div class="panel-body">
+              <div *ngIf="units">
+                <div class="form-group col-xs-10">
+                  <label>Unit No :</label>
+                  <select class="form-control" name="property" id="property" formControlName="property" placeholder="Choose property">
+                    <option *ngFor="let unit of units" [ngValue]="unit._id">
+                      #{{unit.address.unit_no}}-{{unit.address.unit_no_2}}
+                    </option>
+                  </select>
                 </div>
-                <div formGroupName="default_property"> 
-                    <div class="panel panel-default">
-                        <div class="panel-heading">
-                            <span>Default Property</span>
-                        </div>
-                        <div class="panel-body">
-                            <div *ngIf="units">
-                                <div class="form-group col-xs-10">
-                                    <label>Unit No :</label>
-                                    <select class="form-control" name="property" id="property" formControlName="property" placeholder="Choose property">
-                                        <option *ngFor="let unit of units" [ngValue]="unit._id">
-                                            #{{unit.address.unit_no}}-{{unit.address.unit_no_2}}
-                                        </option>
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="form-group col-xs-10">
-                                <label>Role :</label>
-                                <select required class="form-control" formControlName="role" name="role" id="role" placeholder="Choose role">
-                                    <option value="landlord">Landlord</option>
-                                    <option value="tenant" selected>Tenant</option>
-                                </select>
-                            </div>
-                        </div>
-                    </div>
+              </div>
+              <div class="form-group col-xs-10">
+                <label>Role :</label>
+                <select required class="form-control" formControlName="role" name="role" id="role" placeholder="Choose role">
+                  <option value="landlord">Landlord</option>
+                  <option value="tenant" selected>Tenant</option>
+                </select>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div *ngIf="type == 'tenant'" formGroupName="rented_property">
+          <div class="panel panel-default">
+            <div class="panel-heading">
+              <span>Rented Property</span>
+            </div>
+            <div class="panel-body">
+              <div *ngIf="units">
+                <div class="form-group col-xs-10">
+                  <label>Unit No :</label>
+                  <select class="form-control" name="property" id="property" formControlName="property" placeholder="Choose property">
+                    <option *ngFor="let unit of units" [ngValue]="unit._id">
+                      #{{unit.address.unit_no}}-{{unit.address.unit_no_2}}
+                    </option>
+                  </select>
                 </div>
-                <div *ngIf="type == 'tenant'" formGroupName="rented_property"> 
-                    <div class="panel panel-default">
-                        <div class="panel-heading">
-                            <span>Rented Property</span>
-                        </div>
-                        <div class="panel-body">
-                            <div *ngIf="units">
-                                <div class="form-group col-xs-10">
-                                    <label>Unit No :</label>
-                                    <select class="form-control" name="property" id="property" formControlName="property" placeholder="Choose property">
-                                        <option *ngFor="let unit of units" [ngValue]="unit._id">
-                                            #{{unit.address.unit_no}}-{{unit.address.unit_no_2}}
-                                        </option>
-                                    </select>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <!--owned-->
-                <div *ngIf="type == 'landlord'" formArrayName="owned_property">          
-                    <div *ngFor="let owned of myForm.controls.owned_property.controls; let i=index" class="panel panel-default">
-                        <div class="panel-heading">
-                            <span>Owned Property {{i + 1}}</span>
-                            <span class="glyphicon glyphicon-remove pull-right" *ngIf="myForm.controls.owned_property.controls.length > 1" (click)="removeOwned(i)"></span>
-                        </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!--owned-->
+        <div *ngIf="type == 'landlord'" formArrayName="owned_property">
+          <div *ngFor="let owned of myForm.controls.owned_property.controls; let i=index" class="panel panel-default">
+            <div class="panel-heading">
+              <span>Owned Property {{i + 1}}</span>
+              <span class="glyphicon glyphicon-remove pull-right" *ngIf="myForm.controls.owned_property.controls.length > 1" (click)="removeOwned(i)"></span>
+            </div>
 
-                        <div class="panel-body" [formGroupName]="i">
-                           
-                            <div *ngIf="units">
-                                <div class="form-group col-xs-10">
-                                    <label>Unit No :</label>
-                                    <div>
-                                        <select class="form-control" name="property" id="property" formControlName="property" placeholder="Choose property">
-                                            <option *ngFor="let unit of units" [ngValue]="unit._id">
-                                                 #{{unit.address.unit_no}}-{{unit.address.unit_no_2}}
-                                            </option>
-                                        </select>
-                                    </div>  
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+            <div class="panel-body" [formGroupName]="i">
+
+              <div *ngIf="units">
+                <div class="form-group col-xs-10">
+                  <label>Unit No :</label>
+                  <div>
+                    <select class="form-control" name="property" id="property" formControlName="property" placeholder="Choose property">
+                      <option *ngFor="let unit of units" [ngValue]="unit._id">
+                        #{{unit.address.unit_no}}-{{unit.address.unit_no_2}}
+                      </option>
+                    </select>
+                  </div>
                 </div>
-                <div class="margin-20">
-                    <a (click)="addOwned()" style="cursor: default">
-                        <p>Add another Owned Property +</p>
-                        <br/>
-                    </a>
-                </div>           
-                <div formArrayName="authorized_property">
-                    <div *ngFor="let authorized of myForm.controls.authorized_property.controls; let i=index" class="panel panel-default">
-                        <div class="panel-heading">
-                            <span>Authorized Property {{i + 1}}</span>
-                            <span class="glyphicon glyphicon-remove pull-right" *ngIf="myForm.controls.authorized_property.controls.length > 1" (click)="removeAuthorized(i)"></span>
-                        </div>
-                        <div class="panel-body" [formGroupName]="i">
-                            <!-- <authorized [group]="myForm.controls.authorized.controls[i]"></authorized> -->
-                            <div>   
-                                <div *ngIf="units">
-                                    <div class="form-group col-xs-10">
-                                        <label for="property">Unit No :</label>
-                                        <select class="form-control" name="property" id="property" formControlName="property" placeholder="Choose property">
-                                            <option *ngFor="let unit of units" [ngValue]="unit._id">
-                                                #{{unit.address.unit_no}}-{{unit.address.unit_no_2}}
-                                            </option>
-                                        </select>
-                                    </div>
-                                </div>
-                            </div>    
-                        </div>    
-                    </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="margin-20">
+          <a (click)="addOwned()" style="cursor: default">
+            <p>Add another Owned Property +</p>
+            <br/>
+          </a>
+        </div>
+        <div formArrayName="authorized_property">
+          <div *ngFor="let authorized of myForm.controls.authorized_property.controls; let i=index" class="panel panel-default">
+            <div class="panel-heading">
+              <span>Authorized Property {{i + 1}}</span>
+              <span class="glyphicon glyphicon-remove pull-right" *ngIf="myForm.controls.authorized_property.controls.length > 1" (click)="removeAuthorized(i)"></span>
+            </div>
+            <div class="panel-body" [formGroupName]="i">
+              <!-- <authorized [group]="myForm.controls.authorized.controls[i]"></authorized> -->
+              <div>
+                <div *ngIf="units">
+                  <div class="form-group col-xs-10">
+                    <label for="property">Unit No :</label>
+                    <select class="form-control" name="property" id="property" formControlName="property" placeholder="Choose property">
+                      <option *ngFor="let unit of units" [ngValue]="unit._id">
+                        #{{unit.address.unit_no}}-{{unit.address.unit_no_2}}
+                      </option>
+                    </select>
+                  </div>
                 </div>
-                <div class="margin-20">
-                    <a (click)="addAuthorized()" style="cursor: default">
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="margin-20">
+          <a (click)="addAuthorized()" style="cursor: default">
                         Add another Authorized Property +
                     </a>
-                </div>
-                <div class="form-group pull-right">
-                    <button [disabled]="loading" class="btn btn-primary">Save</button>
-                    <img *ngIf="loading" src="data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA==" />
-                    <a (click)="cancel()" class="btn btn-info">Cancel</a>
-                </div>
-            </form>
         </div>
+        <div class="form-group pull-right">
+          <button [disabled]="loading" class="btn btn-primary">Save</button>
+          <img *ngIf="loading" src="data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA=="
+          />
+          <a (click)="cancel()" class="btn btn-info">Cancel</a>
+        </div>
+      </form>
+    </div>
 
-<!-- ADD USER -->
+    <!-- ADD USER -->
 
-        <div *ngIf="!user">
-            <div class="title">
-                Add User
-            </div>
-            <p>Home > User > Add </p>
-            <form [formGroup]="myForm" class="form-horizontal col-md-6" name="form" (ngSubmit)="createUser(myForm.value, myForm.valid)" #f="ngForm" novalidate>
-                <div class="form-group">
-                    <label class="control-label col-sm-2" for="username">Username :</label>
-                    <div class="col-sm-10">
-                        <input type="text" class="form-control" name="username" formControlName="username" required placeholder="Input username here" />
-                        <small *ngIf="f.submitted && !myForm.controls.username.valid" class="text-danger">
+    <div *ngIf="!user">
+      <div class="title">
+        Add User
+      </div>
+      <p class="id-location">Home > User > Add </p>
+      <form [formGroup]="myForm" class="form-horizontal col-md-6" name="form" (ngSubmit)="createUser(myForm.value, myForm.valid)" #f="ngForm" novalidate>
+        <div class="form-group">
+          <label class="control-label col-sm-2" for="username">Username :</label>
+          <div class="col-sm-10">
+            <input type="text" class="form-control" name="username" formControlName="username" required placeholder="Input username here" />
+            <small *ngIf="f.submitted && !myForm.controls.username.valid" class="text-danger">
                         Name is required
                         </small>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label class="control-label col-sm-2" for="email">Email :</label>
-                    <div class="col-sm-10">
-                        <input type="email" class="form-control" name="email" formControlName="email" placeholder="Input email here"/>
-                        <small *ngIf="f.submitted && !myForm.controls.email.valid" class="text-danger">
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="control-label col-sm-2" for="email">Email :</label>
+          <div class="col-sm-10">
+            <input type="email" class="form-control" name="email" formControlName="email" placeholder="Input email here" />
+            <small *ngIf="f.submitted && !myForm.controls.email.valid" class="text-danger">
                         Email is required
                         </small>
-                    </div>
-                </div>
-                <div class="form-group" >
-                    <label class="control-label col-sm-2" for="password">Password :</label>
-                    <div class="col-sm-10">
-                        <input type="password" class="form-control" name="password" formControlName="password" required validateEqual="confirmpassword" reverse="true" placeholder="Input password here"/>
-                        <small *ngIf="f.submitted && !myForm.controls.password.valid" class="text-danger">
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="control-label col-sm-2" for="password">Password :</label>
+          <div class="col-sm-10">
+            <input type="password" class="form-control" name="password" formControlName="password" required validateEqual="confirmpassword" reverse="true" placeholder="Input password here" />
+            <small *ngIf="f.submitted && !myForm.controls.password.valid" class="text-danger">
                         Password is required
                         </small>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label class="control-label col-sm-2" for="confirmpassword">Retype password :</label>
-                    <div class="col-sm-10">
-                        <input type="password" class="form-control" name="confirmpassword" formControlName="confirmpassword" required validateEqual="password" reverse="false" placeholder="Re-input password here">
-                        <!-- <span [hidden]="!confirmpassword.valid || (confirmpassword.pristine && !f.submitted)" class="text-danger">
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="control-label col-sm-2" for="confirmpassword">Retype password :</label>
+          <div class="col-sm-10">
+            <input type="password" class="form-control" name="confirmpassword" formControlName="confirmpassword" required validateEqual="password" reverse="false" placeholder="Re-input password here">
+            <!-- <span [hidden]="!confirmpassword.valid || (confirmpassword.pristine && !f.submitted)" class="text-danger">
                             Password mismatch
                         </span> -->
-                    </div>                
-                </div>
-                <div class="form-group">
-                    <label class="control-label col-sm-2" for="phone">Phone :</label>
-                    <div class="col-sm-10">
-                        <input (keypress)="number($event)" type="text" class="form-control" name="phone" formControlName="phone" required placeholder="Input phone number here"/>
-                        <small *ngIf="f.submitted && !myForm.controls.phone.valid" class="text-danger">
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="control-label col-sm-2" for="phone">Phone :</label>
+          <div class="col-sm-10">
+            <input (keypress)="number($event)" type="text" class="form-control" name="phone" formControlName="phone" required placeholder="Input phone number here" />
+            <small *ngIf="f.submitted && !myForm.controls.phone.valid" class="text-danger">
                             Phone is required
-                        </small>                    
-                    </div>
-                </div>
-                <div class="form-group">
-                  <label class="control-label col-sm-2" for="role">Role :</label>
-                  <div class="col-sm-10">
-                        <select class="form-control" name="role" id="role" formControlName="role" placeholder="Choose role">
-                            <option value="admin">Admin</option>
-                            <option value="user" selected>User</option>
-                        </select>
-                        <small *ngIf="f.submitted && !myForm.controls.role.valid" class="text-danger">
+                        </small>
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="control-label col-sm-2" for="role">Role :</label>
+          <div class="col-sm-10">
+            <select class="form-control" name="role" id="role" formControlName="role" placeholder="Choose role">
+              <option value="admin">Admin</option>
+              <option value="user" selected>User</option>
+            </select>
+            <small *ngIf="f.submitted && !myForm.controls.role.valid" class="text-danger">
                             Role is required
-                        </small> 
-                  </div>  
-                </div>
-                <div class="form-group">
-                    <label class="control-label col-sm-2" for="status">Status :</label>
-                    <div class="col-sm-10">
-                        <select required class="form-control" formControlName="active" name="active" id="active" placeholder="Choose status">
-                            <option value=true selected>Active</option>
-                            <option value=false>Inactive</option>
-                        </select>
-                        <small *ngIf="f.submitted && !myForm.controls.active.valid" class="text-danger">
+                        </small>
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="control-label col-sm-2" for="status">Status :</label>
+          <div class="col-sm-10">
+            <select required class="form-control" formControlName="active" name="active" id="active" placeholder="Choose status">
+              <option value=true selected>Active</option>
+              <option value=false>Inactive</option>
+            </select>
+            <small *ngIf="f.submitted && !myForm.controls.active.valid" class="text-danger">
                         Status is required
                         </small>
-                    </div>
+          </div>
+        </div>
+        <div formGroupName="default_property">
+          <div class="panel panel-default">
+            <div class="panel-heading">
+              <span>Default Property</span>
+            </div>
+            <div class="panel-body">
+              <div class="form-group col-xs-10">
+                <label class="control-label" for="property">Unit No :</label>
+                <div *ngIf="units">
+                  <select class="form-control" name="property" id="property" formControlName="property" placeholder="Choose property">
+                    <option *ngFor="let unit of units" [ngValue]="unit._id">
+                      #{{unit.address.unit_no}}-{{unit.address.unit_no_2}}
+                    </option>
+                  </select>
                 </div>
-                <div formGroupName="default_property"> 
-                    <div class="panel panel-default">
-                        <div class="panel-heading">
-                            <span>Default Property</span>
-                        </div>
-                        <div class="panel-body">
-                            <div class="form-group col-xs-10">
-                                <label class="control-label" for="property">Unit No :</label>
-                                <div *ngIf="units">
-                                    <select class="form-control" name="property" id="property" formControlName="property" placeholder="Choose property">              
-                                        <option *ngFor="let unit of units" [ngValue]="unit._id">
-                                            #{{unit.address.unit_no}}-{{unit.address.unit_no_2}}
-                                        </option>
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="form-group col-xs-10">
-                                <label>Role :</label>
-                                <select required class="form-control" formControlName="role" name="role" id="role" placeholder="Choose role">
-                                    <option value="landlord">Landlord</option>
-                                    <option value="tenant" selected>Tenant</option>
-                                </select>
-                            </div>
-                        </div>
-                    </div>
+              </div>
+              <div class="form-group col-xs-10">
+                <label>Role :</label>
+                <select required class="form-control" formControlName="role" name="role" id="role" placeholder="Choose role">
+                  <option value="landlord">Landlord</option>
+                  <option value="tenant" selected>Tenant</option>
+                </select>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div [hidden]="type == 'landlord'" *ngIf="type == 'tenant'" formGroupName="rented_property">
+          <div class="panel panel-default">
+            <div class="panel-heading">
+              <span>Rented Property</span>
+            </div>
+            <div class="panel-body">
+              <div class="form-group col-xs-10">
+                <label class="control-label" for="property">Unit No :</label>
+                <div *ngIf="units">
+                  <select class="form-control" name="property" id="property" formControlName="property" placeholder="Choose property">
+                    <option *ngFor="let unit of units" [selected]="id == unit._id" [ngValue]="unit._id">
+                      #{{unit.address.unit_no}}-{{unit.address.unit_no_2}}
+                    </option>
+                  </select>
                 </div>
-                <div [hidden]="type == 'landlord'" *ngIf="type == 'tenant'" formGroupName="rented_property"> 
-                    <div class="panel panel-default">
-                        <div class="panel-heading">
-                            <span>Rented Property</span>
-                        </div>
-                        <div class="panel-body">
-                            <div class="form-group col-xs-10">
-                                <label class="control-label" for="property">Unit No :</label>
-                                <div *ngIf="units">
-                                    <select class="form-control" name="property" id="property" formControlName="property" placeholder="Choose property">              
-                                        <option *ngFor="let unit of units" [selected]="id == unit._id" [ngValue]="unit._id">
-                                            #{{unit.address.unit_no}}-{{unit.address.unit_no_2}}
-                                        </option>
-                                    </select>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!--owned-->
+        <div [hidden]="type == 'tenant'" *ngIf="type == 'landlord'" formArrayName="owned_property">
+          <div *ngFor="let owned of myForm.controls.owned_property.controls; let i=index" class="panel panel-default">
+            <div class="panel-heading">
+              <span>Owned Property {{i + 1}}</span>
+              <span class="glyphicon glyphicon-remove pull-right" *ngIf="myForm.controls.owned_property.controls.length > 1" (click)="removeOwned(i)"></span>
+            </div>
+            <div class="panel-body" [formGroupName]="i">
+              <div class="form-group col-xs-10">
+                <label class="control-label" for="property">Unit No :</label>
+                <div *ngIf="units">
+                  <select class="form-control" name="property" id="property" formControlName="property" placeholder="Choose property">
+                    <option *ngFor="let unit of units" [selected]="id == unit._id" [ngValue]="unit._id">
+                      #{{unit.address.unit_no}}-{{unit.address.unit_no_2}}
+                    </option>
+                  </select>
                 </div>
-                <!--owned-->
-                <div [hidden]="type == 'tenant'" *ngIf="type == 'landlord'" formArrayName="owned_property">          
-                    <div *ngFor="let owned of myForm.controls.owned_property.controls; let i=index" class="panel panel-default">
-                        <div class="panel-heading">
-                            <span>Owned Property {{i + 1}}</span>
-                            <span class="glyphicon glyphicon-remove pull-right" *ngIf="myForm.controls.owned_property.controls.length > 1" (click)="removeOwned(i)"></span>
-                        </div>
-                        <div class="panel-body" [formGroupName]="i">      
-                            <div class="form-group col-xs-10">
-                                <label class="control-label" for="property">Unit No :</label>
-                                <div *ngIf="units">
-                                    <select class="form-control" name="property" id="property" formControlName="property" placeholder="Choose property">              
-                                        <option *ngFor="let unit of units" [selected]="id == unit._id" [ngValue]="unit._id">
-                                            #{{unit.address.unit_no}}-{{unit.address.unit_no_2}}
-                                        </option>
-                                    </select>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div *ngIf="!type" class="margin-20">
-                    <a (click)="addOwned()" style="cursor: default">
+              </div>
+            </div>
+          </div>
+        </div>
+        <div *ngIf="!type" class="margin-20">
+          <a (click)="addOwned()" style="cursor: default">
                         Add another Owned Property +
                     </a>
-                </div>           
-                <div formArrayName="authorized_property">
-                    <div *ngFor="let authorized of myForm.controls.authorized_property.controls; let i=index" class="panel panel-default">
-                        <div class="panel-heading">
-                            <span>Authorized Property {{i + 1}}</span>
-                            <span class="glyphicon glyphicon-remove pull-right" *ngIf="myForm.controls.authorized_property.controls.length > 1" (click)="removeAuthorized(i)"></span>
-                        </div>
-                        <div class="panel-body" [formGroupName]="i">
-                            <!-- <authorized [group]="myForm.controls.authorized.controls[i]"></authorized> -->
-                            <div>   
-                                <div class="form-group col-xs-10">
-                                    <label class="control-label" for="property">Unit No :</label>
-                                    <div *ngIf="units">
-                                    <select class="form-control" name="property" id="property" formControlName="property" placeholder="Choose property">              
-                                        <option *ngFor="let unit of units" [ngValue]="unit._id">
-                                            #{{unit.address.unit_no}}-{{unit.address.unit_no_2}}
-                                        </option>
-                                    </select>
-                                </div>
-                                </div>
-                            </div>    
-                        </div>    
-                    </div>
+        </div>
+        <div formArrayName="authorized_property">
+          <div *ngFor="let authorized of myForm.controls.authorized_property.controls; let i=index" class="panel panel-default">
+            <div class="panel-heading">
+              <span>Authorized Property {{i + 1}}</span>
+              <span class="glyphicon glyphicon-remove pull-right" *ngIf="myForm.controls.authorized_property.controls.length > 1" (click)="removeAuthorized(i)"></span>
+            </div>
+            <div class="panel-body" [formGroupName]="i">
+              <!-- <authorized [group]="myForm.controls.authorized.controls[i]"></authorized> -->
+              <div>
+                <div class="form-group col-xs-10">
+                  <label class="control-label" for="property">Unit No :</label>
+                  <div *ngIf="units">
+                    <select class="form-control" name="property" id="property" formControlName="property" placeholder="Choose property">
+                      <option *ngFor="let unit of units" [ngValue]="unit._id">
+                        #{{unit.address.unit_no}}-{{unit.address.unit_no_2}}
+                      </option>
+                    </select>
+                  </div>
                 </div>
-                <div class="margin-20">
-                    <a (click)="addAuthorized()" style="cursor: default">
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="margin-20">
+          <a (click)="addAuthorized()" style="cursor: default">
                         Add another Authorized Property +
                     </a>
-                </div>
-                <div class="form-group pull-right">
-                    <button [disabled]="loading" class="btn btn-primary">Save</button>
-                    <img *ngIf="loading" src="data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA==" />
-                    <a (click)="cancel()" class="btn btn-info">Cancel</a>
-                </div>
-            </form>       
         </div>
+        <div class="form-group pull-right">
+          <button [disabled]="loading" class="btn btn-primary">Save</button>
+          <img *ngIf="loading" src="data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA=="
+          />
+          <a (click)="cancel()" class="btn btn-info">Cancel</a>
+        </div>
+      </form>
     </div>
+  </div>
 </div>
-          

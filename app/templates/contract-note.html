@@ -1,31 +1,37 @@
 <div class="container">
-    <div class="main">
-        <div *ngIf="contractnote && contract">
-            <div class="title">
-                {{ contractnote.posted_by }}
+  <div class="main">
+    <div *ngIf="contractnote && contract">
+      <div class="title">
+        {{ contractnote.posted_by }}
+      </div>
+      <p class="id-location">Home > Manage Projects > {{ contract.title }} > Contract Note > {{ contractnote.posted_by }}</p>
+      <div class="row">
+        <div class="col-lg-6">
+          <p-galleria [images]="images" panelWidth="500" panelHeight="313"></p-galleria>
+        </div>
+        <div class="col-lg-6">
+          <div class="row">
+            <div class="col-md-4">Posted by :</div>
+            <div class="col-md-8">
+              <p>{{ contractnote.posted_by }}</p>
             </div>
-            <p>Home > Manage Projects > {{ contract.title }} > Contract Note > {{ contractnote.posted_by }}</p>
-            <div class="row">
-                <div class="col-lg-6">
-                    <p-galleria [images]="images" panelWidth="500" panelHeight="313"></p-galleria>
-                </div>
-                <div class="col-lg-6">
-                    <div class="row">
-                        <div class="col-md-4">Posted by :</div>
-                        <div class="col-md-8"><p>{{ contractnote.posted_by }}</p></div>
-                    </div>
-                    <div class="row">
-                        <div class="col-md-4">Posted on :</div>
-                        <div class="col-md-8"><p>{{ contractnote.posted_on | date:'d/M/y' }}</p></div>
-                    </div>
-                    <div class="row">
-                        <div class="col-md-4"><p>Project note remark :</p></div>
-                    </div>
-                    <div class="row">
-                         <div class="col-md-12"><p>{{ contractnote.note_remark }}</p></div>
-                    </div>
-                </div>
+          </div>
+          <div class="row">
+            <div class="col-md-4">Posted on :</div>
+            <div class="col-md-8">
+              <p>{{ contractnote.posted_on | date:'d/M/y' }}</p>
             </div>
+          </div>
+          <div class="row">
+            <div class="col-md-4">
+              <p>Project note remark :</p>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-12">
+              <p>{{ contractnote.note_remark }}</p>
+            </div>
+          </div>
         </div>
         <div *ngIf="contract">
             <div class="title"> 

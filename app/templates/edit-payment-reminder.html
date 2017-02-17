@@ -1,177 +1,179 @@
 <div class="container">
-    <div class="main">
-        <div *ngIf="paymentreminder">
-            <div class="title">
-                EDIT PAYMENT SYSTEM
-            </div>
-            <p>Home > Payment system > Edit > {{paymentreminder.title}} </p>
-            <form [formGroup]="myForm" class="form-horizontal" name="form" (ngSubmit)="f.form.valid && updatePaymentReminder(myForm.value)" #f="ngForm" novalidate>
-                <div class="col-md-6">
-                    <div class="form-group">
-                        <label class="control-label col-sm-4" for="title">Title :</label>
-                        <div class="col-sm-8">
-                            <input type="text" class="form-control" name="title" formControlName="title" required placeholder="Input title here" />
-                            <small *ngIf="f.submitted && !myForm.controls.title.valid" class="text-danger">
+  <div class="main">
+    <div *ngIf="paymentreminder">
+      <div class="title">
+        EDIT PAYMENT SYSTEM
+      </div>
+      <p class="id-location">Home > Payment system > Edit > {{paymentreminder.title}} </p>
+      <form [formGroup]="myForm" class="form-horizontal" name="form" (ngSubmit)="f.form.valid && updatePaymentReminder(myForm.value)" #f="ngForm" novalidate>
+        <div class="col-md-6">
+          <div class="form-group">
+            <label class="control-label col-sm-4" for="title">Title :</label>
+            <div class="col-sm-8">
+              <input type="text" class="form-control" name="title" formControlName="title" required placeholder="Input title here" />
+              <small *ngIf="f.submitted && !myForm.controls.title.valid" class="text-danger">
                             Title is required
                             </small>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label class="control-label col-sm-4" for="auto_issue_on">Auto issue on :</label>
-                        <div class="col-sm-8">
-                            <input type="date" class="form-control" name="auto_issue_on" formControlName="auto_issue_on" required placeholder="Input auto issue date here" />
-                            <small *ngIf="f.submitted && !myForm.controls.auto_issue_on.valid" class="text-danger">
-                            Description is required
-                            </small>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label class="control-label col-sm-4" for="due_on">Due on :</label>
-                        <div class="col-sm-8">
-                            <input type="date" class="form-control" name="due_on" formControlName="due_on" required placeholder="Input due date here" />
-                            <small *ngIf="f.submitted && !myForm.controls.due_on.valid" class="text-danger">
-                            Description is required
-                            </small>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label class="control-label col-sm-4" for="message_to_receiver">Message to receiver :</label>
-                        <div class="col-sm-8">
-                            <textarea class="form-control" name="message_to_receiver" formControlName="message_to_receiver" placeholder="Input message to receiver here"></textarea> 
-                            <small *ngIf="f.submitted && !myForm.controls.message_to_receiver.valid" class="text-danger">
-                            Description is required
-                            </small>
-                        </div>
-                    </div>
-                </div>
-                <!--owned-->
-                <div class="col-md-12">
-                    <div formArrayName="notification_list">          
-                        <div class="panel panel-default">
-                            <div class="panel-heading">
-                                <span>Charge/Bill</span> 
-                                <span style="margin-left: 88px">Remarks</span>
-                                <span style="margin-left: 250px">Applies to</span>
-                                <span style="margin-left: 100px">Amount</span>
-                            </div>
-                            <div *ngFor="let owned of myForm.controls.notification_list.controls; let i=index" class="form-group">
-                                <div class="panel-body" [formGroupName]="i">
-                                    <div class="col-md-12">
-                                        <input class="form-control" style="width: 150px" type="text" formControlName="charge" />&nbsp;
-                                        <input class="form-control" style="width: 300px" type="text" formControlName="remarks" /> &nbsp;
-                                        <select class="form-control" style="width: 150px" formControlName="applies_to">
-                                            <option value="all">All</option>
-                                            <option value="resident with vehicle">Resident with vehicle</option>
-                                        </select> &nbsp;
-                                        <input class="form-control" style="width: 100px" type="text" formControlName="amount" />
-                                        <span *ngIf="myForm.controls.notification_list.controls.length > 1" (click)="removeNotification_list(i)"><img src="../../assets/image/icon_close_black.png" width="10px" height="10px"></span>
-                                    </div> 
-                                </div>
-                            </div>  
-                        </div>
-                        <div class="margin-20">
-                            <a (click)="addNotification_list()" style="cursor: default">
-                                Add Line
-                            </a>
-                        </div>  
-                    </div>    
-                </div>
-                <div class="col-md-12">
-                    <div class="form-group pull-right">
-                        <button [disabled]="loading" class="btn btn-primary">Save</button>
-                        <img *ngIf="loading" src="data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA==" />
-                        <a (click)="cancel()" class="btn btn-info">Cancel</a>
-                    </div>
-                </div>
-            </form>
-        </div>
-
-<!-- ADD USER -->
-
-        <div *ngIf="!paymentreminder">
-            <div class="title">
-                ADD PAYMENT SYSTEM
             </div>
-            <p>Home > Payment system > Add </p>
-            <form [formGroup]="myForm" class="form-horizontal" name="form" (ngSubmit)="createPaymentReminder(myForm.value, myForm.valid)" #f="ngForm" novalidate>
-                <div class="col-md-6">
-                    <div class="form-group">
-                        <label class="control-label col-sm-4" for="title">Title :</label>
-                        <div class="col-sm-8">
-                            <input type="text" class="form-control" name="title" formControlName="title" required placeholder="Input title here" />
-                            <small *ngIf="f.submitted && !myForm.controls.title.valid" class="text-danger">
-                            Title is required
-                            </small>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label class="control-label col-sm-4" for="auto_issue_on">Auto issue on :</label>
-                        <div class="col-sm-8">
-                            <input type="date" class="form-control" name="auto_issue_on" formControlName="auto_issue_on" required placeholder="Input auto issue date here" />
-                            <small *ngIf="f.submitted && !myForm.controls.auto_issue_on.valid" class="text-danger">
+          </div>
+          <div class="form-group">
+            <label class="control-label col-sm-4" for="auto_issue_on">Auto issue on :</label>
+            <div class="col-sm-8">
+              <input type="date" class="form-control" name="auto_issue_on" formControlName="auto_issue_on" required placeholder="Input auto issue date here" />
+              <small *ngIf="f.submitted && !myForm.controls.auto_issue_on.valid" class="text-danger">
                             Description is required
                             </small>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label class="control-label col-sm-4" for="due_on">Due on :</label>
-                        <div class="col-sm-8">
-                            <input type="date" class="form-control" name="due_on" formControlName="due_on" required placeholder="Input due date here" />
-                            <small *ngIf="f.submitted && !myForm.controls.due_on.valid" class="text-danger">
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="control-label col-sm-4" for="due_on">Due on :</label>
+            <div class="col-sm-8">
+              <input type="date" class="form-control" name="due_on" formControlName="due_on" required placeholder="Input due date here" />
+              <small *ngIf="f.submitted && !myForm.controls.due_on.valid" class="text-danger">
                             Description is required
                             </small>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label class="control-label col-sm-4" for="message_to_receiver">Message to receiver :</label>
-                        <div class="col-sm-8">
-                            <textarea class="form-control" name="message_to_receiver" formControlName="message_to_receiver" placeholder="Input message to receiver here"></textarea> 
-                            <small *ngIf="f.submitted && !myForm.controls.message_to_receiver.valid" class="text-danger">
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="control-label col-sm-4" for="message_to_receiver">Message to receiver :</label>
+            <div class="col-sm-8">
+              <textarea class="form-control" name="message_to_receiver" formControlName="message_to_receiver" placeholder="Input message to receiver here"></textarea>
+              <small *ngIf="f.submitted && !myForm.controls.message_to_receiver.valid" class="text-danger">
                             Description is required
                             </small>
-                        </div>
-                    </div>
+            </div>
+          </div>
+        </div>
+        <!--owned-->
+        <div class="col-md-12">
+          <div formArrayName="notification_list">
+            <div class="panel panel-default">
+              <div class="panel-heading">
+                <span>Charge/Bill</span>
+                <span style="margin-left: 88px">Remarks</span>
+                <span style="margin-left: 250px">Applies to</span>
+                <span style="margin-left: 100px">Amount</span>
+              </div>
+              <div *ngFor="let owned of myForm.controls.notification_list.controls; let i=index" class="form-group">
+                <div class="panel-body" [formGroupName]="i">
+                  <div class="col-md-12">
+                    <input class="form-control" style="width: 150px" type="text" formControlName="charge" />&nbsp;
+                    <input class="form-control" style="width: 300px" type="text" formControlName="remarks" /> &nbsp;
+                    <select class="form-control" style="width: 150px" formControlName="applies_to">
+                      <option value="all">All</option>
+                      <option value="resident with vehicle">Resident with vehicle</option>
+                    </select> &nbsp;
+                    <input class="form-control" style="width: 100px" type="text" formControlName="amount" />
+                    <span *ngIf="myForm.controls.notification_list.controls.length > 1" (click)="removeNotification_list(i)"><img src="../../assets/image/icon_close_black.png" width="10px" height="10px"></span>
+                  </div>
                 </div>
-                <div class="col-md-11">
-                    <div formArrayName="notification_list">          
-                        <div class="panel panel-default">
-                            <div class="panel-heading">
-                                <span>Charge/Bill</span> 
-                                <span style="margin-left: 88px">Remarks</span>
-                                <span style="margin-left: 250px">Applies to</span>
-                                <span style="margin-left: 100px">Amount</span>
-                            </div>
-                            <div *ngFor="let owned of myForm.controls.notification_list.controls; let i=index" class="form-group">
-                                <div class="panel-body" [formGroupName]="i">
-                                    <div class="col-md-11">
-                                        <input class="form-control" style="width: 150px" type="text" formControlName="charge" />&nbsp;
-                                        <input class="form-control" style="width: 300px" type="text" formControlName="remarks" /> &nbsp;
-                                        <select class="form-control" style="width: 150px" formControlName="applies_to">
-                                            <option value="all">All</option>
-                                            <option value="resident with vehicle">Resident with vehicle</option>
-                                        </select> &nbsp;
-                                        <input class="form-control" style="width: 100px" type="text" formControlName="amount" />
-                                        <span *ngIf="myForm.controls.notification_list.controls.length > 1" (click)="removeNotification_list(i)"><img src="../../assets/image/icon_close_black.png" width="10px" height="10px"></span>
-                                    </div> 
-                                </div>
-                            </div>  
-                        </div>
-                        <div class="margin-20">
-                            <a (click)="addNotification_list()" style="cursor: default">
+              </div>
+            </div>
+            <div class="margin-20">
+              <a (click)="addNotification_list()" style="cursor: default">
                                 Add Line
                             </a>
-                        </div>  
-                    </div>    
-                </div>
-                <!--owned-->
-                <div class="col-md-11">
-                    <div class="form-group pull-right">
-                        <button [disabled]="loading" class="btn btn-primary">Save</button>
-                        <img *ngIf="loading" src="data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA==" />
-                        <a (click)="cancel()" class="btn btn-info">Cancel</a>
-                    </div>
-                </div>
-            </form>       
+            </div>
+          </div>
         </div>
+        <div class="col-md-12">
+          <div class="form-group pull-right">
+            <button [disabled]="loading" class="btn btn-brown btn-primary">Save</button>
+            <img *ngIf="loading" src="data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA=="
+            />
+            <a (click)="cancel()" class="btn btn-white btn-info">Cancel</a>
+          </div>
+        </div>
+      </form>
     </div>
+
+    <!-- ADD USER -->
+
+    <div *ngIf="!paymentreminder">
+      <div class="title">
+        ADD PAYMENT SYSTEM
+      </div>
+      <p class="id-location">Home > Payment system > Add </p>
+      <form [formGroup]="myForm" class="form-horizontal" name="form" (ngSubmit)="createPaymentReminder(myForm.value, myForm.valid)" #f="ngForm" novalidate>
+        <div class="col-md-6">
+          <div class="form-group">
+            <label class="control-label col-sm-4" for="title">Title :</label>
+            <div class="col-sm-8">
+              <input type="text" class="form-control" name="title" formControlName="title" required placeholder="Input title here" />
+              <small *ngIf="f.submitted && !myForm.controls.title.valid" class="text-danger">
+                            Title is required
+                            </small>
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="control-label col-sm-4" for="auto_issue_on">Auto issue on :</label>
+            <div class="col-sm-8">
+              <input type="date" class="form-control" name="auto_issue_on" formControlName="auto_issue_on" required placeholder="Input auto issue date here" />
+              <small *ngIf="f.submitted && !myForm.controls.auto_issue_on.valid" class="text-danger">
+                            Description is required
+                            </small>
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="control-label col-sm-4" for="due_on">Due on :</label>
+            <div class="col-sm-8">
+              <input type="date" class="form-control" name="due_on" formControlName="due_on" required placeholder="Input due date here" />
+              <small *ngIf="f.submitted && !myForm.controls.due_on.valid" class="text-danger">
+                            Description is required
+                            </small>
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="control-label col-sm-4" for="message_to_receiver">Message to receiver :</label>
+            <div class="col-sm-8">
+              <textarea class="form-control" name="message_to_receiver" formControlName="message_to_receiver" placeholder="Input message to receiver here"></textarea>
+              <small *ngIf="f.submitted && !myForm.controls.message_to_receiver.valid" class="text-danger">
+                            Description is required
+                            </small>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-11">
+          <div formArrayName="notification_list">
+            <div class="panel panel-default">
+              <div class="panel-heading">
+                <span>Charge/Bill</span>
+                <span style="margin-left: 88px">Remarks</span>
+                <span style="margin-left: 250px">Applies to</span>
+                <span style="margin-left: 100px">Amount</span>
+              </div>
+              <div *ngFor="let owned of myForm.controls.notification_list.controls; let i=index" class="form-group">
+                <div class="panel-body" [formGroupName]="i">
+                  <div class="col-md-11">
+                    <input class="form-control" style="width: 150px" type="text" formControlName="charge" />&nbsp;
+                    <input class="form-control" style="width: 300px" type="text" formControlName="remarks" /> &nbsp;
+                    <select class="form-control" style="width: 150px" formControlName="applies_to">
+                      <option value="all">All</option>
+                      <option value="resident with vehicle">Resident with vehicle</option>
+                    </select> &nbsp;
+                    <input class="form-control" style="width: 100px" type="text" formControlName="amount" />
+                    <span *ngIf="myForm.controls.notification_list.controls.length > 1" (click)="removeNotification_list(i)"><img src="../../assets/image/icon_close_black.png" width="10px" height="10px"></span>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="margin-20">
+              <a (click)="addNotification_list()" style="cursor: default">
+                                Add Line
+                            </a>
+            </div>
+          </div>
+        </div>
+        <!--owned-->
+        <div class="col-md-11">
+          <div class="form-group pull-right">
+            <button [disabled]="loading" class="btn btn-brown btn-primary">Save</button>
+            <img *ngIf="loading" src="data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA=="
+            />
+            <a (click)="cancel()" class="btn btn-white">Cancel</a>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
 </div>

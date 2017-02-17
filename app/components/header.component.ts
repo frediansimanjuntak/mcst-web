@@ -1,5 +1,5 @@
 import { Component, OnInit, ElementRef } from '@angular/core';
-import { Notification, Notifications } from '../models/index';
+import { Notification } from '../models/index';
 import { Router} from '@angular/router';
 import { NotificationService, AlertService, UserService, AuthenticationService} from '../services/index';
 import '../rxjs-operators';
@@ -50,7 +50,8 @@ export class HeaderComponent implements OnInit{
 
 	}
 
-	private loadUnread() {        this.notificationService.getUnread(this.name._id)
+	private loadUnread() {        
+        this.notificationService.getUnread(this.name._id)
             .subscribe((data)=> {
                 setTimeout(()=> {
                     this.unreadNotifications = data;

@@ -80,7 +80,7 @@ export const MENUS: any[] = [
       },
   		{ 
         name : 'Contact Directory', 
-        link: '', 
+        link: '/contact', 
         img: '../../assets/image/menu_contact.png',
         description: 'Useful and often used contact numbers',
       },

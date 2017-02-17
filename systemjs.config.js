@@ -47,6 +47,8 @@
       'ng2-imageupload': 'node_modules/ng2-imageupload',
       'ng2-slim-progress-bar': 'node_modules/ng2-slim-progress-bar/bundles/index.umd.js',
       'angular2-notifications': 'node_modules/angular2-notifications',
+      'ng2-pdf-viewer': 'node_modules/ng2-pdf-viewer',
+      'pdfjs-dist': 'node_modules/pdfjs-dist'
     },
     // packages tells the System loader how to load when no filename and/or no extension
     packages: {
@@ -71,6 +73,8 @@
       'angular2-notifications': { main: 'components.js', defaultExtension: 'js' },
       'angular2-signaturepad': { main: 'index.js', defaultExtension: 'js' },
       'signature_pad': { main: 'signature_pad.js', defaultExtension: 'js' },
+      'ng2-pdf-viewer': { main: 'dist/index.js', defaultExtension: 'js' },
+      'pdfjs-dist': { defaultExtension: 'js' }
     }
   });
 })(this);
