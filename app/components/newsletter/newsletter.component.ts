@@ -104,6 +104,7 @@ export class NewsletterComponent implements OnInit {
             .subscribe((data)=> {
                 setTimeout(()=> {
                   this.data = data.newsletter;
+                  console.log(this.data);
                   this.dataAgm       = this.data.filter(data => data.type === 'agm' );
                   this.dataEgm       = this.data.filter(data => data.type === 'egm' );
                   this.dataCircular  = this.data.filter(data => data.type === 'circular' );

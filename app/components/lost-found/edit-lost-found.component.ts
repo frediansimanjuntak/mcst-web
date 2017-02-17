@@ -48,6 +48,7 @@ export class EditLostFoundComponent  {
                                 this.name = name;
                                 this.loadAllUnits();
                             })
+        this.model.photo = [];                            
         
     }
 
@@ -64,29 +65,31 @@ export class EditLostFoundComponent  {
     createReport(event: any) {
         // this.model.serial_number = 142141;
         this.model.archieve = false;
-        let formData:FormData = new FormData();
+        if(this.model.photo && this.model.property && this.model.type){
+            let formData:FormData = new FormData();
         
-        for (var i = 0; i < this.model.photo.length; i++) {
-            formData.append("photo[]", this.model.photo[i]);
-        }
-
-        formData.append("archieve", this.model.archieve);
-        formData.append("property", this.model.property);
-        formData.append("type", this.model.type);
-        formData.append("description", this.model.description);
-        formData.append("preferred_method_of_contact", this.model.preferred_method_of_contact);
-        
-        this.lostFoundService.create(formData)
-        .then(
-            data => {
-                this.alertService.success('Create Report successful', true);
-                this.router.navigate([this.name.default_development.name_url + '/lost_found']);
-            },
-            error => {
-                console.log(error);
-                alert(`The Report could not be save, server Error.`);
+            for (var i = 0; i < this.model.photo.length; i++) {
+                formData.append("photo[]", this.model.photo[i]);
             }
-        );
+
+            formData.append("archieve", this.model.archieve);
+            formData.append("property", this.model.property);
+            formData.append("type", this.model.type);
+            formData.append("description", this.model.description);
+            formData.append("preferred_method_of_contact", this.model.preferred_method_of_contact);
+            
+            this.lostFoundService.create(formData)
+            .then(
+                data => {
+                    this.alertService.success('Create Report successful', true);
+                    this.router.navigate([this.name.default_development.name_url + '/lost_found']);
+                },
+                error => {
+                    console.log(error);
+                    alert(`The Report could not be save, server Error.`);
+                }
+            );
+        }
     }
 
     toLostFound(){

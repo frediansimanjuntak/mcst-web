@@ -38,6 +38,7 @@
             <span style="text-decoration: underline;">{{ item.name }}_{{item.size/1024 | number:'1.0-0' }}kb</span> &nbsp;
             <span style="cursor:pointer" (click)="remove(i)"><img src="assets/image/icon_close_black.png" width="14px" height="12px"></span>
           </p>
+          <small style="color: red" [hidden]="model.attachment.length > 0 || (model.attachment.length == 0 && !f.submitted)">Attachment is required</small>
         </div>
       </div>
 
