@@ -1,70 +1,64 @@
 <div class="container">
-    <div class="main">
-        <div class="title">
-            Add Request
-        </div>
-            <p>Home > Manage Request > Add</p>
-        <form class="form-horizontal col-md-6" name="form" [formGroup]="myForm" #f="ngForm" novalidate enctype="multipart/form-data">
-                <div class="form-group">
-                    <label class="control-label col-sm-4" for="petition_type">Petition Type :</label>
-                    <div class="col-sm-8">
-                        <select class="form-control" name="petition_type" id="petition_type" formControlName="petition_type" placeholder="Choose Petition Type">
-                            <option value="maintenance" selected>Maintenance</option>
-                            <option value="moving_in" >Moving In</option>
-                            <option value="renovation" >Renovation</option>
-                            <option value="add_tenant/family" >Add Tenant/Family</option>
-                        </select>
-                        <small style="color: red" [hidden]="myForm.controls.petition_type.valid || (myForm.controls.petition_type.pristine && !submitted)">petition_type is required</small>
-                    </div>  
-                </div>
-                <div class="form-group" >
-                    <label class="control-label col-sm-4" for="chief">Unit No :</label>
-                    <div class="col-sm-8">
-                        <div style="width: 300px; margin-bottom: 20px;">
-                            <ng-select 
-                                      [allowClear]="true"
-                                      [items]="items"
-                                      [disabled]="disabled"
-                                      (data)="refreshValueUnit($event)"
-                                      (selected)="selected($event)"
-                                      (removed)="removed($event)"
-                                      placeholder="Select Unit No">
-                            </ng-select>
-                        </div>
-                    </div>
-                </div>
-                <div class="form-group" >
-                    <label class="control-label col-sm-4" for="attachment">Attachment :</label>
-                    <div class="col-sm-8">
-                        <input type="file" multiple class="upload" name="attachment" (change)="onChange($event)" />
-                        <p *ngFor="let item of model.attachment; let i=index ">
-                            <img src="assets/image/icon_media_image.png" width="14px" height="12px">&nbsp;  
-                            <span style="text-decoration: underline;">{{ item.name }}_{{item.size/1024 | number:'1.0-0' }}kb</span> &nbsp;   
-                            <span style="cursor:pointer" (click)="remove(i)"><img src="assets/image/icon_close_black.png" width="14px" height="12px"></span>
-                        </p>
-                    </div>
-                </div>
-
-                <div class="form-group" [ngClass]="{'has-error': submitted && !myForm.controls.contract.valid}">
-                            <label class="control-label col-sm-4" for="contract">Contract</label>
-                            <div class="col-sm-8">
-                                 <input type="text" class="form-control" name="contract" formControlName="contract">
-                                <small style="color: red" [hidden]="myForm.controls.contract.valid || (myForm.controls.contract.pristine && !submitted)">Contract is required</small>
-                            </div>
-                </div>
-                <div class="form-group" [ngClass]="{ 'has-error': submitted && !myForm.controls.remark.valid }">
-                            <label class="control-label col-sm-4" for="remark">Remark</label>
-                            <div class="col-sm-8">
-                                <textarea  type="text" class="form-control" name="remark" formControlName="remark"></textarea>
-                                <small style="color: red" [hidden]="myForm.controls.remark.valid || (myForm.controls.remark.pristine && !submitted)">Remark is required</small>
-                            </div>
-                </div>
-                
-                <div class="form-group pull-right">
-                    <button [disabled]="loading" (click)="createPetition(myForm.value, myForm.valid)" class="btn btn-primary btn-brown">Save</button>
-                    <img *ngIf="loading" src="data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA==" />
-                    <button (click)="goToPetition()" class="btn btn-white">Cancel</button>
-                </div>
-            </form>      
+  <div class="main">
+    <div class="title">
+      Add Request
     </div>
+    <p class="id-location">Home > Manage Request > Add</p>
+    <form class="form-horizontal col-md-6" name="form" [formGroup]="myForm" #f="ngForm" novalidate enctype="multipart/form-data">
+      <div class="form-group">
+        <label class="control-label col-sm-4" for="petition_type">Petition Type :</label>
+        <div class="col-sm-8">
+          <select class="form-control" name="petition_type" id="petition_type" formControlName="petition_type" placeholder="Choose Petition Type">
+            <option value="maintenance" selected>Maintenance</option>
+            <option value="moving_in">Moving In</option>
+            <option value="renovation">Renovation</option>
+            <option value="add_tenant/family">Add Tenant/Family</option>
+          </select>
+          <small style="color: red" [hidden]="myForm.controls.petition_type.valid || (myForm.controls.petition_type.pristine && !submitted)">petition_type is required</small>
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="control-label col-sm-4" for="chief">Unit No :</label>
+        <div class="col-sm-8">
+          <div style="width: 300px; margin-bottom: 20px;">
+            <ng-select [allowClear]="true" [items]="items" [disabled]="disabled" (data)="refreshValueUnit($event)" (selected)="selected($event)" (removed)="removed($event)" placeholder="Select Unit No">
+            </ng-select>
+          </div>
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="control-label col-sm-4" for="attachment">Attachment :</label>
+        <div class="col-sm-8">
+          <input type="file" multiple class="upload" name="attachment" (change)="onChange($event)" />
+          <p *ngFor="let item of model.attachment; let i=index ">
+            <img src="assets/image/icon_media_image.png" width="14px" height="12px">&nbsp;
+            <span style="text-decoration: underline;">{{ item.name }}_{{item.size/1024 | number:'1.0-0' }}kb</span> &nbsp;
+            <span style="cursor:pointer" (click)="remove(i)"><img src="assets/image/icon_close_black.png" width="14px" height="12px"></span>
+          </p>
+        </div>
+      </div>
+
+      <div class="form-group" [ngClass]="{'has-error': submitted && !myForm.controls.contract.valid}">
+        <label class="control-label col-sm-4" for="contract">Contract</label>
+        <div class="col-sm-8">
+          <input type="text" class="form-control" name="contract" formControlName="contract">
+          <small style="color: red" [hidden]="myForm.controls.contract.valid || (myForm.controls.contract.pristine && !submitted)">Contract is required</small>
+        </div>
+      </div>
+      <div class="form-group" [ngClass]="{ 'has-error': submitted && !myForm.controls.remark.valid }">
+        <label class="control-label col-sm-4" for="remark">Remark</label>
+        <div class="col-sm-8">
+          <textarea type="text" class="form-control" name="remark" formControlName="remark"></textarea>
+          <small style="color: red" [hidden]="myForm.controls.remark.valid || (myForm.controls.remark.pristine && !submitted)">Remark is required</small>
+        </div>
+      </div>
+
+      <div class="form-group pull-right">
+        <button [disabled]="loading" (click)="createPetition(myForm.value, myForm.valid)" class="btn btn-primary btn-brown">Save</button>
+        <img *ngIf="loading" src="data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA=="
+        />
+        <button (click)="goToPetition()" class="btn btn-white">Cancel</button>
+      </div>
+    </form>
+  </div>
 </div>

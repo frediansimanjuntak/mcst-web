@@ -3,28 +3,27 @@
 		<div class="title">
 			Payment
 		</div>
-		<p>Home > Payment</p>
+		<p class="id-location">Home > Payment</p>
 		<div class="row">
 			<div class="col-md-4 pull-right">
-					  		<a class="btn btn-default pull-right" (click)="add()">
-					  		<i class="fa fa-plus" aria-hidden="true"></i>&nbsp;Add Payment</a>
+				<a class="btn btn-default pull-right" (click)="add()">
+					<i class="fa fa-plus" aria-hidden="true"></i>&nbsp;Add Payment</a>
 			</div>
 		</div>
 		<p-dataTable [value]="payments" [rows]="10" [paginator]="true">
-		    <p-column filterMatchMode="contains" field="serial_no" header="Serial No." sortable="true" [filter]="true" filterPlaceholder="Search serial no"></p-column>
-		    <p-column filterMatchMode="contains" field="payment_type" header="Payment type" sortable="true" [filter]="true" filterPlaceholder="Search payment type"></p-column>
-		    <p-column filterMatchMode="contains" field="payment_proof" header="Payment proof"></p-column>
-		    <p-column filterMatchMode="contains" field="sender.username" header="Sender" sortable="true" [filter]="true" filterPlaceholder="Search sender"></p-column>
-		    <p-column filterMatchMode="contains" field="total_amount" header="Total Amount" sortable="true" [filter]="true" filterPlaceholder="Search total amount"></p-column>
-		    <p-column filterMatchMode="contains" field="remark" header="Remark" sortable="true" [filter]="true" filterPlaceholder="Search remark"></p-column>
-		    <p-column filterMatchMode="contains" field="status" header="Status" sortable="true" [filter]="true" filterPlaceholder="Search Status"></p-column>
-		    <p-column header="Action" styleClass="col-button">
-		    	<template let-payment="rowData" pTemplate="body">
-		        	<button type="button" (click)="view(payment)">View</button>
-		        	<button type="button" (click)="deletePayment(payment)">Delete</button>
-		    	</template>
-		    </p-column>
+			<p-column filterMatchMode="contains" field="serial_no" header="Serial No." sortable="true" [filter]="true" filterPlaceholder="Search serial no"></p-column>
+			<p-column filterMatchMode="contains" field="payment_type" header="Payment type" sortable="true" [filter]="true" filterPlaceholder="Search payment type"></p-column>
+			<p-column filterMatchMode="contains" field="payment_proof" header="Payment proof"></p-column>
+			<p-column filterMatchMode="contains" field="sender.username" header="Sender" sortable="true" [filter]="true" filterPlaceholder="Search sender"></p-column>
+			<p-column filterMatchMode="contains" field="total_amount" header="Total Amount" sortable="true" [filter]="true" filterPlaceholder="Search total amount"></p-column>
+			<p-column filterMatchMode="contains" field="remark" header="Remark" sortable="true" [filter]="true" filterPlaceholder="Search remark"></p-column>
+			<p-column filterMatchMode="contains" field="status" header="Status" sortable="true" [filter]="true" filterPlaceholder="Search Status"></p-column>
+			<p-column header="Action" styleClass="col-button">
+				<template let-payment="rowData" pTemplate="body">
+					<button type="button" (click)="view(payment)">View</button>
+					<button type="button" (click)="deletePayment(payment)">Delete</button>
+				</template>
+			</p-column>
 		</p-dataTable>
 	</div>
 </div>
-

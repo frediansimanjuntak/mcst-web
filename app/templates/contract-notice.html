@@ -1,97 +1,110 @@
 <div class="container">
-    <div class="main">
-        <div *ngIf="contractnotice && contract">
-            <div class="title">
-                {{ contractnotice.title }}
-            </div>
-            <p>Home > Manage Projects > {{ contract.title }} > Contract Notice > {{ contractnotice.title }}</p>
-            <div class="row">
-                <div class="col-lg-6">
-                    <p-galleria [images]="images" panelWidth="500" panelHeight="313"></p-galleria>
-                </div>
-                <div class="col-lg-6">
-                    <div class="row">
-                        <div class="col-md-4">Title</div>
-                        <div class="col-md-8"> <p>{{ contractnotice.title }}</p></div>
-                    </div>
-                    <div class="row">
-                        <div class="col-md-4">Commence date :</div>
-                        <div class="col-md-8"><p>{{ contractnotice.start_time | date:'d/M/y' }}</p></div>
-                    </div>
-                    <div class="row">
-                        <div class="col-md-4">Estimated date of completion :</div>
-                        <div class="col-md-8"><p>{{ contractnotice.end_time | date:'d/M/y' }}</p></div>
-                    </div>
-                    <div class="row">
-                        <div class="col-md-4"><p>Description of Project :</p></div>
-                    </div>
-                    <div class="row">
-                         <div class="col-md-12"><p>{{ contractnotice.description }}</p></div>
-                    </div>
-                    <div class="row">
-                        <div class="col-md-4"><p>Action :</p></div>
-                    </div>
-                    <div class="row">   
-                        <div class="col-md-12">
-                            <a class="btn btn-primary" (click)="edit(contractnotice._id)" style="cursor:pointer">Edit</a>
-                        </div>
-                    </div>
-                </div>
-            </div>
+  <div class="main">
+    <div *ngIf="contractnotice && contract">
+      <div class="title">
+        {{ contractnotice.title }}
+      </div>
+      <p class="id-location">Home > Manage Projects > {{ contract.title }} > Contract Notice > {{ contractnotice.title }}</p>
+      <div class="row">
+        <div class="col-lg-6">
+          <p-galleria [images]="images" panelWidth="500" panelHeight="313"></p-galleria>
         </div>
-        <!--ADD NOTICE-->
-        <div *ngIf="contract && !contractnotice">
-            <div class="title"> 
-                Create a Project notice
+        <div class="col-lg-6">
+          <div class="row">
+            <div class="col-md-4">Title</div>
+            <div class="col-md-8">
+              <p>{{ contractnotice.title }}</p>
             </div>
-            <p>Home > Manage Project > {{contract.title}} > Create a Project notice</p>
-            <form class="form-horizontal col-md-6" name="form" #f="ngForm" novalidate>
-                <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !title.valid }">
-                     <label class="control-label col-sm-4" for="title">Title :</label>
-                    <div class="col-sm-8">
-                        <input type="text" class="form-control" name="title" [(ngModel)]="model.title" #title="ngModel" required placeholder="Input project title here" />
-                        <span *ngIf="f.submitted && !title.valid" class="help-block">Project title is required</span>
-                    </div>
-                </div>
-                <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !start_time.valid }">
-                    <label class="control-label col-sm-4" for="start_time">Commence date :</label>
-                    <div class="col-sm-8">
-                        <input type="date" class="form-control" name="start_time" [(ngModel)]="model.start_time" #start_time="ngModel" required />
-                        <span *ngIf="f.submitted && !start_time.valid" class="help-block">Commence date is required</span>
-                    </div>
-                </div>
-                <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !end_time.valid }">
-                    <label class="control-label col-sm-4" for="end_time">Estimate date of completion :</label>
-                    <div class="col-sm-8">
-                        <input type="date" class="form-control" name="end_time" [(ngModel)]="model.end_time" #end_time="ngModel" required />
-                        <span *ngIf="f.submitted && !end_time.valid" class="help-block">Estimate date of completion is required</span>
-                    </div>
-                </div>
-                <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !description.valid }">
-                    <label class="control-label col-sm-4" for="description">Project description :</label>
-                    <div class="col-sm-8">
-                        <textarea class="form-control" name="description" [(ngModel)]="model.description" #description="ngModel" required placeholder="Input description here"></textarea>
-                        <span *ngIf="f.submitted && !description.valid" class="help-block">Project description is required</span>
-                    </div>
-                </div>
-                <div class="form-group" >
-                    <label class="control-label col-sm-4" for="attachment">Attachment :</label>
-                    <div class="col-sm-8">
-                        <input type="file" multiple class="upload" value="Add media" name="attachment" (change)="onChange($event)" />
-                        <p *ngFor="let item of model.attachment; let i=index ">
-                            <img src="assets/image/icon_media_image.png" width="14px" height="12px">&nbsp;  
-                            <span style="text-decoration: underline;">{{ item.name }}_{{item.size/1024 | number:'1.0-0' }}kb</span> &nbsp;   
-                            <span style="cursor:pointer" (click)="remove(i)"><img src="assets/image/icon_close_black.png" width="14px" height="12px"></span>
-                        </p>
-                    </div>
-                </div>
-                <div class="form-group pull-right">
-                    <button [disabled]="loading" (click)="publishContractNotice(contract._id)" class="btn btn-primary">Publish Now</button>
-                    <button [disabled]="loading" (click)="createContractNotice(contract._id)" class="btn btn-primary">Save as draft</button>
-                    <img *ngIf="loading" src="data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA==" />
-                    <a (click)="cancel(contract._id)" class="btn btn-info">Cancel</a>
-                </div>
-            </form>
-        </div>	
-	</div>
+          </div>
+          <div class="row">
+            <div class="col-md-4">Commence date :</div>
+            <div class="col-md-8">
+              <p>{{ contractnotice.start_time | date:'d/M/y' }}</p>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-4">Estimated date of completion :</div>
+            <div class="col-md-8">
+              <p>{{ contractnotice.end_time | date:'d/M/y' }}</p>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-4">
+              <p>Description of Project :</p>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-12">
+              <p>{{ contractnotice.description }}</p>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-4">
+              <p>Action :</p>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-12">
+              <a class="btn btn-primary" (click)="edit(contractnotice._id)" style="cursor:pointer">Edit</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!--ADD NOTICE-->
+    <div *ngIf="contract && !contractnotice">
+      <div class="title">
+        Create a Project notice
+      </div>
+      <p class="id-location">Home > Manage Project > {{contract.title}} > Create a Project notice</p>
+      <form class="form-horizontal col-md-6" name="form" #f="ngForm" novalidate>
+        <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !title.valid }">
+          <label class="control-label col-sm-4" for="title">Title :</label>
+          <div class="col-sm-8">
+            <input type="text" class="form-control" name="title" [(ngModel)]="model.title" #title="ngModel" required placeholder="Input project title here" />
+            <span *ngIf="f.submitted && !title.valid" class="help-block">Project title is required</span>
+          </div>
+        </div>
+        <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !start_time.valid }">
+          <label class="control-label col-sm-4" for="start_time">Commence date :</label>
+          <div class="col-sm-8">
+            <input type="date" class="form-control" name="start_time" [(ngModel)]="model.start_time" #start_time="ngModel" required />
+            <span *ngIf="f.submitted && !start_time.valid" class="help-block">Commence date is required</span>
+          </div>
+        </div>
+        <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !end_time.valid }">
+          <label class="control-label col-sm-4" for="end_time">Estimate date of completion :</label>
+          <div class="col-sm-8">
+            <input type="date" class="form-control" name="end_time" [(ngModel)]="model.end_time" #end_time="ngModel" required />
+            <span *ngIf="f.submitted && !end_time.valid" class="help-block">Estimate date of completion is required</span>
+          </div>
+        </div>
+        <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !description.valid }">
+          <label class="control-label col-sm-4" for="description">Project description :</label>
+          <div class="col-sm-8">
+            <textarea class="form-control" name="description" [(ngModel)]="model.description" #description="ngModel" required placeholder="Input description here"></textarea>
+            <span *ngIf="f.submitted && !description.valid" class="help-block">Project description is required</span>
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="control-label col-sm-4" for="attachment">Attachment :</label>
+          <div class="col-sm-8">
+            <input type="file" multiple class="upload" value="Add media" name="attachment" (change)="onChange($event)" />
+            <p *ngFor="let item of model.attachment; let i=index ">
+              <img src="assets/image/icon_media_image.png" width="14px" height="12px">&nbsp;
+              <span style="text-decoration: underline;">{{ item.name }}_{{item.size/1024 | number:'1.0-0' }}kb</span> &nbsp;
+              <span style="cursor:pointer" (click)="remove(i)"><img src="assets/image/icon_close_black.png" width="14px" height="12px"></span>
+            </p>
+          </div>
+        </div>
+        <div class="form-group pull-right">
+          <button [disabled]="loading" (click)="publishContractNotice(contract._id)" class="btn btn-primary">Publish Now</button>
+          <button [disabled]="loading" (click)="createContractNotice(contract._id)" class="btn btn-primary">Save as draft</button>
+          <img *ngIf="loading" src="data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA=="
+          />
+          <a (click)="cancel(contract._id)" class="btn btn-info">Cancel</a>
+        </div>
+      </form>
+    </div>
+  </div>
 </div>

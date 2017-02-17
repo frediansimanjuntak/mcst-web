@@ -1,69 +1,70 @@
 <div class="container">
-    <div class="main">
-        <div *ngIf="user">
-            <div class="title">
-                Edit User
-            </div>
-            <p>Home > User > Edit > {{user.username}}</p>
-            <form class="form-horizontal col-md-10" name="form" (ngSubmit)="f.form.valid && updateSetting()" #f="ngForm" novalidate>
-                <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !first_name.valid }">
-                    <label class="control-label col-sm-4" for="firstname">Firstname :</label>
-                    <div class="col-sm-10">
-                        <input type="text" class="form-control" name="firstname" [(ngModel)]="user.details.first_name" #first_name="ngModel" required placeholder="Input firstname here" />
-                        <span *ngIf="f.submitted && !first_name.valid" class="help-block">Firstname is required</span>
-                    </div>
-                </div>
-                <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !last_name.valid }">
-                    <label class="control-label col-sm-4" for="lastname">Lastname :</label>
-                    <div class="col-sm-10">
-                        <input type="email" class="form-control" name="lastname" [(ngModel)]="user.details.last_name" #last_name="ngModel" required placeholder="Input lastname here"/>
-                        <span *ngIf="f.submitted && !last_name.valid" class="help-block">Lastname is required</span>
-                    </div>
-                </div>
-                <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !identification_type.valid }">
-                  <label class="control-label col-sm-4" for="identification_type">Identification type :</label>
-                  <div class="col-sm-10">
-                      <select class="form-control" name="identification_type" id="identification_type" [(ngModel)]="user.details.identification_type" #identification_type="ngModel" required>
-                        <option value="nric">NRIC</option>
-                        <option value="passport">PASSPORT</option>
-                      </select>
-                  </div>  
-                </div>
-                <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !identification_no.valid }">
-                    <label class="control-label col-sm-4" for="identification_no">Identification no :</label>
-                    <div class="col-sm-10">
-                        <input type="text" class="form-control" name="identification_no" [(ngModel)]="user.details.identification_no" #identification_no="ngModel" required placeholder="Input identification no here"/>
-                        <span *ngIf="f.submitted && !identification_no.valid" class="help-block">user.detail.identification_no</span>
-                    </div>
-                </div>
-                <div class="form-group" >
-                    <label class="control-label col-sm-4" for="attachment">Front :</label>
-                    <div class="col-sm-8">
-                        <input type="file" multiple class="upload" name="attachment" (change)="onChange($event)" />
-                        <p *ngFor="let item of model.front; let i=index ">
-                            <img src="assets/image/icon_media_image.png" width="14px" height="12px">&nbsp;  
-                            <span style="text-decoration: underline;">{{ item.name }}_{{item.size/1024 | number:'1.0-0' }}kb</span> &nbsp;
-                            <span class="glyphicon glyphicon-remove" style="cursor:pointer" (click)="remove(i)"></span>
-                        </p>
-                    </div>
-                </div>
-                <div class="form-group" >
-                    <label class="control-label col-sm-4" for="attachment">Back :</label>
-                    <div class="col-sm-8">
-                        <input type="file" multiple class="upload" name="attachment" (change)="onChange1($event)" />
-                        <p *ngFor="let item of model.back; let i=index ">
-                            <img src="assets/image/icon_media_image.png" width="14px" height="12px">&nbsp;  
-                            <span style="text-decoration: underline;">{{ item.name }}_{{item.size/1024 | number:'1.0-0' }}kb</span> &nbsp;   
-                            <span class="glyphicon glyphicon-remove" style="cursor:pointer" (click)="remove1(i)"></span>
-                        </p>
-                    </div>
-                </div>
-                <div class="form-group pull-right">
-                    <button [disabled]="loading" class="btn btn-primary">Save</button>
-                    <img *ngIf="loading" src="data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA==" />
-                    <a (click)="cancel()" class="btn btn-info">Cancel</a>
-                </div>
-            </form>
+  <div class="main">
+    <div *ngIf="user">
+      <div class="title">
+        Edit User
+      </div>
+      <p class="id-location">Home > User > Edit > {{user.username}}</p>
+      <form class="form-horizontal col-md-10" name="form" (ngSubmit)="f.form.valid && updateSetting()" #f="ngForm" novalidate>
+        <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !first_name.valid }">
+          <label class="control-label col-sm-4" for="firstname">Firstname :</label>
+          <div class="col-sm-10">
+            <input type="text" class="form-control" name="firstname" [(ngModel)]="user.details.first_name" #first_name="ngModel" required placeholder="Input firstname here" />
+            <span *ngIf="f.submitted && !first_name.valid" class="help-block">Firstname is required</span>
+          </div>
         </div>
+        <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !last_name.valid }">
+          <label class="control-label col-sm-4" for="lastname">Lastname :</label>
+          <div class="col-sm-10">
+            <input type="email" class="form-control" name="lastname" [(ngModel)]="user.details.last_name" #last_name="ngModel" required placeholder="Input lastname here" />
+            <span *ngIf="f.submitted && !last_name.valid" class="help-block">Lastname is required</span>
+          </div>
+        </div>
+        <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !identification_type.valid }">
+          <label class="control-label col-sm-4" for="identification_type">Identification type :</label>
+          <div class="col-sm-10">
+            <select class="form-control" name="identification_type" id="identification_type" [(ngModel)]="user.details.identification_type" #identification_type="ngModel" required>
+              <option value="nric">NRIC</option>
+              <option value="passport">PASSPORT</option>
+            </select>
+          </div>
+        </div>
+        <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !identification_no.valid }">
+          <label class="control-label col-sm-4" for="identification_no">Identification no :</label>
+          <div class="col-sm-10">
+            <input type="text" class="form-control" name="identification_no" [(ngModel)]="user.details.identification_no" #identification_no="ngModel" required placeholder="Input identification no here" />
+            <span *ngIf="f.submitted && !identification_no.valid" class="help-block">user.detail.identification_no</span>
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="control-label col-sm-4" for="attachment">Front :</label>
+          <div class="col-sm-8">
+            <input type="file" multiple class="upload" name="attachment" (change)="onChange($event)" />
+            <p *ngFor="let item of model.front; let i=index ">
+              <img src="assets/image/icon_media_image.png" width="14px" height="12px">&nbsp;
+              <span style="text-decoration: underline;">{{ item.name }}_{{item.size/1024 | number:'1.0-0' }}kb</span> &nbsp;
+              <span class="glyphicon glyphicon-remove" style="cursor:pointer" (click)="remove(i)"></span>
+            </p>
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="control-label col-sm-4" for="attachment">Back :</label>
+          <div class="col-sm-8">
+            <input type="file" multiple class="upload" name="attachment" (change)="onChange1($event)" />
+            <p *ngFor="let item of model.back; let i=index ">
+              <img src="assets/image/icon_media_image.png" width="14px" height="12px">&nbsp;
+              <span style="text-decoration: underline;">{{ item.name }}_{{item.size/1024 | number:'1.0-0' }}kb</span> &nbsp;
+              <span class="glyphicon glyphicon-remove" style="cursor:pointer" (click)="remove1(i)"></span>
+            </p>
+          </div>
+        </div>
+        <div class="form-group pull-right">
+          <button [disabled]="loading" class="btn btn-primary">Save</button>
+          <img *ngIf="loading" src="data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA=="
+          />
+          <a (click)="cancel()" class="btn btn-info">Cancel</a>
+        </div>
+      </form>
     </div>
+  </div>
 </div>

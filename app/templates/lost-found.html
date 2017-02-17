@@ -1,291 +1,292 @@
 <div class="container">
 	<div class="main">
-		 <div *ngIf="lostFound && !buttonViewArchive">
-            <div class="title">
-            	{{lostFound.type}}  #{{lostFound.serial_number}}
-            </div>
-            <p>Home > Manage Lost & Founds > #{{lostFound.serial_number}}</p>
-	        <div class="row">
-	        	<div class="col-lg-6">
-	        		<p-galleria [images]="images" panelWidth="500" panelHeight="313"></p-galleria>
-	        	</div>
-	        	<div class="col-lg-6">
-	        		<div class="row">
-	        			<div class="col-md-4">Reported by :</div>
-	        			<div class="col-md-8"> {{ lostFound.created_by.username }}</div>
-	        		</div>
-	        		<div class="row">
-	        			<div class="col-md-4">Type :</div>
-	        			<div class="col-md-8">{{ lostFound.type }}</div>
-	        		</div>
-	        		<div class="row">
-	        			<div class="col-md-4">Report time :</div>
-	        			<div class="col-md-8">{{ lostFound.created_at | date:'fullDate'}}</div>
-	        		</div>
-	        		<div class="row">
-	        			<div class="col-md-4">Description :</div>
-	        			<div class="col-md-8">{{ lostFound.description }}</div>
-	        		</div>
-	        		<div class="row">
-	        			<div class="col-md-4">Preferred method of contact :</div>
-	        			<div class="col-md-8">{{ lostFound.preferred_method_of_contact }}</div>
-	        		</div>
-	        		<div class="row">
-	        			<div class="col-md-4">Actions :</div>
-	        		</div><br>
-	        		<div class="row">	
-	        			<div class="col-md-12">
-	        				<span *ngIf="!lostFound.archieved"><a class="btn btn-gray btn-primary" (click)="archieve(lostFound._id)" style="cursor:pointer"><img src="assets/image/icon_archived.png" width="14px" height="12px">&nbsp;Archive Report</a></span>
-	        			</div>
-	        		</div>
-	        	</div>
-	        </div>
-        </div>
+		<div *ngIf="lostFound && !buttonViewArchive">
+			<div class="title">
+				{{lostFound.type}} #{{lostFound.serial_number}}
+			</div>
+			<p class="id-location">Home > Manage Lost & Founds > #{{lostFound.serial_number}}</p>
+			<div class="row">
+				<div class="col-lg-6">
+					<p-galleria [images]="images" panelWidth="500" panelHeight="313"></p-galleria>
+				</div>
+				<div class="col-lg-6">
+					<div class="row">
+						<div class="col-md-4">Reported by :</div>
+						<div class="col-md-8"> {{ lostFound.created_by.username }}</div>
+					</div>
+					<div class="row">
+						<div class="col-md-4">Type :</div>
+						<div class="col-md-8">{{ lostFound.type }}</div>
+					</div>
+					<div class="row">
+						<div class="col-md-4">Report time :</div>
+						<div class="col-md-8">{{ lostFound.created_at | date:'fullDate'}}</div>
+					</div>
+					<div class="row">
+						<div class="col-md-4">Description :</div>
+						<div class="col-md-8">{{ lostFound.description }}</div>
+					</div>
+					<div class="row">
+						<div class="col-md-4">Preferred method of contact :</div>
+						<div class="col-md-8">{{ lostFound.preferred_method_of_contact }}</div>
+					</div>
+					<div class="row">
+						<div class="col-md-4">Actions :</div>
+					</div>
+					<br>
+					<div class="row">
+						<div class="col-md-12">
+							<span *ngIf="!lostFound.archieved"><a class="btn btn-gray btn-primary" (click)="archieve(lostFound._id)" style="cursor:pointer"><img src="assets/image/icon_archived.png" width="14px" height="12px">&nbsp;Archive Report</a></span>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
 
 
-        <div *ngIf="!lostFound && !buttonViewArchive">
+		<div *ngIf="!lostFound && !buttonViewArchive">
 			<div class="title">
 				Manage Lost & Found
 			</div>
-			<p>Home > Manage Lost & Found</p>
+			<p class="id-location">Home > Manage Lost & Found</p>
 			<div class="row">
 				<div class="col-md-4 pull-right">
-								<a class="btn btn-default btn-gray pull-right" (click)="viewArchieved()">
-						  			<img class="img-btn" src="../../assets/image/icon_archived.png" />&nbsp;View Archived
-						  		</a>
-						  		<a class="btn btn-default pull-right btn-gray" (click)="add()">
-						  		<i class="fa fa-plus" aria-hidden="true"></i>&nbsp;Add Report</a>
+					<a class="btn btn-default btn-gray pull-right" (click)="viewArchieved()">
+						<img class="img-btn" src="../../assets/image/icon_archived.png" />&nbsp;View Archived
+					</a>
+					<a class="btn btn-default pull-right btn-gray" (click)="add()">
+						<i class="fa fa-plus" aria-hidden="true"></i>&nbsp;Add Report</a>
 				</div>
 			</div>
 			<div (click)="$event.preventDefault()">
-			  <tabset>
-			    <tab heading="All">
-			    	<p-dataTable [value]="all" [rows]="10" [paginator]="true">
-					    <p-column field="_id" header="S/N" [filter]="true" filterPlaceholder="Search S/N"></p-column>
-					    <p-column header="Made by">
-				        	<template let-all="rowData" pTemplate="body">
-				            	<span>{{all.created_by.username}}</span>
-				        	</template>
-				    	</p-column>
-					    <p-column field="unit_no" header="Unit.no" sortable="true"></p-column>
-					    <p-column field="type" header="Type" [filter]="true" filterPlaceholder="Search Type"></p-column>
-					    <p-column field="description" header="Description"></p-column>
-					    <p-column header="Photo">
-				        	<template let-all="rowData" pTemplate="body">
-				            	<span *ngIf="all.photo">Yes</span>
-				            	<span *ngIf="!all.photo">No</span>
-				        	</template>
-				    	</p-column>
-					    <p-column field="preferred_method_of_contact" header="Preferred method of contact"></p-column>
-					    <p-column header="Reported on" sortable="true">
-						    	<template let-all="rowData" pTemplate="body">
-						            <span>{{all.created_at | date:'d/M/y'}}</span>
-						        </template>
-						</p-column>
-					   <p-column styleClass="col-button">
-					    	<template let-all="rowData" class="pull-right" pTemplate="body">
-					    	<a type="button" class="btn-underline" (click)="viewLostFound(all)">View</a>
-					        <button type="button"  (click)="openModal(all) || firstModal.open()"><img class="img-btn" src="../../assets/image/icon_archived.png" /></button>
-					    	</template>
-					    </p-column>
-					</p-dataTable>
-			    </tab>
-			    <tab heading="Lost">
-			    	<p-dataTable [value]="losts" [rows]="10" [paginator]="true">
-					    <p-column field="_id" header="S/N" [filter]="true" filterPlaceholder="Search S/N"></p-column>
-					    <p-column header="Made by">
-				        	<template let-losts="rowData" pTemplate="body">
-				            	<span>{{losts.created_by.username}}</span>
-				        	</template>
-				    	</p-column>
-					    <p-column field="unit_no" header="Unit.no" sortable="true"></p-column>
-					    <p-column field="type" header="Type" sortable="true"  [filter]="true" filterPlaceholder="Search Type"></p-column>
-					    <p-column field="description" header="Description"></p-column>
-					    <p-column header="Photo">
-				        	<template let-losts="rowData" pTemplate="body">
-				            	<span *ngIf="losts.photo">Yes</span>
-				            	<span *ngIf="!losts.photo">No</span>
-				        	</template>
-				    	</p-column>
-					    <p-column field="preferred_method_of_contact" header="Preferred method of contact"></p-column>
-					    <p-column header="Reported on" sortable="true">
-						    	<template let-losts="rowData" pTemplate="body">
-						            <span>{{losts.created_at | date:'d/M/y'}}</span>
-						        </template>
-						</p-column>
-					   <p-column styleClass="col-button">
-					    	<template let-losts="rowData" class="pull-right" pTemplate="body">
-					    	<a type="button" class="btn-underline" (click)="viewLostFound(losts)">View</a>
-					       <button type="button"  (click)="openModal(losts) || firstModal.open()"><img class="img-btn" src="../../assets/image/icon_archived.png" /></button>
-					    	</template>
-					    </p-column>
-					</p-dataTable>
-			    </tab>
-			    <tab heading="Found">
-			    	<p-dataTable [value]="founds" [rows]="10" [paginator]="true">
-					     <p-column field="_id" header="S/N" [filter]="true" filterPlaceholder="Search S/N"></p-column>
-					    <p-column header="Made by">
-				        	<template let-founds="rowData" pTemplate="body">
-				            	<span>{{founds.created_by.username}}</span>
-				        	</template>
-				    	</p-column>
-					    <p-column field="unit_no" header="Unit.no" sortable="true"></p-column>
-					    <p-column field="type" header="Type" sortable="true"  [filter]="true" filterPlaceholder="Search Type"></p-column>
-					    <p-column field="description" header="Description"></p-column>
-					    <p-column header="Photo">
-				        	<template let-founds="rowData" pTemplate="body">
-				            	<span *ngIf="founds.photo">Yes</span>
-				            	<span *ngIf="!founds.photo">No</span>
-				        	</template>
-				    	</p-column>
-					    <p-column field="preferred_method_of_contact" header="Preferred method of contact"></p-column>
-					     <p-column header="Reported on" sortable="true">
-						    	<template let-founds="rowData" pTemplate="body">
-						            <span>{{founds.created_at | date:'d/M/y'}}</span>
-						        </template>
-						</p-column>
-					   <p-column styleClass="col-button">
-					    	<template let-founds="rowData" class="pull-right" pTemplate="body">
-					    	<a type="button" class="btn-underline" (click)="viewLostFound(founds)">View</a>
-					        <button type="button"  (click)="openModal(founds) || firstModal.open()"><img class="img-btn" src="../../assets/image/icon_archived.png" /></button>
-					    	</template>
-					    </p-column>
-					</p-dataTable>
-			    </tab>
-			  </tabset>
-			</div>	
+				<tabset>
+					<tab heading="All">
+						<p-dataTable [value]="all" [rows]="10" [paginator]="true">
+							<p-column field="_id" header="S/N" [filter]="true" filterPlaceholder="Search S/N"></p-column>
+							<p-column header="Made by">
+								<template let-all="rowData" pTemplate="body">
+									<span>{{all.created_by.username}}</span>
+								</template>
+							</p-column>
+							<p-column field="unit_no" header="Unit.no" sortable="true"></p-column>
+							<p-column field="type" header="Type" [filter]="true" filterPlaceholder="Search Type"></p-column>
+							<p-column field="description" header="Description"></p-column>
+							<p-column header="Photo">
+								<template let-all="rowData" pTemplate="body">
+									<span *ngIf="all.photo">Yes</span>
+									<span *ngIf="!all.photo">No</span>
+								</template>
+							</p-column>
+							<p-column field="preferred_method_of_contact" header="Preferred method of contact"></p-column>
+							<p-column header="Reported on" sortable="true">
+								<template let-all="rowData" pTemplate="body">
+									<span>{{all.created_at | date:'d/M/y'}}</span>
+								</template>
+							</p-column>
+							<p-column styleClass="col-button">
+								<template let-all="rowData" class="pull-right" pTemplate="body">
+									<a type="button" class="btn-underline" (click)="viewLostFound(all)">View</a>
+									<button type="button" (click)="openModal(all) || firstModal.open()"><img class="img-btn" src="../../assets/image/icon_archived.png" /></button>
+								</template>
+							</p-column>
+						</p-dataTable>
+					</tab>
+					<tab heading="Lost">
+						<p-dataTable [value]="losts" [rows]="10" [paginator]="true">
+							<p-column field="_id" header="S/N" [filter]="true" filterPlaceholder="Search S/N"></p-column>
+							<p-column header="Made by">
+								<template let-losts="rowData" pTemplate="body">
+									<span>{{losts.created_by.username}}</span>
+								</template>
+							</p-column>
+							<p-column field="unit_no" header="Unit.no" sortable="true"></p-column>
+							<p-column field="type" header="Type" sortable="true" [filter]="true" filterPlaceholder="Search Type"></p-column>
+							<p-column field="description" header="Description"></p-column>
+							<p-column header="Photo">
+								<template let-losts="rowData" pTemplate="body">
+									<span *ngIf="losts.photo">Yes</span>
+									<span *ngIf="!losts.photo">No</span>
+								</template>
+							</p-column>
+							<p-column field="preferred_method_of_contact" header="Preferred method of contact"></p-column>
+							<p-column header="Reported on" sortable="true">
+								<template let-losts="rowData" pTemplate="body">
+									<span>{{losts.created_at | date:'d/M/y'}}</span>
+								</template>
+							</p-column>
+							<p-column styleClass="col-button">
+								<template let-losts="rowData" class="pull-right" pTemplate="body">
+									<a type="button" class="btn-underline" (click)="viewLostFound(losts)">View</a>
+									<button type="button" (click)="openModal(losts) || firstModal.open()"><img class="img-btn" src="../../assets/image/icon_archived.png" /></button>
+								</template>
+							</p-column>
+						</p-dataTable>
+					</tab>
+					<tab heading="Found">
+						<p-dataTable [value]="founds" [rows]="10" [paginator]="true">
+							<p-column field="_id" header="S/N" [filter]="true" filterPlaceholder="Search S/N"></p-column>
+							<p-column header="Made by">
+								<template let-founds="rowData" pTemplate="body">
+									<span>{{founds.created_by.username}}</span>
+								</template>
+							</p-column>
+							<p-column field="unit_no" header="Unit.no" sortable="true"></p-column>
+							<p-column field="type" header="Type" sortable="true" [filter]="true" filterPlaceholder="Search Type"></p-column>
+							<p-column field="description" header="Description"></p-column>
+							<p-column header="Photo">
+								<template let-founds="rowData" pTemplate="body">
+									<span *ngIf="founds.photo">Yes</span>
+									<span *ngIf="!founds.photo">No</span>
+								</template>
+							</p-column>
+							<p-column field="preferred_method_of_contact" header="Preferred method of contact"></p-column>
+							<p-column header="Reported on" sortable="true">
+								<template let-founds="rowData" pTemplate="body">
+									<span>{{founds.created_at | date:'d/M/y'}}</span>
+								</template>
+							</p-column>
+							<p-column styleClass="col-button">
+								<template let-founds="rowData" class="pull-right" pTemplate="body">
+									<a type="button" class="btn-underline" (click)="viewLostFound(founds)">View</a>
+									<button type="button" (click)="openModal(founds) || firstModal.open()"><img class="img-btn" src="../../assets/image/icon_archived.png" /></button>
+								</template>
+							</p-column>
+						</p-dataTable>
+					</tab>
+				</tabset>
+			</div>
 		</div>
 
 		<div *ngIf="!lostFound && buttonViewArchive">
 			<div class="title">
 				Manage Archieved Lost & Found
 			</div>
-			Home > Manage Lost & Found > Archieved
+			<p class="id-location">Home > Manage Lost & Found > Archieved</p>
 			<div class="row">
 				<div class="col-md-4 pull-right">
-						  		<a class="btn btn-default pull-right" (click)="add()">
-						  		<i class="fa fa-plus" aria-hidden="true"></i>&nbsp;Add Report</a>
-						  		
+					<a class="btn btn-default pull-right" (click)="add()">
+						<i class="fa fa-plus" aria-hidden="true"></i>&nbsp;Add Report</a>
+
 				</div>
 			</div>
 			<div (click)="$event.preventDefault()">
-			  <tabset>
-			    <tab heading="All">
-			    	<p-dataTable [value]="archieveds" [rows]="10" [paginator]="true">
-					     <p-column field="_id" header="S/N" [filter]="true" filterPlaceholder="Search S/N"></p-column>
-					    <p-column header="Made by">
-				        	<template let-archieveds="rowData" pTemplate="body">
-				            	<span>{{archieveds.created_by.username}}</span>
-				        	</template>
-				    	</p-column>
-					    <p-column field="unit_no" header="Unit.no" sortable="true"></p-column>
-					    <p-column field="type" header="Type" sortable="true"  [filter]="true" filterPlaceholder="Search Type"></p-column>
-					    <p-column field="description" header="Description"></p-column>
-					    <p-column header="Photo">
-				        	<template let-archieveds="rowData" pTemplate="body">
-				            	<span *ngIf="archieveds.photo">Yes</span>
-				            	<span *ngIf="!archieveds.photo">No</span>
-				        	</template>
-				    	</p-column>
-					    <p-column field="preferred_method_of_contact" header="Preferred method of contact"></p-column>
-					    <p-column header="Reported on" sortable="true">
-						    	<template let-archieveds="rowData" pTemplate="body">
-						            <span>{{archieveds.created_at | date:'d/M/y'}}</span>
-						        </template>
-						</p-column>
-					   <p-column styleClass="col-button">
-					    	<template let-archieveds="rowData" class="pull-right" pTemplate="body">
-					    	<a type="button" class="btn-underline" (click)="viewLostFound(archieveds)">View</a>
-					    	</template>
-					    </p-column>
-					</p-dataTable>
-			    </tab>
-			    <tab heading="Lost">
-			    	<p-dataTable [value]="archievedLosts" [rows]="10" [paginator]="true">
-					     <p-column field="_id" header="S/N" [filter]="true" filterPlaceholder="Search S/N"></p-column>
-					    <p-column header="Made by">
-				        	<template let-archievedLosts="rowData" pTemplate="body">
-				            	<span>{{archievedLosts.created_by.username}}</span>
-				        	</template>
-				    	</p-column>
-					    <p-column field="unit_no" header="Unit.no" sortable="true"></p-column>
-					    <p-column field="type" header="Type" sortable="true"  [filter]="true" filterPlaceholder="Search Type"></p-column>
-					    <p-column field="description" header="Description"></p-column>
-					    <p-column header="Photo">
-				        	<template let-archievedLosts="rowData" pTemplate="body">
-				            	<span *ngIf="archievedLosts.photo">Yes</span>
-				            	<span *ngIf="!archievedLosts.photo">No</span>
-				        	</template>
-				    	</p-column>
-					    <p-column field="preferred_method_of_contact" header="Preferred method of contact"></p-column>
-					    <p-column field="created_at" header="Reported on" sortable="true" ></p-column>
-					    <p-column header="Reported on" sortable="true">
-						    	<template let-archievedLosts="rowData" pTemplate="body">
-						            <span>{{archievedLosts.created_at | date:'d/M/y'}}</span>
-						        </template>
-						</p-column>
-					   <p-column styleClass="col-button">
-					    	<template let-archievedLosts="rowData" class="pull-right" pTemplate="body">
-					    	<a type="button" class="btn-underline" (click)="viewLostFound(archievedLosts)">View</a>
-					    	</template>
-					    </p-column>
-					</p-dataTable>
-			    </tab>
-			    <tab heading="Found">
-			    	<p-dataTable [value]="archievedFounds" [rows]="10" [paginator]="true">
-					     <p-column field="_id" header="S/N" [filter]="true" filterPlaceholder="Search S/N"></p-column>
-					    <p-column header="Made by">
-				        	<template let-archievedFounds="rowData" pTemplate="body">
-				            	<span>{{archievedFounds.created_by.username}}</span>
-				        	</template>
-				    	</p-column>
-					    <p-column field="unit_no" header="Unit.no" sortable="true"></p-column>
-					    <p-column field="type" header="Type" sortable="true"  [filter]="true" filterPlaceholder="Search Type"></p-column>
-					    <p-column field="description" header="Description"></p-column>
-					     <p-column header="Photo">
-				        	<template let-archievedFounds="rowData" pTemplate="body">
-				            	<span *ngIf="archievedFounds.photo">Yes</span>
-				            	<span *ngIf="!archievedFounds.photo">No</span>
-				        	</template>
-				    	</p-column>
-					    <p-column field="preferred_method_of_contact" header="Preferred method of contact"></p-column>
-					    <p-column header="Reported on" sortable="true">
-						    	<template let-archievedFounds="rowData" pTemplate="body">
-						            <span>{{archievedFounds.created_at | date:'d/M/y'}}</span>
-						        </template>
-						</p-column>
-					   <p-column styleClass="col-button">
-					    	<template let-archievedFounds="rowData" class="pull-right" pTemplate="body">
-					    	<a type="button" class="btn-underline" (click)="viewLostFound(archievedFounds)">View</a>
-					    	</template>
-					    </p-column>
-					</p-dataTable>
-			    </tab>
-			  </tabset>
-			</div>	
+				<tabset>
+					<tab heading="All">
+						<p-dataTable [value]="archieveds" [rows]="10" [paginator]="true">
+							<p-column field="_id" header="S/N" [filter]="true" filterPlaceholder="Search S/N"></p-column>
+							<p-column header="Made by">
+								<template let-archieveds="rowData" pTemplate="body">
+									<span>{{archieveds.created_by.username}}</span>
+								</template>
+							</p-column>
+							<p-column field="unit_no" header="Unit.no" sortable="true"></p-column>
+							<p-column field="type" header="Type" sortable="true" [filter]="true" filterPlaceholder="Search Type"></p-column>
+							<p-column field="description" header="Description"></p-column>
+							<p-column header="Photo">
+								<template let-archieveds="rowData" pTemplate="body">
+									<span *ngIf="archieveds.photo">Yes</span>
+									<span *ngIf="!archieveds.photo">No</span>
+								</template>
+							</p-column>
+							<p-column field="preferred_method_of_contact" header="Preferred method of contact"></p-column>
+							<p-column header="Reported on" sortable="true">
+								<template let-archieveds="rowData" pTemplate="body">
+									<span>{{archieveds.created_at | date:'d/M/y'}}</span>
+								</template>
+							</p-column>
+							<p-column styleClass="col-button">
+								<template let-archieveds="rowData" class="pull-right" pTemplate="body">
+									<a type="button" class="btn-underline" (click)="viewLostFound(archieveds)">View</a>
+								</template>
+							</p-column>
+						</p-dataTable>
+					</tab>
+					<tab heading="Lost">
+						<p-dataTable [value]="archievedLosts" [rows]="10" [paginator]="true">
+							<p-column field="_id" header="S/N" [filter]="true" filterPlaceholder="Search S/N"></p-column>
+							<p-column header="Made by">
+								<template let-archievedLosts="rowData" pTemplate="body">
+									<span>{{archievedLosts.created_by.username}}</span>
+								</template>
+							</p-column>
+							<p-column field="unit_no" header="Unit.no" sortable="true"></p-column>
+							<p-column field="type" header="Type" sortable="true" [filter]="true" filterPlaceholder="Search Type"></p-column>
+							<p-column field="description" header="Description"></p-column>
+							<p-column header="Photo">
+								<template let-archievedLosts="rowData" pTemplate="body">
+									<span *ngIf="archievedLosts.photo">Yes</span>
+									<span *ngIf="!archievedLosts.photo">No</span>
+								</template>
+							</p-column>
+							<p-column field="preferred_method_of_contact" header="Preferred method of contact"></p-column>
+							<p-column field="created_at" header="Reported on" sortable="true"></p-column>
+							<p-column header="Reported on" sortable="true">
+								<template let-archievedLosts="rowData" pTemplate="body">
+									<span>{{archievedLosts.created_at | date:'d/M/y'}}</span>
+								</template>
+							</p-column>
+							<p-column styleClass="col-button">
+								<template let-archievedLosts="rowData" class="pull-right" pTemplate="body">
+									<a type="button" class="btn-underline" (click)="viewLostFound(archievedLosts)">View</a>
+								</template>
+							</p-column>
+						</p-dataTable>
+					</tab>
+					<tab heading="Found">
+						<p-dataTable [value]="archievedFounds" [rows]="10" [paginator]="true">
+							<p-column field="_id" header="S/N" [filter]="true" filterPlaceholder="Search S/N"></p-column>
+							<p-column header="Made by">
+								<template let-archievedFounds="rowData" pTemplate="body">
+									<span>{{archievedFounds.created_by.username}}</span>
+								</template>
+							</p-column>
+							<p-column field="unit_no" header="Unit.no" sortable="true"></p-column>
+							<p-column field="type" header="Type" sortable="true" [filter]="true" filterPlaceholder="Search Type"></p-column>
+							<p-column field="description" header="Description"></p-column>
+							<p-column header="Photo">
+								<template let-archievedFounds="rowData" pTemplate="body">
+									<span *ngIf="archievedFounds.photo">Yes</span>
+									<span *ngIf="!archievedFounds.photo">No</span>
+								</template>
+							</p-column>
+							<p-column field="preferred_method_of_contact" header="Preferred method of contact"></p-column>
+							<p-column header="Reported on" sortable="true">
+								<template let-archievedFounds="rowData" pTemplate="body">
+									<span>{{archievedFounds.created_at | date:'d/M/y'}}</span>
+								</template>
+							</p-column>
+							<p-column styleClass="col-button">
+								<template let-archievedFounds="rowData" class="pull-right" pTemplate="body">
+									<a type="button" class="btn-underline" (click)="viewLostFound(archievedFounds)">View</a>
+								</template>
+							</p-column>
+						</p-dataTable>
+					</tab>
+				</tabset>
+			</div>
 		</div>
 
 		<div class="row">
-		    
-		    <modal #firstModal>
-		        <modal-header>
-		            <h5>Archieve Lost/Found</h5>
-		        </modal-header>
-		        <modal-content>
 
-		           <div *ngIf="lostFoundforModal">
-		              
-		           		Archieve this Lost/Found ?	
-		              
-		                <div class="pull-right">
-		                    <button  type="button" class="btn btn-primary" (click)="archieve(lostFoundforModal._id)">Archieve</button>
-		                    <button class="btn btn-default" (click)="firstModal.close()">Cancel</button>
-		                </div>
-		             
-		           </div>
-		        </modal-content>
-		        
-		    </modal>
+			<modal #firstModal>
+				<modal-header>
+					<h5>Archieve Lost/Found</h5>
+				</modal-header>
+				<modal-content>
+
+					<div *ngIf="lostFoundforModal">
+
+						Archieve this Lost/Found ?
+
+						<div class="pull-right">
+							<button type="button" class="btn btn-primary" (click)="archieve(lostFoundforModal._id)">Archieve</button>
+							<button class="btn btn-default" (click)="firstModal.close()">Cancel</button>
+						</div>
+
+					</div>
+				</modal-content>
+
+			</modal>
 		</div>
 	</div>
 </div>
