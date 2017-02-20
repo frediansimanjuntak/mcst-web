@@ -57,7 +57,7 @@
 						<span *ngIf="visitActive.property==''">N/A</span>
 						<template #popTemplate>
 							<div class="row">
-								<img (click)="popTemplate.hide()" src="../../assets/image/icon_close_black.png" style="height:10px; width:10px;" class="close-popover" />
+								<!-- <img (click)="popTemplate.hide()" src="../../assets/image/icon_close_black.png" style="height:10px; width:10px;" class="close-popover" /> -->
 							</div>
 							<div class="row add-bottom-10px">
 								<div class="col-md-5">
@@ -110,7 +110,7 @@
 								</div>
 							</div>
 							<br>
-							<a *ngIf="name" class="btn-underline pull-bottom-right" style="color: black" [routerLink]="'/' + name.default_development.name_url + '/unit/view/' + unit._id">View resident details</a>
+							<a *ngIf="name" class="btn-underline pull-right" style="color: black" [routerLink]="'/' + name.default_development.name_url + '/unit/view/' + unit._id">View resident details</a>
 						</template>
 						<a style="cursor: pointer" class="btn-underline" [popover]="popTemplate" (click)="onUnitClick(visitActive.property)">{{visitActive.visiting}}</a>
 					</template>
@@ -122,14 +122,14 @@
 						<span>{{visitActive.remarks}}</span>
 					</template>
 				</p-column>
-				<p-column header="Added by" field="" sortable="true">visitActive
+				<p-column header="Added by" field="visitActive.created_at" sortable="true">visitActive
 					<template let-visitActive="rowData" pTemplate="body">
 						<span class="btn-underline">{{visitActive.created_by.username}}</span>
 						<br>
 						<span>on {{visitActive.created_at | date:'d/M/y'}}</span>
 					</template>
 				</p-column>
-				<p-column header="Card no" field="" sortable="true">
+				<p-column header="Card no" field="visitActive.visitor.pass" sortable="true">
 					<template let-visitActive="rowData" pTemplate="body">
 						<span *ngIf="visitActive.visitor.pass==''">-</span>
 						<span>{{visitActive.visitor.pass}}</span>
@@ -163,11 +163,9 @@
 					<h5>Adding Guest/Visitor</h5>
 				</modal-header>
 				<modal-content>
-					<form name="form" [formGroup]="myForm" novalidate>
+					<form name="form" [formGroup]="myForm" novalidate><br><br>
 						<div class="form-group" [ngClass]="{ 'has-error': addSubmitted && !myForm.controls.visitor.controls.prefix.valid }" formGroupName="visitor">
 							<div class="row no-margin">
-								<br>
-								<br>
 								<label class="control-label col-sm-4" for="prefix">Prefix :</label>
 								<div class="col-sm-8">
 									<input type="text" class="form-control" name="prefix" formControlName="prefix">
@@ -250,12 +248,12 @@
 							</div>
 						</div>
 						<div class="row no-margin pull-bottom-right">
-							<button class="btn btn-default btn-gray" (click)="firstModal.close()">Cancel</button>
 							<button class="btn btn-primary btn-brown" [disabled]="loading" (click)="addGuest(myForm.value, myForm.valid)">Add
 								<span>
 									<img *ngIf="loading" src="data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA==" />
 								</span>
 							</button>
+							<button class="btn btn-default btn-gray" (click)="firstModal.close()">Cancel</button>
 						</div>
 					</form>
 				</modal-content>
@@ -270,46 +268,58 @@
 				<modal-content *ngIf="visit">
 					<form name="form" [formGroup]="checkInForm" novalidate>
 						<div class="form-group" formGroupName="visitor">
-							<label class="control-label col-sm-4" for="full_name">Name of Guest/visitor :</label>
-							<div class="col-sm-8">
-								<input type="text" class="form-control" name="full_name" formControlName="full_name">
+							<div class="row no-margin">
+								<label class="control-label col-sm-4" for="full_name">Name of Guest/visitor :</label>
+								<div class="col-sm-8">
+									<input type="text" class="form-control" name="full_name" formControlName="full_name">
+								</div>
 							</div>
 						</div>
 						<div class="form-group" formGroupName="visitor">
-							<label class="control-label col-sm-4" for="vehicle">Vehicle :</label>
-							<div class="col-sm-8">
-								<input type="text" class="form-control" placeholder="If any" name="vehicle" formControlName="vehicle">
+							<div class="row no-margin">
+								<label class="control-label col-sm-4" for="vehicle">Vehicle :</label>
+								<div class="col-sm-8">
+									<input type="text" class="form-control" placeholder="If any" name="vehicle" formControlName="vehicle">
+								</div>
 							</div>
 						</div>
 						<div class="form-group">
-							<label class="control-label col-sm-4" for="purpose">Purpose of visit :</label>
-							<div class="col-sm-8">
-								<select class="form-control" formControlName="purpose" name="purpose">
-									<option [selected]="visit.purpose=='house_visit'" value="house_visit">House Visit</option>
-									<option [selected]="visit.purpose=='maintenance_work'" value="maintenance_work">Maintenance Work</option>
-								</select>
+							<div class="row no-margin">
+								<label class="control-label col-sm-4" for="purpose">Purpose of visit :</label>
+								<div class="col-sm-8">
+									<select class="form-control" formControlName="purpose" name="purpose">
+										<option [selected]="visit.purpose=='house_visit'" value="house_visit">House Visit</option>
+										<option [selected]="visit.purpose=='maintenance_work'" value="maintenance_work">Maintenance Work</option>
+									</select>
+								</div>
 							</div>
 						</div>
 						<div class="form-group">
-							<label class="control-label col-sm-4" for="full_name">Visiting :</label>
-							<div class="col-sm-8">
-								<input type="text" class="form-control" name="property" formControlName="property">
+							<div class="row no-margin">
+								<label class="control-label col-sm-4" for="full_name">Visiting :</label>
+								<div class="col-sm-8">
+									<input type="text" class="form-control" name="property" formControlName="property">
+								</div>
 							</div>
 						</div>
 						<div class="form-group">
-							<label class="control-label col-sm-4" for="full_name">Remarks :</label>
-							<div class="col-sm-8">
-								<textarea type="text" class="form-control" name="remarks" formControlName="remarks" placeholder="Remarks here if any"></textarea>
+							<div class="row no-margin">
+								<label class="control-label col-sm-4" for="full_name">Remarks :</label>
+								<div class="col-sm-8">
+									<textarea type="text" class="form-control" name="remarks" formControlName="remarks" placeholder="Remarks here if any"></textarea>
+								</div>
 							</div>
 						</div>
 						<div class="form-group" [ngClass]="{ 'has-error': checkInSsubmitted && !checkInForm.controls.visitor.controls.pass.valid }" formGroupName="visitor">
-							<label class="control-label col-sm-4" for="pass">Visitor Pass :</label>
-							<div class="col-sm-8">
-								<input type="text" class="form-control" placeholder="Enter Pass serial" name="pass" formControlName="pass">
-								<small style="color: red" [hidden]="checkInForm.controls.visitor.controls.pass.valid || (checkInForm.controls.visitor.controls.pass.pristine && !checkInSsubmitted)">Pass number is required</small>
+							<div class="row no-margin">
+								<label class="control-label col-sm-4" for="pass">Visitor Pass :</label>
+								<div class="col-sm-8">
+									<input type="text" class="form-control" placeholder="Enter Pass serial" name="pass" formControlName="pass">
+									<small style="color: red" [hidden]="checkInForm.controls.visitor.controls.pass.valid || (checkInForm.controls.visitor.controls.pass.pristine && !checkInSsubmitted)">Pass number is required</small>
+								</div>
 							</div>
 						</div><br>
-						<div class="pull-right">
+						<div class="row no-margin pull-bottom-right">
 							<button class="btn btn-primary btn-brown" [disabled]="loading" (click)="checkIn(checkInForm.value, checkInForm.valid)">Check-In
 								<span>
                                             <img *ngIf="loading" src="data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA==" />
@@ -336,7 +346,7 @@
 								<small style="color: red" [hidden]="checkOutForm.controls.visitor.controls.pass.valid || (checkOutForm.controls.visitor.controls.pass.pristine && !checkInSsubmitted)">Pass number is required</small>
 							</div>
 						</div><br>
-						<div class="pull-right">
+						<div class="row no-margin pull-bottom-right">
 							<button class="btn btn-primary btn-brown" [disabled]="loading">Check-Out
 								<span>
                                             <img *ngIf="loading" src="data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA==" />

@@ -89,8 +89,7 @@ export class EditPaymentReminderComponent implements OnInit{
         control.removeAt(i);
     }
 
-    createPaymentReminder(model:PaymentReminder, isVaild:boolean) {
-        console.log(model)
+    createPaymentReminder(model:PaymentReminder) {
         this.paymentreminderService.create(model)
         .then(
             data => {

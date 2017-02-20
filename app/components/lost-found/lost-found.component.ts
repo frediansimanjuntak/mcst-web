@@ -105,7 +105,7 @@ export class LostFoundComponent implements OnInit {
             .subscribe((data)=> {
                 setTimeout(()=> {
                     this.lostFounds      = data.filter(data => data.development._id == this.name.default_development._id);
-                    
+                    console.log(this.lostFounds);
                     this.archieveds      = this.lostFounds.filter(data => data.archieve === true );
                     for (var i = 0; i < this.archieveds.length; i++) {
                         let unit = this.dataUnit.find(data => data._id ==  this.archieveds[i].property);

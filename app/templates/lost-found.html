@@ -62,7 +62,11 @@
 				<tabset>
 					<tab heading="All">
 						<p-dataTable [value]="all" [rows]="10" [paginator]="true">
-							<p-column field="_id" header="S/N" [filter]="true" filterPlaceholder="Search S/N"></p-column>
+							<p-column field="serial_number" header="S/N" >
+								<template let-all="rowData" pTemplate="body">
+									<span>#{{all.serial_number}}</span>
+								</template>
+							</p-column>
 							<p-column header="Made by">
 								<template let-all="rowData" pTemplate="body">
 									<span>{{all.created_by.username}}</span>
@@ -93,7 +97,11 @@
 					</tab>
 					<tab heading="Lost">
 						<p-dataTable [value]="losts" [rows]="10" [paginator]="true">
-							<p-column field="_id" header="S/N" [filter]="true" filterPlaceholder="Search S/N"></p-column>
+							<p-column field="serial_number" header="S/N" >
+								<template let-losts="rowData" pTemplate="body">
+									<span>#{{losts.serial_number}}</span>
+								</template>
+							</p-column>
 							<p-column header="Made by">
 								<template let-losts="rowData" pTemplate="body">
 									<span>{{losts.created_by.username}}</span>
@@ -124,7 +132,11 @@
 					</tab>
 					<tab heading="Found">
 						<p-dataTable [value]="founds" [rows]="10" [paginator]="true">
-							<p-column field="_id" header="S/N" [filter]="true" filterPlaceholder="Search S/N"></p-column>
+							<p-column field="serial_number" header="S/N" >
+								<template let-founds="rowData" pTemplate="body">
+									<span>#{{founds.serial_number}}</span>
+								</template>
+							</p-column>
 							<p-column header="Made by">
 								<template let-founds="rowData" pTemplate="body">
 									<span>{{founds.created_by.username}}</span>
@@ -173,7 +185,11 @@
 				<tabset>
 					<tab heading="All">
 						<p-dataTable [value]="archieveds" [rows]="10" [paginator]="true">
-							<p-column field="_id" header="S/N" [filter]="true" filterPlaceholder="Search S/N"></p-column>
+							<p-column field="serial_number" header="S/N" >
+								<template let-archieveds="rowData" pTemplate="body">
+									<span>#{{archieveds.serial_number}}</span>
+								</template>
+							</p-column>
 							<p-column header="Made by">
 								<template let-archieveds="rowData" pTemplate="body">
 									<span>{{archieveds.created_by.username}}</span>
@@ -203,7 +219,11 @@
 					</tab>
 					<tab heading="Lost">
 						<p-dataTable [value]="archievedLosts" [rows]="10" [paginator]="true">
-							<p-column field="_id" header="S/N" [filter]="true" filterPlaceholder="Search S/N"></p-column>
+							<p-column field="serial_number" header="S/N" >
+								<template let-archievedLosts="rowData" pTemplate="body">
+									<span>#{{archievedLosts.serial_number}}</span>
+								</template>
+							</p-column>
 							<p-column header="Made by">
 								<template let-archievedLosts="rowData" pTemplate="body">
 									<span>{{archievedLosts.created_by.username}}</span>
@@ -234,7 +254,11 @@
 					</tab>
 					<tab heading="Found">
 						<p-dataTable [value]="archievedFounds" [rows]="10" [paginator]="true">
-							<p-column field="_id" header="S/N" [filter]="true" filterPlaceholder="Search S/N"></p-column>
+							<p-column field="serial_number" header="S/N" >
+								<template let-archievedFounds="rowData" pTemplate="body">
+									<span>#{{archievedFounds.serial_number}}</span>
+								</template>
+							</p-column>
 							<p-column header="Made by">
 								<template let-archievedFounds="rowData" pTemplate="body">
 									<span>{{archievedFounds.created_by.username}}</span>
@@ -279,8 +303,8 @@
 						Archieve this Lost/Found ?
 
 						<div class="pull-right">
-							<button type="button" class="btn btn-primary" (click)="archieve(lostFoundforModal._id)">Archieve</button>
-							<button class="btn btn-default" (click)="firstModal.close()">Cancel</button>
+							<button type="button" class="btn btn-primary btn-brown" (click)="archieve(lostFoundforModal._id)">Archieve</button>
+							<button class="btn btn-white" (click)="firstModal.close()">Cancel</button>
 						</div>
 
 					</div>

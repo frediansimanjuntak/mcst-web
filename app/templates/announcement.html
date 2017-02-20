@@ -18,11 +18,8 @@
 						<p-column [style]="{'width':'200px'}" field="title" header="Title" sortable="true" [filter]="true" filterPlaceholder="Search title"></p-column>
 						<p-column [style]="{'width':'300px'}" field="message" header="Message" sortable="true" [filter]="true" filterPlaceholder="Search Message"></p-column>
 						<p-column [style]="{'width':'70px'}" field="sticky" header="Sticky" sortable="true"></p-column>
-						<p-column field="auto_post_on" header="Auto post on" sortable="true" filterPlaceholder="Search Date "></p-column>
-						<p-column header="Valid till" sortable="true">
-							<template let-announcementsDrafted="rowData" pTemplate="body">
-								<span>{{announcementsDrafted.valid_till | date:'y/M/d'}}</span>
-							</template>
+						<p-column field="auto_post_date" header="Auto post on" sortable="true" filterPlaceholder="Search Date "></p-column>
+						<p-column header="Valid till" field="valid_till_date" sortable="true">
 						</p-column>
 						<p-column header="Created on" sortable="true">
 							<template let-announcementsDrafted="rowData" pTemplate="body">
@@ -43,10 +40,7 @@
 						<p-column [style]="{'width':'200px'}" field="title" header="Title" sortable="true" [filter]="true" filterPlaceholder="Search title"></p-column>
 						<p-column [style]="{'width':'300px'}" field="message" header="Message" sortable="true" [filter]="true" filterPlaceholder="Search Message"></p-column>
 						<p-column field="sticky" [style]="{'width':'70px'}" header="Sticky" sortable="true"></p-column>
-						<p-column header="Valid till" sortable="true">
-							<template let-announcementsPublished="rowData" pTemplate="body">
-								<span>{{announcementsPublished.valid_till | date:'y/M/d'}}</span>
-							</template>
+						<p-column header="Valid till" field="valid_till_date" sortable="true">
 						</p-column>
 						<p-column header="Created on" sortable="true">
 							<template let-announcementsPublished="rowData" pTemplate="body">

@@ -64,7 +64,7 @@ export class NewsletterComponent implements OnInit {
                 console.log(response);
                 alert(`The Newsletter could not be deleted, server Error.`);
               } else {
-                this.alertService.success('Create newsletter successful', true);
+                this.alertService.success('Delete newsletter successful', true);
                 alert(`Delete Newsletter successful`);
                 this.ngOnInit()
               }
@@ -104,6 +104,7 @@ export class NewsletterComponent implements OnInit {
             .subscribe((data)=> {
                 setTimeout(()=> {
                   this.data = data.newsletter;
+                  console.log(this.data);
                   this.dataAgm       = this.data.filter(data => data.type === 'agm' );
                   this.dataEgm       = this.data.filter(data => data.type === 'egm' );
                   this.dataCircular  = this.data.filter(data => data.type === 'circular' );

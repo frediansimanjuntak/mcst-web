@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, ViewEncapsulation } from '@angular/core';
 import { Router, Params, ActivatedRoute } from '@angular/router';
 import { FormBuilder, FormControl, FormGroup, FormArray, Validators } from '@angular/forms';
 import { UserGroup, UserGroups, User, Users } from '../../models/index';
@@ -10,7 +10,7 @@ import 'rxjs/add/operator/switchMap';
   // moduleId: module.id,
   selector: 'edit-user-group',
   templateUrl: 'app/templates/edit-user-group.html',
-  styleUrls: [ 'app/templates/styles/ng2-select.css' ]
+  
 })
 
 export class EditUserGroupComponent implements OnInit {
@@ -44,7 +44,7 @@ export class EditUserGroupComponent implements OnInit {
     	private formbuilder: FormBuilder,
         private route: ActivatedRoute,) {
     }
-
+    
     ngOnInit(): void {
         this.userService.getByToken()
                         .subscribe(name => {
@@ -58,25 +58,17 @@ export class EditUserGroupComponent implements OnInit {
             users: this.formbuilder.array([]),
         });
 
+        this.model.chief = "";
         this.route.params.subscribe(params => {
             this.id = params['id'];
         });
 
         if( this.id != null) {
             this.userGroupService
-                    .getUserGroup(this.id)
-                    .then(usergroup => {
+                    .getById(this.id)
+                    .subscribe(usergroup => {
                         this.usergroup = usergroup;
-
-
-                        this.chief.text = this.users.find(myObj => myObj._id ===  this.usergroup.chief ).username;
-                        this.chief.id = this.usergroup.chief;
-                        this.chiefField = true;
-
-                        // for (let i = 0; i < this.usergroup.users.length; i++) {
-                        //     this.user[i].text = this.users.find(myObj => myObj._id ===  this.usergroup.users[i] ).username;
-                        //     this.user[i].id = this.usergroup.users[i];
-                        // }
+                        this.model.chief = this.usergroup.chief._id;
 
                         let numOptions =  this.usergroup.users.length;
                         let opts = new Array(numOptions);
@@ -115,14 +107,14 @@ export class EditUserGroupComponent implements OnInit {
         this.user = value;
     }
 
-    public refreshValueChief(value:any):void {
-        this.chief = value;
-        if (this.chief.length == 0){
-            this.chiefField = false;
-        }else{
-            this.chiefField = true;
-        }
-    }
+    // public refreshValueChief(value:any):void {
+    //     this.chief = value;
+    //     if (this.chief.length == 0){
+    //         this.chiefField = false;
+    //     }else{
+    //         this.chiefField = true;
+    //     }
+    // }
 
     public itemsToString(value:Array<any> = []):string {
         return value
@@ -140,7 +132,7 @@ export class EditUserGroupComponent implements OnInit {
         this.userService.getAll().subscribe(users => {
             this.users = users.filter(data => data.default_development == this.name.default_development._id);
             console.log(users)
-            this.usersForMember = this.users.filter(data => data.user_group == false);
+            this.usersForMember = this.users.filter(data => data.user_group == undefined || data.user_group == null || data.user_group == '');
             console.log(this.usersForMember)
             let numOptions =  this.users.length;
             let opts = new Array(numOptions);
@@ -156,7 +148,7 @@ export class EditUserGroupComponent implements OnInit {
             this.items = this.myOptions;
 
             let numOptions2 =  this.usersForMember.length;
-            let opts2 = new Array(numOptions);
+            let opts2 = new Array(numOptions2);
 
             for (let i = 0; i < numOptions2; i++) {
                 opts2[i] = {
@@ -165,7 +157,7 @@ export class EditUserGroupComponent implements OnInit {
                 };
             }
 
-            this.myOptions2 = opts.slice(0);
+            this.myOptions2 = opts2.slice(0);
             this.items2 = this.myOptions2;
         });
     }
@@ -189,18 +181,19 @@ export class EditUserGroupComponent implements OnInit {
         for (let i = 0; i < this.user.length; i++) {
             this.model.users[i] = this.user[i].id ;
         }
-        this.model.chief = this.chief.id;
-
-        this.userGroupService.create(this.model)
-        .then(
-            data => {
-                this.alertService.success('Create usergroup successful', true);
-                this.router.navigate([this.name.default_development.name_url + '/user_group']);
-            },
-            error => {
-                this.alertService.error(error);
-            }
-        );
+        if(this.model.chief){
+            this.userGroupService.create(this.model)
+            .then(
+                data => {
+                    this.alertService.success('Create usergroup successful', true);
+                    this.router.navigate([this.name.default_development.name_url + '/user_group']);
+                },
+                error => {
+                    this.alertService.error(error);
+                }
+            );    
+        }
+        
     }
 
     goToUserGroup(){
@@ -208,12 +201,12 @@ export class EditUserGroupComponent implements OnInit {
     }
 
     updateUserGroup(){
-        if(this.chiefField && this.usergroup.description != ''){
+        if(this.model.chief && this.usergroup.description != ''){
             this.usergroup.users = [];
+            this.usergroup.chief = this.model.chief;
             for (let i = 0; i < this.user.length; i++) {
                 this.usergroup.users[i] =this.user[i].id ;
             }
-            this.usergroup.chief = this.chief.id;
             this.userGroupService.update(this.usergroup)
                 .then(
                     response => {
