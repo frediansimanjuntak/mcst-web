@@ -84,7 +84,7 @@ export class ContractNoteComponent implements OnInit  {
     }
 
     createContractNote(id:any) {
-        if(this.model.attachment) {
+        if(this.model.attachment > 0) {
             let formData:FormData = new FormData();
             for (var i = 0; i < this.model.attachment.length; i++) {
                 formData.append("attachment", this.model.attachment[i]);
