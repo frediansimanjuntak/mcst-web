@@ -66,14 +66,16 @@ export class PaymentReminderComponent implements OnInit {
             this.published = paymentreminders.filter(data => data.publish === true );
             this.draft   = paymentreminders.filter(data => data.publish === false );
             for (var i = 0; i < this.published.length; ++i) {
-                this.published[i].auto_issue_on = this.published[i].auto_issue_on.slice(0,10);
-                this.published[i].due_on = this.published[i].due_on.slice(0,10);
-                this.published[i].created_at = this.published[i].created_at.slice(0,10);
+                let y = this.published[i].auto_issue_on.toString().slice(0,4);
+                let m = (this.published[i].auto_issue_on+100).toString().slice(4,6);
+                let d = this.published[i].auto_issue_on.toString().slice(6,8);
+                this.published[i].auto_issue_on = y + '/' + m + '/' + d ;
             }
             for (var i = 0; i < this.draft.length; ++i) {
-                this.draft[i].auto_issue_on = this.draft[i].auto_issue_on.slice(0,10);
-                this.draft[i].due_on = this.draft[i].due_on.slice(0,10);
-                this.draft[i].created_at = this.draft[i].created_at.slice(0,10);
+                let y = this.draft[i].auto_issue_on.toString().slice(0,4);
+                let m = (this.draft[i].auto_issue_on+100).toString().slice(4,6);
+                let d = this.draft[i].auto_issue_on.toString().slice(6,8);
+                this.draft[i].auto_issue_on = y + '/' + m + '/' + d ;
             }
         });
     }

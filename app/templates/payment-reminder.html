@@ -13,17 +13,25 @@
             <tabset>
                 <!-- Draft -->
                 <tab heading="Draft">
-                    <p-dataTable [value]="draft" [rows]="10" [paginator]="true">
+                    <p-dataTable [value]="draft" [rows]="10" [paginator]="true" [responsive]="true">
                         <p-column field="title" header="Title" sortable="true" [filter]="true" filterPlaceholder="Search title"></p-column>
                         <p-column field="auto_issue_on" header="Auto issue on" sortable="true" [filter]="true" filterPlaceholder="Search auto issue date"></p-column>
-                        <p-column field="due_on" header="Due on" sortable="true" [filter]="true" filterPlaceholder="Search due date"></p-column>
+                        <p-column field="due_on" header="Due on" sortable="true" [filter]="true" filterPlaceholder="Search due date">
+                            <template let-draft="rowData" pTemplate="body">
+                                <p>{{draft.due_on | date:'d/M/y'}}</p>
+                            </template>
+                        </p-column>
                         <p-column field="" header="Notification List" sortable="true" [filter]="true" filterPlaceholder="Search notification list">
                             <template let-draft="rowData" pTemplate="body">
                                 <span *ngIf="draft.notification_list.applies_to != all">Custom</span>
                                 <span *ngIf="draft.notification_list.applies_to == all">All</span>
                             </template>
                         </p-column>
-                        <p-column field="created_at" header="Created on" sortable="true" [filter]="true" filterPlaceholder="Search created date"></p-column>
+                        <p-column field="created_at" header="Created on" sortable="true" [filter]="true" filterPlaceholder="Search created date">
+                            <template let-draft="rowData" pTemplate="body">
+                                <p>{{draft.created_at | date:'d/M/y'}}</p>
+                            </template>
+                        </p-column>
                         <p-column styleClass="col-button" header="action">
                             <template let-draft="rowData" pTemplate="body">
                                 <a type="button" style="cursor:pointer" (click)="edit(draft)"><i class="fa fa-edit" aria-hidden="true"></i>&nbsp;Edit</a>
@@ -35,17 +43,25 @@
                 </tab>
                 <!-- Published -->
                 <tab heading="Published">
-                    <p-dataTable [value]="published" [rows]="10" [paginator]="true">
+                    <p-dataTable [value]="published" [rows]="10" [paginator]="true" [responsive]="true">
                         <p-column field="title" header="Title" sortable="true" [filter]="true" filterPlaceholder="Search title"></p-column>
                         <p-column field="auto_issue_on" header="Auto issue on" sortable="true" [filter]="true" filterPlaceholder="Search auto issue date"></p-column>
-                        <p-column field="due_on" header="Due on" sortable="true" [filter]="true" filterPlaceholder="Search due date"></p-column>
+                        <p-column field="due_on" header="Due on" sortable="true" [filter]="true" filterPlaceholder="Search due date">
+                            <template let-published="rowData" pTemplate="body">
+                                <p>{{published.due_on | date:'d/M/y'}}</p>
+                            </template>
+                        </p-column>
                         <p-column field="" header="Notification List" sortable="true" [filter]="true" filterPlaceholder="Search notification list">
                             <template let-published="rowData" pTemplate="body">
                                 <span *ngIf="published.notification_list.applies_to != 'all'">Custom</span>
                                 <span *ngIf="published.notification_list.applies_to == 'all'">All</span>
                             </template>
                         </p-column>
-                        <p-column field="created_at" header="Created on" sortable="true" [filter]="true" filterPlaceholder="Search created date"></p-column>
+                        <p-column field="created_at" header="Created on" sortable="true" [filter]="true" filterPlaceholder="Search created date">
+                            <template let-published="rowData" pTemplate="body">
+                                <p>{{published.created_at | date:'d/M/y'}}</p>
+                            </template>
+                        </p-column>
                         <p-column styleClass="col-button" header="action">
                             <template let-published="rowData" pTemplate="body">
                                 <button type="button" (click)="deletePaymentReminder(published)"><i class="fa fa-trash" aria-hidden="true"></i></button>
