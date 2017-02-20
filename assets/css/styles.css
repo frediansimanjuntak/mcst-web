@@ -370,10 +370,10 @@ dashboard .title {
   color: #4a4a4a;
 }
 .content-box .content-left {
-  margin: 10px 0px 0 0px;
+  margin: 10px 0 0 0;
 }
 .content-box .content-right {
-  margin: 10px 0px 0 20px;
+    margin: 10px 0 0 0;
 }
 .img-content {
   width: 120px;
@@ -410,7 +410,7 @@ dashboard .title {
   width: 42px;
   background-color: #f9f9f9;
   position: relative;
-  margin-left: 20px;
+  margin-left: -15px;
 }
 .arrow-box {
   position: absolute;
@@ -419,6 +419,9 @@ dashboard .title {
   top: 0;
   bottom: 0;
   margin: auto;
+}
+.content-box .col-lg-9 {
+    padding-left: 25px;
 }
 .content-box .col-lg-8 {
   width: 64.66667%;
