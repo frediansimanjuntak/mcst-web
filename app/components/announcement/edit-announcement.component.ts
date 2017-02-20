@@ -121,9 +121,11 @@ export class EditAnnouncementComponent  {
     }
 
     autoPostOnDateChanged(event:any) {
-         this.model.auto_post_on = event.formatted.replace(/-/g, "/");
+         this.model.auto_post_on = event.jsdate;
+
         if(this.model.auto_post_on){
             (this.selectedValidDate = new Date()).setDate(event.jsdate.getDate() + 1);
+            this.model.valid_till =  this.selectedValidDate;
             this.selectedValidDate = this.convertDate(this.selectedValidDate)
             let copy: IMyOptions = this.getCopyOfValidTillDateOptions();
             copy.disableUntil = event.date;
@@ -144,7 +146,7 @@ export class EditAnnouncementComponent  {
     }
 
     validTillDateChanged(event:any) {
-      this.model.valid_till = event.formatted.replace(/-/g, "/");;
+      this.model.valid_till =  event.jsdate;
     }
 
     updateAnnouncement(){
