@@ -158,7 +158,35 @@ export class AnnouncementComponent implements OnInit {
                           this.announcements            = data.filter(data => data.development._id === this.name.default_development._id );
                           this.announcementsDrafted     = this.announcements.filter(data => data.publish === false && data.valid === true);
                           this.announcementsPublished   = this.announcements.filter(data => data.publish === true && data.valid === true);
-                          console.log(this.announcements);
+                          
+                          for (var i = 0; i < this.announcementsDrafted.length; i++) {
+                              if(this.announcementsDrafted[i].auto_post_on){
+                                  let y = this.announcementsDrafted[i].auto_post_on.toString().slice(0,4);
+                                  let m = (this.announcementsDrafted[i].auto_post_on+100).toString().slice(4,6);
+                                  let d = this.announcementsDrafted[i].auto_post_on.toString().slice(6,8);
+                                  this.announcementsDrafted[i].auto_post_date = y + '/' + m + '/' + d ;
+                              }    
+                          }
+
+                          for (var i = 0; i < this.announcementsDrafted.length; i++) {
+                              if(this.announcementsDrafted[i].valid_till){
+                                  let y = this.announcementsDrafted[i].valid_till.toString().slice(0,4);
+                                  let m = (this.announcementsDrafted[i].valid_till+100).toString().slice(4,6);
+                                  let d = this.announcementsDrafted[i].valid_till.toString().slice(6,8);
+                                  this.announcementsDrafted[i].valid_till_date = y + '/' + m + '/' + d ;
+                              }
+                          }
+
+                           for (var i = 0; i < this.announcementsPublished.length; i++) {
+                              if(this.announcementsPublished[i].valid_till){
+                                  let y = this.announcementsPublished[i].valid_till.toString().slice(0,4);
+                                  let m = (this.announcementsPublished[i].valid_till+100).toString().slice(4,6);
+                                  let d = this.announcementsPublished[i].valid_till.toString().slice(6,8);
+                                  this.announcementsPublished[i].valid_till_date = y + '/' + m + '/' + d ;
+                              }
+                          }
+
+
                 }, 1000);
             });
     }

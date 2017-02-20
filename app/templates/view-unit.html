@@ -90,7 +90,7 @@
                         </p-column>
                         <p-column header="License Plate" field="license_plate">
                         </p-column>
-                        <p-column header="Owner" sortable="true" field="owner">
+                        <p-column header="Owner" sortable="true" field="user">
                         </p-column>
                         <p-column header="Transponder" field="transponder">
                         </p-column>
@@ -147,46 +147,57 @@
                 <modal-content>
                     <form name="form" [formGroup]="myForm2" novalidate>
                         <div class="form-group" [ngClass]="{ 'has-error': vehicleSubmitted && !myForm2.controls.license_plate.valid }">
-                            <label  class="control-label col-sm-4" for="license_plate">License Plate :</label>
-                            <div class="col-sm-8">
-                                <input license_plate="text" class="form-control" name="license_plate" formControlName="license_plate">
-                                <small style="color: red" [hidden]="myForm2.controls.license_plate.valid || (myForm2.controls.license_plate.pristine && !vehicleSubmitted)">License Plate is required</small>
+                            <div class="row no-margin">
+                                <label  class="control-label col-sm-4" for="license_plate">License Plate :</label>
+                                <div class="col-sm-8">
+                                    <input license_plate="text" class="form-control" name="license_plate" formControlName="license_plate">
+                                    <small style="color: red" [hidden]="myForm2.controls.license_plate.valid || (myForm2.controls.license_plate.pristine && !vehicleSubmitted)">License Plate is required</small>
+                                </div>
                             </div>
                         </div>
                          <div class="form-group" [ngClass]="{ 'has-error': vehicleSubmitted && !myForm2.controls.owner.valid }">
-                            <label class="control-label col-sm-4" for="unit_no">Owner :</label>
-                            <div class="col-sm-8">
-                                <select class="form-control" formControlName="owner" name="owner">
-                                     <option *ngFor="let u of residents" [ngValue]="u.resident._id">{{u.resident.username}}</option>
-                                </select>
-                               <small style="color: red" [hidden]="myForm2.controls.owner.valid || (myForm2.controls.owner.pristine && !vehicleSubmitted)">Owner is required</small>
+                            <div class="row no-margin">
+                                <label class="control-label col-sm-4" for="unit_no">Owner :</label>
+                                <div class="col-sm-8">
+                                    <select class="form-control" formControlName="owner" name="owner">
+                                        <option *ngIf="hasLandlord" [ngValue]="unit.landlord._id">{{unit.landlord.username}}</option>
+                                        <option *ngFor="let u of residents" [ngValue]="u.resident._id">{{u.resident.username}}</option>
+                                    </select>
+                                   <small style="color: red" [hidden]="myForm2.controls.owner.valid || (myForm2.controls.owner.pristine && !vehicleSubmitted)">Owner is required</small>
+                                </div>
                             </div>
                         </div>
                         <div class="form-group">
-                            <label  class="control-label col-sm-4" for="transponder">Transponder :</label>
-                            <div class="col-sm-8">
-                                <input  type="text" class="form-control" name="transponder" formControlName="transponder" placeholder="">
+                            <div class="row no-margin">
+                                <label  class="control-label col-sm-4" for="transponder">Transponder :</label>
+                                <div class="col-sm-8">
+                                    <input  type="text" class="form-control" name="transponder" formControlName="transponder" placeholder="">
+                                </div>
                             </div>
                         </div>
                         <div class="form-group" >
-                            <label class="control-label col-sm-4" for="document">Document :</label>
-                            <div class="col-sm-8">
-                                <input type="file" multiple class="upload" name="document" (change)="onChange($event)" />
-                                <p *ngFor="let item of model.document; let i=index ">
-                                    <img src="assets/image/icon_media_image.png" width="14px" height="12px">&nbsp;  
-                                    <span style="text-decoration: underline;">{{ item.name }}_{{item.size/1024 | number:'1.0-0' }}kb</span> &nbsp;   
-                                    <span style="cursor:pointer" (click)="remove(i)"><img src="assets/image/icon_close_black.png" width="14px" height="12px"></span>
-                                </p>
-                                <small style="color: red" [hidden]="model.document.length > 0 || (model.document.length == 0 && !vehicleSubmitted)">Document is required</small>
+                            <div class="row no-margin">
+                                <label class="control-label col-sm-4" for="document">Document :</label>
+                                <div class="col-sm-8">
+                                    <input type="file" multiple class="upload" name="document" (change)="onChange($event)" />
+                                    <p *ngFor="let item of model.document; let i=index ">
+                                        <img src="assets/image/icon_media_image.png" width="14px" height="12px">&nbsp;  
+                                        <span style="text-decoration: underline;">{{ item.name }}_{{item.size/1024 | number:'1.0-0' }}kb</span> &nbsp;   
+                                        <span style="cursor:pointer" (click)="remove(i)"><img src="assets/image/icon_close_black.png" width="14px" height="12px"></span>
+                                    </p>
+                                    <small style="color: red" [hidden]="model.document.length > 0 || (model.document.length == 0 && !vehicleSubmitted)">Document is required</small>
+                                </div>
                             </div>
                         </div>
-                         <div class="form-group">
-                            <label  class="control-label col-sm-4" for="remarks">Remarks :</label>
-                            <div class="col-sm-8">
-                                <textarea  type="text" class="form-control" name="remarks" formControlName="remarks" placeholder="Remarks here if any"></textarea>
+                        <div class="form-group">
+                            <div class="row no-margin">
+                                <label  class="control-label col-sm-4" for="remarks">Remarks :</label>
+                                <div class="col-sm-8">
+                                    <textarea  type="text" class="form-control" name="remarks" formControlName="remarks" placeholder="Remarks here if any"></textarea>
+                                </div>
                             </div>
                         </div>
-                        <div class="pull-right">
+                        <div class="row no-margin pull-bottom-right">
                             <button  class="btn btn-primary btn-brown" (click)="addVehicle(myForm2.value, myForm2.valid)">Add</button>
                             <button class="btn btn-white" (click)="secondModal.close()">Cancel</button>
                         </div>
@@ -248,7 +259,7 @@
                     </div>
                     <div class="row">
                         <div class="col-md-4">Owner</div>
-                        <div class="col-md-8"><p>: {{ vehicle.owner_name }}</p></div>
+                        <div class="col-md-8"><p>: {{ vehicle.user }}</p></div>
                     </div>
                     <div class="row">
                         <div class="col-md-4">Transponder</div>

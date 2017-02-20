@@ -82,7 +82,7 @@ export class EditPollComponent  {
         let tomorrow= new Date();
         ( tomorrow = new Date()).setDate(tomorrow.getDate() + 1);
 
-        this.model.end_time = this.model.start_time = this.convertDate(tomorrow);
+        this.selectedEndTime = this.model.end_time = this.model.start_time = this.convertDate(tomorrow);
         this.model.poll_type = "yes_or_no";
         this.userService.getByToken()
         					.subscribe(name => {
@@ -124,7 +124,7 @@ export class EditPollComponent  {
     }
 
     endTimeChanged(event:any) {
-      this.model.valid_till = event.formatted.replace(/-/g, "/");
+      this.model.end_time = event.formatted.replace(/-/g, "/");
       if(this.poll){
             this.poll.end_time  = event.formatted;
         }
@@ -143,6 +143,7 @@ export class EditPollComponent  {
         if (this.model.poll_type == 'yes_or_no'){
             this.model.choices = ['yes', 'no'];
         }
+        console.log(this.model);
         this.pollService.create(this.model)
         .then(
             data => {

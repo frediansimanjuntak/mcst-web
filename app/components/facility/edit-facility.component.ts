@@ -146,17 +146,16 @@ export class EditFacilityComponent  {
     }
 
     createFacility(model:any) {
-        console.log(model)
-        // this.facilityService.create(model)
-        // .then(
-        //     response => {
-        //         this.alertService.success('Create facility successful', true);
-        //         this.router.navigate([this.name.default_development.name_url + '/facility']);
-        //     },
-        //     error => {
-        //         this.alertService.error(error);
-        //     }
-        // );
+        this.facilityService.create(model)
+        .then(
+            response => {
+                this.alertService.success('Create facility successful', true);
+                this.router.navigate([this.name.default_development.name_url + '/facility']);
+            },
+            error => {
+                this.alertService.error(error);
+            }
+        );
     }
 
 

@@ -58,6 +58,7 @@ export class EditIncidentComponent implements OnInit {
             }  
         });
         this.userService.getByToken().subscribe(name => {this.name = name;})
+        this.model.attachment = [];
     	this.selectedType = 'general';
         this.route.params.subscribe(params => {
             this.id = params['id'];
@@ -68,26 +69,28 @@ export class EditIncidentComponent implements OnInit {
     }
 
     createIncident(event: any) {
-        let formData:FormData = new FormData();
-        for (var i = 0; i < this.model.attachment.length; i++) {
-            formData.append("attachment", this.model.attachment[i]);
-        }
-        formData.append("reference_no", this.model.reference_no);
-        // formData.append("status", this.model.status);
-        formData.append("incident_type", this.model.incident_type);
-        formData.append("title", this.model.title);
-        formData.append("remark", this.model.remark);
-        this.incidentService.create(formData)
-        .then(
-            data => {
-                this.alertService.success('Create incident report successful', true);
-                this.router.navigate([this.name.default_development.name_url + '/incident']);
-            },
-            error => {
-                console.log(error);
-                alert(`The incident report could not be save, server Error.`);
+        if(this.model.attachment.length > 0) {
+           let formData:FormData = new FormData();
+            for (var i = 0; i < this.model.attachment.length; i++) {
+                formData.append("attachment", this.model.attachment[i]);
             }
-        );
+            formData.append("reference_no", this.model.reference_no);
+            // formData.append("status", this.model.status);
+            formData.append("incident_type", this.model.incident_type);
+            formData.append("title", this.model.title);
+            formData.append("remark", this.model.remark);
+            this.incidentService.create(formData)
+            .then(
+                data => {
+                    this.alertService.success('Create incident report successful', true);
+                    this.router.navigate([this.name.default_development.name_url + '/incident']);
+                },
+                error => {
+                    console.log(error);
+                    alert(`The incident report could not be save, server Error.`);
+                }
+            );
+        }
     }
 
     updateIncident(){

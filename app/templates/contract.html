@@ -223,7 +223,7 @@
                             </p-column>
                             <p-column styleClass="col-button" header="Action">
                                 <template let-data="rowData" pTemplate="body">
-                                    <a type="button" style="cursor:pointer" (click)="viewNote(data)">View</a>
+                                    <a type="button" style="cursor:pointer" (click)="viewNote(contract._id, data)">View</a>
                                     <button type="button" (click)="deleteContractNote(data, contract._id)"><i class="fa fa-trash" aria-hidden="true"></i></button>
                                 </template>
                             </p-column>

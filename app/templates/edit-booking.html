@@ -72,9 +72,15 @@
                                     </p></div>
                                 </div>
                                 <div class="row">
+<<<<<<< HEAD
                                     <div class="col-md-3"><p class="pull-down">Period :</p></div>
                                     <div class="col-md-9"><p>
                                         <select name="start" class="form-control" formControlName="start" style="width: 116px">
+=======
+                                    <div class="col-md-3"><p class="pull-down">Period</p></div>
+                                    <div class="col-md-9"><p>
+                                        <select name="start" class="form-control" formControlName="start" style="width: 116px; float: left; margin-right: 5px;">
+>>>>>>> 1c5b5314fe0edc449918b501902592d2e88d0367
                                             <option *ngFor="let start of times_start" [ngValue]="start"><span *ngIf="start < 10">0</span>{{start}}{{min}}</option>
                                         </select>
                                         <select name="end" class="form-control" formControlName="end" style="width: 116px">

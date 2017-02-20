@@ -21,8 +21,8 @@
 				</p-column>
 				<p-column styleClass="col-button">
 					<template let-usergroups="rowData" pTemplate="body">
-						<button type="button" (click)="editUserGroup(usergroups)">Edit</button>
-						<button type="button" (click)="deleteUserGroup(usergroups)">Delete</button>
+						<!-- <button type="button" (click)="editUserGroup(usergroups)">Edit</button> -->
+						<button  type="button" (click)="deleteUserGroup(usergroups)"><i class="fa fa-trash" aria-hidden="true"></i></button>
 					</template>
 				</p-column>
 			</p-dataTable>

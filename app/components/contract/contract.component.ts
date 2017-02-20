@@ -6,6 +6,7 @@ import '../../rxjs-operators';
 import { Observable} from 'rxjs/Observable';
 import { FileUploader } from 'ng2-file-upload';
 
+
 @Component({
   // moduleId: module.id,
   selector: 'contract',
@@ -17,6 +18,8 @@ export class ContractComponent implements OnInit  {
     contracts: Contract[] = [];
     contractnotes: any[];
     contractnotices: any[];
+    commence_date: any;
+    estimate_date: any;
     model: any = {};
     images: any[];
     id: string;
@@ -134,6 +137,23 @@ export class ContractComponent implements OnInit  {
 	private loadAllContract() {
 		this.contractService.getAll().subscribe(contracts => {
 			this.contracts = contracts ;
+            console.log(contracts)
+            for (let i = 0; i < this.contracts.length; ++i) {
+                if(this.contracts[i].contract_notice.length > 1) {
+                    for (let a = 0; a < this.contracts[i].contract_notice.length; ++a) {
+                        // let y = this.contracts[i].contract_notice[a].end_time.toString().slice(0,4);
+                        // let m = this.contracts[i].contract_notice[a].end_time.toString().slice(5,7);
+                        // let d = this.contracts[i].contract_notice[a].end_time.toString().slice(8,10);
+                        // let date = Date.parse(y + '/' + m + '/' + d) ;
+                        // this.contracts[i].end_time = new Date(Math.max.apply(Math,date));
+                    }
+                }else{
+                    for (let a = 0; a < this.contracts[i].contract_notice.length; ++a) {
+                        this.contracts[i].start_time = this.contracts[i].contract_notice[a].start_time;
+                        this.contracts[i].end_time = this.contracts[i].contract_notice[a].end_time;
+                    }
+                }
+            }
             this.open      = this.contracts.filter(contracts => contracts.status === 'open' );
             this.close     = this.contracts.filter(contracts => contracts.status === 'closed' );
 		});

@@ -17,10 +17,10 @@ export class PollComponent implements OnInit {
 	@ViewChild('firstModal') firstModal;
     public max: number;
 	  poll: any;
-    polls: 		Poll[] = [];
-    pollsDraft:  Poll[] = [];
-    pollsActive: Poll[] = [];
-    pollsResult: Poll[] = [];
+    polls: 		any[] = [];
+    pollsDraft:  any[] = [];
+    pollsActive: any[] = [];
+    pollsResult: any[] = [];
     pollStart: Poll;
 	model: any = {};
     id: string;
@@ -36,9 +36,6 @@ export class PollComponent implements OnInit {
                 private userService: UserService
                 ) {  
         this.today = new Date();
-        this.nextDay = new Date();
-
-      this.nextDay.setDate(this.nextDay.getDate() + 5);
       }
 
     ngOnInit(): void {
@@ -93,6 +90,54 @@ export class PollComponent implements OnInit {
                     this.pollsDraft = this.polls.filter(data => data.status == "draft" );
                     this.pollsActive = this.polls.filter(data => data.status == "active" );
                     this.pollsResult= this.polls.filter(data => data.status == "result" );
+
+                    for (var i = 0; i < this.pollsDraft.length; i++) {
+                              if(this.pollsDraft[i].start_time){
+                                  let y = this.pollsDraft[i].start_time.toString().slice(0,4);
+                                  let m = (this.pollsDraft[i].start_time+100).toString().slice(4,6);
+                                  let d = this.pollsDraft[i].start_time.toString().slice(6,8);
+                                  this.pollsDraft[i].start_time = y + '/' + m + '/' + d ;
+                            }    
+                    }
+
+                    for (var i = 0; i < this.pollsDraft.length; i++) {
+                              if(this.pollsDraft[i].end_time){
+                                  let y = this.pollsDraft[i].end_time.toString().slice(0,4);
+                                  let m = (this.pollsDraft[i].end_time+100).toString().slice(4,6);
+                                  let d = this.pollsDraft[i].end_time.toString().slice(6,8);
+                                  this.pollsDraft[i].end_time = y + '/' + m + '/' + d ;
+                              }    
+                    }
+
+                    for (var i = 0; i < this.pollsActive.length; i++) {
+                              if(this.pollsActive[i].end_time){
+                                  let y = this.pollsActive[i].end_time.toString().slice(0,4);
+                                  let m = (this.pollsActive[i].end_time+100).toString().slice(4,6);
+                                  let d = this.pollsActive[i].end_time.toString().slice(6,8);
+                                  this.pollsActive[i].end_time = y + '/' + m + '/' + d ;
+                                  let date2 = new Date(m + '/' + d + '/' + y);
+                                  let timeDiff = Math.abs(date2.getTime() - this.today.getTime());
+                                  this.pollsActive[i].remaining = Math.ceil(timeDiff / (1000 * 3600 * 24)); 
+                              }    
+                    }
+
+                    for (var i = 0; i < this.pollsResult.length; i++) {
+                              if(this.pollsResult[i].start_time){
+                                  let y = this.pollsResult[i].start_time.toString().slice(0,4);
+                                  let m = (this.pollsResult[i].start_time+100).toString().slice(4,6);
+                                  let d = this.pollsResult[i].start_time.toString().slice(6,8);
+                                  this.pollsResult[i].start_time = y + '/' + m + '/' + d ;
+                              }    
+                    }
+
+                    for (var i = 0; i < this.pollsResult.length; i++) {
+                              if(this.pollsResult[i].end_time){
+                                  let y = this.pollsResult[i].end_time.toString().slice(0,4);
+                                  let m = (this.pollsResult[i].end_time+100).toString().slice(4,6);
+                                  let d = this.pollsResult[i].end_time.toString().slice(6,8);
+                                  this.pollsResult[i].end_time = y + '/' + m + '/' + d ;
+                              }    
+                    }
                 }, 1000);
         });
 	}
