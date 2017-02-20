@@ -68,7 +68,7 @@ export class EditLostFoundComponent  {
     createReport(event: any) {
         // this.model.serial_number = 142141;
         this.model.archieve = false;
-        if(this.model.photo && this.model.property && this.model.type){
+        if(this.model.photo.length > 0 && this.model.property && this.model.type){
             let formData:FormData = new FormData();
         
             for (var i = 0; i < this.model.photo.length; i++) {
