@@ -52,13 +52,13 @@
 			<div class="row">
 				<div class="col-md-4">Commence Date</div>
 				<div class="col-md-8">
-					<p>: {{poll.start_time | date:'d/M/y'}}</p>
+					<p>: {{poll.start_time}}</p>
 				</div>
 			</div>
 			<div class="row">
 				<div class="col-md-4">Result Date</div>
 				<div class="col-md-8">
-					<p>: {{poll.end_time | date:'d/M/y'}}</p>
+					<p>: {{poll.end_time}}</p>
 				</div>
 			</div>
 			<div class="row">
@@ -172,7 +172,7 @@
 					<modal-header>
 						<h5>Start Poll ?</h5>
 					</modal-header>
-					<modal-content *ngIf="visitOut">
+					<modal-content *ngIf="pollStart">
 				           <div *ngIf="pollStart">
 				              
 				           		Start this poll ?	
