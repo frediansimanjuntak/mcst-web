@@ -73,7 +73,7 @@ export class ContractNoticeComponent implements OnInit  {
     }
 
     createContractNotice(id:any) {
-        if(this.model.attachment > 0) {
+        if(this.model.attachment.length > 0) {
             this.model.publish = false;
             let formData:FormData = new FormData();
             if(this.model.attachment.length != 0) {
@@ -105,7 +105,7 @@ export class ContractNoticeComponent implements OnInit  {
     }
 
     publishContractNotice(id:any) {
-        if(this.model.attachment > 0) {
+        if(this.model.attachment.length > 0) {
             this.route.params.subscribe(params => {
                 this.id = params['id'];
                 this._id = params['_id'];

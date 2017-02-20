@@ -45,7 +45,7 @@ export class EditContractComponent  implements OnInit {
     }
 
     createContract() {
-        if(this.model.attachment > 0) {
+        if(this.model.attachment.length > 0) {
             let formData:FormData = new FormData();
             for (var i = 0; i < this.model.attachment.length; i++) {
                 formData.append("attachment[]", this.model.attachment[i]);
