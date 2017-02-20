@@ -33,16 +33,16 @@
                         <input type="text" disabled class="form-control" name="reference_no" [(ngModel)]="contract.reference_no" #reference_no="ngModel" placeholder="-"/>
                     </div>
                 </div>
-                <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !attachment.valid }">
+                <div class="form-group" [ngClass]="{ 'has-error': contract.attachment.length == 0 && f.submitted }">
                     <label class="control-label col-sm-4" for="attachment">Attachment :</label>
                     <div class="col-sm-8">
-                        <input required type="file" multiple class="upload" [(ngModel)]="contract.attachment" #attachment="ngModel" name="attachment" (change)="onChange($event)" />
-                        <span *ngIf="f.submitted && !attachment.valid" class="help-block">Attachment is required</span>
+                        <input required type="file" multiple class="upload" name="attachment" (change)="onChange($event)" />
                         <p *ngFor="let item of contract.attachment; let i=index ">
-                            <img src="assets/image/icon_media_image.png" width="14px" height="12px">&nbsp;  
-                            <span style="text-decoration: underline;">{{ item.name }}_{{item.size/1024 | number:'1.0-0' }}kb</span> &nbsp;   
+                            <img src="assets/image/icon_media_image.png" width="14px" height="12px">&nbsp;
+                            <span style="text-decoration: underline;">{{ item.name }}_{{item.size/1024 | number:'1.0-0' }}kb</span> &nbsp;
                             <span style="cursor:pointer" (click)="remove(i)"><img src="assets/image/icon_close_black.png" width="14px" height="12px"></span>
                         </p>
+                        <small class="help-block" *ngIf="f.submitted && contract.attachment.length == 0">Attachment is required</small>
                     </div>
                 </div>
                 <div class="form-group pull-right">
@@ -85,16 +85,16 @@
                         <input type="text" disabled class="form-control" name="reference_no" [(ngModel)]="model.reference_no" #reference_no="ngModel" placeholder="-"/>
                     </div>
                 </div>
-                <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !attachment.valid }">
+                <div class="form-group" [ngClass]="{ 'has-error': model.attachment.length == 0 && f.submitted }">
                     <label class="control-label col-sm-4" for="attachment">Attachment :</label>
                     <div class="col-sm-8">
-                        <input required type="file" multiple class="upload" [(ngModel)]="model.attachment" #attachment="ngModel" name="attachment" (change)="onChange($event)" />
-                        <span *ngIf="f.submitted && !attachment.valid" class="help-block">Attachment is required</span>
+                        <input required type="file" multiple class="upload" name="attachment" (change)="onChange($event)" />
                         <p *ngFor="let item of model.attachment; let i=index ">
-                            <img src="assets/image/icon_media_image.png" width="14px" height="12px">&nbsp;  
-                            <span style="text-decoration: underline;">{{ item.name }}_{{item.size/1024 | number:'1.0-0' }}kb</span> &nbsp;   
+                            <img src="assets/image/icon_media_image.png" width="14px" height="12px">&nbsp;
+                            <span style="text-decoration: underline;">{{ item.name }}_{{item.size/1024 | number:'1.0-0' }}kb</span> &nbsp;
                             <span style="cursor:pointer" (click)="remove(i)"><img src="assets/image/icon_close_black.png" width="14px" height="12px"></span>
                         </p>
+                        <small class="help-block" *ngIf="f.submitted && model.attachment.length == 0">Attachment is required</small>
                     </div>
                 </div>
                 <div class="form-group pull-right">

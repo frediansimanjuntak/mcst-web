@@ -64,7 +64,11 @@
 				    <tab heading="All">
 				    	<p-dataTable [value]="incidents" [rows]="10" [paginator]="true" #dt>
 						    <p-column filterMatchMode="contains" field="reference_no" header="Report No." sortable="true" [filter]="true" filterPlaceholder="Search Report No."></p-column>
-						    <p-column filterMatchMode="contains" [style]="{'text-transform': 'capitalize'}" field="incident_type" header="Type" sortable="true" [filter]="true" filterPlaceholder="Search Type"></p-column>
+						    <p-column field="incident_type" header="Type" [filter]="true" [style]="{'overflow':'visible' , 'text-transform': 'capitalize'}" filterMatchMode="equals">
+						        <template pTemplate="filter" let-col>
+						            <p-dropdown [options]="type" [style]="{'width':'100%'}" (onChange)="dt.filter($event.value,col.field,col.filterMatchMode)" styleClass="ui-column-filter"></p-dropdown>
+						        </template>
+						    </p-column>
 						    <p-column filterMatchMode="contains" field="created_by.username" header="Reported by" sortable="true" [filter]="true" filterPlaceholder="Search Reported by"></p-column>
 						    <p-column filterMatchMode="contains" field="created_at" header="Report time" sortable="true" [filter]="true" filterPlaceholder="Search Report time"></p-column>
 						    <p-column filterMatchMode="contains" field="title" header="Title" sortable="true" [filter]="true" filterPlaceholder="Search Title"></p-column>
@@ -75,7 +79,7 @@
 						    		<a *ngIf="data.attachment == null">-</a>
 						    	</template>
 						    </p-column>
-						    <p-column [filter]="true" [style]="{'overflow':'visible'}" filterMatchMode="equals" field="status" header="Status" sortable="true">
+						    <p-column field="status" header="Status" [filter]="true" [style]="{'overflow':'visible' , 'text-transform': 'capitalize'}" filterMatchMode="equals">
 						        <template pTemplate="filter" let-col>
 						            <p-dropdown [options]="status" [style]="{'width':'100%'}" (onChange)="dt.filter($event.value,col.field,col.filterMatchMode)" styleClass="ui-column-filter"></p-dropdown>
 						        </template>
