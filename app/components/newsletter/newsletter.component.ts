@@ -64,7 +64,7 @@ export class NewsletterComponent implements OnInit {
                 console.log(response);
                 alert(`The Newsletter could not be deleted, server Error.`);
               } else {
-                this.alertService.success('Create newsletter successful', true);
+                this.alertService.success('Delete newsletter successful', true);
                 alert(`Delete Newsletter successful`);
                 this.ngOnInit()
               }
