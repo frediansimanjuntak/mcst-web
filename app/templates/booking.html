@@ -53,10 +53,10 @@
 			        		<div class="col-md-3">Facility :</div>
 			       			<div class="col-md-9">
 			       				<p>
-			       					<select name="name" class="form-control" formControlName="name" style="width: 116.5px">
+			       					<select name="name" class="form-control" formControlName="name" style="width: 116px">
 				                    	<option [style]="{'text-transform': 'capitalize'}" [selected]="facility.name == 'BBQ'" *ngFor="let facility of facilities" (change)="onChange(facility)" [ngValue]="facility.name">{{facility.name}}</option>
 				                    </select>
-					                <select name="type" class="form-control" formControlName="type" style="width: 116.5px">
+					                <select name="type" class="form-control" formControlName="type" style="width: 116px">
 					                	<option value="all">All</option>
 					                   	<option value="a">A</option>
 					                   	<option value="b">B</option>
