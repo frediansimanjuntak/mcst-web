@@ -45,28 +45,5 @@
                 </p-dataTable>
             </div>
         </div>
-      </div>
-      <div (click)="$event.preventDefault()">
-        <p-dataTable [value]="facilities" [rows]="10" [paginator]="true">
-          <p-column filterMatchMode="contains" field="name" header="Name" sortable="true" [filter]="true" filterPlaceholder="Search Name"></p-column>
-          <p-column filterMatchMode="contains" field="description" header="Description" sortable="true" [filter]="true" filterPlaceholder="Search Description"></p-column>
-          <p-column filterMatchMode="contains" field="payment_type" header="Payment Type" sortable="true" [filter]="true" filterPlaceholder="Search Payment Type"></p-column>
-          <p-column filterMatchMode="contains" field="booking_type" header="Booking Type" sortable="true" [filter]="true" filterPlaceholder="Search Booking Type"></p-column>
-          <p-column filterMatchMode="contains" field="booking_fee" header="Booking Fee" sortable="true" [filter]="true" filterPlaceholder="Search Booking Fee"></p-column>
-          <p-column filterMatchMode="contains" field="status" header="Status" sortable="true" [filter]="true" filterPlaceholder="Search Status">
-            <template let-col let-data="rowData" pTemplate="body">
-              <span [style.color]="data[col.field]">{{data[col.field]}}</span>
-            </template>
-          </p-column>
-          <p-column styleClass="col-button" header="action">
-            <template let-data="rowData" pTemplate="body">
-              <button type="button" (click)="view(data)">View</button>
-              <button type="button" (click)="edit(data)">Edit</button>
-              <button type="button" (click)="deleteFacility(data)"><i class="fa fa-trash" aria-hidden="true"></i></button>
-            </template>
-          </p-column>
-        </p-dataTable>
-      </div>
     </div>
-  </div>
 </div>
