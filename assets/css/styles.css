@@ -803,6 +803,15 @@ p.pull-down {
   border-top: 0;
 }
 
+/*costumize table*/
+input.ui-column-filter.ui-inputtext.ui-corner-all.ui-state-default.ui-widget {
+    display: none;
+}
+.ui-datatable-tablewrapper th.ui-state-default.ui-unselectable-text {
+    padding: 10px;
+    text-align: left;
+}
+
 /*costumize Tabs/Pills*/
 
 .tab-container ul.nav.nav-tabs {
