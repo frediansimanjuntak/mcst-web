@@ -305,6 +305,7 @@ export class VisitComponent implements OnInit {
     }
 
     onUnitClick(id:string){
+          this.unit = {};
           this.unitService
                .getById(id, this.name.default_development.name_url)
                 .subscribe(unit => {
