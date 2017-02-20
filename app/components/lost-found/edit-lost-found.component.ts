@@ -49,6 +49,7 @@ export class EditLostFoundComponent  {
                             .subscribe(name => {
                                 this.name = name;
                                 this.loadAllUnits();
+                                this.getLastSerialNo();
                             })
         this.model.photo = [];                            
         
