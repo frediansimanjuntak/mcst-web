@@ -1,187 +1,187 @@
 <div class="container">
-  	<div class="main">
-    	<div *ngIf="incident">
-      		<div class="title">
-        		{{incident.reference_no}} {{incident.title}}
-      		</div>
-      		<p class="id-location">Home > Incident Reports > {{incident.reference_no}} {{incident.title}}</p>
-      		<div class="row">
-        		<div class="col-lg-6">
-          			<p-galleria [images]="images" panelWidth="500" panelHeight="313"></p-galleria>
-        		</div>
-        		<div class="col-lg-6">
-	          		<div class="row">
-	            		<div class="col-md-4">Reported by :</div>
-	            		<div class="col-md-8"><p>{{ incident.created_by.username }}</p></div>
-	          		</div>
-	          		<div class="row">
-	            		<div class="col-md-4">Type of Report :</div>
-	            		<div class="col-md-8"><p>{{ incident.incident_type }}</p></div>
-	          		</div>
-	          		<div class="row">
-	            		<div class="col-md-4">Report time :</div>
-	            		<div class="col-md-8"><p>{{ incident.created_at | date:'d/M/y' }}</p></div>
-	          		</div>
-	          		<div class="row">
-	            		<div class="col-md-4">Status :</div>
-	            		<div class="col-md-8"><p style="text-transform: capitalize;">{{ incident.status }}</p></div>
-	          		</div>
-	          		<div class="row">
-	            		<div class="col-md-4">Order :</div>
-	            		<div class="col-md-8">
-	              			<p><span *ngIf="!incident.contract"><img src="assets/image/menu_manageproject.png" width="14px" height="12px"> <a (click)="add_project(incident.reference_no,incident._id)" style="text-decoration: underline;cursor:pointer">Create Project</a></span>
-	                		<span *ngIf="incident.contract"><b><a (click)="viewContract(incident.contract._id)" style="text-decoration: underline;cursor:pointer">#{{incident.contract._id}}</a></b></span></p>
-	            		</div>
-	          		</div>
-	          		<div class="row">
-	            		<div class="col-md-4">Message :</div>
-	            		<div class="col-md-8"><p>{{ incident.remark }}</p></div>
-	          		</div>
-	          		<div class="row">
-	            		<div class="col-md-4"><p>Action :</p></div>
-	          		</div>
-	          		<div class="row">
-	            		<div class="col-md-12">
-	              			<a class="btn btn-primary btn-gray" (click)="archive(incident._id)" style="cursor:pointer"><img src="assets/image/icon_archived.png" width="14px" height="12px"> Archive Report</a>
-	            		</div>
-	          		</div>
-        		</div>
-      		</div>
-    	</div>
-    	<div *ngIf="!incident">
-      		<div class="title">
-        		Incident Reports
-      		</div>
-      		<p class="id-location">Home > Incident Reports</p>
-      		<div class="row">
-        		<div class="col-md-4 pull-right">
-          			<a class="btn btn-default pull-right btn-gray" (click)="add()"><i class="fa fa-plus" aria-hidden="true"></i>&nbsp;Create Report</a>
-        		</div>
-			</div>
-			<div (click)="$event.preventDefault()">
-			  	<tabset>
-			  	<!-- ALL -->
-				    <tab heading="All">
-				    	<p-dataTable [value]="incidents" [rows]="10" [paginator]="true" #dt>
-						    <p-column filterMatchMode="contains" field="reference_no" header="Report No." sortable="true" [filter]="true" filterPlaceholder="Search Report No."></p-column>
-						    <p-column filterMatchMode="contains" [style]="{'text-transform': 'capitalize'}" field="incident_type" header="Type" sortable="true" [filter]="true" filterPlaceholder="Search Type"></p-column>
-						    <p-column filterMatchMode="contains" field="created_by.username" header="Reported by" sortable="true" [filter]="true" filterPlaceholder="Search Reported by"></p-column>
-						    <p-column filterMatchMode="contains" field="created_at" header="Report time" sortable="true" [filter]="true" filterPlaceholder="Search Report time"></p-column>
-						    <p-column filterMatchMode="contains" field="title" header="Title" sortable="true" [filter]="true" filterPlaceholder="Search Title"></p-column>
-						    <p-column filterMatchMode="contains" field="remark" header="Message" sortable="true" [filter]="true" filterPlaceholder="Search Message"></p-column>
-						    <p-column [style]="{'width':'75px'}" header="Photo">
-						    	<template let-data="rowData" pTemplate="body">
-						    		<a *ngIf="data.attachment != null" style="text-decoration: underline;cursor:pointer" (click)="view(data)">View</a>
-						    		<a *ngIf="data.attachment == null">-</a>
-						    	</template>
-						    </p-column>
-						    <p-column [filter]="true" [style]="{'overflow':'visible'}" filterMatchMode="equals" field="status" header="Status" sortable="true">
-						        <template pTemplate="filter" let-col>
-						            <p-dropdown [options]="status" [style]="{'width':'100%'}" (onChange)="dt.filter($event.value,col.field,col.filterMatchMode)" styleClass="ui-column-filter"></p-dropdown>
-						        </template>
-						    </p-column>
-						    <p-column [style]="{'width':'150px'}" styleClass="col-button" header="Action">
-						    	<template let-data="rowData" pTemplate="body">
-						    		<a type="button" style="text-decoration: underline;cursor:pointer" (click)="view(data)">View</a>
-						    		<img *ngIf="data.starred_by.length < 1" title="starred" src="../../assets/image/star_filled.png" width="24px" height="28px" (click)="starred(data)" />
-						    		<img *ngIf="data.starred_by.length > 0" title="unstarred" src="../../assets/image/icon_star_active@3x.png" width="24px" height="28px" (click)="unstarred(data)" />
-									<img *ngIf="data.archieve === false" title="archived" src="../../assets/image/icon_archived.png" (click)="archieve(data)" />
-						    	</template>
-						    </p-column>
-						</p-dataTable>
-				    </tab>
-				    <!-- NEW -->
-				    <tab heading="New">
-				    	<p-dataTable [value]="dataNew" [rows]="10" [paginator]="true">
-						    <p-column filterMatchMode="contains" field="reference_no" header="Report No." sortable="true" [filter]="true" filterPlaceholder="Search Report No."></p-column>
-						    <p-column filterMatchMode="contains" [style]="{'text-transform': 'capitalize'}" field="incident_type" header="Type" sortable="true" [filter]="true" filterPlaceholder="Search Type"></p-column>
-						    <p-column filterMatchMode="contains" field="created_by.username" header="Reported by" sortable="true" [filter]="true" filterPlaceholder="Search Reported by"></p-column>
-						    <p-column filterMatchMode="contains" field="created_at" header="Report time" sortable="true" [filter]="true" filterPlaceholder="Search Report time"></p-column>
-						    <p-column filterMatchMode="contains" field="title" header="Title" sortable="true" [filter]="true" filterPlaceholder="Search Title"></p-column>
-						    <p-column filterMatchMode="contains" field="remark" header="Message" sortable="true" [filter]="true" filterPlaceholder="Search Message"></p-column>
-						    <p-column [style]="{'width':'75px'}" header="Photo">
-						    	<template let-data="rowData" pTemplate="body">
-						    		<a *ngIf="data.attachment != null" style="text-decoration: underline;cursor:pointer" (click)="view(data)">View</a>
-						    		<a *ngIf="data.attachment == null">-</a>
-						    	</template>
-						    </p-column>
-						     <p-column [filter]="true" [style]="{'overflow':'visible'}" filterMatchMode="equals" field="status" header="Status" sortable="true">
-						        <template pTemplate="filter" let-col>
-						            <p-dropdown [options]="status" [style]="{'width':'100%'}" (onChange)="dt.filter($event.value,col.field,col.filterMatchMode)" styleClass="ui-column-filter"></p-dropdown>
-						        </template>
-						    </p-column>
-						    <p-column [style]="{'width':'150px'}" styleClass="col-button" header="Action">
-						    	<template let-data="rowData" pTemplate="body">
-						    		<a type="button" style="text-decoration: underline;cursor:pointer" (click)="view(data)">View</a>
-						    		<img *ngIf="data.starred_by == null" title="starred" src="../../assets/image/star_filled.png" width="24px" height="28px" (click)="starred(data)" />
-						    		<img *ngIf="data.starred_by != null" title="unstarred" src="../../assets/image/icon_star_active@3x.png" width="24px" height="28px" (click)="unstarred(data)" />
-									<img *ngIf="data.archieve === false" title="archived" src="../../assets/image/icon_archived.png" (click)="archieve(data)" />
-						    	</template>
-						    </p-column>
-						</p-dataTable>
-				    </tab>
-				    <!-- IN PROGRESS -->
-				    <tab heading="In-Progress">
-				    	<p-dataTable [value]="dataInProgress" [rows]="10" [paginator]="true" #dt>
-						    <p-column filterMatchMode="contains" field="reference_no" header="Report No." sortable="true" [filter]="true" filterPlaceholder="Search Report No."></p-column>
-						    <p-column filterMatchMode="contains" [style]="{'text-transform': 'capitalize'}" field="incident_type" header="Type" sortable="true" [filter]="true" filterPlaceholder="Search Type"></p-column>
-						    <p-column filterMatchMode="contains" field="created_by.username" header="Reported by" sortable="true" [filter]="true" filterPlaceholder="Search Reported by"></p-column>
-						    <p-column filterMatchMode="contains" field="created_at" header="Report time" sortable="true" [filter]="true" filterPlaceholder="Search Report time"></p-column>
-						    <p-column filterMatchMode="contains" field="title" header="Title" sortable="true" [filter]="true" filterPlaceholder="Search Title"></p-column>
-						    <p-column filterMatchMode="contains" field="remark" header="Message" sortable="true" [filter]="true" filterPlaceholder="Search Message"></p-column>
-						    <p-column [style]="{'width':'75px'}" header="Photo">
-						    	<template let-data="rowData" pTemplate="body">
-						    		<a *ngIf="data.attachment != null" style="text-decoration: underline;cursor:pointer" (click)="view(data)">View</a>
-						    		<a *ngIf="data.attachment == null">-</a>
-						    	</template>
-						    </p-column>
-						     <p-column [filter]="true" [style]="{'overflow':'visible'}" filterMatchMode="equals" field="status" header="Status" sortable="true">
-						        <template pTemplate="filter" let-col>
-						            <p-dropdown [options]="status" [style]="{'width':'100%'}" (onChange)="dt.filter($event.value,col.field,col.filterMatchMode)" styleClass="ui-column-filter"></p-dropdown>
-						        </template>
-						    </p-column>
-						    <p-column [style]="{'width':'150px'}" styleClass="col-button" header="Action">
-						    	<template let-data="rowData" pTemplate="body">
-						    		<a type="button" style="text-decoration: underline;cursor:pointer" (click)="view(data)">View</a>
-						    		<img *ngIf="data.starred_by == null" title="starred" src="../../assets/image/star_filled.png" width="24px" height="28px" (click)="starred(data)" />
-						    		<img *ngIf="data.starred_by != null" title="unstarred" src="../../assets/image/icon_star_active@3x.png" width="24px" height="28px" (click)="unstarred(data)" />
-									<img *ngIf="data.archieve === false" title="archived" src="../../assets/image/icon_archived.png" (click)="archieve(data)" />
-						    	</template>
-						    </p-column>
-						</p-dataTable>
-				    </tab>	
-				    <!-- RESOLVED -->
-				    <tab heading="Resolved">
-				    	<p-dataTable [value]="dataResolved" [rows]="10" [paginator]="true" #dt>
-						    <p-column filterMatchMode="contains" field="reference_no" header="Report No." sortable="true" [filter]="true" filterPlaceholder="Search Report No."></p-column>
-						    <p-column filterMatchMode="contains" [style]="{'text-transform': 'capitalize'}" field="incident_type" header="Type" sortable="true" [filter]="true" filterPlaceholder="Search Type"></p-column>
-						    <p-column filterMatchMode="contains" field="created_by.username" header="Reported by" sortable="true" [filter]="true" filterPlaceholder="Search Reported by"></p-column>
-						    <p-column filterMatchMode="contains" field="created_at" header="Report time" sortable="true" [filter]="true" filterPlaceholder="Search Report time"></p-column>
-						    <p-column filterMatchMode="contains" field="title" header="Title" sortable="true" [filter]="true" filterPlaceholder="Search Title"></p-column>
-						    <p-column filterMatchMode="contains" field="remark" header="Message" sortable="true" [filter]="true" filterPlaceholder="Search Message"></p-column>
-						    <p-column [style]="{'width':'75px'}" header="Photo">
-						    	<template let-data="rowData" pTemplate="body">
-						    		<a *ngIf="data.attachment != null" style="text-decoration: underline;cursor:pointer" (click)="view(data)">View</a>
-						    		<a *ngIf="data.attachment == null">-</a>
-						    	</template>
-						    </p-column>
-						     <p-column [filter]="true" [style]="{'overflow':'visible'}" filterMatchMode="equals" field="status" header="Status" sortable="true">
-						        <template pTemplate="filter" let-col>
-						            <p-dropdown [options]="status" [style]="{'width':'100%'}" (onChange)="dt.filter($event.value,col.field,col.filterMatchMode)" styleClass="ui-column-filter"></p-dropdown>
-						        </template>
-						    </p-column>
-						    <p-column [style]="{'width':'150px'}" styleClass="col-button" header="Action">
-						    	<template let-data="rowData" pTemplate="body">
-						    		<a type="button" style="text-decoration: underline;cursor:pointer" (click)="view(data)">View</a>
-						    		<img *ngIf="data.starred_by == null" title="starred" src="../../assets/image/star_filled.png" width="24px" height="28px" (click)="starred(data)" />
-						    		<img *ngIf="data.starred_by != null" title="unstarred" src="../../assets/image/icon_star_active@3x.png" width="24px" height="28px" (click)="unstarred(data)" />
-									<img *ngIf="data.archieve === false" title="archived" src="../../assets/image/icon_archived.png" (click)="archieve(data)" />
-						    	</template>
-						    </p-column>
-						</p-dataTable>
-				    </tab>	
-			    </tabset>
-			</div>	
+    <div class="main">
+        <div *ngIf="incident">
+            <div class="title">
+                {{incident.reference_no}} {{incident.title}}
+            </div>
+            <p class="id-location">Home > Incident Reports > {{incident.reference_no}} {{incident.title}}</p>
+            <div class="row">
+                <div class="col-lg-7">
+                    <p-galleria [images]="images" panelWidth="555" panelHeight="372"></p-galleria>
+                </div>
+                <div class="col-lg-5">
+                    <div class="row">
+                        <div class="col-md-5 col-padding"><strong>Reported by :</strong></div>
+                        <div class="col-md-7 col-padding">{{ incident.created_by.username }}</div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-5 col-padding"><strong>Type of Report :</strong></div>
+                        <div class="col-md-7 col-padding">{{ incident.incident_type }}</div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-5 col-padding"><strong>Report time :</strong></div>
+                        <div class="col-md-7 col-padding">{{ incident.created_at | date:'d/M/y' }}</div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-5 col-padding"><strong>Status :</strong></div>
+                        <div class="col-md-7 col-padding">{{ incident.status }}</div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-5 col-padding"><strong>Order :</strong></div>
+                        <div class="col-md-7 col-padding">
+                            <span *ngIf="!incident.contract"><img src="assets/image/menu_manageproject.png" width="14px" height="12px"> <a (click)="add_project(incident.reference_no,incident._id)" style="text-decoration: underline;cursor:pointer">Create Project</a></span>
+                            <span *ngIf="incident.contract"><b><a (click)="viewContract(incident.contract._id)" style="text-decoration: underline;cursor:pointer">#{{incident.contract._id}}</a></b></span>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-5 col-padding"><strong>Message :</strong></div>
+                        <div class="col-md-7 col-padding">{{ incident.remark }}</div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-5 col-padding"><strong>Action :</strong></div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-5 col-padding">
+                            <a class="btn btn-primary btn-gray" (click)="archive(incident._id)" style="cursor:pointer"><img src="assets/image/icon_archived.png" width="14px" height="12px"> Archive Report</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
-  	</div>
+        <div *ngIf="!incident">
+            <div class="title">
+                Incident Reports
+            </div>
+            <p class="id-location">Home > Incident Reports</p>
+            <div class="row">
+                <div class="col-md-4 pull-right">
+                    <a class="btn btn-default pull-right btn-gray" (click)="add()"><i class="fa fa-plus" aria-hidden="true"></i>&nbsp;Create Report</a>
+                </div>
+            </div>
+            <div (click)="$event.preventDefault()">
+                <tabset>
+                <!-- ALL -->
+                    <tab heading="All">
+                        <p-dataTable [value]="incidents" [rows]="10" [paginator]="true" #dt>
+                            <p-column filterMatchMode="contains" field="reference_no" header="Report No." sortable="true" [filter]="true" filterPlaceholder="Search Report No."></p-column>
+                            <p-column filterMatchMode="contains" [style]="{'text-transform': 'capitalize'}" field="incident_type" header="Type" sortable="true" [filter]="true" filterPlaceholder="Search Type"></p-column>
+                            <p-column filterMatchMode="contains" field="created_by.username" header="Reported by" sortable="true" [filter]="true" filterPlaceholder="Search Reported by"></p-column>
+                            <p-column filterMatchMode="contains" field="created_at" header="Report time" sortable="true" [filter]="true" filterPlaceholder="Search Report time"></p-column>
+                            <p-column filterMatchMode="contains" field="title" header="Title" sortable="true" [filter]="true" filterPlaceholder="Search Title"></p-column>
+                            <p-column filterMatchMode="contains" field="remark" header="Message" sortable="true" [filter]="true" filterPlaceholder="Search Message"></p-column>
+                            <p-column [style]="{'width':'75px'}" header="Photo">
+                                <template let-data="rowData" pTemplate="body">
+                                    <a *ngIf="data.attachment != null" style="text-decoration: underline;cursor:pointer" (click)="view(data)">View</a>
+                                    <a *ngIf="data.attachment == null">-</a>
+                                </template>
+                            </p-column>
+                            <p-column [filter]="true" [style]="{'overflow':'visible'}" filterMatchMode="equals" field="status" header="Status" sortable="true">
+                                <template pTemplate="filter" let-col>
+                                    <p-dropdown [options]="status" [style]="{'width':'100%'}" (onChange)="dt.filter($event.value,col.field,col.filterMatchMode)" styleClass="ui-column-filter"></p-dropdown>
+                                </template>
+                            </p-column>
+                            <p-column [style]="{'width':'150px'}" styleClass="col-button" header="Action">
+                                <template let-data="rowData" pTemplate="body">
+                                    <a type="button" style="text-decoration: underline;cursor:pointer" (click)="view(data)">View</a>
+                                    <img *ngIf="data.starred_by.length < 1" title="starred" src="../../assets/image/star_filled.png" width="24px" height="28px" (click)="starred(data)" />
+                                    <img *ngIf="data.starred_by.length > 0" title="unstarred" src="../../assets/image/icon_star_active@3x.png" width="24px" height="28px" (click)="unstarred(data)" />
+                                    <img *ngIf="data.archieve === false" title="archived" src="../../assets/image/icon_archived.png" (click)="archieve(data)" />
+                                </template>
+                            </p-column>
+                        </p-dataTable>
+                    </tab>
+                    <!-- NEW -->
+                    <tab heading="New">
+                        <p-dataTable [value]="dataNew" [rows]="10" [paginator]="true">
+                            <p-column filterMatchMode="contains" field="reference_no" header="Report No." sortable="true" [filter]="true" filterPlaceholder="Search Report No."></p-column>
+                            <p-column filterMatchMode="contains" [style]="{'text-transform': 'capitalize'}" field="incident_type" header="Type" sortable="true" [filter]="true" filterPlaceholder="Search Type"></p-column>
+                            <p-column filterMatchMode="contains" field="created_by.username" header="Reported by" sortable="true" [filter]="true" filterPlaceholder="Search Reported by"></p-column>
+                            <p-column filterMatchMode="contains" field="created_at" header="Report time" sortable="true" [filter]="true" filterPlaceholder="Search Report time"></p-column>
+                            <p-column filterMatchMode="contains" field="title" header="Title" sortable="true" [filter]="true" filterPlaceholder="Search Title"></p-column>
+                            <p-column filterMatchMode="contains" field="remark" header="Message" sortable="true" [filter]="true" filterPlaceholder="Search Message"></p-column>
+                            <p-column [style]="{'width':'75px'}" header="Photo">
+                                <template let-data="rowData" pTemplate="body">
+                                    <a *ngIf="data.attachment != null" style="text-decoration: underline;cursor:pointer" (click)="view(data)">View</a>
+                                    <a *ngIf="data.attachment == null">-</a>
+                                </template>
+                            </p-column>
+                             <p-column [filter]="true" [style]="{'overflow':'visible'}" filterMatchMode="equals" field="status" header="Status" sortable="true">
+                                <template pTemplate="filter" let-col>
+                                    <p-dropdown [options]="status" [style]="{'width':'100%'}" (onChange)="dt.filter($event.value,col.field,col.filterMatchMode)" styleClass="ui-column-filter"></p-dropdown>
+                                </template>
+                            </p-column>
+                            <p-column [style]="{'width':'150px'}" styleClass="col-button" header="Action">
+                                <template let-data="rowData" pTemplate="body">
+                                    <a type="button" style="text-decoration: underline;cursor:pointer" (click)="view(data)">View</a>
+                                    <img *ngIf="data.starred_by == null" title="starred" src="../../assets/image/star_filled.png" width="24px" height="28px" (click)="starred(data)" />
+                                    <img *ngIf="data.starred_by != null" title="unstarred" src="../../assets/image/icon_star_active@3x.png" width="24px" height="28px" (click)="unstarred(data)" />
+                                    <img *ngIf="data.archieve === false" title="archived" src="../../assets/image/icon_archived.png" (click)="archieve(data)" />
+                                </template>
+                            </p-column>
+                        </p-dataTable>
+                    </tab>
+                    <!-- IN PROGRESS -->
+                    <tab heading="In-Progress">
+                        <p-dataTable [value]="dataInProgress" [rows]="10" [paginator]="true" #dt>
+                            <p-column filterMatchMode="contains" field="reference_no" header="Report No." sortable="true" [filter]="true" filterPlaceholder="Search Report No."></p-column>
+                            <p-column filterMatchMode="contains" [style]="{'text-transform': 'capitalize'}" field="incident_type" header="Type" sortable="true" [filter]="true" filterPlaceholder="Search Type"></p-column>
+                            <p-column filterMatchMode="contains" field="created_by.username" header="Reported by" sortable="true" [filter]="true" filterPlaceholder="Search Reported by"></p-column>
+                            <p-column filterMatchMode="contains" field="created_at" header="Report time" sortable="true" [filter]="true" filterPlaceholder="Search Report time"></p-column>
+                            <p-column filterMatchMode="contains" field="title" header="Title" sortable="true" [filter]="true" filterPlaceholder="Search Title"></p-column>
+                            <p-column filterMatchMode="contains" field="remark" header="Message" sortable="true" [filter]="true" filterPlaceholder="Search Message"></p-column>
+                            <p-column [style]="{'width':'75px'}" header="Photo">
+                                <template let-data="rowData" pTemplate="body">
+                                    <a *ngIf="data.attachment != null" style="text-decoration: underline;cursor:pointer" (click)="view(data)">View</a>
+                                    <a *ngIf="data.attachment == null">-</a>
+                                </template>
+                            </p-column>
+                             <p-column [filter]="true" [style]="{'overflow':'visible'}" filterMatchMode="equals" field="status" header="Status" sortable="true">
+                                <template pTemplate="filter" let-col>
+                                    <p-dropdown [options]="status" [style]="{'width':'100%'}" (onChange)="dt.filter($event.value,col.field,col.filterMatchMode)" styleClass="ui-column-filter"></p-dropdown>
+                                </template>
+                            </p-column>
+                            <p-column [style]="{'width':'150px'}" styleClass="col-button" header="Action">
+                                <template let-data="rowData" pTemplate="body">
+                                    <a type="button" style="text-decoration: underline;cursor:pointer" (click)="view(data)">View</a>
+                                    <img *ngIf="data.starred_by == null" title="starred" src="../../assets/image/star_filled.png" width="24px" height="28px" (click)="starred(data)" />
+                                    <img *ngIf="data.starred_by != null" title="unstarred" src="../../assets/image/icon_star_active@3x.png" width="24px" height="28px" (click)="unstarred(data)" />
+                                    <img *ngIf="data.archieve === false" title="archived" src="../../assets/image/icon_archived.png" (click)="archieve(data)" />
+                                </template>
+                            </p-column>
+                        </p-dataTable>
+                    </tab>  
+                    <!-- RESOLVED -->
+                    <tab heading="Resolved">
+                        <p-dataTable [value]="dataResolved" [rows]="10" [paginator]="true" #dt>
+                            <p-column filterMatchMode="contains" field="reference_no" header="Report No." sortable="true" [filter]="true" filterPlaceholder="Search Report No."></p-column>
+                            <p-column filterMatchMode="contains" [style]="{'text-transform': 'capitalize'}" field="incident_type" header="Type" sortable="true" [filter]="true" filterPlaceholder="Search Type"></p-column>
+                            <p-column filterMatchMode="contains" field="created_by.username" header="Reported by" sortable="true" [filter]="true" filterPlaceholder="Search Reported by"></p-column>
+                            <p-column filterMatchMode="contains" field="created_at" header="Report time" sortable="true" [filter]="true" filterPlaceholder="Search Report time"></p-column>
+                            <p-column filterMatchMode="contains" field="title" header="Title" sortable="true" [filter]="true" filterPlaceholder="Search Title"></p-column>
+                            <p-column filterMatchMode="contains" field="remark" header="Message" sortable="true" [filter]="true" filterPlaceholder="Search Message"></p-column>
+                            <p-column [style]="{'width':'75px'}" header="Photo">
+                                <template let-data="rowData" pTemplate="body">
+                                    <a *ngIf="data.attachment != null" style="text-decoration: underline;cursor:pointer" (click)="view(data)">View</a>
+                                    <a *ngIf="data.attachment == null">-</a>
+                                </template>
+                            </p-column>
+                             <p-column [filter]="true" [style]="{'overflow':'visible'}" filterMatchMode="equals" field="status" header="Status" sortable="true">
+                                <template pTemplate="filter" let-col>
+                                    <p-dropdown [options]="status" [style]="{'width':'100%'}" (onChange)="dt.filter($event.value,col.field,col.filterMatchMode)" styleClass="ui-column-filter"></p-dropdown>
+                                </template>
+                            </p-column>
+                            <p-column [style]="{'width':'150px'}" styleClass="col-button" header="Action">
+                                <template let-data="rowData" pTemplate="body">
+                                    <a type="button" style="text-decoration: underline;cursor:pointer" (click)="view(data)">View</a>
+                                    <img *ngIf="data.starred_by == null" title="starred" src="../../assets/image/star_filled.png" width="24px" height="28px" (click)="starred(data)" />
+                                    <img *ngIf="data.starred_by != null" title="unstarred" src="../../assets/image/icon_star_active@3x.png" width="24px" height="28px" (click)="unstarred(data)" />
+                                    <img *ngIf="data.archieve === false" title="archived" src="../../assets/image/icon_archived.png" (click)="archieve(data)" />
+                                </template>
+                            </p-column>
+                        </p-dataTable>
+                    </tab>  
+                </tabset>
+            </div>  
+        </div>
+    </div>
 </div>
