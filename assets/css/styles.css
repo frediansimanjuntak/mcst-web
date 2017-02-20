@@ -859,7 +859,6 @@ th.ui-state-default.ui-unselectable-text {
   background: #e8e8e8;
   color: #646464;
 }
-<<<<<<< HEAD
 .tab-container input.ui-column-filter.ui-inputtext.ui-corner-all.ui-state-default.ui-widget {
   display: none;
 }
@@ -904,6 +903,7 @@ span.ui-cell-data {
     height: auto;
     visibility: visible;
     border: 0;
+    border-radius: 0;
 }
 ul.ui-galleria-panel-wrapper {
     width: 555px;
@@ -928,7 +928,7 @@ img.ui-panel-images {
 li.ui-galleria-frame.ui-galleria-frame-active {
     width: 105px !important;
     height: 80px !important;
-    margin: 10px 5px !important;
+    margin: 10px 10px 0 0 !important;
 }
 img.ui-galleria-frame-image {
     width: 105px !important;
@@ -950,7 +950,3 @@ img.ui-galleria-frame-image {
 #manage-project span.ui-cell-data {
     color: #4a4a4a;
 }
-=======
-
->>>>>>> 1c5b5314fe0edc449918b501902592d2e88d0367
-
