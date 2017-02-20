@@ -1,53 +1,49 @@
 <div class="container">
     <div class="main">
         <div *ngIf="facility">
-            <div class="title">
-                {{facility.name}}
-            </div>
+            <div class="title">{{facility.name}}</div>
             <p>Home > Facility > {{facility.name}}</p>
-	        <div class="row">
-	        	<div class="col-lg-12">
-	        		<div *ngFor="let schedule of facility.schedule" class="row">
-	        			<div class="col-md-4">time</div>
-	        			<div class="col-md-8"> <p>: {{ schedule.day }} {{ schedule.start_time }}-{{ schedule.end_time }}</p></div>
-	        		</div>
-	        	</div>
-	        </div>
-        </div> 
-
+            <div class="row">
+                <div class="col-lg-12">
+                    <div *ngFor="let schedule of facility.schedule" class="row">
+                        <div class="col-md-4">time</div>
+                        <div class="col-md-8">
+                            <p>: {{ schedule.day }} {{ schedule.start_time }}-{{ schedule.end_time }}</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
         <div *ngIf="!facility">
-            <div class="title">
-				Facilities
-			</div>
-			Home > Facilities
-			<div class="row">
-				<div class="col-md-4 pull-right">
-					<a class="btn btn-default pull-right" (click)="add()">
-					<i class="fa fa-plus" aria-hidden="true"></i>&nbsp;Create Facility</a>	  		
-				</div>
-			</div>
-			<div (click)="$event.preventDefault()">
-			    <p-dataTable [value]="facilities" [rows]="10" [paginator]="true">
-				    <p-column filterMatchMode="contains" field="name" header="Name" sortable="true" [filter]="true" filterPlaceholder="Search Name"></p-column>
-				    <p-column filterMatchMode="contains" field="description" header="Description" sortable="true" [filter]="true" filterPlaceholder="Search Description"></p-column>
-				    <p-column filterMatchMode="contains" field="facility_type" header="Facility Type" sortable="true" [filter]="true" filterPlaceholder="Search Facility Type"></p-column>
-				    <p-column filterMatchMode="contains" field="payment_type" header="Payment Type" sortable="true" [filter]="true" filterPlaceholder="Search Payment Type"></p-column>
-					<p-column filterMatchMode="contains" field="booking_type" header="Booking Type" sortable="true" [filter]="true" filterPlaceholder="Search Booking Type"></p-column>
-					<p-column filterMatchMode="contains" field="booking_fee" header="Booking Fee" sortable="true" [filter]="true" filterPlaceholder="Search Booking Fee"></p-column>
-				    <p-column filterMatchMode="contains" field="status" header="Status" sortable="true" [filter]="true" filterPlaceholder="Search Status">
-				        <template let-col let-data="rowData" pTemplate="body">
-				            <span [style.color]="data[col.field]">{{data[col.field]}}</span>
-				        </template>
-				    </p-column>
-				    <p-column styleClass="col-button" header="action">
-				    	<template let-data="rowData" pTemplate="body">
-				    		<button type="button" (click)="view(data)">View</button>
-				    		<button type="button" (click)="edit(data)">Edit</button>
-							<button type="button" (click)="deleteFacility(data)"><i class="fa fa-trash" aria-hidden="true"></i></button>
-				    	</template>
-				    </p-column>
-				</p-dataTable>
-			</div>	
+            <div class="title">Facilities</div>
+            <p class="id-location">Home > Facilities</p>
+            <div class="row">
+                <div class="col-md-4 pull-right">
+                    <a class="btn btn-default btn-gray pull-right" (click)="add()">
+                    <img class="img-btn" src="../../assets/image/icon_add.png" />&nbsp;Create Facility</a>
+                </div>
+            </div>
+            <div (click)="$event.preventDefault()">
+                <p-dataTable [value]="facilities" [rows]="10" [paginator]="true">
+                    <p-column filterMatchMode="contains" field="name" header="Name" sortable="true" [filter]="true" filterPlaceholder="Search Name"></p-column>
+                    <p-column filterMatchMode="contains" field="description" header="Description" sortable="true" [filter]="true" filterPlaceholder="Search Description"></p-column>
+                    <p-column filterMatchMode="contains" field="payment_type" header="Payment Type" sortable="true" [filter]="true" filterPlaceholder="Search Payment Type"></p-column>
+                    <p-column filterMatchMode="contains" field="booking_type" header="Booking Type" sortable="true" [filter]="true" filterPlaceholder="Search Booking Type"></p-column>
+                    <p-column filterMatchMode="contains" field="booking_fee" header="Booking Fee" sortable="true" [filter]="true" filterPlaceholder="Search Booking Fee"></p-column>
+                    <p-column filterMatchMode="contains" field="status" header="Status" sortable="true" [filter]="true" filterPlaceholder="Search Status">
+                        <template let-col let-data="rowData" pTemplate="body">
+                            <span [style.color]="data[col.field]">{{data[col.field]}}</span>
+                        </template>
+                    </p-column>
+                    <p-column styleClass="col-button" header="action">
+                        <template let-data="rowData" pTemplate="body">
+                            <button type="button" (click)="view(data)">View</button>
+                            <button type="button" (click)="edit(data)">Edit</button>
+                            <button type="button" (click)="deleteFacility(data)"><i class="fa fa-trash" aria-hidden="true"></i></button>
+                        </template>
+                    </p-column>
+                </p-dataTable>
+            </div>
         </div>
     </div>
 </div>

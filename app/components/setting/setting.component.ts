@@ -29,6 +29,6 @@ export class SettingComponent implements OnInit {
     }
 
     edit(user: User){
-        this.router.navigate([this.name.default_development.name + '/setting/edit', user._id]);
+        this.router.navigate([this.name.default_development.name_url + '/setting/edit', user._id]);
     }
 }

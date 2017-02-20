@@ -40,7 +40,7 @@ export class EditUserComponent implements OnInit {
         this.userService.getByToken()
         .subscribe(name => {
             this.name = name;
-            this.unitService.getAll(name.default_development.name).subscribe(units => {this.units = units.properties;})
+            this.unitService.getAll(name.default_development.name_url).subscribe(units => {this.units = units.properties;})
         })
         this.route.params.subscribe(params => {
             this.id = params['id'];
@@ -216,7 +216,7 @@ export class EditUserComponent implements OnInit {
         .then(
             data => {
                 this.alertService.success('Create user successful', true);
-                this.router.navigate([this.name.default_development.name + '/user']);
+                this.router.navigate([this.name.default_development.name_url + '/user']);
             },
             error => {
                 this.alertService.error(error);
@@ -229,7 +229,7 @@ export class EditUserComponent implements OnInit {
 		.then(
             response => {
                 this.alertService.success('Update User successful', true);
-                this.router.navigate([this.name.default_development.name + '/user']);
+                this.router.navigate([this.name.default_development.name_url + '/user']);
 	        },
             error=> {
             	this.alertService.error(error);
@@ -246,7 +246,7 @@ export class EditUserComponent implements OnInit {
     }
 
     cancel(){
-        this.router.navigate([this.name.default_development.name + '/user' ]);
+        this.router.navigate([this.name.default_development.name_url + '/user' ]);
     }
 
     text(event: any) {

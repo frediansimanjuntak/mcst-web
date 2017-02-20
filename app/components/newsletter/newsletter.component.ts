@@ -57,14 +57,14 @@ export class NewsletterComponent implements OnInit {
     }
 
     deleteNewsletter(newsletter: any) {
-        this.newsletterservice.delete(newsletter._id, this.name.default_development.name)
+        this.newsletterservice.delete(newsletter._id, this.name.default_development.name_url)
           .then(
             response => {
               if(response) {
                 console.log(response);
                 alert(`The Newsletter could not be deleted, server Error.`);
               } else {
-                this.alertService.success('Create newsletter successful', true);
+                this.alertService.success('Delete newsletter successful', true);
                 alert(`Delete Newsletter successful`);
                 this.ngOnInit()
               }
@@ -78,7 +78,7 @@ export class NewsletterComponent implements OnInit {
 
     releaseNewsletter(){
       
-      this.newsletterservice.release(this.newsletter._id, this.name.default_development.name)
+      this.newsletterservice.release(this.newsletter._id, this.name.default_development.name_url)
           .then(
             response => {
               if(response) {
@@ -100,10 +100,11 @@ export class NewsletterComponent implements OnInit {
     }
 
     private loadAllNewsletters() {
-        this.newsletterservice.getAll(this.name.default_development.name)
+        this.newsletterservice.getAll(this.name.default_development.name_url)
             .subscribe((data)=> {
                 setTimeout(()=> {
                   this.data = data.newsletter;
+                  console.log(this.data);
                   this.dataAgm       = this.data.filter(data => data.type === 'agm' );
                   this.dataEgm       = this.data.filter(data => data.type === 'egm' );
                   this.dataCircular  = this.data.filter(data => data.type === 'circular' );
@@ -130,7 +131,7 @@ export class NewsletterComponent implements OnInit {
     }
 
     add(){
-      this.router.navigate([this.name.default_development.name + '/newsletter/add']);  
+      this.router.navigate([this.name.default_development.name_url + '/newsletter/add']);  
     }
 
 }

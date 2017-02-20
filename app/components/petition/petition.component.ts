@@ -89,7 +89,7 @@ export class PetitionComponent implements OnInit {
     }
 
     private loadAllUnits(): void {
-        this.unitService.getAll(this.name.default_development.name)
+        this.unitService.getAll(this.name.default_development.name_url)
             .subscribe((data)=> {
                 setTimeout(()=> {
                     this.dataUnit       = data.properties;
@@ -118,11 +118,11 @@ export class PetitionComponent implements OnInit {
     }
 
     viewPetition(petition: Petition){
-        this.router.navigate([this.name.default_development.name + '/petition/view', petition._id]);
+        this.router.navigate([this.name.default_development.name_url + '/petition/view', petition._id]);
     }
 
     editPetition(petition: Petition){
-        this.router.navigate([this.name.default_development.name + '/petition/edit', petition._id]);
+        this.router.navigate([this.name.default_development.name_url + '/petition/edit', petition._id]);
     }
 
     checkSelected(){
@@ -140,7 +140,7 @@ export class PetitionComponent implements OnInit {
     }
 
     add(){
-      this.router.navigate([this.name.default_development.name + '/petition/add']);  
+      this.router.navigate([this.name.default_development.name_url + '/petition/add']);  
     }
 
     clearSelected(){

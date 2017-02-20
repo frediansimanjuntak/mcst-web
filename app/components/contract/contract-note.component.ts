@@ -33,6 +33,7 @@ export class ContractNoteComponent implements OnInit  {
         private route: ActivatedRoute) {}
 
     ngOnInit(): void {
+        this.model.attachment = [];
         this.userService.getByToken().subscribe(name => {this.name = name;})
         this.route.params.subscribe(params => {
             this.id = params['id'];
@@ -44,19 +45,26 @@ export class ContractNoteComponent implements OnInit  {
             .subscribe(contract => {
                 this.contract = contract;
                 this.model.status = this.contract.status;
+                console.log(this.contract)
             });
         }
         if( this.id != null && this._id != null) {
-            this.contractService.getById(this.id).subscribe(contract => {this.contract = contract;});
-            this.contractnoteService.getById(this.id,this._id)
-            .subscribe(contractnotice => {
-                this.contractnote = contractnotice.contract_notice[0];
-                this.images = [];
-                for (var i = 0; i < this.contractnote.attachment.length; ++i) {
-                    this.images.push({source:this.contractnote.attachment[i].url});
-                };
+            this.contractService.getById(this.id)
+            .subscribe(contract => {
+                this.contract = contract;
+                this.contractnoteService.getById(this.id,this._id)
+                .subscribe(contractnotice => {
+                    this.contractnote = contractnotice.contract_note;
+                    this.images = [];
+                    // for (var i = 0; i < this.contractnote.attachment.length; ++i) {
+                    //     this.images.push({source:this.contractnote.attachment[i].url});
+                    // };
+                    console.log(this.contract , this.contractnote )
+                });
             });
+            
         }
+
     }
 
 	private loadContractNote() {
@@ -76,27 +84,29 @@ export class ContractNoteComponent implements OnInit  {
     }
 
     createContractNote(id:any) {
-        let formData:FormData = new FormData();
-        for (var i = 0; i < this.model.attachment.length; i++) {
-            formData.append("attachment", this.model.attachment[i]);
-        }
-        formData.append("status", this.model.status);
-        formData.append("note_remark", this.model.note_remark);
-        formData.append("reference_id", this.contract.reference_id);
-        this.route.params.subscribe(params => {
-            this.id = params['id'];
-            this._id = params['_id'];
-        });
-        this.contractnoteService.create(formData, this.id)
-        .then(
-            response => {
-                this.alertService.success('Create contract notice successful', true);
-                this.router.navigate([this.name.default_development.name + '/contract/view', id ]);
-            },
-            error => {
-                this.alertService.error(error);
+        if(this.model.attachment > 0) {
+            let formData:FormData = new FormData();
+            for (var i = 0; i < this.model.attachment.length; i++) {
+                formData.append("attachment", this.model.attachment[i]);
             }
-        );
+            formData.append("status", this.model.status);
+            formData.append("note_remark", this.model.note_remark);
+            formData.append("reference_id", this.contract.reference_id);
+            this.route.params.subscribe(params => {
+                this.id = params['id'];
+                this._id = params['_id'];
+            });
+            this.contractnoteService.create(formData, this.id)
+            .then(
+                response => {
+                    this.alertService.success('Create contract notice successful', true);
+                    this.router.navigate([this.name.default_development.name_url + '/contract/view', id ]);
+                },
+                error => {
+                    this.alertService.error(error);
+                }
+            );
+        }
     }
 
     deleteContractNote(contract: Contract) {
@@ -135,6 +145,6 @@ export class ContractNoteComponent implements OnInit  {
     }
 
     cancel(id:any){
-        this.router.navigate([this.name.default_development.name + '/contract/view', id ]);
+        this.router.navigate([this.name.default_development.name_url + '/contract/view', id ]);
     }
 }

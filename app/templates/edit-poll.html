@@ -59,9 +59,9 @@
 
             
                 <div class="form-group pull-right">
-                    <button [disabled]="loading" class="btn btn-primary">Save</button>
+                    <button [disabled]="loading" class="btn btn-brown btn-primary">Save</button>
                     <img *ngIf="loading" src="data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA==" />
-                    <button (click)="toPoll()" class="btn btn-info">Cancel</button>
+                    <button (click)="toPoll()" class="btn btn-white">Cancel</button>
                 </div>
             </form>     
         </div>
@@ -87,12 +87,12 @@
                         <span *ngIf="f.submitted && !description.valid" class="help-block">Description is required</span>
                     </div>
                 </div>
-                <div class="form-group">
+                <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !poll_type.valid }">
                     <label class="control-label col-sm-4" for="poll_type">Poll Type :</label>
                     <div class="col-sm-8">
-                        <select class="form-control" name="poll_type" [(ngModel)]="model.poll_type">
+                        <select class="form-control" name="poll_type" #poll_type="ngModel" [(ngModel)]="model.poll_type">
                           <option selected value="yes_or_no">Yes or No</option>
-                          <option value="multiple">Multiple Choices</option>
+                          <option value="multiple">Multiple Choices</option>poll_type
                         </select>
                     </div>
                 </div>
@@ -103,7 +103,6 @@
                             <span>Option {{i + 1}}</span>
                                 <span class="glyphicon glyphicon-remove pull-right" *ngIf="model.choices.length > 1" (click)="removeChoice(i)"></span>
                             <input type="text" class="form-control" #{{i}}="ngModel" [(ngModel)]="model.choices[i]" required placeholder="Input choice name here" [ngModelOptions]="{standalone: true}"/>
-                            <span *ngIf="f.submitted && !i.valid" class="help-block">Option is required</span>
                         </div>
                          <div class="margin-20">
                             <a (click)="addChoice()" style="cursor: default">
@@ -124,8 +123,8 @@
                 <div class="form-group">
                     <label class="control-label col-sm-4" for="start_time">Commence date : </label>
                     <div class="col-sm-8">
-                        <my-date-picker [options]="startTimeOptions"
-                            [selDate]="model.start_time" (dateChanged)="startTimeDateChanged($event)">
+                        <my-date-picker [options]="startTimeOptions" 
+                            [selDate]="model.start_time" (dateChanged)="startTimeChanged($event)">
                         </my-date-picker>
                     </div>
                 </div>
@@ -133,15 +132,15 @@
                 <div class="form-group">
                     <label class="control-label col-sm-4" for="valid_till">Result Date :</label>
                     <div class="col-sm-8">
-                        <my-date-picker [options]="endTimeOptions" [selDate]="model.end_time" 
-                            (dateChanged)="endTimeDateChanged($event)">
+                        <my-date-picker [options]="endTimeOptions"
+                            [selDate]="selectedEndTime" (dateChanged)="endTimeChanged($event)">
                         </my-date-picker>
                     </div>
                 </div>
                 <div class="form-group pull-right">
-                    <button [disabled]="loading" class="btn btn-primary">Create</button>
+                    <button [disabled]="loading" class="btn btn-primary btn-brown">Create</button>
                     <img *ngIf="loading" src="data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA==" />
-                    <button (click)="toPoll()" class="btn btn-info">Cancel</button>
+                    <button (click)="toPoll()" class="btn btn-white">Cancel</button>
                 </div>
             </form>     
         </div>

@@ -105,7 +105,7 @@ export class LostFoundComponent implements OnInit {
             .subscribe((data)=> {
                 setTimeout(()=> {
                     this.lostFounds      = data.filter(data => data.development._id == this.name.default_development._id);
-                    
+                    console.log(this.lostFounds);
                     this.archieveds      = this.lostFounds.filter(data => data.archieve === true );
                     for (var i = 0; i < this.archieveds.length; i++) {
                         let unit = this.dataUnit.find(data => data._id ==  this.archieveds[i].property);
@@ -148,11 +148,11 @@ export class LostFoundComponent implements OnInit {
   	}
 
     add(){
-      this.router.navigate([this.name.default_development.name + '/lost_found/add']);  
+      this.router.navigate([this.name.default_development.name_url + '/lost_found/add']);  
     }
 
     private loadAllUnits(): void {
-        this.unitService.getAll(this.name.default_development.name)
+        this.unitService.getAll(this.name.default_development.name_url)
             .subscribe((data)=> {
                 setTimeout(()=> {
                     this.dataUnit      = data.properties;
@@ -174,6 +174,6 @@ export class LostFoundComponent implements OnInit {
     }
 
     viewLostFound(lostfound: LostFound){
-        this.router.navigate([this.name.default_development.name + '/lost_found/view', lostfound._id]);
+        this.router.navigate([this.name.default_development.name_url + '/lost_found/view', lostfound._id]);
     }
 }

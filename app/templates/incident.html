@@ -1,98 +1,74 @@
 <div class="container">
-    <div class="main">
-        <div *ngIf="incident && images">
-            <div class="title">
-                {{incident.reference_no}} {{incident.title}}
-            </div>
-            <p>Home > Incident Reports > {{incident.reference_no}} {{incident.title}}</p>
-	        <div class="row">
-	        	<div class="col-lg-6">
-	        		<p-galleria [images]="images" panelWidth="500" panelHeight="313"></p-galleria>
-	        	</div>
-	        	<div class="col-lg-6">
-	        		<div class="row">
-	        			<div class="col-md-4">Reported by :</div>
-	        			<div class="col-md-8"> <p>{{ incident.created_by.username }}</p></div>
-	        		</div>
-	        		<div class="row">
-	        			<div class="col-md-4">Type of Report :</div>
-	        			<div class="col-md-8"><p>{{ incident.incident_type }}</p></div>
-	        		</div>
-	        		<div class="row">
-	        			<div class="col-md-4">Report time :</div>
-	        			<div class="col-md-8"><p>{{ incident.created_at | date:'d/M/y' }}</p></div>
-	        		</div>
-	        		<div class="row">
-	        			<div class="col-md-4">Status :</div>
-	        			<div class="col-md-8"><p style="text-transform: capitalize;">{{ incident.status }}</p></div>
-	        		</div>
-	        		<div class="row">
-	        			<div class="col-md-4">Order :</div>
-	        			<div class="col-md-8"><p><span *ngIf="!incident.contract"><img src="assets/image/menu_manageproject.png" width="14px" height="12px"> <a (click)="add_project(incident.reference_no,incident._id)" style="text-decoration: underline;cursor:pointer">Create Project</a></span>
-	        			<span *ngIf="incident.contract"><b>#{{incident.contract._id}}</b></span></p></div>
-	        		</div>
-	        		<div class="row">
-	        			<div class="col-md-4">Message :</div>
-	        			<div class="col-md-8"><p>{{ incident.remark }}</p></div>
-	        		</div>
-	        		<div class="row">
-	        			<div class="col-md-4"><p>Action :</p></div>
-	        		</div>
-	        		<div class="row">	
-	        			<div class="col-md-12">
-	        				<span *ngIf="!incident.contract"><a class="btn btn-primary" (click)="add_project(incident.reference_no)" style="cursor:pointer"><img src="assets/image/menu_manageproject.png" width="14px" height="12px"> Create Project</a></span>
-	        				<a class="btn btn-primary" (click)="archive(incident._id)" style="cursor:pointer"><img src="assets/image/icon_archived.png" width="14px" height="12px"> Archive Report</a>
-	        			</div>
-	        		</div>
-	        	</div>
-	        </div>
-        </div>
-
-        <!-- <div *ngIf="images && !incident">
-             <div class="title">
-                {{incident.reference_no}} {{incident.title}}
-            </div>
-            <p>Home > Incident Reports > {{incident.reference_no}} {{incident.title}}</p>
-	        <div class="row">
-	        	<div class="col-lg-6">
-	        		<p-galleria [images]="images" panelWidth="500" panelHeight="313"></p-galleria>
-	        	</div>
-	        	<div class="col-lg-6">
-	        		<div class="row">
-	        			<div class="col-md-4">Reported by :</div>
-	        			<div class="col-md-8"> <p>{{ incident.created_by.username }}</p></div>
-	        		</div>
-	        		<div class="row">
-	        			<div class="col-md-4"><p>Action :</p></div>
-	        		</div>
-	        		<div class="row">	
-	        			<div class="col-md-12">
-	        				<span *ngIf="!incident.contract"><a class="btn btn-primary" (click)="add_project(incident.reference_no)" style="cursor:pointer"><img src="assets/image/menu_manageproject.png" width="14px" height="12px"> Create Project</a></span>
-	        				<a class="btn btn-primary" (click)="archive(incident._id)" style="cursor:pointer"><img src="assets/image/icon_archived.png" width="14px" height="12px"> Archive Report</a>
-	        			</div>
-	        		</div>
-	        	</div>
-	        </div>
-        </div>
- -->
-        <div *ngIf="!incident && !images">
-            <div class="title">
-				Incident Reports
-			</div>
-			Home > Incident Reports
-			<div class="row">
-				<div class="col-md-4 pull-right">
-					<a class="btn btn-default pull-right" (click)="add()">
-					<i class="fa fa-plus" aria-hidden="true"></i>&nbsp;Create Report</a>	  		
-				</div>
+  	<div class="main">
+    	<div *ngIf="incident">
+      		<div class="title">
+        		{{incident.reference_no}} {{incident.title}}
+      		</div>
+      		<p class="id-location">Home > Incident Reports > {{incident.reference_no}} {{incident.title}}</p>
+      		<div class="row">
+        		<div class="col-lg-6">
+          			<p-galleria [images]="images" panelWidth="500" panelHeight="313"></p-galleria>
+        		</div>
+        		<div class="col-lg-6">
+	          		<div class="row">
+	            		<div class="col-md-4">Reported by :</div>
+	            		<div class="col-md-8"><p>{{ incident.created_by.username }}</p></div>
+	          		</div>
+	          		<div class="row">
+	            		<div class="col-md-4">Type of Report :</div>
+	            		<div class="col-md-8"><p>{{ incident.incident_type }}</p></div>
+	          		</div>
+	          		<div class="row">
+	            		<div class="col-md-4">Report time :</div>
+	            		<div class="col-md-8"><p>{{ incident.created_at | date:'d/M/y' }}</p></div>
+	          		</div>
+	          		<div class="row">
+	            		<div class="col-md-4">Status :</div>
+	            		<div class="col-md-8"><p style="text-transform: capitalize;">{{ incident.status }}</p></div>
+	          		</div>
+	          		<div class="row">
+	            		<div class="col-md-4">Order :</div>
+	            		<div class="col-md-8">
+	              			<p><span *ngIf="!incident.contract"><img src="assets/image/menu_manageproject.png" width="14px" height="12px"> <a (click)="add_project(incident.reference_no,incident._id)" style="text-decoration: underline;cursor:pointer">Create Project</a></span>
+	                		<span *ngIf="incident.contract"><b><a (click)="viewContract(incident.contract._id)" style="text-decoration: underline;cursor:pointer">#{{incident.contract._id}}</a></b></span></p>
+	            		</div>
+	          		</div>
+	          		<div class="row">
+	            		<div class="col-md-4">Message :</div>
+	            		<div class="col-md-8"><p>{{ incident.remark }}</p></div>
+	          		</div>
+	          		<div class="row">
+	            		<div class="col-md-4"><p>Action :</p></div>
+	          		</div>
+	          		<div class="row">
+	            		<div class="col-md-12">
+	              			<a class="btn btn-primary btn-gray" (click)="archive(incident._id)" style="cursor:pointer"><img src="assets/image/icon_archived.png" width="14px" height="12px"> Archive Report</a>
+	            		</div>
+	          		</div>
+        		</div>
+      		</div>
+    	</div>
+    	<div *ngIf="!incident">
+      		<div class="title">
+        		Incident Reports
+      		</div>
+      		<p class="id-location">Home > Incident Reports</p>
+      		<div class="row">
+        		<div class="col-md-4 pull-right">
+          			<a class="btn btn-default pull-right btn-gray" (click)="add()"><i class="fa fa-plus" aria-hidden="true"></i>&nbsp;Create Report</a>
+        		</div>
 			</div>
 			<div (click)="$event.preventDefault()">
 			  	<tabset>
-			  <!-- ALL -->
+			  	<!-- ALL -->
 				    <tab heading="All">
-				    	<p-dataTable [value]="incidents" [rows]="10" [paginator]="true">
+				    	<p-dataTable [value]="incidents" [rows]="10" [paginator]="true" #dt>
 						    <p-column filterMatchMode="contains" field="reference_no" header="Report No." sortable="true" [filter]="true" filterPlaceholder="Search Report No."></p-column>
-						    <p-column filterMatchMode="contains" [style]="{'text-transform': 'capitalize'}" field="incident_type" header="Type" sortable="true" [filter]="true" filterPlaceholder="Search Type"></p-column>
+						    <p-column field="incident_type" header="Type" [filter]="true" [style]="{'overflow':'visible' , 'text-transform': 'capitalize'}" filterMatchMode="equals">
+						        <template pTemplate="filter" let-col>
+						            <p-dropdown [options]="type" [style]="{'width':'100%'}" (onChange)="dt.filter($event.value,col.field,col.filterMatchMode)" styleClass="ui-column-filter"></p-dropdown>
+						        </template>
+						    </p-column>
 						    <p-column filterMatchMode="contains" field="created_by.username" header="Reported by" sortable="true" [filter]="true" filterPlaceholder="Search Reported by"></p-column>
 						    <p-column filterMatchMode="contains" field="created_at" header="Report time" sortable="true" [filter]="true" filterPlaceholder="Search Report time"></p-column>
 						    <p-column filterMatchMode="contains" field="title" header="Title" sortable="true" [filter]="true" filterPlaceholder="Search Title"></p-column>
@@ -103,9 +79,9 @@
 						    		<a *ngIf="data.attachment == null">-</a>
 						    	</template>
 						    </p-column>
-						    <p-column [style]="{'text-transform': 'capitalize'}" field="status" header="Status" sortable="true" [filter]="true" filterMatchMode="contains" filterPlaceholder="Search Status">
-						        <template let-col let-data="rowData" pTemplate="body">
-						            <span [style.color]="data[col.field]">{{data[col.field]}}</span>
+						    <p-column field="status" header="Status" [filter]="true" [style]="{'overflow':'visible' , 'text-transform': 'capitalize'}" filterMatchMode="equals">
+						        <template pTemplate="filter" let-col>
+						            <p-dropdown [options]="status" [style]="{'width':'100%'}" (onChange)="dt.filter($event.value,col.field,col.filterMatchMode)" styleClass="ui-column-filter"></p-dropdown>
 						        </template>
 						    </p-column>
 						    <p-column [style]="{'width':'150px'}" styleClass="col-button" header="Action">
@@ -133,9 +109,9 @@
 						    		<a *ngIf="data.attachment == null">-</a>
 						    	</template>
 						    </p-column>
-						    <p-column filterMatchMode="contains" [style]="{'text-transform': 'capitalize'}" field="status" header="Status" sortable="true" [filter]="true" filterMatchMode="containss" filterPlaceholder="Search Status">
-						        <template let-col let-data="rowData" pTemplate="body">
-						            <span [style.color]="data[col.field]">{{data[col.field]}}</span>
+						     <p-column [filter]="true" [style]="{'overflow':'visible'}" filterMatchMode="equals" field="status" header="Status" sortable="true">
+						        <template pTemplate="filter" let-col>
+						            <p-dropdown [options]="status" [style]="{'width':'100%'}" (onChange)="dt.filter($event.value,col.field,col.filterMatchMode)" styleClass="ui-column-filter"></p-dropdown>
 						        </template>
 						    </p-column>
 						    <p-column [style]="{'width':'150px'}" styleClass="col-button" header="Action">
@@ -150,7 +126,7 @@
 				    </tab>
 				    <!-- IN PROGRESS -->
 				    <tab heading="In-Progress">
-				    	<p-dataTable [value]="dataInProgress" [rows]="10" [paginator]="true">
+				    	<p-dataTable [value]="dataInProgress" [rows]="10" [paginator]="true" #dt>
 						    <p-column filterMatchMode="contains" field="reference_no" header="Report No." sortable="true" [filter]="true" filterPlaceholder="Search Report No."></p-column>
 						    <p-column filterMatchMode="contains" [style]="{'text-transform': 'capitalize'}" field="incident_type" header="Type" sortable="true" [filter]="true" filterPlaceholder="Search Type"></p-column>
 						    <p-column filterMatchMode="contains" field="created_by.username" header="Reported by" sortable="true" [filter]="true" filterPlaceholder="Search Reported by"></p-column>
@@ -163,9 +139,9 @@
 						    		<a *ngIf="data.attachment == null">-</a>
 						    	</template>
 						    </p-column>
-						    <p-column filterMatchMode="contains" [style]="{'text-transform': 'capitalize'}" field="status" header="Status" sortable="true" [filter]="true" filterPlaceholder="Search Status">
-						        <template let-col let-data="rowData" pTemplate="body">
-						            <span [style.color]="data[col.field]">{{data[col.field]}}</span>
+						     <p-column [filter]="true" [style]="{'overflow':'visible'}" filterMatchMode="equals" field="status" header="Status" sortable="true">
+						        <template pTemplate="filter" let-col>
+						            <p-dropdown [options]="status" [style]="{'width':'100%'}" (onChange)="dt.filter($event.value,col.field,col.filterMatchMode)" styleClass="ui-column-filter"></p-dropdown>
 						        </template>
 						    </p-column>
 						    <p-column [style]="{'width':'150px'}" styleClass="col-button" header="Action">
@@ -180,7 +156,7 @@
 				    </tab>	
 				    <!-- RESOLVED -->
 				    <tab heading="Resolved">
-				    	<p-dataTable [value]="dataResolved" [rows]="10" [paginator]="true">
+				    	<p-dataTable [value]="dataResolved" [rows]="10" [paginator]="true" #dt>
 						    <p-column filterMatchMode="contains" field="reference_no" header="Report No." sortable="true" [filter]="true" filterPlaceholder="Search Report No."></p-column>
 						    <p-column filterMatchMode="contains" [style]="{'text-transform': 'capitalize'}" field="incident_type" header="Type" sortable="true" [filter]="true" filterPlaceholder="Search Type"></p-column>
 						    <p-column filterMatchMode="contains" field="created_by.username" header="Reported by" sortable="true" [filter]="true" filterPlaceholder="Search Reported by"></p-column>
@@ -193,9 +169,9 @@
 						    		<a *ngIf="data.attachment == null">-</a>
 						    	</template>
 						    </p-column>
-						    <p-column filterMatchMode="contains" [style]="{'text-transform': 'capitalize'}" field="status" header="Status" sortable="true" [filter]="true" filterPlaceholder="Search Status">
-						        <template let-col let-data="rowData" pTemplate="body">
-						            <span [style.color]="data[col.field]">{{data[col.field]}}</span>
+						     <p-column [filter]="true" [style]="{'overflow':'visible'}" filterMatchMode="equals" field="status" header="Status" sortable="true">
+						        <template pTemplate="filter" let-col>
+						            <p-dropdown [options]="status" [style]="{'width':'100%'}" (onChange)="dt.filter($event.value,col.field,col.filterMatchMode)" styleClass="ui-column-filter"></p-dropdown>
 						        </template>
 						    </p-column>
 						    <p-column [style]="{'width':'150px'}" styleClass="col-button" header="Action">
@@ -211,5 +187,5 @@
 			    </tabset>
 			</div>	
         </div>
-    </div>
+  	</div>
 </div>

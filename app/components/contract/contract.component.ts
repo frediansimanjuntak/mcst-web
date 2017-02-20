@@ -17,6 +17,8 @@ export class ContractComponent implements OnInit  {
     contracts: Contract[] = [];
     contractnotes: any[];
     contractnotices: any[];
+    commence_date: any;
+    estimate_date: any;
     model: any = {};
     images: any[];
     id: string;
@@ -134,40 +136,52 @@ export class ContractComponent implements OnInit  {
 	private loadAllContract() {
 		this.contractService.getAll().subscribe(contracts => {
 			this.contracts = contracts ;
+            for (let i = 0; i < this.contracts.length; ++i) {
+                if(this.contracts[i].contract_notice.length > 0) {
+                    for (let a = 0; a < this.contracts[i].contract_notice.length; ++a) {
+                        this.contracts[i].start_time = new Date(Math.max.apply(null,this.contracts[i].contract_notice[a].start_time));
+                        this.contracts[i].end_time = new Date(Math.max.apply(null,this.contracts[i].contract_notice[a].end_time));
+                    }
+                }
+            }
             this.open      = this.contracts.filter(contracts => contracts.status === 'open' );
             this.close     = this.contracts.filter(contracts => contracts.status === 'closed' );
 		});
     }
 
     view(contract: Contract){
-        this.router.navigate([this.name.default_development.name + '/contract/view', contract._id]);
+        this.router.navigate([this.name.default_development.name_url + '/contract/view', contract._id]);
     }
 
     viewNotice(id: any, contractnotice:any){
-        this.router.navigate([this.name.default_development.name + '/contract/notice/' + id + '/view' , contractnotice._id]);
+        this.router.navigate([this.name.default_development.name_url + '/contract/notice/' + id + '/view' , contractnotice._id]);
     }
 
     viewNote(id: any, contractnote:any){
-        this.router.navigate([this.name.default_development.name + '/contract/note/' + id + '/view' , contractnote._id]);
+        this.router.navigate([this.name.default_development.name_url + '/contract/note/' + id + '/view' , contractnote._id]);
+    }
+
+    viewIncident(id: any){
+        this.router.navigate([this.name.default_development.name_url + '/incident/view', id]);
     }
 
     edit(id: any){
-        this.router.navigate([this.name.default_development.name + '/contract/edit', id]);
+        this.router.navigate([this.name.default_development.name_url + '/contract/edit', id]);
     }
 
     add_note(id: any){
-        this.router.navigate([this.name.default_development.name + '/contract/add/note', id]);
+        this.router.navigate([this.name.default_development.name_url + '/contract/add/note', id]);
     }
 
     add_notice(id: any){
-        this.router.navigate([this.name.default_development.name + '/contract/add/notice', id]);
+        this.router.navigate([this.name.default_development.name_url + '/contract/add/notice', id]);
     }
 
     add(){
-        this.router.navigate([this.name.default_development.name + '/contract/add']);
+        this.router.navigate([this.name.default_development.name_url + '/contract/add']);
     }
 
     back(){
-        this.router.navigate([this.name.default_development.name + '/contract']);
+        this.router.navigate([this.name.default_development.name_url + '/contract']);
     }
 }

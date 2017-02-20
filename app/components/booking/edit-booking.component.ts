@@ -76,9 +76,8 @@ export class EditBookingComponent implements OnInit  {
     end : any; 
     min : any;
     status: any;
-    filtered: any;
+    filtered: any = null;
     facility_name : any;
-    facility_type: any;
     booking_status: any[] = [];
     booking_fee: any;
     id: string;
@@ -92,6 +91,9 @@ export class EditBookingComponent implements OnInit  {
     filesToUpload: Array<File>;
     days : any[] = ["sunday","monday","tuesday","wednesday","thursday","friday","saturday"];
     name: any;
+    total: any;
+    available: any;
+    date: any;
 
     constructor(
 		private router: Router,
@@ -132,10 +134,10 @@ export class EditBookingComponent implements OnInit  {
         this.userService.getByToken()
         .subscribe(name => {
             this.name = name;
-            this.unitService.getAll(name.default_development.name).subscribe(units => {this.units = units.properties})
+            this.unitService.getAll(name.default_development.name_url).subscribe(units => {this.units = units.properties})
         })
         this.step = 1;
-        this.day = this.days[this.dt.getDay()];
+        this.date     = new Date(this.dt.getTime());
 		this.facilityService.getAll()
 		.subscribe(facilities => {
 			this.facilities = facilities;
@@ -144,52 +146,11 @@ export class EditBookingComponent implements OnInit  {
                     this.selectedFacility = this.facilities.filter(data => data.schedule[b].day == this.day); 
                 }   
             }
-            if (this.selectedFacility.length > 0) { 
-                this.model.facility = this.selectedFacility[0]._id;
-                this.facilityService.getById(this.model.facility)
-                .subscribe(facility => {
-                    this.facility = facility;
-                    this.facility_name = facility.name;
-                    this.facility_type = facility.facility_type;
-                    this.model.booking_fee = facility.booking_fee;
-                this.selectedDay = this.facility.schedule.filter(data => data.day == this.day); 
-    			this.start = this.selectedDay[0].start_time.slice(0,2);
-        		let start = +this.start
-        		this.end = this.selectedDay[0].end_time.slice(0,2);
-        		let end = +this.end
-        		this.min =	":00"
-        		for (var i = start; i < end; ++i) {
-        		    this.times_start.push(i)
-        		}
-            	while(start < end){       
-               		start += 1;
-               		this.times_end.push(start)
-            	}
-                let booking_date;
-                    booking_date     = new Date(this.dt.getTime());
-                    booking_date     = this.convertDate1(booking_date);
-                    this.bookingService.getAll()
-                    .subscribe(bookings => {
-                            for (let b = 0; b < this.times_start.length; ++b) {
-                                this.bookings = bookings.filter(data => 
-                                    data.booking_date.slice(0,10) == booking_date &&
-                                    data.start_time == this.times_start[b]+this.min &&
-                                    data.end_time == this.times_end[b]+this.min )
-                                    if(this.bookings.length > 0) {
-                                        this.booking_status.push("Not Available")
-                                    }else{
-                                        this.booking_status.push("Available")
-                                    } 
-                            }
-                    })
-                });
-            }
 		});
         this.myForm = this.formbuilder.group({
-            id : [this.model.facility],
-            choice : ['All'],
-            start : [0],
-            end : [23]
+            id : [],
+            start : [],
+            end : []
         })
         for (var a = 0; a < 24; ++a) {
             this.period.push(a)
@@ -217,7 +178,6 @@ export class EditBookingComponent implements OnInit  {
         formData.append("start_time", this.model.start_time);
         formData.append("end_time", this.model.end_time);
         formData.append("name", this.model.name);
-        formData.append("facility_type", this.model.facility_type);
         // for (var i = 0; i < this.model.fees.length; i++) {
         //     formData.append("fees[]", this.model.fees[i]);
         // }
@@ -233,7 +193,7 @@ export class EditBookingComponent implements OnInit  {
         .then(
             data => {
                 this.alertService.success('Create booking successful', true);
-                this.router.navigate([this.name.default_development.name + '/booking']);
+                this.router.navigate([this.name.default_development.name_url + '/booking']);
             },
             error => {
                 console.log(error);
@@ -260,8 +220,36 @@ export class EditBookingComponent implements OnInit  {
         return yyyy + '-' + (mmChars[1]?mm:"0"+mmChars[0]) + '-' + (ddChars[1]?dd:"0"+ddChars[0]);
     }
 
+    time(event:any){
+        this.model.facility = event.target.value.slice(3);
+        this.times_end = [];
+        this.times_start = []
+        this.facilityService.getById(this.model.facility)
+        .subscribe(facility => {
+            this.facility = facility;
+            this.facility_name = facility.name;
+            this.model.deposit_fee = facility.deposit_fee;
+            this.model.booking_fee = facility.booking_fee;
+            this.model.admin_fee = facility.admin_fee;
+            this.selectedDay = this.facility.schedule.filter(data => data.day == this.day); 
+            this.start = this.selectedDay[0].start_time.slice(0,2);
+            let start = +this.start
+            this.end = this.selectedDay[0].end_time.slice(0,2);
+            let end = +this.end
+            this.min =    ":00"
+            for (var i = start; i < end; ++i) {
+                this.times_start.push(i)
+            }
+            while(start < end){       
+                   start += 1;
+                   this.times_end.push(start)
+            }
+        });
+            
+    }
+
 	filter(data: any){
-        console.log(this.model.booking_fee)
+        this.booking_status = [];
         this.day = this.days[this.dt.getDay()];
         if(data.start < 10) {
             var start = "0" + data.start.toString() + ":00"
@@ -273,27 +261,16 @@ export class EditBookingComponent implements OnInit  {
         }else{
             var end   = data.end.toString() + ":00"
         } 
-        this.model.facility = data.id;
-        this.facilityService.getById(data.id)
+        this.facilityService.getById(this.model.facility)
         .subscribe(facility => {
             this.facility = facility;
-            this.facility_name = facility.name;
-            this.facility_type = facility.facility_type;
-            this.model.booking_fee = facility.booking_fee;
-             this.timeStart = [];
-             this.timeEnd = [];
-            if(data.choice == "all" ) {
-                this.filtered = this.facility.schedule.filter(data => 
-                    data.start_time <= start && 
-                    data.end_time >= end 
-
-                );
-            }else{
-                this.filtered = this.facility.schedule.filter(data => 
-                    data.start_time <= start && 
-                    data.end_time >= end 
-                );
-            };
+            this.timeStart = [];
+            this.timeEnd = [];
+            this.filtered = this.facility.schedule.filter(facility => 
+                facility.start_time <= start && 
+                facility.end_time >= end
+            );
+            
             if (this.filtered.length > 0) {   
                 this.min =    ":00"
                 for (var i = data.start; i < data.end; ++i) {
@@ -305,6 +282,28 @@ export class EditBookingComponent implements OnInit  {
                 }
             }
         });
+        let booking_date;
+            booking_date     = new Date(this.dt.getTime());
+            booking_date     = this.convertDate1(booking_date);
+            this.bookingService.getAll()
+            .subscribe(bookings => {
+                for (let b = 0; b < this.timeStart.length; ++b) {
+                    this.bookings = bookings.filter(data => 
+                        data.booking_date.slice(0,10) == booking_date &&
+                        data.facility._id == this.selectedFacility[0]._id &&
+                        data.start_time == this.timeStart[b]+this.min &&
+                        data.end_time == this.timeEnd[b]+this.min )
+                        if(this.bookings.length > 0) {
+                            this.booking_status.push("Not Available")
+                        }else{
+                            this.booking_status.push("Available")
+                        } 
+                }
+                this.total = this.booking_status.length;
+                this.available = this.booking_status.reduce(function(n, val) {
+                    return n + (val == "Available");
+                }, 0);
+            })
     }
 
     public archieveSelected(start:any[],end:any[],min:any,name:any,type:any){
@@ -314,9 +313,9 @@ export class EditBookingComponent implements OnInit  {
         var time_end = Math.max.apply(Math,this.tend);
         let booking_fee = this.model.booking_fee * (time_end - time_start);
         this.model.fees = [{
-            deposit_fee : "80" ,
+            deposit_fee : this.model.deposit_fee ,
             booking_fee : booking_fee ,
-            admin_fee : "0" 
+            admin_fee : this.model.admin_fee 
         }]
         var deposit = +this.model.fees[0].deposit_fee;
         var booking = +this.model.fees[0].booking_fee;
@@ -325,10 +324,9 @@ export class EditBookingComponent implements OnInit  {
         this.model.start_time = time_start+min;
         this.model.end_time = time_end+min;
         this.model.name = name;
-        this.model.facility_type = type;
     }
 
-    public test() {  
+    public selectedDate() {  
         let date;
         date     = new Date(this.dt.getTime());
         date     = this.convertDate(date);
@@ -338,20 +336,18 @@ export class EditBookingComponent implements OnInit  {
         booking_date     = this.convertDate1(booking_date);
         this.model.booking_date = booking_date
         this.day = this.days[this.dt.getDay()];
-        this.times_start = [];
-        this.times_end   = [];
+        this.filtered = null;
         this.ngOnInit();
     }
 
     next(){ 
-        // this.generate()
-        // this.model.serial_no = this.ref_no.toString();
         this.model.sender = "Mr. Nice";
         this.step = 2;
     }
 
     change(){
         this.step = 1
+        this.selectedValues = []
     }
 
     onChange(event: any) {
@@ -363,16 +359,8 @@ export class EditBookingComponent implements OnInit  {
         this.model.payment_proof.splice(i, 1)
     }
 
-    // getRandomInt(min, max) {
-    //     return Math.floor(Math.random() * (max - min + 1)) + min;
-    // }
-
-    // generate(){
-    //     this.ref_no = this.getRandomInt(1, 9999999);
-    // }
-
     cancel(){
-        this.router.navigate([this.name.default_development.name + '/booking' ]);
+        this.router.navigate([this.name.default_development.name_url + '/booking' ]);
     }
 	
 }

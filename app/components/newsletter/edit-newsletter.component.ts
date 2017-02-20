@@ -37,6 +37,7 @@ export class EditNewsletterComponent  {
         this.userService.getByToken().subscribe(name => {this.name = name;})
         this.model.released = false;
         this.model.type = 'agm';
+        this.model.attachment = [];
         this.myForm = this.formbuilder.group({
             newsletter: this.formbuilder.group({
                 title: [''],
@@ -57,38 +58,40 @@ export class EditNewsletterComponent  {
     }
 
     createNewsletter() {
-        let formData:FormData = new FormData();
+        if (this.model.attachment.length > 0){
+            let formData:FormData = new FormData();
         
-        for (var i = 0; i < this.model.attachment.length; i++) {
-            formData.append("attachment[]", this.model.attachment[i]);
-        }
-
-        formData.append("title", this.model.title);
-        formData.append("description", this.model.description);
-        formData.append("type", this.model.type);
-        formData.append("released", this.model.released);
-        
-        if(this.model.released == true){
-            this.model.released_at =  Date.now();
-            formData.append("released", this.model.released);
-            formData.append("release_at", this.model.released_at);
-        } 
-
-        this.newsletterService.create(formData, this.name.default_development.name)
-        .then(
-            data => {
-                this.alertService.success('Create newsletter successful', true);
-                this.router.navigate([this.name.default_development.name + '/newsletter']);
-            },
-            error => {
-                console.log(error);
-                alert(`The Newsletter could not be save, server Error.`);
+            for (var i = 0; i < this.model.attachment.length; i++) {
+                formData.append("attachment[]", this.model.attachment[i]);
             }
-        );
+
+            formData.append("title", this.model.title);
+            formData.append("description", this.model.description);
+            formData.append("type", this.model.type);
+            formData.append("released", this.model.released);
+            
+            if(this.model.released == true){
+                this.model.released_at =  Date.now();
+                formData.append("released", this.model.released);
+                formData.append("release_at", this.model.released_at);
+            } 
+
+            this.newsletterService.create(formData, this.name.default_development.name_url)
+            .then(
+                data => {
+                    this.alertService.success('Create newsletter successful', true);
+                    this.router.navigate([this.name.default_development.name_url + '/newsletter']);
+                },
+                error => {
+                    console.log(error);
+                    alert(`The Newsletter could not be save, server Error.`);
+                }
+            );
+        }
     }
 
     updateNewsletter(){
-		this.newsletterService.update(this.model, this.name.default_development.name)
+		this.newsletterService.update(this.model, this.name.default_development.name_url)
 		.then(
 			response => {
 				if(response.error) {
@@ -96,7 +99,7 @@ export class EditNewsletterComponent  {
 	            } else {
 	                // EmitterService.get(this.userList).emit(response.users);
                      this.alertService.success('Update newsletter successful', true);
-                     this.router.navigate([this.name.default_development.name, '/newsletter']);
+                     this.router.navigate([this.name.default_development.name_url, '/newsletter']);
 	            }
             },
             error=> {
@@ -115,6 +118,6 @@ export class EditNewsletterComponent  {
     }
 
     goToNewsletters(){
-        this.router.navigate([this.name.default_development.name + '/newsletter']);  
+        this.router.navigate([this.name.default_development.name_url + '/newsletter']);  
     }
 }

@@ -29,6 +29,8 @@ export class IncidentComponent implements OnInit {
     isFavorite = false;
     isArchieved = false;
     change = new EventEmitter();
+    status: any[] = [];
+    type: any[] = [];
     public data;
     public dataNew;
     public dataInProgress;
@@ -43,6 +45,14 @@ export class IncidentComponent implements OnInit {
         private editcontractComponent: EditContractComponent,) {}
 
     ngOnInit(): void {
+        this.status.push({label: 'All Status', value: null});
+        this.status.push({label: 'New', value: 'new'});
+        this.status.push({label: 'In Progress', value: 'in progress'});
+        this.status.push({label: 'Resolved', value: 'resolved'});
+        this.type.push({label: 'All Types', value: null});
+        this.type.push({label: 'General', value: 'General'});
+        this.type.push({label: 'Hygiene', value: 'Hygiene'});
+        this.type.push({label: 'Damage', value: 'Damage'});
         this.userService.getByToken().subscribe(name => {this.name = name;})
         this.route.params.subscribe(params => {
             this.id = params['id'];
@@ -101,21 +111,25 @@ export class IncidentComponent implements OnInit {
     }
 
     view(incident: Incident){
-        this.router.navigate([this.name.default_development.name + '/incident/view', incident._id]);
+        this.router.navigate([this.name.default_development.name_url + '/incident/view', incident._id]);
     }
 
     viewPhoto(incident: Incident){
-        this.router.navigate([this.name.default_development.name + '/incident/view/photo', incident._id]);
+        this.router.navigate([this.name.default_development.name_url + '/incident/view/photo', incident._id]);
+    }
+
+    viewContract(id: any){
+        this.router.navigate([this.name.default_development.name_url + '/contract/view', id]);
     }
 
     add(){
-        this.router.navigate([this.name.default_development.name + '/incident/add']);
+        this.router.navigate([this.name.default_development.name_url + '/incident/add']);
     }
 
     add_project(reference_no:any, id:any){
         this.reference_id = id;
         this.reference_type = 'incident';
-        this.router.navigate([this.name.default_development.name + '/add/contract/' + this.reference_type ,id ,reference_no]);    
+        this.router.navigate([this.name.default_development.name_url + '/add/contract/' + this.reference_type ,id ,reference_no]);    
     }
 
     public archieve(incident:Incident){

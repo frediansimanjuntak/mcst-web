@@ -50,10 +50,10 @@ export class UserComponent implements OnInit {
     }
 
     add(){
-        this.router.navigate([this.name.default_development.name + '/user/add' ]);
+        this.router.navigate([this.name.default_development.name_url + '/user/add' ]);
     }
 
     edit(user: User){
-        this.router.navigate([this.name.default_development.name + '/user/edit', user._id ]);
+        this.router.navigate([this.name.default_development.name_url + '/user/edit', user._id ]);
     }
 }

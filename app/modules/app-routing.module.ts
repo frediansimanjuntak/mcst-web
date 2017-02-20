@@ -10,6 +10,7 @@ import {
   EditBookingComponent,
   EditCompanyComponent,
   CompanyComponent,
+  ContactComponent,
   ContractComponent,
   EditContractComponent,
   ContractorComponent,
@@ -55,18 +56,20 @@ import {
   EditPetitionComponent,
   TestComponent,
   LostFoundComponent,
-  EditLostFoundComponent
+  EditLostFoundComponent,
+  TokenComponent,
   
 } from '../components/index';
+
 const routes: Routes = [
-  { path: '', redirectTo: '/login', pathMatch: 'full' },
-  { path: 'login',  component: LoginComponent},
-  { path: 'register', component: RegisterComponent},
+  { path: '', component: TokenComponent },
+  { path: 'login',  component: LoginComponent },
+  { path: 'register', component: RegisterComponent },
   { path: ':name/user',     component: UserComponent, canActivate: [AuthGuard] },
   { path: ':name/user/add',   component: EditUserComponent, canActivate: [AuthGuard] },
   { path: ':name/user/add/:id/:type',   component: EditUserComponent, canActivate: [AuthGuard] },
   { path: ':name/user/edit/:id',   component: EditUserComponent, canActivate: [AuthGuard] },
-  { path: ':name/dashboard',     component: DashboardComponent},
+  { path: ':name/dashboard',     component: DashboardComponent, canActivate: [AuthGuard] },
   { path: ':name/newsletter',   component: NewsletterComponent, canActivate: [AuthGuard] },
   { path: ':name/newsletter/add',   component: EditNewsletterComponent, canActivate: [AuthGuard] },
   { path: ':name/newsletter/edit/:id',   component: EditNewsletterComponent, canActivate: [AuthGuard] },
@@ -79,6 +82,7 @@ const routes: Routes = [
   { path: ':name/payment_system',   component: PaymentReminderComponent, canActivate: [AuthGuard] },
   { path: ':name/payment_system/add',   component: EditPaymentReminderComponent, canActivate: [AuthGuard] },
   { path: ':name/payment_system/edit/:id',   component: EditPaymentReminderComponent, canActivate: [AuthGuard] },
+  { path: ':name/contact',   component: ContactComponent, canActivate: [AuthGuard] },
   { path: ':name/contract',   component: ContractComponent, canActivate: [AuthGuard] },
   { path: ':name/contract/add',   component: EditContractComponent, canActivate: [AuthGuard] },
   { path: ':name/add/contract/:type/:refid/:refno',   component: EditContractComponent, canActivate: [AuthGuard] },

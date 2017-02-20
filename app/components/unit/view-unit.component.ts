@@ -38,7 +38,6 @@ export class ViewUnitComponent implements OnInit {
     hasTenants: boolean;
     myForm: FormGroup;
     myForm2: FormGroup;
-    myOptions: Array<any>;
 
     name: any;
 
@@ -62,37 +61,10 @@ export class ViewUnitComponent implements OnInit {
         this.userService.getByToken()
                             .subscribe(name => {
                                 this.name = name;
-                                if( this.id != null) {
-                                    this.unitservice
-                                        .getById(this.id, this.name.default_development.name)
-                                           .subscribe(unit => {
-                                               this.unit = unit.properties[0];
-                                               console.log(this.unit)
-                                               this.residents = this.unit.tenant;
-
-                                               if(this.unit.landlord){
-                                                   this.hasLandlord = true;
-                                               }else{
-                                                   this.hasLandlord = false;
-                                               }
-
-                                               if(this.residents){
-                                                   this.hasTenants = true;
-                                               }else{
-                                                   this.hasTenants = false;
-                                               }
-
-                                                this.unitservice
-                                                .getRegVehicles(this.id, this.name.default_development.name)
-                                                   .subscribe(data => {
-                                                       this.vehicles = data[0].properties[0].registered_vehicle;
-                                                });
-                                        });
-                                }
+                                this.getUsers();
                             });
 
-        this.getUsers();
-
+        this.model.document = [];
         this.myForm = this.formbuilder.group({
                 resident: [''],
                 type: ['', <any>Validators.required],
@@ -103,7 +75,7 @@ export class ViewUnitComponent implements OnInit {
 
         this.myForm2 = this.formbuilder.group({
                 license_plate: ['', <any>Validators.required],
-                owner: [''],
+                owner: ['', <any>Validators.required],
                 transponder: [''],
                 document: [''],
                 registered_on: [''],
@@ -112,20 +84,39 @@ export class ViewUnitComponent implements OnInit {
     }
 
     getUsers(): void {
-        this.userService.getUsers().then(users => {
+        this.userService.getAll().subscribe(users => {
             this.users = users;
-            let numOptions =  this.users.length;
-            let opts = new Array(numOptions);
+            if( this.id != null) {
+                    this.unitservice
+                        .getById(this.id, this.name.default_development.name_url)
+                            .subscribe(unit => {
+                                this.unit = unit.properties[0];
+                                this.residents = this.unit.tenant;
+                                this.vehicles = this.unit.registered_vehicle;
 
-            for (let i = 0; i < numOptions; i++) {
-                opts[i] = {
-                    id: this.users[i]._id,
-                    text: this.users[i].username
-                };
+                                if(this.unit.landlord){
+                                    this.hasLandlord = true;
+                                }else{
+                                    this.hasLandlord = false;
+                                }
+
+                                if(this.residents){
+                                    this.hasTenants = true;
+                                    for (var i = 0; i < this.residents.length; i++) {
+                                         this.residents[i].i = i + 1;
+                                    }
+                                }else{
+                                    this.hasTenants = false;
+                                }
+
+                                if(this.vehicles){
+                                    for (var i = 0; i < this.vehicles.length; i++) {
+                                        this.vehicles[i].i = i + 1;
+                                        this.vehicles[i].user = this.users.find(data => data._id == this.vehicles[i].owner).username;
+                                    }
+                                }
+                            });
             }
-
-            this.myOptions = opts.slice(0);
-            this.items = this.myOptions;
         });
     }
 
@@ -154,11 +145,43 @@ export class ViewUnitComponent implements OnInit {
     }
 
     deleteResident(resident: any){
-        this.unitservice.deleteTenant(resident._id, this.unit._id, this.name.default_development.name)
+        this.unitservice.deleteTenant(resident._id, this.unit._id, this.name.default_development.name_url)
+            .then(
+                response => {
+                  if(response) {
+                    console.log(response);
+                    alert(`Resident could not be deleted, server Error.`);
+                  } else {
+                    this.alertService.success('Delete resident successful', true);
+                    alert(`Delete resident successful`);
+                    this.ngOnInit()
+                  }
+                },
+                error=> {
+                  console.log(error);
+                    alert(`resident could not be deleted, server Error.`);
+                }
+            );
     }
 
     deleteVehicle(vehicle: any){
-         this.unitservice.deleteRegVehicle(vehicle._id, this.unit._id, this.name.default_development.name)   
+        this.unitservice.deleteRegVehicle(vehicle._id, this.unit._id, this.name.default_development.name_url)
+            .then(
+                response => {
+                  if(response) {
+                    console.log(response);
+                    alert(`Vehicle could not be deleted, server Error.`);
+                  } else {
+                    this.alertService.success('Delete vehicle successful', true);
+                    alert(`Delete vehicle successful`);
+                    this.ngOnInit()
+                  }
+                },
+                error=> {
+                  console.log(error);
+                    alert(`vehicle could not be deleted, server Error.`);
+                }
+            );
     }
 
     openResidentDetail(resident: any){
@@ -170,11 +193,11 @@ export class ViewUnitComponent implements OnInit {
     }
 
     goToUnit(){
-        this.router.navigate([this.name.default_development.name + '/unit']);  
+        this.router.navigate([this.name.default_development.name_url + '/unit']);  
     }
 
     addResident(){
-        this.router.navigate([this.name.default_development.name + '/user/add', this.unit._id, this.model.type]);  
+        this.router.navigate([this.name.default_development.name_url + '/user/add', this.unit._id, this.model.type]);  
     }
 
     onChange(fileInput: any){
@@ -190,7 +213,7 @@ export class ViewUnitComponent implements OnInit {
          this.vehicleSubmitted = true;
          model.registered_on = new Date();
 
-        if(isValid && this.selectedResident){
+        if(isValid && this.model.document.length > 0){
             let formData:FormData = new FormData();
                 for (var i = 0; i < this.model.document.length; i++) {
                     formData.append("document[]", this.model.document[i]);
@@ -201,11 +224,12 @@ export class ViewUnitComponent implements OnInit {
             formData.append("transponder", model.transponder);
             formData.append("remarks", model.remarks);
 
-            this.unitservice.createRegVehicle(formData, this.name.default_development.name, this.unit._id)
+            this.unitservice.createRegVehicle(formData, this.name.default_development.name_url, this.unit._id)
             .then(
                 data => {
                     this.alertService.success('Add guest successful', true);
-                    this.router.navigate([this.name.default_development.name + '/unit']);
+                    this.secondModal.close();
+                    this.ngOnInit();
                 },
                 error => {
                     console.log(error);

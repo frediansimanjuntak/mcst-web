@@ -13,8 +13,8 @@ export class Contract {
   attachment : Attachment[];
   quotations : Quotation[];
   purchase_order : string;
-  start_time : string;
-  end_time : string;
+  start_time : Date;
+  end_time : Date;
   schedule : [{
       days : string,
       start_time : string,

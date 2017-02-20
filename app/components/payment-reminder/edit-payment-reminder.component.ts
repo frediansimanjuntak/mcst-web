@@ -89,13 +89,12 @@ export class EditPaymentReminderComponent implements OnInit{
         control.removeAt(i);
     }
 
-    createPaymentReminder(model:PaymentReminder, isVaild:boolean) {
-        console.log(model)
+    createPaymentReminder(model:PaymentReminder) {
         this.paymentreminderService.create(model)
         .then(
             data => {
                 this.alertService.success('Create payment successful', true);
-                this.router.navigate([this.name.default_development.name + '/payment_system']);
+                this.router.navigate([this.name.default_development.name_url + '/payment_system']);
             },
             error => {
                 console.log(error);
@@ -109,7 +108,7 @@ export class EditPaymentReminderComponent implements OnInit{
         .then(
             response => {
                 this.alertService.success('Update payment reminder successful', true);
-                this.router.navigate([this.name.default_development.name + '/payment_system']);
+                this.router.navigate([this.name.default_development.name_url + '/payment_system']);
             },
             error => {
                 this.alertService.error(error);
@@ -119,6 +118,6 @@ export class EditPaymentReminderComponent implements OnInit{
 
     
     cancel(){
-        this.router.navigate([this.name.default_development.name + '/payment_system' ]);
+        this.router.navigate([this.name.default_development.name_url + '/payment_system' ]);
     }
 }

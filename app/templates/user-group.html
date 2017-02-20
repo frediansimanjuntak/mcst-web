@@ -1,34 +1,32 @@
-
 <div class="container">
 	<div class="main">
 		<div class="title">
 			USER GROUP
 		</div>
-		Home > User Group
+		<p class="id-location">Home > User Group</p>
 		<div class="row">
 			<div class="col-md-4 pull-right">
-					<a class="btn btn-default pull-right" (click)="add()">
-					<i class="fa fa-plus" aria-hidden="true"></i>&nbsp;Create User Group</a>
+				<button class="btn btn-default btn-add pull-right" (click)="add()"><img class="img-btn" src="../../assets/image/icon_add.png" />&nbsp;Create User Group</button>
 			</div>
 		</div>
 		<div (click)="$event.preventDefault()">
-		  
-		    	<p-dataTable [value]="usergroups" [rows]="10" [paginator]="true">
-				    <p-column field="description" header="Description" sortable="true" [filter]="true" filterPlaceholder="Search description"></p-column>
-				    <p-column field="chief.username" header="Chief" sortable="true" [filter]="true" filterPlaceholder="Search Chief"></p-column>
-				    <p-column field="users" header="Users" sortable="true">
-				        <template let-usergroups="rowData" pTemplate="body">
-				            <span *ngFor="let t of usergroups.users">{{t.username}},</span>
-				        </template>
-				    </p-column>
-				   	<p-column styleClass="col-button">
-				    	<template let-usergroups="rowData" pTemplate="body">
-				    	<button type="button" (click)="editUserGroup(usergroups)">Edit</button>
-				        <button type="button" (click)="deleteUserGroup(usergroups)">Delete</button>
-				    	</template>
-				    </p-column>
-				</p-dataTable>
-		    
-		</div>	
+
+			<p-dataTable [value]="usergroups" [rows]="10" [paginator]="true">
+				<p-column field="description" header="Description" sortable="true" [filter]="true" filterPlaceholder="Search description"></p-column>
+				<p-column field="chief.username" header="Chief" sortable="true" [filter]="true" filterPlaceholder="Search Chief"></p-column>
+				<p-column field="users" header="Users" sortable="true">
+					<template let-usergroups="rowData" pTemplate="body">
+						<span *ngFor="let t of usergroups.users">{{t.username}},</span>
+					</template>
+				</p-column>
+				<p-column styleClass="col-button">
+					<template let-usergroups="rowData" pTemplate="body">
+						<!-- <button type="button" (click)="editUserGroup(usergroups)">Edit</button> -->
+						<button  type="button" (click)="deleteUserGroup(usergroups)"><i class="fa fa-trash" aria-hidden="true"></i></button>
+					</template>
+				</p-column>
+			</p-dataTable>
+
+		</div>
 	</div>
-</div>					  		
+</div>

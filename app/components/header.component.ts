@@ -1,5 +1,5 @@
 import { Component, OnInit, ElementRef } from '@angular/core';
-import { Notification, Notifications } from '../models/index';
+import { Notification } from '../models/index';
 import { Router} from '@angular/router';
 import { NotificationService, AlertService, UserService, AuthenticationService} from '../services/index';
 import '../rxjs-operators';
@@ -50,7 +50,8 @@ export class HeaderComponent implements OnInit{
 
 	}
 
-	private loadUnread() {        this.notificationService.getUnread(this.name._id)
+	private loadUnread() {        
+        this.notificationService.getUnread(this.name._id)
             .subscribe((data)=> {
                 setTimeout(()=> {
                     this.unreadNotifications = data;
@@ -79,31 +80,31 @@ export class HeaderComponent implements OnInit{
         switch (notification.ref)
         {
             case 'petition' :
-                this.router.navigate([this.name.default_development.name + '/petition/view', notification.ref_id]);
+                this.router.navigate([this.name.default_development.name_url + '/petition/view', notification.ref_id]);
             break;
             case 'incident' :
-                this.router.navigate([this.name.default_development.name + '/incident/view', notification.ref_id]);
+                this.router.navigate([this.name.default_development.name_url + '/incident/view', notification.ref_id]);
             break;
             case 'payment' :
-                this.router.navigate([this.name.default_development.name + '/payment/view', notification.ref_id]);
+                this.router.navigate([this.name.default_development.name_url + '/payment/view', notification.ref_id]);
             break;
             case 'contract' :
-                this.router.navigate([this.name.default_development.name + '/contract/view', notification.ref_id]);
+                this.router.navigate([this.name.default_development.name_url + '/contract/view', notification.ref_id]);
             break;
             case 'facility' :
-                this.router.navigate([this.name.default_development.name + '/facility/view', notification.ref_id]);
+                this.router.navigate([this.name.default_development.name_url + '/facility/view', notification.ref_id]);
             break;
             case 'booking' :
-                this.router.navigate([this.name.default_development.name + '/booking/view', notification.ref_id]);
+                this.router.navigate([this.name.default_development.name_url + '/booking/view', notification.ref_id]);
             break;
             case 'unit' :
-                this.router.navigate([this.name.default_development.name + '/unit/view', notification.ref_id]);
+                this.router.navigate([this.name.default_development.name_url + '/unit/view', notification.ref_id]);
             break;
             case 'lost_found' :
-                this.router.navigate([this.name.default_development.name + '/lost_found/view', notification.ref_id]);
+                this.router.navigate([this.name.default_development.name_url + '/lost_found/view', notification.ref_id]);
             break;
             case 'poll' :
-                this.router.navigate([this.name.default_development.name + '/poll/view', notification.ref_id]);
+                this.router.navigate([this.name.default_development.name_url + '/poll/view', notification.ref_id]);
             break;     
         }
     }

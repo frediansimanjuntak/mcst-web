@@ -98,11 +98,12 @@ export class EditAnnouncementComponent  {
     }
 
     createAnnouncement() {
+        console.log(this.model)
         this.anouncementService.create(this.model)
         .then(
             data => {
                 this.alertService.success('Create announcement successful', true);
-                this.router.navigate([this.name.default_development.name + '/announcement']);
+                this.router.navigate([this.name.default_development.name_url + '/announcement']);
             },
             error => {
                 console.log(error);
@@ -120,15 +121,18 @@ export class EditAnnouncementComponent  {
     }
 
     autoPostOnDateChanged(event:any) {
-         this.model.auto_post_on = event.formatted.replace(/-/g, "/");
+         this.model.auto_post_on = event.jsdate;
+
         if(this.model.auto_post_on){
             (this.selectedValidDate = new Date()).setDate(event.jsdate.getDate() + 1);
+            this.model.valid_till =  this.selectedValidDate;
             this.selectedValidDate = this.convertDate(this.selectedValidDate)
             let copy: IMyOptions = this.getCopyOfValidTillDateOptions();
             copy.disableUntil = event.date;
             this.validTillDateOptions = copy;
         }
     }
+
 
     convertDate(date) {
       var yyyy = date.getFullYear().toString();
@@ -142,7 +146,7 @@ export class EditAnnouncementComponent  {
     }
 
     validTillDateChanged(event:any) {
-      this.model.valid_till = event.formatted.replace(/-/g, "/");;
+      this.model.valid_till =  event.jsdate;
     }
 
     updateAnnouncement(){
@@ -156,7 +160,7 @@ export class EditAnnouncementComponent  {
 	                this.alertService.error('Update announcement failed');
 	            } else {
 	                 this.alertService.success('Update announcement successful', true);
-                     this.router.navigate([this.name.default_development.name + '/announcement']);
+                     this.router.navigate([this.name.default_development.name_url + '/announcement']);
 	            }
             },
             error=> {
@@ -166,7 +170,7 @@ export class EditAnnouncementComponent  {
 	}
 
     toAnnouncement(){
-         this.router.navigate([this.name.default_development.name + '/announcement']);
+         this.router.navigate([this.name.default_development.name_url + '/announcement']);
     }
 
 

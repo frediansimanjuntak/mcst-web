@@ -40,7 +40,7 @@ export class EditPaymentComponent implements OnInit{
         .then(
             data => {
                 this.alertService.success('Create payment successful', true);
-                this.router.navigate([this.name.default_development.name + '/payment']);
+                this.router.navigate([this.name.default_development.name_url + '/payment']);
             },
             error => {
                 console.log(error);
@@ -59,6 +59,6 @@ export class EditPaymentComponent implements OnInit{
     }
 
     cancel(){
-        this.router.navigate([this.name.default_development.name + '/payment' ]);
+        this.router.navigate([this.name.default_development.name_url + '/payment' ]);
     }
 }

@@ -15,6 +15,7 @@ import '../../rxjs-operators';
 
 export class PollComponent implements OnInit { 
 	@ViewChild('firstModal') firstModal;
+    public max: number;
 	  poll: any;
     polls: 		Poll[] = [];
     pollsDraft:  Poll[] = [];
@@ -54,7 +55,8 @@ export class PollComponent implements OnInit {
                                     this.pollService.getById(this.id)
                                         .subscribe(poll => {
                                             this.poll = poll;
-
+                                            this.max = this.poll.votes.length;
+                                            
                                             let numOptions =  this.poll.choices.length;
                                             let opts = new Array(numOptions);
 
@@ -62,6 +64,7 @@ export class PollComponent implements OnInit {
                                                 opts[i] = {
                                                     choice: this.poll.choices[i],
                                                     progress: this.poll.votes.filter(data => data.answer == this.poll.choices[i] ).length,
+                                                    
                                                 };
                                             }
                                             this.poll.answers = opts.slice(0);
@@ -136,11 +139,11 @@ export class PollComponent implements OnInit {
     }
 
 	viewPoll(poll: Poll){
-        this.router.navigate([this.name.default_development.name + '/poll/view', poll._id]);
+        this.router.navigate([this.name.default_development.name_url + '/poll/view', poll._id]);
     }
 
     editPoll(poll: Poll){
-        this.router.navigate([this.name.default_development.name + '/poll/edit', poll._id]);
+        this.router.navigate([this.name.default_development.name_url + '/poll/edit', poll._id]);
     }
 
 	goBack(): void {
@@ -148,7 +151,7 @@ export class PollComponent implements OnInit {
   	}
 
     add(){
-      this.router.navigate([this.name.default_development.name + '/poll/add']);  
+      this.router.navigate([this.name.default_development.name_url + '/poll/add']);  
     }
 
 }

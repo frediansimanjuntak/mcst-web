@@ -62,10 +62,10 @@ export class PaymentComponent implements OnInit {
     }
 
     view(payment: Payment){
-        this.router.navigate([this.name.default_development.name + '/payment/view', payment._id]);
+        this.router.navigate([this.name.default_development.name_url + '/payment/view', payment._id]);
     }
 
     add(){
-        this.router.navigate([this.name.default_development.name + '/payment/add']);
+        this.router.navigate([this.name.default_development.name_url + '/payment/add']);
     }
 }

@@ -7,7 +7,7 @@ import { SimpleNotificationsModule }    from 'angular2-notifications';
 import { FileDropDirective }            from 'ng2-file-upload';
 import { ReactiveFormsModule }			    from '@angular/forms';
 import { HttpModule }                   from '@angular/http';
-import { Ng2BootstrapModule, PaginationModule, DatepickerModule, TabsModule, PopoverModule } from 'ng2-bootstrap';
+import { Ng2BootstrapModule, PaginationModule, DatepickerModule, TabsModule, PopoverModule, ProgressbarModule  } from 'ng2-bootstrap';
 import { SelectModule }                 from 'ng2-select/ng2-select';
 import { MyDatePickerModule }           from 'mydatepicker';
 import { SignaturePadModule }           from 'angular2-signaturepad';
@@ -17,15 +17,17 @@ import { SignaturePad } from 'angular2-signaturepad/signature-pad';
 // import { SELECT_DIRECTIVES }            from 'ng2-select';
 import { AppRoutingModule }     		    from './app-routing.module';
 import { url }                          from '../global'
-import { DataTableModule,SharedModule,ScheduleModule,DialogModule,InputMaskModule,CheckboxModule,PanelModule,FieldsetModule,CalendarModule } from 'primeng/primeng';
+import { DataTableModule,SharedModule,ScheduleModule,DialogModule,InputMaskModule,CheckboxModule,PanelModule,FieldsetModule,CalendarModule,DropdownModule } from 'primeng/primeng';
 import { EqualValidator }               from '../components/user/equal-validator.directive';
 import { ImageUploadModule }            from 'ng2-imageupload';
 import { ModalModule }                  from "ngx-modal";
 import { BootstrapModalModule }         from 'angular2-modal/plugins/bootstrap';
-import { SlimLoadingBarModule }         from 'ng2-slim-loading-bar';
+import { SlimLoadingBarModule }         from 'ng2-slim-progress-bar';
 import { MomentModule }                 from 'angular2-moment';
+import { PdfViewerComponent }           from 'ng2-pdf-viewer';
 
 import { 
+  TokenComponent,
   AccessControlComponent,
   EditAccessControlComponent,
   AlertComponent,
@@ -38,6 +40,7 @@ import {
   EditBookingComponent,
   CompanyComponent,
   EditCompanyComponent,
+  ContactComponent,
   ContractComponent,
   EditContractComponent,
   ContractNoticeComponent,
@@ -83,7 +86,7 @@ import {
   NotificationComponent,
   LostFoundComponent,
   EditLostFoundComponent,
-
+  FooterComponent,
   SignaturePadPage,
 } from '../components/index';
 
@@ -120,7 +123,8 @@ import {
 @NgModule({
   imports:      [
     CommonModule, 
-    DataTableModule,  
+    DataTableModule, 
+    DropdownModule, 
   	BrowserModule,
   	FormsModule,
   	ReactiveFormsModule,
@@ -149,8 +153,10 @@ import {
     ImageUploadModule,
     MomentModule,
     SlimLoadingBarModule.forRoot(),
+    ProgressbarModule.forRoot()
   ],
   declarations: [ 
+    TokenComponent,
     AccessControlComponent,
     EditAccessControlComponent,
     EqualValidator,
@@ -161,6 +167,7 @@ import {
     EditBookingComponent,
     CompanyComponent,
     EditCompanyComponent,
+    ContactComponent,
     ContractComponent,
     EditContractComponent,
     ContractNoticeComponent,
@@ -208,8 +215,10 @@ import {
     NotificationComponent,
     LostFoundComponent,
     EditLostFoundComponent,
+    FooterComponent,
     SignaturePadPage,
-  ],
+    PdfViewerComponent
+],
   providers: [ 
     AccessControlService,
     AlertService,
