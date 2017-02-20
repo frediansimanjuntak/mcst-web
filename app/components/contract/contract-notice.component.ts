@@ -73,7 +73,7 @@ export class ContractNoticeComponent implements OnInit  {
     }
 
     createContractNotice(id:any) {
-        if(this.model.attachment > 0 > 0) {
+        if(this.model.attachment > 0) {
             this.model.publish = false;
             let formData:FormData = new FormData();
             if(this.model.attachment.length != 0) {
