@@ -19,6 +19,7 @@ export class EditLostFoundComponent  {
   
     @Input('group')
 	lostFound: LostFound;
+    lostFounds: LostFound[] = [];
     model: any = {};
     myForm: FormGroup;
     attachment: any = [];
@@ -28,6 +29,7 @@ export class EditLostFoundComponent  {
     name: any;
     dataUnit: any[]=[];
     photos: any;
+    no: number;
 
     constructor(private router: Router,
     	private lostFoundService: LostFoundService,
@@ -72,6 +74,7 @@ export class EditLostFoundComponent  {
                 formData.append("photo[]", this.model.photo[i]);
             }
 
+            formData.append("serial_number", this.model.serial_number);
             formData.append("archieve", this.model.archieve);
             formData.append("property", this.model.property);
             formData.append("type", this.model.type);
@@ -104,6 +107,28 @@ export class EditLostFoundComponent  {
                     this.dataUnit      = data.properties;
                 }, 1000);
             });
+    }
+
+    getLastSerialNo(){
+        this.lostFoundService.getAll().subscribe(lostfounds => {
+            this.lostFounds = lostfounds ;
+            if(lostfounds.length > 0) { 
+                var a = this.lostFounds.length - 1;
+                this.no = +this.lostFounds[a].serial_number + 1
+                if(this.no > 1 && this.no < 10) {
+                    this.model.serial_number = '000' + this.no.toString();
+                }if(this.no > 10 && this.no < 100) {
+                    this.model.serial_number = '00' + this.no.toString();
+                }if(this.no > 100 && this.no < 1000) { 
+                    this.model.serial_number = '0' + this.no.toString();
+                }if(this.no > 1000) {
+                    this.model.serial_number = this.no.toString();
+                }
+            } else {
+                this.model.serial_number = '0001'
+            }
+            
+        });
     }
 
     remove(i: any){

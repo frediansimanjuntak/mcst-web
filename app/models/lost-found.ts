@@ -2,6 +2,7 @@ import { User, Development } from './index'
 
 export class LostFound {
   _id : string;
+  serial_number : string;
   development : Development;
   property: string;
   type: string;
