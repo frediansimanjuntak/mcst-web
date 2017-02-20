@@ -669,11 +669,15 @@ p.pull-down {
   margin: 0 10px 0 0;
 }
 .btn-trash {
+  background-color: #d8d8d8;
   height: 35px;
   width: 35px !important;
   margin-right: 10px;
   border-radius: 4px !important;
   box-shadow: 0 3px 0 0 #bbb;
+}
+.btn-trash:hover {
+    background-color: #bdbdbd;
 }
 .btn-trash .fa.fa-trash-o {
   font-size: 20px;
@@ -807,12 +811,13 @@ p.pull-down {
 }
 
 /*costumize table*/
+
 input.ui-column-filter.ui-inputtext.ui-corner-all.ui-state-default.ui-widget {
     display: none;
 }
-.ui-datatable-tablewrapper th.ui-state-default.ui-unselectable-text {
-    padding: 10px;
+th.ui-state-default.ui-unselectable-text {
     text-align: left;
+    border: 0;
 }
 
 /*costumize Tabs/Pills*/
