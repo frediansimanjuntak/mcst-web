@@ -5,7 +5,7 @@
                 Edit User
             </div>
             <p class="id-location">Home > User > Edit > {{user.username}}</p>
-            <form [formGroup]="myForm" class="form-horizontal col-md-6" name="form" (ngSubmit)="f.form.valid && updateUser(myForm.value)" #f="ngForm" novalidate>
+            <form [formGroup]="myForm" class="form-horizontal col-md-6" name="form" (ngSubmit)="myForm.valid && updateUser(myForm.value)" #f="ngForm" novalidate>
                 <div class="form-group">
                     <label class="control-label col-sm-2" for="username">Username :</label>
                     <div class="col-sm-10">
@@ -175,7 +175,7 @@
                 Add User
             </div>
             <p class="id-location">Home > User > Add </p>
-            <form [formGroup]="myForm" class="form-horizontal col-md-6" name="form" (ngSubmit)="createUser(myForm.value, myForm.valid)" #f="ngForm" novalidate>
+            <form [formGroup]="myForm" class="form-horizontal col-md-6" name="form" (ngSubmit)="myForm.valid && createUser(myForm.value)" #f="ngForm" novalidate>
                 <div class="form-group">
                     <label class="control-label col-sm-2" for="username">Username :</label>
                     <div class="col-sm-10">

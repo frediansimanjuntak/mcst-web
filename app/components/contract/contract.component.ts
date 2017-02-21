@@ -18,8 +18,6 @@ export class ContractComponent implements OnInit  {
     contracts: Contract[] = [];
     contractnotes: any[];
     contractnotices: any[];
-    commence_date: any;
-    estimate_date: any;
     model: any = {};
     images: any[];
     id: string;
@@ -137,6 +135,7 @@ export class ContractComponent implements OnInit  {
 	private loadAllContract() {
 		this.contractService.getAll().subscribe(contracts => {
 			this.contracts = contracts ;
+<<<<<<< HEAD
             console.log(contracts)
             for (let i = 0; i < this.contracts.length; ++i) {
                 if(this.contracts[i].contract_notice.length > 1) {
@@ -154,6 +153,8 @@ export class ContractComponent implements OnInit  {
                     }
                 }
             }
+=======
+>>>>>>> ad077b63ccbda43ce0df54c8289848b8a943ed2e
             this.open      = this.contracts.filter(contracts => contracts.status === 'open' );
             this.close     = this.contracts.filter(contracts => contracts.status === 'closed' );
 		});

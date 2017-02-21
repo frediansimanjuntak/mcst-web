@@ -29,8 +29,7 @@ export class IncidentComponent implements OnInit {
     isFavorite = false;
     isArchieved = false;
     change = new EventEmitter();
-    status: any[] = [];
-    type: any[] = [];
+    status: any;
     public data;
     public dataNew;
     public dataInProgress;
@@ -45,14 +44,11 @@ export class IncidentComponent implements OnInit {
         private editcontractComponent: EditContractComponent,) {}
 
     ngOnInit(): void {
-        this.status.push({label: 'All Status', value: null});
+        this.status = [];
+        this.status.push({label: 'All Brands', value: null});
         this.status.push({label: 'New', value: 'new'});
         this.status.push({label: 'In Progress', value: 'in progress'});
         this.status.push({label: 'Resolved', value: 'resolved'});
-        this.type.push({label: 'All Types', value: null});
-        this.type.push({label: 'General', value: 'General'});
-        this.type.push({label: 'Hygiene', value: 'Hygiene'});
-        this.type.push({label: 'Damage', value: 'Damage'});
         this.userService.getByToken().subscribe(name => {this.name = name;})
         this.route.params.subscribe(params => {
             this.id = params['id'];

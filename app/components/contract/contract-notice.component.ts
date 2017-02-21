@@ -33,7 +33,6 @@ export class ContractNoticeComponent implements OnInit  {
         private userService: UserService) {}
 
     ngOnInit(): void {
-        this.model.attachment = [];
         this.userService.getByToken().subscribe(name => {this.name = name;})
         this.route.params.subscribe(params => {
             this.id = params['id'];
@@ -73,6 +72,7 @@ export class ContractNoticeComponent implements OnInit  {
     }
 
     createContractNotice(id:any) {
+<<<<<<< HEAD
         if(this.model.attachment.length > 0) {
             this.model.publish = false;
             let formData:FormData = new FormData();
@@ -80,31 +80,39 @@ export class ContractNoticeComponent implements OnInit  {
                 for (var i = 0; i < this.model.attachment.length; i++) {
                     formData.append("attachment", this.model.attachment[i]);
                 }
+=======
+        this.model.publish = false;
+        let formData:FormData = new FormData();
+        if(this.model.attachment.length != 0) {
+            for (var i = 0; i < this.model.attachment.length; i++) {
+                formData.append("attachment", this.model.attachment[i]);
+>>>>>>> ad077b63ccbda43ce0df54c8289848b8a943ed2e
             }
-            formData.append("start_time", this.model.start_time);
-            formData.append("end_time", this.model.end_time);
-            formData.append("title", this.model.title);
-            formData.append("description", this.model.description);
-            formData.append("status", this.model.status);
-            formData.append("publish", this.model.publish);
-            this.route.params.subscribe(params => {
-                this.id = params['id'];
-                this._id = params['_id'];
-            });
-            this.contractnoticeService.create(formData, this.id)
-            .then(
-                response => {
-                    this.alertService.success('Create contract notice successful', true);
-                    this.router.navigate([this.name.default_development.name_url + '/contract/view', id ]);
-                },
-                error => {
-                    this.alertService.error(error);
-                }
-            );
         }
+        formData.append("start_time", this.model.start_time);
+        formData.append("end_time", this.model.end_time);
+        formData.append("title", this.model.title);
+        formData.append("description", this.model.description);
+        formData.append("status", this.model.status);
+        formData.append("publish", this.model.publish);
+        this.route.params.subscribe(params => {
+            this.id = params['id'];
+            this._id = params['_id'];
+        });
+        this.contractnoticeService.create(formData, this.id)
+        .then(
+            response => {
+                this.alertService.success('Create contract notice successful', true);
+                this.router.navigate([this.name.default_development.name_url + '/contract/view', id ]);
+            },
+            error => {
+                this.alertService.error(error);
+            }
+        );
     }
 
     publishContractNotice(id:any) {
+<<<<<<< HEAD
         if(this.model.attachment.length > 0) {
             this.route.params.subscribe(params => {
                 this.id = params['id'];
@@ -131,7 +139,33 @@ export class ContractNoticeComponent implements OnInit  {
                     this.alertService.error(error);
                 }
             );
+=======
+        this.route.params.subscribe(params => {
+            this.id = params['id'];
+            this._id = params['_id'];
+        });
+        this.model.publish = true;
+        let formData:FormData = new FormData();
+        for (var i = 0; i < this.model.attachment.length; i++) {
+            formData.append("attachment", this.model.attachment[i]);
+>>>>>>> ad077b63ccbda43ce0df54c8289848b8a943ed2e
         }
+        formData.append("start_time", this.model.start_time);
+        formData.append("end_time", this.model.end_time);
+        formData.append("title", this.model.title);
+        formData.append("description", this.model.description);
+        formData.append("status", this.model.status);
+        formData.append("publish", this.model.publish);
+        this.contractnoticeService.create(formData, this.id)
+        .then(
+            response => {
+                this.alertService.success('Create contract notice successful', true);
+                this.router.navigate([this.name.default_development.name_url + '/contract/view', id ]);
+            },
+            error => {
+                this.alertService.error(error);
+            }
+        );
     }
 
     publish(contract: Contract){
