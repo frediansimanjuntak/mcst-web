@@ -20,6 +20,9 @@ export class PaymentReminderComponent implements OnInit {
     name: any;
     draft: any;
     published: any;
+    total: number = 0;
+    notification_list: any[];
+
 
     constructor(private router: Router, 
         private paymentreminderService: PaymentReminderService, 
@@ -35,7 +38,16 @@ export class PaymentReminderComponent implements OnInit {
         if( this.id == null) {
             this.loadAllPaymentReminder();
         }else{
-        	this.paymentreminderService.getById(this.id).subscribe(paymentreminder => {this.paymentreminder = paymentreminder});
+        	this.paymentreminderService.getById(this.id)
+            .subscribe(paymentreminder => {
+                this.paymentreminder = paymentreminder;
+                this.notification_list = paymentreminder.notification_list;
+                for (let a = 0; a < this.notification_list.length; ++a) {
+                    let total_amount = parseInt(this.notification_list[a].amount)
+                    this.total = this.total + total_amount;
+                    console.log(this.total);
+                }
+            });
         }
     }
 
