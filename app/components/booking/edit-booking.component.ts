@@ -221,9 +221,9 @@ export class EditBookingComponent implements OnInit  {
     }
 
     time(event:any){
-        this.model.facility = event.target.value.slice(3);
         this.times_end = [];
         this.times_start = []
+        this.model.facility = event.target.value.slice(3);
         this.facilityService.getById(this.model.facility)
         .subscribe(facility => {
             this.facility = facility;
@@ -232,18 +232,22 @@ export class EditBookingComponent implements OnInit  {
             this.model.booking_fee = facility.booking_fee;
             this.model.admin_fee = facility.admin_fee;
             this.selectedDay = this.facility.schedule.filter(data => data.day == this.day); 
+            console.log(this.selectedDay)
             this.start = this.selectedDay[0].start_time.slice(0,2);
             let start = +this.start
             this.end = this.selectedDay[0].end_time.slice(0,2);
             let end = +this.end
             this.min =    ":00"
+            console.log(start , end)
             for (var i = start; i < end; ++i) {
                 this.times_start.push(i)
+                console.log(i)
             }
             while(start < end){       
                    start += 1;
                    this.times_end.push(start)
             }
+            console.log(this.times_start , this.times_end)
         });
             
     }
