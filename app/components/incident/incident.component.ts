@@ -72,7 +72,6 @@ export class IncidentComponent implements OnInit {
 
     updateIncident(){
         this.resolveIncident.remark = this.model.remark;
-        this.resolveIncident.status = this.model.status;
         this.resolveIncident.resolved_by = this.model.resolved_by;
         this.incidentService.update(this.resolveIncident)
         .then(
@@ -89,7 +88,6 @@ export class IncidentComponent implements OnInit {
 
     openModal(incident){
         this.resolveIncident = incident;
-        this.model.status = 'resolved';
         this.userService.getAll().subscribe(users => {this.users = users;})
     }
 

@@ -21,11 +21,21 @@
             </div>
             <div class="row" style="margin-top: 30px;">
                 <div class="col-md-9">
-                    <p-dataTable [value]="" scrollable="true">
-                        <p-column header="Charge/Bill" field=""></p-column>
-                        <p-column header="Remarks" field="" ></p-column>
-                        <p-column header="Applies to" field="" sortable="true"></p-column>
-                        <p-column header="Remarks" field=""></p-column>
+                    <p-dataTable [value]="notification_list">
+                        <p-column field="charge" header="Charge/Bill"></p-column>
+                        <p-column field="remarks" header="Remarks"></p-column>
+                        <p-column field="applies_to" header="Applies to" sortable="true"></p-column>
+                        <p-column field="amount" header="Amount"></p-column>
+                        <p-footerColumnGroup>
+                            <p-row>
+                                <p-column footer="Totals:" colspan="3"></p-column>
+                                <p-column footer="">
+                                    <template let-notification_list="rowData" pTemplate="footer">
+                                        <p>${{ total }}</p>
+                                    </template>
+                                </p-column>
+                            </p-row>
+                        </p-footerColumnGroup>
                     </p-dataTable>
                 </div>
                 <div class="col-md-3"></div>
