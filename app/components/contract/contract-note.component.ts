@@ -76,9 +76,28 @@ export class ContractNoteComponent implements OnInit  {
     }
 
     createContractNote(id:any) {
-        let formData:FormData = new FormData();
-        for (var i = 0; i < this.model.attachment.length; i++) {
-            formData.append("attachment", this.model.attachment[i]);
+        if(this.model.attachment.length > 0) {
+            let formData:FormData = new FormData();
+            for (var i = 0; i < this.model.attachment.length; i++) {
+                formData.append("attachment", this.model.attachment[i]);
+            }
+            formData.append("status", this.model.status);
+            formData.append("note_remark", this.model.note_remark);
+            formData.append("reference_id", this.contract.reference_id);
+            this.route.params.subscribe(params => {
+                this.id = params['id'];
+                this._id = params['_id'];
+            });
+            this.contractnoteService.create(formData, this.id)
+            .then(
+                response => {
+                    this.alertService.success('Create contract notice successful', true);
+                    this.router.navigate([this.name.default_development.name_url + '/contract/view', id ]);
+                },
+                error => {
+                    this.alertService.error(error);
+                }
+            );
         }
         formData.append("status", this.model.status);
         formData.append("note_remark", this.model.note_remark);

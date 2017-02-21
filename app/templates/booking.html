@@ -50,22 +50,17 @@
             		</div>
 	        		<form [formGroup]="myForm" name="form" (ngSubmit)="f.form.valid && filter(myForm.value)" #f="ngForm" novalidate>
 			        	<div class="row">
-			        		<div class="col-md-3">Facility :</div>
+			        		<div class="col-md-3"><p class="pull-down">Facility :</p></div>
 			       			<div class="col-md-9">
 			       				<p>
-			       					<select name="name" class="form-control" formControlName="name" style="width: 116.5px">
+			       					<select name="name" class="form-control" formControlName="name" style="width: 237px">
 				                    	<option [style]="{'text-transform': 'capitalize'}" [selected]="facility.name == 'BBQ'" *ngFor="let facility of facilities" (change)="onChange(facility)" [ngValue]="facility.name">{{facility.name}}</option>
 				                    </select>
-					                <select name="type" class="form-control" formControlName="type" style="width: 116.5px">
-					                	<option value="all">All</option>
-					                   	<option value="a">A</option>
-					                   	<option value="b">B</option>
-					                </select>
 			        			</p>
 			        		</div>
 			        	</div>
 			        	<div class="row">
-			        		<div class="col-md-3">Status :</div>
+			        		<div class="col-md-3"><p class="pull-down">Status :</p></div>
 			        		<div class="col-md-9">
 			       				<p>
 			       					<select name="status" class="form-control" formControlName="status" style="width: 237px">
@@ -77,7 +72,7 @@
 			       			</div>
 			       		</div>
 			       		<div class="row">
-			       			<div class="col-md-3">Period :</div>
+			       			<div class="col-md-3"><p class="pull-down">Period :</p></div>
 			       			<div class="col-md-9">
 			       				<p>
 			       					<select name="start" class="form-control" formControlName="start" style="width: 116.5px">

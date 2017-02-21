@@ -54,7 +54,11 @@ export class EditFacilityComponent  {
     ngOnInit(): void {
         this.userService.getByToken().subscribe(name => {this.name = name;})
         for (let i = 0; i < 24; ++i) {
-            this.time.push(i+':00')
+            let time = i.toString();
+            if(i < 10) {
+                time = '0' + i
+            }
+            this.time.push(time+':00')
         }
         this.myForm = this.formbuilder.group({
             name : ['', Validators.required],
