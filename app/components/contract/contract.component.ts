@@ -17,8 +17,6 @@ export class ContractComponent implements OnInit  {
     contracts: Contract[] = [];
     contractnotes: any[];
     contractnotices: any[];
-    commence_date: any;
-    estimate_date: any;
     model: any = {};
     images: any[];
     id: string;
@@ -136,14 +134,6 @@ export class ContractComponent implements OnInit  {
 	private loadAllContract() {
 		this.contractService.getAll().subscribe(contracts => {
 			this.contracts = contracts ;
-            for (let i = 0; i < this.contracts.length; ++i) {
-                if(this.contracts[i].contract_notice.length > 0) {
-                    for (let a = 0; a < this.contracts[i].contract_notice.length; ++a) {
-                        this.contracts[i].start_time = new Date(Math.max.apply(null,this.contracts[i].contract_notice[a].start_time));
-                        this.contracts[i].end_time = new Date(Math.max.apply(null,this.contracts[i].contract_notice[a].end_time));
-                    }
-                }
-            }
             this.open      = this.contracts.filter(contracts => contracts.status === 'open' );
             this.close     = this.contracts.filter(contracts => contracts.status === 'closed' );
 		});
