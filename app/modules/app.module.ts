@@ -142,7 +142,7 @@ import {
     PanelModule,
     FieldsetModule,
     DatepickerModule.forRoot(),
-    SimpleNotificationsModule,
+    SimpleNotificationsModule.forRoot(),
     // ModalModule.forRoot(),
     TabsModule.forRoot(),
     ModalModule,

@@ -89,17 +89,17 @@ export class AppComponent implements OnInit {
         if (event instanceof NavigationStart) {
             this.loading = true;
         }
-        if (event instanceof NavigationEnd) {
-           setTimeout(() => this.loading = false, 3000);
-        }
+        // if (event instanceof NavigationEnd) {
+        //    setTimeout(() => this.loading = false, 3000);
+        // }
 
         // Set loading state to false in both of the below events to hide the spinner in case a request fails
-        if (event instanceof NavigationCancel) {
-            this.loading = false;
-        }
-        if (event instanceof NavigationError) {
-            this.loading = false;
-        }
+        // if (event instanceof NavigationCancel) {
+        //     this.loading = false;
+        // }
+        // if (event instanceof NavigationError) {
+        //     this.loading = false;
+        // }
     }    
 
     getToken(){
