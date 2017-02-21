@@ -20,54 +20,54 @@ export class FeedbackService {
     }
 
     getAll(){
-        return this.http.get( url + 'api/feedback', this.jwt())
+        return this.http.get( url + 'feedback', this.jwt())
             .map((res:Response) => res.json())
             .catch((error:any) => Observable.throw(error.json().error || 'Server error'));
     }
 
     getById(id:string){
-        return this.http.get( url + 'api/feedback' + id, this.jwt())
+        return this.http.get( url + 'feedback' + id, this.jwt())
             .map((res:Response) => res.json())
             .catch((error:any) => Observable.throw(error.json().error || 'Server error'));
     }
 
     create(body:any): Promise<Feedback> {
-        return this.http.post(url +  'api/feedback', JSON.stringify(body), this.jwt())
+        return this.http.post(url +  'feedback', JSON.stringify(body), this.jwt())
             .toPromise()
             .then(res => res.json().data)
             .catch(this.handleError);
     }
 
     reply(body:Feedback): Promise<Feedback> {
-        return this.http.post(url + 'api/feedback/reply/' + body._id,body, this.jwt())
+        return this.http.post(url + 'feedback/reply/' + body._id,body, this.jwt())
             .toPromise()
             .then(res => res.json().data)
             .catch(this.handleError);
     }
 
     delete(id: string): Promise<void> {
-        return this.http.delete(url + 'api/feedbacks/' + id, this.jwt())
+        return this.http.delete(url + 'feedbacks/' + id, this.jwt())
             .toPromise()
             .then(() => null)
             .catch(this.handleError);
     }
 
     archieve(id: string): Promise<Feedback> {
-        return this.http.post(url + 'api/feedback/achieve/' + id,'', this.jwt())
+        return this.http.post(url + 'feedback/achieve/' + id,'', this.jwt())
             .toPromise()
             .then(res => res.json().data)
             .catch(this.handleError);
     }
 
     publish(id: string): Promise<Feedback> {
-        return this.http.post(url + 'api/feedback/publish/' + id,'', this.jwt())
+        return this.http.post(url + 'feedback/publish/' + id,'', this.jwt())
             .toPromise()
             .then(res => res.json().data)
             .catch(this.handleError);
     }
 
     unarchieve(id: string): Promise<Feedback> {
-        return this.http.put(url + 'api/feedback/achieve/' + id,'', this.jwt())
+        return this.http.put(url + 'feedback/achieve/' + id,'', this.jwt())
             .toPromise()
             .then(res => res.json().data)
             .catch(this.handleError);

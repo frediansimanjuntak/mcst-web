@@ -20,13 +20,13 @@ export class UserService {
     }
 
     getAll(){
-        return this.http.get(url + 'api/users', this.jwt())
+        return this.http.get(url + 'users', this.jwt())
             .map((res:Response) => res.json())
             .catch((error:any) => Observable.throw(error.json().error || 'Server error'));
     }
 
     getById(id:string){    
-        return this.http.get(url + 'api/users/' + id, this.jwt())
+        return this.http.get(url + 'users/' + id, this.jwt())
             .map((res:Response) => res.json())
             .catch((error:any) => Observable.throw(error.json().error || 'Server error'));
     }
@@ -38,21 +38,21 @@ export class UserService {
     }
 
     create(body:any): Promise<User> {
-        return this.http.post(url +  'api/users', body, this.jwt())
+        return this.http.post(url +  'users', body, this.jwt())
             .toPromise()
             .then(res => res.json().data)
             .catch(this.handleError);
     }
 
     update(body:User): Promise<User> {
-        return this.http.post(url + 'api/users/update/' + body._id,body, this.jwt())
+        return this.http.post(url + 'users/update/' + body._id,body, this.jwt())
             .toPromise()
             .then(res => res.json().data)
             .catch(this.handleError);
     }
 
     delete(id: string, body: any): Promise<void> {
-        return this.http.put(url + 'api/users/' + id, body, this.jwt())
+        return this.http.put(url + 'users/' + id, body, this.jwt())
           .toPromise()
           .then(() => null)
           .catch(this.handleError);

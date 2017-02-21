@@ -20,40 +20,40 @@ export class NewsletterService {
     }
 
     getAll(name: string){
-        return this.http.get(url + 'api/newsletters/' + name, this.jwt())
+        return this.http.get(url + 'newsletters/' + name, this.jwt())
             .map((res:Response) => res.json())
             .catch((error:any) => Observable.throw(error.json().error || 'Server error'));
     }
 
     getById(id:string, name:string){
-        return this.http.get( url + 'api/newsletters/' + name + '/' + id, this.jwt())
+        return this.http.get( url + 'newsletters/' + name + '/' + id, this.jwt())
             .map((res:Response) => res.json())
             .catch((error:any) => Observable.throw(error.json().error || 'Server error'));
     }
 
     create(body:any, name:string): Promise<any> {
-        return this.http.post(`${url + 'api/newsletters/' + name}`, body, this.jwt())
+        return this.http.post(`${url + 'newsletters/' + name}`, body, this.jwt())
             .toPromise()
             .then(res => res.json().data)
             .catch(this.handleError);
     }
 
     update(body:any, name:string): Promise<any> {
-        return this.http.post(url + 'api/newsletters/' + name + '/update/' + body._id ,body, this.jwt())
+        return this.http.post(url + 'newsletters/' + name + '/update/' + body._id ,body, this.jwt())
             .toPromise()
             .then(res => res.json().data)
             .catch(this.handleError);
     }
 
     release(id: string, name: string): Promise<void> {
-        return this.http.post( url + 'api/newsletters/' + name + '/release/' + id, '', this.jwt())
+        return this.http.post( url + 'newsletters/' + name + '/release/' + id, '', this.jwt())
             .toPromise()
             .then(res => res.json().data)
             .catch(this.handleError);
     }
 
     delete(id: string, name: string): Promise<void> {
-        return this.http.delete( url + 'api/newsletters/' + name + '/' + id,  this.jwt())
+        return this.http.delete( url + 'newsletters/' + name + '/' + id,  this.jwt())
           .toPromise()
           .then(() => null)
           .catch(this.handleError);
