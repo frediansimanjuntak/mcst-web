@@ -176,4 +176,8 @@ export class LostFoundComponent implements OnInit {
     viewLostFound(lostfound: LostFound){
         this.router.navigate([this.name.default_development.name_url + '/lost_found/view', lostfound._id]);
     }
+
+    goToLostFound(){
+        this.router.navigate([this.name.default_development.name_url + '/lost_found']);  
+    }
 }

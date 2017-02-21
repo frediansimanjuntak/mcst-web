@@ -39,6 +39,7 @@ export class EditIncidentComponent implements OnInit {
     }
 
     ngOnInit(): void {
+        this.model.attachment = [];
         this.incidentService.getAll().subscribe(incidents => {
             this.incidents = incidents ;
             if(incidents.length > 0) { 

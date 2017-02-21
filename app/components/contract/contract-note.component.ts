@@ -33,6 +33,7 @@ export class ContractNoteComponent implements OnInit  {
         private route: ActivatedRoute) {}
 
     ngOnInit(): void {
+        this.model.attachment = [];
         this.userService.getByToken().subscribe(name => {this.name = name;})
         this.route.params.subscribe(params => {
             this.id = params['id'];
