@@ -864,12 +864,6 @@ th.ui-state-default.ui-unselectable-text {
   height: 44px;
   text-align: left;
 }
-.tab-container .ui-column-filter.ui-dropdown.ui-widget.ui-state-default.ui-corner-all.ui-helper-clearfix {
-  display: none;
-}
-.tab-container span.ui-sortable-column-icon.fa.fa-fw.fa-sort {
-  display: none;
-}
 .tab-container img {
     width: 15px;
     height: 15px;
@@ -885,7 +879,7 @@ span.ui-cell-data {
     color: #6D6E71;
 }
 .col-padding {
-    padding: 10px;
+    padding: 10px 15px;
     font-size: 14px;
     color: #4a4a4a;
 }
