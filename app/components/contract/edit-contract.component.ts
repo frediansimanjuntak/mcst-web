@@ -52,6 +52,8 @@ export class EditContractComponent  implements OnInit {
             }
             formData.append("reference_no", this.model.reference_no);
             formData.append("reference_type", this.reference_type);
+            formData.append("start_time", this.model.start_time);
+            formData.append("end_time", this.model.end_time);
             formData.append("reference_id", this.reference_id);
             formData.append("contract_type", this.model.contract_type);
             formData.append("title", this.model.title);

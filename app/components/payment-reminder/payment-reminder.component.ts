@@ -92,6 +92,10 @@ export class PaymentReminderComponent implements OnInit {
         this.router.navigate([this.name.default_development.name_url + '/payment_system/add']);
     }
 
+    view(paymentreminder: PaymentReminder){
+        this.router.navigate([this.name.default_development.name_url + '/payment_system/view', paymentreminder._id]);
+    }
+
     publish(paymentreminder:PaymentReminder){
         this.paymentreminderService.publish(paymentreminder._id);
         this.ngOnInit()

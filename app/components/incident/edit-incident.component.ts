@@ -39,6 +39,7 @@ export class EditIncidentComponent implements OnInit {
     }
 
     ngOnInit(): void {
+        this.model.attachment = [];
         this.incidentService.getAll().subscribe(incidents => {
             this.incidents = incidents ;
             if(incidents.length > 0) { 
@@ -58,7 +59,6 @@ export class EditIncidentComponent implements OnInit {
             }  
         });
         this.userService.getByToken().subscribe(name => {this.name = name;})
-        this.model.attachment = [];
     	this.selectedType = 'general';
         this.route.params.subscribe(params => {
             this.id = params['id'];

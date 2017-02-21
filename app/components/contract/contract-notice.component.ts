@@ -80,7 +80,7 @@ export class ContractNoticeComponent implements OnInit  {
                 for (var i = 0; i < this.model.attachment.length; i++) {
                     formData.append("attachment", this.model.attachment[i]);
                 }
-            }
+            }   
             formData.append("start_time", this.model.start_time);
             formData.append("end_time", this.model.end_time);
             formData.append("title", this.model.title);

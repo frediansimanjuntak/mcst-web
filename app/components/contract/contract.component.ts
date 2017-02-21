@@ -18,8 +18,6 @@ export class ContractComponent implements OnInit  {
     contracts: Contract[] = [];
     contractnotes: any[];
     contractnotices: any[];
-    commence_date: any;
-    estimate_date: any;
     model: any = {};
     images: any[];
     id: string;
@@ -27,6 +25,7 @@ export class ContractComponent implements OnInit  {
     public open;
     public close;
     name: any;
+    
 
     constructor(private router: Router, 
         private contractService: ContractService, 
@@ -75,20 +74,20 @@ export class ContractComponent implements OnInit  {
 
     deleteContract(contract: Contract) {
         this.contractService.delete(contract._id)
-          .then(
+        .then(
             response => {
-              if(response) {
-                console.log(response);
-                // console.log(response.error());
-                alert(`The Contract could not be deleted, server Error.`);
-              } else {
-                this.alertService.success('Create contract successful', true);
-                alert(`Delete Contarct successful`);
-                this.ngOnInit()
-              }
+                if(response) {
+                    console.log(response);
+                    // console.log(response.error());
+                    alert(`The Contract could not be deleted, server Error.`);
+                } else {
+                    this.alertService.success('Create contract successful', true);
+                    alert(`Delete Contarct successful`);
+                    this.ngOnInit()
+                }
             },
             error=> {
-              console.log(error);
+                console.log(error);
                 alert(`The Newsletter could not be deleted, server Error.`);
             }
         );
@@ -96,39 +95,39 @@ export class ContractComponent implements OnInit  {
 
     deleteContractNote(contractnote: any , id:any) {
         this.contractnoteService.delete(id,contractnote._id)
-          .then(
+        .then(
             response => {
-              if(response) {
-                console.log(response);
-                // console.log(response.error());
-                alert(`The Contract could not be deleted, server Error.`);
-              } else {
-                this.alertService.success('Delete contract successful', true);
-                alert(`Delete Contarct successful`);
-                this.contractService.getById(id)
-                .subscribe(contract => {
-                    this.contract = contract;
-                    this.images = [];
-                    for (var i = 0; i < this.contract.attachment.length; ++i) {
-                        this.images.push({source:this.contract.attachment[i].url});
-                    };
-                });
-                this.contractnoteService.getAll(id)
-                .subscribe(contractnotes => {
-                    if(contractnotes[0].contract_note.length > 0) { 
-                        this.contractnotes = contractnotes[0].contract_note;
-                    }
-                })
-                this.contractnoticeService.getAll(id)
-                .subscribe(contractnotices => {
-                    if(contractnotices[0].contract_notice.length > 0) {
-                        this.contractnotices = contractnotices[0].contract_notice;
-                    }
-                })
-              }
+                if(response) {
+                    console.log(response);
+                    // console.log(response.error());
+                    alert(`The Contract could not be deleted, server Error.`);
+                } else {
+                    this.alertService.success('Delete contract successful', true);
+                    alert(`Delete Contarct successful`);
+                    this.contractService.getById(id)
+                    .subscribe(contract => {
+                        this.contract = contract;
+                        this.images = [];
+                        for (var i = 0; i < this.contract.attachment.length; ++i) {
+                            this.images.push({source:this.contract.attachment[i].url});
+                        };
+                    });
+                    this.contractnoteService.getAll(id)
+                    .subscribe(contractnotes => {
+                        if(contractnotes[0].contract_note.length > 0) { 
+                            this.contractnotes = contractnotes[0].contract_note;
+                        }
+                    })
+                    this.contractnoticeService.getAll(id)
+                    .subscribe(contractnotices => {
+                        if(contractnotices[0].contract_notice.length > 0) {
+                            this.contractnotices = contractnotices[0].contract_notice;
+                        }
+                    })
+                }
             },
             error=> {
-              console.log(error);
+                console.log(error);
                 alert(`The Newsletter could not be deleted, server Error.`);
             }
         );
@@ -137,23 +136,23 @@ export class ContractComponent implements OnInit  {
 	private loadAllContract() {
 		this.contractService.getAll().subscribe(contracts => {
 			this.contracts = contracts ;
-            console.log(contracts)
-            for (let i = 0; i < this.contracts.length; ++i) {
-                if(this.contracts[i].contract_notice.length > 1) {
-                    for (let a = 0; a < this.contracts[i].contract_notice.length; ++a) {
-                        // let y = this.contracts[i].contract_notice[a].end_time.toString().slice(0,4);
-                        // let m = this.contracts[i].contract_notice[a].end_time.toString().slice(5,7);
-                        // let d = this.contracts[i].contract_notice[a].end_time.toString().slice(8,10);
-                        // let date = Date.parse(y + '/' + m + '/' + d) ;
-                        // this.contracts[i].end_time = new Date(Math.max.apply(Math,date));
-                    }
-                }else{
-                    for (let a = 0; a < this.contracts[i].contract_notice.length; ++a) {
-                        this.contracts[i].start_time = this.contracts[i].contract_notice[a].start_time;
-                        this.contracts[i].end_time = this.contracts[i].contract_notice[a].end_time;
-                    }
-                }
-            }
+            // console.log(contracts)
+            // for (let i = 0; i < this.contracts.length; ++i) {
+            //     if(this.contracts[i].contract_notice.length > 1) {
+            //         for (let a = 0; a < this.contracts[i].contract_notice.length; ++a) {
+            //             let y = this.contracts[i].contract_notice[a].end_time.toString().slice(0,4);
+            //             let m = this.contracts[i].contract_notice[a].end_time.toString().slice(5,7);
+            //             let d = this.contracts[i].contract_notice[a].end_time.toString().slice(8,10);
+            //             let date = y + '/' + m + '/' + d;
+            //             this.contracts[i].end_time = new Date(Math.max.apply(Math,date));
+            //         }
+            //     }else{
+            //         for (let a = 0; a < this.contracts[i].contract_notice.length; ++a) {
+            //             this.contracts[i].start_time = this.contracts[i].contract_notice[a].start_time;
+            //             this.contracts[i].end_time = this.contracts[i].contract_notice[a].end_time;
+            //         }
+            //     }
+            // }
             this.open      = this.contracts.filter(contracts => contracts.status === 'open' );
             this.close     = this.contracts.filter(contracts => contracts.status === 'closed' );
 		});

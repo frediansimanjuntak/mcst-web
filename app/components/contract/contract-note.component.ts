@@ -45,26 +45,19 @@ export class ContractNoteComponent implements OnInit  {
             .subscribe(contract => {
                 this.contract = contract;
                 this.model.status = this.contract.status;
-                console.log(this.contract)
             });
         }
         if( this.id != null && this._id != null) {
-            this.contractService.getById(this.id)
-            .subscribe(contract => {
-                this.contract = contract;
-                this.contractnoteService.getById(this.id,this._id)
-                .subscribe(contractnotice => {
-                    this.contractnote = contractnotice.contract_note;
-                    this.images = [];
-                    // for (var i = 0; i < this.contractnote.attachment.length; ++i) {
-                    //     this.images.push({source:this.contractnote.attachment[i].url});
-                    // };
-                    console.log(this.contract , this.contractnote )
-                });
+            this.contractService.getById(this.id).subscribe(contract => {this.contract = contract;});
+            this.contractnoteService.getById(this.id,this._id)
+            .subscribe(contractnotice => {
+                this.contractnote = contractnotice.contract_notice[0];
+                this.images = [];
+                for (var i = 0; i < this.contractnote.attachment.length; ++i) {
+                    this.images.push({source:this.contractnote.attachment[i].url});
+                };
             });
-            
         }
-
     }
 
 	private loadContractNote() {
