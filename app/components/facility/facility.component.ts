@@ -4,6 +4,7 @@ import { Facility } from '../../models/index';
 import { FacilityService, AlertService, UserService } from '../../services/index';
 import '../../rxjs-operators';
 import { Observable} from 'rxjs/Observable';
+import { AppComponent } from '../index';
 
 @Component({
   // moduleId: module.id,
@@ -22,6 +23,7 @@ export class FacilityComponent implements OnInit {
         private facilityService: FacilityService,
         private alertService: AlertService,
         private route: ActivatedRoute,
+        private appComponent: AppComponent,
         private userService: UserService) {}
 
     ngOnInit() {
@@ -34,9 +36,11 @@ export class FacilityComponent implements OnInit {
         }else{
             this.facilityService.getFacility(this.id).then(facility => {this.facility = facility;});
         }
+        setTimeout(() => this.appComponent.loading = false, 1000);
     }
 
     deleteFacility(facility: Facility) {
+        this.appComponent.loading = true
         this.facilityService.delete(facility._id)
         .then(
 			response => {

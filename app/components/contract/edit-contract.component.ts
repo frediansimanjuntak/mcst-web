@@ -4,6 +4,7 @@ import { Contract } from '../../models/index';
 import { ContractService, AlertService, UserService, IncidentService } from '../../services/index';
 import '../../rxjs-operators';
 import 'rxjs/add/operator/switchMap';
+import { AppComponent } from '../index';
 
 @Component({
   // moduleId: module.id,
@@ -27,6 +28,7 @@ export class EditContractComponent  implements OnInit {
     	private alertService: AlertService,
         private route: ActivatedRoute,
         private userService: UserService,
+        private appComponent: AppComponent,
         private incidentService: IncidentService) {}
 
     ngOnInit(): void {
@@ -42,9 +44,11 @@ export class EditContractComponent  implements OnInit {
         if( this.id != null) {
             this.contractService.getById(this.id).subscribe(contract => this.contract = contract);
         }
+        setTimeout(() => this.appComponent.loading = false, 1000);
     }
 
     createContract() {
+        this.appComponent.loading = true
         if(this.model.attachment.length > 0) {
             let formData:FormData = new FormData();
             for (var i = 0; i < this.model.attachment.length; i++) {
@@ -81,6 +85,7 @@ export class EditContractComponent  implements OnInit {
     }
 
     updateContract(id:any){
+        this.appComponent.loading = true
         this.contract.attachment = this.model.attachment
 		this.contractService.update(this.contract)
 		.then(

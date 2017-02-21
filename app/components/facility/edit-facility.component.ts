@@ -6,6 +6,7 @@ import { FacilityService, AlertService, UserService } from '../../services/index
 import '../../rxjs-operators';
 import 'rxjs/add/operator/switchMap';
 import { TimepickerConfig } from 'ng2-bootstrap';
+import { AppComponent } from '../index';
 
 export function getTimepickerConfig(): TimepickerConfig {
   return Object.assign(new TimepickerConfig(), {
@@ -49,6 +50,7 @@ export class EditFacilityComponent  {
     	private alertService: AlertService,
         private formbuilder: FormBuilder,
         private route: ActivatedRoute,
+        private appComponent: AppComponent,
         private userService: UserService) {}
 
     ngOnInit(): void {
@@ -127,6 +129,7 @@ export class EditFacilityComponent  {
                 this.myForm.patchValue(this.facility);
             });
         }
+        setTimeout(() => this.appComponent.loading = false, 1000);
     }
 
     initSchedule() {
@@ -150,6 +153,7 @@ export class EditFacilityComponent  {
     }
 
     createFacility(model:any) {
+        this.appComponent.loading = true
         this.facilityService.create(model)
         .then(
             response => {
@@ -164,6 +168,7 @@ export class EditFacilityComponent  {
 
 
     updateFacility(facility:Facility){
+        this.appComponent.loading = true
 		this.facilityService.update(facility)
 		.then(
 			response => {

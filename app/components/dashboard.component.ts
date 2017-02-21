@@ -53,7 +53,7 @@ export class DashboardComponent implements OnInit{
 
     this.menus2 = this.menus[1].sub;
     this.menus3 = this.menus[7].sub;
-    this.appComponent.loading = false;
+    setTimeout(() => this.appComponent.loading = false, 1000);
   }
 
   start(link:any) {

@@ -5,6 +5,7 @@ import { PaymentService, AlertService, UserService } from '../../services/index'
 import '../../rxjs-operators';
 import { Observable } from 'rxjs/Observable';
 import { FileUploader } from 'ng2-file-upload';
+import { AppComponent } from '../index';
 
 @Component({
     // moduleId: module.id,
@@ -23,6 +24,7 @@ export class PaymentComponent implements OnInit {
         private paymentService: PaymentService, 
         private alertService: AlertService,
         private route: ActivatedRoute,
+        private appComponent: AppComponent,
         private userService: UserService) {}
 
     ngOnInit(): void {
@@ -35,9 +37,11 @@ export class PaymentComponent implements OnInit {
         }else{
         	this.paymentService.getPayment(this.id).then(payment => {this.payment = payment;});
         }
+        setTimeout(() => this.appComponent.loading = false, 1000);
     }
 
     deletePayment(payment: Payment) {
+        this.appComponent.loading = true
         this.paymentService.delete(payment._id)
           .then(
             response => {

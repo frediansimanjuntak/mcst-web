@@ -7,6 +7,7 @@ import { BookingService, AlertService, FacilityService, UserService, UnitService
 import '../../rxjs-operators';
 import { Observable} from 'rxjs/Observable';
 import * as moment from 'moment';
+import { AppComponent } from '../index';
 
 @Component({
   // moduleId: module.id,
@@ -62,6 +63,7 @@ export class BookingComponent implements OnInit {
         private formbuilder: FormBuilder,
 		private route: ActivatedRoute,
         private userService: UserService,
+        private appComponent: AppComponent,
         private unitService: UnitService,){}
 
 	ngOnInit() {
@@ -101,10 +103,11 @@ export class BookingComponent implements OnInit {
         }else{
         	this.bookingService.getBooking(this.id).then(booking => {this.booking = booking;});
         }
-
+        setTimeout(() => this.appComponent.loading = false, 1000);
     }
  
     deleteBooking(booking: Booking) {
+        this.appComponent.loading = true
         this.bookingService.delete(booking._id)
         .then(
 			response => {
@@ -112,7 +115,7 @@ export class BookingComponent implements OnInit {
 	                alert(`The booking could not be deleted, server Error.`);
 	            } else {
                     this.alertService.success('Delete booking successful', true);
-	                this.loadAllBookings()
+	                this.ngOnInit()
 	            }
             },
             error=> {
@@ -156,6 +159,7 @@ export class BookingComponent implements OnInit {
     }
 
     filter(booking: any){
+        this.appComponent.loading = true
         this.facility = booking.name;
         this.type = booking.type;
         this.status = booking.status;
@@ -210,6 +214,7 @@ export class BookingComponent implements OnInit {
                 );
             };
         });
+        setTimeout(() => this.appComponent.loading = false, 1000);
     }
 
     convertDate(date) {
@@ -222,6 +227,7 @@ export class BookingComponent implements OnInit {
     }
 
     public test() {
+        this.appComponent.loading = true
         this.day     = new Date(this.dt.getTime());
         this.day     = this.convertDate(this.day);
         this.ngOnInit();
