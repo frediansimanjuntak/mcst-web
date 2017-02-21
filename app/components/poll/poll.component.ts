@@ -54,6 +54,17 @@ export class PollComponent implements OnInit {
                                             this.poll = poll;
                                             this.max = this.poll.votes.length;
                                             
+                                            let y = this.poll.start_time.toString().slice(0,4);
+                                            let m = (this.poll.start_time+100).toString().slice(4,6);
+                                            let d = this.poll.start_time.toString().slice(6,8);
+                                            this.poll.start_time = y + '/' + m + '/' + d ;
+
+                                            y = this.poll.end_time.toString().slice(0,4);
+                                            m = (this.poll.end_time+100).toString().slice(4,6);
+                                            d = this.poll.end_time.toString().slice(6,8);
+                                            this.poll.end_time = y + '/' + m + '/' + d ;
+
+
                                             let numOptions =  this.poll.choices.length;
                                             let opts = new Array(numOptions);
 
