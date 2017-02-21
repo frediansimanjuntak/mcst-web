@@ -300,7 +300,7 @@ ul.ui-select-choices.dropdown-menu {
 }
 .dropdown-menu>li>a {
   font-weight: 400;
-  color: #fff;
+  color: #eee;
 }
 .nav .open>a, .nav .open>a:focus, .nav .open>a:hover {
   background-color: #2f3034;
@@ -945,4 +945,38 @@ img.ui-galleria-frame-image {
 /*costumize special page*/
 #manage-project span.ui-cell-data {
     color: #4a4a4a;
+}
+#resident-database td {
+    padding: 15px 10px !important;
+}
+
+.right-box {
+    background-color: #f9f9f9;
+}
+.left-box {
+    margin-top: 17px;
+    margin-left: 10px;
+}
+.col-md-10.no-padding {
+    height: 55px;
+}
+.col-md-2.no-padding {
+    height: 55px;
+    background-color: #f9f9f9;
+    cursor: pointer;
+}
+.border-box {
+    border: 1px solid #dedede;
+}
+.link-box {
+    color: #4a4a4a;
+    font-size: 13px;
+    cursor: pointer;
+}
+.link-box:hover {
+    color: #444;
+}
+p.field-box.no-margin {
+    font-size: 13px;
+    font-weight: bold;
 }
