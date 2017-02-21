@@ -65,7 +65,7 @@
                         </p-column>
                         <p-column styleClass="col-button" header="action">
                             <template let-published="rowData" pTemplate="body">
-                                <button type="button" (click)="deletePaymentReminder(published)"><i class="fa fa-trash" aria-hidden="true"></i></button>
+                                <button type="button" class="btn btn-trash" (click)="deletePaymentReminder(published)"><i class="fa fa-trash-o" aria-hidden="true"></i></button>
                             </template>
                         </p-column>
                     </p-dataTable>
