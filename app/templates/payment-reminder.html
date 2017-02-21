@@ -4,18 +4,41 @@
             <div class="title">{{ paymentreminder.title }}</div>
             <p class="id-location">Home > Payment system > {{ paymentreminder.title }}</p>
             <div class="row">
-                <div class="row">
-                    <div class="col-md-2 col-padding"><strong>Title :</strong></div>
-                    <div class="col-md-10 col-padding">{{ paymentreminder.title }}</div>
+                <div class="col-md-12">
+                    <div class="row">
+                        <div class="col-md-2 col-padding"><strong>Title :</strong></div>
+                        <div class="col-md-10 col-padding">{{ paymentreminder.title }}</div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-2 col-padding"><strong>Auto issue on :</strong></div>
+                        <div class="col-md-10 col-padding">{{ paymentreminder.auto_issue_on | date:'d/M/y' }}</div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-2 col-padding"><strong>Message to receiver :</strong></div>
+                        <div class="col-md-10 col-padding">{{ paymentreminder.message_to_receiver }}</div>
+                    </div>
                 </div>
-                <div class="row">
-                    <div class="col-md-2 col-padding"><strong>Auto issue on :</strong></div>
-                    <div class="col-md-10 col-padding">{{ paymentreminder.auto_issue_on | date:'d/M/y' }}</div>
+            </div>
+            <div class="row" style="margin-top: 30px;">
+                <div class="col-md-9">
+                    <p-dataTable [value]="notification_list">
+                        <p-column field="charge" header="Charge/Bill"></p-column>
+                        <p-column field="remarks" header="Remarks"></p-column>
+                        <p-column field="applies_to" header="Applies to" sortable="true"></p-column>
+                        <p-column field="amount" header="Amount"></p-column>
+                        <p-footerColumnGroup>
+                            <p-row>
+                                <p-column footer="Totals:" colspan="3"></p-column>
+                                <p-column footer="">
+                                    <template let-notification_list="rowData" pTemplate="footer">
+                                        <p>${{ total }}</p>
+                                    </template>
+                                </p-column>
+                            </p-row>
+                        </p-footerColumnGroup>
+                    </p-dataTable>
                 </div>
-                <div class="row">
-                    <div class="col-md-2 col-padding"><strong>Message to receiver :</strong></div>
-                    <div class="col-md-10 col-padding">{{ paymentreminder.message_to_receiver }}</div>
-                </div>
+                <div class="col-md-3"></div>
             </div>
         </div>
         <div *ngIf="!paymentreminder">
@@ -33,8 +56,8 @@
                     <!-- Draft -->
                     <tab heading="Draft">
                         <p-dataTable [value]="draft" [rows]="10" [paginator]="true" [responsive]="true">
-                            <p-column field="title" header="Title" [style]="{'width': '230px'}" sortable="true" [filter]="true" filterPlaceholder="Search title"></p-column>
-                            <p-column field="auto_issue_on" header="Auto issue on" [style]="{'width': '112px'}" sortable="true" [filter]="true" filterPlaceholder="Search auto issue date"></p-column>
+                            <p-column field="title" header="Title" [style]="{'width': '225px'}" sortable="true" [filter]="true" filterPlaceholder="Search title"></p-column>
+                            <p-column field="auto_issue_on" header="Auto issue on" [style]="{'width': '125px'}" sortable="true" [filter]="true" filterPlaceholder="Search auto issue date"></p-column>
                             <p-column field="due_on" header="Due on" [style]="{'width': '112px'}" sortable="true" [filter]="true" filterPlaceholder="Search due date">
                                 <template let-draft="rowData" pTemplate="body">
                                     <p>{{draft.due_on | date:'d/M/y'}}</p>
@@ -64,8 +87,8 @@
                     <!-- Published -->
                     <tab heading="Published">
                         <p-dataTable [value]="published" [rows]="10" [paginator]="true" [responsive]="true">
-                            <p-column field="title" header="Title" [style]="{'width': '230px'}" sortable="true" [filter]="true" filterPlaceholder="Search title"></p-column>
-                            <p-column field="auto_issue_on" header="Auto issue on" [style]="{'width': '112px'}" sortable="true" [filter]="true" filterPlaceholder="Search auto issue date"></p-column>
+                            <p-column field="title" header="Title" [style]="{'width': '225px'}" sortable="true" [filter]="true" filterPlaceholder="Search title"></p-column>
+                            <p-column field="auto_issue_on" header="Auto issue on" [style]="{'width': '125px'}" sortable="true" [filter]="true" filterPlaceholder="Search auto issue date"></p-column>
                             <p-column field="due_on" header="Due on" [style]="{'width': '112px'}" sortable="true" [filter]="true" filterPlaceholder="Search due date">
                                 <template let-published="rowData" pTemplate="body">
                                     <p>{{published.due_on | date:'d/M/y'}}</p>

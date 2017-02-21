@@ -810,12 +810,10 @@ p.pull-down {
 
 /*costumize table*/
 
-input.ui-column-filter.ui-inputtext.ui-corner-all.ui-state-default.ui-widget {
-    display: none;
-}
 th.ui-state-default.ui-unselectable-text {
-    text-align: left;
+    text-align: center;
     border: 0;
+    padding: 10px 0;
 }
 
 /*costumize Tabs/Pills*/
@@ -857,18 +855,9 @@ th.ui-state-default.ui-unselectable-text {
   background: #e8e8e8;
   color: #646464;
 }
-.tab-container input.ui-column-filter.ui-inputtext.ui-corner-all.ui-state-default.ui-widget {
-  display: none;
-}
 .tab-container th.ui-state-default.ui-unselectable-text.ui-sortable-column {
   height: 44px;
   text-align: left;
-}
-.tab-container .ui-column-filter.ui-dropdown.ui-widget.ui-state-default.ui-corner-all.ui-helper-clearfix {
-  display: none;
-}
-.tab-container span.ui-sortable-column-icon.fa.fa-fw.fa-sort {
-  display: none;
 }
 .tab-container img {
     width: 15px;
@@ -885,7 +874,7 @@ span.ui-cell-data {
     color: #6D6E71;
 }
 .col-padding {
-    padding: 10px;
+    padding: 10px 15px;
     font-size: 14px;
     color: #4a4a4a;
 }
@@ -942,6 +931,15 @@ img.ui-galleria-frame-image {
 }
 .ui-galleria-nav-next.fa.fa-fw.fa-chevron-circle-right {
     display: none;
+}
+
+/*costumize panel*/
+
+.panel-heading {
+    height: 40px;
+}
+.panel.panel-default {
+    margin-top: 25px;
 }
 
 /*costumize special page*/

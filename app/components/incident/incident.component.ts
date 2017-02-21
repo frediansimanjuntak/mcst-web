@@ -1,4 +1,4 @@
-import { Component, OnInit, EventEmitter } from '@angular/core';
+import { Component, OnInit, EventEmitter, ViewChild } from '@angular/core';
 import { Router, Params, ActivatedRoute } from '@angular/router';
 import { Incident } from '../../models/index';
 import { EditContractComponent } from '../index';
@@ -16,8 +16,10 @@ import { FileUploader } from 'ng2-file-upload';
 })
 
 export class IncidentComponent implements OnInit {
+    @ViewChild('firstModal') firstModal;
     reference_type: any; 
     reference_id: any; 
+    users: any[]
 	incident: Incident;
     incidents: Incident[] = [];
     model: any = {};
@@ -28,8 +30,8 @@ export class IncidentComponent implements OnInit {
     units: any;
     isFavorite = false;
     isArchieved = false;
+    resolveIncident: any;
     change = new EventEmitter();
-    status: any;
     public data;
     public dataNew;
     public dataInProgress;
@@ -44,11 +46,11 @@ export class IncidentComponent implements OnInit {
         private editcontractComponent: EditContractComponent,) {}
 
     ngOnInit(): void {
-        this.status = [];
-        this.status.push({label: 'All Brands', value: null});
-        this.status.push({label: 'New', value: 'new'});
-        this.status.push({label: 'In Progress', value: 'in progress'});
-        this.status.push({label: 'Resolved', value: 'resolved'});
+        // this.status = [];
+        // this.status.push({label: 'All Brands', value: null});
+        // this.status.push({label: 'New', value: 'new'});
+        // this.status.push({label: 'In Progress', value: 'in progress'});
+        // this.status.push({label: 'Resolved', value: 'resolved'});
         this.userService.getByToken().subscribe(name => {this.name = name;})
         this.route.params.subscribe(params => {
             this.id = params['id'];
@@ -66,6 +68,27 @@ export class IncidentComponent implements OnInit {
                 };
             });
         }
+    }
+
+    updateIncident(){
+        this.resolveIncident.remark = this.model.remark;
+        this.resolveIncident.resolved_by = this.model.resolved_by;
+        this.incidentService.update(this.resolveIncident)
+        .then(
+            response => {
+                this.alertService.success('Update incident successful', true);
+                this.firstModal.close();
+                this.ngOnInit();
+            },
+            error => {
+                this.alertService.error(error);
+            }
+        );
+    }
+
+    openModal(incident){
+        this.resolveIncident = incident;
+        this.userService.getAll().subscribe(users => {this.users = users;})
     }
 
     deleteIncident(incident: Incident) {

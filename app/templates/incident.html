@@ -62,7 +62,7 @@
                 <tabset>
                 <!-- ALL -->
                     <tab heading="All">
-                        <p-dataTable [value]="incidents" [rows]="10" [paginator]="true" #dt>
+                        <p-dataTable [value]="incidents" [rows]="10" [paginator]="true" [responsive]="true" #dt>
                             <p-column filterMatchMode="contains" field="reference_no" header="Report No." sortable="true" [filter]="true" filterPlaceholder="Search Report No."></p-column>
                             <p-column filterMatchMode="contains" [style]="{'text-transform': 'capitalize'}" field="incident_type" header="Type" sortable="true" [filter]="true" filterPlaceholder="Search Type"></p-column>
                             <p-column filterMatchMode="contains" field="created_by.username" header="Reported by" sortable="true" [filter]="true" filterPlaceholder="Search Reported by"></p-column>
@@ -75,13 +75,10 @@
                                     <a *ngIf="data.attachment == null">-</a>
                                 </template>
                             </p-column>
-                            <p-column [filter]="true" [style]="{'overflow':'visible'}" filterMatchMode="equals" field="status" header="Status" sortable="true">
-                                <template pTemplate="filter" let-col>
-                                    <p-dropdown [options]="status" [style]="{'width':'100%'}" (onChange)="dt.filter($event.value,col.field,col.filterMatchMode)" styleClass="ui-column-filter"></p-dropdown>
-                                </template>
-                            </p-column>
+                            <p-column [filter]="true" [style]="{'text-transform': 'capitalize'}" filterPlaceholder="Search status" filterMatchMode="contains" field="status" header="Status" sortable="true"></p-column>
                             <p-column [style]="{'width':'150px'}" styleClass="col-button" header="Action">
                                 <template let-data="rowData" pTemplate="body">
+                                    <a *ngIf="data.status == 'new'" type="button" style="text-decoration: underline;cursor:pointer" (click)="openModal(data) || firstModal.open()">Resolved</a>
                                     <a type="button" style="text-decoration: underline;cursor:pointer" (click)="view(data)">View</a>
                                     <img *ngIf="data.starred_by.length < 1" title="starred" src="../../assets/image/star_filled.png" width="24px" height="28px" (click)="starred(data)" />
                                     <img *ngIf="data.starred_by.length > 0" title="unstarred" src="../../assets/image/icon_star_active@3x.png" width="24px" height="28px" (click)="unstarred(data)" />
@@ -92,7 +89,7 @@
                     </tab>
                     <!-- NEW -->
                     <tab heading="New">
-                        <p-dataTable [value]="dataNew" [rows]="10" [paginator]="true">
+                        <p-dataTable [value]="dataNew" [rows]="10" [responsive]="true" [paginator]="true">
                             <p-column filterMatchMode="contains" field="reference_no" header="Report No." sortable="true" [filter]="true" filterPlaceholder="Search Report No."></p-column>
                             <p-column filterMatchMode="contains" [style]="{'text-transform': 'capitalize'}" field="incident_type" header="Type" sortable="true" [filter]="true" filterPlaceholder="Search Type"></p-column>
                             <p-column filterMatchMode="contains" field="created_by.username" header="Reported by" sortable="true" [filter]="true" filterPlaceholder="Search Reported by"></p-column>
@@ -105,13 +102,10 @@
                                     <a *ngIf="data.attachment == null">-</a>
                                 </template>
                             </p-column>
-                             <p-column [filter]="true" [style]="{'overflow':'visible'}" filterMatchMode="equals" field="status" header="Status" sortable="true">
-                                <template pTemplate="filter" let-col>
-                                    <p-dropdown [options]="status" [style]="{'width':'100%'}" (onChange)="dt.filter($event.value,col.field,col.filterMatchMode)" styleClass="ui-column-filter"></p-dropdown>
-                                </template>
-                            </p-column>
+                            <p-column [filter]="true" [style]="{'text-transform': 'capitalize'}" filterPlaceholder="Search status" filterMatchMode="contains" field="status" header="Status" sortable="true"></p-column>
                             <p-column [style]="{'width':'150px'}" styleClass="col-button" header="Action">
                                 <template let-data="rowData" pTemplate="body">
+                                    <a type="button" style="text-decoration: underline;cursor:pointer" (click)="openModal(data) || firstModal.open()">Resolved</a>
                                     <a type="button" style="text-decoration: underline;cursor:pointer" (click)="view(data)">View</a>
                                     <img *ngIf="data.starred_by == null" title="starred" src="../../assets/image/star_filled.png" width="24px" height="28px" (click)="starred(data)" />
                                     <img *ngIf="data.starred_by != null" title="unstarred" src="../../assets/image/icon_star_active@3x.png" width="24px" height="28px" (click)="unstarred(data)" />
@@ -122,7 +116,7 @@
                     </tab>
                     <!-- IN PROGRESS -->
                     <tab heading="In-Progress">
-                        <p-dataTable [value]="dataInProgress" [rows]="10" [paginator]="true" #dt>
+                        <p-dataTable [value]="dataInProgress" [rows]="10" [responsive]="true" [paginator]="true" #dt>
                             <p-column filterMatchMode="contains" field="reference_no" header="Report No." sortable="true" [filter]="true" filterPlaceholder="Search Report No."></p-column>
                             <p-column filterMatchMode="contains" [style]="{'text-transform': 'capitalize'}" field="incident_type" header="Type" sortable="true" [filter]="true" filterPlaceholder="Search Type"></p-column>
                             <p-column filterMatchMode="contains" field="created_by.username" header="Reported by" sortable="true" [filter]="true" filterPlaceholder="Search Reported by"></p-column>
@@ -135,11 +129,7 @@
                                     <a *ngIf="data.attachment == null">-</a>
                                 </template>
                             </p-column>
-                             <p-column [filter]="true" [style]="{'overflow':'visible'}" filterMatchMode="equals" field="status" header="Status" sortable="true">
-                                <template pTemplate="filter" let-col>
-                                    <p-dropdown [options]="status" [style]="{'width':'100%'}" (onChange)="dt.filter($event.value,col.field,col.filterMatchMode)" styleClass="ui-column-filter"></p-dropdown>
-                                </template>
-                            </p-column>
+                            <p-column [filter]="true" [style]="{'text-transform': 'capitalize'}" filterPlaceholder="Search status" filterMatchMode="contains" field="status" header="Status" sortable="true"></p-column>
                             <p-column [style]="{'width':'150px'}" styleClass="col-button" header="Action">
                                 <template let-data="rowData" pTemplate="body">
                                     <a type="button" style="text-decoration: underline;cursor:pointer" (click)="view(data)">View</a>
@@ -152,7 +142,7 @@
                     </tab>  
                     <!-- RESOLVED -->
                     <tab heading="Resolved">
-                        <p-dataTable [value]="dataResolved" [rows]="10" [paginator]="true" #dt>
+                        <p-dataTable [value]="dataResolved" [rows]="10" [responsive]="true" [paginator]="true" #dt>
                             <p-column filterMatchMode="contains" field="reference_no" header="Report No." sortable="true" [filter]="true" filterPlaceholder="Search Report No."></p-column>
                             <p-column filterMatchMode="contains" [style]="{'text-transform': 'capitalize'}" field="incident_type" header="Type" sortable="true" [filter]="true" filterPlaceholder="Search Type"></p-column>
                             <p-column filterMatchMode="contains" field="created_by.username" header="Reported by" sortable="true" [filter]="true" filterPlaceholder="Search Reported by"></p-column>
@@ -165,11 +155,7 @@
                                     <a *ngIf="data.attachment == null">-</a>
                                 </template>
                             </p-column>
-                             <p-column [filter]="true" [style]="{'overflow':'visible'}" filterMatchMode="equals" field="status" header="Status" sortable="true">
-                                <template pTemplate="filter" let-col>
-                                    <p-dropdown [options]="status" [style]="{'width':'100%'}" (onChange)="dt.filter($event.value,col.field,col.filterMatchMode)" styleClass="ui-column-filter"></p-dropdown>
-                                </template>
-                            </p-column>
+                            <p-column [filter]="true" [style]="{'text-transform': 'capitalize'}" filterPlaceholder="Search status" filterMatchMode="contains" field="status" header="Status" sortable="true"></p-column>
                             <p-column [style]="{'width':'150px'}" styleClass="col-button" header="Action">
                                 <template let-data="rowData" pTemplate="body">
                                     <a type="button" style="text-decoration: underline;cursor:pointer" (click)="view(data)">View</a>
@@ -182,6 +168,47 @@
                     </tab>  
                 </tabset>
             </div>  
+            <div class="row">
+                <modal #firstModal>
+                    <modal-header>
+                        <h5>Resolve incident</h5>
+                    </modal-header>
+                    <modal-content>
+                        <form class="form-horizontal" name="form" (ngSubmit)="f.form.valid && updateIncident(resolveIncident)" #f="ngForm" novalidate><br><br>
+                            <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !remark.valid }">
+                                <div class="row no-margin">
+                                    <label class="control-label col-sm-4" for="remark">Remark :</label>
+                                    <div class="col-sm-8">
+                                        <input type="text" class="form-control" name="remark" [(ngModel)]="model.remark" #remark="ngModel" required placeholder="Input remark here">
+                                        <small *ngIf="f.submitted && !remark.valid" class="help-block">Remark is required</small>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !resolved_by.valid }">
+                                <div class="row no-margin">
+                                    <label class="control-label col-sm-4" for="resolved_by">Resolved by :</label>
+                                    <div class="col-sm-8">
+                                        <select class="form-control" required name="resolved_by" [(ngModel)]="model.resolved_by" #resolved_by="ngModel">
+                                            <option *ngFor="let user of users" [ngValue]="user._id">
+                                                {{user.username}}
+                                            </option>
+                                        </select>
+                                        <small *ngIf="f.submitted && !resolved_by.valid" class="help-block">Remark is required</small>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row no-margin pull-bottom-right">
+                                <button class="btn btn-brown" [disabled]="loading">Save
+                                    <span>
+                                        <img *ngIf="loading" src="data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA==" />
+                                    </span>
+                                </button>
+                                <button class="btn btn-gray" (click)="firstModal.close()">Cancel</button>
+                            </div>
+                        </form>
+                    </modal-content>
+                </modal>
+            </div>
         </div>
     </div>
 </div>

@@ -51,7 +51,7 @@
                 <div class="form-group">
                     <label class="control-label col-sm-4" for="deposit_fee">Deposit Fee :</label>
                     <div class="col-sm-8">
-                        <input type="text" class="form-control" name="deposit_fee" formControlName="deposit_fee" required placeholder="Input deposit fee here" />
+                        <input type="text" (keypress)="number($event)" class="form-control" name="deposit_fee" formControlName="deposit_fee" required placeholder="Input deposit fee here" />
                         <small *ngIf="f.submitted && !myForm.controls.deposit_fee.valid" class="text-danger">
                         Name is required
                         </small>
@@ -60,7 +60,7 @@
                 <div class="form-group">
                     <label class="control-label col-sm-4" for="booking_fee">Booking Fee :</label>
                     <div class="col-sm-8">
-                        <input type="text" class="form-control" name="booking_fee" formControlName="booking_fee" required placeholder="Input booking fee here" />
+                        <input type="text" (keypress)="number($event)" class="form-control" name="booking_fee" formControlName="booking_fee" required placeholder="Input booking fee here" />
                         <small *ngIf="f.submitted && !myForm.controls.booking_fee.valid" class="text-danger">
                         Name is required
                         </small>
@@ -69,7 +69,7 @@
                 <div class="form-group">
                     <label class="control-label col-sm-4" for="admin_fee">Admin Fee :</label>
                     <div class="col-sm-8">
-                        <input type="text" class="form-control" name="admin_fee" formControlName="admin_fee" required placeholder="Input admin fee here" />
+                        <input type="text" (keypress)="number($event)" class="form-control" name="admin_fee" formControlName="admin_fee" required placeholder="Input admin fee here" />
                         <small *ngIf="f.submitted && !myForm.controls.admin_fee.valid" class="text-danger">
                         Name is required
                         </small>
@@ -190,7 +190,7 @@
                 <div class="form-group">
                     <label class="control-label col-sm-4" for="deposit_fee">Deposit Fee :</label>
                     <div class="col-sm-8">
-                        <input type="text" class="form-control" name="deposit_fee" formControlName="deposit_fee" required placeholder="Input deposit fee here" />
+                        <input type="text" (keypress)="number($event)" class="form-control" name="deposit_fee" formControlName="deposit_fee" required placeholder="Input deposit fee here" />
                         <small *ngIf="f.submitted && !myForm.controls.deposit_fee.valid" class="text-danger">
                         Name is required
                         </small>
@@ -199,7 +199,7 @@
                 <div class="form-group">
                     <label class="control-label col-sm-4" for="booking_fee">Booking Fee :</label>
                     <div class="col-sm-8">
-                        <input type="text" class="form-control" name="booking_fee" formControlName="booking_fee" required placeholder="Input booking fee here" />
+                        <input type="text" (keypress)="number($event)" class="form-control" name="booking_fee" formControlName="booking_fee" required placeholder="Input booking fee here" />
                         <small *ngIf="f.submitted && !myForm.controls.booking_fee.valid" class="text-danger">
                         Name is required
                         </small>
@@ -208,7 +208,7 @@
                 <div class="form-group">
                     <label class="control-label col-sm-4" for="admin_fee">Admin Fee :</label>
                     <div class="col-sm-8">
-                        <input type="text" class="form-control" name="admin_fee" formControlName="admin_fee" required placeholder="Input admin fee here" />
+                        <input type="text" (keypress)="number($event)" class="form-control" name="admin_fee" formControlName="admin_fee" required placeholder="Input admin fee here" />
                         <small *ngIf="f.submitted && !myForm.controls.admin_fee.valid" class="text-danger">
                         Name is required
                         </small>
