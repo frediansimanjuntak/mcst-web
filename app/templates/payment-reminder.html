@@ -19,40 +19,16 @@
                     </div>
                 </div>
             </div>
-            <div class="row">
-                <div class="col-md-8">
-                    <div class="panel panel-default">
-                        <div class="panel-heading">
-                            <div class="col-md-3">
-                                <span>Charge/Bill</span>
-                            </div>
-                            <div class="col-md-3">
-                                <span>Remarks</span>
-                            </div>
-                            <div class="col-md-3">
-                                <span>Applies to</span>
-                            </div>
-                            <div class="col-md-3">
-                                <span>Ammount</span>
-                            </div>
-                        </div>
-                        <div class="panel-body ng-untouched ng-pristine ng-valid">
-                            <div class="col-md-3">
-                                <span>Charge/Bill</span>
-                            </div>
-                            <div class="col-md-3">
-                                <span>Remarks</span>
-                            </div>
-                            <div class="col-md-3">
-                                <span>Applies to</span>
-                            </div>
-                            <div class="col-md-3">
-                                <span>Ammount</span>
-                            </div>
-                        </div>
-                    </div>
+            <div class="row" style="margin-top: 30px;">
+                <div class="col-md-9">
+                    <p-dataTable [value]="" scrollable="true">
+                        <p-column header="Charge/Bill" field=""></p-column>
+                        <p-column header="Remarks" field="" ></p-column>
+                        <p-column header="Applies to" field="" sortable="true"></p-column>
+                        <p-column header="Remarks" field=""></p-column>
+                    </p-dataTable>
                 </div>
-                <div class="col-md-4"></div>
+                <div class="col-md-3"></div>
             </div>
         </div>
         <div *ngIf="!paymentreminder">
@@ -70,8 +46,8 @@
                     <!-- Draft -->
                     <tab heading="Draft">
                         <p-dataTable [value]="draft" [rows]="10" [paginator]="true" [responsive]="true">
-                            <p-column field="title" header="Title" [style]="{'width': '230px'}" sortable="true" [filter]="true" filterPlaceholder="Search title"></p-column>
-                            <p-column field="auto_issue_on" header="Auto issue on" [style]="{'width': '112px'}" sortable="true" [filter]="true" filterPlaceholder="Search auto issue date"></p-column>
+                            <p-column field="title" header="Title" [style]="{'width': '225px'}" sortable="true" [filter]="true" filterPlaceholder="Search title"></p-column>
+                            <p-column field="auto_issue_on" header="Auto issue on" [style]="{'width': '125px'}" sortable="true" [filter]="true" filterPlaceholder="Search auto issue date"></p-column>
                             <p-column field="due_on" header="Due on" [style]="{'width': '112px'}" sortable="true" [filter]="true" filterPlaceholder="Search due date">
                                 <template let-draft="rowData" pTemplate="body">
                                     <p>{{draft.due_on | date:'d/M/y'}}</p>
@@ -101,8 +77,8 @@
                     <!-- Published -->
                     <tab heading="Published">
                         <p-dataTable [value]="published" [rows]="10" [paginator]="true" [responsive]="true">
-                            <p-column field="title" header="Title" [style]="{'width': '230px'}" sortable="true" [filter]="true" filterPlaceholder="Search title"></p-column>
-                            <p-column field="auto_issue_on" header="Auto issue on" [style]="{'width': '112px'}" sortable="true" [filter]="true" filterPlaceholder="Search auto issue date"></p-column>
+                            <p-column field="title" header="Title" [style]="{'width': '225px'}" sortable="true" [filter]="true" filterPlaceholder="Search title"></p-column>
+                            <p-column field="auto_issue_on" header="Auto issue on" [style]="{'width': '125px'}" sortable="true" [filter]="true" filterPlaceholder="Search auto issue date"></p-column>
                             <p-column field="due_on" header="Due on" [style]="{'width': '112px'}" sortable="true" [filter]="true" filterPlaceholder="Search due date">
                                 <template let-published="rowData" pTemplate="body">
                                     <p>{{published.due_on | date:'d/M/y'}}</p>

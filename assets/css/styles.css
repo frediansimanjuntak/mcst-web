@@ -811,8 +811,9 @@ p.pull-down {
 /*costumize table*/
 
 th.ui-state-default.ui-unselectable-text {
-    text-align: left;
+    text-align: center;
     border: 0;
+    padding: 10px 0;
 }
 
 /*costumize Tabs/Pills*/
@@ -930,6 +931,15 @@ img.ui-galleria-frame-image {
 }
 .ui-galleria-nav-next.fa.fa-fw.fa-chevron-circle-right {
     display: none;
+}
+
+/*costumize panel*/
+
+.panel-heading {
+    height: 40px;
+}
+.panel.panel-default {
+    margin-top: 25px;
 }
 
 /*costumize special page*/
