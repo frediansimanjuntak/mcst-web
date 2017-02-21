@@ -6,6 +6,7 @@ import { IncidentService, AlertService, UserService, UnitService } from '../../s
 import '../../rxjs-operators';
 import { Observable } from 'rxjs/Observable';
 import { FileUploader } from 'ng2-file-upload';
+import { AppComponent } from '../index';
 
 @Component({
     // moduleId: module.id,
@@ -43,6 +44,7 @@ export class IncidentComponent implements OnInit {
         private route: ActivatedRoute,
         private userService: UserService,
         private unitService: UnitService,
+        private appComponent: AppComponent,
         private editcontractComponent: EditContractComponent,) {}
 
     ngOnInit(): void {
@@ -68,9 +70,11 @@ export class IncidentComponent implements OnInit {
                 };
             });
         }
+        setTimeout(() => this.appComponent.loading = false, 1000);
     }
 
     updateIncident(){
+        this.appComponent.loading = true
         this.resolveIncident.remark = this.model.remark;
         this.resolveIncident.resolved_by = this.model.resolved_by;
         this.incidentService.update(this.resolveIncident)
@@ -87,11 +91,14 @@ export class IncidentComponent implements OnInit {
     }
 
     openModal(incident){
+        this.appComponent.loading = true
         this.resolveIncident = incident;
         this.userService.getAll().subscribe(users => {this.users = users;})
+        setTimeout(() => this.appComponent.loading = false, 1000);
     }
 
     deleteIncident(incident: Incident) {
+        this.appComponent.loading = true
         this.incidentService.delete(incident._id)
           .then(
             response => {
@@ -146,27 +153,32 @@ export class IncidentComponent implements OnInit {
     }
 
     add_project(reference_no:any, id:any){
+        this.appComponent.loading = true
         this.reference_id = id;
         this.reference_type = 'incident';
         this.router.navigate([this.name.default_development.name_url + '/add/contract/' + this.reference_type ,id ,reference_no]);    
     }
 
     public archieve(incident:Incident){
+        this.appComponent.loading = true
         this.incidentService.archieve(incident._id);
         this.ngOnInit()
     }
 
     public unarchieve(incident:Incident){
+        this.appComponent.loading = true
         this.incidentService.unarchieve(incident._id);
         this.ngOnInit()
     }
 
     starred(incident:Incident) {
+        this.appComponent.loading = true
         this.incidentService.starred(incident._id)
         this.ngOnInit()
     }
 
     unstarred(incident:Incident) {
+        this.appComponent.loading = true
         this.incidentService.unstarred(incident._id)
         this.ngOnInit()
     }

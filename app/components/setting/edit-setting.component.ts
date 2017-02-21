@@ -4,6 +4,7 @@ import { AlertService, UserService, DevelopmentService } from '../../services/in
 import { User } from '../../models/index';
 import 'rxjs/add/operator/switchMap';
 import '../../rxjs-operators';
+import { AppComponent } from '../index';
 
 @Component({
     // moduleId: module.id,
@@ -21,6 +22,7 @@ export class EditSettingComponent {
         private userService: UserService,
         private route: ActivatedRoute,
         private alertService: AlertService,
+        private appComponent: AppComponent,
         private developmentService: DevelopmentService) {}
 
     ngOnInit(): void {
@@ -31,10 +33,12 @@ export class EditSettingComponent {
         if( this.id != null) {
             this.userService.getUser(this.id).then(user => this.user = user);
         };
+        setTimeout(() => this.appComponent.loading = false, 1000);
         // this.developmentService.getAll().subscribe(developments => { this.developments = developments; });
     }
 
     updateSetting(){
+        this.appComponent.loading = true
         this.user.details.identification_proof.front = this.model.front;
         this.user.details.identification_proof.back = this.model.back;
 		this.userService.update(this.user)

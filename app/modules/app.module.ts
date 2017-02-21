@@ -142,7 +142,7 @@ import {
     PanelModule,
     FieldsetModule,
     DatepickerModule.forRoot(),
-    SimpleNotificationsModule,
+    SimpleNotificationsModule.forRoot(),
     // ModalModule.forRoot(),
     TabsModule.forRoot(),
     ModalModule,
@@ -249,6 +249,7 @@ import {
     LostFoundService,
     TestService,
     EditContractComponent,
+    AppComponent,
   ],
   bootstrap:    [ AppComponent ],
   // entryComponents: [ PublishAnnouncementModalComponent ] 
