@@ -300,7 +300,7 @@ ul.ui-select-choices.dropdown-menu {
 }
 .dropdown-menu>li>a {
   font-weight: 400;
-  color: #fff;
+  color: #eee;
 }
 .nav .open>a, .nav .open>a:focus, .nav .open>a:hover {
   background-color: #2f3034;
