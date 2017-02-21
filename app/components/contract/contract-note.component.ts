@@ -111,23 +111,6 @@ export class ContractNoteComponent implements OnInit  {
 =======
 >>>>>>> eda06c2d36ad38a7eeb0c9d5e29171da1942a423
         }
-        formData.append("status", this.model.status);
-        formData.append("note_remark", this.model.note_remark);
-        formData.append("reference_id", this.contract.reference_id);
-        this.route.params.subscribe(params => {
-            this.id = params['id'];
-            this._id = params['_id'];
-        });
-        this.contractnoteService.create(formData, this.id)
-        .then(
-            response => {
-                this.alertService.success('Create contract notice successful', true);
-                this.router.navigate([this.name.default_development.name_url + '/contract/view', id ]);
-            },
-            error => {
-                this.alertService.error(error);
-            }
-        );
     }
 
     deleteContractNote(contract: Contract) {

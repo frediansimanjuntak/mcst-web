@@ -102,22 +102,6 @@ export class EditIncidentComponent implements OnInit {
 =======
 >>>>>>> eda06c2d36ad38a7eeb0c9d5e29171da1942a423
         }
-        formData.append("reference_no", this.model.reference_no);
-        // formData.append("status", this.model.status);
-        formData.append("incident_type", this.model.incident_type);
-        formData.append("title", this.model.title);
-        formData.append("remark", this.model.remark);
-        this.incidentService.create(formData)
-        .then(
-            data => {
-                this.alertService.success('Create incident report successful', true);
-                this.router.navigate([this.name.default_development.name_url + '/incident']);
-            },
-            error => {
-                console.log(error);
-                alert(`The incident report could not be save, server Error.`);
-            }
-        );
     }
 
     updateIncident(){
