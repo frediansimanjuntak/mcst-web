@@ -136,6 +136,9 @@ export class ContractComponent implements OnInit  {
 		this.contractService.getAll().subscribe(contracts => {
 			this.contracts = contracts ;
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> eda06c2d36ad38a7eeb0c9d5e29171da1942a423
             console.log(contracts)
             for (let i = 0; i < this.contracts.length; ++i) {
                 if(this.contracts[i].contract_notice.length > 1) {
@@ -153,8 +156,11 @@ export class ContractComponent implements OnInit  {
                     }
                 }
             }
+<<<<<<< HEAD
 =======
 >>>>>>> ad077b63ccbda43ce0df54c8289848b8a943ed2e
+=======
+>>>>>>> eda06c2d36ad38a7eeb0c9d5e29171da1942a423
             this.open      = this.contracts.filter(contracts => contracts.status === 'open' );
             this.close     = this.contracts.filter(contracts => contracts.status === 'closed' );
 		});
