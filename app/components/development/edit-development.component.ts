@@ -4,6 +4,7 @@ import { Development } from '../../models/index';
 import { DevelopmentService, AlertService } from '../../services/index';
 import '../../rxjs-operators';
 import 'rxjs/add/operator/switchMap';
+import { AppComponent } from '../index';
 
 @Component({
   // moduleId: module.id,
@@ -19,6 +20,7 @@ export class EditDevelopmentComponent implements OnInit {
     constructor(private router: Router,
     	private developmentService: DevelopmentService,
     	private alertService: AlertService,
+        private appComponent: AppComponent,
         private route: ActivatedRoute,) {}
 
     ngOnInit(): void {

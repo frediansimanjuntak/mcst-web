@@ -6,6 +6,7 @@ import { BookingService, AlertService, FacilityService, UserService, UnitService
 import '../../rxjs-operators';
 import { Observable} from 'rxjs/Observable';
 import * as moment from 'moment';
+import { AppComponent } from '../index';
 
 export var Binformation: any[] = []
 
@@ -104,6 +105,7 @@ export class EditBookingComponent implements OnInit  {
 		private route: ActivatedRoute,
         private userService: UserService,
         private unitService: UnitService,
+        private appComponent: AppComponent,
         private paymentService: PaymentService){
         (this.minDate = new Date()).setDate(this.minDate.getDate());
     }
@@ -160,7 +162,7 @@ export class EditBookingComponent implements OnInit  {
         }else{
         	this.bookingService.getById(this.id).subscribe(booking => {this.booking = booking;});
         }
-
+        setTimeout(() => this.appComponent.loading = false, 1000);
     }
 
     private loadAllBookings() {
@@ -168,6 +170,7 @@ export class EditBookingComponent implements OnInit  {
     }
 
     createBooking() { 
+        this.appComponent.loading = true
         let formData:FormData = new FormData();
         for (var i = 0; i < this.model.payment_proof.length; i++) {
             formData.append("payment_proof[]", this.model.payment_proof[i]);
@@ -221,6 +224,7 @@ export class EditBookingComponent implements OnInit  {
     }
 
     time(event:any){
+        this.appComponent.loading = true
         this.times_end = [];
         this.times_start = []
         this.model.facility = event.target.value.slice(3);
@@ -247,12 +251,12 @@ export class EditBookingComponent implements OnInit  {
                    start += 1;
                    this.times_end.push(start)
             }
-            console.log(this.times_start , this.times_end)
         });
-            
+        this.appComponent.loading = false
     }
 
 	filter(data: any){
+        this.appComponent.loading = true
         this.booking_status = [];
         this.day = this.days[this.dt.getDay()];
         if(data.start < 10) {
@@ -308,6 +312,7 @@ export class EditBookingComponent implements OnInit  {
                     return n + (val == "Available");
                 }, 0);
             })
+        setTimeout(() => this.appComponent.loading = false, 1000);
     }
 
     public archieveSelected(start:any[],end:any[],min:any,name:any,type:any){
@@ -331,6 +336,7 @@ export class EditBookingComponent implements OnInit  {
     }
 
     public selectedDate() {  
+        this.appComponent.loading = true
         let date;
         date     = new Date(this.dt.getTime());
         date     = this.convertDate(date);
@@ -345,13 +351,17 @@ export class EditBookingComponent implements OnInit  {
     }
 
     next(){ 
+        this.appComponent.loading = true
         this.model.sender = "Mr. Nice";
         this.step = 2;
+        setTimeout(() => this.appComponent.loading = false, 1000);
     }
 
     change(){
+        this.appComponent.loading = true
         this.step = 1
         this.selectedValues = []
+        setTimeout(() => this.appComponent.loading = false, 1000);
     }
 
     onChange(event: any) {

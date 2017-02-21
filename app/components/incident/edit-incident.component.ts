@@ -6,6 +6,7 @@ import { FormBuilder, FormGroup } from '@angular/forms';
 import { FileUploader } from 'ng2-file-upload';
 import '../../rxjs-operators';
 import 'rxjs/add/operator/switchMap';
+import { AppComponent } from '../index';
 
 @Component({
   // moduleId: module.id,
@@ -34,6 +35,7 @@ export class EditIncidentComponent implements OnInit {
     	private incidentService: IncidentService,
     	private alertService: AlertService,
         private route: ActivatedRoute,
+        private appComponent: AppComponent,
         private userService: UserService) {
         // this.user = JSON.parse(localStorage.getItem('user'));
     }
@@ -66,9 +68,11 @@ export class EditIncidentComponent implements OnInit {
         if( this.id != null) {
             this.incidentService.getById(this.id).subscribe(incident => {this.incident = incident;});
         }
+        setTimeout(() => this.appComponent.loading = false, 1000);
     }
 
     createIncident(event: any) {
+        this.appComponent.loading = true
         if(this.model.attachment.length > 0) {
            let formData:FormData = new FormData();
             for (var i = 0; i < this.model.attachment.length; i++) {
@@ -94,6 +98,7 @@ export class EditIncidentComponent implements OnInit {
     }
 
     updateIncident(){
+        this.appComponent.loading = true
 		this.incidentService.update(this.incident)
 		.then(
 			response => {

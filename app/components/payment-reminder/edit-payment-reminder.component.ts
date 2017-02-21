@@ -4,6 +4,7 @@ import { FormBuilder, FormControl, FormGroup, FormArray, Validators, ReactiveFor
 import { PaymentReminder, User, Development } from '../../models/index';
 import { PaymentReminderService, DevelopmentService, UserService, AlertService } from '../../services/index';
 import '../../rxjs-operators';
+import { AppComponent } from '../index';
 
 
 @Component({
@@ -27,6 +28,7 @@ export class EditPaymentReminderComponent implements OnInit{
     	private developmentService: DevelopmentService,
     	private userService: UserService,
     	private alertService: AlertService,
+        private appComponent: AppComponent,
         private route: ActivatedRoute,
         private formbuilder: FormBuilder ) {}
 
@@ -66,6 +68,7 @@ export class EditPaymentReminderComponent implements OnInit{
                 this.myForm.patchValue(this.paymentreminder);
             });
         }
+        setTimeout(() => this.appComponent.loading = false, 1000);
     }
 
     initNotification_list() {
@@ -97,6 +100,7 @@ export class EditPaymentReminderComponent implements OnInit{
     }
 
     createPaymentReminder(model:PaymentReminder) {
+        this.appComponent.loading = true
         this.paymentreminderService.create(model)
         .then(
             data => {
@@ -111,6 +115,7 @@ export class EditPaymentReminderComponent implements OnInit{
     }
 
     updatePaymentReminder(paymentreminder:PaymentReminder){
+        this.appComponent.loading = true
         this.paymentreminderService.update(paymentreminder)
         .then(
             response => {

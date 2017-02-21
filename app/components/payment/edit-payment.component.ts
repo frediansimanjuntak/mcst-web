@@ -4,6 +4,7 @@ import { Payment, User, Development } from '../../models/index';
 import { PaymentService, DevelopmentService, UserService, AlertService } from '../../services/index';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import '../../rxjs-operators';
+import { AppComponent } from '../index';
 
 
 @Component({
@@ -26,6 +27,7 @@ export class EditPaymentComponent implements OnInit{
     	private developmentService: DevelopmentService,
     	private userService: UserService,
     	private alertService: AlertService,
+        private appComponent: AppComponent,
         private formbuilder: FormBuilder ) {
 
         // this.user = JSON.parse(localStorage.getItem('user'));
@@ -33,9 +35,11 @@ export class EditPaymentComponent implements OnInit{
 
     ngOnInit():void{ 
         this.userService.getByToken().subscribe(name => {this.name = name;})
+        setTimeout(() => this.appComponent.loading = false, 1000);
     }
 
     createPayment() {
+        this.appComponent.loading = true
         this.paymentService.create(this.model)
         .then(
             data => {

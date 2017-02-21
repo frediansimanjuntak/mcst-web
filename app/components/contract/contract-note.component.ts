@@ -5,6 +5,7 @@ import { ContractService, AlertService, UserService, ContractNoteService } from 
 import '../../rxjs-operators';
 import 'rxjs/add/operator/switchMap';
 import { Observable} from 'rxjs/Observable';
+import { AppComponent } from '../index';
 
 @Component({
   // moduleId: module.id,
@@ -30,6 +31,7 @@ export class ContractNoteComponent implements OnInit  {
         private contractnoteService: ContractNoteService,
         private alertService: AlertService,
         private userService: UserService,
+        private appComponent: AppComponent,
         private route: ActivatedRoute) {}
 
     ngOnInit(): void {
@@ -58,6 +60,7 @@ export class ContractNoteComponent implements OnInit  {
                 };
             });
         }
+        setTimeout(() => this.appComponent.loading = false, 1000);
     }
 
 	private loadContractNote() {
@@ -77,6 +80,7 @@ export class ContractNoteComponent implements OnInit  {
     }
 
     createContractNote(id:any) {
+        this.appComponent.loading = true
         if(this.model.attachment.length > 0) {
             let formData:FormData = new FormData();
             for (var i = 0; i < this.model.attachment.length; i++) {
@@ -103,6 +107,7 @@ export class ContractNoteComponent implements OnInit  {
     }
 
     deleteContractNote(contract: Contract) {
+        this.appComponent.loading = true
         this.route.params.subscribe(params => {
             this.id = params['id'];
             this._id = params['_id'];

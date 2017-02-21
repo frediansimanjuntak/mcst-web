@@ -4,6 +4,7 @@ import { User } from '../../models/index';
 import { UserService, AlertService } from '../../services/index';
 import '../../rxjs-operators';
 import { Observable} from 'rxjs/Observable';
+import { AppComponent } from '../index';
 
 @Component({
     // moduleId: module.id,
@@ -17,11 +18,12 @@ export class SettingComponent implements OnInit {
     name: any;
     model: any = {};
 
-    constructor(private router: Router,private userService: UserService,private alertService: AlertService) {}
+    constructor(private router: Router,private userService: UserService,private appComponent: AppComponent,private alertService: AlertService) {}
 
     ngOnInit() {
         this.userService.getByToken().subscribe(name => {this.name = name;})
         this.loadSetting();
+        setTimeout(() => this.appComponent.loading = false, 1000);
     }
 
     private loadSetting() {

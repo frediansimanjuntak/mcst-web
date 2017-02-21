@@ -5,6 +5,7 @@ import { FeedbackService, AlertService, UserService } from '../../services/index
 import '../../rxjs-operators';
 import { Observable } from 'rxjs/Observable';
 import { FileUploader } from 'ng2-file-upload';
+import { AppComponent } from '../index';
 
 @Component({
     // moduleId: module.id,
@@ -29,11 +30,13 @@ export class FeedbackComponent implements OnInit {
         private feedbackService: FeedbackService, 
         private alertService: AlertService,
         private route: ActivatedRoute,
+        private appComponent: AppComponent,
         private userService: UserService) {}
 
     ngOnInit(): void {
         this.userService.getByToken().subscribe(name => {this.name = name;})
         this.loadAllFeedback();
+        setTimeout(() => this.appComponent.loading = false, 1000);
     }
 
     deleteFeedback(feedback: Feedback) {
@@ -65,11 +68,14 @@ export class FeedbackComponent implements OnInit {
     }
 
     openModal(feedback){
+        this.appComponent.loading = true
         this.feedback = feedback;
         this.feedback_reply = feedback.feedback_reply;   
+        setTimeout(() => this.appComponent.loading = false, 1000);
     }
 
     replyFeedback(){
+        this.appComponent.loading = true
         this.feedbackService.reply(this.feedback)
         .then(
             response => {
@@ -98,16 +104,19 @@ export class FeedbackComponent implements OnInit {
     }
 
     archive(feedback:Feedback){
+        this.appComponent.loading = true
         this.feedbackService.archieve(feedback._id);
         this.ngOnInit()
     }
 
     publish(feedback:Feedback){
+        this.appComponent.loading = true
         this.feedbackService.publish(feedback._id);
         this.ngOnInit()
     }
 
     unarchive(feedback:Feedback){
+        this.appComponent.loading = true
         this.feedbackService.unarchieve(feedback._id);
         this.ngOnInit()
     }

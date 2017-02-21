@@ -5,6 +5,7 @@ import { ContractService, AlertService, UserService, ContractNoteService, Contra
 import '../../rxjs-operators';
 import { Observable} from 'rxjs/Observable';
 import { FileUploader } from 'ng2-file-upload';
+import { AppComponent } from '../index';
 
 
 @Component({
@@ -33,6 +34,7 @@ export class ContractComponent implements OnInit  {
         private route: ActivatedRoute,
         private userService: UserService,
         private contractnoteService:ContractNoteService,
+        private appComponent: AppComponent,
         private contractnoticeService:ContractNoticeService) {}
 
     ngOnInit(): void {
@@ -70,9 +72,11 @@ export class ContractComponent implements OnInit  {
                 }
             })
         }
+        setTimeout(() => this.appComponent.loading = false, 1000);
     }
 
     deleteContract(contract: Contract) {
+        this.appComponent.loading = true
         this.contractService.delete(contract._id)
         .then(
             response => {
@@ -94,6 +98,7 @@ export class ContractComponent implements OnInit  {
     }
 
     deleteContractNote(contractnote: any , id:any) {
+        this.appComponent.loading = true
         this.contractnoteService.delete(id,contractnote._id)
         .then(
             response => {

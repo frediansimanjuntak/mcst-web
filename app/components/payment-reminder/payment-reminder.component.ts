@@ -5,6 +5,7 @@ import { PaymentReminderService, AlertService, UserService } from '../../service
 import '../../rxjs-operators';
 import { Observable } from 'rxjs/Observable';
 import { FileUploader } from 'ng2-file-upload';
+import { AppComponent } from '../index';
 
 @Component({
     // moduleId: module.id,
@@ -28,6 +29,7 @@ export class PaymentReminderComponent implements OnInit {
         private paymentreminderService: PaymentReminderService, 
         private alertService: AlertService,
         private route: ActivatedRoute,
+        private appComponent: AppComponent,
         private userService: UserService) {}
 
     ngOnInit(): void {
@@ -49,9 +51,11 @@ export class PaymentReminderComponent implements OnInit {
                 }
             });
         }
+        setTimeout(() => this.appComponent.loading = false, 1000);
     }
 
     deletePaymentReminder(paymentreminder: PaymentReminder) {
+        this.appComponent.loading = true
         this.paymentreminderService.delete(paymentreminder._id)
           .then(
             response => {
@@ -109,6 +113,7 @@ export class PaymentReminderComponent implements OnInit {
     }
 
     publish(paymentreminder:PaymentReminder){
+        this.appComponent.loading = true
         this.paymentreminderService.publish(paymentreminder._id);
         this.ngOnInit()
     }

@@ -4,6 +4,7 @@ import { Development } from '../../models/index';
 import { DevelopmentService, AlertService } from '../../services/index';
 import '../../rxjs-operators';
 import { Observable} from 'rxjs/Observable';
+import { AppComponent } from '../index';
 
 
 @Component({
@@ -17,7 +18,7 @@ export class DevelopmentComponent implements OnInit {
     developments: Development[] = [];
     model: any = {};
 
-    constructor(private router: Router,private developmentService: DevelopmentService,private alertService: AlertService) {}
+    constructor(private router: Router,private developmentService: DevelopmentService,private appComponent: AppComponent,private alertService: AlertService) {}
 
     ngOnInit() {
         this.loadAllDevelopments();
