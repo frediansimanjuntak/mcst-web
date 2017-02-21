@@ -5,8 +5,8 @@
 		</div>
 		<p class="id-location">Home > Guest & Visitors {{ tomorrow }}</p>
 		{{ afterTomorrow}}
-		<div class="row no-margin">
-			<div class="col-md-8 no-padding top-block">
+		<div class="row no-margin top-block">
+			<div class="col-md-8 no-padding">
 				<div class="input-group filter-search">
 					<input type="text" class="form-control input-search" placeholder="Search name, vehicle no., unit no." name="filter">
 					<span class="input-group-btn">
@@ -14,7 +14,7 @@
 					</span>
 				</div>
 			</div>
-			<div class="col-md-4 pull-right no-padding top-block">
+			<div class="col-md-4 pull-right no-padding">
 				<button type="button" class="btn btn-default btn-add pull-right" (click)="firstModal.open()"><img class="img-btn" src="../../assets/image/icon_add.png" />&nbsp;Add Visitor/Guest</button>
 				<a class="btn btn-default btn-print pull-right"><img class="img-btn" src="../../assets/image/icon_print.png" (click)="print()" />&nbsp;Print</a>
 			</div>

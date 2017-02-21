@@ -77,6 +77,10 @@ export class ContractNoteComponent implements OnInit  {
     }
 
     createContractNote(id:any) {
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> eda06c2d36ad38a7eeb0c9d5e29171da1942a423
         if(this.model.attachment.length > 0) {
             let formData:FormData = new FormData();
             for (var i = 0; i < this.model.attachment.length; i++) {
@@ -99,6 +103,14 @@ export class ContractNoteComponent implements OnInit  {
                     this.alertService.error(error);
                 }
             );
+<<<<<<< HEAD
+=======
+        let formData:FormData = new FormData();
+        for (var i = 0; i < this.model.attachment.length; i++) {
+            formData.append("attachment", this.model.attachment[i]);
+>>>>>>> ad077b63ccbda43ce0df54c8289848b8a943ed2e
+=======
+>>>>>>> eda06c2d36ad38a7eeb0c9d5e29171da1942a423
         }
     }
 
