@@ -55,13 +55,13 @@
                             <div *ngFor="let owned of myForm.controls.notification_list.controls; let i=index" class="form-group">
                                 <div class="panel-body" [formGroupName]="i">
                                     <div class="col-md-12">
-                                        <input class="form-control" style="width: 150px" type="text" formControlName="charge" />&nbsp;
-                                        <input class="form-control" style="width: 300px" type="text" formControlName="remarks" /> &nbsp;
-                                        <select class="form-control" style="width: 150px" formControlName="applies_to">
+                                        <input class="form-control" style="width: 150px; float: left; margin-right: 10px" type="text" formControlName="charge" />&nbsp;
+                                        <input class="form-control" style="width: 300px; float: left; margin-right: 10px" type="text" formControlName="remarks" /> &nbsp;
+                                        <select class="form-control" style="width: 150px; float: left; margin-right: 20px" formControlName="applies_to">
                                             <option value="all">All</option>
                                             <option value="resident with vehicle">Resident with vehicle</option>
                                         </select> &nbsp;
-                                        <input class="form-control" style="width: 100px" type="text" formControlName="amount" />
+                                        <input (keypress)="number($event)" class="form-control" style="width: 100px" type="text" formControlName="amount" />
                                         <span *ngIf="myForm.controls.notification_list.controls.length > 1" (click)="removeNotification_list(i)"><img src="../../assets/image/icon_close_black.png" width="10px" height="10px"></span>
                                     </div>
                                 </div>
@@ -137,13 +137,13 @@
                             <div *ngFor="let owned of myForm.controls.notification_list.controls; let i=index" class="form-group">
                                 <div class="panel-body" [formGroupName]="i">
                                     <div class="col-md-11">
-                                        <input class="form-control" style="width: 150px; float: left; margin-right: 5px" type="text" formControlName="charge" />&nbsp;
-                                        <input class="form-control" style="width: 300px; float: left; margin-right: 5px" type="text" formControlName="remarks" /> &nbsp;
-                                        <select class="form-control" style="width: 150px; float: left; margin-right: 5px" formControlName="applies_to">
+                                        <input class="form-control" style="width: 150px; float: left; margin-right: 10px" type="text" formControlName="charge" />&nbsp;
+                                        <input class="form-control" style="width: 300px; float: left; margin-right: 10px" type="text" formControlName="remarks" /> &nbsp;
+                                        <select class="form-control" style="width: 150px; float: left; margin-right: 20px" formControlName="applies_to">
                                             <option value="all">All</option>
                                             <option value="resident with vehicle">Resident with vehicle</option>
                                         </select> &nbsp;
-                                        <input class="form-control" style="width: 100px; float: left; margin-right: 5px" type="text" formControlName="amount" />
+                                        <input (keypress)="number($event)" class="form-control" style="width: 100px; float: left; margin-right: 5px" type="text" formControlName="amount" />
                                         <span *ngIf="myForm.controls.notification_list.controls.length > 1" (click)="removeNotification_list(i)"><img src="../../assets/image/icon_close_black.png" width="10px" height="10px"></span>
                                     </div>
                                 </div>

@@ -58,7 +58,6 @@ export class EditPaymentReminderComponent implements OnInit{
             this.paymentreminderService.getById(this.id)
             .subscribe(paymentreminder => {
                 this.paymentreminder = paymentreminder; 
-                this.paymentreminder.auto_issue_on = this.paymentreminder.auto_issue_on.slice(0,10);
                 this.paymentreminder.due_on = this.paymentreminder.due_on.slice(0,10);
                 for (let i = 0; i < this.paymentreminder.notification_list.length; i++) {
                     const control = <FormArray>this.myForm.controls['notification_list'];
@@ -87,6 +86,14 @@ export class EditPaymentReminderComponent implements OnInit{
     removeNotification_list(i: number) {
         const control = <FormArray>this.myForm.controls['notification_list'];
         control.removeAt(i);
+    }
+
+    number(event: any) {
+        const pattern = /[0-9\+\ ]/;
+        let inputChar = String.fromCharCode(event.charCode);
+        if (!pattern.test(inputChar)) {
+            event.preventDefault();
+        }
     }
 
     createPaymentReminder(model:PaymentReminder) {

@@ -176,6 +176,14 @@ export class EditFacilityComponent  {
         );
 	}
 
+    number(event: any) {
+        const pattern = /[0-9\+\ ]/;
+        let inputChar = String.fromCharCode(event.charCode);
+        if (!pattern.test(inputChar)) {
+            event.preventDefault();
+        }
+    }
+
     cancel(){
         this.router.navigate([this.name.default_development.name_url + '/facility' ]);
     }
