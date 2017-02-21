@@ -4,6 +4,7 @@ import { Router, Params, ActivatedRoute } from '@angular/router';
 import { AlertService, UserService, UnitService } from '../../services/index';
 import { User, Development, Users } from '../../models/index';
 import { EqualValidator } from './equal-validator.directive';
+import { AppComponent } from '../index';
 import 'rxjs/add/operator/switchMap';
 import '../../rxjs-operators';
 
@@ -32,7 +33,8 @@ export class EditUserComponent implements OnInit {
         private route: ActivatedRoute,
         private alertService: AlertService,
         private formbuilder: FormBuilder,
-        private unitService: UnitService) {}
+        private unitService: UnitService,
+        private appComponent: AppComponent,) {}
 
 
 

@@ -4,6 +4,7 @@ import { User } from '../../models/index';
 import { UserService, AlertService } from '../../services/index';
 import '../../rxjs-operators';
 import { Observable} from 'rxjs/Observable';
+import { AppComponent } from '../index';
 
 @Component({
     // moduleId: module.id,
@@ -18,7 +19,10 @@ export class UserComponent implements OnInit {
     developmentID = "1";
     name: any;
 
-    constructor(private router: Router,private userService: UserService,private alertService: AlertService) {}
+    constructor(private router: Router,
+        private userService: UserService,
+        private alertService: AlertService,
+        private appComponent: AppComponent,) {}
 
     ngOnInit() {
         this.userService.getByToken().subscribe(name => {this.name = name;})

@@ -3,6 +3,7 @@ import { Router, Params, ActivatedRoute } from '@angular/router';
 import { FormBuilder, FormControl, FormGroup, FormArray, Validators } from '@angular/forms';
 import { UserGroup, UserGroups, User, Users } from '../../models/index';
 import { UserGroupService, UserService, AlertService } from '../../services/index';
+import { AppComponent } from '../index';
 import '../../rxjs-operators';
 import 'rxjs/add/operator/switchMap';
 
@@ -42,7 +43,8 @@ export class EditUserGroupComponent implements OnInit {
     	private userService: UserService,
     	private alertService: AlertService,
     	private formbuilder: FormBuilder,
-        private route: ActivatedRoute,) {
+        private route: ActivatedRoute,
+        private appComponent: AppComponent,) {
     }
     
     ngOnInit(): void {

@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Notification, Notifications } from '../models/index';
 import { NotificationService, AlertService, UserService} from '../services/index';
 import { Router} from '@angular/router';
+import { AppComponent } from './index';
 import '../rxjs-operators';
 import { Observable} from 'rxjs/Observable';
 

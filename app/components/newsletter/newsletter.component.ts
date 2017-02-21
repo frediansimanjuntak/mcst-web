@@ -4,6 +4,7 @@ import { Development } from '../../models/index';
 import { NewsletterService, AlertService, UserService} from '../../services/index';
 import '../../rxjs-operators';
 import { FileUploader } from 'ng2-file-upload';
+import { AppComponent } from '../index';
 import { Observable} from 'rxjs/Observable';
 
 @Component({
@@ -35,7 +36,8 @@ export class NewsletterComponent implements OnInit {
                 private router: Router,
                 private newsletterservice: NewsletterService, 
                 private alertService: AlertService,
-                private userService: UserService) {
+                private userService: UserService,
+                private appComponent: AppComponent,) {
     }
 
           

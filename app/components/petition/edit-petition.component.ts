@@ -4,7 +4,7 @@ import { Petition, Petitions } from '../../models/index';
 import { UnitService, PetitionService, AlertService, UserService } from '../../services/index';
 import { FormBuilder, FormControl, FormGroup, FormArray, Validators } from '@angular/forms';
 import { FileUploader } from 'ng2-file-upload';
-
+import { AppComponent } from '../index';
 import '../../rxjs-operators';
 import 'rxjs/add/operator/switchMap';
 
@@ -45,7 +45,8 @@ export class EditPetitionComponent implements OnInit {
     	private alertService: AlertService,
         private route: ActivatedRoute,
         private formbuilder: FormBuilder,
-        private userService: UserService) {
+        private userService: UserService,
+        private appComponent: AppComponent,) {
         // this.user = JSON.parse(localStorage.getItem('user'));
     }
 

@@ -7,6 +7,7 @@ import '../../rxjs-operators';
 import { Observable} from 'rxjs/Observable';
 import { Location }               from '@angular/common';
 import * as $ from "jquery";
+import { AppComponent } from '../index';
 // import { Overlay } from 'angular2-modal';
 // import { Modal } from 'angular2-modal/plugins/bootstrap';
 // import { PublishAnnouncementModalComponent, PublishAnnouncementModalData } from './publish-announcement-modal.component';
@@ -56,7 +57,8 @@ export class PetitionComponent implements OnInit {
                 private location: Location,
                 private userService: UserService,
                 private unitService: UnitService,
-                private _notificationsService: NotificationsService
+                private _notificationsService: NotificationsService,
+                private appComponent: AppComponent,
                 ) {}
 
     ngOnInit(): void {

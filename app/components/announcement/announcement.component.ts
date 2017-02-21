@@ -1,6 +1,7 @@
 import { Component, OnInit, ViewContainerRef, ViewEncapsulation, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { Announcement, Announcements} from '../../models/index';
+import { AppComponent } from '../index';
 import { AnnouncementService, AlertService, UserService} from '../../services/index';
 import '../../rxjs-operators';
 import { Observable} from 'rxjs/Observable';
@@ -54,7 +55,8 @@ export class AnnouncementComponent implements OnInit {
                 private router: Router,
                 private announcementService: AnnouncementService,
                 private alertService: AlertService,
-                private userService: UserService
+                private userService: UserService,
+                private appComponent: AppComponent,
                 ) {
 
     }

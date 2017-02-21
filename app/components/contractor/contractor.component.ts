@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import { Contractor, Contractors } from '../../models/index';
 import { ContractorService, AlertService, UserService} from '../../services/index';
 import '../../rxjs-operators';
+import { AppComponent } from '../index';
 import { Observable} from 'rxjs/Observable';
 import * as $ from "jquery";
 // import { Overlay } from 'angular2-modal';
@@ -30,6 +31,7 @@ export class ContractorComponent implements OnInit {
                 private contractorService: ContractorService,
                 private alertService: AlertService,
                 private userService: UserService,
+                private appComponent: AppComponent,
                 ) {
 
     }

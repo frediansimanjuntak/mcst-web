@@ -4,6 +4,7 @@ import { FormBuilder, FormControl, FormGroup, FormArray, Validators } from '@ang
 import { Company, Companies, Contractor, Contractors } from '../../models/index';
 import { CompanyService, ContractorService, AlertService, UserService } from '../../services/index';
 import '../../rxjs-operators';
+import { AppComponent } from '../index';
 import 'rxjs/add/operator/switchMap';
 
 @Component({
@@ -41,7 +42,8 @@ export class EditContractorComponent implements OnInit {
     	private alertService: AlertService,
     	private formbuilder: FormBuilder,
         private userService: UserService,
-        private route: ActivatedRoute,) {
+        private route: ActivatedRoute,
+        private appComponent: AppComponent,) {
     }
 
     ngOnInit(): void {

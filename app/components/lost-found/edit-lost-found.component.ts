@@ -4,6 +4,7 @@ import { LostFound, LostFounds } from '../../models/index';
 import { Http, Headers, RequestOptions, Response } from '@angular/http';
 import { LostFoundService, AlertService, UserService, UnitService } from '../../services/index';
 import { FormBuilder, FormGroup, FormControl, FormArray, Validators } from '@angular/forms';
+import { AppComponent } from '../index';
 import { FileUploader } from 'ng2-file-upload';
 import { Observable} from 'rxjs/Observable';
 import '../../rxjs-operators';
@@ -39,6 +40,7 @@ export class EditLostFoundComponent  {
         private userService: UserService,
         private unitService: UnitService,
         private http: Http, 
+        private appComponent: AppComponent,
          ) {
 
         // this.user = JSON.parse(localStorage.getItem('user'));

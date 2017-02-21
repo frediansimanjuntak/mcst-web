@@ -5,6 +5,7 @@ import { UnitService, AlertService, UserService } from '../../services/index';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Location }               from '@angular/common';
 import { Observable} from 'rxjs/Observable';
+import { AppComponent } from '../index';
 import '../../rxjs-operators';
 import 'rxjs/add/operator/switchMap';
 
@@ -48,7 +49,8 @@ export class ViewUnitComponent implements OnInit {
     	private alertService: AlertService,
         private userService: UserService,
         private formbuilder: FormBuilder,
-        private location: Location ) {
+        private location: Location,
+        private appComponent: AppComponent, ) {
 
         // this.user = JSON.parse(localStorage.getItem('user'));
     }

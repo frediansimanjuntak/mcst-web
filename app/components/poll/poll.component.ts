@@ -4,6 +4,7 @@ import { Poll } from '../../models/index';
 import { PollService, AlertService, UserService} from '../../services/index';
 import { Observable} from 'rxjs/Observable';
 import { Location }               from '@angular/common';
+import { AppComponent } from '../index';
 import * as $ from "jquery";
 import '../../rxjs-operators';
 
@@ -33,7 +34,8 @@ export class PollComponent implements OnInit {
                 private alertService: AlertService,
                 private route: ActivatedRoute,
                 private location: Location,
-                private userService: UserService
+                private userService: UserService,
+                private appComponent: AppComponent,
                 ) {  
         this.today = new Date();
       }
