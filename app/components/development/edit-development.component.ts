@@ -30,9 +30,11 @@ export class EditDevelopmentComponent implements OnInit {
         if( this.id != null) {
             this.developmentService.getById(this.id).subscribe(development => this.development = development);
         }
+        setTimeout(() => this.appComponent.loading = false, 1000);
     }
 
     createDevelopment() {
+        this.appComponent.loading = true
         this.developmentService.create(this.model)
         .then(
             response => {
@@ -46,6 +48,7 @@ export class EditDevelopmentComponent implements OnInit {
     }
 
     updateDevelopment(){
+        this.appComponent.loading = true
 		this.developmentService.update(this.development)
 		.then(
 			response => {

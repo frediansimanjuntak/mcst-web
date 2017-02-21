@@ -47,7 +47,7 @@ export class NewsletterComponent implements OnInit {
             this.name = name;
             this.loadAllNewsletters();
           })
-        this.getUsers();
+        setTimeout(() => this.appComponent.loading = false, 1000);
     }
 
     public toInt(num: string) {
@@ -59,6 +59,7 @@ export class NewsletterComponent implements OnInit {
     }
 
     deleteNewsletter(newsletter: any) {
+        this.appComponent.loading = true
         this.newsletterservice.delete(newsletter._id, this.name.default_development.name_url)
           .then(
             response => {
@@ -79,6 +80,7 @@ export class NewsletterComponent implements OnInit {
     }
 
     releaseNewsletter(){
+        this.appComponent.loading = true
       
       this.newsletterservice.release(this.newsletter._id, this.name.default_development.name_url)
           .then(
@@ -116,20 +118,9 @@ export class NewsletterComponent implements OnInit {
     }
 
     openModal(newsletter:any){
+        this.appComponent.loading = true
       this.newsletter = newsletter;
-    }
-
-    getUsers(): void {
-        this.userService.getUsers().then(users => {
-            this.users = users;
-        });
-
-        // this.userService.getAll()
-        //     .subscribe((data)=> {
-        //         setTimeout(()=> {
-        //            this.users = data;
-        //         }, 1000);
-        //     });
+        setTimeout(() => this.appComponent.loading = false, 1000);
     }
 
     add(){

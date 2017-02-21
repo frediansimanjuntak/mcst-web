@@ -131,9 +131,7 @@ export class VisitComponent implements OnInit {
             // disableUntil: {year: 2016, month: 8, day: 10},
             selectionTxtFontSize: '16px'
         };
-
-
-
+        setTimeout(() => this.appComponent.loading = false, 1000);
     }
 
     convertDate(date) {
@@ -148,6 +146,7 @@ export class VisitComponent implements OnInit {
 	}
 
     preCheckIn(visit){
+        this.appComponent.loading = true
     	this.visit = visit;
    		this.checkInForm = this.formbuilder.group({
 			 	property: [{value: visit.visiting, disabled: true}],
@@ -160,10 +159,12 @@ export class VisitComponent implements OnInit {
                 remarks : [{ value: visit.remarks, disabled: true}],
                 check_in: [''],
         });
+        setTimeout(() => this.appComponent.loading = false, 1000);
          // this.myForm.setValue(this.user);
     }
 
     preCheckOut(visit){
+        this.appComponent.loading = true
         this.visitOut = visit;
            this.checkOutForm = this.formbuilder.group({
                  property: [{value: visit.visiting, disabled: true}],
@@ -176,10 +177,12 @@ export class VisitComponent implements OnInit {
                 remarks : [{ value: visit.remarks, disabled: true}],
                 check_in: [''],
         });
+        setTimeout(() => this.appComponent.loading = false, 1000);
          // this.myForm.setValue(this.user);
     }
 
     checkOut(model: any, isValid: boolean){
+        this.appComponent.loading = true
         this.checkOutSsubmitted = true;
 
         if(isValid === true){
@@ -221,6 +224,7 @@ export class VisitComponent implements OnInit {
     }
 
     checkIn(model: any, isValid: boolean) {
+        this.appComponent.loading = true
         this.checkInSsubmitted = true;
         if(isValid === true){
             this.loading = true;
@@ -243,6 +247,7 @@ export class VisitComponent implements OnInit {
     }
 
     addGuest(model: any, isValid: boolean) {
+        this.appComponent.loading = true
         this.addSubmitted = true;
         if(model.check_in === true){
         	model.check_in = new Date();
@@ -285,6 +290,7 @@ export class VisitComponent implements OnInit {
                     this.loading = false;
                 }, 1000);
             });
+            setTimeout(() => this.appComponent.loading = false, 1000);
     }
 
     private loadAllUnits(): void {
@@ -298,6 +304,7 @@ export class VisitComponent implements OnInit {
     }
 
     onPickerClick(event:any) {
+        this.appComponent.loading = true
       this.visitActive  = [];
       this.activeDate = event.formatted;
       this.activeDateFull = event.jsdate;
@@ -318,6 +325,7 @@ export class VisitComponent implements OnInit {
     }
 
     previousDay(){
+        this.appComponent.loading = true
         this.visitActive  = [];
     	(this.activeDate = new Date()).setDate(this.activeDateFull.getDate() - 1);
     	this.activeDateFull = this.activeDate;
@@ -325,6 +333,7 @@ export class VisitComponent implements OnInit {
     }
 
     nextDay(){
+        this.appComponent.loading = true
         this.visitActive  = [];
     	(this.activeDate = new Date()).setDate(this.activeDateFull.getDate() + 1);
     	this.activeDateFull = this.activeDate;

@@ -83,6 +83,7 @@ export class ViewUnitComponent implements OnInit {
                 registered_on: [''],
                 remarks: [''],
         });
+        setTimeout(() => this.appComponent.loading = false, 1000);
     }
 
     getUsers(): void {
@@ -129,24 +130,8 @@ export class ViewUnitComponent implements OnInit {
     public selected(value:any):void {
     }
 
-    updateUnit(){
-        // this.unitservice.update(model)
-        // .then(
-        //     response => {
-        //         this.alertService.success('Update development successful', true);
-        //         this.router.navigate(['/development']);
-        //     },
-        //     error => {
-        //         this.alertService.error(error);
-        //     }
-        // );
-    }
-
-    goBack(): void {
-        this.location.back();
-    }
-
     deleteResident(resident: any){
+        this.appComponent.loading = true
         this.unitservice.deleteTenant(resident._id, this.unit._id, this.name.default_development.name_url)
             .then(
                 response => {
@@ -167,6 +152,7 @@ export class ViewUnitComponent implements OnInit {
     }
 
     deleteVehicle(vehicle: any){
+        this.appComponent.loading = true
         this.unitservice.deleteRegVehicle(vehicle._id, this.unit._id, this.name.default_development.name_url)
             .then(
                 response => {
@@ -187,11 +173,15 @@ export class ViewUnitComponent implements OnInit {
     }
 
     openResidentDetail(resident: any){
+        this.appComponent.loading = true
         this.resident = resident;
+        setTimeout(() => this.appComponent.loading = false, 1000);
     }
 
     openVehicleDetail(vehicle: any){
+        this.appComponent.loading = true
         this.vehicle = vehicle;
+        setTimeout(() => this.appComponent.loading = false, 1000);
     }
 
     goToUnit(){

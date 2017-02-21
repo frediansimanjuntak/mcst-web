@@ -27,9 +27,11 @@ export class UserComponent implements OnInit {
     ngOnInit() {
         this.userService.getByToken().subscribe(name => {this.name = name;})
         this.loadAllUsers();
+        setTimeout(() => this.appComponent.loading = false, 1000);
     }
 
     deleteUser(user:User) {
+        this.appComponent.loading = true
         this.model.development = this.name.default_development._id;
         if(user.user_group){
             this.model.user_group = user.user_group; 

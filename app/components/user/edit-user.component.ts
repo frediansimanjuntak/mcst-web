@@ -146,6 +146,7 @@ export class EditUserComponent implements OnInit {
             }
             
         }
+        setTimeout(() => this.appComponent.loading = false, 1000);
      // this.developmentService.getAll().subscribe(developments => { this.developments = developments; });
     }
 
@@ -198,6 +199,7 @@ export class EditUserComponent implements OnInit {
     }
 
     createUser(model:any , isValid: boolean) {
+        this.appComponent.loading = true
        if(this.type=='tenant'){
            model.rented_property.development = this.name.default_development._id;
            
@@ -227,6 +229,7 @@ export class EditUserComponent implements OnInit {
     }
 
     updateUser(user:User){
+        this.appComponent.loading = true
 		this.userService.update(this.user)
 		.then(
             response => {

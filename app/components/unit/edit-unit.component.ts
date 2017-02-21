@@ -51,7 +51,6 @@ export class EditUnitComponent implements OnInit {
 
     ngOnInit() {
         this.userService.getByToken().subscribe(name => {this.name = name;})
-        this.getUsers();
         this.submitted = false;
         this.myForm = this.formbuilder.group({
                 address: this.formbuilder.group({
@@ -77,27 +76,11 @@ export class EditUnitComponent implements OnInit {
                        this.unit = unit.propeties;
                     });
         }
-    }
-
-    getUsers(): void {
-        this.userService.getUsers().then(users => {
-            this.users = users;
-            let numOptions =  this.users.length;
-            let opts = new Array(numOptions);
-
-            for (let i = 0; i < numOptions; i++) {
-                opts[i] = {
-                    id: this.users[i]._id,
-                    text: this.users[i].username
-                };
-            }
-
-            this.myOptions = opts.slice(0);
-            this.items = this.myOptions;
-        });
+        setTimeout(() => this.appComponent.loading = false, 1000);
     }
 
     createUnit(model: any, isValid: boolean) {
+        this.appComponent.loading = true
         this.submitted = true;
         
         if(isValid){
@@ -124,6 +107,7 @@ export class EditUnitComponent implements OnInit {
     }
 
     updateUnit(){
+        this.appComponent.loading = true
         this.unitservice.update(this.unit, this.name.default_development.name_url)
         .then(
             response => {

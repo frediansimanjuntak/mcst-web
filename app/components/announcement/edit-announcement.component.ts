@@ -97,10 +97,11 @@ export class EditAnnouncementComponent  {
                                             });
                                 };
                             })
+        setTimeout(() => this.appComponent.loading = false, 1000);
     }
 
     createAnnouncement() {
-        console.log(this.model)
+        this.appComponent.loading = true
         this.anouncementService.create(this.model)
         .then(
             data => {
@@ -152,6 +153,7 @@ export class EditAnnouncementComponent  {
     }
 
     updateAnnouncement(){
+        this.appComponent.loading = true
         this.announcement.auto_post_on  = this.model.auto_post_on;
         this.announcement.valid_till = this.model.valid_till;
         

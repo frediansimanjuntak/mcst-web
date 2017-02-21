@@ -97,6 +97,7 @@ export class EditPollComponent  {
 											});
 						        };
         					})
+        setTimeout(() => this.appComponent.loading = false, 1000);
     }
 
 
@@ -141,6 +142,7 @@ export class EditPollComponent  {
     }
 
     createPoll() {
+        this.appComponent.loading = true
     	this.model.status = 'draft';
         if (this.model.poll_type == 'yes_or_no'){
             this.model.choices = ['yes', 'no'];
@@ -160,6 +162,7 @@ export class EditPollComponent  {
     }
 
     updatePoll(){
+        this.appComponent.loading = true
         this.pollService.update(this.poll)
 		.then(
 			response => {

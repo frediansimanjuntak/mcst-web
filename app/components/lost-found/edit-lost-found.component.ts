@@ -53,7 +53,8 @@ export class EditLostFoundComponent  {
                                 this.loadAllUnits();
                                 this.getLastSerialNo();
                             })
-        this.model.photo = [];                            
+        this.model.photo = [];    
+        setTimeout(() => this.appComponent.loading = false, 1000);                        
         
     }
 
@@ -68,6 +69,7 @@ export class EditLostFoundComponent  {
     }
 
     createReport(event: any) {
+        this.appComponent.loading = true
         // this.model.serial_number = 142141;
         this.model.archieve = false;
         if(this.model.photo.length > 0 && this.model.property && this.model.type){

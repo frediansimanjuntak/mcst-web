@@ -37,10 +37,11 @@ export class UnitComponent implements OnInit {
                 this.name = name;
                 this.loadAllUnits();
             })
-        this.getUsers();
+        setTimeout(() => this.appComponent.loading = false, 1000);
     }
 
     deleteUnit(unit: any) {
+        this.appComponent.loading = true
         this.unitservice.delete(unit._id, this.developmentId)
           .then(
             response => {
@@ -69,12 +70,6 @@ export class UnitComponent implements OnInit {
                     this.loading = false;
                 }, 1000);
             });
-    }
-
-    getUsers(): void {
-        this.userService.getUsers().then(users => {
-            this.users = users;
-        });
     }
 
     view(unit: any){

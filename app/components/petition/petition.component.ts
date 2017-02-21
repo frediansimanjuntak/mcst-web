@@ -71,12 +71,14 @@ export class PetitionComponent implements OnInit {
                                 this.name = name;
                                 this.loadAllUnits();
                             })
+        setTimeout(() => this.appComponent.loading = false, 1000);
     }
 
     private logCheckbox(element: HTMLInputElement): void {
     }
 
     deletePetition(petition) {
+        this.appComponent.loading = true
         this.petitionService.delete(petition._id)
           .then(
             response => {
@@ -97,7 +99,7 @@ export class PetitionComponent implements OnInit {
     }
 
     openModal(petition){
-
+        
     }
 
     private loadAllUnits(): void {
@@ -146,6 +148,7 @@ export class PetitionComponent implements OnInit {
   	}
 
     archieveSelected(){
+        this.appComponent.loading = true
         this.model.ids = this.selectedValues;
         this.petitionService.archive(this.model) .then(
                     data => {
