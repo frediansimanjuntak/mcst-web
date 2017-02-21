@@ -4,18 +4,55 @@
             <div class="title">{{ paymentreminder.title }}</div>
             <p class="id-location">Home > Payment system > {{ paymentreminder.title }}</p>
             <div class="row">
-                <div class="row">
-                    <div class="col-md-2 col-padding"><strong>Title :</strong></div>
-                    <div class="col-md-10 col-padding">{{ paymentreminder.title }}</div>
+                <div class="col-md-12">
+                    <div class="row">
+                        <div class="col-md-2 col-padding"><strong>Title :</strong></div>
+                        <div class="col-md-10 col-padding">{{ paymentreminder.title }}</div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-2 col-padding"><strong>Auto issue on :</strong></div>
+                        <div class="col-md-10 col-padding">{{ paymentreminder.auto_issue_on | date:'d/M/y' }}</div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-2 col-padding"><strong>Message to receiver :</strong></div>
+                        <div class="col-md-10 col-padding">{{ paymentreminder.message_to_receiver }}</div>
+                    </div>
                 </div>
-                <div class="row">
-                    <div class="col-md-2 col-padding"><strong>Auto issue on :</strong></div>
-                    <div class="col-md-10 col-padding">{{ paymentreminder.auto_issue_on | date:'d/M/y' }}</div>
+            </div>
+            <div class="row">
+                <div class="col-md-8">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <div class="col-md-3">
+                                <span>Charge/Bill</span>
+                            </div>
+                            <div class="col-md-3">
+                                <span>Remarks</span>
+                            </div>
+                            <div class="col-md-3">
+                                <span>Applies to</span>
+                            </div>
+                            <div class="col-md-3">
+                                <span>Ammount</span>
+                            </div>
+                        </div>
+                        <div class="panel-body ng-untouched ng-pristine ng-valid">
+                            <div class="col-md-3">
+                                <span>Charge/Bill</span>
+                            </div>
+                            <div class="col-md-3">
+                                <span>Remarks</span>
+                            </div>
+                            <div class="col-md-3">
+                                <span>Applies to</span>
+                            </div>
+                            <div class="col-md-3">
+                                <span>Ammount</span>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-                <div class="row">
-                    <div class="col-md-2 col-padding"><strong>Message to receiver :</strong></div>
-                    <div class="col-md-10 col-padding">{{ paymentreminder.message_to_receiver }}</div>
-                </div>
+                <div class="col-md-4"></div>
             </div>
         </div>
         <div *ngIf="!paymentreminder">
