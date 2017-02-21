@@ -375,7 +375,7 @@ dashboard .title {
   margin: 10px 0 0 0;
 }
 .content-box .content-right {
-    margin: 10px 0 0 0;
+    margin: 10px 0 0 5px;
 }
 .img-content {
   width: 120px;
@@ -582,18 +582,16 @@ p.pull-down {
 }
 .btn-brown {
   background-color: #b6ad96;
-  border: 1px solid #9a8d6b;
+  border: 0 !important;
   color: #fff;
   font-weight: bold;
   height: 44px;
   min-width: 130px !important;
-  font-size: 13px;
-  font-family: arial;
   padding: 10px;
+  box-shadow: 0 3px 0 0 #9a8d6b;
 }
 .btn-brown:active, .btn-brown:hover, .btn-brown:focus, .btn-brown:active:hover, .btn-brown:active:focus {
   background-color: #d4cab1;
-  border: 1px solid #9a8d6b;
   color: #fff;
   outline-style: none;
 }
@@ -677,17 +675,17 @@ p.pull-down {
   box-shadow: 0 3px 0 0 #bbb;
 }
 .btn-trash:hover {
-    background-color: #bdbdbd;
+  background-color: #bdbdbd;
 }
 .btn-trash .fa.fa-trash-o {
-  font-size: 20px;
+  font-size: 18px;
 }
 .btn-publish {
-  margin-right: 10px;
   border-radius: 4px !important;
-  box-shadow: 0 3px 0 0 #bbb;
+  height: 35px !important;
+  min-width: 75px !important;
+  font-weight: normal;
 }
-
 /*breadcrumb*/
 
 .id-location {
