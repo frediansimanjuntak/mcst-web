@@ -4,6 +4,7 @@ import { Development, Developments } from '../../models/index';
 import { NewsletterService, AlertService, UserService } from '../../services/index';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { FileUploader } from 'ng2-file-upload';
+import { AppComponent } from '../index';
 import '../../rxjs-operators';
 import { User } from '../../models/index';
 
@@ -28,7 +29,8 @@ export class EditNewsletterComponent  {
     	private newsletterService: NewsletterService,
     	private alertService: AlertService,
         private formbuilder: FormBuilder,
-        private userService: UserService ) {
+        private userService: UserService,
+        private appComponent: AppComponent, ) {
 
         // this.user = JSON.parse(localStorage.getItem('user'));
     }

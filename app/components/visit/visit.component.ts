@@ -1,8 +1,8 @@
 import { Component, OnInit, ViewContainerRef, ViewEncapsulation, ViewChild } from '@angular/core';
 import { Router, Params, ActivatedRoute } from '@angular/router';
+import { AppComponent } from '../index';
 import { Visit, Visits } from '../../models/index';
 import { VisitService, AlertService, UserService, UnitService} from '../../services/index';
-import { NotificationsService } from 'angular2-notifications';
 import '../../rxjs-operators';
 import { Observable} from 'rxjs/Observable';
 import { Location }               from '@angular/common';
@@ -60,7 +60,7 @@ export class VisitComponent implements OnInit {
                 private formbuilder: FormBuilder,
                 private userService: UserService,
                 private unitService: UnitService,
-                private _notificationsService: NotificationsService
+                private appComponent: AppComponent,
     ){
         this.visitDateCreate = new Date();
         this.activeDate = this.activeDateFull = new Date();
@@ -189,24 +189,12 @@ export class VisitComponent implements OnInit {
                     data => {
                         this.checkOutModal.close();
                         this.ngOnInit();
-                        this._notificationsService.success(
-                            'Success',
-                            'Check out '+ this.visitOut.visitor.prefix + ' ' + this.visitOut.visitor.full_name + 'successful',
-                        )
+                        this.appComponent.showNotification('success', 'Check out '+ this.visitOut.visitor.prefix + ' ' + this.visitOut.visitor.full_name + 'successful');
                     },
                     error => {
                         console.log(error);
-                        this.checkOutModal.close();
-                        this._notificationsService.error(
-                            'Error',
-                            'Check out failed, server Error',
-                            {
-                                timeOut: 3000,
-                                showProgressBar: true,
-                                pauseOnHover: true,
-                                clickToClose: true,
-                            }
-                        )
+                        this.checkOutModal.close();this.appComponent.showNotification('error', 'Check in failed, server Error');
+                        this.appComponent.showNotification('error', 'Check out failed, server Error');
                         this.loading = false;
                     }
                 );
@@ -241,24 +229,12 @@ export class VisitComponent implements OnInit {
                     data => {
                         this.checkInModal.close();
                         this.ngOnInit();
-                        this._notificationsService.success(
-                            'Success',
-                            'Check in '+ this.visit.visitor.prefix + ' ' + this.visit.visitor.full_name + 'successful',
-                        )
+                        this.appComponent.showNotification('success', 'Check in '+ this.visit.visitor.prefix + ' ' + this.visit.visitor.full_name + 'successful');
                     },
                     error => {
                         console.log(error);
                         this.checkInModal.close();
-                        this._notificationsService.error(
-                            'Error',
-                            'Check in failed, server Error',
-                            {
-                                timeOut: 3000,
-                                showProgressBar: true,
-                                pauseOnHover: true,
-                                clickToClose: true,
-                            }
-                        )
+                        this.appComponent.showNotification('error', 'Check in failed, server Error');
                         this.loading = false;
                     }
                 );
@@ -281,18 +257,12 @@ export class VisitComponent implements OnInit {
                 data => {
                     this.firstModal.close();
                     this.ngOnInit();
-                    this._notificationsService.success(
-                            'Success',
-                            'Add guest successful',
-                        )
+                    this.appComponent.showNotification('success', 'Add guest successful');
                 },
                 error => {
                     console.log(error);
                     this.firstModal.close();
-                    this._notificationsService.error(
-                        'Error',
-                        'Add guest failed, server Error',
-                    )
+                    this.appComponent.showNotification('error', 'Add guest failed, server Error');
                     this.loading = false;
                 }
             );

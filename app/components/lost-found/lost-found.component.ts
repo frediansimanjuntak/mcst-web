@@ -4,6 +4,7 @@ import { LostFound, LostFounds } from '../../models/index';
 import { LostFoundService, AlertService, UserService, UnitService} from '../../services/index';
 import '../../rxjs-operators';
 import { Observable} from 'rxjs/Observable';
+import { AppComponent } from '../index';
 import { Location }               from '@angular/common';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import * as $ from "jquery";
@@ -49,6 +50,7 @@ export class LostFoundComponent implements OnInit {
                 private formbuilder: FormBuilder,
                 private userService: UserService,
                 private unitService: UnitService,
+                private appComponent: AppComponent,
                 ) {
     }
 

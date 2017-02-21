@@ -4,6 +4,7 @@ import { Poll } from '../../models/index';
 import { PollService, AlertService, UserService } from '../../services/index';
 import { FormBuilder, FormGroup, FormControl, FormArray, Validators } from '@angular/forms';
 import {IMyOptions} from 'mydatepicker';
+import { AppComponent } from '../index';
 import '../../rxjs-operators';
 import 'rxjs/add/operator/switchMap';
 
@@ -53,7 +54,8 @@ export class EditPollComponent  {
     	private alertService: AlertService,
         private formbuilder: FormBuilder,
         private route: ActivatedRoute,
-        private userService: UserService ) {
+        private userService: UserService,
+        private appComponent: AppComponent, ) {
 
     }
 

@@ -5,6 +5,7 @@ import { UserGroupService, UserService, AlertService} from '../../services/index
 import '../../rxjs-operators';
 import { FileUploader } from 'ng2-file-upload';
 import { Observable} from 'rxjs/Observable';
+import { AppComponent } from '../index';
 
 @Component({
   // moduleId: module.id,
@@ -32,7 +33,8 @@ export class UserGroupComponent implements OnInit {
                 private router: Router,
                 private userGroupService: UserGroupService,
     			private userService: UserService,
-    			private alertService: AlertService) {
+    			private alertService: AlertService,
+                private appComponent: AppComponent,) {
     }
 
     ngOnInit(): void {

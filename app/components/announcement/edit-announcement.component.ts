@@ -4,6 +4,7 @@ import { Announcement, Announcements } from '../../models/index';
 import { AnnouncementService, AlertService, UserService } from '../../services/index';
 import { FormBuilder, FormGroup, FormControl, FormArray, Validators } from '@angular/forms';
 import {IMyOptions} from 'mydatepicker';
+import { AppComponent } from '../index';
 import '../../rxjs-operators';
 import 'rxjs/add/operator/switchMap';
 
@@ -53,7 +54,8 @@ export class EditAnnouncementComponent  {
     	private alertService: AlertService,
         private formbuilder: FormBuilder,
         private route: ActivatedRoute,
-        private userService: UserService ) {
+        private userService: UserService,
+        private appComponent: AppComponent, ) {
     }
     private autoPostOnDateTxt: string = 'No auto post (default)';
     private validTillDateTxt: string = 'Forever (default)';

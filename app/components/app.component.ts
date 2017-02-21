@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import '../rxjs-operators';
 import { SlimLoadingBarService } from 'ng2-slim-progress-bar';
 import { UserService } from '../services/index';
+import { NotificationsService } from 'angular2-notifications';
 import {
     Event as RouterEvent,
     NavigationStart,
@@ -62,7 +63,10 @@ export class AppComponent implements OnInit {
     authToken : any;
     name: any;
     constructor(
-        private slimLoadingBarService: SlimLoadingBarService,private router: Router, private userService:UserService) {
+        private slimLoadingBarService: SlimLoadingBarService,
+        private router: Router, 
+        private userService:UserService,
+        private _notificationsService: NotificationsService,) {
         router.events.subscribe((event: RouterEvent) => {
             this.navigationInterceptor(event);
         });
@@ -102,6 +106,19 @@ export class AppComponent implements OnInit {
         // }
     }    
 
+    showNotification(type:string, message:string): void{
+        if(type == 'success'){
+            this._notificationsService.success(
+                            'Success',
+                            message,
+            )
+        }else if(type == 'error'){
+            this._notificationsService.error(
+                        'Error',
+                        message,
+            )
+        }
+    }
     getToken(){
         this.authToken = JSON.parse(localStorage.getItem('authToken' || null));
     }

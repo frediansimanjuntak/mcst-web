@@ -4,6 +4,7 @@ import { Company, Companies } from '../../models/index';
 import { CompanyService, AlertService} from '../../services/index';
 import '../../rxjs-operators';
 import { Observable} from 'rxjs/Observable';
+import { AppComponent } from '../index';
 import * as $ from "jquery";
 // import { Overlay } from 'angular2-modal';
 // import { Modal } from 'angular2-modal/plugins/bootstrap';
@@ -36,6 +37,7 @@ export class CompanyComponent implements OnInit {
                 private router: Router,
                 private companyService: CompanyService,
                 private alertService: AlertService,
+                private appComponent: AppComponent,
                 ) {
 
     }

@@ -5,6 +5,7 @@ import { UnitService, AlertService, UserService } from '../../services/index';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Location }               from '@angular/common';
 import { Observable} from 'rxjs/Observable';
+import { AppComponent } from '../index';
 import '../../rxjs-operators';
 import 'rxjs/add/operator/switchMap';
 // import { User } from '../../models/index';
@@ -42,7 +43,8 @@ export class EditUnitComponent implements OnInit {
         private userService: UserService,
     	private alertService: AlertService,
         private formbuilder: FormBuilder,
-        private location: Location ) {
+        private location: Location,
+        private appComponent: AppComponent, ) {
 
         // this.user = JSON.parse(localStorage.getItem('user'));
     }

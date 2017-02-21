@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import { Development } from '../../models/index';
 import { UnitService, AlertService, UserService} from '../../services/index';
 import '../../rxjs-operators';
+import { AppComponent } from '../index';
 import { Observable} from 'rxjs/Observable';
 
 @Component({
@@ -25,7 +26,8 @@ export class UnitComponent implements OnInit {
     constructor(private router: Router,
                 private unitservice: UnitService, 
                 private alertService: AlertService,
-                private userService: UserService) {
+                private userService: UserService,
+                private appComponent: AppComponent,) {
 
     }
 
