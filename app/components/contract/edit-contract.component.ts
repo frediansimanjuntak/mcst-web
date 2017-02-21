@@ -66,22 +66,6 @@ export class EditContractComponent  implements OnInit {
                 }
             );
         }
-        formData.append("reference_no", this.model.reference_no);
-        formData.append("reference_type", this.reference_type);
-        formData.append("reference_id", this.reference_id);
-        formData.append("contract_type", this.model.contract_type);
-        formData.append("title", this.model.title);
-        formData.append("remark", this.model.remark);
-        this.contractService.create(formData)
-        .then(
-            response => {
-                this.alertService.success('Create contract successful', true);
-                this.router.navigate([this.name.default_development.name_url + '/contract' ]);
-            },
-            error => {
-                this.alertService.error(error);
-            }
-        );
     }
 
     onChange(event: any) {
