@@ -120,7 +120,7 @@
                         </div>
                     </div>
                     <div *ngIf="contractnotices">
-                        <p-dataTable [value]="contractnotices" [rows]="10" [paginator]="true">
+                        <p-dataTable [value]="contractnotices" [rows]="10" [paginator]="true" [responsive]="true">
                             <p-column filterMatchMode="contains" field="title" header="Title" sortable="true" [filter]="true" filterPlaceholder="Search title"></p-column>
                             <p-column filterMatchMode="contains" field="start_time" header="Commence date" sortable="true" [filter]="true" filterPlaceholder="Search commence date">
                                 <template let-data="rowData" pTemplate="body">
@@ -207,7 +207,7 @@
                         </div>
                     </div>
                     <div *ngIf="contractnotes">
-                        <p-dataTable [value]="contractnotes" [rows]="10" [paginator]="true">
+                        <p-dataTable [value]="contractnotes" [rows]="10" [paginator]="true" [responsive]="true">
                             <p-column filterMatchMode="contains" field="posted_by.username" header="Posted by" sortable="true" [filter]="true" filterPlaceholder="Search posted by"></p-column>
                             <p-column filterMatchMode="contains" field="posted_on" header="Posted on" sortable="true" [filter]="true" filterPlaceholder="Search posted on">
                                 <template let-data="rowData" pTemplate="body">
@@ -249,7 +249,7 @@
                 <tabset>
                     <!-- ALL -->
                     <tab heading="All">
-                        <p-dataTable [value]="contracts" [rows]="10" [paginator]="true">
+                        <p-dataTable [value]="contracts" [rows]="10" [paginator]="true" [responsive]="true">
                             <p-column filterMatchMode="contains" [style]="{'width': '170px'}" field="title" header="Project Title" sortable="true" [filter]="true" filterPlaceholder="Search Project Title"></p-column>
                             <p-column filterMatchMode="contains" [style]="{'width': '112px'}" header="Commence on" sortable="true" [filter]="true" filterPlaceholder="Search Commence on">
                                 <template let-contracts="rowData" pTemplate="body">
@@ -279,7 +279,7 @@
                     </tab>
                     <!-- OPEN -->
                     <tab heading="Open">
-                        <p-dataTable [value]="open" [rows]="10" [paginator]="true">
+                        <p-dataTable [value]="open" [rows]="10" [paginator]="true" [responsive]="true">
                             <p-column filterMatchMode="contains" [style]="{'text-transform': 'capitalize'}" field="title" header="Project Title" sortable="true" [filter]="true" filterPlaceholder="Search Project Title"></p-column>
                             <p-column filterMatchMode="contains" header="Commence on" sortable="true" [filter]="true" filterPlaceholder="Search Commence on">
                                 <template let-open="rowData" pTemplate="body">
@@ -309,7 +309,7 @@
                     </tab>
                     <!-- CLOSE -->
                     <tab heading="Closed">
-                        <p-dataTable [value]="close" [rows]="10" [paginator]="true">
+                        <p-dataTable [value]="close" [rows]="10" [paginator]="true" [responsive]="true">
                             <p-column filterMatchMode="contains" [style]="{'text-transform': 'capitalize'}" field="title" header="Project Title" sortable="true" [filter]="true" filterPlaceholder="Search Project Title"></p-column>
                             <p-column filterMatchMode="contains" header="Commence on" sortable="true" [filter]="true" filterPlaceholder="Search Commence on">
                                 <template let-close="rowData" pTemplate="body">
