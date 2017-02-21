@@ -249,6 +249,7 @@ import {
     LostFoundService,
     TestService,
     EditContractComponent,
+    AppComponent,
   ],
   bootstrap:    [ AppComponent ],
   // entryComponents: [ PublishAnnouncementModalComponent ] 
