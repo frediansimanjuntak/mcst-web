@@ -79,6 +79,7 @@ export class EditPetitionComponent implements OnInit {
             archieved : [''],
             created_at : ['']
         });
+        setTimeout(() => this.appComponent.loading = false, 1000);
     }
 
     getLastRefNo(){
@@ -104,6 +105,7 @@ export class EditPetitionComponent implements OnInit {
     }
 
     createPetition(model: any, isValid: boolean) {
+        this.appComponent.loading = true
         this.submitted = true;
         if(isValid && this.model.attachment.length > 0){
             model.updated_at = new Date();
@@ -168,6 +170,7 @@ export class EditPetitionComponent implements OnInit {
     }
 
     updatePetition(){
+        this.appComponent.loading = true
 		this.petitionService.update(this.petition)
 		.then(
 			response => {

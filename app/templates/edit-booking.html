@@ -190,7 +190,7 @@
                                     <label class="control-label col-sm-4" for="property">Unit no :</label>
                                     <div class="col-sm-8">
                                         <div *ngIf="units">
-                                            <select class="form-control" [(ngModel)]="model.property" #property="ngModel" name="property" id="property" placeholder="Choose property" required>
+                                            <select class="form-control" (change)="getLandlord($event)" [(ngModel)]="model.property" #property="ngModel" name="property" id="property" placeholder="Choose property" required>
                                                 <option *ngFor="let unit of units" [ngValue]="unit._id">
                                                     #{{unit.address.unit_no}}-{{unit.address.unit_no_2}}
                                                 </option>

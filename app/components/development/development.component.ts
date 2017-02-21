@@ -22,9 +22,11 @@ export class DevelopmentComponent implements OnInit {
 
     ngOnInit() {
         this.loadAllDevelopments();
+        setTimeout(() => this.appComponent.loading = false, 1000);
     }
 
     deleteDevelopment(development: Development) {
+        this.appComponent.loading = true
         this.developmentService.delete(development._id)
         .then(
 			response => {

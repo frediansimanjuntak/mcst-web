@@ -81,7 +81,8 @@ export class AnnouncementComponent implements OnInit {
         };
         this.validTillDateOptions = copy;
 
-        this.model.publish = false;                              
+        this.model.publish = false;     
+        setTimeout(() => this.appComponent.loading = false, 1000);                         
     }
 
     getCopyOfValidTillDateOptions(): IMyOptions {
@@ -89,6 +90,7 @@ export class AnnouncementComponent implements OnInit {
     }
 
     deleteAnnouncement(announcement) {
+        this.appComponent.loading = true
         this.announcementService.delete(announcement._id)
           .then(
             response => {
@@ -109,6 +111,7 @@ export class AnnouncementComponent implements OnInit {
 
 
     openModal(announcement){
+        this.appComponent.loading = true
         this.announcement = announcement;
         this.valid_tillStatus = announcement.valid_till;
         this.stickyStatus = announcement.sticky;
@@ -116,9 +119,11 @@ export class AnnouncementComponent implements OnInit {
         if(this.valid_tillStatus == ""){
               this.valid_tillStatus = "";
         }
+        setTimeout(() => this.appComponent.loading = false, 1000);
     }
 
     publishAnnouncement(){
+        this.appComponent.loading = true
         if ( this.valid_tillStatus == ""){
             this.announcement.valid_till = "forever";
         }else{

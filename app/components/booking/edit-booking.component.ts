@@ -93,6 +93,7 @@ export class EditBookingComponent implements OnInit  {
     days : any[] = ["sunday","monday","tuesday","wednesday","thursday","friday","saturday"];
     name: any;
     total: any;
+    unit: any;
     available: any;
     date: any;
 
@@ -236,16 +237,13 @@ export class EditBookingComponent implements OnInit  {
             this.model.booking_fee = facility.booking_fee;
             this.model.admin_fee = facility.admin_fee;
             this.selectedDay = this.facility.schedule.filter(data => data.day == this.day); 
-            console.log(this.selectedDay)
             this.start = this.selectedDay[0].start_time.slice(0,2);
             let start = +this.start
             this.end = this.selectedDay[0].end_time.slice(0,2);
             let end = +this.end
             this.min =    ":00"
-            console.log(start , end)
             for (var i = start; i < end; ++i) {
                 this.times_start.push(i)
-                console.log(i)
             }
             while(start < end){       
                    start += 1;
@@ -352,7 +350,6 @@ export class EditBookingComponent implements OnInit  {
 
     next(){ 
         this.appComponent.loading = true
-        this.model.sender = "Mr. Nice";
         this.step = 2;
         setTimeout(() => this.appComponent.loading = false, 1000);
     }
@@ -375,6 +372,18 @@ export class EditBookingComponent implements OnInit  {
 
     cancel(){
         this.router.navigate([this.name.default_development.name_url + '/booking' ]);
+    }
+
+    getLandlord(event:any){
+        console.log(event.target.value)
+        this.appComponent.loading = true
+        this.unitService.getById(this.model.property , this.name.default_development.name_url)
+        .subscribe(unit => {
+            this.unit = unit.properties[0];
+            this.model.sender = this.unit.landlord.username;
+            console.log(this.model.sender , this.unit.landlord.username);
+        });
+        this.appComponent.loading = false
     }
 	
 }

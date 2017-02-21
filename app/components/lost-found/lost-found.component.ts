@@ -65,6 +65,7 @@ export class LostFoundComponent implements OnInit {
         this.route.params.subscribe(params => {
             this.id = params['id'];
         });
+        setTimeout(() => this.appComponent.loading = false, 1000);
     }
 
     convertDate(date) {
@@ -79,10 +80,13 @@ export class LostFoundComponent implements OnInit {
 	}
 
     openModal(lostFound){
+        this.appComponent.loading = true
     	this.lostFoundforModal = lostFound;
+        setTimeout(() => this.appComponent.loading = false, 1000);
     }
 
     archieve(id) {      
+        this.appComponent.loading = true
         this.lostFoundService.archieve(id)
             .then(
                 data => {
@@ -144,10 +148,6 @@ export class LostFoundComponent implements OnInit {
                 }, 1000);
             });
     }
-
-    goBack(): void {
-    	this.location.back();
-  	}
 
     add(){
       this.router.navigate([this.name.default_development.name_url + '/lost_found/add']);  

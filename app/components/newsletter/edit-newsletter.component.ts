@@ -57,9 +57,11 @@ export class EditNewsletterComponent  {
                 // }
             })
         })
+        setTimeout(() => this.appComponent.loading = false, 1000);
     }
 
     createNewsletter() {
+        this.appComponent.loading = true
         if (this.model.attachment.length > 0){
             let formData:FormData = new FormData();
         
@@ -93,6 +95,7 @@ export class EditNewsletterComponent  {
     }
 
     updateNewsletter(){
+        this.appComponent.loading = true
 		this.newsletterService.update(this.model, this.name.default_development.name_url)
 		.then(
 			response => {

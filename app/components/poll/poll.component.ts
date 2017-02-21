@@ -82,6 +82,7 @@ export class PollComponent implements OnInit {
                                         });
                                 }
                             })
+        setTimeout(() => this.appComponent.loading = false, 1000);
     }
 
     convertDate(date) {
@@ -156,6 +157,7 @@ export class PollComponent implements OnInit {
 	}
 
 	deletePoll(poll) {
+        this.appComponent.loading = true
         this.pollService.delete(poll._id)
           .then(
             response => {
@@ -174,10 +176,13 @@ export class PollComponent implements OnInit {
     }
 
  	openModal(poll){
+        this.appComponent.loading = true
  		this.pollStart = poll;
+        setTimeout(() => this.appComponent.loading = false, 1000);
     }
 
     startPoll(){
+        this.appComponent.loading = true
         this.pollService.start(this.pollStart._id)
           .then(
             response => {
