@@ -2,6 +2,7 @@ import { Component, OnInit, ViewContainerRef, ViewEncapsulation, ViewChild } fro
 import { Router, Params, ActivatedRoute } from '@angular/router';
 import { Visit, Visits } from '../../models/index';
 import { VisitService, AlertService, UserService, UnitService} from '../../services/index';
+import { NotificationsService } from 'angular2-notifications';
 import '../../rxjs-operators';
 import { Observable} from 'rxjs/Observable';
 import { Location }               from '@angular/common';
@@ -39,6 +40,14 @@ export class VisitComponent implements OnInit {
     public addSubmitted: boolean;
     public checkInSsubmitted: boolean;
     public checkOutSsubmitted: boolean;
+    public options = {
+        position: ["bottom", "right"],
+        timeOut: 3000,
+        lastOnBottom: true,
+        showProgressBar: true,
+        pauseOnHover: true,
+        clickToClose: true,
+    }
     name: any;
     loading = false;
 
@@ -51,8 +60,8 @@ export class VisitComponent implements OnInit {
                 private formbuilder: FormBuilder,
                 private userService: UserService,
                 private unitService: UnitService,
-
-                ) {
+                private _notificationsService: NotificationsService
+    ){
         this.visitDateCreate = new Date();
         this.activeDate = this.activeDateFull = new Date();
     }
@@ -178,15 +187,26 @@ export class VisitComponent implements OnInit {
             this.visitService.checkOut(this.visitOut._id)
                 .then(
                     data => {
-                        this.ngOnInit();
-                        this.alertService.success('Check out guest successful', true);
                         this.checkOutModal.close();
-                        this.loading = false;
+                        this.ngOnInit();
+                        this._notificationsService.success(
+                            'Success',
+                            'Check out '+ this.visitOut.visitor.prefix + ' ' + this.visitOut.visitor.full_name + 'successful',
+                        )
                     },
                     error => {
                         console.log(error);
                         this.checkOutModal.close();
-                        alert(`Check out could not be save, server Error.`);
+                        this._notificationsService.error(
+                            'Error',
+                            'Check out failed, server Error',
+                            {
+                                timeOut: 3000,
+                                showProgressBar: true,
+                                pauseOnHover: true,
+                                clickToClose: true,
+                            }
+                        )
                         this.loading = false;
                     }
                 );
@@ -219,15 +239,26 @@ export class VisitComponent implements OnInit {
             this.visitService.checkIn(this.visit._id)
                 .then(
                     data => {
-                        this.ngOnInit();
-                        this.alertService.success('Check in guest successful', true);
                         this.checkInModal.close();
-                        this.loading = false;
+                        this.ngOnInit();
+                        this._notificationsService.success(
+                            'Success',
+                            'Check in '+ this.visit.visitor.prefix + ' ' + this.visit.visitor.full_name + 'successful',
+                        )
                     },
                     error => {
                         console.log(error);
                         this.checkInModal.close();
-                        alert(`Check in could not be save, server Error.`);
+                        this._notificationsService.error(
+                            'Error',
+                            'Check in failed, server Error',
+                            {
+                                timeOut: 3000,
+                                showProgressBar: true,
+                                pauseOnHover: true,
+                                clickToClose: true,
+                            }
+                        )
                         this.loading = false;
                     }
                 );
@@ -237,8 +268,6 @@ export class VisitComponent implements OnInit {
 
     addGuest(model: any, isValid: boolean) {
         this.addSubmitted = true;
-        // model.properties.created_by = '583e4e9dd97c97149884fef5';
-        // this.model.pinned.rank = 0;
         if(model.check_in === true){
         	model.check_in = new Date();
         }else{
@@ -250,15 +279,20 @@ export class VisitComponent implements OnInit {
             this.visitService.create(model)
             .then(
                 data => {
-                    this.alertService.success('Add guest successful', true);
                     this.firstModal.close();
                     this.ngOnInit();
-                    this.loading = false;
+                    this._notificationsService.success(
+                            'Success',
+                            'Add guest successful',
+                        )
                 },
                 error => {
                     console.log(error);
                     this.firstModal.close();
-                    alert(`Guest register could not be save, server Error.`);
+                    this._notificationsService.error(
+                        'Error',
+                        'Add guest failed, server Error',
+                    )
                     this.loading = false;
                 }
             );
