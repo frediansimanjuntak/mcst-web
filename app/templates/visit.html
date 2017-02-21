@@ -41,7 +41,7 @@
 			<p-dataTable [value]="visitActive" scrollable="true" scrollHeight="360px">
 				<p-column header="No" [style]="{'width':'42px'}" field="i">
 				</p-column>
-				<p-column header="Visitor/Guest" field="" filterPlaceholder="Search Name">
+				<p-column header="Visitor/Guest" field="" [filter]="true" filterPlaceholder="Search Name">
 					<template let-visitActive="rowData" pTemplate="body">
 						<span>{{visitActive.visitor.prefix}} {{visitActive.visitor.full_name}}</span>
 					</template>
@@ -362,6 +362,7 @@
 			</modal>
 		</div>
 	</div>
+	<simple-notifications [options]="options"></simple-notifications>
 </div>
 
 <style>
