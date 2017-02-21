@@ -73,30 +73,11 @@ export class ContractNoticeComponent implements OnInit  {
     }
 
     createContractNotice(id:any) {
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> eda06c2d36ad38a7eeb0c9d5e29171da1942a423
-        if(this.model.attachment.length > 0) {
+        if(this.model.attachment.length != 0) {
             this.model.publish = false;
             let formData:FormData = new FormData();
-            if(this.model.attachment.length != 0) {
-                for (var i = 0; i < this.model.attachment.length; i++) {
-                    formData.append("attachment", this.model.attachment[i]);
-                }
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
-        this.model.publish = false;
-        let formData:FormData = new FormData();
-        if(this.model.attachment.length != 0) {
             for (var i = 0; i < this.model.attachment.length; i++) {
                 formData.append("attachment", this.model.attachment[i]);
->>>>>>> ad077b63ccbda43ce0df54c8289848b8a943ed2e
-=======
->>>>>>> eda06c2d36ad38a7eeb0c9d5e29171da1942a423
-            }
-=======
             }   
             formData.append("start_time", this.model.start_time);
             formData.append("end_time", this.model.end_time);
@@ -118,15 +99,10 @@ export class ContractNoticeComponent implements OnInit  {
                     this.alertService.error(error);
                 }
             );
->>>>>>> a4d52fd240bf36bc4c91203d7d83f32dcb3303b4
         }
     }
 
     publishContractNotice(id:any) {
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> eda06c2d36ad38a7eeb0c9d5e29171da1942a423
         if(this.model.attachment.length > 0) {
             this.route.params.subscribe(params => {
                 this.id = params['id'];
@@ -153,19 +129,6 @@ export class ContractNoticeComponent implements OnInit  {
                     this.alertService.error(error);
                 }
             );
-<<<<<<< HEAD
-=======
-        this.route.params.subscribe(params => {
-            this.id = params['id'];
-            this._id = params['_id'];
-        });
-        this.model.publish = true;
-        let formData:FormData = new FormData();
-        for (var i = 0; i < this.model.attachment.length; i++) {
-            formData.append("attachment", this.model.attachment[i]);
->>>>>>> ad077b63ccbda43ce0df54c8289848b8a943ed2e
-=======
->>>>>>> eda06c2d36ad38a7eeb0c9d5e29171da1942a423
         }
     }
 
