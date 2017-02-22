@@ -116,7 +116,7 @@
 					    	<template class="pull-right" let-pollsDraft="rowData" pTemplate="body">
 						    	<a type="button" style="cursor:pointer; margin-right: 15px;" (click)="editPoll(pollsDraft)"><i class="fa fa-edit" aria-hidden="true"></i>&nbsp;<u>Edit</u></a>
 						    	<button class="btn btn-publish btn-brown" style="cursor:pointer; margin-right:5px" (click)="openModal(pollsDraft) || firstModal.open()">Start Poll</button>
-						        <button  type="button" class="btn btn-trash" (click)="deletePoll(pollsDraft)"><i class="fa fa-trash" aria-hidden="true"></i></button>
+						        <button  type="button" class="btn btn-trash" (click)="deleteConfirmation(pollsDraft)"><i class="fa fa-trash" aria-hidden="true"></i></button>
 					    	</template>
 					    </p-column>
 					</p-dataTable>

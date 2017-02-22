@@ -8,6 +8,7 @@ import '../../rxjs-operators';
 import { Observable} from 'rxjs/Observable';
 import {IMyOptions} from 'mydatepicker';
 import * as $ from "jquery";
+import { ConfirmationService } from 'primeng/primeng';
 // import { Overlay } from 'angular2-modal';
 // import { Modal } from 'angular2-modal/plugins/bootstrap';
 // import { PublishAnnouncementModalComponent, PublishAnnouncementModalData } from './publish-announcement-modal.component';
@@ -58,6 +59,7 @@ export class AnnouncementComponent implements OnInit {
                 private alertService: AlertService,
                 private userService: UserService,
                 private appComponent: AppComponent,
+                private confirmationService: ConfirmationService,
                 private _notificationsService: NotificationsService,
                 ) {
 
@@ -112,7 +114,16 @@ export class AnnouncementComponent implements OnInit {
         );
     }
 
-
+    deleteConfirmation(announcement) {
+        this.confirmationService.confirm({
+            message: 'Are you sure that you want to delete this announcement?',
+            header: 'Delete Confirmation',
+            icon: 'fa fa-trash',
+            accept: () => {
+                this.deleteAnnouncement(announcement)
+            }
+        });
+    }
 
     openModal(announcement){
         this.announcement = announcement;

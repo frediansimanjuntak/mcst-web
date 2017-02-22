@@ -7,6 +7,7 @@ import '../../rxjs-operators';
 import { FileUploader } from 'ng2-file-upload';
 import { AppComponent } from '../index';
 import { Observable} from 'rxjs/Observable';
+import { ConfirmationService } from 'primeng/primeng';
 
 @Component({
   // moduleId: module.id,
@@ -39,6 +40,7 @@ export class NewsletterComponent implements OnInit {
                 private alertService: AlertService,
                 private userService: UserService,
                 private appComponent: AppComponent,
+                private confirmationService: ConfirmationService,
                 private _notificationsService: NotificationsService) {
     }
 
@@ -79,6 +81,17 @@ export class NewsletterComponent implements OnInit {
                     this.appComponent.loading = false
                 }
         );
+    }
+
+    deleteConfirmation(newsletter) {
+        this.confirmationService.confirm({
+            message: 'Are you sure that you want to delete this newsletter?',
+            header: 'Delete Confirmation',
+            icon: 'fa fa-trash',
+            accept: () => {
+                this.deleteNewsletter(newsletter)
+            }
+        });
     }
 
     releaseNewsletter(){

@@ -3,6 +3,7 @@ import { Router, Params, ActivatedRoute } from '@angular/router';
 import { Contract } from '../../models/index';
 import { ContractService, AlertService, UserService, ContractNoteService } from '../../services/index';
 import '../../rxjs-operators';
+import { NotificationsService } from 'angular2-notifications';
 import 'rxjs/add/operator/switchMap';
 import { Observable} from 'rxjs/Observable';
 import { AppComponent } from '../index';
@@ -32,6 +33,7 @@ export class ContractNoteComponent implements OnInit  {
         private alertService: AlertService,
         private userService: UserService,
         private appComponent: AppComponent,
+        private _notificationsService: NotificationsService,
         private route: ActivatedRoute) {}
 
     ngOnInit(): void {
@@ -95,12 +97,20 @@ export class ContractNoteComponent implements OnInit  {
             });
             this.contractnoteService.create(formData, this.id)
             .then(
-                response => {
-                    this.alertService.success('Create contract notice successful', true);
+                data => {
+                    this._notificationsService.success(
+                            'Success',
+                            'Create contract note successful',
+                    )
                     this.router.navigate([this.name.default_development.name_url + '/contract/view', id ]);
                 },
                 error => {
-                    this.alertService.error(error);
+                    console.log(error);
+                    this._notificationsService.error(
+                            'Error',
+                            'failed create data, server Error',
+                    )
+                    setTimeout(() => this.appComponent.loading = false, 1000);
                 }
             );
         }
@@ -114,21 +124,21 @@ export class ContractNoteComponent implements OnInit  {
         });
         this.contractnoteService.delete(contract._id,this.id)
           .then(
-            response => {
-              if(response) {
-                console.log(response);
-                // console.log(response.error());
-                alert(`The Contract could not be deleted, server Error.`);
-              } else {
-                this.alertService.success('Delete contract successful', true);
-                alert(`Delete Contarct successful`);
-                this.ngOnInit()
-              }
-            },
-            error=> {
-              console.log(error);
-                alert(`The Newsletter could not be deleted, server Error.`);
-            }
+                data => {
+                    this._notificationsService.success(
+                            'Success',
+                            'Delete contract note successful',
+                    )
+                    this.ngOnInit()
+                },
+                error => {
+                    console.log(error);
+                    this._notificationsService.error(
+                            'Error',
+                            'failed delete data, server Error',
+                    )
+                    setTimeout(() => this.appComponent.loading = false, 1000);
+                 }
         );
     }
 

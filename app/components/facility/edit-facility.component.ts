@@ -3,6 +3,7 @@ import { Router, Params, ActivatedRoute } from '@angular/router';
 import { FormBuilder, FormControl, FormGroup, FormArray, Validators, ReactiveFormsModule  } from '@angular/forms';
 import { Facility,Facilities } from '../../models/index';
 import { FacilityService, AlertService, UserService } from '../../services/index';
+import { NotificationsService } from 'angular2-notifications';
 import '../../rxjs-operators';
 import 'rxjs/add/operator/switchMap';
 import { TimepickerConfig } from 'ng2-bootstrap';
@@ -51,6 +52,7 @@ export class EditFacilityComponent  {
         private formbuilder: FormBuilder,
         private route: ActivatedRoute,
         private appComponent: AppComponent,
+        private _notificationsService: NotificationsService,
         private userService: UserService) {}
 
     ngOnInit(): void {
@@ -157,11 +159,18 @@ export class EditFacilityComponent  {
         this.facilityService.create(model)
         .then(
             response => {
-                this.alertService.success('Create facility successful', true);
+                this._notificationsService.success(
+                            'Success',
+                            'Create facility successful',
+                    )
                 this.router.navigate([this.name.default_development.name_url + '/facility']);
             },
             error => {
-                this.alertService.error(error);
+                this._notificationsService.error(
+                            'Error',
+                            'Create data failed, server Error',
+                    )
+                setTimeout(() => this.appComponent.loading = false, 1000);
             }
         );
     }
@@ -172,11 +181,18 @@ export class EditFacilityComponent  {
 		this.facilityService.update(facility)
 		.then(
 			response => {
-                this.alertService.success('Update development successful', true);
+                this._notificationsService.success(
+                            'Success',
+                            'Update development successful',
+                    )
                 this.router.navigate([this.name.default_development.name_url + '/facility']);
             },
             error => {
-            	this.alertService.error(error);
+                this._notificationsService.error(
+                            'Error',
+                            'Update data failed, server Error',
+                    )
+                setTimeout(() => this.appComponent.loading = false, 1000);
             }
         );
 	}

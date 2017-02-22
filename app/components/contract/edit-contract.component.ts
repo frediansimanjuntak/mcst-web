@@ -3,6 +3,7 @@ import { Router, Params, ActivatedRoute } from '@angular/router';
 import { Contract } from '../../models/index';
 import { ContractService, AlertService, UserService, IncidentService } from '../../services/index';
 import '../../rxjs-operators';
+import { NotificationsService } from 'angular2-notifications';
 import 'rxjs/add/operator/switchMap';
 import { AppComponent } from '../index';
 
@@ -29,7 +30,8 @@ export class EditContractComponent  implements OnInit {
         private route: ActivatedRoute,
         private userService: UserService,
         private appComponent: AppComponent,
-        private incidentService: IncidentService) {}
+        private incidentService: IncidentService,
+        private _notificationsService: NotificationsService,) {}
 
     ngOnInit(): void {
         this.model.attachment = [];
@@ -64,12 +66,20 @@ export class EditContractComponent  implements OnInit {
             formData.append("remark", this.model.remark);
             this.contractService.create(formData)
             .then(
-                response => {
-                    this.alertService.success('Create contract successful', true);
+                data => {
+                    this._notificationsService.success(
+                            'Success',
+                            'Create contract successful',
+                    )
                     this.router.navigate([this.name.default_development.name_url + '/contract' ]);
                 },
                 error => {
-                    this.alertService.error(error);
+                    console.log(error);
+                    this._notificationsService.error(
+                            'Error',
+                            'Create data failed, server Error',
+                    )
+                    setTimeout(() => this.appComponent.loading = false, 1000);
                 }
             );
         }
@@ -89,12 +99,20 @@ export class EditContractComponent  implements OnInit {
         this.contract.attachment = this.model.attachment
 		this.contractService.update(this.contract)
 		.then(
+
 			response => {
-                this.alertService.success('Update contract successful', true);
+                 this._notificationsService.success(
+                            'Success',
+                            'Update contract successful',
+                    )
                 this.router.navigate([this.name.default_development.name_url + '/contract/view', id ]);
             },
             error => {
-            	this.alertService.error(error);
+                this._notificationsService.error(
+                            'Error',
+                            'Update contract failed',
+                    )
+            	this.appComponent.loading = false
             }
         );
 	}

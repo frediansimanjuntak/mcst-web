@@ -5,9 +5,11 @@ import { Router, Params, ActivatedRoute } from '@angular/router';
 import { Booking, Facility } from '../../models/index';
 import { BookingService, AlertService, FacilityService, UserService, UnitService } from '../../services/index';
 import '../../rxjs-operators';
+import { NotificationsService } from 'angular2-notifications';
 import { Observable} from 'rxjs/Observable';
 import * as moment from 'moment';
 import { AppComponent } from '../index';
+import { ConfirmationService } from 'primeng/primeng';
 
 @Component({
   // moduleId: module.id,
@@ -64,7 +66,9 @@ export class BookingComponent implements OnInit {
 		private route: ActivatedRoute,
         private userService: UserService,
         private appComponent: AppComponent,
-        private unitService: UnitService,){}
+        private unitService: UnitService,
+        private confirmationService: ConfirmationService,
+        private _notificationsService: NotificationsService,){}
 
 	ngOnInit() {
         this.userService.getByToken().subscribe(name => {this.name = name;})
@@ -109,19 +113,34 @@ export class BookingComponent implements OnInit {
     deleteBooking(booking: Booking) {
         this.appComponent.loading = true
         this.bookingService.delete(booking._id)
-        .then(
-			response => {
-				if(response) {
-	                alert(`The booking could not be deleted, server Error.`);
-	            } else {
-                    this.alertService.success('Delete booking successful', true);
-	                this.ngOnInit()
-	            }
-            },
-            error=> {
-                alert(`The Booking could not be deleted, server Error.`);
+            .then(
+                    data => {
+                        this._notificationsService.success(
+                                'Success',
+                                'Delete booking successful',
+                        )
+                        this.ngOnInit();
+                    },
+                    error => {
+                        console.log(error);
+                        this._notificationsService.error(
+                                'Error',
+                                'The Booking could not be deleted, server Error',
+                        )
+                        setTimeout(() => this.appComponent.loading = false, 1000);
+                    }
+            );
+    }
+
+    deleteConfirmation(booking) {
+        this.confirmationService.confirm({
+            message: 'Are you sure that you want to delete this booking?',
+            header: 'Delete Confirmation',
+            icon: 'fa fa-trash',
+            accept: () => {
+                this.deleteBooking(booking)
             }
-        );
+        });
     }
 
     private loadAllBookings() {

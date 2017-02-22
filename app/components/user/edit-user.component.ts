@@ -5,6 +5,7 @@ import { AlertService, UserService, UnitService } from '../../services/index';
 import { User, Development, Users } from '../../models/index';
 import { EqualValidator } from './equal-validator.directive';
 import { NotificationsService } from 'angular2-notifications';
+import { ConfirmationService } from 'primeng/primeng';
 import { AppComponent } from '../index';
 import 'rxjs/add/operator/switchMap';
 import '../../rxjs-operators';
@@ -35,6 +36,7 @@ export class EditUserComponent implements OnInit {
         private alertService: AlertService,
         private formbuilder: FormBuilder,
         private unitService: UnitService,
+        private confirmationService: ConfirmationService,
         private _notificationsService: NotificationsService,
         private appComponent: AppComponent, ) {}
 
@@ -243,11 +245,17 @@ export class EditUserComponent implements OnInit {
         this.userService.update(this.user)
         .then(
             response => {
-                this.alertService.success('Update User successful', true);
+                 this._notificationsService.success(
+                                'Success',
+                                'Update User successful',
+                            )
                 this.router.navigate([this.name.default_development.name_url + '/user']);
             },
             error=> {
-                this.alertService.error(error);
+                this._notificationsService.error(
+                                'Error',
+                                'Update failed, server Error.',
+                        )
             }
         );
     }
