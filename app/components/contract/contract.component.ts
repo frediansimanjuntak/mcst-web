@@ -4,6 +4,7 @@ import { Contract } from '../../models/index';
 import { ContractService, AlertService, UserService, ContractNoteService, ContractNoticeService } from '../../services/index';
 import '../../rxjs-operators';
 import { Observable} from 'rxjs/Observable';
+import { NotificationsService } from 'angular2-notifications';
 import { FileUploader } from 'ng2-file-upload';
 import { AppComponent } from '../index';
 
@@ -35,6 +36,7 @@ export class ContractComponent implements OnInit  {
         private userService: UserService,
         private contractnoteService:ContractNoteService,
         private appComponent: AppComponent,
+        private _notificationsService: NotificationsService,
         private contractnoticeService:ContractNoticeService) {}
 
     ngOnInit(): void {
@@ -79,21 +81,21 @@ export class ContractComponent implements OnInit  {
         this.appComponent.loading = true
         this.contractService.delete(contract._id)
         .then(
-            response => {
-                if(response) {
-                    console.log(response);
-                    // console.log(response.error());
-                    alert(`The Contract could not be deleted, server Error.`);
-                } else {
-                    this.alertService.success('Create contract successful', true);
-                    alert(`Delete Contarct successful`);
-                    this.ngOnInit()
+                data => {
+                    this._notificationsService.success(
+                            'Success',
+                            'Delete Contract successful',
+                    )
+                    this.ngOnInit();
+                },
+                error => {
+                    console.log(error);
+                    this._notificationsService.error(
+                            'Error',
+                            'The Contract could not be deleted, server Error',
+                    )
+                    setTimeout(() => this.appComponent.loading = false, 1000);
                 }
-            },
-            error=> {
-                console.log(error);
-                alert(`The Newsletter could not be deleted, server Error.`);
-            }
         );
     }
 
@@ -104,11 +106,16 @@ export class ContractComponent implements OnInit  {
             response => {
                 if(response) {
                     console.log(response);
-                    // console.log(response.error());
-                    alert(`The Contract could not be deleted, server Error.`);
+                    this._notificationsService.error(
+                            'Error',
+                            'The Contract could not be deleted, server Error',
+                    )
+                    this.appComponent.loading = false;
                 } else {
-                    this.alertService.success('Delete contract successful', true);
-                    alert(`Delete Contarct successful`);
+                    this._notificationsService.success(
+                            'Success',
+                            'Delete Contarct successful',
+                    )
                     this.contractService.getById(id)
                     .subscribe(contract => {
                         this.contract = contract;
@@ -133,7 +140,10 @@ export class ContractComponent implements OnInit  {
             },
             error=> {
                 console.log(error);
-                alert(`The Newsletter could not be deleted, server Error.`);
+                this._notificationsService.error(
+                            'Success',
+                            'The Contract could not be deleted, server Error',
+                )
             }
         );
     }

@@ -4,6 +4,7 @@ import { Router, Params, ActivatedRoute } from '@angular/router';
 import { Booking, Facility, Bookings } from '../../models/index';
 import { BookingService, AlertService, FacilityService, UserService, UnitService, PaymentService } from '../../services/index';
 import '../../rxjs-operators';
+import { NotificationsService } from 'angular2-notifications';
 import { Observable} from 'rxjs/Observable';
 import * as moment from 'moment';
 import { AppComponent } from '../index';
@@ -107,6 +108,7 @@ export class EditBookingComponent implements OnInit  {
         private userService: UserService,
         private unitService: UnitService,
         private appComponent: AppComponent,
+        private _notificationsService: NotificationsService,
         private paymentService: PaymentService){
         (this.minDate = new Date()).setDate(this.minDate.getDate());
     }
@@ -196,12 +198,19 @@ export class EditBookingComponent implements OnInit  {
         this.bookingService.create(formData)
         .then(
             data => {
-                this.alertService.success('Create booking successful', true);
+                this._notificationsService.success(
+                            'Success',
+                            'Create booking successful',
+                    )
                 this.router.navigate([this.name.default_development.name_url + '/booking']);
             },
             error => {
                 console.log(error);
-                alert(`The booking could not be save, server Error.`);
+                this._notificationsService.success(
+                            'Success',
+                            'Booking could not be save, server Error',
+                    )
+                this.appComponent.loading = false
             }
         );
     }

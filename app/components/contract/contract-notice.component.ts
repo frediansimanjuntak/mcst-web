@@ -4,6 +4,7 @@ import { Contract } from '../../models/index';
 import { ContractService, AlertService, UserService, ContractNoticeService } from '../../services/index';
 import '../../rxjs-operators';
 import 'rxjs/add/operator/switchMap';
+import { NotificationsService } from 'angular2-notifications';
 import { Observable} from 'rxjs/Observable';
 import { AppComponent } from '../index';
 
@@ -32,6 +33,7 @@ export class ContractNoticeComponent implements OnInit  {
         private alertService: AlertService,
         private route: ActivatedRoute,
         private appComponent: AppComponent,
+        private _notificationsService: NotificationsService,
         private userService: UserService) {}
 
     ngOnInit(): void {
@@ -95,12 +97,20 @@ export class ContractNoticeComponent implements OnInit  {
             });
             this.contractnoticeService.create(formData, this.id)
             .then(
-                response => {
-                    this.alertService.success('Create contract notice successful', true);
+                data => {
+                    this._notificationsService.success(
+                            'Success',
+                            'Create contract notice successful',
+                    )
                     this.router.navigate([this.name.default_development.name_url + '/contract/view', id ]);
                 },
                 error => {
-                    this.alertService.error(error);
+                    console.log(error);
+                    this._notificationsService.error(
+                            'Error',
+                            'Failed create data, server Error',
+                    )
+                    setTimeout(() => this.appComponent.loading = false, 1000);
                 }
             );
         }
@@ -126,12 +136,20 @@ export class ContractNoticeComponent implements OnInit  {
             formData.append("publish", this.model.publish);
             this.contractnoticeService.create(formData, this.id)
             .then(
-                response => {
-                    this.alertService.success('Create contract notice successful', true);
+                data => {
+                    this._notificationsService.success(
+                            'Success',
+                            'Create & publish notice successful',
+                    )
                     this.router.navigate([this.name.default_development.name_url + '/contract/view', id ]);
                 },
                 error => {
-                    this.alertService.error(error);
+                    console.log(error);
+                    this._notificationsService.error(
+                            'Error',
+                            'Failed create data, server Error',
+                    )
+                    setTimeout(() => this.appComponent.loading = false, 1000);
                 }
             );
         }
@@ -143,9 +161,25 @@ export class ContractNoticeComponent implements OnInit  {
             this.id = params['id'];
             this._id = params['_id'];
         });
-        this.contractnoticeService.publish(this.id,contract._id);
-        this.ngOnInit()
-    }
+        this.contractnoticeService.publish(this.id,contract._id)
+        .then(
+                data => {
+                    this._notificationsService.success(
+                            'Success',
+                            'Publish notice successful',
+                    )
+                    this.ngOnInit()
+                },
+                error => {
+                    console.log(error);
+                    this._notificationsService.error(
+                            'Error',
+                            'Publish failed, server Error',
+                    )
+                    setTimeout(() => this.appComponent.loading = false, 1000);
+                }
+            );
+        }
 
     onChange(event: any) {
        let files = [].slice.call(event.target.files);

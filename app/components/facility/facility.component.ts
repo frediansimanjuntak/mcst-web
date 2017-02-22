@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router, Params, ActivatedRoute } from '@angular/router';
 import { Facility } from '../../models/index';
 import { FacilityService, AlertService, UserService } from '../../services/index';
+import { NotificationsService } from 'angular2-notifications';
 import '../../rxjs-operators';
 import { Observable} from 'rxjs/Observable';
 import { AppComponent } from '../index';
@@ -24,6 +25,7 @@ export class FacilityComponent implements OnInit {
         private alertService: AlertService,
         private route: ActivatedRoute,
         private appComponent: AppComponent,
+        private _notificationsService: NotificationsService,
         private userService: UserService) {}
 
     ngOnInit() {
@@ -43,17 +45,20 @@ export class FacilityComponent implements OnInit {
         this.appComponent.loading = true
         this.facilityService.delete(facility._id)
         .then(
-			response => {
-				if(response) {
-	                alert(`The facility could not be deleted, server Error.`);
-	            } else {
-                    this.alertService.success('Delete facility successful', true);
-	                this.loadAllFacilities()
-	            }
-            },
-            error=> {
-                alert(`The Development could not be deleted, server Error.`);
-            }
+                data => {
+                    this._notificationsService.success(
+                            'Success',
+                            'Delete facility successful',
+                    )
+                    this.loadAllFacilities()
+                },
+                error => {
+                    this._notificationsService.error(
+                            'Error',
+                            'The facility could not be deleted, server Error',
+                    )
+                    setTimeout(() => this.appComponent.loading = false, 1000);
+                }
         );
     }
 
