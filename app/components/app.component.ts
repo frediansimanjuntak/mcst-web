@@ -27,6 +27,7 @@ import {
         <div class="aaa"></div>
         <button *ngIf="!loading" (click)="stop()"></button>
     </div>
+    <simple-notifications [options]="options"></simple-notifications>
 
 
   	
@@ -62,6 +63,14 @@ export class AppComponent implements OnInit {
 	loading: boolean = true;
     authToken : any;
     name: any;
+    public options = {
+        position: ["bottom", "right"],
+        timeOut: 3000,
+        lastOnBottom: true,
+        showProgressBar: true,
+        pauseOnHover: true,
+        clickToClose: true,
+    }
     constructor(
         private slimLoadingBarService: SlimLoadingBarService,
         private router: Router, 
@@ -106,19 +115,6 @@ export class AppComponent implements OnInit {
         // }
     }    
 
-    showNotification(type:string, message:string): void{
-        if(type == 'success'){
-            this._notificationsService.success(
-                            'Success',
-                            message,
-            )
-        }else if(type == 'error'){
-            this._notificationsService.error(
-                        'Error',
-                        message,
-            )
-        }
-    }
     getToken(){
         this.authToken = JSON.parse(localStorage.getItem('authToken' || null));
     }

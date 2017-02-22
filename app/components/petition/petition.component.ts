@@ -71,7 +71,6 @@ export class PetitionComponent implements OnInit {
                                 this.name = name;
                                 this.loadAllUnits();
                             })
-        setTimeout(() => this.appComponent.loading = false, 1000);
     }
 
     private logCheckbox(element: HTMLInputElement): void {
@@ -115,6 +114,7 @@ export class PetitionComponent implements OnInit {
                                             this.petition = petition;
                                             let property = this.dataUnit.find(data => data._id ==  this.petition.property);
                                             this.petition.unit_no = '#' + property.address.unit_no + '-' + property.address.unit_no_2;
+                                            setTimeout(() => this.appComponent.loading = false, 1000);
                                         });
                                 }
                 }, 1000);
@@ -126,7 +126,7 @@ export class PetitionComponent implements OnInit {
             .subscribe((data)=> {
                 setTimeout(()=> {
                     this.petitions = data.filter(data => data.archieve === false && data.development._id == this.name.default_development._id );
-                    
+                    setTimeout(() => this.appComponent.loading = false, 1000);
                 }, 1000);
         });
     }
@@ -163,13 +163,8 @@ export class PetitionComponent implements OnInit {
                         this._notificationsService.error(
                             'Error',
                             'Archive failed, server Error',
-                            {
-                                timeOut: 3000,
-                                showProgressBar: true,
-                                pauseOnHover: true,
-                                clickToClose: true,
-                            }
                         )
+                        this.appComponent.loading = false;
                     }
                 );
     }

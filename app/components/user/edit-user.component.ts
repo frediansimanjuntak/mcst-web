@@ -4,6 +4,7 @@ import { Router, Params, ActivatedRoute } from '@angular/router';
 import { AlertService, UserService, UnitService } from '../../services/index';
 import { User, Development, Users } from '../../models/index';
 import { EqualValidator } from './equal-validator.directive';
+import { NotificationsService } from 'angular2-notifications';
 import { AppComponent } from '../index';
 import 'rxjs/add/operator/switchMap';
 import '../../rxjs-operators';
@@ -34,7 +35,8 @@ export class EditUserComponent implements OnInit {
         private alertService: AlertService,
         private formbuilder: FormBuilder,
         private unitService: UnitService,
-        private appComponent: AppComponent,) {}
+        private _notificationsService: NotificationsService,
+        private appComponent: AppComponent, ) {}
 
 
 
@@ -42,33 +44,37 @@ export class EditUserComponent implements OnInit {
         this.userService.getByToken()
         .subscribe(name => {
             this.name = name;
-            this.unitService.getAll(name.default_development.name_url).subscribe(units => {this.units = units.properties;})
+            this.unitService.getAll(name.default_development.name_url)
+                            .subscribe(units => {
+                                this.units = units.properties
+                                setTimeout(() => this.appComponent.loading = false, 1000);
+                            ;})
         })
         this.route.params.subscribe(params => {
             this.id = params['id'];
             this.type = params['type'];
         });
         if(this.id == null){
-        this.myForm = this.formbuilder.group({
-            username : ['', Validators.required],
-            email : ['', Validators.required],
-            password : ['', Validators.required],
-            confirmpassword : ['', Validators.required],
-            phone : ['', Validators.required],
-            role : ['', Validators.required],
-            default_property: this.formbuilder.group({
-                property: [''],
-                role : ['']
-            }),
-            rented_property: this.formbuilder.group({
-                property: ['']
-            }),
-            owned_property: this.formbuilder.array([this.initOwned()]),
-            authorized_property: this.formbuilder.array([this.initAuthorized()]),
-            active: ['', Validators.required],
+            this.myForm = this.formbuilder.group({
+                username : ['', Validators.required],
+                email : ['', Validators.required],
+                password : ['', Validators.required],
+                confirmpassword : ['', Validators.required],
+                phone : ['', Validators.required],
+                role : ['', Validators.required],
+                default_property: this.formbuilder.group({
+                    property: [''],
+                    role : ['']
+                }),
+                rented_property: this.formbuilder.group({
+                    property: ['']
+                }),
+                owned_property: this.formbuilder.array([this.initOwned()]),
+                authorized_property: this.formbuilder.array([this.initAuthorized()]),
+                active: ['', Validators.required],
 
-        });
-    }
+            });
+        }
         
         if( this.id != null &&  this.type == null) {
             this.userService.getById(this.id)
@@ -146,7 +152,6 @@ export class EditUserComponent implements OnInit {
             }
             
         }
-        setTimeout(() => this.appComponent.loading = false, 1000);
      // this.developmentService.getAll().subscribe(developments => { this.developments = developments; });
     }
 
@@ -199,48 +204,53 @@ export class EditUserComponent implements OnInit {
     }
 
     createUser(model:any , isValid: boolean) {
-        this.appComponent.loading = true
-       if(this.type=='tenant'){
+        if(this.type=='tenant'){
            model.rented_property.development = this.name.default_development._id;
            
-       }
-       if(this.type=='landlord'){
-           // model.owned_property[0].development = this.name.default_development._id;
-           // delete model.rented_property;
-           let numOptions =  model.owned_property.length;
+        }
 
-            for (let i = 0; i < numOptions; i++) {
+        if(this.type=='landlord'){
+            for (let i = 0; i < model.owned_property.length; i++) {
                  model.owned_property[i].development = this.name.default_development._id;
             }
-
         }
-        console.log(model);
-       this.submitted = true;
-        this.userService.create(model)
+
+        if(model.username && model.email && model.password && model.confirmpassword && 
+           model.phone && model.role && model.active)
+           {
+            this.appComponent.loading = true;
+            this.userService.create(model)
+            .then(
+                data => {
+                    this._notificationsService.success(
+                                'Success',
+                                'Create ' + this.type + ' successful',
+                            )
+                    this.router.navigate([this.name.default_development.name_url + '/user']);
+                },
+                error => {
+                    this._notificationsService.error(
+                                'Error',
+                                'Data could not be save, server Error.',
+                        )
+                    this.appComponent.loading = false;
+                }
+            );   
+        }
+    }
+
+    updateUser(user:User){
+        this.userService.update(this.user)
         .then(
-            data => {
-                this.alertService.success('Create user successful', true);
+            response => {
+                this.alertService.success('Update User successful', true);
                 this.router.navigate([this.name.default_development.name_url + '/user']);
             },
-            error => {
+            error=> {
                 this.alertService.error(error);
             }
         );
     }
-
-    updateUser(user:User){
-        this.appComponent.loading = true
-		this.userService.update(this.user)
-		.then(
-            response => {
-                this.alertService.success('Update User successful', true);
-                this.router.navigate([this.name.default_development.name_url + '/user']);
-	        },
-            error=> {
-            	this.alertService.error(error);
-            }
-        );
-	}
 
     number(event: any) {
         const pattern = /[0-9\+\ ]/;

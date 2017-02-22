@@ -2,6 +2,7 @@ import { Component, OnInit, Input } from '@angular/core';
 import { Router, Params, ActivatedRoute } from '@angular/router';
 import { Petition, Petitions } from '../../models/index';
 import { UnitService, PetitionService, AlertService, UserService } from '../../services/index';
+import { NotificationsService } from 'angular2-notifications';
 import { FormBuilder, FormControl, FormGroup, FormArray, Validators } from '@angular/forms';
 import { FileUploader } from 'ng2-file-upload';
 import { AppComponent } from '../index';
@@ -46,7 +47,8 @@ export class EditPetitionComponent implements OnInit {
         private route: ActivatedRoute,
         private formbuilder: FormBuilder,
         private userService: UserService,
-        private appComponent: AppComponent,) {
+        private appComponent: AppComponent,
+        private _notificationsService: NotificationsService,) {
         // this.user = JSON.parse(localStorage.getItem('user'));
     }
 
@@ -79,7 +81,6 @@ export class EditPetitionComponent implements OnInit {
             archieved : [''],
             created_at : ['']
         });
-        setTimeout(() => this.appComponent.loading = false, 1000);
     }
 
     getLastRefNo(){
@@ -100,14 +101,15 @@ export class EditPetitionComponent implements OnInit {
             } else {
                 this.model.reference_no = '0001'
             }
-            
+        
+        setTimeout(() => this.appComponent.loading = false, 1000); 
         });
     }
 
     createPetition(model: any, isValid: boolean) {
-        this.appComponent.loading = true
         this.submitted = true;
         if(isValid && this.model.attachment.length > 0){
+            this.appComponent.loading = true
             model.updated_at = new Date();
 
             let formData:FormData = new FormData();
@@ -127,11 +129,18 @@ export class EditPetitionComponent implements OnInit {
             this.petitionService.create(formData)
             .then(
                 data => {
-                    this.alertService.success('Create petition successful', true);
+                    this._notificationsService.success(
+                            'Success',
+                            'Add request Successful',
+                        )
                     this.router.navigate([this.name.default_development.name_url + '/petition']);
                 },
                 error => {
-                    this.alertService.error(error);
+                    this._notificationsService.error(
+                            'Error',
+                            'Add request failed, server Error',
+                    )
+                    this.appComponent.loading = false;
                 }
             );
         }

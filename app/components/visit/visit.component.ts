@@ -3,6 +3,7 @@ import { Router, Params, ActivatedRoute } from '@angular/router';
 import { AppComponent } from '../index';
 import { Visit, Visits } from '../../models/index';
 import { VisitService, AlertService, UserService, UnitService} from '../../services/index';
+import { NotificationsService } from 'angular2-notifications';
 import '../../rxjs-operators';
 import { Observable} from 'rxjs/Observable';
 import { Location }               from '@angular/common';
@@ -40,14 +41,7 @@ export class VisitComponent implements OnInit {
     public addSubmitted: boolean;
     public checkInSsubmitted: boolean;
     public checkOutSsubmitted: boolean;
-    public options = {
-        position: ["bottom", "right"],
-        timeOut: 3000,
-        lastOnBottom: true,
-        showProgressBar: true,
-        pauseOnHover: true,
-        clickToClose: true,
-    }
+    
     name: any;
     loading = false;
 
@@ -61,6 +55,7 @@ export class VisitComponent implements OnInit {
                 private userService: UserService,
                 private unitService: UnitService,
                 private appComponent: AppComponent,
+                private _notificationsService: NotificationsService,
     ){
         this.visitDateCreate = new Date();
         this.activeDate = this.activeDateFull = new Date();
@@ -68,7 +63,7 @@ export class VisitComponent implements OnInit {
 
     ngOnInit(): void {
         this.unit = {};
-        this.loading = true;
+        this.loading = false;
     	this.addSubmitted = false;
     	this.checkInSsubmitted = false;
         this.checkOutSsubmitted = false;
@@ -131,7 +126,6 @@ export class VisitComponent implements OnInit {
             // disableUntil: {year: 2016, month: 8, day: 10},
             selectionTxtFontSize: '16px'
         };
-        setTimeout(() => this.appComponent.loading = false, 1000);
     }
 
     convertDate(date) {
@@ -146,7 +140,6 @@ export class VisitComponent implements OnInit {
 	}
 
     preCheckIn(visit){
-        this.appComponent.loading = true
     	this.visit = visit;
    		this.checkInForm = this.formbuilder.group({
 			 	property: [{value: visit.visiting, disabled: true}],
@@ -159,12 +152,9 @@ export class VisitComponent implements OnInit {
                 remarks : [{ value: visit.remarks, disabled: true}],
                 check_in: [''],
         });
-        setTimeout(() => this.appComponent.loading = false, 1000);
-         // this.myForm.setValue(this.user);
     }
 
     preCheckOut(visit){
-        this.appComponent.loading = true
         this.visitOut = visit;
            this.checkOutForm = this.formbuilder.group({
                  property: [{value: visit.visiting, disabled: true}],
@@ -177,12 +167,10 @@ export class VisitComponent implements OnInit {
                 remarks : [{ value: visit.remarks, disabled: true}],
                 check_in: [''],
         });
-        setTimeout(() => this.appComponent.loading = false, 1000);
-         // this.myForm.setValue(this.user);
     }
 
     checkOut(model: any, isValid: boolean){
-        this.appComponent.loading = true
+        
         this.checkOutSsubmitted = true;
 
         if(isValid === true){
@@ -190,14 +178,22 @@ export class VisitComponent implements OnInit {
             this.visitService.checkOut(this.visitOut._id)
                 .then(
                     data => {
+                        this.appComponent.loading = true;
                         this.checkOutModal.close();
                         this.ngOnInit();
-                        this.appComponent.showNotification('success', 'Check out '+ this.visitOut.visitor.prefix + ' ' + this.visitOut.visitor.full_name + 'successful');
+                        this.loading = false;
+                        this._notificationsService.success(
+                            'Success',
+                            'Check out '+ this.visitOut.visitor.prefix + ' ' + this.visitOut.visitor.full_name + ' successful',
+                        )
                     },
                     error => {
                         console.log(error);
-                        this.checkOutModal.close();this.appComponent.showNotification('error', 'Check in failed, server Error');
-                        this.appComponent.showNotification('error', 'Check out failed, server Error');
+                        this.checkOutModal.close();
+                        this._notificationsService.error(
+                            'Error',
+                            'Check out failed, server Error',
+                        )
                         this.loading = false;
                     }
                 );
@@ -224,21 +220,28 @@ export class VisitComponent implements OnInit {
     }
 
     checkIn(model: any, isValid: boolean) {
-        this.appComponent.loading = true
         this.checkInSsubmitted = true;
         if(isValid === true){
             this.loading = true;
             this.visitService.checkIn(this.visit._id)
                 .then(
                     data => {
+                        this.appComponent.loading =true;
                         this.checkInModal.close();
                         this.ngOnInit();
-                        this.appComponent.showNotification('success', 'Check in '+ this.visit.visitor.prefix + ' ' + this.visit.visitor.full_name + 'successful');
+                        this.loading = false;
+                        this._notificationsService.success(
+                            'Success',
+                            'Check in '+ this.visit.visitor.prefix + ' ' + this.visit.visitor.full_name + ' successful',
+                        )
                     },
                     error => {
                         console.log(error);
                         this.checkInModal.close();
-                        this.appComponent.showNotification('error', 'Check in failed, server Error');
+                        this._notificationsService.error(
+                            'Error',
+                            'Check in failed, server Error',
+                        )
                         this.loading = false;
                     }
                 );
@@ -247,7 +250,6 @@ export class VisitComponent implements OnInit {
     }
 
     addGuest(model: any, isValid: boolean) {
-        this.appComponent.loading = true
         this.addSubmitted = true;
         if(model.check_in === true){
         	model.check_in = new Date();
@@ -260,18 +262,27 @@ export class VisitComponent implements OnInit {
             this.visitService.create(model)
             .then(
                 data => {
+
+                    this.appComponent.loading = true
                     this.firstModal.close();
                     this.ngOnInit();
-                    this.appComponent.showNotification('success', 'Add guest successful');
+                    this._notificationsService.success(
+                            'Success',
+                            'Add guest successful',
+                        )
+                    this.loading = false;
                 },
                 error => {
                     console.log(error);
                     this.firstModal.close();
-                    this.appComponent.showNotification('error', 'Add guest failed, server Error');
+                    setTimeout(() => this.appComponent.loading = false, 1000);
+                    this._notificationsService.error(
+                            'Error',
+                            'Add guest failed, server Error',
+                        )
                     this.loading = false;
                 }
             );
-
             this.addSubmitted = false;
         }
     }
@@ -287,10 +298,9 @@ export class VisitComponent implements OnInit {
                         let visiting = this.dataUnit.find(data => data._id ==  this.visitActive[i].property);
                         this.visitActive[i].visiting = '#' + visiting.address.unit_no + '-' + visiting.address.unit_no_2;
                     }
-                    this.loading = false;
+                    setTimeout(() => this.appComponent.loading = false, 1000);
                 }, 1000);
             });
-            setTimeout(() => this.appComponent.loading = false, 1000);
     }
 
     private loadAllUnits(): void {

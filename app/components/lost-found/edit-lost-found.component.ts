@@ -5,6 +5,7 @@ import { Http, Headers, RequestOptions, Response } from '@angular/http';
 import { LostFoundService, AlertService, UserService, UnitService } from '../../services/index';
 import { FormBuilder, FormGroup, FormControl, FormArray, Validators } from '@angular/forms';
 import { AppComponent } from '../index';
+import { NotificationsService } from 'angular2-notifications';
 import { FileUploader } from 'ng2-file-upload';
 import { Observable} from 'rxjs/Observable';
 import '../../rxjs-operators';
@@ -41,6 +42,7 @@ export class EditLostFoundComponent  {
         private unitService: UnitService,
         private http: Http, 
         private appComponent: AppComponent,
+        private _notificationsService: NotificationsService,
          ) {
 
         // this.user = JSON.parse(localStorage.getItem('user'));
@@ -51,10 +53,8 @@ export class EditLostFoundComponent  {
                             .subscribe(name => {
                                 this.name = name;
                                 this.loadAllUnits();
-                                this.getLastSerialNo();
                             })
-        this.model.photo = [];    
-        setTimeout(() => this.appComponent.loading = false, 1000);                        
+        this.model.photo = [];                            
         
     }
 
@@ -70,7 +70,6 @@ export class EditLostFoundComponent  {
 
     createReport(event: any) {
         this.appComponent.loading = true
-        // this.model.serial_number = 142141;
         this.model.archieve = false;
         if(this.model.photo.length > 0 && this.model.property && this.model.type){
             let formData:FormData = new FormData();
@@ -87,14 +86,22 @@ export class EditLostFoundComponent  {
             formData.append("preferred_method_of_contact", this.model.preferred_method_of_contact);
             
             this.lostFoundService.create(formData)
-            .then(
-                data => {
+            .then(data => {
+                    this._notificationsService.success(
+                            'Success',
+                            'Create Report successful',
+                    )
                     this.alertService.success('Create Report successful', true);
                     this.router.navigate([this.name.default_development.name_url + '/lost_found']);
                 },
                 error => {
                     console.log(error);
                     alert(`The Report could not be save, server Error.`);
+                    this._notificationsService.error(
+                            'Error',
+                            'The Report could not be save, server Error',
+                    )
+                    this.appComponent.loading = true
                 }
             );
         }
@@ -110,6 +117,7 @@ export class EditLostFoundComponent  {
             .subscribe((data)=> {
                 setTimeout(()=> {
                     this.dataUnit      = data.properties;
+                    this.getLastSerialNo();
                 }, 1000);
             });
     }
@@ -132,7 +140,7 @@ export class EditLostFoundComponent  {
             } else {
                 this.model.serial_number = '0001'
             }
-            
+            setTimeout(() => this.appComponent.loading = false, 1000);
         });
     }
 

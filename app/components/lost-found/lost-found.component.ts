@@ -2,6 +2,7 @@ import { Component, OnInit, ViewContainerRef, ViewEncapsulation, ViewChild } fro
 import { Router, Params, ActivatedRoute } from '@angular/router';
 import { LostFound, LostFounds } from '../../models/index';
 import { LostFoundService, AlertService, UserService, UnitService} from '../../services/index';
+import { NotificationsService } from 'angular2-notifications';
 import '../../rxjs-operators';
 import { Observable} from 'rxjs/Observable';
 import { AppComponent } from '../index';
@@ -51,10 +52,14 @@ export class LostFoundComponent implements OnInit {
                 private userService: UserService,
                 private unitService: UnitService,
                 private appComponent: AppComponent,
+                private _notificationsService: NotificationsService
                 ) {
     }
 
     ngOnInit(): void {
+        this.route.params.subscribe(params => {
+            this.id = params['id'];
+        });
 		this.userService.getByToken()
                         .subscribe(name => {
                             this.name = name;
@@ -62,10 +67,6 @@ export class LostFoundComponent implements OnInit {
                         })
         this.buttonViewArchive = false;
         this.images = [];
-        this.route.params.subscribe(params => {
-            this.id = params['id'];
-        });
-        setTimeout(() => this.appComponent.loading = false, 1000);
     }
 
     convertDate(date) {
@@ -91,13 +92,20 @@ export class LostFoundComponent implements OnInit {
             .then(
                 data => {
                     this.firstModal.close();
-                    this.alertService.success('Archive data successful', true);
+                     this._notificationsService.success(
+                            'Success',
+                            'Archive data successful',
+                    )
                     this.ngOnInit();
                 },
                 error => {
                     console.log(error);
                     this.firstModal.close();
-                    alert(`could not be archive, server Error.`);
+                    this._notificationsService.error(
+                            'Error',
+                            'Failed to archive, server error',
+                    )
+                    this.appComponent.loading = false
                 }
             );
     }
@@ -145,6 +153,7 @@ export class LostFoundComponent implements OnInit {
                         let unit = this.dataUnit.find(data => data._id ==  this.founds[i].property);
                         this.founds[i].unit_no = '#' + unit.address.unit_no + '-' + unit.address.unit_no_2;
                     }
+                    setTimeout(() => this.appComponent.loading = false, 1000);
                 }, 1000);
             });
     }
@@ -169,6 +178,7 @@ export class LostFoundComponent implements OnInit {
                                         this.images.push({source: this.lostFound.photo[i].url});   
                                     }
                                 }
+                                setTimeout(() => this.appComponent.loading = false, 1000);
                             });
                     }
                 }, 1000);

@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import { Announcement, Announcements} from '../../models/index';
 import { AppComponent } from '../index';
 import { AnnouncementService, AlertService, UserService} from '../../services/index';
+import { NotificationsService } from 'angular2-notifications';
 import '../../rxjs-operators';
 import { Observable} from 'rxjs/Observable';
 import {IMyOptions} from 'mydatepicker';
@@ -57,6 +58,7 @@ export class AnnouncementComponent implements OnInit {
                 private alertService: AlertService,
                 private userService: UserService,
                 private appComponent: AppComponent,
+                private _notificationsService: NotificationsService,
                 ) {
 
     }
@@ -81,8 +83,7 @@ export class AnnouncementComponent implements OnInit {
         };
         this.validTillDateOptions = copy;
 
-        this.model.publish = false;     
-        setTimeout(() => this.appComponent.loading = false, 1000);                         
+        this.model.publish = false;                           
     }
 
     getCopyOfValidTillDateOptions(): IMyOptions {
@@ -93,25 +94,27 @@ export class AnnouncementComponent implements OnInit {
         this.appComponent.loading = true
         this.announcementService.delete(announcement._id)
           .then(
-            response => {
-              if(response) {
-                alert(`The Announcement could not be deleted, server Error.`);
-              } else {
-                
-                alert(`Delete announcement successful`);
-                this.ngOnInit()
-              }
-            },
-            error=> {
-                alert(`The Announcement could not be deleted, server Error.`);
-            }
+             data => {
+                    this._notificationsService.success(
+                            'Success',
+                            'Delete announcement successful',
+                    )
+                    this.ngOnInit();
+                },
+                error => {
+                    console.log(error);
+                    this._notificationsService.error(
+                            'Error',
+                            'Failed to delete, server error',
+                    )
+                    setTimeout(() => this.appComponent.loading = false, 1000);
+                }
         );
     }
 
 
 
     openModal(announcement){
-        this.appComponent.loading = true
         this.announcement = announcement;
         this.valid_tillStatus = announcement.valid_till;
         this.stickyStatus = announcement.sticky;
@@ -119,7 +122,6 @@ export class AnnouncementComponent implements OnInit {
         if(this.valid_tillStatus == ""){
               this.valid_tillStatus = "";
         }
-        setTimeout(() => this.appComponent.loading = false, 1000);
     }
 
     publishAnnouncement(){
@@ -136,18 +138,22 @@ export class AnnouncementComponent implements OnInit {
 
         this.announcementService.publish(this.announcement._id , this.publishData)
           .then(
-            response => {
-              if(response) {
-                alert(`The Announcement could not be publish, server Error.`);
-              } else {
-                alert(`Publish Announcement successful`);
-                this.firstModal.close();
-                this.ngOnInit()
-              }
-            },
-            error=> {
-                alert(`The Announcement could not be deleted, server Error.`);
-            }
+            data => {
+                    this._notificationsService.success(
+                            'Success',
+                            'Publish announcement successful',
+                    )
+                    this.firstModal.close();
+                    this.ngOnInit();
+                },
+                error => {
+                    console.log(error);
+                    this._notificationsService.error(
+                            'Error',
+                            'Failed to publish, server error',
+                    )
+                    setTimeout(() => this.appComponent.loading = false, 1000);
+                }
         );
 
         this.firstModal.close();
@@ -192,7 +198,7 @@ export class AnnouncementComponent implements OnInit {
                                   this.announcementsPublished[i].valid_till_date = y + '/' + m + '/' + d ;
                               }
                           }
-
+                          setTimeout(() => this.appComponent.loading = false, 1000);   
 
                 }, 1000);
             });

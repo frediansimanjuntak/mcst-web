@@ -3,6 +3,7 @@ import { Router, Params, ActivatedRoute } from '@angular/router';
 import { Development, Developments } from '../../models/index';
 import { UnitService, AlertService, UserService } from '../../services/index';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { NotificationsService } from 'angular2-notifications';
 import { Location }               from '@angular/common';
 import { Observable} from 'rxjs/Observable';
 import { AppComponent } from '../index';
@@ -44,13 +45,18 @@ export class EditUnitComponent implements OnInit {
     	private alertService: AlertService,
         private formbuilder: FormBuilder,
         private location: Location,
+        private _notificationsService: NotificationsService,
         private appComponent: AppComponent, ) {
 
         // this.user = JSON.parse(localStorage.getItem('user'));
     }
 
     ngOnInit() {
-        this.userService.getByToken().subscribe(name => {this.name = name;})
+        this.userService.getByToken()
+                            .subscribe(name => {
+                                this.name = name;
+                                setTimeout(() => this.appComponent.loading = false, 1000);
+                            })
         this.submitted = false;
         this.myForm = this.formbuilder.group({
                 address: this.formbuilder.group({
@@ -76,23 +82,30 @@ export class EditUnitComponent implements OnInit {
                        this.unit = unit.propeties;
                     });
         }
-        setTimeout(() => this.appComponent.loading = false, 1000);
     }
 
     createUnit(model: any, isValid: boolean) {
-        this.appComponent.loading = true
         this.submitted = true;
         
         if(isValid){
+
+            this.appComponent.loading = true
             this.unitservice.create(model, this.name.default_development.name_url)
             .then(
                 data => {
-                    this.alertService.success('Create Unit successful', true);
+                    this._notificationsService.success(
+                            'Success',
+                            'Create Unit successful',
+                        )
                     this.router.navigate([this.name.default_development.name_url + '/unit']);
                 },
                 error => {
                     console.log(error);
-                    alert(`The Unit could not be save, server Error.`);
+                    this._notificationsService.error(
+                            'Error',
+                            'The Unit could not be save, server Error.',
+                    )
+                    this.appComponent.loading = false;
                 }
             );
         }

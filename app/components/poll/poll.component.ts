@@ -4,6 +4,7 @@ import { Poll } from '../../models/index';
 import { PollService, AlertService, UserService} from '../../services/index';
 import { Observable} from 'rxjs/Observable';
 import { Location }               from '@angular/common';
+import { NotificationsService } from 'angular2-notifications';
 import { AppComponent } from '../index';
 import * as $ from "jquery";
 import '../../rxjs-operators';
@@ -36,6 +37,7 @@ export class PollComponent implements OnInit {
                 private location: Location,
                 private userService: UserService,
                 private appComponent: AppComponent,
+                private _notificationsService: NotificationsService,
                 ) {  
         this.today = new Date();
       }
@@ -78,11 +80,10 @@ export class PollComponent implements OnInit {
                                                 };
                                             }
                                             this.poll.answers = opts.slice(0);
-                                            
+                                            setTimeout(() => this.appComponent.loading = false, 1000);
                                         });
                                 }
                             })
-        setTimeout(() => this.appComponent.loading = false, 1000);
     }
 
     convertDate(date) {
@@ -152,6 +153,7 @@ export class PollComponent implements OnInit {
                                   this.pollsResult[i].end_time = y + '/' + m + '/' + d ;
                               }    
                     }
+                    setTimeout(() => this.appComponent.loading = false, 1000);
                 }, 1000);
         });
 	}
@@ -160,43 +162,47 @@ export class PollComponent implements OnInit {
         this.appComponent.loading = true
         this.pollService.delete(poll._id)
           .then(
-            response => {
-              if(response) {
-                alert(`The Poll could not be deleted, server Error.`);
-              } else {
-                alert(`Delete Poll successful`);
-                this.ngOnInit()
-              }
+             data => {
+                this._notificationsService.success(
+                            'Success',
+                            'Delete poll successful',
+                )
+                this.ngOnInit();
             },
-            error=> {
-              console.log(error);
-                alert(`The Poll could not be deleted, server Error.`);
+            error => {
+                console.log(error);
+                this._notificationsService.error(
+                            'Error',
+                            'Failed delete poll, server error',
+                    )
+                this.appComponent.loading = false
             }
-        );
+          );
     }
 
  	openModal(poll){
-        this.appComponent.loading = true
  		this.pollStart = poll;
-        setTimeout(() => this.appComponent.loading = false, 1000);
     }
 
     startPoll(){
         this.appComponent.loading = true
         this.pollService.start(this.pollStart._id)
           .then(
-            response => {
-              if(response) {
-                alert(`The Poll failed to start, server Error.`);
-              } else {
-                alert(`Start Poll successful`);
+             data => {
+                this._notificationsService.success(
+                            'Success',
+                            'Start poll successful',
+                )
                 this.firstModal.close();
                 this.ngOnInit()
-              }
             },
-            error=> {
-              console.log(error);
-                alert(`The Poll could not be start, server Error.`);
+            error => {
+                console.log(error);
+                this._notificationsService.error(
+                            'Error',
+                            '`The Poll could not be start, server Error',
+                    )
+                this.appComponent.loading = false
             }
         );
     }

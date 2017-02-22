@@ -3,6 +3,7 @@ import { Router, Params, ActivatedRoute } from '@angular/router';
 import { FormBuilder, FormControl, FormGroup, FormArray, Validators } from '@angular/forms';
 import { UserGroup, UserGroups, User, Users } from '../../models/index';
 import { UserGroupService, UserService, AlertService } from '../../services/index';
+import { NotificationsService } from 'angular2-notifications';
 import { AppComponent } from '../index';
 import '../../rxjs-operators';
 import 'rxjs/add/operator/switchMap';
@@ -44,7 +45,8 @@ export class EditUserGroupComponent implements OnInit {
     	private alertService: AlertService,
     	private formbuilder: FormBuilder,
         private route: ActivatedRoute,
-        private appComponent: AppComponent,) {
+        private appComponent: AppComponent,
+        private _notificationsService: NotificationsService) {
     }
     
     ngOnInit(): void {
@@ -83,6 +85,7 @@ export class EditUserGroupComponent implements OnInit {
                         }
 
                         this.user = opts.slice(0);
+                        setTimeout(() => this.appComponent.loading = false, 1000);
 
                     });
         };
@@ -161,6 +164,7 @@ export class EditUserGroupComponent implements OnInit {
 
             this.myOptions2 = opts2.slice(0);
             this.items2 = this.myOptions2;
+            setTimeout(() => this.appComponent.loading = false, 1000);
         });
     }
 
@@ -184,14 +188,22 @@ export class EditUserGroupComponent implements OnInit {
             this.model.users[i] = this.user[i].id ;
         }
         if(this.model.chief){
+            this.appComponent.loading = true;
             this.userGroupService.create(this.model)
             .then(
                 data => {
-                    this.alertService.success('Create usergroup successful', true);
+                    this._notificationsService.success(
+                            'Success',
+                            'Create usergroup successful',
+                    )
                     this.router.navigate([this.name.default_development.name_url + '/user_group']);
                 },
                 error => {
-                    this.alertService.error(error);
+                    this._notificationsService.error(
+                            'Error',
+                            'Failed to create usergroup, server Error',
+                    )
+                    this.appComponent.loading = false;
                 }
             );    
         }
@@ -211,12 +223,19 @@ export class EditUserGroupComponent implements OnInit {
             }
             this.userGroupService.update(this.usergroup)
                 .then(
-                    response => {
-                        this.alertService.success('Update Usergroup successful', true);
+                    data => {
+                        this._notificationsService.success(
+                                'Success',
+                                'Update usergroup successful',
+                        )
                         this.router.navigate([this.name.default_development.name_url + '/user_group']);
                     },
-                    error=> {
-                        this.alertService.error(error);
+                    error => {
+                        this._notificationsService.error(
+                                'Error',
+                                'Failed to update usergroup, server Error',
+                        )
+                        this.appComponent.loading = false;
                     }
                 );
         }

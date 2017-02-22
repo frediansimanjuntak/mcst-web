@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import { Contractor, Contractors } from '../../models/index';
 import { ContractorService, AlertService, UserService} from '../../services/index';
 import '../../rxjs-operators';
+import { NotificationsService } from 'angular2-notifications';
 import { AppComponent } from '../index';
 import { Observable} from 'rxjs/Observable';
 import * as $ from "jquery";
@@ -32,6 +33,7 @@ export class ContractorComponent implements OnInit {
                 private alertService: AlertService,
                 private userService: UserService,
                 private appComponent: AppComponent,
+                private _notificationsService: NotificationsService
                 ) {
 
     }
@@ -54,22 +56,23 @@ export class ContractorComponent implements OnInit {
     }
 
     deleteContractor(contractor) {
+        this.appComponent.loading = true;
         this.contractorService.delete(contractor._id)
           .then(
-            response => {
-              if(response) {
-                console.log(response);
-                alert(`The contractor could not be deleted, server Error.`);
-              } else {
-                this.alertService.success('Delete contractor successful', true);
-                alert(`Delete Contractor successful`);
-                this.ngOnInit()
+              data => {
+                    this._notificationsService.success(
+                            'Success',
+                            'Delete contractor successful',
+                    )
+                    this.ngOnInit()
+                },
+                error => {
+                    this._notificationsService.error(
+                            'Error',
+                            'The Contractor could not be deleted, server Error',
+                    )
+                    this.appComponent.loading = false;
               }
-            },
-            error=> {
-              console.log(error);
-                alert(`The Contractor could not be deleted, server Error.`);
-            }
         );
     }
 
@@ -78,23 +81,25 @@ export class ContractorComponent implements OnInit {
     }
 
     activate(){
+        this.appComponent.loading = true;
         this.contractorService.activation(this.contractor._id)
           .then(
-            response => {
-              if(response) {
-                alert(`The Contractor could not be activated, server Error.`);
-              } else {
-                this.alertService.success('Activate Contractor successful', true);
-                alert(`Activated Contractor successful`);
-                this.activeModal.close();
-                this.ngOnInit()
+             data => {
+                    this._notificationsService.success(
+                            'Success',
+                            'Activate Contractor successful',
+                    )
+                    this.activeModal.close();
+                    this.ngOnInit()
+                },
+                error => {
+                      this.activeModal.close();
+                    this._notificationsService.error(
+                            'Error',
+                            'The Contractor could not be Activated, server Error',
+                    )
+                    this.appComponent.loading = false;
               }
-            },
-            error=> {
-              console.log(error);
-              this.activeModal.close();
-                alert(`The Contractor could not be Activated, server Error.`);
-            }
         );
     }
 
@@ -108,6 +113,7 @@ export class ContractorComponent implements OnInit {
             .subscribe((data)=> {
                 setTimeout(()=> {
                     this.contractors = data;
+                    setTimeout(() => this.appComponent.loading = false, 1000);
                 }, 1000);
             });
     }

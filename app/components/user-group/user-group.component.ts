@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import { UserGroup, User } from '../../models/index';
 import { UserGroupService, UserService, AlertService} from '../../services/index';
 import '../../rxjs-operators';
+import { NotificationsService } from 'angular2-notifications';
 import { FileUploader } from 'ng2-file-upload';
 import { Observable} from 'rxjs/Observable';
 import { AppComponent } from '../index';
@@ -34,7 +35,8 @@ export class UserGroupComponent implements OnInit {
                 private userGroupService: UserGroupService,
     			private userService: UserService,
     			private alertService: AlertService,
-                private appComponent: AppComponent,) {
+                private appComponent: AppComponent,
+                private _notificationsService: NotificationsService) {
     }
 
     ngOnInit(): void {
@@ -63,23 +65,29 @@ export class UserGroupComponent implements OnInit {
                         let user = this.users.find(data => data._id ==  this.usergroups.users[i]);
                         this.usergroups.user[i] = user.username;
                     }
-                }, 3000);
+                    setTimeout(() => this.appComponent.loading = false, 1000);
+                }, 1000);
             });
     }
 
     deleteUserGroup(usergroup: UserGroup) {
+        this.appComponent.loading = true;
         this.userGroupService.delete(usergroup._id)
         .then(
-            response => {
-                if(response) {
-                    alert(`The Usergroup could not be deleted, server Error.`);
-                } else {
-                    this.alertService.success('Delete usergroup successful', true);
+            data => {
+                    this._notificationsService.success(
+                            'Success',
+                            'Delete usergroup successful',
+                    )
                     this.loadAllUserGroup()
-                }
-            },
-            error=> {
-                alert(`The Usergroup could not be deleted, server Error.`);
+                },
+                error => {
+                    console.log(error);
+                    this._notificationsService.error(
+                            'Error',
+                            'The Usergroup could not be deleted, server Error',
+                    )
+                    this.appComponent.loading = false;
             }
         );
     }

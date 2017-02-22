@@ -3,6 +3,7 @@ import { Router, Params, ActivatedRoute } from '@angular/router';
 import { Development, Developments } from '../../models/index';
 import { UnitService, AlertService, UserService } from '../../services/index';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { NotificationsService } from 'angular2-notifications';
 import { Location }               from '@angular/common';
 import { Observable} from 'rxjs/Observable';
 import { AppComponent } from '../index';
@@ -37,6 +38,7 @@ export class ViewUnitComponent implements OnInit {
     id: string;
     hasLandlord: boolean;
     hasTenants: boolean;
+    loading: boolean;
     myForm: FormGroup;
     myForm2: FormGroup;
 
@@ -50,6 +52,7 @@ export class ViewUnitComponent implements OnInit {
         private userService: UserService,
         private formbuilder: FormBuilder,
         private location: Location,
+        private _notificationsService: NotificationsService,
         private appComponent: AppComponent, ) {
 
         // this.user = JSON.parse(localStorage.getItem('user'));
@@ -83,7 +86,6 @@ export class ViewUnitComponent implements OnInit {
                 registered_on: [''],
                 remarks: [''],
         });
-        setTimeout(() => this.appComponent.loading = false, 1000);
     }
 
     getUsers(): void {
@@ -118,6 +120,7 @@ export class ViewUnitComponent implements OnInit {
                                         this.vehicles[i].user = this.users.find(data => data._id == this.vehicles[i].owner).username;
                                     }
                                 }
+                                setTimeout(() => this.appComponent.loading = false, 1000);
                             });
             }
         });
@@ -155,33 +158,30 @@ export class ViewUnitComponent implements OnInit {
         this.appComponent.loading = true
         this.unitservice.deleteRegVehicle(vehicle._id, this.unit._id, this.name.default_development.name_url)
             .then(
-                response => {
-                  if(response) {
-                    console.log(response);
-                    alert(`Vehicle could not be deleted, server Error.`);
-                  } else {
-                    this.alertService.success('Delete vehicle successful', true);
-                    alert(`Delete vehicle successful`);
-                    this.ngOnInit()
-                  }
+                 data => {
+                    this._notificationsService.success(
+                            'Success',
+                            'Delete Vehicle successful',
+                    )
+                    this.ngOnInit();
                 },
-                error=> {
-                  console.log(error);
-                    alert(`vehicle could not be deleted, server Error.`);
+                error => {
+                    console.log(error);
+                    this._notificationsService.error(
+                            'Error',
+                            'Data failed to delete, server error',
+                    )
+                    setTimeout(() => this.appComponent.loading = false, 1000);
                 }
             );
     }
 
     openResidentDetail(resident: any){
-        this.appComponent.loading = true
         this.resident = resident;
-        setTimeout(() => this.appComponent.loading = false, 1000);
     }
 
     openVehicleDetail(vehicle: any){
-        this.appComponent.loading = true
         this.vehicle = vehicle;
-        setTimeout(() => this.appComponent.loading = false, 1000);
     }
 
     goToUnit(){
@@ -203,9 +203,11 @@ export class ViewUnitComponent implements OnInit {
 
     addVehicle(model: any, isValid: boolean){
          this.vehicleSubmitted = true;
+         this.loading = true;
          model.registered_on = new Date();
 
         if(isValid && this.model.document.length > 0){
+            this.appComponent.loading = true
             let formData:FormData = new FormData();
                 for (var i = 0; i < this.model.document.length; i++) {
                     formData.append("document[]", this.model.document[i]);
@@ -219,13 +221,23 @@ export class ViewUnitComponent implements OnInit {
             this.unitservice.createRegVehicle(formData, this.name.default_development.name_url, this.unit._id)
             .then(
                 data => {
-                    this.alertService.success('Add guest successful', true);
+                    this._notificationsService.success(
+                            'Success',
+                            'Add Vehicle successful',
+                    )
                     this.secondModal.close();
+                    this.loading = false;
                     this.ngOnInit();
                 },
                 error => {
                     console.log(error);
-                    alert(`Guest register could not be save, server Error.`);
+                    this._notificationsService.error(
+                            'Error',
+                            'Data failed to save, server error',
+                    )
+                    this.secondModal.close();
+                    this.loading = false;
+                    this.appComponent.loading = false
                 }
             );
             this.vehicleSubmitted = false;

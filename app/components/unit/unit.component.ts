@@ -37,7 +37,6 @@ export class UnitComponent implements OnInit {
                 this.name = name;
                 this.loadAllUnits();
             })
-        setTimeout(() => this.appComponent.loading = false, 1000);
     }
 
     deleteUnit(unit: any) {
@@ -68,6 +67,7 @@ export class UnitComponent implements OnInit {
                     this.dataUnit = data.properties;
                     console.log(this.dataUnit)
                     this.loading = false;
+                    setTimeout(() => this.appComponent.loading = false, 1000);
                 }, 1000);
             });
     }

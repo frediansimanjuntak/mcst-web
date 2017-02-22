@@ -112,6 +112,7 @@ export class LoginComponent implements OnInit {
                 this.router.navigate([this.name.default_development.name_url, 'dashboard']);
             })
         }
+        setTimeout(() => this.appComponent.loading = false, 1000);  
     }
 
     login() {
