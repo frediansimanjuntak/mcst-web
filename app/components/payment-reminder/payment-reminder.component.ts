@@ -7,6 +7,7 @@ import { NotificationsService } from 'angular2-notifications';
 import { Observable } from 'rxjs/Observable';
 import { FileUploader } from 'ng2-file-upload';
 import { AppComponent } from '../index';
+import { ConfirmationService } from 'primeng/primeng';
 
 @Component({
     // moduleId: module.id,
@@ -31,6 +32,7 @@ export class PaymentReminderComponent implements OnInit {
         private alertService: AlertService,
         private route: ActivatedRoute,
         private appComponent: AppComponent,
+        private confirmationService: ConfirmationService,
         private _notificationsService: NotificationsService,
         private userService: UserService) {}
 
@@ -76,6 +78,17 @@ export class PaymentReminderComponent implements OnInit {
                             setTimeout(() => this.appComponent.loading = false, 1000);
                 }
             );
+    }
+
+    deleteConfirmation(paymentreminder) {
+        this.confirmationService.confirm({
+            message: 'Are you sure that you want to delete this payment reminder?',
+            header: 'Delete Confirmation',
+            icon: 'fa fa-trash',
+            accept: () => {
+                this.deletePaymentReminder(paymentreminder)
+            }
+        });
     }
 
 	private loadAllPaymentReminder() {
@@ -134,5 +147,15 @@ export class PaymentReminderComponent implements OnInit {
                             setTimeout(() => this.appComponent.loading = false, 1000);
                 }
             );
+    }
+
+    publishConfirmation(paymentreminder) {
+        this.confirmationService.confirm({
+            message: 'Are you sure that you want to publish this paymentreminder?',
+            header: 'Publish Confirmation',
+            accept: () => {
+                this.publish(paymentreminder)
+            }
+        });
     }
 }

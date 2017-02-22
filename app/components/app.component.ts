@@ -28,6 +28,7 @@ import {
         <button *ngIf="!loading" (click)="stop()"></button>
     </div>
     <simple-notifications [options]="options"></simple-notifications>
+    <p-confirmDialog width="425"></p-confirmDialog>
 
 
   	
