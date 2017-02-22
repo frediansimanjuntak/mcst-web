@@ -8,6 +8,7 @@ import { NotificationsService } from 'angular2-notifications';
 import { AppComponent } from '../index';
 import * as $ from "jquery";
 import '../../rxjs-operators';
+import { ConfirmationService } from 'primeng/primeng';
 
 @Component({
   // moduleId: module.id,
@@ -37,6 +38,7 @@ export class PollComponent implements OnInit {
                 private location: Location,
                 private userService: UserService,
                 private appComponent: AppComponent,
+                private confirmationService: ConfirmationService,
                 private _notificationsService: NotificationsService,
                 ) {  
         this.today = new Date();
@@ -178,6 +180,17 @@ export class PollComponent implements OnInit {
                 this.appComponent.loading = false
             }
           );
+    }
+
+    deleteConfirmation(poll) {
+        this.confirmationService.confirm({
+            message: 'Are you sure that you want to delete this poll?',
+            header: 'Delete Confirmation',
+            icon: 'fa fa-trash',
+            accept: () => {
+                this.deletePoll(poll)
+            }
+        });
     }
 
  	openModal(poll){

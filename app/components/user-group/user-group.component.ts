@@ -7,6 +7,7 @@ import { NotificationsService } from 'angular2-notifications';
 import { FileUploader } from 'ng2-file-upload';
 import { Observable} from 'rxjs/Observable';
 import { AppComponent } from '../index';
+import { ConfirmationService } from 'primeng/primeng';
 
 @Component({
   // moduleId: module.id,
@@ -36,6 +37,7 @@ export class UserGroupComponent implements OnInit {
     			private userService: UserService,
     			private alertService: AlertService,
                 private appComponent: AppComponent,
+                private confirmationService: ConfirmationService,
                 private _notificationsService: NotificationsService) {
     }
 
@@ -90,6 +92,17 @@ export class UserGroupComponent implements OnInit {
                     this.appComponent.loading = false;
             }
         );
+    }
+
+    deleteConfirmation(usergroup) {
+        this.confirmationService.confirm({
+            message: 'Are you sure that you want to delete this usergroup?',
+            header: 'Delete Confirmation',
+            icon: 'fa fa-trash',
+            accept: () => {
+                this.deleteUserGroup(usergroup)
+            }
+        });
     }
 
     add(){

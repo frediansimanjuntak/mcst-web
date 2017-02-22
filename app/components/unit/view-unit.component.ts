@@ -9,6 +9,7 @@ import { Observable} from 'rxjs/Observable';
 import { AppComponent } from '../index';
 import '../../rxjs-operators';
 import 'rxjs/add/operator/switchMap';
+import { ConfirmationService } from 'primeng/primeng';
 
 @Component({
   // moduleId: module.id,
@@ -52,6 +53,7 @@ export class ViewUnitComponent implements OnInit {
         private userService: UserService,
         private formbuilder: FormBuilder,
         private location: Location,
+        private confirmationService: ConfirmationService,
         private _notificationsService: NotificationsService,
         private appComponent: AppComponent, ) {
 
@@ -154,6 +156,17 @@ export class ViewUnitComponent implements OnInit {
             );
     }
 
+    deleteResidentConfirmation(resident) {
+        this.confirmationService.confirm({
+            message: 'Are you sure that you want to delete this resident?',
+            header: 'Delete Confirmation',
+            icon: 'fa fa-trash',
+            accept: () => {
+                this.deleteResident(resident)
+            }
+        });
+    }
+
     deleteVehicle(vehicle: any){
         this.appComponent.loading = true
         this.unitservice.deleteRegVehicle(vehicle._id, this.unit._id, this.name.default_development.name_url)
@@ -174,6 +187,17 @@ export class ViewUnitComponent implements OnInit {
                     setTimeout(() => this.appComponent.loading = false, 1000);
                 }
             );
+    }
+
+    deleteVehicleConfirmation(vehicle) {
+        this.confirmationService.confirm({
+            message: 'Are you sure that you want to delete this vehicle?',
+            header: 'Delete Confirmation',
+            icon: 'fa fa-trash',
+            accept: () => {
+                this.deleteVehicle(vehicle)
+            }
+        });
     }
 
     openResidentDetail(resident: any){

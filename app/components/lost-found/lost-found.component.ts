@@ -9,6 +9,7 @@ import { AppComponent } from '../index';
 import { Location }               from '@angular/common';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import * as $ from "jquery";
+import { ConfirmationService } from 'primeng/primeng';
 // import { Overlay } from 'angular2-modal';
 // import { Modal } from 'angular2-modal/plugins/bootstrap';
 // import { PublishAnnouncementModalComponent, PublishAnnouncementModalData } from './publish-announcement-modal.component';
@@ -52,6 +53,7 @@ export class LostFoundComponent implements OnInit {
                 private userService: UserService,
                 private unitService: UnitService,
                 private appComponent: AppComponent,
+                private confirmationService: ConfirmationService,
                 private _notificationsService: NotificationsService
                 ) {
     }
@@ -86,9 +88,9 @@ export class LostFoundComponent implements OnInit {
         setTimeout(() => this.appComponent.loading = false, 1000);
     }
 
-    archieve(id) {      
+    archieve(lostfound) {      
         this.appComponent.loading = true
-        this.lostFoundService.archieve(id)
+        this.lostFoundService.archieve(lostfound._id)
             .then(
                 data => {
                     this.firstModal.close();
@@ -108,6 +110,16 @@ export class LostFoundComponent implements OnInit {
                     this.appComponent.loading = false
                 }
             );
+    }
+
+    archieveConfirmation(lostfound) {
+        this.confirmationService.confirm({
+            message: 'Are you sure that you want to archieve this lost & found?',
+            header: 'Archieve Confirmation',
+            accept: () => {
+                this.archieve(lostfound)
+            }
+        });
     }
 
     viewArchieved(){

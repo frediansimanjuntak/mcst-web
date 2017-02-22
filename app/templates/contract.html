@@ -224,7 +224,7 @@
                             <p-column styleClass="col-button" header="Action">
                                 <template let-data="rowData" pTemplate="body">
                                     <a type="button" style="cursor:pointer" (click)="viewNote(contract._id, data)">View</a>
-                                    <button type="button" (click)="deleteContractNote(data, contract._id)"><i class="fa fa-trash" aria-hidden="true"></i></button>
+                                    <button type="button" (click)="deleteContractNoteConfirmation(data, contract._id)"><i class="fa fa-trash" aria-hidden="true"></i></button>
                                 </template>
                             </p-column>
                         </p-dataTable>
@@ -272,7 +272,7 @@
                             <p-column styleClass="col-button" header="Action">
                                 <template let-contracts="rowData" pTemplate="body">
                                     <a type="button" style="cursor:pointer; text-decoration: underline;" (click)="view(contracts)">See Details</a>
-                                    <button type="button" class="pull-right btn btn-trash" (click)="deleteContract(contracts)"><i class="fa fa-trash-o" aria-hidden="true"></i></button>
+                                    <button type="button" class="pull-right btn btn-trash" (click)="deleteContractConfirmation(contracts)"><i class="fa fa-trash-o" aria-hidden="true"></i></button>
                                 </template>
                             </p-column>
                         </p-dataTable>
@@ -302,7 +302,7 @@
                             <p-column styleClass="col-button" header="Action">
                                 <template let-open="rowData" pTemplate="body">
                                     <a type="button" style="cursor:pointer" (click)="view(open)">See Details</a>
-                                    <button type="button" (click)="deleteContract(open)">Remove</button>
+                                    <button type="button" (click)="deleteContractConfirmation(open)">Remove</button>
                                 </template>
                             </p-column>
                         </p-dataTable>
@@ -332,7 +332,7 @@
                             <p-column styleClass="col-button" header="Action">
                                 <template let-close="rowData" pTemplate="body">
                                     <a type="button" style="cursor:pointer" (click)="view(close)">See Details</a>
-                                    <button type="button" (click)="deleteContract(close)">Remove</button>
+                                    <button type="button" (click)="deleteContractConfirmation(close)">Remove</button>
                                 </template>
                             </p-column>
                         </p-dataTable>

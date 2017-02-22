@@ -7,6 +7,7 @@ import { Observable} from 'rxjs/Observable';
 import { NotificationsService } from 'angular2-notifications';
 import { FileUploader } from 'ng2-file-upload';
 import { AppComponent } from '../index';
+import { ConfirmationService } from 'primeng/primeng';
 
 
 @Component({
@@ -36,6 +37,7 @@ export class ContractComponent implements OnInit  {
         private userService: UserService,
         private contractnoteService:ContractNoteService,
         private appComponent: AppComponent,
+        private confirmationService: ConfirmationService,
         private _notificationsService: NotificationsService,
         private contractnoticeService:ContractNoticeService) {}
 
@@ -99,6 +101,17 @@ export class ContractComponent implements OnInit  {
         );
     }
 
+    deleteContractConfirmation(contract) {
+        this.confirmationService.confirm({
+            message: 'Are you sure that you want to delete this project?',
+            header: 'Delete Confirmation',
+            icon: 'fa fa-trash',
+            accept: () => {
+                this.deleteContract(contract)
+            }
+        });
+    }
+
     deleteContractNote(contractnote: any , id:any) {
         this.appComponent.loading = true
         this.contractnoteService.delete(id,contractnote._id)
@@ -146,6 +159,17 @@ export class ContractComponent implements OnInit  {
                 )
             }
         );
+    }
+
+    deleteContractNoteConfirmation(contractnote: any , id:any) {
+        this.confirmationService.confirm({
+            message: 'Are you sure that you want to delete this project note?',
+            header: 'Delete Confirmation',
+            icon: 'fa fa-trash',
+            accept: () => {
+                this.deleteContractNote(id,contractnote._id)
+            }
+        });
     }
 
 	private loadAllContract() {

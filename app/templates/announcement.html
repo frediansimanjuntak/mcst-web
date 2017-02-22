@@ -30,7 +30,7 @@
 							<template class="pull-right" let-announcementsDrafted="rowData" pTemplate="body">
 								<a type="button" style="cursor:pointer; margin-right: 15px; " (click)="editAnnouncement(announcementsDrafted)"><i class="fa fa-edit" aria-hidden="true"></i>&nbsp;<u>Edit</u></a>
 								<button class="btn btn-brown btn-publish" style="cursor:pointer; margin-right:5px" (click)="openModal(announcementsDrafted) || firstModal.open()">Publish</button>
-								<button type="button" class="btn btn-trash" (click)="deleteAnnouncement(announcementsDrafted)"><i class="fa fa-trash" aria-hidden="true"></i></button>
+								<button type="button" class="btn btn-trash" (click)="deleteConfirmation(announcementsDrafted)"><i class="fa fa-trash" aria-hidden="true"></i></button>
 							</template>
 						</p-column>
 					</p-dataTable>
@@ -54,7 +54,7 @@
 						</p-column>
 						<p-column [style]="{'width':'90px'}" styleClass="col-button">
 							<template class="pull-right" let-announcementsPublished="rowData" pTemplate="body">
-								<button type="button" class="btn btn-trash" (click)="deleteAnnouncement(announcementsPublished)"><i class="fa fa-trash" aria-hidden="true"></i></button>
+								<button type="button" class="btn btn-trash" (click)="deleteConfirmation(announcementsPublished)"><i class="fa fa-trash" aria-hidden="true"></i></button>
 							</template>
 						</p-column>
 					</p-dataTable>

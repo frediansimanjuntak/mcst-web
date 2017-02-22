@@ -6,6 +6,7 @@ import { NotificationsService } from 'angular2-notifications';
 import '../../rxjs-operators';
 import { Observable} from 'rxjs/Observable';
 import { AppComponent } from '../index';
+import { ConfirmationService } from 'primeng/primeng';
 
 @Component({
   // moduleId: module.id,
@@ -25,6 +26,7 @@ export class FacilityComponent implements OnInit {
         private alertService: AlertService,
         private route: ActivatedRoute,
         private appComponent: AppComponent,
+        private confirmationService: ConfirmationService,
         private _notificationsService: NotificationsService,
         private userService: UserService) {}
 
@@ -60,6 +62,17 @@ export class FacilityComponent implements OnInit {
                     setTimeout(() => this.appComponent.loading = false, 1000);
                 }
         );
+    }
+
+    deleteConfirmation(facility) {
+        this.confirmationService.confirm({
+            message: 'Are you sure that you want to delete this facility?',
+            header: 'Delete Confirmation',
+            icon: 'fa fa-trash',
+            accept: () => {
+                this.deleteFacility(facility)
+            }
+        });
     }
 
     private loadAllFacilities() {
