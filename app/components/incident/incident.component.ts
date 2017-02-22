@@ -8,6 +8,7 @@ import { NotificationsService } from 'angular2-notifications';
 import { Observable } from 'rxjs/Observable';
 import { FileUploader } from 'ng2-file-upload';
 import { AppComponent } from '../index';
+import { ConfirmationService } from 'primeng/primeng';
 
 @Component({
     // moduleId: module.id,
@@ -47,6 +48,7 @@ export class IncidentComponent implements OnInit {
         private unitService: UnitService,
         private appComponent: AppComponent,
         private _notificationsService: NotificationsService,
+        private confirmationService: ConfirmationService,
         private editcontractComponent: EditContractComponent,) {}
 
     ngOnInit(): void {
@@ -166,6 +168,16 @@ export class IncidentComponent implements OnInit {
             );
     }
 
+    archieveConfirmation(incident) {
+        this.confirmationService.confirm({
+            message: 'Are you sure that you want to archieve this incident?',
+            header: 'Archieve Confirmation',
+            accept: () => {
+                this.archieve(incident)
+            }
+        });
+    }
+
     public unarchieve(incident:Incident){
         this.appComponent.loading = true
         this.incidentService.unarchieve(incident._id)
@@ -208,6 +220,16 @@ export class IncidentComponent implements OnInit {
                             setTimeout(() => this.appComponent.loading = false, 1000);
                         }
             );
+    }
+
+    starredConfirmation(incident) {
+        this.confirmationService.confirm({
+            message: 'Are you sure that you want to star this incident?',
+            header: 'Star Confirmation',
+            accept: () => {
+                this.starred(incident)
+            }
+        });
     }
 
     unstarred(incident:Incident) {

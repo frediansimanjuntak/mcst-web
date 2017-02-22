@@ -7,6 +7,7 @@ import { Observable } from 'rxjs/Observable';
 import { NotificationsService } from 'angular2-notifications';
 import { FileUploader } from 'ng2-file-upload';
 import { AppComponent } from '../index';
+import { ConfirmationService } from 'primeng/primeng';
 
 @Component({
     // moduleId: module.id,
@@ -26,6 +27,7 @@ export class PaymentComponent implements OnInit {
         private alertService: AlertService,
         private route: ActivatedRoute,
         private appComponent: AppComponent,
+        private confirmationService: ConfirmationService,
         private _notificationsService: NotificationsService,
         private userService: UserService) {}
 
@@ -62,6 +64,17 @@ export class PaymentComponent implements OnInit {
                         setTimeout(() => this.appComponent.loading = false, 1000);
                     }
         );
+    }
+
+    deleteConfirmation(payment) {
+        this.confirmationService.confirm({
+            message: 'Are you sure that you want to delete this payment?',
+            header: 'Delete Confirmation',
+            icon: 'fa fa-trash',
+            accept: () => {
+                this.deletePayment(payment)
+            }
+        });
     }
 
 	private loadAllPayment() {

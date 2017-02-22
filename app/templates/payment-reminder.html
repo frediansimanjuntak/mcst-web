@@ -78,8 +78,8 @@
                                 <template let-draft="rowData" pTemplate="body">
                                     <a type="button" style="cursor:pointer; margin: 0 25px 0 5px;" (click)="view(draft)">&nbsp;<u>View</u></a>
                                     <a type="button" style="cursor:pointer; margin-right: 15px; " (click)="edit(draft)"><i class="fa fa-edit" aria-hidden="true"></i>&nbsp;<u>Edit</u></a>
-                                    <button class="btn btn-brown btn-publish" [disabled]="draft.publish == true" style="cursor:pointer; margin-right:5px" (click)="publish(draft)">Publish</button>
-                                    <button class="btn btn-trash" type="button" (click)="deletePaymentReminder(draft)"><i class="fa fa-trash-o" aria-hidden="true"></i></button>
+                                    <button class="btn btn-brown btn-publish" [disabled]="draft.publish == true" style="cursor:pointer; margin-right:5px" (click)="publishConfirmation(draft)">Publish</button>
+                                    <button class="btn btn-trash" type="button" (click)="deleteConfirmation(draft)"><i class="fa fa-trash-o" aria-hidden="true"></i></button>
                                 </template>
                             </p-column>
                         </p-dataTable>
@@ -108,7 +108,7 @@
                             <p-column styleClass="col-button" header="action">
                                 <template let-published="rowData" pTemplate="body">
                                     <a type="button" style="cursor:pointer; margin: 0 25px 0 5px;" (click)="view(published)">&nbsp;<u>View</u></a>
-                                    <button type="button" class="btn btn-trash" (click)="deletePaymentReminder(published)"><i class="fa fa-trash-o" aria-hidden="true"></i></button>
+                                    <button type="button" class="btn btn-trash" (click)="deleteConfirmation(published)"><i class="fa fa-trash-o" aria-hidden="true"></i></button>
                                 </template>
                             </p-column>
                         </p-dataTable>
