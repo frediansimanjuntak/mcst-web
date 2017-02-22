@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthenticationService, UserService } from '../../services/index';
+import { NotificationsService } from 'angular2-notifications';
 import { Router } from '@angular/router';
 import { AppComponent } from '../index';
 
@@ -100,6 +101,7 @@ export class LoginComponent implements OnInit {
         private router: Router,
         private AuthService: AuthenticationService,
         private appComponent: AppComponent,
+        private _notificationsService: NotificationsService,
         private userService: UserService   ) { }
 
     ngOnInit() {
@@ -129,7 +131,12 @@ export class LoginComponent implements OnInit {
                 },
                 error => {
                     this.error = 'Username or password is incorrect';
+                    this._notificationsService.error(
+                            '',
+                            'The username and password you entered did not match our records',
+                    )
                     this.loading = false;
+
                 });
     }
 }
