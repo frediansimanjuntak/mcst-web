@@ -56,10 +56,9 @@ export class UserGroupComponent implements OnInit {
         });
     }
 
-    loadAllUserGroup(): void {
+    loadAllUserGroup(){
         this.userGroupService.getAll()
             .subscribe((data)=> {
-                setTimeout(()=> {
                     this.usergroups          = data.filter(data => data.development._id == this.name.default_development._id);
                     let totalUsers = this.usergroups.users.length;
                     console.log(data);
@@ -68,7 +67,6 @@ export class UserGroupComponent implements OnInit {
                         this.usergroups.user[i] = user.username;
                     }
                     setTimeout(() => this.appComponent.loading = false, 1000);
-                }, 1000);
             });
     }
 
