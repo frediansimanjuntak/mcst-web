@@ -105,14 +105,14 @@ export class BookingComponent implements OnInit {
         });
         if( this.id == null) {
             this.loadAllBookings();
-        }else{
-        	this.bookingService.getBooking(this.id)
-            .then(booking => {
+        }
+        if( this.id != null) {
+           this.bookingService.getById(this.id)
+            .subscribe(booking => {
                 this.booking = booking;
                 setTimeout(() => this.appComponent.loading = false, 1000);
             });
         }
-        
     }
  
     deleteBooking(booking: Booking) {
@@ -174,11 +174,14 @@ export class BookingComponent implements OnInit {
 
     add(){
         this.router.navigate([this.name.default_development.name_url + '/booking/add']);
-        
+    }
+
+    goBack(){
+        this.router.navigate([this.name.default_development.name_url + '/booking']);
     }
 
     view(booking: Booking){
-        this.router.navigate([this.name.default_development.name_url + '/booking/edit', booking._id]);
+        this.router.navigate([this.name.default_development.name_url + '/booking/view', booking._id]);
     }
 
     filter(booking: any){

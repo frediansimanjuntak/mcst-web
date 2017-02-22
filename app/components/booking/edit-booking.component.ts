@@ -391,13 +391,11 @@ export class EditBookingComponent implements OnInit  {
     }
 
     getLandlord(event:any){
-        console.log(event.target.value)
         this.appComponent.loading = true
         this.unitService.getById(this.model.property , this.name.default_development.name_url)
         .subscribe(unit => {
             this.unit = unit.properties[0];
             this.model.sender = this.unit.landlord.username;
-            console.log(this.model.sender , this.unit.landlord.username);
         });
         this.appComponent.loading = false
     }
