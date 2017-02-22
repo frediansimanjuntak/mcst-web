@@ -53,6 +53,7 @@ export class UserGroupComponent implements OnInit {
         this.userService.getAll().subscribe(users => {
             this.users = users.filter(data => data.default_development == this.name.default_development._id);
             this.loadAllUserGroup();
+            setTimeout(() => this.appComponent.loading = false, 1000);
         });
     }
 
@@ -66,7 +67,6 @@ export class UserGroupComponent implements OnInit {
                         let user = this.users.find(data => data._id ==  this.usergroups.users[i]);
                         this.usergroups.user[i] = user.username;
                     }
-                    setTimeout(() => this.appComponent.loading = false, 1000);
             });
     }
 
