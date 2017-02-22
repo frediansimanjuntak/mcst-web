@@ -74,9 +74,9 @@ export class ContractComponent implements OnInit  {
                 if(contractnotices[0].contract_notice.length > 0) {
                     this.contractnotices = contractnotices[0].contract_notice;
                 }
+                setTimeout(() => this.appComponent.loading = false, 1000);
             })
         }
-        setTimeout(() => this.appComponent.loading = false, 1000);
     }
 
     deleteContract(contract: Contract) {
@@ -147,6 +147,7 @@ export class ContractComponent implements OnInit  {
                     .subscribe(contractnotices => {
                         if(contractnotices[0].contract_notice.length > 0) {
                             this.contractnotices = contractnotices[0].contract_notice;
+                            setTimeout(() => this.appComponent.loading = false, 1000);
                         }
                     })
                 }
@@ -194,6 +195,7 @@ export class ContractComponent implements OnInit  {
             // }
             this.open      = this.contracts.filter(contracts => contracts.status === 'open' );
             this.close     = this.contracts.filter(contracts => contracts.status === 'closed' );
+            setTimeout(() => this.appComponent.loading = false, 1000);
 		});
     }
 

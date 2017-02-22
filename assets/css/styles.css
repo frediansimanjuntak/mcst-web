@@ -980,3 +980,26 @@ p.field-box.no-margin {
     font-size: 13px;
     font-weight: bold;
 }
+
+/*costumize button input file*/
+
+.inputfile {
+    width: 0.1px;
+    height: 0.1px;
+    opacity: 0;
+    overflow: hidden;
+    position: absolute;
+    z-index: -1;
+}
+.btn-upload {
+    width: 150px;
+    height: 44px;
+    padding: 14px;
+    background-color: #f8f8f8;
+    border: 1px solid #dedede;
+    border-bottom: none;
+    box-shadow: 0px 4px 0 0 #dedede;
+    color: #6d6e71;
+    font-weight: bold;
+    font-size: 13px;
+}

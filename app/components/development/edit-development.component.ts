@@ -30,9 +30,12 @@ export class EditDevelopmentComponent implements OnInit {
             this.id = params['id'];
         });
         if( this.id != null) {
-            this.developmentService.getById(this.id).subscribe(development => this.development = development);
+            this.developmentService.getById(this.id)
+            .subscribe(development => {
+                this.development = development;
+                setTimeout(() => this.appComponent.loading = false, 1000);
+            });
         }
-        setTimeout(() => this.appComponent.loading = false, 1000);
     }
 
     createDevelopment() {

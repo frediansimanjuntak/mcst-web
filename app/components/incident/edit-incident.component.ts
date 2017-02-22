@@ -43,6 +43,16 @@ export class EditIncidentComponent implements OnInit {
     }
 
     ngOnInit(): void {
+        this.route.params.subscribe(params => {
+            this.id = params['id'];
+        });
+        if( this.id != null) {
+            this.incidentService.getById(this.id)
+            .subscribe(incident => {
+                this.incident = incident;
+                setTimeout(() => this.appComponent.loading = false, 1000);
+            });
+        }
         this.model.attachment = [];
         this.incidentService.getAll().subscribe(incidents => {
             this.incidents = incidents ;
@@ -62,15 +72,14 @@ export class EditIncidentComponent implements OnInit {
                 this.model.reference_no = '0001'
             }  
         });
-        this.userService.getByToken().subscribe(name => {this.name = name;})
+        this.userService.getByToken()
+        .subscribe(name => {
+            this.name = name;
+            setTimeout(() => this.appComponent.loading = false, 1000);
+        })
     	this.selectedType = 'general';
-        this.route.params.subscribe(params => {
-            this.id = params['id'];
-        });
-        if( this.id != null) {
-            this.incidentService.getById(this.id).subscribe(incident => {this.incident = incident;});
-        }
-        setTimeout(() => this.appComponent.loading = false, 1000);
+        
+        
     }
 
     createIncident(event: any) {

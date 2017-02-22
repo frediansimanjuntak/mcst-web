@@ -40,7 +40,6 @@ export class FeedbackComponent implements OnInit {
     ngOnInit(): void {
         this.userService.getByToken().subscribe(name => {this.name = name;})
         this.loadAllFeedback();
-        setTimeout(() => this.appComponent.loading = false, 1000);
     }
 
     deleteFeedback(feedback: Feedback) {
@@ -80,6 +79,7 @@ export class FeedbackComponent implements OnInit {
 		this.feedbackService.getAll().subscribe(feedbacks => {
 			this.feedbacks     = feedbacks.filter(feedbacks => feedbacks.archive === false );
             this.published     = feedbacks.filter(feedbacks => feedbacks.status === 'published' && feedbacks.archive === false );
+            setTimeout(() => this.appComponent.loading = false, 1000);
 		});
     }
 

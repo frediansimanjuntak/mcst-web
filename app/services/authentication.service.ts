@@ -20,7 +20,7 @@ export class AuthenticationService {
     }
     
     login(username: string, password: string): Observable<void> {
-        return this.http.post('https://128.199.245.43:5000/' + 'auth/local', { username: username, password: password })
+        return this.http.post('https://192.168.5.55:5000/' + 'auth/local', { username: username, password: password })
             .map((response: Response) => {
                  // login successful if there's a jwt token in the response
                 let user = response.json();

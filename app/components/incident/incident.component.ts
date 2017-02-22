@@ -72,16 +72,19 @@ export class IncidentComponent implements OnInit {
                 for (var i = 0; i < this.incident.attachment.length; ++i) {
                     this.images.push({source:this.incident.attachment[i].url});
                 };
+                setTimeout(() => this.appComponent.loading = false, 1000);
             });
         }
-        setTimeout(() => this.appComponent.loading = false, 1000);
     }
 
     openModal(incident){
         this.appComponent.loading = true
         this.resolveIncident = incident;
-        this.userService.getAll().subscribe(users => {this.users = users;})
-        setTimeout(() => this.appComponent.loading = false, 1000);
+        this.userService.getAll()
+        .subscribe(users => {
+            this.users = users;
+            setTimeout(() => this.appComponent.loading = false, 1000);
+        })
     }
 
     deleteIncident(incident: Incident) {
@@ -120,6 +123,7 @@ export class IncidentComponent implements OnInit {
             for (var i = 0; i < this.dataResolved.length; ++i) {
                 this.dataResolved[i].created_at = this.dataResolved[i].created_at.slice(0,10);
             }
+            setTimeout(() => this.appComponent.loading = false, 1000);
 		});
     }
 

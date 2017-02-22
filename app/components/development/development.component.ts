@@ -29,7 +29,6 @@ export class DevelopmentComponent implements OnInit {
 
     ngOnInit() {
         this.loadAllDevelopments();
-        setTimeout(() => this.appComponent.loading = false, 1000);
     }
 
     deleteDevelopment(development: Development) {
@@ -66,7 +65,11 @@ export class DevelopmentComponent implements OnInit {
     }
 
     private loadAllDevelopments() {
-        this.developmentService.getAll().subscribe(developments => { this.developments = developments; });
+        this.developmentService.getAll()
+        .subscribe(developments => { 
+            this.developments = developments; 
+            setTimeout(() => this.appComponent.loading = false, 1000);
+        });
     }
 
     add(){
