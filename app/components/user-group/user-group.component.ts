@@ -18,7 +18,7 @@ import { ConfirmationService } from 'primeng/primeng';
 export class UserGroupComponent implements OnInit {
 	usergroup: any;
     usergroups: any = [];
-    users: User[] = [];
+    users: any[] = [];
 	model: any = {};
     cols: any[];
     public developmentId;
@@ -45,28 +45,15 @@ export class UserGroupComponent implements OnInit {
         this.userService.getByToken()
                         .subscribe(name => {
                             this.name = name;
-                            this.getUsers();
+                            this.loadAllUserGroup();
                         })
-    }
-
-    getUsers(): void {
-        this.userService.getAll().subscribe(users => {
-            this.users = users.filter(data => data.default_development == this.name.default_development._id);
-            this.loadAllUserGroup();
-            setTimeout(() => this.appComponent.loading = false, 1000);
-        });
     }
 
     loadAllUserGroup(){
         this.userGroupService.getAll()
             .subscribe((data)=> {
                     this.usergroups          = data.filter(data => data.development._id == this.name.default_development._id);
-                    let totalUsers = this.usergroups.users.length;
-
-                    for (var i = 0; i < this.usergroups.length; i++) {
-                        let user = this.users.find(data => data._id ==  this.usergroups.users[i]);
-                        this.usergroups.user[i] = user.username;
-                    }
+                    setTimeout(() => this.appComponent.loading = false, 1000);
                    
             });
     }

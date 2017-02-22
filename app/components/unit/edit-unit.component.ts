@@ -32,10 +32,6 @@ export class EditUnitComponent implements OnInit {
     public submitted: boolean; // keep track on whether form is submitted
     public events: any[] = []; // use later to display form changes
      name: any;
-    status = [
-        { value: 'tenanted', name: 'Tenanted' },
-        { value: 'own_stay', name: 'Own Stay' }
-    ];
 
     constructor(
         private router: Router,
@@ -68,7 +64,7 @@ export class EditUnitComponent implements OnInit {
                     country : ['', <any>Validators.required],
                     full_address : ['', <any>Validators.required]
                 }),
-                status: ['', <any>Validators.required],
+                status: ['own_stay'],
         });
 
         this.route.params.subscribe(params => {
