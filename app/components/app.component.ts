@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import '../rxjs-operators';
 import { SlimLoadingBarService } from 'ng2-slim-progress-bar';
 import { UserService } from '../services/index';
+import { NotificationsService } from 'angular2-notifications';
 import {
     Event as RouterEvent,
     NavigationStart,
@@ -26,6 +27,8 @@ import {
         <div class="aaa"></div>
         <button *ngIf="!loading" (click)="stop()"></button>
     </div>
+    <simple-notifications [options]="options"></simple-notifications>
+    <p-confirmDialog width="425"></p-confirmDialog>
 
 
   	
@@ -61,8 +64,19 @@ export class AppComponent implements OnInit {
 	loading: boolean = true;
     authToken : any;
     name: any;
+    public options = {
+        position: ["bottom", "right"],
+        timeOut: 3000,
+        lastOnBottom: true,
+        showProgressBar: true,
+        pauseOnHover: true,
+        clickToClose: true,
+    }
     constructor(
-        private slimLoadingBarService: SlimLoadingBarService,private router: Router, private userService:UserService) {
+        private slimLoadingBarService: SlimLoadingBarService,
+        private router: Router, 
+        private userService:UserService,
+        private _notificationsService: NotificationsService,) {
         router.events.subscribe((event: RouterEvent) => {
             this.navigationInterceptor(event);
         });
@@ -89,17 +103,17 @@ export class AppComponent implements OnInit {
         if (event instanceof NavigationStart) {
             this.loading = true;
         }
-        if (event instanceof NavigationEnd) {
-           setTimeout(() => this.loading = false, 3000);
-        }
+        // if (event instanceof NavigationEnd) {
+        //    setTimeout(() => this.loading = false, 3000);
+        // }
 
         // Set loading state to false in both of the below events to hide the spinner in case a request fails
-        if (event instanceof NavigationCancel) {
-            this.loading = false;
-        }
-        if (event instanceof NavigationError) {
-            this.loading = false;
-        }
+        // if (event instanceof NavigationCancel) {
+        //     this.loading = false;
+        // }
+        // if (event instanceof NavigationError) {
+        //     this.loading = false;
+        // }
     }    
 
     getToken(){

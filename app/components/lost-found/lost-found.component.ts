@@ -2,11 +2,14 @@ import { Component, OnInit, ViewContainerRef, ViewEncapsulation, ViewChild } fro
 import { Router, Params, ActivatedRoute } from '@angular/router';
 import { LostFound, LostFounds } from '../../models/index';
 import { LostFoundService, AlertService, UserService, UnitService} from '../../services/index';
+import { NotificationsService } from 'angular2-notifications';
 import '../../rxjs-operators';
 import { Observable} from 'rxjs/Observable';
+import { AppComponent } from '../index';
 import { Location }               from '@angular/common';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import * as $ from "jquery";
+import { ConfirmationService } from 'primeng/primeng';
 // import { Overlay } from 'angular2-modal';
 // import { Modal } from 'angular2-modal/plugins/bootstrap';
 // import { PublishAnnouncementModalComponent, PublishAnnouncementModalData } from './publish-announcement-modal.component';
@@ -49,10 +52,16 @@ export class LostFoundComponent implements OnInit {
                 private formbuilder: FormBuilder,
                 private userService: UserService,
                 private unitService: UnitService,
+                private appComponent: AppComponent,
+                private confirmationService: ConfirmationService,
+                private _notificationsService: NotificationsService
                 ) {
     }
 
     ngOnInit(): void {
+        this.route.params.subscribe(params => {
+            this.id = params['id'];
+        });
 		this.userService.getByToken()
                         .subscribe(name => {
                             this.name = name;
@@ -60,9 +69,6 @@ export class LostFoundComponent implements OnInit {
                         })
         this.buttonViewArchive = false;
         this.images = [];
-        this.route.params.subscribe(params => {
-            this.id = params['id'];
-        });
     }
 
     convertDate(date) {
@@ -77,23 +83,43 @@ export class LostFoundComponent implements OnInit {
 	}
 
     openModal(lostFound){
+        this.appComponent.loading = true
     	this.lostFoundforModal = lostFound;
+        setTimeout(() => this.appComponent.loading = false, 1000);
     }
 
-    archieve(id) {      
-        this.lostFoundService.archieve(id)
+    archieve(lostfound) {      
+        this.appComponent.loading = true
+        this.lostFoundService.archieve(lostfound._id)
             .then(
                 data => {
                     this.firstModal.close();
-                    this.alertService.success('Archive data successful', true);
+                     this._notificationsService.success(
+                            'Success',
+                            'Archive data successful',
+                    )
                     this.ngOnInit();
                 },
                 error => {
                     console.log(error);
                     this.firstModal.close();
-                    alert(`could not be archive, server Error.`);
+                    this._notificationsService.error(
+                            'Error',
+                            'Failed to archive, server error',
+                    )
+                    this.appComponent.loading = false
                 }
             );
+    }
+
+    archieveConfirmation(lostfound) {
+        this.confirmationService.confirm({
+            message: 'Are you sure that you want to archieve this lost & found?',
+            header: 'Archieve Confirmation',
+            accept: () => {
+                this.archieve(lostfound)
+            }
+        });
     }
 
     viewArchieved(){
@@ -139,13 +165,10 @@ export class LostFoundComponent implements OnInit {
                         let unit = this.dataUnit.find(data => data._id ==  this.founds[i].property);
                         this.founds[i].unit_no = '#' + unit.address.unit_no + '-' + unit.address.unit_no_2;
                     }
+                    setTimeout(() => this.appComponent.loading = false, 1000);
                 }, 1000);
             });
     }
-
-    goBack(): void {
-    	this.location.back();
-  	}
 
     add(){
       this.router.navigate([this.name.default_development.name_url + '/lost_found/add']);  
@@ -167,6 +190,7 @@ export class LostFoundComponent implements OnInit {
                                         this.images.push({source: this.lostFound.photo[i].url});   
                                     }
                                 }
+                                setTimeout(() => this.appComponent.loading = false, 1000);
                             });
                     }
                 }, 1000);
@@ -175,5 +199,9 @@ export class LostFoundComponent implements OnInit {
 
     viewLostFound(lostfound: LostFound){
         this.router.navigate([this.name.default_development.name_url + '/lost_found/view', lostfound._id]);
+    }
+
+    goToLostFound(){
+        this.router.navigate([this.name.default_development.name_url + '/lost_found']);  
     }
 }

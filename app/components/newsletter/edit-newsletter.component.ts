@@ -3,7 +3,9 @@ import { Router } from '@angular/router';
 import { Development, Developments } from '../../models/index';
 import { NewsletterService, AlertService, UserService } from '../../services/index';
 import { FormBuilder, FormGroup } from '@angular/forms';
+import { NotificationsService } from 'angular2-notifications';
 import { FileUploader } from 'ng2-file-upload';
+import { AppComponent } from '../index';
 import '../../rxjs-operators';
 import { User } from '../../models/index';
 
@@ -28,13 +30,19 @@ export class EditNewsletterComponent  {
     	private newsletterService: NewsletterService,
     	private alertService: AlertService,
         private formbuilder: FormBuilder,
-        private userService: UserService ) {
+        private userService: UserService,
+        private appComponent: AppComponent,
+        private _notificationsService: NotificationsService ) {
 
         // this.user = JSON.parse(localStorage.getItem('user'));
     }
 
     ngOnInit() {
-        this.userService.getByToken().subscribe(name => {this.name = name;})
+        this.userService.getByToken()
+                        .subscribe(name => {
+                            this.name = name;
+                            setTimeout(() => this.appComponent.loading = false, 1000);
+                        })
         this.model.released = false;
         this.model.type = 'agm';
         this.model.attachment = [];
@@ -58,6 +66,7 @@ export class EditNewsletterComponent  {
     }
 
     createNewsletter() {
+        this.appComponent.loading = true
         if (this.model.attachment.length > 0){
             let formData:FormData = new FormData();
         
@@ -79,18 +88,25 @@ export class EditNewsletterComponent  {
             this.newsletterService.create(formData, this.name.default_development.name_url)
             .then(
                 data => {
-                    this.alertService.success('Create newsletter successful', true);
+                    this._notificationsService.success(
+                            'Success',
+                            'Create Newsletter successful',
+                    )
                     this.router.navigate([this.name.default_development.name_url + '/newsletter']);
                 },
                 error => {
                     console.log(error);
-                    alert(`The Newsletter could not be save, server Error.`);
+                    this._notificationsService.error(
+                            'Error',
+                            'The Newsletter could not be save, server Error',
+                    )
                 }
             );
         }
     }
 
     updateNewsletter(){
+        this.appComponent.loading = true
 		this.newsletterService.update(this.model, this.name.default_development.name_url)
 		.then(
 			response => {

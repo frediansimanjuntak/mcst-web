@@ -3,8 +3,10 @@ import { Router, Params, ActivatedRoute } from '@angular/router';
 import { Contract } from '../../models/index';
 import { ContractService, AlertService, UserService, ContractNoteService } from '../../services/index';
 import '../../rxjs-operators';
+import { NotificationsService } from 'angular2-notifications';
 import 'rxjs/add/operator/switchMap';
 import { Observable} from 'rxjs/Observable';
+import { AppComponent } from '../index';
 
 @Component({
   // moduleId: module.id,
@@ -30,6 +32,8 @@ export class ContractNoteComponent implements OnInit  {
         private contractnoteService: ContractNoteService,
         private alertService: AlertService,
         private userService: UserService,
+        private appComponent: AppComponent,
+        private _notificationsService: NotificationsService,
         private route: ActivatedRoute) {}
 
     ngOnInit(): void {
@@ -45,26 +49,20 @@ export class ContractNoteComponent implements OnInit  {
             .subscribe(contract => {
                 this.contract = contract;
                 this.model.status = this.contract.status;
-                console.log(this.contract)
             });
         }
         if( this.id != null && this._id != null) {
-            this.contractService.getById(this.id)
-            .subscribe(contract => {
-                this.contract = contract;
-                this.contractnoteService.getById(this.id,this._id)
-                .subscribe(contractnotice => {
-                    this.contractnote = contractnotice.contract_note;
-                    this.images = [];
-                    // for (var i = 0; i < this.contractnote.attachment.length; ++i) {
-                    //     this.images.push({source:this.contractnote.attachment[i].url});
-                    // };
-                    console.log(this.contract , this.contractnote )
-                });
+            this.contractService.getById(this.id).subscribe(contract => {this.contract = contract;});
+            this.contractnoteService.getById(this.id,this._id)
+            .subscribe(contractnotice => {
+                this.contractnote = contractnotice.contract_notice[0];
+                this.images = [];
+                for (var i = 0; i < this.contractnote.attachment.length; ++i) {
+                    this.images.push({source:this.contractnote.attachment[i].url});
+                };
             });
-            
         }
-
+        setTimeout(() => this.appComponent.loading = false, 1000);
     }
 
 	private loadContractNote() {
@@ -84,6 +82,7 @@ export class ContractNoteComponent implements OnInit  {
     }
 
     createContractNote(id:any) {
+        this.appComponent.loading = true
         if(this.model.attachment.length > 0) {
             let formData:FormData = new FormData();
             for (var i = 0; i < this.model.attachment.length; i++) {
@@ -98,39 +97,48 @@ export class ContractNoteComponent implements OnInit  {
             });
             this.contractnoteService.create(formData, this.id)
             .then(
-                response => {
-                    this.alertService.success('Create contract notice successful', true);
+                data => {
+                    this._notificationsService.success(
+                            'Success',
+                            'Create contract note successful',
+                    )
                     this.router.navigate([this.name.default_development.name_url + '/contract/view', id ]);
                 },
                 error => {
-                    this.alertService.error(error);
+                    console.log(error);
+                    this._notificationsService.error(
+                            'Error',
+                            'failed create data, server Error',
+                    )
+                    setTimeout(() => this.appComponent.loading = false, 1000);
                 }
             );
         }
     }
 
     deleteContractNote(contract: Contract) {
+        this.appComponent.loading = true
         this.route.params.subscribe(params => {
             this.id = params['id'];
             this._id = params['_id'];
         });
         this.contractnoteService.delete(contract._id,this.id)
           .then(
-            response => {
-              if(response) {
-                console.log(response);
-                // console.log(response.error());
-                alert(`The Contract could not be deleted, server Error.`);
-              } else {
-                this.alertService.success('Delete contract successful', true);
-                alert(`Delete Contarct successful`);
-                this.ngOnInit()
-              }
-            },
-            error=> {
-              console.log(error);
-                alert(`The Newsletter could not be deleted, server Error.`);
-            }
+                data => {
+                    this._notificationsService.success(
+                            'Success',
+                            'Delete contract note successful',
+                    )
+                    this.ngOnInit()
+                },
+                error => {
+                    console.log(error);
+                    this._notificationsService.error(
+                            'Error',
+                            'failed delete data, server Error',
+                    )
+                    setTimeout(() => this.appComponent.loading = false, 1000);
+                 }
         );
     }
 

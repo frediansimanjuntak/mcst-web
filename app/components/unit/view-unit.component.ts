@@ -3,10 +3,13 @@ import { Router, Params, ActivatedRoute } from '@angular/router';
 import { Development, Developments } from '../../models/index';
 import { UnitService, AlertService, UserService } from '../../services/index';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { NotificationsService } from 'angular2-notifications';
 import { Location }               from '@angular/common';
 import { Observable} from 'rxjs/Observable';
+import { AppComponent } from '../index';
 import '../../rxjs-operators';
 import 'rxjs/add/operator/switchMap';
+import { ConfirmationService } from 'primeng/primeng';
 
 @Component({
   // moduleId: module.id,
@@ -36,6 +39,7 @@ export class ViewUnitComponent implements OnInit {
     id: string;
     hasLandlord: boolean;
     hasTenants: boolean;
+    loading: boolean;
     myForm: FormGroup;
     myForm2: FormGroup;
 
@@ -48,7 +52,10 @@ export class ViewUnitComponent implements OnInit {
     	private alertService: AlertService,
         private userService: UserService,
         private formbuilder: FormBuilder,
-        private location: Location ) {
+        private location: Location,
+        private confirmationService: ConfirmationService,
+        private _notificationsService: NotificationsService,
+        private appComponent: AppComponent, ) {
 
         // this.user = JSON.parse(localStorage.getItem('user'));
     }
@@ -115,6 +122,7 @@ export class ViewUnitComponent implements OnInit {
                                         this.vehicles[i].user = this.users.find(data => data._id == this.vehicles[i].owner).username;
                                     }
                                 }
+                                setTimeout(() => this.appComponent.loading = false, 1000);
                             });
             }
         });
@@ -127,24 +135,8 @@ export class ViewUnitComponent implements OnInit {
     public selected(value:any):void {
     }
 
-    updateUnit(){
-        // this.unitservice.update(model)
-        // .then(
-        //     response => {
-        //         this.alertService.success('Update development successful', true);
-        //         this.router.navigate(['/development']);
-        //     },
-        //     error => {
-        //         this.alertService.error(error);
-        //     }
-        // );
-    }
-
-    goBack(): void {
-        this.location.back();
-    }
-
     deleteResident(resident: any){
+        this.appComponent.loading = true
         this.unitservice.deleteTenant(resident._id, this.unit._id, this.name.default_development.name_url)
             .then(
                 response => {
@@ -164,24 +156,48 @@ export class ViewUnitComponent implements OnInit {
             );
     }
 
+    deleteResidentConfirmation(resident) {
+        this.confirmationService.confirm({
+            message: 'Are you sure that you want to delete this resident?',
+            header: 'Delete Confirmation',
+            icon: 'fa fa-trash',
+            accept: () => {
+                this.deleteResident(resident)
+            }
+        });
+    }
+
     deleteVehicle(vehicle: any){
+        this.appComponent.loading = true
         this.unitservice.deleteRegVehicle(vehicle._id, this.unit._id, this.name.default_development.name_url)
             .then(
-                response => {
-                  if(response) {
-                    console.log(response);
-                    alert(`Vehicle could not be deleted, server Error.`);
-                  } else {
-                    this.alertService.success('Delete vehicle successful', true);
-                    alert(`Delete vehicle successful`);
-                    this.ngOnInit()
-                  }
+                 data => {
+                    this._notificationsService.success(
+                            'Success',
+                            'Delete Vehicle successful',
+                    )
+                    this.ngOnInit();
                 },
-                error=> {
-                  console.log(error);
-                    alert(`vehicle could not be deleted, server Error.`);
+                error => {
+                    console.log(error);
+                    this._notificationsService.error(
+                            'Error',
+                            'Data failed to delete, server error',
+                    )
+                    setTimeout(() => this.appComponent.loading = false, 1000);
                 }
             );
+    }
+
+    deleteVehicleConfirmation(vehicle) {
+        this.confirmationService.confirm({
+            message: 'Are you sure that you want to delete this vehicle?',
+            header: 'Delete Confirmation',
+            icon: 'fa fa-trash',
+            accept: () => {
+                this.deleteVehicle(vehicle)
+            }
+        });
     }
 
     openResidentDetail(resident: any){
@@ -211,9 +227,11 @@ export class ViewUnitComponent implements OnInit {
 
     addVehicle(model: any, isValid: boolean){
          this.vehicleSubmitted = true;
+         this.loading = true;
          model.registered_on = new Date();
 
         if(isValid && this.model.document.length > 0){
+            this.appComponent.loading = true
             let formData:FormData = new FormData();
                 for (var i = 0; i < this.model.document.length; i++) {
                     formData.append("document[]", this.model.document[i]);
@@ -227,13 +245,23 @@ export class ViewUnitComponent implements OnInit {
             this.unitservice.createRegVehicle(formData, this.name.default_development.name_url, this.unit._id)
             .then(
                 data => {
-                    this.alertService.success('Add guest successful', true);
+                    this._notificationsService.success(
+                            'Success',
+                            'Add Vehicle successful',
+                    )
                     this.secondModal.close();
+                    this.loading = false;
                     this.ngOnInit();
                 },
                 error => {
                     console.log(error);
-                    alert(`Guest register could not be save, server Error.`);
+                    this._notificationsService.error(
+                            'Error',
+                            'Data failed to save, server error',
+                    )
+                    this.secondModal.close();
+                    this.loading = false;
+                    this.appComponent.loading = false
                 }
             );
             this.vehicleSubmitted = false;

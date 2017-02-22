@@ -2,8 +2,10 @@ import { Component, OnInit } from '@angular/core';
 import { Router, Params, ActivatedRoute } from '@angular/router';
 import { AlertService, UserService, DevelopmentService } from '../../services/index';
 import { User } from '../../models/index';
+import { NotificationsService } from 'angular2-notifications';
 import 'rxjs/add/operator/switchMap';
 import '../../rxjs-operators';
+import { AppComponent } from '../index';
 
 @Component({
     // moduleId: module.id,
@@ -21,6 +23,8 @@ export class EditSettingComponent {
         private userService: UserService,
         private route: ActivatedRoute,
         private alertService: AlertService,
+        private appComponent: AppComponent,
+        private _notificationsService: NotificationsService,
         private developmentService: DevelopmentService) {}
 
     ngOnInit(): void {
@@ -31,20 +35,31 @@ export class EditSettingComponent {
         if( this.id != null) {
             this.userService.getUser(this.id).then(user => this.user = user);
         };
+        setTimeout(() => this.appComponent.loading = false, 1000);
         // this.developmentService.getAll().subscribe(developments => { this.developments = developments; });
     }
 
     updateSetting(){
+        this.appComponent.loading = true
         this.user.details.identification_proof.front = this.model.front;
         this.user.details.identification_proof.back = this.model.back;
 		this.userService.update(this.user)
-		    .then(response => {
-                  this.alertService.success('Update User successful', true);
-                  this.router.navigate([this.name.default_development.name_url + '/user']);
-	            },
-              error=> {
-            	    this.alertService.error(error);
-              }
+		    .then(
+                    data => {
+                        this._notificationsService.success(
+                                'Success',
+                                'Update setting successful',
+                        )
+                        this.router.navigate([this.name.default_development.name_url + '/user']);
+                    },
+                    error => {
+                        console.log(error);
+                        this._notificationsService.error(
+                                'Error',
+                                'Update setting failed, server Error',
+                        )
+                        setTimeout(() => this.appComponent.loading = false, 1000);
+                    }
         );
 	}
 

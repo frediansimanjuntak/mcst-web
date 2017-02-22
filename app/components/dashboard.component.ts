@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import { Notification } from '../models/index';
 import {SlimLoadingBarService, SlimLoadingBarComponent} from 'ng2-slim-progress-bar';
 import { UserService, NotificationService } from '../services/index';
+import { AppComponent } from './index';
 
 
 @Component({
@@ -36,6 +37,7 @@ export class DashboardComponent implements OnInit{
   constructor(private router: Router,
               private slimLoadingBarService: SlimLoadingBarService, 
               private notificationService: NotificationService,
+              private appComponent: AppComponent,
               private userService: UserService) { }
 
 
@@ -51,6 +53,7 @@ export class DashboardComponent implements OnInit{
 
     this.menus2 = this.menus[1].sub;
     this.menus3 = this.menus[7].sub;
+    setTimeout(() => this.appComponent.loading = false, 1000);
   }
 
   start(link:any) {

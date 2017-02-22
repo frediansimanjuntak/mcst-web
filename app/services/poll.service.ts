@@ -11,33 +11,33 @@ export class PollService {
     constructor(private http: Http, private authenticationService: AuthenticationService) {}
 
     getAll(){
-        return this.http.get(url + 'api/polls', this.jwt())
+        return this.http.get(url + 'polls', this.jwt())
             .map((res:Response) => res.json())
             .catch((error:any) => Observable.throw(error.json().error || 'Server error'));
     }
 
     getById(id:string){    
-        return this.http.get(url + 'api/polls/' + id, this.jwt())
+        return this.http.get(url + 'polls/' + id, this.jwt())
             .map((res:Response) => res.json())
             .catch((error:any) => Observable.throw(error.json().error || 'Server error'));
     }
 
     create(body:any): Promise<Poll> {
-        return this.http.post(url +  'api/polls', JSON.stringify(body), this.jwt())
+        return this.http.post(url +  'polls', JSON.stringify(body), this.jwt())
             .toPromise()
             .then(res => res.json().data)
             .catch(this.handleError);
     }
 
     update(body:Poll): Promise<Poll> {
-        return this.http.post(url + 'api/polls/update/' + body._id,body, this.jwt())
+        return this.http.post(url + 'polls/update/' + body._id,body, this.jwt())
             .toPromise()
             .then(res => res.json().data)
             .catch(this.handleError);
     }
 
     delete(id: string): Promise<void> {
-        return this.http.delete(url + 'api/polls/' + id, this.jwt())
+        return this.http.delete(url + 'polls/' + id, this.jwt())
           .toPromise()
           .then(() => null)
           .catch(this.handleError);
@@ -45,7 +45,7 @@ export class PollService {
 
 
     start(id: string): Promise<void> {
-        return this.http.post(url + 'api/polls/start_poll/' + id, '', this.jwt())
+        return this.http.post(url + 'polls/start_poll/' + id, '', this.jwt())
           .toPromise()
           .then(() => null)
           .catch(this.handleError);

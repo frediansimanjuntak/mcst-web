@@ -20,40 +20,40 @@ export class LostFoundService {
     }
 
     getAll(){
-        return this.http.get(url + 'api/lost_found', this.jwt())
+        return this.http.get(url + 'lost_found', this.jwt())
             .map((res:Response) => res.json())
             .catch((error:any) => Observable.throw(error.json().error || 'Server error'));
     }
 
     getById(id:string){    
-        return this.http.get(url + 'api/lost_found/' + id, this.jwt())
+        return this.http.get(url + 'lost_found/' + id, this.jwt())
             .map((res:Response) => res.json())
             .catch((error:any) => Observable.throw(error.json().error || 'Server error'));
     }
 
     create(formData:any): Promise<any> {
-        return this.http.post(`${url + 'api/lost_found'}`, formData, this.jwt())
+        return this.http.post(`${url + 'lost_found'}`, formData, this.jwt())
             .toPromise()
             .then(res => res.json().data)
             .catch(this.handleError);
     }
 
     update(body:any): Promise<LostFound> {
-        return this.http.post(url + 'api/lost_found/update/' + body._id,body, this.jwt())
+        return this.http.post(url + 'lost_found/update/' + body._id,body, this.jwt())
             .toPromise()
             .then(res => res.json().data)
             .catch(this.handleError);
     }
 
     delete(id: string): Promise<void> {
-        return this.http.delete(url + 'api/lost_found/' + id, this.jwt())
+        return this.http.delete(url + 'lost_found/' + id, this.jwt())
           .toPromise()
           .then(() => null)
           .catch(this.handleError);
     }
 
     archieve(id: string): Promise<LostFound> {
-        return this.http.post(url + 'api/lost_found/archieve/' + id, '', this.jwt())
+        return this.http.post(url + 'lost_found/archieve/' + id, '', this.jwt())
           .toPromise()
           .then(() => null)
           .catch(this.handleError);

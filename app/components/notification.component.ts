@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { Notification, Notifications } from '../models/index';
 import { NotificationService, AlertService, UserService} from '../services/index';
 import { Router} from '@angular/router';
+import { AppComponent } from './index';
+import { NotificationsService } from 'angular2-notifications';
 import '../rxjs-operators';
 import { Observable} from 'rxjs/Observable';
 
@@ -25,6 +27,8 @@ export class NotificationComponent implements OnInit {
                 private alertService: AlertService,
                 private userService: UserService,
                 private router: Router,
+                private appComponent: AppComponent,
+                private _notificationsService: NotificationsService
                 ) {}
 
     ngOnInit(): void {
@@ -44,15 +48,18 @@ export class NotificationComponent implements OnInit {
                     this.allNotifications = data;
                     this.allNotificationTotal = this.allNotifications.length;
                     this.dataToShow            = this.allNotifications.slice(0, 10);
+                    setTimeout(() => this.appComponent.loading = false, 1000);
                 }, 1000);
             });
     }
 
     loadLazy(event) {
+        this.appComponent.loading = true
         setTimeout(() => {
             if(this.allNotifications) {
                 this.dataToShow = this.allNotifications.slice(event.first, (event.first + event.rows));
             }
+            this.appComponent.loading = false
         }, 250);
     }
 

@@ -22,40 +22,40 @@ export class AnnouncementService {
     }
  
     getAll(){
-        return this.http.get(url + 'api/announcements', this.jwt())
+        return this.http.get(url + 'announcements', this.jwt())
             .map((res:Response) => res.json())
             .catch((error:any) => Observable.throw(error.json().error || 'Server error'));
     }
 
     getById(id:string){    
-        return this.http.get(url + 'api/announcements/' + id, this.jwt())
+        return this.http.get(url + 'announcements/' + id, this.jwt())
             .map((res:Response) => res.json())
             .catch((error:any) => Observable.throw(error.json().error || 'Server error'));
     }
 
     create(body:any): Promise<Announcement> {
-        return this.http.post(url +  'api/announcements', JSON.stringify(body), this.jwt())
+        return this.http.post(url +  'announcements', JSON.stringify(body), this.jwt())
             .toPromise()
             .then(res => res.json().data)
             .catch(this.handleError);
     }
 
     update(body:any): Promise<Announcement> {
-        return this.http.post(url + 'api/announcements/update/' + body._id,body, this.jwt())
+        return this.http.post(url + 'announcements/update/' + body._id,body, this.jwt())
             .toPromise()
             .then(res => res.json().data)
             .catch(this.handleError);
     }
 
     delete(id: string): Promise<void> {
-        return this.http.delete(url + 'api/announcements/' + id, this.jwt())
+        return this.http.delete(url + 'announcements/' + id, this.jwt())
           .toPromise()
           .then(() => null)
           .catch(this.handleError);
     }
     
     publish(id: string, body:any): Promise<void> {
-        return this.http.post(url + 'api/announcements/publish/' + id, body, this.jwt())
+        return this.http.post(url + 'announcements/publish/' + id, body, this.jwt())
           .toPromise()
           .then(() => null)
           .catch(this.handleError);

@@ -4,6 +4,8 @@ import { Announcement, Announcements } from '../../models/index';
 import { AnnouncementService, AlertService, UserService } from '../../services/index';
 import { FormBuilder, FormGroup, FormControl, FormArray, Validators } from '@angular/forms';
 import {IMyOptions} from 'mydatepicker';
+import { NotificationsService } from 'angular2-notifications';
+import { AppComponent } from '../index';
 import '../../rxjs-operators';
 import 'rxjs/add/operator/switchMap';
 
@@ -53,7 +55,9 @@ export class EditAnnouncementComponent  {
     	private alertService: AlertService,
         private formbuilder: FormBuilder,
         private route: ActivatedRoute,
-        private userService: UserService ) {
+        private userService: UserService,
+        private appComponent: AppComponent,
+        private _notificationsService: NotificationsService, ) {
     }
     private autoPostOnDateTxt: string = 'No auto post (default)';
     private validTillDateTxt: string = 'Forever (default)';
@@ -92,22 +96,30 @@ export class EditAnnouncementComponent  {
                                                 this.announcement = announcement;
                                                 this.model.auto_post_on = this.announcement.auto_post_on;
                                                 this.model.valid_till = this.announcement.valid_till;
+                                                setTimeout(() => this.appComponent.loading = false, 1000);
                                             });
                                 };
+                                setTimeout(() => this.appComponent.loading = false, 1000);
                             })
     }
 
     createAnnouncement() {
-        console.log(this.model)
+        this.appComponent.loading = true
         this.anouncementService.create(this.model)
         .then(
             data => {
-                this.alertService.success('Create announcement successful', true);
+                this._notificationsService.success(
+                            'Success',
+                            'Create announcement successful',
+                )
                 this.router.navigate([this.name.default_development.name_url + '/announcement']);
             },
             error => {
                 console.log(error);
-                alert(`The announcement could not be save, server Error.`);
+                this._notificationsService.error(
+                            'Error',
+                            'The announcement could not be save, server error',
+                    )
             }
         );
     }
@@ -150,6 +162,7 @@ export class EditAnnouncementComponent  {
     }
 
     updateAnnouncement(){
+        this.appComponent.loading = true
         this.announcement.auto_post_on  = this.model.auto_post_on;
         this.announcement.valid_till = this.model.valid_till;
         

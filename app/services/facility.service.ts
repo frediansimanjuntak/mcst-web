@@ -26,27 +26,27 @@ export class FacilityService {
     }
 
     getById(id:string){
-        return this.http.get(url + 'api/facilities/' + id, this.jwt())
+        return this.http.get(url + 'facilities/' + id, this.jwt())
             .map((res:Response) => res.json())
             .catch((error:any) => Observable.throw(error.json().error || 'Server error'));
     }
 
     create(body:any): Promise<Facility> {
-        return this.http.post(url +  'api/facilities', body, this.jwt())
+        return this.http.post(url +  'facilities', body, this.jwt())
             .toPromise()
             .then(res => res.json().data)
             .catch(this.handleError);
     }
 
     update(body:Facility): Promise<Facility> {
-        return this.http.post(url + 'api/facilities/update/' + body._id,body, this.jwt())
+        return this.http.post(url + 'facilities/update/' + body._id,body, this.jwt())
             .toPromise()
             .then(res => res.json().data)
             .catch(this.handleError);
     }
 
     delete(id: string): Promise<void> {
-    return this.http.delete(url + 'api/facilities/' + id, this.jwt())
+    return this.http.delete(url + 'facilities/' + id, this.jwt())
       .toPromise()
       .then(() => null)
       .catch(this.handleError);

@@ -20,40 +20,40 @@ export class ContractorService {
     }
 
     getAll(){
-        return this.http.get(url + 'api/contractors', this.jwt())
+        return this.http.get(url + 'contractors', this.jwt())
             .map((res:Response) => res.json())
             .catch((error:any) => Observable.throw(error.json().error || 'Server error'));
     }
 
     getById(id:string){    
-        return this.http.get(url + 'api/contractors/' + id, this.jwt())
+        return this.http.get(url + 'contractors/' + id, this.jwt())
             .map((res:Response) => res.json())
             .catch((error:any) => Observable.throw(error.json().error || 'Server error'));
     }
 
     create(formData:any): Promise<Contractor> {
-        return this.http.post(`${url +  'api/contractors'}`, formData, this.jwt())
+        return this.http.post(`${url +  'contractors'}`, formData, this.jwt())
             .toPromise()
             .then(res => res.json().data)
             .catch(this.handleError);
     }
 
     update(body:Contractor): Promise<Contractor> {
-        return this.http.post(url + 'api/contractors/update/' + body._id,body, this.jwt())
+        return this.http.post(url + 'contractors/update/' + body._id,body, this.jwt())
             .toPromise()
             .then(res => res.json().data)
             .catch(this.handleError);
     }
 
     delete(id: string): Promise<void> {
-        return this.http.delete(url + 'api/contractors/' + id, this.jwt())
+        return this.http.delete(url + 'contractors/' + id, this.jwt())
           .toPromise()
           .then(() => null)
           .catch(this.handleError);
     }
 
     activation(id: string): Promise<void> {
-        return this.http.post( url + 'api/contractors/activation/' + id, this.jwt())
+        return this.http.post( url + 'contractors/activation/' + id, this.jwt())
           .toPromise()
           .then(() => null)
           .catch(this.handleError);

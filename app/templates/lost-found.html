@@ -5,6 +5,7 @@
 				{{lostFound.type}} #{{lostFound.serial_number}}
 			</div>
 			<p class="id-location">Home > Manage Lost & Founds > #{{lostFound.serial_number}}</p>
+			<a class="btn-underline" (click)="goToLostFound()">Back to last page</a>
 			<div class="row">
 				<div class="col-lg-6">
 					<p-galleria [images]="images" panelWidth="500" panelHeight="313"></p-galleria>
@@ -36,7 +37,7 @@
 					<br>
 					<div class="row">
 						<div class="col-md-12">
-							<span *ngIf="!lostFound.archieved"><a class="btn btn-gray btn-primary" (click)="archieve(lostFound._id)" style="cursor:pointer"><img src="assets/image/icon_archived.png" width="14px" height="12px">&nbsp;Archive Report</a></span>
+							<span *ngIf="!lostFound.archieved"><a class="btn btn-gray btn-primary" (click)="archieveConfirmation(lostFound)" style="cursor:pointer"><img src="assets/image/icon_archived.png" width="14px" height="12px">&nbsp;Archive Report</a></span>
 						</div>
 					</div>
 				</div>
@@ -90,7 +91,7 @@
 							<p-column styleClass="col-button">
 								<template let-all="rowData" class="pull-right" pTemplate="body">
 									<a type="button" class="btn-underline" (click)="viewLostFound(all)">View</a>
-									<button type="button" (click)="openModal(all) || firstModal.open()"><img class="img-btn" src="../../assets/image/icon_archived.png" /></button>
+									<button type="button" (click)="archieveConfirmation(all)"><img class="img-btn" src="../../assets/image/icon_archived.png" /></button>
 								</template>
 							</p-column>
 						</p-dataTable>
@@ -125,7 +126,7 @@
 							<p-column styleClass="col-button">
 								<template let-losts="rowData" class="pull-right" pTemplate="body">
 									<a type="button" class="btn-underline" (click)="viewLostFound(losts)">View</a>
-									<button type="button" (click)="openModal(losts) || firstModal.open()"><img class="img-btn" src="../../assets/image/icon_archived.png" /></button>
+									<button type="button" (click)="archieveConfirmation(losts)"><img class="img-btn" src="../../assets/image/icon_archived.png" /></button>
 								</template>
 							</p-column>
 						</p-dataTable>
@@ -160,7 +161,7 @@
 							<p-column styleClass="col-button">
 								<template let-founds="rowData" class="pull-right" pTemplate="body">
 									<a type="button" class="btn-underline" (click)="viewLostFound(founds)">View</a>
-									<button type="button" (click)="openModal(founds) || firstModal.open()"><img class="img-btn" src="../../assets/image/icon_archived.png" /></button>
+									<button type="button" (click)="archieveConfirmation(founds)"><img class="img-btn" src="../../assets/image/icon_archived.png" /></button>
 								</template>
 							</p-column>
 						</p-dataTable>
@@ -288,29 +289,6 @@
 					</tab>
 				</tabset>
 			</div>
-		</div>
-
-		<div class="row">
-
-			<modal #firstModal>
-				<modal-header>
-					<h5>Archieve Lost/Found</h5>
-				</modal-header>
-				<modal-content>
-
-					<div *ngIf="lostFoundforModal">
-
-						Archieve this Lost/Found ?
-
-						<div class="pull-right">
-							<button type="button" class="btn btn-primary btn-brown" (click)="archieve(lostFoundforModal._id)">Archieve</button>
-							<button class="btn btn-white" (click)="firstModal.close()">Cancel</button>
-						</div>
-
-					</div>
-				</modal-content>
-
-			</modal>
 		</div>
 	</div>
 </div>

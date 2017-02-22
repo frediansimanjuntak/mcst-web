@@ -20,40 +20,40 @@ export class PaymentReminderService {
     }
 
     getAll(){
-        return this.http.get(url + 'api/payment_reminder', this.jwt())
+        return this.http.get(url + 'payment_reminder', this.jwt())
             .map((res:Response) => res.json())
             .catch((error:any) => Observable.throw(error.json().error || 'Server error'));
     }
 
     getById(id:string){
-        return this.http.get(url + 'api/payment_reminder/' + id, this.jwt())
+        return this.http.get(url + 'payment_reminder/' + id, this.jwt())
             .map((res:Response) => res.json())
             .catch((error:any) => Observable.throw(error.json().error || 'Server error'));
     }
 
     create(body:any): Promise<PaymentReminder> {
-        return this.http.post(url +  'api/payment_reminder', body, this.jwt())
+        return this.http.post(url +  'payment_reminder', body, this.jwt())
             .toPromise()
             .then(res => res.json().data)
             .catch(this.handleError);
     }
 
     update(body:PaymentReminder): Promise<PaymentReminder> {
-        return this.http.post(url + 'api/payment_reminder/update/' + body._id,body, this.jwt())
+        return this.http.post(url + 'payment_reminder/update/' + body._id,body, this.jwt())
             .toPromise()
             .then(res => res.json().data)
             .catch(this.handleError);
     }
 
     delete(id: string): Promise<void> {
-        return this.http.delete(url + 'api/payment_reminder/' + id, this.jwt())
+        return this.http.delete(url + 'payment_reminder/' + id, this.jwt())
             .toPromise()
             .then(() => null)
             .catch(this.handleError);
     }
 
     publish(id: string): Promise<PaymentReminder> {
-        return this.http.post(url + 'api/payment_reminder/publish/' + id,'', this.jwt())
+        return this.http.post(url + 'payment_reminder/publish/' + id,'', this.jwt())
             .toPromise()
             .then(res => res.json().data)
             .catch(this.handleError);

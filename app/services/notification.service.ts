@@ -20,19 +20,19 @@ export class NotificationService {
     }
 
     getAll(id:string){
-        return this.http.get(url + 'api/notifications/user/' + id, this.jwt())
+        return this.http.get(url + 'notifications/user/' + id, this.jwt())
             .map((res:Response) => res.json())
             .catch((error:any) => Observable.throw(error.json().error || 'Server error'));
     }
 
     getUnread(id:string){
-        return this.http.get(url + 'api/notifications/user/' + id + '/unread', this.jwt())
+        return this.http.get(url + 'notifications/user/' + id + '/unread', this.jwt())
             .map((res:Response) => res.json())
             .catch((error:any) => Observable.throw(error.json().error || 'Server error'));
     }
 
     read(body:any, id:string): Promise<any>{
-        return this.http.post(url + 'api/notifications/user/' + id, JSON.stringify(body), this.jwt())
+        return this.http.post(url + 'notifications/user/' + id, JSON.stringify(body), this.jwt())
             .toPromise()
             .then(res => res.json().data)
             .catch(this.handleError);

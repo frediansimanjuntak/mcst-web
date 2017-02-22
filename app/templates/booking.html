@@ -75,10 +75,10 @@
 			       			<div class="col-md-3"><p class="pull-down">Period :</p></div>
 			       			<div class="col-md-9">
 			       				<p>
-			       					<select name="start" class="form-control" formControlName="start" style="width: 116.5px">
+			       					<select name="start" class="form-control" formControlName="start" style="width: 116px; float: left; margin-right: 5px">
 				                    	<option *ngFor="let start of period" [ngValue]="start"><span *ngIf="start < 10">0</span>{{start}}{{min}}</option>
 				                    </select>
-				                    <select name="end" class="form-control" formControlName="end" style="width: 116.5px">
+				                    <select name="end" class="form-control" formControlName="end" style="width: 116px">
 				                    	<option *ngFor="let end of period" [ngValue]="end"><span *ngIf="end < 10">0</span>{{end}}{{min}}</option>
 				                    </select>
 		        				</p>
@@ -126,7 +126,7 @@
 						    <p-column header="Action" styleClass="col-button">
 						    	<template let-booking="rowData" pTemplate="body">
 						        	<button type="button" (click)="view(booking)">View</button>
-						        	<button type="button" (click)="deleteBooking(booking)"><i class="fa fa-trash" aria-hidden="true"></i></button>
+						        	<button type="button" (click)="deleteConfirmation(booking)"><i class="fa fa-trash" aria-hidden="true"></i></button>
 						    	</template>
 						    </p-column>
 						</p-dataTable>
@@ -156,7 +156,7 @@
 						    <p-column header="Action" styleClass="col-button">
 						    	<template let-booking="rowData" pTemplate="body">
 						        	<button type="button" (click)="view(booking)">View</button>
-						        	<button type="button" (click)="deleteBooking(booking)"><i class="fa fa-trash" aria-hidden="true"></i></button>
+						        	<button type="button" (click)="deleteConfirmation(booking)"><i class="fa fa-trash" aria-hidden="true"></i></button>
 						    	</template>
 						    </p-column>
 						</p-dataTable>
@@ -186,7 +186,7 @@
 						    <p-column header="Action" styleClass="col-button">
 						    	<template let-booking="rowData" pTemplate="body">
 						        	<button type="button" (click)="view(booking)">View</button>
-						        	<button type="button" (click)="deleteBooking(booking)"><i class="fa fa-trash" aria-hidden="true"></i></button>
+						        	<button type="button" (click)="deleteConfirmation(booking)"><i class="fa fa-trash" aria-hidden="true"></i></button>
 						    	</template>
 						    </p-column>
 						</p-dataTable>

@@ -3,8 +3,11 @@ import { Router, Params, ActivatedRoute } from '@angular/router';
 import { PaymentReminder } from '../../models/index';
 import { PaymentReminderService, AlertService, UserService } from '../../services/index';
 import '../../rxjs-operators';
+import { NotificationsService } from 'angular2-notifications';
 import { Observable } from 'rxjs/Observable';
 import { FileUploader } from 'ng2-file-upload';
+import { AppComponent } from '../index';
+import { ConfirmationService } from 'primeng/primeng';
 
 @Component({
     // moduleId: module.id,
@@ -20,11 +23,17 @@ export class PaymentReminderComponent implements OnInit {
     name: any;
     draft: any;
     published: any;
+    total: number = 0;
+    notification_list: any[];
+
 
     constructor(private router: Router, 
         private paymentreminderService: PaymentReminderService, 
         private alertService: AlertService,
         private route: ActivatedRoute,
+        private appComponent: AppComponent,
+        private confirmationService: ConfirmationService,
+        private _notificationsService: NotificationsService,
         private userService: UserService) {}
 
     ngOnInit(): void {
@@ -35,29 +44,51 @@ export class PaymentReminderComponent implements OnInit {
         if( this.id == null) {
             this.loadAllPaymentReminder();
         }else{
-        	this.paymentreminderService.getById(this.id).subscribe(paymentreminder => {this.paymentreminder = paymentreminder});
+        	this.paymentreminderService.getById(this.id)
+            .subscribe(paymentreminder => {
+                this.paymentreminder = paymentreminder;
+                this.notification_list = paymentreminder.notification_list;
+                for (let a = 0; a < this.notification_list.length; ++a) {
+                    let total_amount = parseInt(this.notification_list[a].amount)
+                    this.total = this.total + total_amount;
+                    console.log(this.total);
+                }
+            });
         }
+        setTimeout(() => this.appComponent.loading = false, 1000);
     }
 
     deletePaymentReminder(paymentreminder: PaymentReminder) {
+        this.appComponent.loading = true
         this.paymentreminderService.delete(paymentreminder._id)
-          .then(
-            response => {
-              if(response) {
-                console.log(response);
-                // console.log(response.error());
-                alert(`The Newsletter could not be deleted, server Error.`);
-              } else {
-                this.alertService.success('Create user successful', true);
-                alert(`Delete Newsletter successful`);
-                this.ngOnInit()
-              }
-            },
-            error=> {
-              console.log(error);
-                alert(`The Newsletter could not be deleted, server Error.`);
+            .then(
+                data => {
+                            this._notificationsService.success(
+                                    'Success',
+                                    'Delete payment reminder successful',
+                            )
+                            this.ngOnInit();
+                        },
+                        error => {
+                            console.log(error);
+                            this._notificationsService.error(
+                                    'Error',
+                                    'Payment reminder could not be delete, server Error',
+                            )
+                            setTimeout(() => this.appComponent.loading = false, 1000);
+                }
+            );
+    }
+
+    deleteConfirmation(paymentreminder) {
+        this.confirmationService.confirm({
+            message: 'Are you sure that you want to delete this payment reminder?',
+            header: 'Delete Confirmation',
+            icon: 'fa fa-trash',
+            accept: () => {
+                this.deletePaymentReminder(paymentreminder)
             }
-        );
+        });
     }
 
 	private loadAllPaymentReminder() {
@@ -92,8 +123,39 @@ export class PaymentReminderComponent implements OnInit {
         this.router.navigate([this.name.default_development.name_url + '/payment_system/add']);
     }
 
+    view(paymentreminder: PaymentReminder){
+        this.router.navigate([this.name.default_development.name_url + '/payment_system/view', paymentreminder._id]);
+    }
+
     publish(paymentreminder:PaymentReminder){
-        this.paymentreminderService.publish(paymentreminder._id);
-        this.ngOnInit()
+        this.appComponent.loading = true
+        this.paymentreminderService.publish(paymentreminder._id)
+            .then(
+                data => {
+                            this._notificationsService.success(
+                                    'Success',
+                                    'Publish payment reminder successful',
+                            )
+                            this.ngOnInit();
+                        },
+                        error => {
+                            console.log(error);
+                            this._notificationsService.error(
+                                    'Error',
+                                    'Payment reminder could not be publish, server Error',
+                            )
+                            setTimeout(() => this.appComponent.loading = false, 1000);
+                }
+            );
+    }
+
+    publishConfirmation(paymentreminder) {
+        this.confirmationService.confirm({
+            message: 'Are you sure that you want to publish this paymentreminder?',
+            header: 'Publish Confirmation',
+            accept: () => {
+                this.publish(paymentreminder)
+            }
+        });
     }
 }

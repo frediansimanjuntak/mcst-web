@@ -20,33 +20,33 @@ export class BookingService {
     }
 
     getAll(){
-        return this.http.get(url + 'api/booking', this.jwt())
+        return this.http.get(url + 'booking', this.jwt())
             .map((res:Response) => res.json())
             .catch((error:any) => Observable.throw(error.json().error || 'Server error'));
     }
 
     getById(id:string){
-        return this.http.get(url + 'api/booking/' + id, this.jwt())
+        return this.http.get(url + 'booking/' + id, this.jwt())
             .map((res:Response) => res.json())
             .catch((error:any) => Observable.throw(error.json().error || 'Server error'));
     }
 
     create(body:any): Promise<Booking> {
-        return this.http.post(url +  'api/booking', body, this.jwt())
+        return this.http.post(url +  'booking', body, this.jwt())
             .toPromise()
             .then(res => res.json().data)
             .catch(this.handleError);
     }
 
     update(body:Booking): Promise<Booking> {
-        return this.http.post(url + 'api/booking/update/' + body._id,body, this.jwt())
+        return this.http.post(url + 'booking/update/' + body._id,body, this.jwt())
             .toPromise()
             .then(res => res.json().data)
             .catch(this.handleError);
     }
 
     delete(id: string): Promise<void> {
-        return this.http.delete(url + 'api/booking/' + id, this.jwt())
+        return this.http.delete(url + 'booking/' + id, this.jwt())
           .toPromise()
           .then(() => null)
           .catch(this.handleError);
