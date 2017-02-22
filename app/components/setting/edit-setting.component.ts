@@ -28,14 +28,22 @@ export class EditSettingComponent {
         private developmentService: DevelopmentService) {}
 
     ngOnInit(): void {
-        this.userService.getByToken().subscribe(name => {this.name = name;})
         this.route.params.subscribe(params => {
             this.id = params['id'];
         });
         if( this.id != null) {
-            this.userService.getUser(this.id).then(user => this.user = user);
+            this.userService.getById(this.id)
+            .subscribe(user => {
+                this.user = user;
+                setTimeout(() => this.appComponent.loading = false, 1000);
+            });
         };
-        setTimeout(() => this.appComponent.loading = false, 1000);
+        this.userService.getByToken()
+        .subscribe(name => {
+            this.name = name;
+            setTimeout(() => this.appComponent.loading = false, 1000);
+        })
+        
         // this.developmentService.getAll().subscribe(developments => { this.developments = developments; });
     }
 

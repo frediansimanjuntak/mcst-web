@@ -129,9 +129,9 @@ export class EditFacilityComponent  {
                     control.push(this.initSchedule());
                 }
                 this.myForm.patchValue(this.facility);
+                setTimeout(() => this.appComponent.loading = false, 1000);
             });
         }
-        setTimeout(() => this.appComponent.loading = false, 1000);
     }
 
     initSchedule() {

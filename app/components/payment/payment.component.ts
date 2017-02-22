@@ -39,9 +39,12 @@ export class PaymentComponent implements OnInit {
         if( this.id == null) {
             this.loadAllPayment();
         }else{
-        	this.paymentService.getPayment(this.id).then(payment => {this.payment = payment;});
+        	this.paymentService.getPayment(this.id)
+            .then(payment => {
+                this.payment = payment;
+                setTimeout(() => this.appComponent.loading = false, 1000);
+            });
         }
-        setTimeout(() => this.appComponent.loading = false, 1000);
     }
 
     deletePayment(payment: Payment) {
@@ -78,7 +81,11 @@ export class PaymentComponent implements OnInit {
     }
 
 	private loadAllPayment() {
-		this.paymentService.getPayments().then(payments => this.payments = payments);
+		this.paymentService.getPayments()
+        .then(payments => {
+            this.payments = payments;
+            setTimeout(() => this.appComponent.loading = false, 1000);
+        });
     }
 
     view(payment: Payment){

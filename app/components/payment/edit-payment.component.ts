@@ -36,8 +36,11 @@ export class EditPaymentComponent implements OnInit{
     }
 
     ngOnInit():void{ 
-        this.userService.getByToken().subscribe(name => {this.name = name;})
-        setTimeout(() => this.appComponent.loading = false, 1000);
+        this.userService.getByToken()
+        .subscribe(name => {
+            this.name = name;
+            setTimeout(() => this.appComponent.loading = false, 1000);
+        })
     }
 
     createPayment() {
