@@ -62,11 +62,12 @@ export class UserGroupComponent implements OnInit {
             .subscribe((data)=> {
                     this.usergroups          = data.filter(data => data.development._id == this.name.default_development._id);
                     let totalUsers = this.usergroups.users.length;
-                    console.log(data);
-                    for (var i = 0; i < totalUsers; i++) {
+
+                    for (var i = 0; i < this.usergroups.length; i++) {
                         let user = this.users.find(data => data._id ==  this.usergroups.users[i]);
                         this.usergroups.user[i] = user.username;
                     }
+                   
             });
     }
 
