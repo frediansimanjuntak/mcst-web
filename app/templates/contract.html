@@ -250,13 +250,13 @@
                     <!-- ALL -->
                     <tab heading="All">
                         <p-dataTable [value]="contracts" [rows]="10" [paginator]="true" [responsive]="true">
-                            <p-column filterMatchMode="contains" [style]="{'width': '170px'}" field="title" header="Project Title" sortable="true" [filter]="true" filterPlaceholder="Search Project Title"></p-column>
-                            <p-column filterMatchMode="contains" [style]="{'width': '112px'}" header="Commence on" sortable="true" [filter]="true" filterPlaceholder="Search Commence on">
+                            <p-column filterMatchMode="contains" [style]="{'width': '180px'}" field="title" header="Project Title" sortable="true" [filter]="true" filterPlaceholder="Search Project Title"></p-column>
+                            <p-column filterMatchMode="contains" [style]="{'width': '120px'}" header="Commence on" sortable="true" [filter]="true" filterPlaceholder="Search Commence on">
                                 <template let-contracts="rowData" pTemplate="body">
                                     <span>{{contracts.start_time | date:'d/M/y'}}</span>
                                 </template>
                             </p-column>
-                            <p-column filterMatchMode="contains" [style]="{'width': '155px'}" header="Estimated Completion" sortable="true" [filter]="true" filterPlaceholder="Search Estimated Completion">
+                            <p-column filterMatchMode="contains" [style]="{'width': '165px'}" header="Estimated Completion" sortable="true" [filter]="true" filterPlaceholder="Search Estimated Completion">
                                 <template let-contracts="rowData" pTemplate="body">
                                     <span>{{contracts.end_time | date:'d/M/y'}}</span>
                                 </template>
