@@ -4,18 +4,19 @@
             <div class="title">
                 Unit #{{unit.address.unit_no}}-{{unit.address.unit_no_2}}
             </div>
-            <p>Home > Residents' Database > #{{unit.address.unit_no}}-{{unit.address.unit_no_2}}</p>
-            <a class="btn-underline" (click)="goToUnit()">Back to last page</a>
-
-                <div class="row bg-dark">
-                    <div class="col-md-6">
+            <p class="id-location">Home > Residents' Database > #{{unit.address.unit_no}}-{{unit.address.unit_no_2}}</p>
+            <div class="row top-block no-margin">
+                <a class="btn-underline" (click)="goToUnit()">Back to last page</a>
+            </div>
+                <div class="row bg-dark no-margin">
+                    <div class="col-md-6 col-padding" style="color:#eee;">
                         <h5>General Details</h5>
                     </div>
-                    <div class="col-md-6">
+                    <div class="col-md-6 col-padding">
                         <a class="btn btn-default pull-right" ><img class="img-btn" src="../../assets/image/icon_add.png" />&nbsp;Generate Code</a>
                     </div>
                 </div>
-                <div class="row" style="border: 1px solid grey; padding: 5px;">
+                <div class="row no-margin" style="border: 1px solid grey; padding: 5px;">
                     <div class="row">
                         <div class="col-md-4">
                                 <b>Unit No :</b>#{{unit.address.unit_no}}-{{unit.address.unit_no_2}}<br>
@@ -32,15 +33,15 @@
                     </div>
                 </div><br>
 
-                <div class="row bg-dark">
-                    <div class="col-md-6">
+                <div class="row bg-dark no-margin">
+                    <div class="col-md-6 col-padding" style="color:#eee;">
                         <h5>Resident/Tenant</h5>
                     </div>
-                    <div class="col-md-6">
+                    <div class="col-md-6 col-padding">
                         <a class="btn btn-default pull-right" (click)="firstModal.open()"><img class="img-btn" src="../../assets/image/icon_addresident.png"   />&nbsp;Add Resident</a>
                     </div>
                 </div>
-                <div class="row">
+                <div class="row no-margin">
                    <p-dataTable [value]="residents">
                         <p-column header="no" [style]="{'width':'42px'}" field="i">
                         </p-column>
@@ -76,15 +77,15 @@
                 </div><br>
 
 
-                <div class="row bg-dark">
-                    <div class="col-md-6">
+                <div class="row bg-dark no-margin">
+                    <div class="col-md-6 col-padding" style="color:#eee;">
                         <h5>Registered Vehicle</h5>
                     </div>
-                    <div class="col-md-6">
+                    <div class="col-md-6 col-padding">
                         <button [disabled]="!hasTenants" class="btn btn-default pull-right" (click)="secondModal.open()"><img class="img-btn" src="../../assets/image/icon_addresident.png" />&nbsp;Register Vehicle</button>
                     </div>
                 </div>
-                <div class="row">
+                <div class="row no-margin">
                    <p-dataTable [value]="vehicles">
                         <p-column header="no" [style]="{'width':'42px'}" field="i">
                         </p-column>

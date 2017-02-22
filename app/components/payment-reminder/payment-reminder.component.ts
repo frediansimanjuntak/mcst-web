@@ -53,9 +53,9 @@ export class PaymentReminderComponent implements OnInit {
                     this.total = this.total + total_amount;
                     console.log(this.total);
                 }
+                setTimeout(() => this.appComponent.loading = false, 1000);
             });
         }
-        setTimeout(() => this.appComponent.loading = false, 1000);
     }
 
     deletePaymentReminder(paymentreminder: PaymentReminder) {
@@ -108,6 +108,7 @@ export class PaymentReminderComponent implements OnInit {
                 let d = this.draft[i].auto_issue_on.toString().slice(6,8);
                 this.draft[i].auto_issue_on = y + '/' + m + '/' + d ;
             }
+            setTimeout(() => this.appComponent.loading = false, 1000);
         });
     }
 

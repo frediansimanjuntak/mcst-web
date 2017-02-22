@@ -94,6 +94,7 @@ export class BookingComponent implements OnInit {
                    start += 1;
                    this.times_end.push(start)
             }
+
         });
         for (var a = 0; a < 24; ++a) {
             this.period.push(a)
@@ -105,9 +106,13 @@ export class BookingComponent implements OnInit {
         if( this.id == null) {
             this.loadAllBookings();
         }else{
-        	this.bookingService.getBooking(this.id).then(booking => {this.booking = booking;});
+        	this.bookingService.getBooking(this.id)
+            .then(booking => {
+                this.booking = booking;
+                setTimeout(() => this.appComponent.loading = false, 1000);
+            });
         }
-        setTimeout(() => this.appComponent.loading = false, 1000);
+        
     }
  
     deleteBooking(booking: Booking) {
@@ -163,9 +168,8 @@ export class BookingComponent implements OnInit {
                     }
                 })
             })
+            setTimeout(() => this.appComponent.loading = false, 1000);
         });
-        
-
     }
 
     add(){

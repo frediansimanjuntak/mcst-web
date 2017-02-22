@@ -45,7 +45,11 @@ export class ContractNoticeComponent implements OnInit  {
         });
         // this.contractnoticeService.getById(this.id,this._id).subscribe(contract => {this.contract = contract;});
         if( this.id != null && this._id == null ) {
-            this.contractService.getById(this.id).subscribe(contract => {this.contract = contract;});
+            this.contractService.getById(this.id)
+            .subscribe(contract => {
+                this.contract = contract;
+                setTimeout(() => this.appComponent.loading = false, 1000);
+            });
         }
         if( this.id != null && this._id != null) {
             this.contractService.getById(this.id).subscribe(contract => {this.contract = contract;});
@@ -56,9 +60,9 @@ export class ContractNoticeComponent implements OnInit  {
                 for (var i = 0; i < this.contractnotice.attachment.length; ++i) {
                     this.images.push({source:this.contractnotice.attachment[i].url});
                 };
+                setTimeout(() => this.appComponent.loading = false, 1000);
             });
         }
-        setTimeout(() => this.appComponent.loading = false, 1000);
     }
 
 	private loadContractNotice() {

@@ -163,13 +163,20 @@ export class EditBookingComponent implements OnInit  {
         if( this.id == null) {
             this.loadAllBookings();
         }else{
-        	this.bookingService.getById(this.id).subscribe(booking => {this.booking = booking;});
+        	this.bookingService.getById(this.id)
+            .subscribe(booking => {
+                this.booking = booking;
+                setTimeout(() => this.appComponent.loading = false, 1000);
+            });
         }
-        setTimeout(() => this.appComponent.loading = false, 1000);
     }
 
     private loadAllBookings() {
-        this.bookingService.getAll().subscribe(bookings => { this.bookings = bookings; });
+        this.bookingService.getAll()
+        .subscribe(bookings => { 
+            this.bookings = bookings; 
+            setTimeout(() => this.appComponent.loading = false, 1000);
+        });
     }
 
     createBooking() { 

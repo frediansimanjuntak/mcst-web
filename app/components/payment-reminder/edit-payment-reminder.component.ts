@@ -35,14 +35,6 @@ export class EditPaymentReminderComponent implements OnInit{
         private formbuilder: FormBuilder ) {}
 
     ngOnInit():void{ 
-        this.userService.getByToken().subscribe(name => {this.name = name;})
-        this.myForm = this.formbuilder.group({
-            title : ['', Validators.required],
-            auto_issue_on : ['', Validators.required],
-            due_on : ['', Validators.required],
-            message_to_receiver : ['', Validators.required],
-            notification_list: this.formbuilder.array([this.initNotification_list()]),
-        });
         this.route.params.subscribe(params => {
             this.id = params['id'];
         });
@@ -68,9 +60,21 @@ export class EditPaymentReminderComponent implements OnInit{
                     control.push(this.initNotification_list());
                 }
                 this.myForm.patchValue(this.paymentreminder);
+                setTimeout(() => this.appComponent.loading = false, 1000);
             });
         }
-        setTimeout(() => this.appComponent.loading = false, 1000);
+        this.userService.getByToken()
+        .subscribe(name => {
+            this.name = name;
+            setTimeout(() => this.appComponent.loading = false, 1000);
+        })
+        this.myForm = this.formbuilder.group({
+            title : ['', Validators.required],
+            auto_issue_on : ['', Validators.required],
+            due_on : ['', Validators.required],
+            message_to_receiver : ['', Validators.required],
+            notification_list: this.formbuilder.array([this.initNotification_list()]),
+        });
     }
 
     initNotification_list() {
