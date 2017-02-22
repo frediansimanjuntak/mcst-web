@@ -34,8 +34,6 @@ export class EditContractComponent  implements OnInit {
         private _notificationsService: NotificationsService,) {}
 
     ngOnInit(): void {
-        this.model.attachment = [];
-        this.userService.getByToken().subscribe(name => {this.name = name;})
         this.route.params.subscribe(params => {
             this.id = params['id'];
             this.refno = params['refno'];
@@ -44,9 +42,19 @@ export class EditContractComponent  implements OnInit {
         });
         this.model.reference_no = this.refno;
         if( this.id != null) {
-            this.contractService.getById(this.id).subscribe(contract => this.contract = contract);
+            this.contractService.getById(this.id)
+            .subscribe(contract => {
+                this.contract = contract;
+                setTimeout(() => this.appComponent.loading = false, 1000);
+            });
         }
-        setTimeout(() => this.appComponent.loading = false, 1000);
+        this.model.attachment = [];
+        this.userService.getByToken().subscribe(
+            name => {
+                this.name = name;
+                setTimeout(() => this.appComponent.loading = false, 1000);
+            })
+        
     }
 
     createContract() {

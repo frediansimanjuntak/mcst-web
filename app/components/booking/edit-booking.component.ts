@@ -163,13 +163,20 @@ export class EditBookingComponent implements OnInit  {
         if( this.id == null) {
             this.loadAllBookings();
         }else{
-        	this.bookingService.getById(this.id).subscribe(booking => {this.booking = booking;});
+        	this.bookingService.getById(this.id)
+            .subscribe(booking => {
+                this.booking = booking;
+                setTimeout(() => this.appComponent.loading = false, 1000);
+            });
         }
-        setTimeout(() => this.appComponent.loading = false, 1000);
     }
 
     private loadAllBookings() {
-        this.bookingService.getAll().subscribe(bookings => { this.bookings = bookings; });
+        this.bookingService.getAll()
+        .subscribe(bookings => { 
+            this.bookings = bookings; 
+            setTimeout(() => this.appComponent.loading = false, 1000);
+        });
     }
 
     createBooking() { 
@@ -384,13 +391,11 @@ export class EditBookingComponent implements OnInit  {
     }
 
     getLandlord(event:any){
-        console.log(event.target.value)
         this.appComponent.loading = true
         this.unitService.getById(this.model.property , this.name.default_development.name_url)
         .subscribe(unit => {
             this.unit = unit.properties[0];
             this.model.sender = this.unit.landlord.username;
-            console.log(this.model.sender , this.unit.landlord.username);
         });
         this.appComponent.loading = false
     }

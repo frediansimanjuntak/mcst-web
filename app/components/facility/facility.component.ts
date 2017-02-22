@@ -38,9 +38,12 @@ export class FacilityComponent implements OnInit {
         if( this.id == null) {
             this.loadAllFacilities();
         }else{
-            this.facilityService.getFacility(this.id).then(facility => {this.facility = facility;});
+            this.facilityService.getFacility(this.id)
+            .then(facility => {
+                this.facility = facility;
+                setTimeout(() => this.appComponent.loading = false, 1000);
+            });
         }
-        setTimeout(() => this.appComponent.loading = false, 1000);
     }
 
     deleteFacility(facility: Facility) {
@@ -76,7 +79,11 @@ export class FacilityComponent implements OnInit {
     }
 
     private loadAllFacilities() {
-        this.facilityService.getAll().subscribe(facilities => { this.facilities = facilities; });
+        this.facilityService.getAll()
+        .subscribe(facilities => { 
+            this.facilities = facilities; 
+            setTimeout(() => this.appComponent.loading = false, 1000);
+        });
     }
 
     add(){

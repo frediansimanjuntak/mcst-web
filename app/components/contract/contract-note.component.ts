@@ -49,6 +49,7 @@ export class ContractNoteComponent implements OnInit  {
             .subscribe(contract => {
                 this.contract = contract;
                 this.model.status = this.contract.status;
+                setTimeout(() => this.appComponent.loading = false, 1000);
             });
         }
         if( this.id != null && this._id != null) {
@@ -60,9 +61,9 @@ export class ContractNoteComponent implements OnInit  {
                 for (var i = 0; i < this.contractnote.attachment.length; ++i) {
                     this.images.push({source:this.contractnote.attachment[i].url});
                 };
+                setTimeout(() => this.appComponent.loading = false, 1000);
             });
         }
-        setTimeout(() => this.appComponent.loading = false, 1000);
     }
 
 	private loadContractNote() {
