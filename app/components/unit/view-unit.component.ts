@@ -21,15 +21,17 @@ export class ViewUnitComponent implements OnInit {
     @ViewChild('firstModal') firstModal;
     @ViewChild('secondModal') secondModal;
     public items:Array<any> = [];
-    public addSubmitted: boolean;
+    public addSubmitted: boolean = false;
     public vehicleSubmitted: boolean;
     public developmentId;
     public submitted: boolean; // keep track on whether form is submitted
     public events: any[] = []; // use later to display form changes
 	unit: any;
     units: any;
+    user: any;
     users: any;
     model: any = {};
+    data: any = {};
     filesToUpload: Array<File>;
     residents :any;
     resident :any = {};
@@ -37,11 +39,13 @@ export class ViewUnitComponent implements OnInit {
     vehicles : any;
     vehicle :any = {};
     id: string;
+    errorMessage: string;
     hasLandlord: boolean;
     hasTenants: boolean;
     loading: boolean;
     myForm: FormGroup;
     myForm2: FormGroup;
+    valid: boolean;
 
     name: any;
 
@@ -70,7 +74,7 @@ export class ViewUnitComponent implements OnInit {
                                 this.name = name;
                                 this.getUsers();
                             });
-
+        this.model.option = "new";                    
         this.model.document = [];
         this.myForm = this.formbuilder.group({
                 resident: [''],
@@ -103,8 +107,10 @@ export class ViewUnitComponent implements OnInit {
 
                                 if(this.unit.landlord){
                                     this.hasLandlord = true;
+                                    this.model.type  = 'tenant'
                                 }else{
                                     this.hasLandlord = false;
+                                    this.model.type  = 'landlord'
                                 }
 
                                 if(this.residents){
@@ -213,7 +219,53 @@ export class ViewUnitComponent implements OnInit {
     }
 
     addResident(){
-        this.router.navigate([this.name.default_development.name_url + '/user/add', this.unit._id, this.model.type]);  
+        this.addSubmitted = true;
+         if(this.model.type == "tenant" && !this.hasLandlord){
+            this.errorMessage = "This unit did not has landlord yet, please add lanlord first"
+         }else if(this.model.type == "landlord" && this.hasLandlord){
+            this.errorMessage = "This unit already has a landlord, cannot add landlord"
+         }else if(this.model.option == 'new'){
+             this.router.navigate([this.name.default_development.name_url + '/user/add', this.unit._id, this.model.type]);  
+         }
+    }
+
+    addExistResident(){
+        this.addSubmitted = true;
+         if(this.model.type == "tenant" && !this.hasLandlord){
+            this.errorMessage = "This unit did not has landlord yet, please add landlord first"
+         }else if(this.model.type == "landlord" && this.hasLandlord){
+            this.errorMessage = "This unit already has a landlord, cannot add landlord"
+         }else {
+             this.loading = true;
+             this.appComponent.loading = true
+             this.data.id_user         = this.model.user;
+             this.data.id_development  = this.name.default_development.id;
+             this.data.id_property     = this.unit._id;
+             this.data.type            = this.model.type;
+             this.unitservice.createResident(this.data)
+                .then(
+                    data => {
+                        this._notificationsService.success(
+                                'Success',
+                                'Add Resident successful',
+                        )
+                        this.firstModal.close();
+                        this.addSubmitted = false;
+                        this.loading = false;
+                        this.ngOnInit();
+                    },
+                    error => {
+                        console.log(error);
+                        this._notificationsService.error(
+                                'Error',
+                                'Data failed to save, server error',
+                        )
+                        this.firstModal.close();
+                        this.loading = false;
+                        this.appComponent.loading = false
+                    }
+            );
+         }
     }
 
     onChange(fileInput: any){
@@ -265,7 +317,6 @@ export class ViewUnitComponent implements OnInit {
                 }
             );
             this.vehicleSubmitted = false;
-            this.ngOnInit();
         }
     }
 

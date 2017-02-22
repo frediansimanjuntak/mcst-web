@@ -105,6 +105,7 @@ export class EditAnnouncementComponent  {
 
     createAnnouncement() {
         this.appComponent.loading = true
+        console.log(this.model)
         this.anouncementService.create(this.model)
         .then(
             data => {
@@ -120,6 +121,7 @@ export class EditAnnouncementComponent  {
                             'Error',
                             'The announcement could not be save, server error',
                     )
+                this.appComponent.loading = false
             }
         );
     }
