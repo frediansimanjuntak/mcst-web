@@ -6,6 +6,7 @@ import '../../rxjs-operators';
 import { NotificationsService } from 'angular2-notifications';
 import { Observable} from 'rxjs/Observable';
 import { AppComponent } from '../index';
+import { ConfirmationService } from 'primeng/primeng';
 
 
 @Component({
@@ -23,6 +24,7 @@ export class DevelopmentComponent implements OnInit {
                 private developmentService: DevelopmentService,
                 private appComponent: AppComponent,
                 private alertService: AlertService,
+                private confirmationService: ConfirmationService,
                 private _notificationsService: NotificationsService,) {}
 
     ngOnInit() {
@@ -50,6 +52,17 @@ export class DevelopmentComponent implements OnInit {
                     setTimeout(() => this.appComponent.loading = false, 1000);
                 }
         );
+    }
+
+    deleteConfirmation(development) {
+        this.confirmationService.confirm({
+            message: 'Are you sure that you want to delete this development?',
+            header: 'Delete Confirmation',
+            icon: 'fa fa-trash',
+            accept: () => {
+                this.deleteDevelopment(development)
+            }
+        });
     }
 
     private loadAllDevelopments() {

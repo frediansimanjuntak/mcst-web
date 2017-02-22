@@ -5,6 +5,7 @@ import { UserService, AlertService } from '../../services/index';
 import '../../rxjs-operators';
 import { Observable} from 'rxjs/Observable';
 import { AppComponent } from '../index';
+import { ConfirmationService } from 'primeng/primeng';
 
 @Component({
     // moduleId: module.id,
@@ -22,6 +23,7 @@ export class UserComponent implements OnInit {
     constructor(private router: Router,
         private userService: UserService,
         private alertService: AlertService,
+        private confirmationService: ConfirmationService,
         private appComponent: AppComponent,) {}
 
     ngOnInit() {
@@ -45,6 +47,17 @@ export class UserComponent implements OnInit {
                   alert(`The user could not be deleted, server Error.`);
               }
         );
+    }
+
+    deleteConfirmation(user) {
+        this.confirmationService.confirm({
+            message: 'Are you sure that you want to delete this user?',
+            header: 'Delete Confirmation',
+            icon: 'fa fa-trash',
+            accept: () => {
+                this.deleteUser(user)
+            }
+        });
     }
 
 

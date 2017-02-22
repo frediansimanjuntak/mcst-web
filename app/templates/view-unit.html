@@ -69,7 +69,7 @@
                         <p-column [style]="{'width':'160px'}" styleClass="col-button" >
                             <template let-residents="rowData" pTemplate="body">
                                     <a type="button" class="btn-underline"  (click)="openResidentDetail(residents) || residentDetail.open()">View details</a>
-                                    <button  type="button" (click)="deleteResident(residents)"><i class="fa fa-trash" aria-hidden="true"></i></button>
+                                    <button  type="button" (click)="deleteResidentConfirmation(residents)"><i class="fa fa-trash" aria-hidden="true"></i></button>
                             </template>
                         </p-column>
                     </p-dataTable>
@@ -106,7 +106,7 @@
                         <p-column styleClass="col-button" >
                             <template let-vehicles="rowData" pTemplate="body">
                                     <a type="button" class="btn-underline" (click)="openVehicleDetail(vehicles) || vehicleDetail.open()">View details</a>
-                                    <button  type="button" (click)="deleteVehicle(vehicles)"><i class="fa fa-trash" aria-hidden="true"></i></button>
+                                    <button  type="button" (click)="deleteVehicleConfirmation(vehicles)"><i class="fa fa-trash" aria-hidden="true"></i></button>
                             </template>
                         </p-column>
                     </p-dataTable>

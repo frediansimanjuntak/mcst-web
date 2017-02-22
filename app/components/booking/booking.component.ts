@@ -9,6 +9,7 @@ import { NotificationsService } from 'angular2-notifications';
 import { Observable} from 'rxjs/Observable';
 import * as moment from 'moment';
 import { AppComponent } from '../index';
+import { ConfirmationService } from 'primeng/primeng';
 
 @Component({
   // moduleId: module.id,
@@ -66,6 +67,7 @@ export class BookingComponent implements OnInit {
         private userService: UserService,
         private appComponent: AppComponent,
         private unitService: UnitService,
+        private confirmationService: ConfirmationService,
         private _notificationsService: NotificationsService,){}
 
 	ngOnInit() {
@@ -128,6 +130,17 @@ export class BookingComponent implements OnInit {
                     setTimeout(() => this.appComponent.loading = false, 1000);
                 }
         );
+    }
+
+    deleteConfirmation(booking) {
+        this.confirmationService.confirm({
+            message: 'Are you sure that you want to delete this booking?',
+            header: 'Delete Confirmation',
+            icon: 'fa fa-trash',
+            accept: () => {
+                this.deleteBooking(booking)
+            }
+        });
     }
 
     private loadAllBookings() {

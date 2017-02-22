@@ -8,6 +8,7 @@ import { Observable} from 'rxjs/Observable';
 import { Location }               from '@angular/common';
 import * as $ from "jquery";
 import { AppComponent } from '../index';
+import { ConfirmationService } from 'primeng/primeng';
 // import { Overlay } from 'angular2-modal';
 // import { Modal } from 'angular2-modal/plugins/bootstrap';
 // import { PublishAnnouncementModalComponent, PublishAnnouncementModalData } from './publish-announcement-modal.component';
@@ -58,6 +59,7 @@ export class PetitionComponent implements OnInit {
                 private userService: UserService,
                 private unitService: UnitService,
                 private _notificationsService: NotificationsService,
+                private confirmationService: ConfirmationService,
                 private appComponent: AppComponent,
                 ) {}
 
@@ -167,6 +169,16 @@ export class PetitionComponent implements OnInit {
                         this.appComponent.loading = false;
                     }
                 );
+    }
+
+    archieveConfirmation() {
+        this.confirmationService.confirm({
+            message: 'Are you sure that you want to archieve this petition?',
+            header: 'Archieve Confirmation',
+            accept: () => {
+                this.archieveSelected()
+            }
+        });
     }
 
     add(){
