@@ -27,7 +27,8 @@ import {
         <div class="aaa"></div>
         <button *ngIf="!loading" (click)="stop()"></button>
     </div>
-    <simple-notifications [options]="options"></simple-notifications>
+    <simple-notifications style="position: absolute;
+      z-index: 99999;" [options]="options"></simple-notifications>
     <p-confirmDialog width="425"></p-confirmDialog>
 
 
@@ -66,11 +67,12 @@ export class AppComponent implements OnInit {
     name: any;
     public options = {
         position: ["bottom", "right"],
-        timeOut: 3000,
+        timeOut: 5000,
         lastOnBottom: true,
         showProgressBar: true,
         pauseOnHover: true,
         clickToClose: true,
+        animate: "fromLeft"
     }
     constructor(
         private slimLoadingBarService: SlimLoadingBarService,
