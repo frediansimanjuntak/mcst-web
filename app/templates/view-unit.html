@@ -121,18 +121,39 @@
                 <modal-content>
                      <form name="form">
                         <div class="form-group">
-                            <label class="control-label col-sm-4" for="sticky">Type :</label>
-                            <div class="col-sm-8">
-                                <div class="col-sm-2" *ngIf="hasLandlord">
-                                    <label><input type="radio" name="type" [checked]="model.type == 'tenant'" [(ngModel)]="model.type" value='tenant'>Tenant</label>   
+                            <div class="row no-margin">
+                                <label  class="control-label col-sm-4" for="type">Type :</label>
+                                <div class="col-sm-8">
+                                    <select class="form-control" name="type" [(ngModel)]="model.type">
+                                        <option [selected]="hasLandlord" value="tenant">Tenant</option>
+                                        <option [selected]="!hasLandlord" value="landlord">Landlord</option>
+                                    </select>
+                                    <span *ngIf="!valid" style="color: red">{{errorMessage}}</span>
                                 </div>
-                                <div class="col-sm-2" *ngIf="!hasLandlord">
-                                    <label><input type="radio" name="type" [checked]="model.type == 'landlord'" [(ngModel)]="model.type" value='landlord'>Landlord</label>      
+                            </div>
+                            <div class="row no-margin">
+                                <label  class="control-label col-sm-4" for="type">User Option :</label>
+                                <div class="col-sm-8">
+                                    <select class="form-control" name="option" [(ngModel)]="model.option">
+                                        <option value="new">Create New user</option>
+                                        <option value="exist">Select existing user</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div *ngIf="model.option == 'exist'" class="row no-margin">
+                                <label  class="control-label col-sm-4" for="type">Choose User for {{model.type}}:</label>
+                                <div class="col-sm-8">
+                                    <select class="form-control" name="user" [(ngModel)]="model.user">
+                                        <option *ngFor="let u of users" [ngValue]="u._id">{{u.username}}</option>
+                                    </select>
                                 </div>
                             </div>
                         </div>
                         <div class="pull-right">
-                            <button  class="btn btn-primary btn-brown" (click)="addResident()">Go to Form</button>
+                            <button  *ngIf="model.option == 'new'" class="btn btn-primary btn-brown" (click)="addResident()">Go to Form</button>
+                            <button  *ngIf="model.option == 'exist'" class="btn btn-primary btn-brown" (click)="addExistResident()">Add resident<span>
+                                    <img *ngIf="loading" src="data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA==" />
+                                </span></button>
                             <button class="btn btn-white" (click)="firstModal.close()">Cancel</button>
                         </div>
                     </form>   

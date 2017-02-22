@@ -83,9 +83,7 @@ export class LostFoundComponent implements OnInit {
 	}
 
     openModal(lostFound){
-        this.appComponent.loading = true
     	this.lostFoundforModal = lostFound;
-        setTimeout(() => this.appComponent.loading = false, 1000);
     }
 
     archieve(lostfound) {      
@@ -93,7 +91,6 @@ export class LostFoundComponent implements OnInit {
         this.lostFoundService.archieve(lostfound._id)
             .then(
                 data => {
-                    this.firstModal.close();
                      this._notificationsService.success(
                             'Success',
                             'Archive data successful',
@@ -102,7 +99,6 @@ export class LostFoundComponent implements OnInit {
                 },
                 error => {
                     console.log(error);
-                    this.firstModal.close();
                     this._notificationsService.error(
                             'Error',
                             'Failed to archive, server error',
@@ -114,7 +110,7 @@ export class LostFoundComponent implements OnInit {
 
     archieveConfirmation(lostfound) {
         this.confirmationService.confirm({
-            message: 'Are you sure that you want to archieve this lost & found?',
+            message: 'Are you sure that you want to archieve this lost/found?',
             header: 'Archieve Confirmation',
             accept: () => {
                 this.archieve(lostfound)
@@ -123,7 +119,15 @@ export class LostFoundComponent implements OnInit {
     }
 
     viewArchieved(){
+        this.appComponent.loading = true
         this.buttonViewArchive = true;
+        setTimeout(() => this.appComponent.loading = false, 500);
+    }
+
+    viewUnarchieved(){
+        this.appComponent.loading = true
+        this.buttonViewArchive = false;
+        setTimeout(() => this.appComponent.loading = false, 500);
     }
 
     private loadLostFounds() {
