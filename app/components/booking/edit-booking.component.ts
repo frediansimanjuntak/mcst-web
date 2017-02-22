@@ -4,8 +4,10 @@ import { Router, Params, ActivatedRoute } from '@angular/router';
 import { Booking, Facility, Bookings } from '../../models/index';
 import { BookingService, AlertService, FacilityService, UserService, UnitService, PaymentService } from '../../services/index';
 import '../../rxjs-operators';
+import { NotificationsService } from 'angular2-notifications';
 import { Observable} from 'rxjs/Observable';
 import * as moment from 'moment';
+import { AppComponent } from '../index';
 
 export var Binformation: any[] = []
 
@@ -92,6 +94,7 @@ export class EditBookingComponent implements OnInit  {
     days : any[] = ["sunday","monday","tuesday","wednesday","thursday","friday","saturday"];
     name: any;
     total: any;
+    unit: any;
     available: any;
     date: any;
 
@@ -104,6 +107,8 @@ export class EditBookingComponent implements OnInit  {
 		private route: ActivatedRoute,
         private userService: UserService,
         private unitService: UnitService,
+        private appComponent: AppComponent,
+        private _notificationsService: NotificationsService,
         private paymentService: PaymentService){
         (this.minDate = new Date()).setDate(this.minDate.getDate());
     }
@@ -158,16 +163,24 @@ export class EditBookingComponent implements OnInit  {
         if( this.id == null) {
             this.loadAllBookings();
         }else{
-        	this.bookingService.getById(this.id).subscribe(booking => {this.booking = booking;});
+        	this.bookingService.getById(this.id)
+            .subscribe(booking => {
+                this.booking = booking;
+                setTimeout(() => this.appComponent.loading = false, 1000);
+            });
         }
-
     }
 
     private loadAllBookings() {
-        this.bookingService.getAll().subscribe(bookings => { this.bookings = bookings; });
+        this.bookingService.getAll()
+        .subscribe(bookings => { 
+            this.bookings = bookings; 
+            setTimeout(() => this.appComponent.loading = false, 1000);
+        });
     }
 
     createBooking() { 
+        this.appComponent.loading = true
         let formData:FormData = new FormData();
         for (var i = 0; i < this.model.payment_proof.length; i++) {
             formData.append("payment_proof[]", this.model.payment_proof[i]);
@@ -192,12 +205,19 @@ export class EditBookingComponent implements OnInit  {
         this.bookingService.create(formData)
         .then(
             data => {
-                this.alertService.success('Create booking successful', true);
+                this._notificationsService.success(
+                            'Success',
+                            'Create booking successful',
+                    )
                 this.router.navigate([this.name.default_development.name_url + '/booking']);
             },
             error => {
                 console.log(error);
-                alert(`The booking could not be save, server Error.`);
+                this._notificationsService.success(
+                            'Success',
+                            'Booking could not be save, server Error',
+                    )
+                this.appComponent.loading = false
             }
         );
     }
@@ -221,6 +241,7 @@ export class EditBookingComponent implements OnInit  {
     }
 
     time(event:any){
+        this.appComponent.loading = true
         this.times_end = [];
         this.times_start = []
         this.model.facility = event.target.value.slice(3);
@@ -232,27 +253,24 @@ export class EditBookingComponent implements OnInit  {
             this.model.booking_fee = facility.booking_fee;
             this.model.admin_fee = facility.admin_fee;
             this.selectedDay = this.facility.schedule.filter(data => data.day == this.day); 
-            console.log(this.selectedDay)
             this.start = this.selectedDay[0].start_time.slice(0,2);
             let start = +this.start
             this.end = this.selectedDay[0].end_time.slice(0,2);
             let end = +this.end
             this.min =    ":00"
-            console.log(start , end)
             for (var i = start; i < end; ++i) {
                 this.times_start.push(i)
-                console.log(i)
             }
             while(start < end){       
                    start += 1;
                    this.times_end.push(start)
             }
-            console.log(this.times_start , this.times_end)
         });
-            
+        this.appComponent.loading = false
     }
 
 	filter(data: any){
+        this.appComponent.loading = true
         this.booking_status = [];
         this.day = this.days[this.dt.getDay()];
         if(data.start < 10) {
@@ -308,6 +326,7 @@ export class EditBookingComponent implements OnInit  {
                     return n + (val == "Available");
                 }, 0);
             })
+        setTimeout(() => this.appComponent.loading = false, 1000);
     }
 
     public archieveSelected(start:any[],end:any[],min:any,name:any,type:any){
@@ -331,6 +350,7 @@ export class EditBookingComponent implements OnInit  {
     }
 
     public selectedDate() {  
+        this.appComponent.loading = true
         let date;
         date     = new Date(this.dt.getTime());
         date     = this.convertDate(date);
@@ -345,13 +365,16 @@ export class EditBookingComponent implements OnInit  {
     }
 
     next(){ 
-        this.model.sender = "Mr. Nice";
+        this.appComponent.loading = true
         this.step = 2;
+        setTimeout(() => this.appComponent.loading = false, 1000);
     }
 
     change(){
+        this.appComponent.loading = true
         this.step = 1
         this.selectedValues = []
+        setTimeout(() => this.appComponent.loading = false, 1000);
     }
 
     onChange(event: any) {
@@ -365,6 +388,16 @@ export class EditBookingComponent implements OnInit  {
 
     cancel(){
         this.router.navigate([this.name.default_development.name_url + '/booking' ]);
+    }
+
+    getLandlord(event:any){
+        this.appComponent.loading = true
+        this.unitService.getById(this.model.property , this.name.default_development.name_url)
+        .subscribe(unit => {
+            this.unit = unit.properties[0];
+            this.model.sender = this.unit.landlord.username;
+        });
+        this.appComponent.loading = false
     }
 	
 }

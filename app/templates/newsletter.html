@@ -26,8 +26,8 @@
 						<!-- </p-column> -->
 						<p-column styleClass="col-button">
 							<template let-dataAgm="rowData" class="pull-right" pTemplate="body">
-								<button class="btn btn-primary btn-brown" *ngIf="dataAgm.released == false" type="button" (click)="openModal(dataAgm) || firstModal.open()">Release</button>
-								<button type="button" (click)="deleteNewsletter(dataAgm)"><i class="fa fa-trash" aria-hidden="true"></i></button>
+								<button type="button" class="btn btn-trash pull-right" (click)="deleteConfirmation(dataAgm)"><i class="fa fa-trash" aria-hidden="true"></i></button>
+								<button class="btn btn-brown btn-publish pull-right" style="cursor:pointer; margin-right:5px" *ngIf="dataAgm.released == false" (click)="openModal(dataAgm) || firstModal.open()">Release</button>
 							</template>
 						</p-column>
 					</p-dataTable>
@@ -45,8 +45,8 @@
 						<!-- </p-column> -->
 						<p-column styleClass="col-button">
 							<template let-dataEgm="rowData" class="pull-right" pTemplate="body">
-								<button class="btn btn-primary btn-brown" *ngIf="dataEgm.released == false" type="button" (click)="openModal(dataEgm) || firstModal.open()">Release</button>
-								<button type="button" (click)="deleteNewsletter(dataEgm)"><i class="fa fa-trash" aria-hidden="true"></i></button>
+								<button type="button" class="btn btn-trash pull-right" (click)="deleteConfirmation(dataEgm)"><i class="fa fa-trash" aria-hidden="true"></i></button>
+								<button class="btn btn-brown btn-publish pull-right" style="cursor:pointer; margin-right:5px" *ngIf="dataEgm.released == false" (click)="openModal(dataEgm) || firstModal.open()">Release</button>
 							</template>
 						</p-column>
 					</p-dataTable>
@@ -64,8 +64,8 @@
 						<!-- </p-column> -->
 						<p-column styleClass="col-button">
 							<template let-dataCircular="rowData" class="pull-right" pTemplate="body">
-								<button class="btn btn-primary btn-brown" *ngIf="dataCircular.released == false" type="button" (click)="openModal(dataCircular) || firstModal.open()">Release</button>
-								<button type="button" (click)="deleteNewsletter(dataCircular)"><i class="fa fa-trash" aria-hidden="true"></i></button>
+								<button type="button" class="btn btn-trash pull-right" (click)="deleteConfirmation(dataCircular)"><i class="fa fa-trash" aria-hidden="true"></i></button>
+								<button class="btn btn-brown btn-publish pull-right" style="cursor:pointer; margin-right:5px" *ngIf="dataCircular.released == false" (click)="openModal(dataCircular) || firstModal.open()">Release</button>
 							</template>
 						</p-column>
 					</p-dataTable>

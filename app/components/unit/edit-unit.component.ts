@@ -3,8 +3,10 @@ import { Router, Params, ActivatedRoute } from '@angular/router';
 import { Development, Developments } from '../../models/index';
 import { UnitService, AlertService, UserService } from '../../services/index';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { NotificationsService } from 'angular2-notifications';
 import { Location }               from '@angular/common';
 import { Observable} from 'rxjs/Observable';
+import { AppComponent } from '../index';
 import '../../rxjs-operators';
 import 'rxjs/add/operator/switchMap';
 // import { User } from '../../models/index';
@@ -30,10 +32,6 @@ export class EditUnitComponent implements OnInit {
     public submitted: boolean; // keep track on whether form is submitted
     public events: any[] = []; // use later to display form changes
      name: any;
-    status = [
-        { value: 'tenanted', name: 'Tenanted' },
-        { value: 'own_stay', name: 'Own Stay' }
-    ];
 
     constructor(
         private router: Router,
@@ -42,14 +40,19 @@ export class EditUnitComponent implements OnInit {
         private userService: UserService,
     	private alertService: AlertService,
         private formbuilder: FormBuilder,
-        private location: Location ) {
+        private location: Location,
+        private _notificationsService: NotificationsService,
+        private appComponent: AppComponent, ) {
 
         // this.user = JSON.parse(localStorage.getItem('user'));
     }
 
     ngOnInit() {
-        this.userService.getByToken().subscribe(name => {this.name = name;})
-        this.getUsers();
+        this.userService.getByToken()
+                            .subscribe(name => {
+                                this.name = name;
+                                setTimeout(() => this.appComponent.loading = false, 1000);
+                            })
         this.submitted = false;
         this.myForm = this.formbuilder.group({
                 address: this.formbuilder.group({
@@ -61,7 +64,7 @@ export class EditUnitComponent implements OnInit {
                     country : ['', <any>Validators.required],
                     full_address : ['', <any>Validators.required]
                 }),
-                status: ['', <any>Validators.required],
+                status: ['own_stay'],
         });
 
         this.route.params.subscribe(params => {
@@ -77,37 +80,28 @@ export class EditUnitComponent implements OnInit {
         }
     }
 
-    getUsers(): void {
-        this.userService.getUsers().then(users => {
-            this.users = users;
-            let numOptions =  this.users.length;
-            let opts = new Array(numOptions);
-
-            for (let i = 0; i < numOptions; i++) {
-                opts[i] = {
-                    id: this.users[i]._id,
-                    text: this.users[i].username
-                };
-            }
-
-            this.myOptions = opts.slice(0);
-            this.items = this.myOptions;
-        });
-    }
-
     createUnit(model: any, isValid: boolean) {
         this.submitted = true;
         
         if(isValid){
+
+            this.appComponent.loading = true
             this.unitservice.create(model, this.name.default_development.name_url)
             .then(
                 data => {
-                    this.alertService.success('Create Unit successful', true);
+                    this._notificationsService.success(
+                            'Success',
+                            'Create Unit successful',
+                        )
                     this.router.navigate([this.name.default_development.name_url + '/unit']);
                 },
                 error => {
                     console.log(error);
-                    alert(`The Unit could not be save, server Error.`);
+                    this._notificationsService.error(
+                            'Error',
+                            'The Unit could not be save, server Error.',
+                    )
+                    this.appComponent.loading = false;
                 }
             );
         }
@@ -122,6 +116,7 @@ export class EditUnitComponent implements OnInit {
     }
 
     updateUnit(){
+        this.appComponent.loading = true
         this.unitservice.update(this.unit, this.name.default_development.name_url)
         .then(
             response => {

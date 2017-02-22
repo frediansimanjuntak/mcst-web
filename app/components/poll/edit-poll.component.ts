@@ -4,6 +4,8 @@ import { Poll } from '../../models/index';
 import { PollService, AlertService, UserService } from '../../services/index';
 import { FormBuilder, FormGroup, FormControl, FormArray, Validators } from '@angular/forms';
 import {IMyOptions} from 'mydatepicker';
+import { NotificationsService } from 'angular2-notifications';
+import { AppComponent } from '../index';
 import '../../rxjs-operators';
 import 'rxjs/add/operator/switchMap';
 
@@ -53,7 +55,9 @@ export class EditPollComponent  {
     	private alertService: AlertService,
         private formbuilder: FormBuilder,
         private route: ActivatedRoute,
-        private userService: UserService ) {
+        private userService: UserService,
+        private appComponent: AppComponent,
+        private _notificationsService: NotificationsService, ) {
 
     }
 
@@ -92,9 +96,12 @@ export class EditPollComponent  {
 						                    .getById(this.id)
 						                    .subscribe(poll => {
 						                       	this.poll = poll;
+                                                setTimeout(() => this.appComponent.loading = false, 1000);
 											});
 						        };
+                                setTimeout(() => this.appComponent.loading = false, 1000);
         					})
+        
     }
 
 
@@ -139,37 +146,49 @@ export class EditPollComponent  {
     }
 
     createPoll() {
+        this.appComponent.loading = true
     	this.model.status = 'draft';
         if (this.model.poll_type == 'yes_or_no'){
             this.model.choices = ['yes', 'no'];
         }
-        console.log(this.model);
         this.pollService.create(this.model)
         .then(
             data => {
-                this.alertService.success('Create Poll successful', true);
+                 this._notificationsService.success(
+                            'Success',
+                            'Create Poll successful',
+                )
                 this.router.navigate([this.name.default_development.name_url + '/poll']);
             },
             error => {
                 console.log(error);
-                alert(`The Poll could not be save, server Error.`);
+                this._notificationsService.error(
+                            'Error',
+                            'The Poll could not be save, server Error',
+                    )
+                this.appComponent.loading = false
             }
         );
     }
 
     updatePoll(){
+        this.appComponent.loading = true
         this.pollService.update(this.poll)
 		.then(
-			response => {
-				if(response) {
-	                this.alertService.error('Failed Update . server error');
-	            } else {
-                    this.alertService.success('Update Poll successful', true);
-                    this.router.navigate([this.name.default_development.name_url + '/poll']);
-	            }
+            data => {
+                 this._notificationsService.success(
+                            'Success',
+                            'Update Poll successful',
+                )
+                this.router.navigate([this.name.default_development.name_url + '/poll']);
             },
-            error=> {
-            	this.alertService.error(error);
+            error => {
+                console.log(error);
+                this._notificationsService.error(
+                            'Error',
+                            'Failed Update . server error',
+                    )
+                this.appComponent.loading = false
             }
         );
 	}

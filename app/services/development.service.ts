@@ -11,33 +11,33 @@ export class DevelopmentService {
     constructor(private http: Http, private authenticationService: AuthenticationService) {}
 
     getAll(){
-        return this.http.get(url + 'api/developments', this.jwt())
+        return this.http.get(url + 'developments', this.jwt())
             .map((res:Response) => res.json())
             .catch((error:any) => Observable.throw(error.json().error || 'Server error'));
     }
 
     getById(id:string){
-        return this.http.get(url + 'api/developments/' + id, this.jwt())
+        return this.http.get(url + 'developments/' + id, this.jwt())
             .map((res:Response) => res.json())
             .catch((error:any) => Observable.throw(error.json().error || 'Server error'));
     }
 
     create(body:any): Promise<Development> {
-        return this.http.post(url +  'api/developments', body, this.jwt())
+        return this.http.post(url +  'developments', body, this.jwt())
             .toPromise()
             .then(res => res.json().data)
             .catch(this.handleError);
     }
 
     update(body:Development): Promise<Development> {
-        return this.http.post(url + 'api/developments/update/' + body._id,body, this.jwt())
+        return this.http.post(url + 'developments/update/' + body._id,body, this.jwt())
             .toPromise()
             .then(res => res.json().data)
             .catch(this.handleError);
     }
 
     delete(id: string): Promise<void> {
-        return this.http.delete(url + 'api/developments/' + id, this.jwt())
+        return this.http.delete(url + 'developments/' + id, this.jwt())
             .toPromise()
             .then(() => null)
             .catch(this.handleError);

@@ -11,40 +11,40 @@ export class ContractNoticeService {
     constructor(private http: Http, private authenticationService: AuthenticationService) {}
 
     getAll(id: string){
-        return this.http.get( url + 'api/contract_notice/' + id, this.jwt())
+        return this.http.get( url + 'contract_notice/' + id, this.jwt())
             .map((res:Response) => res.json())
             .catch((error:any) => Observable.throw(error.json().error || 'Server error'));
     }
 
     getById(idcontract:string , id:string){
-        return this.http.get( url + 'api/contract_notice/' + idcontract +'/'+ id , this.jwt())
+        return this.http.get( url + 'contract_notice/' + idcontract +'/'+ id , this.jwt())
             .map((res:Response) => res.json())
             .catch((error:any) => Observable.throw(error.json().error || 'Server error'));
     }
 
    create(body:any, id:string): Promise<Contract> {
-        return this.http.post(url +  'api/contract_notice/' + id, body, this.jwt())
+        return this.http.post(url +  'contract_notice/' + id, body, this.jwt())
             .toPromise()
             .then(res => res.json().data)
             .catch(this.handleError);
     }
 
     update(body:Contract, id:string): Promise<Contract> {
-        return this.http.post(url + 'api/contract_notice/update/' + id + '/' + body._id,body, this.jwt())
+        return this.http.post(url + 'contract_notice/update/' + id + '/' + body._id,body, this.jwt())
             .toPromise()
             .then(res => res.json().data)
             .catch(this.handleError);
     }
 
     delete(idcontract: string, id:string): Promise<void> {
-        return this.http.delete(url + 'api/contract_notice/' + idcontract +'/'+ id, this.jwt())
+        return this.http.delete(url + 'contract_notice/' + idcontract +'/'+ id, this.jwt())
             .toPromise()
             .then(() => null)
             .catch(this.handleError);
     }
 
     publish(idcontract:string,id: string): Promise<Contract> {
-        return this.http.post(url + 'api/contract_notice/'+ idcontract + '/publish/' + id,'', this.jwt())
+        return this.http.post(url + 'contract_notice/'+ idcontract + '/publish/' + id,'', this.jwt())
             .toPromise()
             .then(res => res.json().data)
             .catch(this.handleError);

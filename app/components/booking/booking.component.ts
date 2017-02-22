@@ -5,8 +5,11 @@ import { Router, Params, ActivatedRoute } from '@angular/router';
 import { Booking, Facility } from '../../models/index';
 import { BookingService, AlertService, FacilityService, UserService, UnitService } from '../../services/index';
 import '../../rxjs-operators';
+import { NotificationsService } from 'angular2-notifications';
 import { Observable} from 'rxjs/Observable';
 import * as moment from 'moment';
+import { AppComponent } from '../index';
+import { ConfirmationService } from 'primeng/primeng';
 
 @Component({
   // moduleId: module.id,
@@ -62,7 +65,10 @@ export class BookingComponent implements OnInit {
         private formbuilder: FormBuilder,
 		private route: ActivatedRoute,
         private userService: UserService,
-        private unitService: UnitService,){}
+        private appComponent: AppComponent,
+        private unitService: UnitService,
+        private confirmationService: ConfirmationService,
+        private _notificationsService: NotificationsService,){}
 
 	ngOnInit() {
         this.userService.getByToken().subscribe(name => {this.name = name;})
@@ -88,6 +94,7 @@ export class BookingComponent implements OnInit {
                    start += 1;
                    this.times_end.push(start)
             }
+
         });
         for (var a = 0; a < 24; ++a) {
             this.period.push(a)
@@ -98,27 +105,47 @@ export class BookingComponent implements OnInit {
         });
         if( this.id == null) {
             this.loadAllBookings();
-        }else{
-        	this.bookingService.getBooking(this.id).then(booking => {this.booking = booking;});
         }
-
+        if( this.id != null) {
+           this.bookingService.getById(this.id)
+            .subscribe(booking => {
+                this.booking = booking;
+                setTimeout(() => this.appComponent.loading = false, 1000);
+            });
+        }
     }
  
     deleteBooking(booking: Booking) {
+        this.appComponent.loading = true
         this.bookingService.delete(booking._id)
-        .then(
-			response => {
-				if(response) {
-	                alert(`The booking could not be deleted, server Error.`);
-	            } else {
-                    this.alertService.success('Delete booking successful', true);
-	                this.loadAllBookings()
-	            }
-            },
-            error=> {
-                alert(`The Booking could not be deleted, server Error.`);
+            .then(
+                    data => {
+                        this._notificationsService.success(
+                                'Success',
+                                'Delete booking successful',
+                        )
+                        this.ngOnInit();
+                    },
+                    error => {
+                        console.log(error);
+                        this._notificationsService.error(
+                                'Error',
+                                'The Booking could not be deleted, server Error',
+                        )
+                        setTimeout(() => this.appComponent.loading = false, 1000);
+                    }
+            );
+    }
+
+    deleteConfirmation(booking) {
+        this.confirmationService.confirm({
+            message: 'Are you sure that you want to delete this booking?',
+            header: 'Delete Confirmation',
+            icon: 'fa fa-trash',
+            accept: () => {
+                this.deleteBooking(booking)
             }
-        );
+        });
     }
 
     private loadAllBookings() {
@@ -141,21 +168,24 @@ export class BookingComponent implements OnInit {
                     }
                 })
             })
+            setTimeout(() => this.appComponent.loading = false, 1000);
         });
-        
-
     }
 
     add(){
         this.router.navigate([this.name.default_development.name_url + '/booking/add']);
-        
+    }
+
+    goBack(){
+        this.router.navigate([this.name.default_development.name_url + '/booking']);
     }
 
     view(booking: Booking){
-        this.router.navigate([this.name.default_development.name_url + '/booking/edit', booking._id]);
+        this.router.navigate([this.name.default_development.name_url + '/booking/view', booking._id]);
     }
 
     filter(booking: any){
+        this.appComponent.loading = true
         this.facility = booking.name;
         this.type = booking.type;
         this.status = booking.status;
@@ -210,6 +240,7 @@ export class BookingComponent implements OnInit {
                 );
             };
         });
+        setTimeout(() => this.appComponent.loading = false, 1000);
     }
 
     convertDate(date) {
@@ -222,6 +253,7 @@ export class BookingComponent implements OnInit {
     }
 
     public test() {
+        this.appComponent.loading = true
         this.day     = new Date(this.dt.getTime());
         this.day     = this.convertDate(this.day);
         this.ngOnInit();

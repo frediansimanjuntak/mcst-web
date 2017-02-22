@@ -2,9 +2,12 @@ import { Component, OnInit, ViewContainerRef, ViewEncapsulation, ViewChild } fro
 import { Router } from '@angular/router';
 import { Development } from '../../models/index';
 import { NewsletterService, AlertService, UserService} from '../../services/index';
+import { NotificationsService } from 'angular2-notifications';
 import '../../rxjs-operators';
 import { FileUploader } from 'ng2-file-upload';
+import { AppComponent } from '../index';
 import { Observable} from 'rxjs/Observable';
+import { ConfirmationService } from 'primeng/primeng';
 
 @Component({
   // moduleId: module.id,
@@ -35,7 +38,10 @@ export class NewsletterComponent implements OnInit {
                 private router: Router,
                 private newsletterservice: NewsletterService, 
                 private alertService: AlertService,
-                private userService: UserService) {
+                private userService: UserService,
+                private appComponent: AppComponent,
+                private confirmationService: ConfirmationService,
+                private _notificationsService: NotificationsService) {
     }
 
           
@@ -45,7 +51,6 @@ export class NewsletterComponent implements OnInit {
             this.name = name;
             this.loadAllNewsletters();
           })
-        this.getUsers();
     }
 
     public toInt(num: string) {
@@ -57,44 +62,59 @@ export class NewsletterComponent implements OnInit {
     }
 
     deleteNewsletter(newsletter: any) {
+        this.appComponent.loading = true
         this.newsletterservice.delete(newsletter._id, this.name.default_development.name_url)
           .then(
-            response => {
-              if(response) {
-                console.log(response);
-                alert(`The Newsletter could not be deleted, server Error.`);
-              } else {
-                this.alertService.success('Delete newsletter successful', true);
-                alert(`Delete Newsletter successful`);
-                this.ngOnInit()
-              }
-            },
-            error=> {
-              console.log(error);
-                alert(`The Newsletter could not be deleted, server Error.`);
-            }
+             data => {
+                    this._notificationsService.success(
+                            'Success',
+                            'Delete Newsletter successful',
+                    )
+                    this.ngOnInit();
+                },
+                error => {
+                    console.log(error);
+                    this._notificationsService.error(
+                            'Error',
+                            'The Newsletter could not be deleted, server Error',
+                    )
+                    this.appComponent.loading = false
+                }
         );
     }
 
+    deleteConfirmation(newsletter) {
+        this.confirmationService.confirm({
+            message: 'Are you sure that you want to delete this newsletter?',
+            header: 'Delete Confirmation',
+            icon: 'fa fa-trash',
+            accept: () => {
+                this.deleteNewsletter(newsletter)
+            }
+        });
+    }
+
     releaseNewsletter(){
+      this.appComponent.loading = true
       
       this.newsletterservice.release(this.newsletter._id, this.name.default_development.name_url)
           .then(
-            response => {
-              if(response) {
-                console.log(response);
-                alert(`The Newsletter could not be release, server Error.`);
-              } else {
-                this.alertService.success('Release Newsletter successful', true);
-                this.firstModal.close();
-                alert(`Release Newsletter successful`);
-                this.ngOnInit()
-              }
-            },
-            error=> {
-              console.log(error);
-              this.firstModal.close();
-              alert(`The Newsletter could not be release, server Error.`);
+            data => {
+                     this._notificationsService.success(
+                            'Success',
+                            'Release Newsletter successful',
+                    )
+                      this.firstModal.close();
+                    this.ngOnInit();
+                },
+                error => {
+                    console.log(error);
+                    this.firstModal.close();
+                    this._notificationsService.error(
+                            'Error',
+                            'The Newsletter could not be release, server Error',
+                    )
+                    this.appComponent.loading = false
             }
         );
     }
@@ -103,31 +123,18 @@ export class NewsletterComponent implements OnInit {
         this.newsletterservice.getAll(this.name.default_development.name_url)
             .subscribe((data)=> {
                 setTimeout(()=> {
+                    console.log(data)
                   this.data = data.newsletter;
-                  console.log(this.data);
                   this.dataAgm       = this.data.filter(data => data.type === 'agm' );
                   this.dataEgm       = this.data.filter(data => data.type === 'egm' );
                   this.dataCircular  = this.data.filter(data => data.type === 'circular' );
-
+                  setTimeout(() => this.appComponent.loading = false, 1000);
                 }, 1000);
             });
     }
 
     openModal(newsletter:any){
       this.newsletter = newsletter;
-    }
-
-    getUsers(): void {
-        this.userService.getUsers().then(users => {
-            this.users = users;
-        });
-
-        // this.userService.getAll()
-        //     .subscribe((data)=> {
-        //         setTimeout(()=> {
-        //            this.users = data;
-        //         }, 1000);
-        //     });
     }
 
     add(){

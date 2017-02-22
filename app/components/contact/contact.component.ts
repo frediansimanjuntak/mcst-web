@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { AppComponent } from '../index';
 import '../../rxjs-operators';
 
 @Component({

@@ -16,7 +16,7 @@
 				<tab heading="Draft">
 					<p-dataTable [value]="announcementsDrafted" [rows]="10" [paginator]="true">
 						<p-column [style]="{'width':'200px'}" field="title" header="Title" sortable="true" [filter]="true" filterPlaceholder="Search title"></p-column>
-						<p-column [style]="{'width':'300px'}" field="message" header="Message" sortable="true" [filter]="true" filterPlaceholder="Search Message"></p-column>
+						<p-column [style]="{'width':'250px'}" field="message" header="Message" sortable="true" [filter]="true" filterPlaceholder="Search Message"></p-column>
 						<p-column [style]="{'width':'70px'}" field="sticky" header="Sticky" sortable="true"></p-column>
 						<p-column field="auto_post_date" header="Auto post on" sortable="true" filterPlaceholder="Search Date "></p-column>
 						<p-column header="Valid till" field="valid_till_date" sortable="true">
@@ -26,11 +26,11 @@
 								<span>{{announcementsDrafted.created_at | date:'y/M/d'}}</span>
 							</template>
 						</p-column>
-						<p-column [style]="{'width':'200px'}" styleClass="col-button">
+						<p-column [style]="{'width':'250px'}" styleClass="col-button">
 							<template class="pull-right" let-announcementsDrafted="rowData" pTemplate="body">
-								<a type="button" style="cursor:pointer" (click)="editAnnouncement(announcementsDrafted)"><i class="fa fa-edit" aria-hidden="true"></i>&nbsp;Edit</a>
-								<button type="button" class="btn btn-primary btn-brown" (click)="openModal(announcementsDrafted) || firstModal.open()">Publish</button>
-								<button type="button" (click)="deleteAnnouncement(announcementsDrafted)"><i class="fa fa-trash" aria-hidden="true"></i></button>
+								<a type="button" style="cursor:pointer; margin-right: 15px; " (click)="editAnnouncement(announcementsDrafted)"><i class="fa fa-edit" aria-hidden="true"></i>&nbsp;<u>Edit</u></a>
+								<button class="btn btn-brown btn-publish" style="cursor:pointer; margin-right:5px" (click)="openModal(announcementsDrafted) || firstModal.open()">Publish</button>
+								<button type="button" class="btn btn-trash" (click)="deleteConfirmation(announcementsDrafted)"><i class="fa fa-trash" aria-hidden="true"></i></button>
 							</template>
 						</p-column>
 					</p-dataTable>
@@ -38,7 +38,7 @@
 				<tab heading="Published">
 					<p-dataTable [value]="announcementsPublished" [rows]="10" [paginator]="true">
 						<p-column [style]="{'width':'200px'}" field="title" header="Title" sortable="true" [filter]="true" filterPlaceholder="Search title"></p-column>
-						<p-column [style]="{'width':'300px'}" field="message" header="Message" sortable="true" [filter]="true" filterPlaceholder="Search Message"></p-column>
+						<p-column [style]="{'width':'250px'}" field="message" header="Message" sortable="true" [filter]="true" filterPlaceholder="Search Message"></p-column>
 						<p-column field="sticky" [style]="{'width':'70px'}" header="Sticky" sortable="true"></p-column>
 						<p-column header="Valid till" field="valid_till_date" sortable="true">
 						</p-column>
@@ -52,9 +52,9 @@
 								<span>{{announcementsPublished.created_by.username}}</span>
 							</template>
 						</p-column>
-						<p-column [style]="{'width':'40px'}" styleClass="col-button">
+						<p-column [style]="{'width':'90px'}" styleClass="col-button">
 							<template class="pull-right" let-announcementsPublished="rowData" pTemplate="body">
-								<button type="button" (click)="deleteAnnouncement(announcementsPublished)"><i class="fa fa-trash" aria-hidden="true"></i></button>
+								<button type="button" class="btn btn-trash" (click)="deleteConfirmation(announcementsPublished)"><i class="fa fa-trash" aria-hidden="true"></i></button>
 							</template>
 						</p-column>
 					</p-dataTable>
@@ -96,7 +96,7 @@
 							</div>
 							<div class="pull-right">
 								<button class="btn btn-primary btn-brown" (click)="publishAnnouncement()">Announce</button>
-								<button class="btn btn-default btn-gray" (click)="firstModal.close()">Cancel</button>
+								<button class="btn btn-primary btn-gray" (click)="firstModal.close()">Cancel</button>
 							</div>
 						</form>
 					</div>

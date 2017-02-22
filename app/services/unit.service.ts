@@ -20,73 +20,73 @@ export class UnitService {
     }
 
     getAll(name:string){
-        return this.http.get( url + 'api/properties/' + name, this.jwt())
+        return this.http.get( url + 'properties/' + name, this.jwt())
             .map((res:Response) => res.json())
             .catch((error:any) => Observable.throw(error.json().error || 'Server error'));
     }
 
     getById(id:string, name:string){
-        return this.http.get( url + 'api/properties/' + name + '/' + id,  this.jwt())
+        return this.http.get( url + 'properties/' + name + '/' + id,  this.jwt())
             .map((res:Response) => res.json())
             .catch((error:any) => Observable.throw(error.json().error || 'Server error'));
     }
 
     getTenants(id:string, name:string){
-        return this.http.get( url + 'api/properties/' + name + '/tenant/' + id, this.jwt())
+        return this.http.get( url + 'properties/' + name + '/tenant/' + id, this.jwt())
             .map((res:Response) => res.json())
             .catch((error:any) => Observable.throw(error.json().error || 'Server error'));
     }
 
     getRegVehicles(id:string, name:string){
-        return this.http.get( url + 'api/properties/' + name + '/register_vehicle/' + id, this.jwt())
+        return this.http.get( url + 'properties/' + name + '/register_vehicle/' + id, this.jwt())
             .map((res:Response) => res.json())
             .catch((error:any) => Observable.throw(error.json().error || 'Server error'));
     }
 
     create(body:any, name:string): Promise<any> {
-        return this.http.post(url +  'api/properties/' + name, JSON.stringify(body), this.jwt())
+        return this.http.post(url +  'properties/' + name, JSON.stringify(body), this.jwt())
             .toPromise()
             .then(res => res.json().data)
             .catch(this.handleError);
     }
 
-    createTenant(body:any, name:string, id:string): Promise<any> {
-        return this.http.post(url +  'api/properties/' + name + '/tenant/' + id, JSON.stringify(body), this.jwt())
+    createResident(body:any): Promise<any> {
+        return this.http.post(url +  'users/user_tenant_landlord', JSON.stringify(body), this.jwt())
             .toPromise()
             .then(res => res.json().data)
             .catch(this.handleError);
     }
 
     createRegVehicle(body:any, name:string, id:string): Promise<any> {
-        return this.http.post(url +  'api/properties/' + name + '/register_vehicle/' + id, body, this.jwt2())
+        return this.http.post(url +  'properties/' + name + '/register_vehicle/' + id, body, this.jwt2())
             .toPromise()
             .then(res => res.json().data)
             .catch(this.handleError);
     }
 
     update(body:any, name:string): Promise<any> {
-        return this.http.post(url + 'api/properties/' + name + '/update/' + body._id,body, this.jwt())
+        return this.http.post(url + 'properties/' + name + '/update/' + body._id,body, this.jwt())
             .toPromise()
             .then(res => res.json().data)
             .catch(this.handleError);
     }
 
     delete(id: string, name: string): Promise<void> {
-        return this.http.delete( url + 'api/properties/' + name + '/' + id, this.jwt())
+        return this.http.delete( url + 'properties/' + name + '/' + id, this.jwt())
           .toPromise()
           .then(() => null)
           .catch(this.handleError);
     }
 
     deleteTenant(idTenant:string, idUnit: string, name: string): Promise<void> {
-        return this.http.delete( url + 'api/properties/' + name + '/' + idUnit + '/tenant/' + idTenant, this.jwt())
+        return this.http.delete( url + 'properties/' + name + '/' + idUnit + '/tenant/' + idTenant, this.jwt())
           .toPromise()
           .then(() => null)
           .catch(this.handleError);
     }
 
     deleteRegVehicle(idRegVehicle:string, idUnit: string, name: string): Promise<void> {
-        return this.http.delete( url + 'api/properties/' + name + '/' + idUnit + '/register_vehicle/' + idRegVehicle, this.jwt())
+        return this.http.delete( url + 'properties/' + name + '/' + idUnit + '/register_vehicle/' + idRegVehicle, this.jwt())
           .toPromise()
           .then(() => null)
           .catch(this.handleError);

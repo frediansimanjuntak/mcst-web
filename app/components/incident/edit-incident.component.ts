@@ -4,8 +4,10 @@ import { Incident, Incidents } from '../../models/index';
 import { IncidentService, AlertService, UserService } from '../../services/index';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { FileUploader } from 'ng2-file-upload';
+import { NotificationsService } from 'angular2-notifications';
 import '../../rxjs-operators';
 import 'rxjs/add/operator/switchMap';
+import { AppComponent } from '../index';
 
 @Component({
   // moduleId: module.id,
@@ -34,11 +36,24 @@ export class EditIncidentComponent implements OnInit {
     	private incidentService: IncidentService,
     	private alertService: AlertService,
         private route: ActivatedRoute,
+        private appComponent: AppComponent,
+        private _notificationsService: NotificationsService,
         private userService: UserService) {
         // this.user = JSON.parse(localStorage.getItem('user'));
     }
 
     ngOnInit(): void {
+        this.route.params.subscribe(params => {
+            this.id = params['id'];
+        });
+        if( this.id != null) {
+            this.incidentService.getById(this.id)
+            .subscribe(incident => {
+                this.incident = incident;
+                setTimeout(() => this.appComponent.loading = false, 1000);
+            });
+        }
+        this.model.attachment = [];
         this.incidentService.getAll().subscribe(incidents => {
             this.incidents = incidents ;
             if(incidents.length > 0) { 
@@ -57,18 +72,18 @@ export class EditIncidentComponent implements OnInit {
                 this.model.reference_no = '0001'
             }  
         });
-        this.userService.getByToken().subscribe(name => {this.name = name;})
-        this.model.attachment = [];
+        this.userService.getByToken()
+        .subscribe(name => {
+            this.name = name;
+            setTimeout(() => this.appComponent.loading = false, 1000);
+        })
     	this.selectedType = 'general';
-        this.route.params.subscribe(params => {
-            this.id = params['id'];
-        });
-        if( this.id != null) {
-            this.incidentService.getById(this.id).subscribe(incident => {this.incident = incident;});
-        }
+        
+        
     }
 
     createIncident(event: any) {
+        this.appComponent.loading = true
         if(this.model.attachment.length > 0) {
            let formData:FormData = new FormData();
             for (var i = 0; i < this.model.attachment.length; i++) {
@@ -82,26 +97,41 @@ export class EditIncidentComponent implements OnInit {
             this.incidentService.create(formData)
             .then(
                 data => {
-                    this.alertService.success('Create incident report successful', true);
+                    this._notificationsService.success(
+                            'Success',
+                            'Create incident report successful',
+                    )
                     this.router.navigate([this.name.default_development.name_url + '/incident']);
                 },
                 error => {
                     console.log(error);
-                    alert(`The incident report could not be save, server Error.`);
+                    this._notificationsService.error(
+                            'Error',
+                            'The incident report could not be save, server Error',
+                    )
+                    setTimeout(() => this.appComponent.loading = false, 1000);
                 }
             );
         }
     }
 
     updateIncident(){
+        this.appComponent.loading = true
 		this.incidentService.update(this.incident)
 		.then(
 			response => {
-                this.alertService.success('Update incident successful', true);
+                this._notificationsService.success(
+                            'Success',
+                            'Update incident successful',
+                )
                 this.router.navigate([this.name.default_development.name_url + '/incident']);
             },
             error => {
-            	this.alertService.error(error);
+                this._notificationsService.error(
+                            'Error',
+                            'The incident report could not be update, server Error',
+                )
+                setTimeout(() => this.appComponent.loading = false, 1000);
             }
         );
 	}

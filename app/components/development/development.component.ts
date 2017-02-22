@@ -3,7 +3,10 @@ import { Router } from '@angular/router';
 import { Development } from '../../models/index';
 import { DevelopmentService, AlertService } from '../../services/index';
 import '../../rxjs-operators';
+import { NotificationsService } from 'angular2-notifications';
 import { Observable} from 'rxjs/Observable';
+import { AppComponent } from '../index';
+import { ConfirmationService } from 'primeng/primeng';
 
 
 @Component({
@@ -17,31 +20,56 @@ export class DevelopmentComponent implements OnInit {
     developments: Development[] = [];
     model: any = {};
 
-    constructor(private router: Router,private developmentService: DevelopmentService,private alertService: AlertService) {}
+    constructor(private router: Router,
+                private developmentService: DevelopmentService,
+                private appComponent: AppComponent,
+                private alertService: AlertService,
+                private confirmationService: ConfirmationService,
+                private _notificationsService: NotificationsService,) {}
 
     ngOnInit() {
         this.loadAllDevelopments();
     }
 
     deleteDevelopment(development: Development) {
+        this.appComponent.loading = true
         this.developmentService.delete(development._id)
         .then(
-			response => {
-				if(response) {
-	                alert(`The development could not be deleted, server Error.`);
-	            } else {
-                    this.alertService.success('Delete development successful', true);
-	                this.loadAllDevelopments()
-	            }
-            },
-            error=> {
-                alert(`The Development could not be deleted, server Error.`);
-            }
+                data => {
+                    this._notificationsService.success(
+                            'Success',
+                            'Delete development successful',
+                    )
+                    this.loadAllDevelopments()
+                },
+                error => {
+                    console.log(error);
+                    this._notificationsService.error(
+                            'Error',
+                            'The Development could not be deleted, server Error',
+                    )
+                    setTimeout(() => this.appComponent.loading = false, 1000);
+                }
         );
     }
 
+    deleteConfirmation(development) {
+        this.confirmationService.confirm({
+            message: 'Are you sure that you want to delete this development?',
+            header: 'Delete Confirmation',
+            icon: 'fa fa-trash',
+            accept: () => {
+                this.deleteDevelopment(development)
+            }
+        });
+    }
+
     private loadAllDevelopments() {
-        this.developmentService.getAll().subscribe(developments => { this.developments = developments; });
+        this.developmentService.getAll()
+        .subscribe(developments => { 
+            this.developments = developments; 
+            setTimeout(() => this.appComponent.loading = false, 1000);
+        });
     }
 
     add(){

@@ -20,40 +20,40 @@ export class CompanyService {
     }
 
     getAll(){
-        return this.http.get(url + 'api/company', this.jwt())
+        return this.http.get(url + 'company', this.jwt())
             .map((res:Response) => res.json())
             .catch((error:any) => Observable.throw(error.json().error || 'Server error'));
     }
 
     getById(id:string){
-        return this.http.get(url + 'api/company/' + id, this.jwt())
+        return this.http.get(url + 'company/' + id, this.jwt())
             .map((res:Response) => res.json())
             .catch((error:any) => Observable.throw(error.json().error || 'Server error'));
     }
 
     create(body:any): Promise<Company> {
-        return this.http.post(url +  'api/company', JSON.stringify(body), this.jwt())
+        return this.http.post(url +  'company', JSON.stringify(body), this.jwt())
             .toPromise()
             .then(res => res.json().data)
             .catch(this.handleError);
     }
 
     update(body:Company): Promise<Company> {
-        return this.http.post(url + 'api/company/update/' + body._id,body, this.jwt())
+        return this.http.post(url + 'company/update/' + body._id,body, this.jwt())
             .toPromise()
             .then(res => res.json().data)
             .catch(this.handleError);
     }
 
     delete(id: string): Promise<void> {
-        return this.http.delete(url + 'api/company/' + id, this.jwt())
+        return this.http.delete(url + 'company/' + id, this.jwt())
           .toPromise()
           .then(() => null)
           .catch(this.handleError);
     }
 
     activation(id: string): Promise<void> {
-        return this.http.post( url + 'api/company/activation/' + id, this.jwt())
+        return this.http.post( url + 'company/activation/' + id, this.jwt())
           .toPromise()
           .then(() => null)
           .catch(this.handleError);

@@ -20,61 +20,61 @@ export class IncidentService {
     }
 
     getAll(){
-        return this.http.get( url + 'api/incidents', this.jwt())
+        return this.http.get( url + 'incidents', this.jwt())
             .map((res:Response) => res.json())
             .catch((error:any) => Observable.throw(error.json().error || 'Server error'));
     }
 
     getById(id:string){
-        return this.http.get( url + 'api/incidents/' + id, this.jwt())
+        return this.http.get( url + 'incidents/' + id, this.jwt())
             .map((res:Response) => res.json())
             .catch((error:any) => Observable.throw(error.json().error || 'Server error'));
     }
 
    create(body:any): Promise<any> {
-        return this.http.post(`${url + 'api/incidents'}`, body, this.jwt())
+        return this.http.post(`${url + 'incidents'}`, body, this.jwt())
             .toPromise()
             .then(res => res.json().data)
             .catch(this.handleError);
     }
 
     update(body:Incident): Promise<Incident> {
-        return this.http.post(url + 'api/incidents/update/' + body._id,body, this.jwt())
+        return this.http.post(url + 'incidents/update/' + body._id,body, this.jwt())
             .toPromise()
             .then(res => res.json().data)
             .catch(this.handleError);
     }
 
     delete(id: string): Promise<void> {
-        return this.http.delete(url + 'api/incidents/' + id, this.jwt())
+        return this.http.delete(url + 'incidents/' + id, this.jwt())
             .toPromise()
             .then(() => null)
             .catch(this.handleError);
     }
 
     starred(id: string): Promise<Incident> {
-        return this.http.post(url + 'api/incidents/starred/' + id, '', this.jwt())
+        return this.http.post(url + 'incidents/starred/' + id, '', this.jwt())
             .toPromise()
             .then(res => res.json().data)
             .catch(this.handleError);
     }
 
     unstarred(id: string): Promise<Incident> {
-        return this.http.put(url + 'api/incidents/starred/' + id,'', this.jwt())
+        return this.http.put(url + 'incidents/starred/' + id,'', this.jwt())
             .toPromise()
             .then(res => res.json().data)
             .catch(this.handleError);
     }
 
     archieve(id: string): Promise<Incident> {
-        return this.http.post(url + 'api/incidents/archieve/' + id,'', this.jwt())
+        return this.http.post(url + 'incidents/archieve/' + id,'', this.jwt())
             .toPromise()
             .then(res => res.json().data)
             .catch(this.handleError);
     }
 
     unarchieve(id: string): Promise<Incident> {
-        return this.http.put(url + 'api/incidents/archieve/' + id,'', this.jwt())
+        return this.http.put(url + 'incidents/archieve/' + id,'', this.jwt())
             .toPromise()
             .then(res => res.json().data)
             .catch(this.handleError);

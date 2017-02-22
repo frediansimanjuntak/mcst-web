@@ -5,8 +5,8 @@
 		</div>
 		<p class="id-location">Home > Guest & Visitors {{ tomorrow }}</p>
 		{{ afterTomorrow}}
-		<div class="row no-margin">
-			<div class="col-md-8 no-padding top-block">
+		<div class="row no-margin top-block">
+			<div class="col-md-8 no-padding">
 				<div class="input-group filter-search">
 					<input type="text" class="form-control input-search" placeholder="Search name, vehicle no., unit no." name="filter">
 					<span class="input-group-btn">
@@ -14,7 +14,7 @@
 					</span>
 				</div>
 			</div>
-			<div class="col-md-4 pull-right no-padding top-block">
+			<div class="col-md-4 pull-right no-padding">
 				<button type="button" class="btn btn-default btn-add pull-right" (click)="firstModal.open()"><img class="img-btn" src="../../assets/image/icon_add.png" />&nbsp;Add Visitor/Guest</button>
 				<a class="btn btn-default btn-print pull-right"><img class="img-btn" src="../../assets/image/icon_print.png" (click)="print()" />&nbsp;Print</a>
 			</div>
@@ -41,7 +41,7 @@
 			<p-dataTable [value]="visitActive" scrollable="true" scrollHeight="360px">
 				<p-column header="No" [style]="{'width':'42px'}" field="i">
 				</p-column>
-				<p-column header="Visitor/Guest" field="" filterPlaceholder="Search Name">
+				<p-column header="Visitor/Guest" field="" [filter]="true" filterPlaceholder="Search Name">
 					<template let-visitActive="rowData" pTemplate="body">
 						<span>{{visitActive.visitor.prefix}} {{visitActive.visitor.full_name}}</span>
 					</template>
@@ -112,7 +112,7 @@
 							<br>
 							<a *ngIf="name" class="btn-underline pull-right" style="color: black" [routerLink]="'/' + name.default_development.name_url + '/unit/view/' + unit._id">View resident details</a>
 						</template>
-						<a style="cursor: pointer" class="btn-underline" [popover]="popTemplate" (click)="onUnitClick(visitActive.property)">{{visitActive.visiting}}</a>
+						<a style="cursor: pointer; color: blue;" class="btn-underline" [popover]="popTemplate" (click)="onUnitClick(visitActive.property)">{{visitActive.visiting}}</a>
 					</template>
 				</p-column>
 				<p-column field="purpose" header="Purpose of visit"></p-column>
@@ -153,9 +153,6 @@
 				</p-column>
 			</p-dataTable>
 		</div>
-		<span>
-            <img *ngIf="loading" src="data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA==" />
-        </span>
 
 		<div class="row">
 			<modal #firstModal>
@@ -166,10 +163,13 @@
 					<form name="form" [formGroup]="myForm" novalidate><br><br>
 						<div class="form-group" [ngClass]="{ 'has-error': addSubmitted && !myForm.controls.visitor.controls.prefix.valid }" formGroupName="visitor">
 							<div class="row no-margin">
-								<label class="control-label col-sm-4" for="prefix">Prefix :</label>
+								<label class="control-label col-sm-4" for="prefix">Title :</label>
 								<div class="col-sm-8">
-									<input type="text" class="form-control" name="prefix" formControlName="prefix">
-									<small style="color: red" [hidden]="myForm.controls.visitor.controls.prefix.valid || (myForm.controls.visitor.controls.prefix.pristine && !addSubmitted)">Prefix is required</small>
+									<select class="form-control" placeholder="If any" formControlName="prefix" name="prefix">
+										<option [selected]="true" value="Mr">Mr</option>
+										<option value="Mrs">Mrs</option>
+										<option value="Ms">Ms</option>
+									</select>
 								</div>
 							</div>
 						</div>
@@ -359,6 +359,7 @@
 			</modal>
 		</div>
 	</div>
+	
 </div>
 
 <style>

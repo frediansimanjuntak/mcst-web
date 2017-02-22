@@ -1,75 +1,120 @@
 <div class="container">
     <div class="main">
-        <div class="title">PAYMENT SYSTEM</div>
-        <p class="id-location">Home > Payment system</p>
-        <div class="row">
-            <div class="col-md-4 pull-right">
-                <button class="btn btn-default pull-right btn-add" (click)="add()">
-                    <img class="img-btn" src="../../assets/image/icon_add.png" />&nbsp;Create payment reminder
-                </button>
+        <div *ngIf="paymentreminder">
+            <div class="title">{{ paymentreminder.title }}</div>
+            <p class="id-location">Home > Payment system > {{ paymentreminder.title }}</p>
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="row">
+                        <div class="col-md-2 col-padding"><strong>Title :</strong></div>
+                        <div class="col-md-10 col-padding">{{ paymentreminder.title }}</div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-2 col-padding"><strong>Auto issue on :</strong></div>
+                        <div class="col-md-10 col-padding">{{ paymentreminder.auto_issue_on | date:'d/M/y' }}</div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-2 col-padding"><strong>Message to receiver :</strong></div>
+                        <div class="col-md-10 col-padding">{{ paymentreminder.message_to_receiver }}</div>
+                    </div>
+                </div>
+            </div>
+            <div class="row" style="margin-top: 30px;">
+                <div class="col-md-9">
+                    <p-dataTable [value]="notification_list">
+                        <p-column field="charge" header="Charge/Bill"></p-column>
+                        <p-column field="remarks" header="Remarks"></p-column>
+                        <p-column field="applies_to" header="Applies to" sortable="true"></p-column>
+                        <p-column field="amount" header="Amount"></p-column>
+                        <p-footerColumnGroup>
+                            <p-row>
+                                <p-column footer="Totals:" colspan="3"></p-column>
+                                <p-column footer="">
+                                    <template let-notification_list="rowData" pTemplate="footer">
+                                        <p>${{ total }}</p>
+                                    </template>
+                                </p-column>
+                            </p-row>
+                        </p-footerColumnGroup>
+                    </p-dataTable>
+                </div>
+                <div class="col-md-3"></div>
             </div>
         </div>
-        <div (click)="$event.preventDefault()">
-            <tabset>
-                <!-- Draft -->
-                <tab heading="Draft">
-                    <p-dataTable [value]="draft" [rows]="10" [paginator]="true" [responsive]="true">
-                        <p-column field="title" header="Title" sortable="true" [filter]="true" filterPlaceholder="Search title"></p-column>
-                        <p-column field="auto_issue_on" header="Auto issue on" sortable="true" [filter]="true" filterPlaceholder="Search auto issue date"></p-column>
-                        <p-column field="due_on" header="Due on" sortable="true" [filter]="true" filterPlaceholder="Search due date">
-                            <template let-draft="rowData" pTemplate="body">
-                                <p>{{draft.due_on | date:'d/M/y'}}</p>
-                            </template>
-                        </p-column>
-                        <p-column field="" header="Notification List" sortable="true" [filter]="true" filterPlaceholder="Search notification list">
-                            <template let-draft="rowData" pTemplate="body">
-                                <span *ngIf="draft.notification_list.applies_to != all">Custom</span>
-                                <span *ngIf="draft.notification_list.applies_to == all">All</span>
-                            </template>
-                        </p-column>
-                        <p-column field="created_at" header="Created on" sortable="true" [filter]="true" filterPlaceholder="Search created date">
-                            <template let-draft="rowData" pTemplate="body">
-                                <p>{{draft.created_at | date:'d/M/y'}}</p>
-                            </template>
-                        </p-column>
-                        <p-column styleClass="col-button" header="action">
-                            <template let-draft="rowData" pTemplate="body">
-                                <a type="button" style="cursor:pointer" (click)="edit(draft)"><i class="fa fa-edit" aria-hidden="true"></i>&nbsp;Edit</a>
-                                <button class="btn btn-brown" [disabled]="draft.publish == true" style="text-decoration: underline;cursor:pointer" (click)="publish(draft)">Publish</button>
-                                <button type="button" (click)="deletePaymentReminder(draft)"><i class="fa fa-trash" aria-hidden="true"></i></button>
-                            </template>
-                        </p-column>
-                    </p-dataTable>
-                </tab>
-                <!-- Published -->
-                <tab heading="Published">
-                    <p-dataTable [value]="published" [rows]="10" [paginator]="true" [responsive]="true">
-                        <p-column field="title" header="Title" sortable="true" [filter]="true" filterPlaceholder="Search title"></p-column>
-                        <p-column field="auto_issue_on" header="Auto issue on" sortable="true" [filter]="true" filterPlaceholder="Search auto issue date"></p-column>
-                        <p-column field="due_on" header="Due on" sortable="true" [filter]="true" filterPlaceholder="Search due date">
-                            <template let-published="rowData" pTemplate="body">
-                                <p>{{published.due_on | date:'d/M/y'}}</p>
-                            </template>
-                        </p-column>
-                        <p-column field="" header="Notification List" sortable="true" [filter]="true" filterPlaceholder="Search notification list">
-                            <template let-published="rowData" pTemplate="body">
-                                <span *ngIf="published.notification_list.applies_to != 'all'">Custom</span>
-                                <span *ngIf="published.notification_list.applies_to == 'all'">All</span>
-                            </template>
-                        </p-column>
-                        <p-column field="created_at" header="Created on" sortable="true" [filter]="true" filterPlaceholder="Search created date">
-                            <template let-published="rowData" pTemplate="body">
-                                <p>{{published.created_at | date:'d/M/y'}}</p>
-                            </template>
-                        </p-column>
-                        <p-column styleClass="col-button" header="action">
-                            <template let-published="rowData" pTemplate="body">
-                                <button type="button" (click)="deletePaymentReminder(published)"><i class="fa fa-trash" aria-hidden="true"></i></button>
-                            </template>
-                        </p-column>
-                    </p-dataTable>
-                </tab>
-            </tabset>
+        <div *ngIf="!paymentreminder">
+            <div class="title">PAYMENT SYSTEM</div>
+            <p class="id-location">Home > Payment system</p>
+            <div class="row top-block">
+                <div class="col-md-4 pull-right">
+                    <button class="btn btn-default pull-right btn-add" (click)="add()">
+                        <img class="img-btn" src="../../assets/image/icon_add.png" />&nbsp;Create payment reminder
+                    </button>
+                </div>
+            </div>
+            <div (click)="$event.preventDefault()">
+                <tabset>
+                    <!-- Draft -->
+                    <tab heading="Draft">
+                        <p-dataTable [value]="draft" [rows]="10" [paginator]="true" [responsive]="true">
+                            <p-column field="title" header="Title" [style]="{'width': '225px'}" sortable="true" [filter]="true" filterPlaceholder="Search title"></p-column>
+                            <p-column field="auto_issue_on" header="Auto issue on" [style]="{'width': '125px'}" sortable="true" [filter]="true" filterPlaceholder="Search auto issue date"></p-column>
+                            <p-column field="due_on" header="Due on" [style]="{'width': '112px'}" sortable="true" [filter]="true" filterPlaceholder="Search due date">
+                                <template let-draft="rowData" pTemplate="body">
+                                    <p>{{draft.due_on | date:'d/M/y'}}</p>
+                                </template>
+                            </p-column>
+                            <p-column field="" header="Notification List" [style]="{'width': '150px'}" sortable="true" [filter]="true" filterPlaceholder="Search notification list">
+                                <template let-draft="rowData" pTemplate="body">
+                                    <span *ngIf="draft.notification_list.applies_to != all">Custom</span>
+                                    <span *ngIf="draft.notification_list.applies_to == all">All</span>
+                                </template>
+                            </p-column>
+                            <p-column field="created_at" header="Created on" [style]="{'width': '150px'}" sortable="true" [filter]="true" filterPlaceholder="Search created date">
+                                <template let-draft="rowData" pTemplate="body">
+                                    <p>{{draft.created_at | date:'d/M/y'}}</p>
+                                </template>
+                            </p-column>
+                            <p-column styleClass="col-button" header="action">
+                                <template let-draft="rowData" pTemplate="body">
+                                    <a type="button" style="cursor:pointer; margin: 0 25px 0 5px;" (click)="view(draft)">&nbsp;<u>View</u></a>
+                                    <a type="button" style="cursor:pointer; margin-right: 15px; " (click)="edit(draft)"><i class="fa fa-edit" aria-hidden="true"></i>&nbsp;<u>Edit</u></a>
+                                    <button class="btn btn-brown btn-publish" [disabled]="draft.publish == true" style="cursor:pointer; margin-right:5px" (click)="publishConfirmation(draft)">Publish</button>
+                                    <button class="btn btn-trash" type="button" (click)="deleteConfirmation(draft)"><i class="fa fa-trash-o" aria-hidden="true"></i></button>
+                                </template>
+                            </p-column>
+                        </p-dataTable>
+                    </tab>
+                    <!-- Published -->
+                    <tab heading="Published">
+                        <p-dataTable [value]="published" [rows]="10" [paginator]="true" [responsive]="true">
+                            <p-column field="title" header="Title" [style]="{'width': '225px'}" sortable="true" [filter]="true" filterPlaceholder="Search title"></p-column>
+                            <p-column field="auto_issue_on" header="Auto issue on" [style]="{'width': '125px'}" sortable="true" [filter]="true" filterPlaceholder="Search auto issue date"></p-column>
+                            <p-column field="due_on" header="Due on" [style]="{'width': '112px'}" sortable="true" [filter]="true" filterPlaceholder="Search due date">
+                                <template let-published="rowData" pTemplate="body">
+                                    <p>{{published.due_on | date:'d/M/y'}}</p>
+                                </template>
+                            </p-column>
+                            <p-column field="" header="Notification List" [style]="{'width': '150px'}" sortable="true" [filter]="true" filterPlaceholder="Search notification list">
+                                <template let-published="rowData" pTemplate="body">
+                                    <span *ngIf="published.notification_list.applies_to != 'all'">Custom</span>
+                                    <span *ngIf="published.notification_list.applies_to == 'all'">All</span>
+                                </template>
+                            </p-column>
+                            <p-column field="created_at" header="Created on" [style]="{'width': '150px'}" sortable="true" [filter]="true" filterPlaceholder="Search created date">
+                                <template let-published="rowData" pTemplate="body">
+                                    <p>{{published.created_at | date:'d/M/y'}}</p>
+                                </template>
+                            </p-column>
+                            <p-column styleClass="col-button" header="action">
+                                <template let-published="rowData" pTemplate="body">
+                                    <a type="button" style="cursor:pointer; margin: 0 25px 0 5px;" (click)="view(published)">&nbsp;<u>View</u></a>
+                                    <button type="button" class="btn btn-trash" (click)="deleteConfirmation(published)"><i class="fa fa-trash-o" aria-hidden="true"></i></button>
+                                </template>
+                            </p-column>
+                        </p-dataTable>
+                    </tab>
+                </tabset>
+            </div>
         </div>
     </div>
 </div>

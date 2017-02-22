@@ -2,10 +2,13 @@ import { Component, OnInit, ViewContainerRef, ViewEncapsulation } from '@angular
 import { Router, Params, ActivatedRoute } from '@angular/router';
 import { Petition } from '../../models/index';
 import { PetitionService, AlertService, UnitService, UserService} from '../../services/index';
+import { NotificationsService } from 'angular2-notifications';
 import '../../rxjs-operators';
 import { Observable} from 'rxjs/Observable';
 import { Location }               from '@angular/common';
 import * as $ from "jquery";
+import { AppComponent } from '../index';
+import { ConfirmationService } from 'primeng/primeng';
 // import { Overlay } from 'angular2-modal';
 // import { Modal } from 'angular2-modal/plugins/bootstrap';
 // import { PublishAnnouncementModalComponent, PublishAnnouncementModalData } from './publish-announcement-modal.component';
@@ -37,6 +40,14 @@ export class PetitionComponent implements OnInit {
     public rowsOnPage = 10;
     public sortBy = "email";
     public sortOrder = "asc";
+    public options = {
+        position: ["bottom", "right"],
+        timeOut: 3000,
+        lastOnBottom: true,
+        showProgressBar: true,
+        pauseOnHover: true,
+        clickToClose: true,
+    }
     name: any;
 
     constructor(
@@ -47,6 +58,9 @@ export class PetitionComponent implements OnInit {
                 private location: Location,
                 private userService: UserService,
                 private unitService: UnitService,
+                private _notificationsService: NotificationsService,
+                private confirmationService: ConfirmationService,
+                private appComponent: AppComponent,
                 ) {}
 
     ngOnInit(): void {
@@ -65,6 +79,7 @@ export class PetitionComponent implements OnInit {
     }
 
     deletePetition(petition) {
+        this.appComponent.loading = true
         this.petitionService.delete(petition._id)
           .then(
             response => {
@@ -85,7 +100,7 @@ export class PetitionComponent implements OnInit {
     }
 
     openModal(petition){
-
+        
     }
 
     private loadAllUnits(): void {
@@ -101,6 +116,7 @@ export class PetitionComponent implements OnInit {
                                             this.petition = petition;
                                             let property = this.dataUnit.find(data => data._id ==  this.petition.property);
                                             this.petition.unit_no = '#' + property.address.unit_no + '-' + property.address.unit_no_2;
+                                            setTimeout(() => this.appComponent.loading = false, 1000);
                                         });
                                 }
                 }, 1000);
@@ -112,7 +128,7 @@ export class PetitionComponent implements OnInit {
             .subscribe((data)=> {
                 setTimeout(()=> {
                     this.petitions = data.filter(data => data.archieve === false && data.development._id == this.name.default_development._id );
-                    
+                    setTimeout(() => this.appComponent.loading = false, 1000);
                 }, 1000);
         });
     }
@@ -134,9 +150,35 @@ export class PetitionComponent implements OnInit {
   	}
 
     archieveSelected(){
+        this.appComponent.loading = true
         this.model.ids = this.selectedValues;
-        this.petitionService.archive(this.model)
-        this.ngOnInit();
+        this.petitionService.archive(this.model) .then(
+                    data => {
+                        this.ngOnInit();
+                        this._notificationsService.success(
+                            'Success',
+                            'Archive requests successful',
+                        )
+                    },
+                    error => {
+                        console.log(error);
+                        this._notificationsService.error(
+                            'Error',
+                            'Archive failed, server Error',
+                        )
+                        this.appComponent.loading = false;
+                    }
+                );
+    }
+
+    archieveConfirmation() {
+        this.confirmationService.confirm({
+            message: 'Are you sure that you want to archieve this petition?',
+            header: 'Archieve Confirmation',
+            accept: () => {
+                this.archieveSelected()
+            }
+        });
     }
 
     add(){

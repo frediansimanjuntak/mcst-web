@@ -9,7 +9,7 @@
 				<button class="btn btn-default pull-right btn-gray" (click)="add()"> <img class="img-btn" src="../../assets/image/icon_add.png" />&nbsp;Add User</button>
 			</div>
 		</div>
-		<p-dataTable [value]="users" [rows]="10" [paginator]="true">
+		<p-dataTable [value]="users" [rows]="10" [paginator]="true" [responsive]="true">
 			<p-column filterMatchMode="contains" field="username" header="Username" sortable="true" [filter]="true" filterPlaceholder="Search username"></p-column>
 			<p-column filterMatchMode="contains" field="email" header="Email" sortable="true" [filter]="true" filterPlaceholder="Search email"></p-column>
 			<p-column filterMatchMode="contains" field="phone" header="Phone" sortable="true" [filter]="true" filterPlaceholder="Search phone"></p-column>
@@ -21,7 +21,7 @@
 			<p-column styleClass="col-button" header="action">
 				<template let-data="rowData" pTemplate="body">
 					<a type="button" style="cursor:pointer" (click)="edit(data)"><i class="fa fa-edit" aria-hidden="true"></i>&nbsp;Edit</a>
-					<button type="button" (click)="deleteUser(data)"><i class="fa fa-trash" aria-hidden="true"></i></button>
+					<button type="button" (click)="deleteConfirmation(data)"><i class="fa fa-trash" aria-hidden="true"></i></button>
 				</template>
 			</p-column>
 		</p-dataTable>

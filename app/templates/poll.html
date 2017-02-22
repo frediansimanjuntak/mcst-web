@@ -34,7 +34,8 @@
 				</div>
 			</div>
 			<div class="row" *ngIf="poll.votes.length > 0 ">
-				<div class="col-md-4">Answers Progress </div>
+				<div *ngIf="!poll.outcome" class="col-md-4">Answers Progress </div>
+				<div *ngIf="poll.outcome" class="col-md-4">Answer Results </div>
 				<div class="col-md-8">
 					<div *ngFor="let a of poll.answers">
 						<progressbar [max]="max" [value]="a.progress">
@@ -43,10 +44,10 @@
 					</div>
 				</div>
 			</div>
-			<div class="row">
+			<div class="row" *ngIf="poll.outcome">
 				<div class="col-md-4">Outcome</div>
 				<div class="col-md-8">
-					<p>: {{poll.outcome}}</p>
+					<p style="color: red">: <b>{{poll.outcome}}</b></p>
 				</div>
 			</div>
 			<div class="row">
@@ -113,9 +114,9 @@
 						</p-column>
 						<p-column [style]="{'width':'300px'}" styleClass="col-button">
 					    	<template class="pull-right" let-pollsDraft="rowData" pTemplate="body">
-					    	<a type="button" style="cursor:pointer" (click)="editPoll(pollsDraft)"><i class="fa fa-edit" aria-hidden="true"></i>&nbsp;Edit</a>
-					    	<button type="button" class="btn btn-primary btn-brown btn-xs" (click)="openModal(pollsDraft) || firstModal.open()">Start Poll</button>
-					        <button  type="button" (click)="deletePoll(pollsDraft)"><i class="fa fa-trash" aria-hidden="true"></i></button>
+						    	<a type="button" style="cursor:pointer; margin-right: 15px;" (click)="editPoll(pollsDraft)"><i class="fa fa-edit" aria-hidden="true"></i>&nbsp;<u>Edit</u></a>
+						    	<button class="btn btn-publish btn-brown" style="cursor:pointer; margin-right:5px" (click)="openModal(pollsDraft) || firstModal.open()">Start Poll</button>
+						        <button  type="button" class="btn btn-trash" (click)="deleteConfirmation(pollsDraft)"><i class="fa fa-trash" aria-hidden="true"></i></button>
 					    	</template>
 					    </p-column>
 					</p-dataTable>
@@ -135,7 +136,7 @@
 						</p-column>
 						<p-column [style]="{'width':'300px'}" styleClass="col-button">
 					    	<template class="pull-right" let-pollsActive="rowData" pTemplate="body">
-					    	<a type="button" class="btn-underline" style="cursor:pointer" (click)="viewPoll(pollsActive)">&nbsp;View Progress</a>
+					    	<a type="button" style="cursor:pointer" (click)="viewPoll(pollsActive)">&nbsp;<u>View Progress</u></a>
 					    	</template>
 					    </p-column>
 					</p-dataTable>
@@ -151,6 +152,7 @@
 						            <span>{{pollsResult.votes.length}}</span>
 						        </template>
 						</p-column>
+						<p-column field="outcome" header="Outcome" sortable="true"></p-column>
 						<p-column field="start_time" header="Commence date" sortable="true"></p-column>
 						<p-column field="end_time" header="Result date" sortable="true"></p-column>
 					    

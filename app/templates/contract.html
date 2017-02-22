@@ -120,7 +120,7 @@
                         </div>
                     </div>
                     <div *ngIf="contractnotices">
-                        <p-dataTable [value]="contractnotices" [rows]="10" [paginator]="true">
+                        <p-dataTable [value]="contractnotices" [rows]="10" [paginator]="true" [responsive]="true">
                             <p-column filterMatchMode="contains" field="title" header="Title" sortable="true" [filter]="true" filterPlaceholder="Search title"></p-column>
                             <p-column filterMatchMode="contains" field="start_time" header="Commence date" sortable="true" [filter]="true" filterPlaceholder="Search commence date">
                                 <template let-data="rowData" pTemplate="body">
@@ -207,7 +207,7 @@
                         </div>
                     </div>
                     <div *ngIf="contractnotes">
-                        <p-dataTable [value]="contractnotes" [rows]="10" [paginator]="true">
+                        <p-dataTable [value]="contractnotes" [rows]="10" [paginator]="true" [responsive]="true">
                             <p-column filterMatchMode="contains" field="posted_by.username" header="Posted by" sortable="true" [filter]="true" filterPlaceholder="Search posted by"></p-column>
                             <p-column filterMatchMode="contains" field="posted_on" header="Posted on" sortable="true" [filter]="true" filterPlaceholder="Search posted on">
                                 <template let-data="rowData" pTemplate="body">
@@ -224,7 +224,7 @@
                             <p-column styleClass="col-button" header="Action">
                                 <template let-data="rowData" pTemplate="body">
                                     <a type="button" style="cursor:pointer" (click)="viewNote(contract._id, data)">View</a>
-                                    <button type="button" (click)="deleteContractNote(data, contract._id)"><i class="fa fa-trash" aria-hidden="true"></i></button>
+                                    <button type="button" (click)="deleteContractNoteConfirmation(data, contract._id)"><i class="fa fa-trash" aria-hidden="true"></i></button>
                                 </template>
                             </p-column>
                         </p-dataTable>
@@ -238,106 +238,108 @@
                 MANAGE PROJECTS
             </div>
             <p class="id-location">Home > Manage Projects</p>
-            <div class="row">
+            <div class="row top-block">
                 <div class="col-md-4 pull-right">
                     <a class="btn btn-default pull-right btn-gray" (click)="add()">
                         <i class="fa fa-plus" aria-hidden="true"></i>&nbsp;Add Projects</a>
                 </div>
             </div>
+            <section id="manage-project">
             <div (click)="$event.preventDefault()">
                 <tabset>
                     <!-- ALL -->
                     <tab heading="All">
-                        <p-dataTable [value]="contracts" [rows]="10" [paginator]="true">
-                            <p-column filterMatchMode="contains" [style]="{'text-transform': 'capitalize'}" field="title" header="Project Title" sortable="true" [filter]="true" filterPlaceholder="Search Project Title"></p-column>
-                            <p-column filterMatchMode="contains" header="Commence on" sortable="true" [filter]="true" filterPlaceholder="Search Commence on">
+                        <p-dataTable [value]="contracts" [rows]="10" [paginator]="true" [responsive]="true">
+                            <p-column filterMatchMode="contains" [style]="{'width': '180px' , 'text-transform': 'capitalize'}" field="title" header="Project Title" sortable="true" [filter]="true" filterPlaceholder="Search Project Title"></p-column>
+                            <p-column filterMatchMode="contains" [style]="{'width': '120px'}" header="Commence on" sortable="true" [filter]="true" filterPlaceholder="Search Commence on">
                                 <template let-contracts="rowData" pTemplate="body">
                                     <span>{{contracts.start_time | date:'d/M/y'}}</span>
                                 </template>
                             </p-column>
-                            <p-column filterMatchMode="contains" header="Estimated Completion" sortable="true" [filter]="true" filterPlaceholder="Search Estimated Completion">
+                            <p-column filterMatchMode="contains" [style]="{'width': '165px'}" header="Estimated Completion" sortable="true" [filter]="true" filterPlaceholder="Search Estimated Completion">
                                 <template let-contracts="rowData" pTemplate="body">
                                     <span>{{contracts.end_time | date:'d/M/y'}}</span>
                                 </template>
                             </p-column>
-                            <p-column filterMatchMode="contains" field="remark" header="Remarks" sortable="true" [filter]="true" filterPlaceholder="Search Remark"></p-column>
-                            <p-column filterMatchMode="contains" [style]="{'text-transform': 'capitalize'}" field="status" header="Status" sortable="true" [filter]="true" filterPlaceholder="Search Status"></p-column>
+                            <p-column filterMatchMode="contains" [style]="{'width': '155px'}" field="remark" header="Remarks" sortable="true" [filter]="true" filterPlaceholder="Search Remark"></p-column>
+                            <p-column filterMatchMode="contains" [style]="{'width': '112px' , 'text-transform': 'capitalize'}" field="status" header="Status" sortable="true" [filter]="true" filterPlaceholder="Search Status"></p-column>
                             <p-column filterMatchMode="contains" field="" header="Created/Update" sortable="true" [filter]="true" filterPlaceholder="Search Issued on">
                                 <template let-contracts="rowData" pTemplate="body">
-                                    <p>Created:{{contracts.created_at | date:'d/M/y'}}</p>
-                                    <p>Latest:{{contracts.updated_at | date:'d/M/y'}}</p>
+                                    <span style="font-size:10px">Created:{{contracts.created_at | date:'d/M/y'}}</span><br>
+                                    <span style="font-size:10px">Latest:{{contracts.updated_at | date:'d/M/y'}}</span>
                                 </template>
                             </p-column>
                             <p-column styleClass="col-button" header="Action">
                                 <template let-contracts="rowData" pTemplate="body">
-                                    <a type="button" style="cursor:pointer" (click)="view(contracts)">See Details</a>
-                                    <button type="button" (click)="deleteContract(contracts)">Remove</button>
+                                    <a type="button" style="cursor:pointer; text-decoration: underline;" (click)="view(contracts)">See Details</a>
+                                    <button type="button" class="pull-right btn btn-trash" (click)="deleteContractConfirmation(contracts)"><i class="fa fa-trash-o" aria-hidden="true"></i></button>
                                 </template>
                             </p-column>
                         </p-dataTable>
                     </tab>
                     <!-- OPEN -->
                     <tab heading="Open">
-                        <p-dataTable [value]="open" [rows]="10" [paginator]="true">
-                            <p-column filterMatchMode="contains" [style]="{'text-transform': 'capitalize'}" field="title" header="Project Title" sortable="true" [filter]="true" filterPlaceholder="Search Project Title"></p-column>
-                            <p-column filterMatchMode="contains" header="Commence on" sortable="true" [filter]="true" filterPlaceholder="Search Commence on">
+                        <p-dataTable [value]="open" [rows]="10" [paginator]="true" [responsive]="true">
+                            <p-column filterMatchMode="contains" [style]="{'width': '180px' , 'text-transform': 'capitalize'}" field="title" header="Project Title" sortable="true" [filter]="true" filterPlaceholder="Search Project Title"></p-column>
+                            <p-column filterMatchMode="contains" [style]="{'width': '120px'}" header="Commence on" sortable="true" [filter]="true" filterPlaceholder="Search Commence on">
                                 <template let-open="rowData" pTemplate="body">
                                     <span>{{open.start_time | date:'d/M/y'}}</span>
                                 </template>
                             </p-column>
-                            <p-column filterMatchMode="contains" header="Estimated Completion" sortable="true" [filter]="true" filterPlaceholder="Search Estimated Completion">
+                            <p-column filterMatchMode="contains" header="Estimated Completion" sortable="true" [style]="{'width': '165px'}" [filter]="true" filterPlaceholder="Search Estimated Completion">
                                 <template let-open="rowData" pTemplate="body">
                                     <span>{{open.end_time | date:'d/M/y'}}</span>
                                 </template>
                             </p-column>
-                            <p-column filterMatchMode="contains" field="remark" header="Remarks" sortable="true" [filter]="true" filterPlaceholder="Search Remark"></p-column>
-                            <p-column filterMatchMode="contains" [style]="{'text-transform': 'capitalize'}" field="status" header="Status" sortable="true" [filter]="true" filterPlaceholder="Search Status"></p-column>
+                            <p-column filterMatchMode="contains" [style]="{'width': '155px'}" field="remark" header="Remarks" sortable="true" [filter]="true" filterPlaceholder="Search Remark"></p-column>
+                            <p-column filterMatchMode="contains" [style]="{'width': '112px' , 'text-transform': 'capitalize'}" field="status" header="Status" sortable="true" [filter]="true" filterPlaceholder="Search Status"></p-column>
                             <p-column filterMatchMode="contains" field="" header="Created/Update" sortable="true" [filter]="true" filterPlaceholder="Search Issued on">
                                 <template let-open="rowData" pTemplate="body">
-                                    <p>Created:{{open.created_at | date:'d/M/y'}}</p>
-                                    <p>Latest:{{open.updated_at | date:'d/M/y'}}</p>
+                                    <span style="font-size:10px">Created:{{open.created_at | date:'d/M/y'}}</span><br>
+                                    <span style="font-size:10px">Latest:{{open.updated_at | date:'d/M/y'}}</span>
                                 </template>
                             </p-column>
                             <p-column styleClass="col-button" header="Action">
                                 <template let-open="rowData" pTemplate="body">
-                                    <a type="button" style="cursor:pointer" (click)="view(open)">See Details</a>
-                                    <button type="button" (click)="deleteContract(open)">Remove</button>
+                                    <a type="button" style="cursor:pointer; text-decoration: underline;" (click)="view(open)">See Details</a>
+                                    <button type="button" class="pull-right btn btn-trash" (click)="deleteContractConfirmation(open)"><i class="fa fa-trash-o" aria-hidden="true"></i></button>
                                 </template>
                             </p-column>
                         </p-dataTable>
                     </tab>
                     <!-- CLOSE -->
                     <tab heading="Closed">
-                        <p-dataTable [value]="close" [rows]="10" [paginator]="true">
-                            <p-column filterMatchMode="contains" [style]="{'text-transform': 'capitalize'}" field="title" header="Project Title" sortable="true" [filter]="true" filterPlaceholder="Search Project Title"></p-column>
-                            <p-column filterMatchMode="contains" header="Commence on" sortable="true" [filter]="true" filterPlaceholder="Search Commence on">
+                        <p-dataTable [value]="close" [rows]="10" [paginator]="true" [responsive]="true">
+                            <p-column filterMatchMode="contains" [style]="{'width': '180px' , 'text-transform': 'capitalize'}" field="title" header="Project Title" sortable="true" [filter]="true" filterPlaceholder="Search Project Title"></p-column>
+                            <p-column filterMatchMode="contains" [style]="{'width': '120px'}" header="Commence on" sortable="true" [filter]="true" filterPlaceholder="Search Commence on">
                                 <template let-close="rowData" pTemplate="body">
                                     <span>{{close.start_time | date:'d/M/y'}}</span>
                                 </template>
                             </p-column>
-                            <p-column filterMatchMode="contains" header="Estimated Completion" sortable="true" [filter]="true" filterPlaceholder="Search Estimated Completion">
+                            <p-column filterMatchMode="contains" [style]="{'width': '165px'}" header="Estimated Completion" sortable="true" [filter]="true" filterPlaceholder="Search Estimated Completion">
                                 <template let-close="rowData" pTemplate="body">
                                     <span>{{close.end_time | date:'d/M/y'}}</span>
                                 </template>
                             </p-column>
-                            <p-column filterMatchMode="contains" field="remark" header="Remarks" sortable="true" [filter]="true" filterPlaceholder="Search Remark"></p-column>
-                            <p-column filterMatchMode="contains" [style]="{'text-transform': 'capitalize'}" field="status" header="Status" sortable="true" [filter]="true" filterPlaceholder="Search Status"></p-column>
+                            <p-column filterMatchMode="contains" field="remark" [style]="{'width': '155px'}" header="Remarks" sortable="true" [filter]="true" filterPlaceholder="Search Remark"></p-column>
+                            <p-column filterMatchMode="contains" [style]="{'width': '112px' , 'text-transform': 'capitalize'}" field="status" header="Status" sortable="true" [filter]="true" filterPlaceholder="Search Status"></p-column>
                             <p-column filterMatchMode="contains" field="" header="Created/Update" sortable="true" [filter]="true" filterPlaceholder="Search Issued on">
                                 <template let-close="rowData" pTemplate="body">
-                                    <p>Created:{{close.created_at | date:'d/M/y'}}</p>
-                                    <p>Latest:{{close.updated_at | date:'d/M/y'}}</p>
+                                    <span style="font-size:10px">Created:{{close.created_at | date:'d/M/y'}}</span><br>
+                                    <span style="font-size:10px">Latest:{{close.updated_at | date:'d/M/y'}}</span>
                                 </template>
                             </p-column>
                             <p-column styleClass="col-button" header="Action">
                                 <template let-close="rowData" pTemplate="body">
-                                    <a type="button" style="cursor:pointer" (click)="view(close)">See Details</a>
-                                    <button type="button" (click)="deleteContract(close)">Remove</button>
+                                    <a type="button" style="cursor:pointer; text-decoration: underline;" (click)="view(close)">See Details</a>
+                                    <button type="button" class="pull-right btn btn-trash" (click)="deleteContractConfirmation(close)"><i class="fa fa-trash-o" aria-hidden="true"></i></button>
                                 </template>
                             </p-column>
                         </p-dataTable>
                     </tab>
                 </tabset>
             </div>
+            </section>
         </div>
     </div>
 </div>

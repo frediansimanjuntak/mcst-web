@@ -3,8 +3,11 @@ import { Router } from '@angular/router';
 import { UserGroup, User } from '../../models/index';
 import { UserGroupService, UserService, AlertService} from '../../services/index';
 import '../../rxjs-operators';
+import { NotificationsService } from 'angular2-notifications';
 import { FileUploader } from 'ng2-file-upload';
 import { Observable} from 'rxjs/Observable';
+import { AppComponent } from '../index';
+import { ConfirmationService } from 'primeng/primeng';
 
 @Component({
   // moduleId: module.id,
@@ -15,7 +18,7 @@ import { Observable} from 'rxjs/Observable';
 export class UserGroupComponent implements OnInit {
 	usergroup: any;
     usergroups: any = [];
-    users: User[] = [];
+    users: any[] = [];
 	model: any = {};
     cols: any[];
     public developmentId;
@@ -32,54 +35,60 @@ export class UserGroupComponent implements OnInit {
                 private router: Router,
                 private userGroupService: UserGroupService,
     			private userService: UserService,
-    			private alertService: AlertService) {
+    			private alertService: AlertService,
+                private appComponent: AppComponent,
+                private confirmationService: ConfirmationService,
+                private _notificationsService: NotificationsService) {
     }
 
     ngOnInit(): void {
         this.userService.getByToken()
                         .subscribe(name => {
                             this.name = name;
-                            this.getUsers();
+                            this.loadAllUserGroup();
                         })
     }
 
-    getUsers(): void {
-        this.userService.getAll().subscribe(users => {
-            this.users = users.filter(data => data.default_development == this.name.default_development._id);
-            this.loadAllUserGroup();
-        });
-    }
-
-    loadAllUserGroup(): void {
+    loadAllUserGroup(){
         this.userGroupService.getAll()
             .subscribe((data)=> {
-                setTimeout(()=> {
                     this.usergroups          = data.filter(data => data.development._id == this.name.default_development._id);
-                    let totalUsers = this.usergroups.users.length;
-                    console.log(data);
-                    for (var i = 0; i < totalUsers; i++) {
-                        let user = this.users.find(data => data._id ==  this.usergroups.users[i]);
-                        this.usergroups.user[i] = user.username;
-                    }
-                }, 3000);
+                    setTimeout(() => this.appComponent.loading = false, 1000);
+                   
             });
     }
 
     deleteUserGroup(usergroup: UserGroup) {
+        this.appComponent.loading = true;
         this.userGroupService.delete(usergroup._id)
         .then(
-            response => {
-                if(response) {
-                    alert(`The Usergroup could not be deleted, server Error.`);
-                } else {
-                    this.alertService.success('Delete usergroup successful', true);
+            data => {
+                    this._notificationsService.success(
+                            'Success',
+                            'Delete usergroup successful',
+                    )
                     this.loadAllUserGroup()
-                }
-            },
-            error=> {
-                alert(`The Usergroup could not be deleted, server Error.`);
+                },
+                error => {
+                    console.log(error);
+                    this._notificationsService.error(
+                            'Error',
+                            'The Usergroup could not be deleted, server Error',
+                    )
+                    this.appComponent.loading = false;
             }
         );
+    }
+
+    deleteConfirmation(usergroup) {
+        this.confirmationService.confirm({
+            message: 'Are you sure that you want to delete this usergroup?',
+            header: 'Delete Confirmation',
+            icon: 'fa fa-trash',
+            accept: () => {
+                this.deleteUserGroup(usergroup)
+            }
+        });
     }
 
     add(){

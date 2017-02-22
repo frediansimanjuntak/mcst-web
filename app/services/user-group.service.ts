@@ -22,34 +22,34 @@ export class UserGroupService {
     
 
     getAll(){
-        return this.http.get(url + 'api/user_groups', this.jwt())
+        return this.http.get(url + 'user_groups', this.jwt())
             .map((res:Response) => res.json())
             .catch((error:any) => Observable.throw(error.json().error || 'Server error'));
     }
 
     getById(id:string){    
-        return this.http.get(url + 'api/user_groups/' + id, this.jwt())
+        return this.http.get(url + 'user_groups/' + id, this.jwt())
             .map((res:Response) => res.json())
             .catch((error:any) => Observable.throw(error.json().error || 'Server error'));
     }
 
     create(body:any): Promise<UserGroup> {
         console.log(body)
-        return this.http.post(url +  'api/user_groups', JSON.stringify(body), this.jwt())
+        return this.http.post(url +  'user_groups', JSON.stringify(body), this.jwt())
             .toPromise()
             .then(res => res.json().data)
             .catch(this.handleError);
     }
 
     update(body:UserGroup): Promise<UserGroup> {
-        return this.http.post(url + 'api/user_groups/update/' + body._id, body, this.jwt())
+        return this.http.post(url + 'user_groups/update/' + body._id, body, this.jwt())
             .toPromise()
             .then(res => res.json().data)
             .catch(this.handleError);
     }
 
     delete(id: string): Promise<void> {
-    return this.http.delete( url + 'api/user_groups/' + id, this.jwt())
+    return this.http.delete( url + 'user_groups/' + id, this.jwt())
       .toPromise()
       .then(() => null)
       .catch(this.handleError);

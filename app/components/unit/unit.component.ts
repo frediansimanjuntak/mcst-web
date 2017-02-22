@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import { Development } from '../../models/index';
 import { UnitService, AlertService, UserService} from '../../services/index';
 import '../../rxjs-operators';
+import { AppComponent } from '../index';
 import { Observable} from 'rxjs/Observable';
 
 @Component({
@@ -25,7 +26,8 @@ export class UnitComponent implements OnInit {
     constructor(private router: Router,
                 private unitservice: UnitService, 
                 private alertService: AlertService,
-                private userService: UserService) {
+                private userService: UserService,
+                private appComponent: AppComponent,) {
 
     }
 
@@ -35,10 +37,10 @@ export class UnitComponent implements OnInit {
                 this.name = name;
                 this.loadAllUnits();
             })
-        this.getUsers();
     }
 
     deleteUnit(unit: any) {
+        this.appComponent.loading = true
         this.unitservice.delete(unit._id, this.developmentId)
           .then(
             response => {
@@ -65,14 +67,9 @@ export class UnitComponent implements OnInit {
                     this.dataUnit = data.properties;
                     console.log(this.dataUnit)
                     this.loading = false;
+                    setTimeout(() => this.appComponent.loading = false, 1000);
                 }, 1000);
             });
-    }
-
-    getUsers(): void {
-        this.userService.getUsers().then(users => {
-            this.users = users;
-        });
     }
 
     view(unit: any){
