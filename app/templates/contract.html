@@ -295,14 +295,14 @@
                             <p-column filterMatchMode="contains" [style]="{'text-transform': 'capitalize'}" field="status" header="Status" sortable="true" [filter]="true" filterPlaceholder="Search Status"></p-column>
                             <p-column filterMatchMode="contains" field="" header="Created/Update" sortable="true" [filter]="true" filterPlaceholder="Search Issued on">
                                 <template let-open="rowData" pTemplate="body">
-                                    <p>Created:{{open.created_at | date:'d/M/y'}}</p>
-                                    <p>Latest:{{open.updated_at | date:'d/M/y'}}</p>
+                                    <span style="font-size:10px">Created:{{open.created_at | date:'d/M/y'}}</span><br>
+                                    <span style="font-size:10px">Latest:{{open.updated_at | date:'d/M/y'}}</span>
                                 </template>
                             </p-column>
                             <p-column styleClass="col-button" header="Action">
                                 <template let-open="rowData" pTemplate="body">
-                                    <a type="button" style="cursor:pointer" (click)="view(open)">See Details</a>
-                                    <button type="button" (click)="deleteContractConfirmation(open)">Remove</button>
+                                    <a type="button" style="cursor:pointer; text-decoration: underline;" (click)="view(open)">See Details</a>
+                                    <button type="button" class="pull-right btn btn-trash" (click)="deleteContractConfirmation(open)"><i class="fa fa-trash-o" aria-hidden="true"></i></button>
                                 </template>
                             </p-column>
                         </p-dataTable>
@@ -325,14 +325,14 @@
                             <p-column filterMatchMode="contains" [style]="{'text-transform': 'capitalize'}" field="status" header="Status" sortable="true" [filter]="true" filterPlaceholder="Search Status"></p-column>
                             <p-column filterMatchMode="contains" field="" header="Created/Update" sortable="true" [filter]="true" filterPlaceholder="Search Issued on">
                                 <template let-close="rowData" pTemplate="body">
-                                    <p>Created:{{close.created_at | date:'d/M/y'}}</p>
-                                    <p>Latest:{{close.updated_at | date:'d/M/y'}}</p>
+                                    <span style="font-size:10px">Created:{{close.created_at | date:'d/M/y'}}</span><br>
+                                    <span style="font-size:10px">Latest:{{close.updated_at | date:'d/M/y'}}</span>
                                 </template>
                             </p-column>
                             <p-column styleClass="col-button" header="Action">
                                 <template let-close="rowData" pTemplate="body">
-                                    <a type="button" style="cursor:pointer" (click)="view(close)">See Details</a>
-                                    <button type="button" (click)="deleteContractConfirmation(close)">Remove</button>
+                                    <a type="button" style="cursor:pointer; text-decoration: underline;" (click)="view(close)">See Details</a>
+                                    <button type="button" class="pull-right btn btn-trash" (click)="deleteContractConfirmation(close)"><i class="fa fa-trash-o" aria-hidden="true"></i></button>
                                 </template>
                             </p-column>
                         </p-dataTable>
