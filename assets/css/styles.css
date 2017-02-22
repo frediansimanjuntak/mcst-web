@@ -857,7 +857,7 @@ th.ui-state-default.ui-unselectable-text {
 }
 .tab-container th.ui-state-default.ui-unselectable-text.ui-sortable-column {
   height: 44px;
-  text-align: left;
+  /*text-align: left;*/
 }
 .tab-container img {
     width: 15px;
