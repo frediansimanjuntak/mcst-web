@@ -16,28 +16,28 @@
                     <tab heading="All Feedback">
                         <p-dataTable [value]="feedbacks" [rows]="10" [paginator]="true">
                             <p-column filterMatchMode="contains" [style]="{'width': '100px'}" field="created_by.username" header="Made by" sortable="true" [filter]="true" filterPlaceholder="Search Made by"></p-column>
-                            <p-column [style]="{'width': '100px'}" filterMatchMode="contains" field="" header="Unit.no" sortable="true" [filter]="true" filterPlaceholder="Search Unit.no">
+                            <p-column [style]="{'width': '70px'}" filterMatchMode="contains" field="" header="Unit.no" sortable="true" [filter]="true" filterPlaceholder="Search Unit.no">
                                 <template let-feedback="rowData" pTemplate="body">
                                     {{feedback.property.address.unit_no}}-{{feedback.property.address.unit_no_2}}
                                 </template>
                             </p-column>
                             <p-column filterMatchMode="contains" [style]="{'width': '120px'}" field="title" header="Topic / Title" sortable="true" [filter]="true" filterPlaceholder="Search Topic / Title"></p-column>
-                            <p-column  filterMatchMode="contains" [style]="{'width': '100px' , 'text-transform': 'capitalize'}" field="feedback_type" header="Type" sortable="true" [filter]="true" filterPlaceholder="Search Type"></p-column>>
+                            <p-column  filterMatchMode="contains" [style]="{'width': '90px' , 'text-transform': 'capitalize'}" field="feedback_type" header="Type" sortable="true" [filter]="true" filterPlaceholder="Search Type"></p-column>>
                             <p-column filterMatchMode="contains" [style]="{'width': '100px' , 'text-transform': 'capitalize'}" field="feedback_privacy" header="Privacy" sortable="true" [filter]="true" filterPlaceholder="Search Privacy"></p-column>
                             <p-column filterMatchMode="contains" [style]="{'width': '100px'}" field="remark" header="Feedback" sortable="true" [filter]="true" filterPlaceholder="Search Feedback"></p-column>
-                            <p-column [style]="{'width': '100px'}" filterMatchMode="contains" field="feedback_reply" header="Reply" sortable="true" [filter]="true" filterPlaceholder="Search Reply"></p-column>
+                            <p-column [style]="{'width': '80px'}" filterMatchMode="contains" field="feedback_reply" header="Reply" sortable="true" [filter]="true" filterPlaceholder="Search Reply"></p-column>
                             <p-column [style]="{'width': '120px'}" filterMatchMode="contains" field="" header="Commented on" sortable="true" [filter]="true" filterPlaceholder="Search Commented on">
                                 <template let-feedback="rowData" pTemplate="body">
                                     <p>{{feedback.created_at}}</p>
                                     <span *ngIf="feedback.reply_at != null">replied at {{feedback.reply_at}}</span>
                                 </template>
                             </p-column>
-                            <p-column [style]="{'width':'150px'}" styleClass="col-button" header="action">
+                            <p-column [style]="{'width':'240px'}" styleClass="col-button" header="action">
                                 <template let-feedback="rowData" pTemplate="body">
-                                    <a type="button" style="cursor:pointer" (click)="openModal(feedback) || firstModal.open()"><img src="../../assets/image/icon_reply.png" width="10px" height="10x">&nbsp;Reply</a>
+                                    <a type="button" style="cursor:pointer; margin-right: 5px;" (click)="openModal(feedback) || firstModal.open()"><img src="../../assets/image/icon_reply.png" class="pull-left" width="10px" height="10x" style="margin:12px 0;">&nbsp;Reply</a>
                                     <button class="btn btn-brown" disabled="feedback.status == unpublished" style="text-decoration: underline;cursor:pointer" (click)="publishConfirmation(feedback)">Publish</button>
-                                    <img *ngIf="feedback.archive == false" title="archived" src="../../assets/image/icon_archived.png" (click)="archiveConfirmation(feedback)" />
-                                    <img *ngIf="feedback.archive == true" title="unarchived" src="../../assets/image/icon_archived.png" (click)="unarchived(feedback)" />
+                                    <img *ngIf="feedback.archive == false" title="archived" src="../../assets/image/icon_archived.png" style="margin:12px" (click)="archiveConfirmation(feedback)" />
+                                    <img *ngIf="feedback.archive == true" title="unarchived" src="../../assets/image/icon_archived.png" style="margin:12px" (click)="unarchived(feedback)" />
                                 </template>
                             </p-column>
                         </p-dataTable>
@@ -64,10 +64,10 @@
                             </p-column>
                             <p-column [style]="{'width':'150px'}" styleClass="col-button" header="action">
                                 <template let-feedback="rowData" pTemplate="body">
-                                    <a type="button" style="cursor:pointer" (click)="openModal(feedback) || firstModal.open()"><img src="../../assets/image/icon_reply.png" width="10px" height="10x">&nbsp;Reply</a>
+                                    <a type="button" style="cursor:pointer; margin-right: 5px;" (click)="openModal(feedback) || firstModal.open()"><img src="../../assets/image/icon_reply.png" class="pull-left" width="10px" height="10x" style="margin:12px 0">&nbsp;Reply</a>
                                     <button disabled="feedback.status == unpublished" style="text-decoration: underline;cursor:pointer" (click)="publishConfirmation(feedback)">Publish</button>
-                                    <img *ngIf="feedback.archive == false" title="archived" src="../../assets/image/icon_archived.png" (click)="archiveConfirmation(feedback)" />
-                                    <img *ngIf="feedback.archive == true" title="unarchived" src="../../assets/image/icon_archived.png" (click)="unarchived(feedback)" />
+                                    <img *ngIf="feedback.archive == false" title="archived" src="../../assets/image/icon_archived.png" style="margin:12px" (click)="archiveConfirmation(feedback)" />
+                                    <img *ngIf="feedback.archive == true" title="unarchived" src="../../assets/image/icon_archived.png" style="margin:12px" (click)="unarchived(feedback)" />
                                 </template>
                             </p-column>
                         </p-dataTable>
@@ -105,7 +105,7 @@
                 ARCHIVED FEEDBACK
             </div>
             <p class="id-location">Home > Manage Feedback > Archived Feedback</p>
-            <div class="row">
+            <div class="row top-block">
                 <div class="col-md-4 pull-right">
                     <a class="btn btn-default pull-right btn-gray" (click)="viewUnarchived()">View Unarchived</a>
                 </div>

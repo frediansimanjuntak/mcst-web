@@ -81,9 +81,9 @@
                                 <template let-data="rowData" pTemplate="body">
                                     <a *ngIf="data.status == 'new'" type="button" style="text-decoration: underline;cursor:pointer" (click)="openModal(data) || firstModal.open()">Resolved</a>
                                     <a type="button" style="text-decoration: underline;cursor:pointer" (click)="view(data)">View</a>
+                                    <img *ngIf="data.archieve === false" title="archived" src="../../assets/image/icon_archived.png" (click)="archieveConfirmation(data)" />
                                     <img *ngIf="data.starred_by.length < 1" title="starred" src="../../assets/image/star_filled.png" width="24px" height="28px" (click)="starredConfirmation(data)" />
                                     <img *ngIf="data.starred_by.length > 0" title="unstarred" src="../../assets/image/icon_star_active@3x.png" width="24px" height="28px" (click)="unstarred(data)" />
-                                    <img *ngIf="data.archieve === false" title="archived" src="../../assets/image/icon_archived.png" (click)="archieveConfirmation(data)" />
                                 </template>
                             </p-column>
                         </p-dataTable>
@@ -108,9 +108,9 @@
                                 <template let-data="rowData" pTemplate="body">
                                     <a type="button" style="text-decoration: underline;cursor:pointer" (click)="openModal(data) || firstModal.open()">Resolved</a>
                                     <a type="button" style="text-decoration: underline;cursor:pointer" (click)="view(data)">View</a>
+                                    <img *ngIf="data.archieve === false" title="archived" src="../../assets/image/icon_archived.png" (click)="archieveConfirmation(data)" />
                                     <img *ngIf="data.starred_by == null" title="starred" src="../../assets/image/star_filled.png" width="24px" height="28px" (click)="starredConfirmation(data)" />
                                     <img *ngIf="data.starred_by != null" title="unstarred" src="../../assets/image/icon_star_active@3x.png" width="24px" height="28px" (click)="unstarred(data)" />
-                                    <img *ngIf="data.archieve === false" title="archived" src="../../assets/image/icon_archived.png" (click)="archieveConfirmation(data)" />
                                 </template>
                             </p-column>
                         </p-dataTable>
@@ -134,13 +134,13 @@
                             <p-column [style]="{'width':'150px'}" styleClass="col-button" header="Action">
                                 <template let-data="rowData" pTemplate="body">
                                     <a type="button" style="text-decoration: underline;cursor:pointer" (click)="view(data)">View</a>
+                                    <img *ngIf="data.archieve === false" title="archived" src="../../assets/image/icon_archived.png" (click)="archieveConfirmation(data)" />
                                     <img *ngIf="data.starred_by == null" title="starred" src="../../assets/image/star_filled.png" width="24px" height="28px" (click)="starredConfirmation(data)" />
                                     <img *ngIf="data.starred_by != null" title="unstarred" src="../../assets/image/icon_star_active@3x.png" width="24px" height="28px" (click)="unstarred(data)" />
-                                    <img *ngIf="data.archieve === false" title="archived" src="../../assets/image/icon_archived.png" (click)="archieveConfirmation(data)" />
                                 </template>
                             </p-column>
                         </p-dataTable>
-                    </tab>  
+                    </tab>
                     <!-- RESOLVED -->
                     <tab heading="Resolved">
                         <p-dataTable [value]="dataResolved" [rows]="10" [responsive]="true" [paginator]="true" #dt>
@@ -160,15 +160,15 @@
                             <p-column [style]="{'width':'150px'}" styleClass="col-button" header="Action">
                                 <template let-data="rowData" pTemplate="body">
                                     <a type="button" style="text-decoration: underline;cursor:pointer" (click)="view(data)">View</a>
+                                    <img *ngIf="data.archieve === false" title="archived" src="../../assets/image/icon_archived.png" (click)="archieveConfirmation(data)" />
                                     <img *ngIf="data.starred_by == null" title="starred" src="../../assets/image/star_filled.png" width="24px" height="28px" (click)="starredConfirmation(data)" />
                                     <img *ngIf="data.starred_by != null" title="unstarred" src="../../assets/image/icon_star_active@3x.png" width="24px" height="28px" (click)="unstarred(data)" />
-                                    <img *ngIf="data.archieve === false" title="archived" src="../../assets/image/icon_archived.png" (click)="archieveConfirmation(data)" />
                                 </template>
                             </p-column>
                         </p-dataTable>
-                    </tab>  
+                    </tab>
                 </tabset>
-            </div>  
+            </div>
             <div class="row">
                 <modal #firstModal>
                     <modal-header>
