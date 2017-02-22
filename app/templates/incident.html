@@ -5,6 +5,7 @@
                 {{incident.reference_no}} {{incident.title}}
             </div>
             <p class="id-location">Home > Incident Reports > {{incident.reference_no}} {{incident.title}}</p>
+            <p><a style="cursor:pointer" (click)="goBack()">Back to last page</a></p>
             <div class="row">
                 <div class="col-lg-7">
                     <p-galleria [images]="images" panelWidth="555" panelHeight="372"></p-galleria>
