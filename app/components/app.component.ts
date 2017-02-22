@@ -24,7 +24,7 @@ import {
    	<router-outlet></router-outlet>
     <footers *ngIf="authToken"></footers>
     <div class="loading-overlay" *ngIf="loading">
-        <div class="aaa"></div>
+        <div class="cssload-box-loading"></div>
         <button *ngIf="!loading" (click)="stop()"></button>
     </div>
     <simple-notifications [options]="options"></simple-notifications>
