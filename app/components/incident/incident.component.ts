@@ -143,6 +143,10 @@ export class IncidentComponent implements OnInit {
         this.router.navigate([this.name.default_development.name_url + '/incident/add']);
     }
 
+    goBack(){
+        this.router.navigate([this.name.default_development.name_url + '/incident']);
+    }
+
     add_project(reference_no:any, id:any){
         this.appComponent.loading = true
         this.reference_id = id;
