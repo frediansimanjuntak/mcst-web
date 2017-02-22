@@ -97,11 +97,11 @@ export class AnnouncementComponent implements OnInit {
         this.announcementService.delete(announcement._id)
           .then(
              data => {
+                    this.ngOnInit()
                     this._notificationsService.success(
                             'Success',
                             'Delete announcement successful',
                     )
-                    this.ngOnInit();
                 },
                 error => {
                     console.log(error);
