@@ -3,6 +3,7 @@ import { Router, Params, ActivatedRoute } from '@angular/router';
 import { PaymentReminder } from '../../models/index';
 import { PaymentReminderService, AlertService, UserService } from '../../services/index';
 import '../../rxjs-operators';
+import { NotificationsService } from 'angular2-notifications';
 import { Observable } from 'rxjs/Observable';
 import { FileUploader } from 'ng2-file-upload';
 import { AppComponent } from '../index';
@@ -30,6 +31,7 @@ export class PaymentReminderComponent implements OnInit {
         private alertService: AlertService,
         private route: ActivatedRoute,
         private appComponent: AppComponent,
+        private _notificationsService: NotificationsService,
         private userService: UserService) {}
 
     ngOnInit(): void {
@@ -57,23 +59,23 @@ export class PaymentReminderComponent implements OnInit {
     deletePaymentReminder(paymentreminder: PaymentReminder) {
         this.appComponent.loading = true
         this.paymentreminderService.delete(paymentreminder._id)
-          .then(
-            response => {
-              if(response) {
-                console.log(response);
-                // console.log(response.error());
-                alert(`The Newsletter could not be deleted, server Error.`);
-              } else {
-                this.alertService.success('Create user successful', true);
-                alert(`Delete Newsletter successful`);
-                this.ngOnInit()
-              }
-            },
-            error=> {
-              console.log(error);
-                alert(`The Newsletter could not be deleted, server Error.`);
-            }
-        );
+            .then(
+                data => {
+                            this._notificationsService.success(
+                                    'Success',
+                                    'Delete payment reminder successful',
+                            )
+                            this.ngOnInit();
+                        },
+                        error => {
+                            console.log(error);
+                            this._notificationsService.error(
+                                    'Error',
+                                    'Payment reminder could not be delete, server Error',
+                            )
+                            setTimeout(() => this.appComponent.loading = false, 1000);
+                }
+            );
     }
 
 	private loadAllPaymentReminder() {
@@ -114,7 +116,23 @@ export class PaymentReminderComponent implements OnInit {
 
     publish(paymentreminder:PaymentReminder){
         this.appComponent.loading = true
-        this.paymentreminderService.publish(paymentreminder._id);
-        this.ngOnInit()
+        this.paymentreminderService.publish(paymentreminder._id)
+            .then(
+                data => {
+                            this._notificationsService.success(
+                                    'Success',
+                                    'Publish payment reminder successful',
+                            )
+                            this.ngOnInit();
+                        },
+                        error => {
+                            console.log(error);
+                            this._notificationsService.error(
+                                    'Error',
+                                    'Payment reminder could not be publish, server Error',
+                            )
+                            setTimeout(() => this.appComponent.loading = false, 1000);
+                }
+            );
     }
 }

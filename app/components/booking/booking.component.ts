@@ -111,23 +111,23 @@ export class BookingComponent implements OnInit {
     deleteBooking(booking: Booking) {
         this.appComponent.loading = true
         this.bookingService.delete(booking._id)
-        .then(
-                data => {
-                    this._notificationsService.success(
-                            'Success',
-                            'Delete booking successful',
-                    )
-                    this.ngOnInit();
-                },
-                error => {
-                    console.log(error);
-                    this._notificationsService.error(
-                            'Error',
-                            'The Booking could not be deleted, server Error',
-                    )
-                    setTimeout(() => this.appComponent.loading = false, 1000);
-                }
-        );
+            .then(
+                    data => {
+                        this._notificationsService.success(
+                                'Success',
+                                'Delete booking successful',
+                        )
+                        this.ngOnInit();
+                    },
+                    error => {
+                        console.log(error);
+                        this._notificationsService.error(
+                                'Error',
+                                'The Booking could not be deleted, server Error',
+                        )
+                        setTimeout(() => this.appComponent.loading = false, 1000);
+                    }
+            );
     }
 
     private loadAllBookings() {

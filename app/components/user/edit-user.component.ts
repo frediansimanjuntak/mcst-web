@@ -243,11 +243,17 @@ export class EditUserComponent implements OnInit {
         this.userService.update(this.user)
         .then(
             response => {
-                this.alertService.success('Update User successful', true);
+                 this._notificationsService.success(
+                                'Success',
+                                'Update User successful',
+                            )
                 this.router.navigate([this.name.default_development.name_url + '/user']);
             },
             error=> {
-                this.alertService.error(error);
+                this._notificationsService.error(
+                                'Error',
+                                'Update failed, server Error.',
+                        )
             }
         );
     }

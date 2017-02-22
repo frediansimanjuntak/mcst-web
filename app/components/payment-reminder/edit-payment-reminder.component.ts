@@ -3,6 +3,7 @@ import { Router, Params, ActivatedRoute } from '@angular/router';
 import { FormBuilder, FormControl, FormGroup, FormArray, Validators, ReactiveFormsModule  } from '@angular/forms';
 import { PaymentReminder, User, Development } from '../../models/index';
 import { PaymentReminderService, DevelopmentService, UserService, AlertService } from '../../services/index';
+import { NotificationsService } from 'angular2-notifications';
 import '../../rxjs-operators';
 import { AppComponent } from '../index';
 
@@ -30,6 +31,7 @@ export class EditPaymentReminderComponent implements OnInit{
     	private alertService: AlertService,
         private appComponent: AppComponent,
         private route: ActivatedRoute,
+        private _notificationsService: NotificationsService,
         private formbuilder: FormBuilder ) {}
 
     ngOnInit():void{ 
@@ -104,12 +106,19 @@ export class EditPaymentReminderComponent implements OnInit{
         this.paymentreminderService.create(model)
         .then(
             data => {
-                this.alertService.success('Create payment successful', true);
+                this._notificationsService.success(
+                                'Success',
+                                'Create payment successful',
+                        )
                 this.router.navigate([this.name.default_development.name_url + '/payment_system']);
             },
             error => {
                 console.log(error);
-                alert(`The payment could not be save, server Error.`);
+                this._notificationsService.error(
+                                'Error',
+                                'The payment could not be save, server Error',
+                )
+                        setTimeout(() => this.appComponent.loading = false, 1000);
             }
         );
     }
@@ -119,11 +128,18 @@ export class EditPaymentReminderComponent implements OnInit{
         this.paymentreminderService.update(paymentreminder)
         .then(
             response => {
-                this.alertService.success('Update payment reminder successful', true);
+                this._notificationsService.success(
+                                'Success',
+                                'Update payment reminder successful',
+                        )
                 this.router.navigate([this.name.default_development.name_url + '/payment_system']);
             },
             error => {
-                this.alertService.error(error);
+                this._notificationsService.error(
+                                'Error',
+                                'The payment could not be update, server Error',
+                        )
+                setTimeout(() => this.appComponent.loading = false, 1000);
             }
         );
     }

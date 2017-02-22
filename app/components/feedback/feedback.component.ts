@@ -4,6 +4,7 @@ import { Feedback } from '../../models/index';
 import { FeedbackService, AlertService, UserService } from '../../services/index';
 import '../../rxjs-operators';
 import { Observable } from 'rxjs/Observable';
+import { NotificationsService } from 'angular2-notifications';
 import { FileUploader } from 'ng2-file-upload';
 import { AppComponent } from '../index';
 
@@ -31,6 +32,7 @@ export class FeedbackComponent implements OnInit {
         private alertService: AlertService,
         private route: ActivatedRoute,
         private appComponent: AppComponent,
+        private _notificationsService: NotificationsService,
         private userService: UserService) {}
 
     ngOnInit(): void {
@@ -40,24 +42,25 @@ export class FeedbackComponent implements OnInit {
     }
 
     deleteFeedback(feedback: Feedback) {
+        this.appComponent.loading = true;
         this.feedbackService.delete(feedback._id)
-          .then(
-            response => {
-              if(response) {
-                console.log(response);
-                // console.log(response.error());
-                alert(`The feedback could not be deleted, server Error.`);
-              } else {
-                this.alertService.success('Create user successful', true);
-                alert(`Delete feedback successful`);
-                this.ngOnInit()
-              }
-            },
-            error=> {
-              console.log(error);
-                alert(`The feedback could not be deleted, server Error.`);
-            }
-        );
+            .then(
+                data => {
+                    this._notificationsService.success(
+                            'Success',
+                            'Delete feedback successful',
+                    )
+                    this.ngOnInit();
+                },
+                error => {
+                    console.log(error);
+                    this._notificationsService.error(
+                            'Error',
+                            'The feedback could not be deleted, server Error',
+                    )
+                    setTimeout(() => this.appComponent.loading = false, 1000);
+                }
+            );
     }
 
 	private loadAllFeedback() {
@@ -79,11 +82,18 @@ export class FeedbackComponent implements OnInit {
         this.feedbackService.reply(this.feedback)
         .then(
             response => {
-                this.alertService.success('Update Feedback successful', true);
-                this.router.navigate([this.name.default_development.name_url + '/user']);
+                this._notificationsService.success(
+                            'Success',
+                            'Reply feedback successful',
+                    )
+                this.router.navigate([this.name.default_development.name_url + '/feddback']);
             },
             error=> {
-                this.alertService.error(error);
+                this._notificationsService.error(
+                            'Error',
+                            'Reply feedback failed, server Error',
+                )
+                setTimeout(() => this.appComponent.loading = false, 1000);
             }
         );
     }
@@ -105,19 +115,67 @@ export class FeedbackComponent implements OnInit {
 
     archive(feedback:Feedback){
         this.appComponent.loading = true
-        this.feedbackService.archieve(feedback._id);
-        this.ngOnInit()
+        this.feedbackService.archieve(feedback._id)
+            .then(
+                data => {
+                    this._notificationsService.success(
+                            'Success',
+                            'Archieve feedback successful',
+                    )
+                    this.ngOnInit();
+                },
+                error => {
+                    console.log(error);
+                    this._notificationsService.error(
+                            'Error',
+                            'The feedback could not be archieve, server Error',
+                    )
+                    setTimeout(() => this.appComponent.loading = false, 1000);
+                }
+        );
     }
 
     publish(feedback:Feedback){
         this.appComponent.loading = true
-        this.feedbackService.publish(feedback._id);
-        this.ngOnInit()
+        this.feedbackService.publish(feedback._id)
+            .then(
+                data => {
+                    this._notificationsService.success(
+                            'Success',
+                            'Publish feedback successful',
+                    )
+                    this.ngOnInit();
+                },
+                error => {
+                    console.log(error);
+                    this._notificationsService.error(
+                            'Error',
+                            'The feedback could not be publish, server Error',
+                    )
+                    setTimeout(() => this.appComponent.loading = false, 1000);
+                }
+            );
     }
 
     unarchive(feedback:Feedback){
         this.appComponent.loading = true
-        this.feedbackService.unarchieve(feedback._id);
-        this.ngOnInit()
+        this.feedbackService.unarchieve(feedback._id)
+            .then(
+                data => {
+                    this._notificationsService.success(
+                            'Success',
+                            'Unarchieve feedback successful',
+                    )
+                    this.ngOnInit();
+                },
+                error => {
+                    console.log(error);
+                    this._notificationsService.error(
+                            'Error',
+                            'The feedback could not be unarchieve, server Error',
+                    )
+                    setTimeout(() => this.appComponent.loading = false, 1000);
+                }
+            );
     }
 }

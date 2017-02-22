@@ -4,6 +4,7 @@ import { User } from '../../models/index';
 import { UserService, AlertService } from '../../services/index';
 import '../../rxjs-operators';
 import { Observable} from 'rxjs/Observable';
+import { NotificationsService } from 'angular2-notifications';
 import { AppComponent } from '../index';
 
 @Component({
@@ -22,6 +23,7 @@ export class UserComponent implements OnInit {
     constructor(private router: Router,
         private userService: UserService,
         private alertService: AlertService,
+        private _notificationsService: NotificationsService,
         private appComponent: AppComponent,) {}
 
     ngOnInit() {
@@ -38,11 +40,18 @@ export class UserComponent implements OnInit {
         }
         this.userService.delete(user._id, this.model)
         .then(response => {
-                  this.alertService.success('Delete user successful', true);
+                    this._notificationsService.success(
+                                'Success',
+                                'Delete user successful',
+                        )
 	                this.loadAllUsers()
               },
               error => {
-                  alert(`The user could not be deleted, server Error.`);
+                      this._notificationsService.error(
+                                'Error',
+                                'The user could not be delete, server Error',
+                        )
+                    setTimeout(() => this.appComponent.loading = false, 1000);
               }
         );
     }

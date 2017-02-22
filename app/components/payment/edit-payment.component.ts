@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import { Payment, User, Development } from '../../models/index';
 import { PaymentService, DevelopmentService, UserService, AlertService } from '../../services/index';
 import { FormBuilder, FormGroup } from '@angular/forms';
+import { NotificationsService } from 'angular2-notifications';
 import '../../rxjs-operators';
 import { AppComponent } from '../index';
 
@@ -28,6 +29,7 @@ export class EditPaymentComponent implements OnInit{
     	private userService: UserService,
     	private alertService: AlertService,
         private appComponent: AppComponent,
+        private _notificationsService: NotificationsService,
         private formbuilder: FormBuilder ) {
 
         // this.user = JSON.parse(localStorage.getItem('user'));
@@ -43,12 +45,19 @@ export class EditPaymentComponent implements OnInit{
         this.paymentService.create(this.model)
         .then(
             data => {
-                this.alertService.success('Create payment successful', true);
+                this._notificationsService.success(
+                                'Success',
+                                'Create payment successful',
+                )
                 this.router.navigate([this.name.default_development.name_url + '/payment']);
             },
             error => {
                 console.log(error);
-                alert(`The payment could not be save, server Error.`);
+                this._notificationsService.error(
+                                'Error',
+                                'The payment could not be save, server Error',
+                        )
+                this.appComponent.loading = false;
             }
         );
     }
