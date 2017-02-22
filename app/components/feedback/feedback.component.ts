@@ -152,7 +152,6 @@ export class FeedbackComponent implements OnInit {
         this.confirmationService.confirm({
             message: 'Are you sure that you want to archive this feedback?',
             header: 'Archieve Confirmation',
-            icon: 'fa fa-trash',
             accept: () => {
                 this.archive(feedback)
             }
@@ -185,7 +184,6 @@ export class FeedbackComponent implements OnInit {
         this.confirmationService.confirm({
             message: 'Are you sure that you want to publish this feedback?',
             header: 'Publish Confirmation',
-            icon: 'fa fa-trash',
             accept: () => {
                 this.publish(feedback)
             }
