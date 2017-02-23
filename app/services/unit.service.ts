@@ -78,8 +78,8 @@ export class UnitService {
           .catch(this.handleError);
     }
 
-    deleteTenant(idTenant:string, idUnit: string, name: string): Promise<void> {
-        return this.http.delete( url + 'properties/' + name + '/' + idUnit + '/tenant/' + idTenant, this.jwt())
+    deleteTenant(idTenant:string, idUnit: string, name: string, body:any): Promise<void> {
+        return this.http.put( url + 'properties/' + name + '/' + idUnit + '/tenant/' + idTenant, JSON.stringify(body),this.jwt())
           .toPromise()
           .then(() => null)
           .catch(this.handleError);
