@@ -247,7 +247,7 @@ export class ViewUnitComponent implements OnInit {
     }
 
     goToUnit(){
-        this.router.navigate([this.name.default_development.name_url + '/unit']);  
+        window.history.back();
     }
 
     addResident(){
