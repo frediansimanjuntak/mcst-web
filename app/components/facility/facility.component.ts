@@ -38,8 +38,8 @@ export class FacilityComponent implements OnInit {
         if( this.id == null) {
             this.loadAllFacilities();
         }else{
-            this.facilityService.getFacility(this.id)
-            .then(facility => {
+            this.facilityService.getById(this.id)
+            .subscribe(facility => {
                 this.facility = facility;
                 setTimeout(() => this.appComponent.loading = false, 1000);
             });

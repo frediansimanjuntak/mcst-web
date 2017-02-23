@@ -46,7 +46,7 @@ export class EditUserComponent implements OnInit {
         this.userService.getByToken()
         .subscribe(name => {
             this.name = name;
-            this.unitService.getAll(name.default_development.name_url)
+            this.unitService.getAll(this.name.default_development.name_url)
                             .subscribe(units => {
                                 this.units = units.properties
                                 setTimeout(() => this.appComponent.loading = false, 1000);

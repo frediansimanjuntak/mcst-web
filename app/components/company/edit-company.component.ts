@@ -120,6 +120,7 @@ export class EditCompanyComponent implements OnInit {
             //             this.contractor = opts.slice(0);
             //         }, 1000);
             //     });
+            setTimeout(() => this.appComponent.loading = false, 1000);
         };
 
     }
