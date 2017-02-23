@@ -164,7 +164,7 @@ export class ViewUnitComponent implements OnInit {
 
     deleteResident(resident: any){
         this.appComponent.loading = true
-        if(resident.resident.type == 'owner'){
+        if(resident.type == 'owner'){
             this.unitservice.deleteLandlord(this.unit._id, this.name.default_development.name_url, resident.resident)
             .then(
                 response => {
@@ -192,7 +192,7 @@ export class ViewUnitComponent implements OnInit {
                     setTimeout(() => this.appComponent.loading = false, 1000);
                 }
             ); 
-        }else if (resident.resident.type == 'tenant'){
+        }else if (resident.type == 'tenant'){
            this.unitservice.deleteTenant(resident._id, this.unit._id, this.name.default_development.name_url, resident.resident)
             .then(
                 response => {
@@ -226,8 +226,8 @@ export class ViewUnitComponent implements OnInit {
 
     deleteResidentConfirmation(resident) {
         console.log(resident)
-        if(resident.resident.type == 'owner'){
-            if(this.hasTenants){
+        if(resident.type == 'owner'){
+            if(this.unit.tenant.length < 0){
                 this.confirmationService.confirm({
                     message: 'Are you sure that you want to delete this landlord?',
                     header: 'Delete Confirmation',
@@ -236,7 +236,7 @@ export class ViewUnitComponent implements OnInit {
                         this.deleteResident(resident)
                     }
                 });    
-            }else{
+            }else if(this.unit.tenant.length > 0){
                 this.confirmationService.confirm({
                     message: 'This unit has tenant, Are you sure that you want to delete this landlord?',
                     header: 'Delete Confirmation',
@@ -247,7 +247,7 @@ export class ViewUnitComponent implements OnInit {
                 });
             }
                 
-        }else if(resident.resident.type == 'tenant'){
+        }else if(resident.type == 'tenant'){
             this.confirmationService.confirm({
                 message: 'Are you sure that you want to delete this resident?',
                 header: 'Delete Confirmation',
@@ -302,7 +302,7 @@ export class ViewUnitComponent implements OnInit {
     }
 
     goToUnit(){
-        this.router.navigate([this.name.default_development.name_url + '/unit']);  
+        window.history.back();
     }
 
     addResident(){
