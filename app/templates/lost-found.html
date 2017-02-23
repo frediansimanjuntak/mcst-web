@@ -32,11 +32,15 @@
 							<div class="col-md-4">Preferred method of contact :</div>
 							<div class="col-md-8">{{ lostFound.preferred_method_of_contact }}</div>
 						</div>
-						<div class="row">
+						<div class="row" *ngIf="lostFound.archieve">
+							<div class="col-md-4">Status :</div>
+							<div class="col-md-8">Archived</div>
+						</div>
+						<div class="row" *ngIf="!lostFound.archieve">
 							<div class="col-md-4">Actions :</div>
 						</div>
 						<br>
-						<div class="row">
+						<div class="row" *ngIf="!lostFound.archieve">
 							<div class="col-md-12">
 								<span *ngIf="!lostFound.archieved"><a class="btn btn-gray btn-primary" (click)="archieveConfirmation(lostFound)" style="cursor:pointer"><img src="assets/image/icon_archived.png" width="14px" height="12px">&nbsp;Archive Report</a></span>
 							</div>
