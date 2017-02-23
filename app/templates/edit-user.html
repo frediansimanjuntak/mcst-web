@@ -109,9 +109,7 @@
                             <span>Owned Property {{i + 1}}</span>
                             <span class="glyphicon glyphicon-remove pull-right" *ngIf="myForm.controls.owned_property.controls.length > 1" (click)="removeOwned(i)"></span>
                         </div>
-
                         <div class="panel-body" [formGroupName]="i">
-                           
                             <div *ngIf="units">
                                 <div class="form-group col-xs-10">
                                     <label>Unit No :</label>
