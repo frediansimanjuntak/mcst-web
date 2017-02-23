@@ -106,6 +106,7 @@ export class LoginComponent implements OnInit {
 
     ngOnInit() {
         // reset login status
+        localStorage.removeItem('authToken');
         setTimeout(() => this.appComponent.loading = false, 1000);  
     }
 
