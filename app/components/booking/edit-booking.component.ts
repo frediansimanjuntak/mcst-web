@@ -114,6 +114,7 @@ export class EditBookingComponent implements OnInit  {
     }
 
 	ngOnInit() {
+        this.day = this.days[this.dt.getDay()];
         this.paymentService.getAll().subscribe(payments => {
             this.payments = payments ;
             if(payments.length > 0) { 
@@ -147,9 +148,10 @@ export class EditBookingComponent implements OnInit  {
 		.subscribe(facilities => {
 			this.facilities = facilities;
             for (let a = 0; a < facilities.length; ++a) {
-                for (let b = 0; b < facilities[a].schedule.length; ++b) {
-                    this.selectedFacility = this.facilities.filter(data => data.schedule[b].day == this.day); 
-                }   
+                if(this.facilities[a].schedule.filter(data => data.day == this.day)) {
+                    this.selectedFacility.push(this.facilities[a])
+                }
+                setTimeout(() => this.appComponent.loading = false, 1000);
             }
 		});
         this.myForm = this.formbuilder.group({
@@ -159,15 +161,6 @@ export class EditBookingComponent implements OnInit  {
         })
         for (var a = 0; a < 24; ++a) {
             this.period.push(a)
-        }
-        if( this.id == null) {
-            this.loadAllBookings();
-        }else{
-        	this.bookingService.getById(this.id)
-            .subscribe(booking => {
-                this.booking = booking;
-                setTimeout(() => this.appComponent.loading = false, 1000);
-            });
         }
     }
 
@@ -248,10 +241,6 @@ export class EditBookingComponent implements OnInit  {
         this.facilityService.getById(this.model.facility)
         .subscribe(facility => {
             this.facility = facility;
-            this.facility_name = facility.name;
-            this.model.deposit_fee = facility.deposit_fee;
-            this.model.booking_fee = facility.booking_fee;
-            this.model.admin_fee = facility.admin_fee;
             this.selectedDay = this.facility.schedule.filter(data => data.day == this.day); 
             this.start = this.selectedDay[0].start_time.slice(0,2);
             let start = +this.start
@@ -286,6 +275,10 @@ export class EditBookingComponent implements OnInit  {
         this.facilityService.getById(this.model.facility)
         .subscribe(facility => {
             this.facility = facility;
+            this.facility_name = facility.name;
+            this.model.deposit_fee = facility.deposit_fee;
+            this.model.booking_fee = facility.booking_fee;
+            this.model.admin_fee = facility.admin_fee;
             this.timeStart = [];
             this.timeEnd = [];
             this.filtered = this.facility.schedule.filter(facility => 
