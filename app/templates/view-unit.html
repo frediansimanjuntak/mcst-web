@@ -57,16 +57,24 @@
                                 <span>{{residents.created_at | date:'d/M/y'}}</span>
                             </template>
                         </p-column> 
-                        <p-column header="Social page" sortable="true" field="social_page">
-                        </p-column>
+                        <p-column header="Social page" sortable="true">
+                            <template let-residents="rowData" pTemplate="body">
+                                <span *ngIf="residents.social_page">{{residents.social_page}}</span>
+                                <span *ngIf="!residents.social_page">-</span>
+                            </template>
+                        </p-column> 
                         <p-column header="Contact No." >
                             <template let-residents="rowData" pTemplate="body">
                                 <span *ngIf="residents.resident.phone">{{residents.resident.phone}}<br></span>
                                 <span *ngIf="residents.resident.email">{{residents.resident.email}}<br></span>
                             </template>
                         </p-column>
-                        <p-column header="Remarks" field="remarks">
-                        </p-column>
+                        <p-column header="Remarks" sortable="true">
+                            <template let-residents="rowData" pTemplate="body">
+                                <span *ngIf="residents.remarks">{{residents.remarks}}</span>
+                                <span *ngIf="!residents.remarks">-</span>
+                            </template>
+                        </p-column> 
                         <p-column [style]="{'width':'160px'}" styleClass="col-button" >
                             <template let-residents="rowData" pTemplate="body">
                                     <a type="button" class="btn-underline"  (click)="openResidentDetail(residents) || residentDetail.open()">View details</a>
@@ -93,8 +101,12 @@
                         </p-column>
                         <p-column header="Owner" sortable="true" field="user">
                         </p-column>
-                        <p-column header="Transponder" field="transponder">
-                        </p-column>
+                         <p-column header="Transponder">
+                            <template let-vehicles="rowData" pTemplate="body">
+                                <span *ngIf="vehicles.transponder">{{vehicles.transponder}}</span>
+                                <span *ngIf="!vehicles.transponder">-</span>
+                            </template>
+                        </p-column> 
                         <p-column header="Document" field="document">
                         </p-column>
                          <p-column header="Registered On" sortable="true">
@@ -102,9 +114,13 @@
                                 <span>{{vehicles.registered_on | date:'d/M/y'}}</span>
                             </template>
                         </p-column> 
-                        <p-column header="Remarks" field="remarks">
-                        </p-column>
-                        <p-column styleClass="col-button" >
+                        <p-column header="Remarks">
+                            <template let-vehicles="rowData" pTemplate="body">
+                                <span *ngIf="vehicles.remarks">{{vehicles.remarks}}</span>
+                                <span *ngIf="!vehicles.remarks">-</span>
+                            </template>
+                        </p-column> 
+                        <p-column  [style]="{'width':'160px'}" styleClass="col-button" >
                             <template let-vehicles="rowData" pTemplate="body">
                                     <a type="button" class="btn-underline" (click)="openVehicleDetail(vehicles) || vehicleDetail.open()">View details</a>
                                     <button class="btn btn-trash" type="button" (click)="deleteVehicleConfirmation(vehicles)"><i class="fa fa-trash-o" aria-hidden="true"></i></button>
@@ -186,7 +202,6 @@
                                 <label class="control-label col-sm-4" for="unit_no">Owner :</label>
                                 <div class="col-sm-8">
                                     <select class="form-control" formControlName="owner" name="owner">
-                                        <option *ngIf="hasLandlord" [ngValue]="unit.landlord._id">{{unit.landlord.username}}</option>
                                         <option *ngFor="let u of residents" [ngValue]="u.resident._id">{{u.resident.username}}</option>
                                     </select>
                                    <small style="color: red" [hidden]="myForm2.controls.owner.valid || (myForm2.controls.owner.pristine && !vehicleSubmitted)">Owner is required</small>
@@ -264,11 +279,17 @@
                     </div>
                     <div class="row">
                         <div class="col-md-4">Social Page </div>
-                        <div class="col-md-8"><p>: {{ resident.resident.social_page }}</p></div>
+                        <div class="col-md-8">
+                            <p *ngIf="resident.resident.social_page">: {{ resident.resident.social_page }}</p>
+                            <p *ngIf="!resident.resident.social_page">: -</p>
+                        </div>
                     </div>
                     <div class="row">
                         <div class="col-md-4">Remarks </div>
-                        <div class="col-md-8"><p>: {{ resident.remarks }}</p></div>
+                        <div class="col-md-8">
+                            <p *ngIf="resident.resident.social_page">: {{ resident.remarks }}</p>
+                            <p *ngIf="!resident.resident.social_page">: -</p>
+                        </div>
                     </div>
                 </modal-content>
                 <modal-footer>
@@ -293,7 +314,10 @@
                     </div>
                     <div class="row">
                         <div class="col-md-4">Transponder</div>
-                        <div class="col-md-8"><p>: {{ vehicle.transponder }}</p></div>
+                        <div class="col-md-8">
+                            <p *ngIf="vehicle.transponder">: {{ vehicle.transponder }}</p>
+                            <p *ngIf="!vehicle.transponder">: -</p>
+                        </div>
                     </div>
                    <div class="row">
                         <div class="col-md-4">Document</div>
