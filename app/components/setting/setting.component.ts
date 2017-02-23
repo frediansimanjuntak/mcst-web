@@ -13,7 +13,7 @@ import { AppComponent } from '../index';
 })
 
 export class SettingComponent implements OnInit {
-    user: User;
+    user: any;
     users: User[] = [];
     name: any;
     model: any = {};
@@ -21,19 +21,21 @@ export class SettingComponent implements OnInit {
     constructor(private router: Router,private userService: UserService,private appComponent: AppComponent,private alertService: AlertService) {}
 
     ngOnInit() {
-        this.userService.getByToken().subscribe(name => {this.name = name;})
-        this.loadSetting();
-    }
-
-    private loadSetting() {
-        this.userService.getById(this.name._id)
+        this.userService.getByToken()
         .subscribe(user => {
             this.user = user;
+            console.log(this.user)
+            // this.userService.getById(this.name._id)
+            // .subscribe(user => {
+            //     this.user = user;
+            //     console.log(this.user)
+            //     setTimeout(() => this.appComponent.loading = false, 1000);
+            // });
             setTimeout(() => this.appComponent.loading = false, 1000);
-        });
+        })
     }
 
     edit(user: User){
-        this.router.navigate([this.name.default_development.name_url + '/setting/edit', user._id]);
+        this.router.navigate([this.user.default_development.name_url + '/setting/edit', user._id]);
     }
 }

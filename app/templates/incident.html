@@ -38,14 +38,23 @@
                         <div class="col-md-5 col-padding"><strong>Message :</strong></div>
                         <div class="col-md-7 col-padding">{{ incident.remark }}</div>
                     </div>
-                    <div class="row">
-                        <div class="col-md-5 col-padding"><strong>Action :</strong></div>
+                    <div *ngIf="incident.archieve === false">
+                        <div class="row">
+                            <div class="col-md-5 col-padding"><strong>Action :</strong></div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-5 col-padding">
+                                <a  class="btn btn-primary btn-gray" (click)="archive(incident._id)" style="cursor:pointer"><img src="assets/image/icon_archived.png" width="14px" height="12px"> Archive Report</a>
+                            </div>
+                        </div> 
                     </div>
-                    <div class="row">
-                        <div class="col-md-5 col-padding">
-                            <a class="btn btn-primary btn-gray" (click)="archive(incident._id)" style="cursor:pointer"><img src="assets/image/icon_archived.png" width="14px" height="12px"> Archive Report</a>
+                    <div *ngIf="incident.archieve === true">
+                        <div class="row">
+                            <div class="col-md-5 col-padding"><strong>Archieved</strong></div>
+                            <!-- <div class="col-md-7 col-padding"></div> -->
                         </div>
                     </div>
+                    
                 </div>
             </div>
         </div>

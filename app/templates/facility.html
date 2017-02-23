@@ -2,7 +2,7 @@
     <div class="main">
         <div *ngIf="facility">
             <div class="title">{{facility.name}}</div>
-            <p>Home > Facility > {{facility.name}}</p>
+            <p class="id-location">Home > Facility > {{facility.name}}</p>
             <div class="row">
                 <div class="col-lg-12">
                     <div *ngFor="let schedule of facility.schedule" class="row">

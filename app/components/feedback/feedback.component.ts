@@ -112,16 +112,20 @@ export class FeedbackComponent implements OnInit {
     }
 
     viewArchived(){
-        this.feedbackService.getFeedbacks().then(feedbacks => {
+        this.appComponent.loading = true
+        this.feedbackService.getAll().subscribe(feedbacks => {
             this.feedbacks = feedbacks ;
             this.archived  = this.feedbacks.filter(feedbacks => feedbacks.archive === true );
+            setTimeout(() => this.appComponent.loading = false, 1000);
         });
     }
 
     viewUnarchived(){
-        this.feedbackService.getFeedbacks().then(feedbacks => {
+        this.appComponent.loading = true
+        this.feedbackService.getAll().subscribe(feedbacks => {
             this.feedbacks     = feedbacks.filter(feedbacks => feedbacks.archive === false );
             this.published     = feedbacks.filter(feedbacks => feedbacks.status === 'published' && feedbacks.archive === false );
+            setTimeout(() => this.appComponent.loading = false, 1000);
         });       
         this.archived = '';
     }
