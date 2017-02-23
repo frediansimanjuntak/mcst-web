@@ -688,14 +688,24 @@ p.pull-down {
     margin: 0 0 0 10px;
     box-shadow: 0 4px 0 0 #dedede !important;
 }
+.btn-add:hover, .btn-add:active, .btn-add:focus, .btn-add:active:hover, .btn-add:active:focus {
+  background-color: #f7f7f7;
+  outline-style: none;
+}
 .btn-print {
-  background-color: #f0f0f0;
-  border: 1px solid #dedede;
-  color: #4a4a4a;
-  height: 44px;
-  width: auto;
-  padding: 10px 35px;
-  margin: 0 10px 0 0;
+    background-color: #f0f0f0;
+    border: 1px solid #dedede;
+    color: #4a4a4a;
+    height: 44px;
+    width: auto;
+    padding: 12px 35px;
+    margin: 0 10px 0 0;
+    border-bottom: 0;
+    box-shadow: 0 4px 0 0 #dedede;
+}
+.btn-print:hover, .btn-print:active, .btn-print:focus, .btn-print:active:hover, .btn-print:active:focus {
+  background-color: #f7f7f7;
+  outline-style: none;
 }
 .btn-trash {
   background-color: #d8d8d8;
