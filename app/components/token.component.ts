@@ -34,15 +34,16 @@ export class TokenComponent implements OnInit {
     constructor(private userService: UserService, private appComponent: AppComponent, private router: Router) { }
  
     ngOnInit() {
-        if(localStorage.getItem('authToken')) { 
-            this.userService.getByToken()
-            .subscribe(name => {
-              this.name = name;
-              this.appComponent.getToken()
-              this.router.navigate([this.name.default_development.name_url, 'dashboard']);
-            })
-        } else {
-            this.router.navigate(['/login']);
-        }
+        this.userService.getByToken()
+        .subscribe(
+        	name => {
+          		this.name = name;
+          		this.appComponent.getToken()
+          		this.router.navigate([this.name.default_development.name_url, 'dashboard']);
+        	},
+        	error => {
+        		this.router.navigate(['login']);
+        	}
+        )
     }
 }

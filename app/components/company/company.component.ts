@@ -110,6 +110,7 @@ export class CompanyComponent implements OnInit {
                 setTimeout(()=> {
                     this.companies          = data;
                 }, 1000);
+                setTimeout(() => this.appComponent.loading = false, 1000);
             });
     }
 
