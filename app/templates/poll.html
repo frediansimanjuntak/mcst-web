@@ -100,7 +100,7 @@
 						<p-dataTable [value]="pollsDraft" [rows]="10" [paginator]="true">
 							<p-column field="title" header="Poll Title" sortable="true" [filter]="true" filterPlaceholder="Search Title"></p-column>
 							<p-column field="description" header="Poll" sortable="true" [filter]="true" filterPlaceholder="Search Poll"></p-column>
-							<p-column header="Poll Type" sortable="true" [filter]="true" filterPlaceholder="Search Type">
+							<p-column field="poll_type" header="Poll Type" sortable="true" [filter]="true" filterPlaceholder="Search Type">
 								<template let-pollsDraft="rowData" pTemplate="body">
 									<span *ngIf="pollsDraft.poll_type == 'yes_or_no'">Yes / No</span>
 									<span *ngIf="pollsDraft.poll_type == 'multiple'">Multiple</span>

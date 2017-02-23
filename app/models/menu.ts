@@ -33,7 +33,7 @@ export const MENUS: any[] = [
   	sub : [
   		{ name : 'Browse Request', link: '/petition'},
   		{ name : 'Add Request', link: '/petition/add', img: '../../assets/image/icon_add.png' },
-  		{ name : 'Search Reference.no', link: '', img: '../../assets/image/icon_search.png'}
+  		// { name : 'Search Reference.no', link: '', img: '../../assets/image/icon_search.png'}
   	]
   },
   { 
@@ -55,7 +55,7 @@ export const MENUS: any[] = [
   	sub : [
   		{ name : 'Browse Database', link :'/unit' },
   		{ name : 'Add Resident', link: '/unit/add' },
-  		{ name : 'Manage Access control', link: '/access_control' }
+  		// { name : 'Manage Access control', link: '/access_control' }
   	]
   },
   {
@@ -86,12 +86,12 @@ export const MENUS: any[] = [
       },
       { name : 'User', link: '/user' },
       { name : 'User Group', link: '/user_group' },
-      { name : 'Development', link: '/development' },
+      // { name : 'Development', link: '/development' },
       { name : 'Facility', link: '/facility' },
-      { name : 'Company', link: '/company' },
-      { name : 'Contractor', link: '/contractor' },
-      { name : 'Payment', link: '/payment' },
-      { name : 'Test', link: '/test' },
+      // { name : 'Company', link: '/company' },
+      // { name : 'Contractor', link: '/contractor' },
+      // { name : 'Payment', link: '/payment' },
+      // { name : 'Test', link: '/test' },
     ]
   },
 ];

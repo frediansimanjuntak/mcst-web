@@ -164,8 +164,36 @@ export class ViewUnitComponent implements OnInit {
 
     deleteResident(resident: any){
         this.appComponent.loading = true
-        console.log(resident)
-        this.unitservice.deleteTenant(resident._id, this.unit._id, this.name.default_development.name_url, resident)
+        if(resident.resident.type == 'owner'){
+            this.unitservice.deleteLandlord(this.unit._id, this.name.default_development.name_url, resident.resident)
+            .then(
+                response => {
+                  if(response) {
+                    console.log(response);
+                    this._notificationsService.error(
+                            'Error',
+                            'Landlord could not to delete, server error',
+                    )
+                    setTimeout(() => this.appComponent.loading = false, 1000);
+                  } else {
+                    this._notificationsService.success(
+                            'Success',
+                            'Delete landlord successful',
+                    )
+                    this.ngOnInit()
+                  }
+                },
+                error=> {
+                  console.log(error);
+                    this._notificationsService.error(
+                            'Error',
+                            'Landlord could not to delete, server error',
+                    )
+                    setTimeout(() => this.appComponent.loading = false, 1000);
+                }
+            ); 
+        }else if (resident.resident.type == 'tenant'){
+           this.unitservice.deleteTenant(resident._id, this.unit._id, this.name.default_development.name_url, resident.resident)
             .then(
                 response => {
                   if(response) {
@@ -191,18 +219,45 @@ export class ViewUnitComponent implements OnInit {
                     )
                     setTimeout(() => this.appComponent.loading = false, 1000);
                 }
-            );
+            ); 
+        }
+        
     }
 
     deleteResidentConfirmation(resident) {
-        this.confirmationService.confirm({
-            message: 'Are you sure that you want to delete this resident?',
-            header: 'Delete Confirmation',
-            icon: 'fa fa-trash',
-            accept: () => {
-                this.deleteResident(resident)
+        console.log(resident)
+        if(resident.resident.type == 'owner'){
+            if(this.hasTenants){
+                this.confirmationService.confirm({
+                    message: 'Are you sure that you want to delete this landlord?',
+                    header: 'Delete Confirmation',
+                    icon: 'fa fa-trash',
+                    accept: () => {
+                        this.deleteResident(resident)
+                    }
+                });    
+            }else{
+                this.confirmationService.confirm({
+                    message: 'This unit has tenant, Are you sure that you want to delete this landlord?',
+                    header: 'Delete Confirmation',
+                    icon: 'fa fa-trash',
+                    accept: () => {
+                        this.deleteResident(resident)
+                    }
+                });
             }
-        });
+                
+        }else if(resident.resident.type == 'tenant'){
+            this.confirmationService.confirm({
+                message: 'Are you sure that you want to delete this resident?',
+                header: 'Delete Confirmation',
+                icon: 'fa fa-warning',
+                accept: () => {
+                    this.deleteResident(resident)
+                }
+            });    
+        }
+        
     }
 
     deleteVehicle(vehicle: any){
@@ -247,7 +302,7 @@ export class ViewUnitComponent implements OnInit {
     }
 
     goToUnit(){
-        this.router.navigate([this.name.default_development.name_url + '/unit']);  
+        window.history.back();
     }
 
     addResident(){
@@ -350,6 +405,8 @@ export class ViewUnitComponent implements OnInit {
             );
             this.vehicleSubmitted = false;
         }
+        this.loading = true;
+        this.vehicleSubmitted = false;
     }
 
 }
