@@ -134,6 +134,7 @@ export class EditUserComponent implements OnInit {
                     }),
                     authorized_property: this.formbuilder.array([this.initAuthorized()]),
                     active: [''],
+                    remarks_tenant: [''],
                     });    
             }else if(this.type == 'landlord'){
                      this.myForm = this.formbuilder.group({
@@ -216,7 +217,7 @@ export class EditUserComponent implements OnInit {
                  model.owned_property[i].development = this.name.default_development._id;
             }
         }
-
+        console.log(model);
         if(model.username && model.email && model.password && model.confirmpassword && 
            model.phone && model.role)
            {
