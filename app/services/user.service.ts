@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Http, Headers, RequestOptions, Response } from '@angular/http';
+import { Router } from '@angular/router';
 import { Observable } from 'rxjs/Rx';
 import { User, Users } from '../models/index';
 import { AuthenticationService } from '../services/index';
@@ -8,7 +9,7 @@ import 'rxjs/add/operator/toPromise';
  
 @Injectable()
 export class UserService {
-    constructor(private http: Http, private authenticationService: AuthenticationService) {}
+    constructor(private http: Http, private authenticationService: AuthenticationService,private router: Router) {}
 
     getUsers(): Promise<User[]> {
         return Promise.resolve(Users);
@@ -34,7 +35,7 @@ export class UserService {
     getByToken(){    
         return this.http.get(url + 'me', this.jwt())
             .map((res:Response) => res.json())
-            .catch((error:any) => Observable.throw(error.json().error || 'Server error'));
+            .catch((error:any) => Observable.throw(error.json().error || this.router.navigate(['login'])));
     }
 
     create(body:any): Promise<User> {

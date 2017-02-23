@@ -50,8 +50,8 @@ export class UnitService {
             .catch(this.handleError);
     }
 
-    createTenant(body:any, name:string, id:string): Promise<any> {
-        return this.http.post(url +  'properties/' + name + '/tenant/' + id, JSON.stringify(body), this.jwt())
+    createResident(body:any): Promise<any> {
+        return this.http.post(url +  'users/user_tenant_landlord', JSON.stringify(body), this.jwt())
             .toPromise()
             .then(res => res.json().data)
             .catch(this.handleError);

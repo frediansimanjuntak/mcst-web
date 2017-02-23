@@ -1,7 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthenticationService, UserService } from '../../services/index';
+import { NotificationsService } from 'angular2-notifications';
 import { Router } from '@angular/router';
 import { AppComponent } from '../index';
+import { NotificationsService } from 'angular2-notifications';
 
 @Component({
     // moduleId: module.id,
@@ -100,28 +102,37 @@ export class LoginComponent implements OnInit {
         private router: Router,
         private AuthService: AuthenticationService,
         private appComponent: AppComponent,
+        private _notificationsService: NotificationsService,
         private userService: UserService   ) { }
 
     ngOnInit() {
         // reset login status
-        if (localStorage.getItem('authToken')) {
-            this.userService.getByToken()
-            .subscribe(name => {
-                this.name = name;
-                this.appComponent.getToken()
-                this.router.navigate([this.name.default_development.name_url, 'dashboard']);
-            })
-        }
-        setTimeout(() => this.appComponent.loading = false, 1000);  
+        // if (localStorage.getItem('authToken')) {
+        //     this.userService.getByToken()
+        //     .subscribe(name => {
+        //         this.name = name;
+        //         this.appComponent.getToken()
+        //         this.router.navigate([this.name.default_development.name_url, 'dashboard']);
+        //     })
+            setTimeout(() => this.appComponent.loading = false, 1000);  
+        // }
     }
 
     login() {
-        this.loading = true;
+        this.appComponent.loading = true
         this.AuthService.login(this.model.username, this.model.password)
             .subscribe(
-                data => {
-                    this.userService.getByToken()
-                    .subscribe(name => {
+                response => {
+                    if(response){
+                        console.log(response)
+                        // this._notificationsService.error(
+                        //     '',
+                        //    response,
+                        // )
+                        this.loading = false;
+                    }else{
+                        this.userService.getByToken()
+                            .subscribe(name => {
                         this.name = name;
                         this.appComponent.getToken()
                         this.router.navigate([this.name.default_development.name_url, 'dashboard']);
@@ -129,7 +140,20 @@ export class LoginComponent implements OnInit {
                 },
                 error => {
                     this.error = 'Username or password is incorrect';
-                    this.loading = false;
+                    this._notificationsService.error(
+                                'Login Failed',
+                               this.error,
+                            )
+                    this.appComponent.loading = false
                 });
+                // response => {
+                //     this.error = 'Username or password is incorrect';
+                //     this._notificationsService.error(
+                //             '',
+                //            error,
+                //     )
+                //     this.loading = false;
+
+                // });
     }
 }

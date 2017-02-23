@@ -49,7 +49,7 @@
 					<div class="row">
 						<p class="field-box no-margin" style="padding: 15px 10px;">Related Functions</p>
 					</div>
-					<div class="row border-box">
+					<!-- <div class="row border-box">
 						<div class="col-md-10 no-padding">
 							<div class="left-box">
 								<img src="../../assets/image/icon_accesscontrol.png" style="height:17px; width:17px; margin-right:5px;" class="img-responsive pull-left" alt="" />	
@@ -61,7 +61,7 @@
 								<img src="../../assets/image/icon_arrowright_black.png" style="width:10px" class="img-responsive arrow-box" alt="" />
 							</div>
 						</div>
-					</div>
+					</div> -->
 					<div class="row border-box">
 						<div class="col-md-10 no-padding">
 							<div class="left-box">
@@ -69,7 +69,7 @@
 								<a class="link-box">Guest & Visitors</a>
 							</div>
 						</div>
-						<div class="col-md-2 no-padding">
+						<div class="col-md-2 no-padding" style="cursor: pointer;" (click)="start('/visit')">
 							<div class="right-box">
 								<img src="../../assets/image/icon_arrowright_black.png" style="width:10px" class="img-responsive arrow-box" alt="" />
 							</div>
@@ -82,7 +82,7 @@
 								<a class="link-box">Manage Request</a>
 							</div>
 						</div>
-						<div class="col-md-2 no-padding">
+						<div class="col-md-2 no-padding" style="cursor: pointer;" (click)="start('/petition')">
 							<div class="right-box">
 								<img src="../../assets/image/icon_arrowright_black.png" style="width:10px" class="img-responsive arrow-box" alt="" />
 							</div>
@@ -95,7 +95,7 @@
 								<a class="link-box">Incident Reports</a>
 							</div>
 						</div>
-						<div class="col-md-2 no-padding">
+						<div class="col-md-2 no-padding" style="cursor: pointer;" (click)="start('/incident')">
 							<div class="right-box">
 								<img src="../../assets/image/icon_arrowright_black.png" style="width:10px" class="img-responsive arrow-box" alt="" />
 							</div>
@@ -108,7 +108,7 @@
 								<a class="link-box">Manage Feedbacks</a>
 							</div>
 						</div>
-						<div class="col-md-2 no-padding">
+						<div class="col-md-2 no-padding" style="cursor: pointer;" (click)="start('/feedback')">
 							<div class="right-box">
 								<img src="../../assets/image/icon_arrowright_black.png" style="width:10px" class="img-responsive arrow-box" alt="" />
 							</div>

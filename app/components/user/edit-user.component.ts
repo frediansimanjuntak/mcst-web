@@ -123,7 +123,7 @@ export class EditUserComponent implements OnInit {
                     password : ['', Validators.required],
                     confirmpassword : ['', Validators.required],
                     phone : ['', Validators.required],
-                    role : ['', Validators.required],
+                    role : ['user'],
                     default_property: this.formbuilder.group({
                         property: [''],
                         role : ['']
@@ -133,7 +133,7 @@ export class EditUserComponent implements OnInit {
                         property: [this.id]
                     }),
                     authorized_property: this.formbuilder.array([this.initAuthorized()]),
-                    active: ['', Validators.required],
+                    active: [''],
                     });    
             }else if(this.type == 'landlord'){
                      this.myForm = this.formbuilder.group({
@@ -142,14 +142,14 @@ export class EditUserComponent implements OnInit {
                     password : ['', Validators.required],
                     confirmpassword : ['', Validators.required],
                     phone : ['', Validators.required],
-                    role : ['', Validators.required],
+                    role : ['user'],
                     default_property: this.formbuilder.group({
                         property: [''],
                         role : ['']
                     }),
                     owned_property: this.formbuilder.array([this.initOwned()]),
                     authorized_property: this.formbuilder.array([this.initAuthorized()]),
-                    active: ['', Validators.required],
+                    active: [''],
                     });    
             }
             
@@ -218,7 +218,7 @@ export class EditUserComponent implements OnInit {
         }
 
         if(model.username && model.email && model.password && model.confirmpassword && 
-           model.phone && model.role && model.active)
+           model.phone && model.role)
            {
             this.appComponent.loading = true;
             this.userService.create(model)
@@ -228,7 +228,7 @@ export class EditUserComponent implements OnInit {
                                 'Success',
                                 'Create ' + this.type + ' successful',
                             )
-                    this.router.navigate([this.name.default_development.name_url + '/user']);
+                    this.router.navigate([this.name.default_development.name_url + '/unit/view', this.id]);
                 },
                 error => {
                     this._notificationsService.error(
