@@ -588,7 +588,6 @@ p.pull-down {
     font-weight: bold;
     font-size: 13px;
     font-family: arial;
-    margin-right: 10px;
     padding: 10px;
     border-bottom: 0;
     box-shadow: 0 4px 0 0 #dedede;
@@ -679,22 +678,34 @@ p.pull-down {
   outline-style: none;
 }
 .btn-add {
-  background-color: #f0f0f0;
-  border: 1px solid #dedede;
-  color: #4a4a4a;
-  height: 44px;
-  width: auto;
-  padding: 0 20px;
-  margin: 0 0 0 10px;
+    background-color: #f0f0f0;
+    border: 1px solid #dedede;
+    border-bottom: 0;
+    color: #4a4a4a;
+    height: 44px;
+    width: auto;
+    padding: 0 20px;
+    margin: 0 0 0 10px;
+    box-shadow: 0 4px 0 0 #dedede !important;
+}
+.btn-add:hover, .btn-add:active, .btn-add:focus, .btn-add:active:hover, .btn-add:active:focus {
+  background-color: #f7f7f7;
+  outline-style: none;
 }
 .btn-print {
-  background-color: #f0f0f0;
-  border: 1px solid #dedede;
-  color: #4a4a4a;
-  height: 44px;
-  width: auto;
-  padding: 10px 35px;
-  margin: 0 10px 0 0;
+    background-color: #f0f0f0;
+    border: 1px solid #dedede;
+    color: #4a4a4a;
+    height: 44px;
+    width: auto;
+    padding: 12px 35px;
+    margin: 0 10px 0 0;
+    border-bottom: 0;
+    box-shadow: 0 4px 0 0 #dedede;
+}
+.btn-print:hover, .btn-print:active, .btn-print:focus, .btn-print:active:hover, .btn-print:active:focus {
+  background-color: #f7f7f7;
+  outline-style: none;
 }
 .btn-trash {
   background-color: #d8d8d8;
@@ -860,7 +871,6 @@ th.ui-state-default.ui-unselectable-text {
   color: #4a4a4a;
 }
 .tab-container li.nav-item {
-  width: 117px;
   height: 44px;
 }
 .tab-container a.nav-link {
