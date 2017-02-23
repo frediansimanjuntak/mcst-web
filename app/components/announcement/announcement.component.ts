@@ -128,11 +128,18 @@ export class AnnouncementComponent implements OnInit {
     openModal(announcement){
         this.announcement = announcement;
         this.valid_tillStatus = announcement.valid_till;
-        this.stickyStatus = announcement.sticky;
-
-        if(this.valid_tillStatus == ""){
+        if(this.valid_tillStatus){
+                                  let y = this.valid_tillStatus.toString().slice(0,4);
+                                  let m = (this.valid_tillStatus+100).toString().slice(4,6);
+                                  let d = this.valid_tillStatus.toString().slice(6,8);
+                                  this.valid_tillStatus = y + '-' + m + '-' + d ;
+        }else if(this.valid_tillStatus == ""){
               this.valid_tillStatus = "";
         }
+
+        this.stickyStatus = announcement.sticky;
+
+        
     }
 
     publishAnnouncement(){
