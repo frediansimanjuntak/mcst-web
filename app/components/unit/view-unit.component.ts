@@ -35,7 +35,7 @@ export class ViewUnitComponent implements OnInit {
     data: any = {};
     filesToUpload: Array<File>;
     residents :any;
-    resident :any = {};
+    resident :any;
     selectedResident : any = {};
     vehicles : any;
     vehicle :any = {};
@@ -107,7 +107,9 @@ export class ViewUnitComponent implements OnInit {
                     this.unitservice
                         .getById(this.id, this.name.default_development.name_url)
                             .subscribe(unit => {
+
                                 this.unit = unit.properties[0];
+                                console.log(this.unit)
                                 this.residents = this.unit.tenant;
                                 this.vehicles = this.unit.registered_vehicle;
                                 
@@ -162,7 +164,8 @@ export class ViewUnitComponent implements OnInit {
 
     deleteResident(resident: any){
         this.appComponent.loading = true
-        this.unitservice.deleteTenant(resident._id, this.unit._id, this.name.default_development.name_url)
+        console.log(resident)
+        this.unitservice.deleteTenant(resident._id, this.unit._id, this.name.default_development.name_url, resident)
             .then(
                 response => {
                   if(response) {

@@ -239,12 +239,12 @@
         <div class="row">
             <modal #residentDetail>
                 <modal-header *ngIf="resident">
-                    <h5>Resident/Tenant {{ resident.resident_name }}</h5>
+                    <h5>Resident/Tenant {{ resident.resident.username }}</h5>
                 </modal-header>
                 <modal-content *ngIf="resident">
                     <div class="row">
                         <div class="col-md-4">Resident</div>
-                        <div class="col-md-8"> <p>: {{ resident.resident_name }}</p></div>
+                        <div class="col-md-8"> <p>: {{ resident.resident.username }}</p></div>
                     </div>
                     <div class="row">
                         <div class="col-md-4">Type</div>
@@ -254,17 +254,17 @@
                         <div class="col-md-4">Added on </div>
                         <div class="col-md-8">
                             <p>: 
-                                {{ resident.added_on | date:'fullDate' }} 
+                                {{ resident.created_at | date:'fullDate' }} 
                             </p>
                         </div>
                     </div>
                     <div class="row">
                         <div class="col-md-4">Contact No </div>
-                        <div class="col-md-8"><p>: {{resident.phone}}, {{resident.email}}</p></div>
+                        <div class="col-md-8"><p>: {{resident.resident.phone}}, {{resident.resident.email}}</p></div>
                     </div>
                     <div class="row">
                         <div class="col-md-4">Social Page </div>
-                        <div class="col-md-8"><p>: {{ resident.social_page }}</p></div>
+                        <div class="col-md-8"><p>: {{ resident.resident.social_page }}</p></div>
                     </div>
                     <div class="row">
                         <div class="col-md-4">Remarks </div>
