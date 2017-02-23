@@ -6,6 +6,7 @@ import { NotificationsService } from 'angular2-notifications';
 import 'rxjs/add/operator/switchMap';
 import '../../rxjs-operators';
 import { AppComponent } from '../index';
+import { EqualValidator } from '../user/equal-validator.directive';
 
 @Component({
     // moduleId: module.id,
@@ -87,23 +88,23 @@ export class EditSettingComponent {
         }
     }
 
-    onChange(event: any) {
-        let files = [].slice.call(event.target.files);
-        this.model.front =  files;
-    }
+    // onChange(event: any) {
+    //     let files = [].slice.call(event.target.files);
+    //     this.model.front =  files;
+    // }
 
-    onChange1(event: any) {
-       let files = [].slice.call(event.target.files);
-       this.model.back =  files;
-    }
+    // onChange1(event: any) {
+    //    let files = [].slice.call(event.target.files);
+    //    this.model.back =  files;
+    // }
 
-    remove(i: any){
-        this.model.front.splice(i, 1)
-    }
+    // remove(i: any){
+    //     this.model.front.splice(i, 1)
+    // }
 
-    remove1(i: any){
-        this.model.back.splice(i, 1)
-    }
+    // remove1(i: any){
+    //     this.model.back.splice(i, 1)
+    // }
 
     cancel(){
         this.router.navigate([this.name.default_development.name_url + '/setting' ]);
