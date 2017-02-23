@@ -16,13 +16,13 @@ import {
     moduleId: module.id,
     selector: 'my-app',
     template: `
-    <div *ngIf="authToken">
+    <div *ngIf="name">
   	  <headers></headers>
   	  <navbar></navbar>
   	</div>
     <ng2-slim-loading-bar></ng2-slim-loading-bar>
    	<router-outlet></router-outlet>
-    <footers *ngIf="authToken"></footers>
+    <footers *ngIf="name"></footers>
     <div class="loading-overlay" *ngIf="loading">
         <div class="aaa"></div>
         <button *ngIf="!loading" (click)="stop()"></button>
@@ -119,6 +119,15 @@ export class AppComponent implements OnInit {
     }    
 
     getToken(){
-        this.authToken = JSON.parse(localStorage.getItem('authToken' || null));
+        // this.authToken = JSON.parse(localStorage.getItem('authToken' || null));
+        this.userService.getByToken()
+        .subscribe(
+            name => {
+                  this.name = name;
+            },
+            error => {
+                this.router.navigate(['login']);
+            }
+        )
     }
 }

@@ -56,27 +56,6 @@ export class EditFacilityComponent  {
         private userService: UserService) {}
 
     ngOnInit(): void {
-        this.userService.getByToken().subscribe(name => {this.name = name;})
-        for (let i = 0; i < 24; ++i) {
-            let time = i.toString();
-            if(i < 10) {
-                time = '0' + i
-            }
-            this.time.push(time+':00')
-        }
-        this.myForm = this.formbuilder.group({
-            name : ['', Validators.required],
-            description : ['', Validators.required],
-            payment_type : ['', Validators.required],
-            booking_type : ['', Validators.required],
-            deposit_fee : ['', Validators.required],
-            booking_fee : ['', Validators.required],
-            admin_fee : ['', Validators.required],
-            schedule: this.formbuilder.array([this.initSchedule()]),
-            status: ['', Validators.required],
-            created_by : [''],
-            created_at : ['']
-        });
         this.route.params.subscribe(params => {
             this.id = params['id'];
         });
@@ -132,6 +111,31 @@ export class EditFacilityComponent  {
                 setTimeout(() => this.appComponent.loading = false, 1000);
             });
         }
+        this.userService.getByToken()
+        .subscribe(name => {
+            this.name = name;
+            setTimeout(() => this.appComponent.loading = false, 1000);
+        })
+        for (let i = 0; i < 24; ++i) {
+            let time = i.toString();
+            if(i < 10) {
+                time = '0' + i
+            }
+            this.time.push(time+':00')
+        }
+        this.myForm = this.formbuilder.group({
+            name : ['', Validators.required],
+            description : ['', Validators.required],
+            payment_type : ['', Validators.required],
+            booking_type : ['', Validators.required],
+            deposit_fee : ['', Validators.required],
+            booking_fee : ['', Validators.required],
+            admin_fee : ['', Validators.required],
+            schedule: this.formbuilder.array([this.initSchedule()]),
+            status: ['', Validators.required],
+            created_by : [''],
+            created_at : ['']
+        });
     }
 
     initSchedule() {

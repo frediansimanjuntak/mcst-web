@@ -30,11 +30,12 @@ export class ViewUnitComponent implements OnInit {
     units: any;
     user: any;
     users: any;
+    allUsers: any;
     model: any = {};
     data: any = {};
     filesToUpload: Array<File>;
     residents :any;
-    resident :any = {};
+    resident :any;
     selectedResident : any = {};
     vehicles : any;
     vehicle :any = {};
@@ -96,16 +97,36 @@ export class ViewUnitComponent implements OnInit {
 
     getUsers(): void {
         this.userService.getAll().subscribe(users => {
-            this.users = users;
+            this.allUsers =this.users = users;
+            
+            let roleFilter =  ['master' , 'super admin', 'admin'];
+            for (var i = 0; i < roleFilter.length; i++) {
+                this.users = this.users.filter(data => data.role != roleFilter[i]); 
+            }
             if( this.id != null) {
                     this.unitservice
                         .getById(this.id, this.name.default_development.name_url)
                             .subscribe(unit => {
+
                                 this.unit = unit.properties[0];
+                                console.log(this.unit)
                                 this.residents = this.unit.tenant;
                                 this.vehicles = this.unit.registered_vehicle;
+                                
+                                if(this.residents){
+                                    this.hasTenants = true;
+                                }else{
+                                    this.hasTenants = false;
+                                }
 
-                                if(this.unit.landlord){
+                                if(this.unit.landlord){ 
+                                    var landlordForResidentTable :any = {
+                                    type : 'owner',
+                                    i    :  1,
+                                    resident : this.unit.landlord
+                                    }
+                                    
+                                    this.residents.unshift(landlordForResidentTable);
                                     this.hasLandlord = true;
                                     this.model.type  = 'tenant'
                                 }else{
@@ -114,18 +135,18 @@ export class ViewUnitComponent implements OnInit {
                                 }
 
                                 if(this.residents){
-                                    this.hasTenants = true;
                                     for (var i = 0; i < this.residents.length; i++) {
-                                         this.residents[i].i = i + 1;
+                                        this.users = this.users.filter(data => data._id != this.residents[i].resident._id);
                                     }
-                                }else{
-                                    this.hasTenants = false;
+                                    for (var i = 0; i < this.residents.length; i++) {
+                                             this.residents[i].i = i + 1;
+                                    }
                                 }
 
                                 if(this.vehicles){
                                     for (var i = 0; i < this.vehicles.length; i++) {
                                         this.vehicles[i].i = i + 1;
-                                        this.vehicles[i].user = this.users.find(data => data._id == this.vehicles[i].owner).username;
+                                        this.vehicles[i].user = this.allUsers.find(data => data._id == this.vehicles[i].owner).username;
                                     }
                                 }
                                 setTimeout(() => this.appComponent.loading = false, 1000);
@@ -143,34 +164,100 @@ export class ViewUnitComponent implements OnInit {
 
     deleteResident(resident: any){
         this.appComponent.loading = true
-        this.unitservice.deleteTenant(resident._id, this.unit._id, this.name.default_development.name_url)
+        if(resident.type == 'owner'){
+            this.unitservice.deleteLandlord(this.unit._id, this.name.default_development.name_url, resident.resident)
             .then(
                 response => {
                   if(response) {
                     console.log(response);
-                    alert(`Resident could not be deleted, server Error.`);
+                    this._notificationsService.error(
+                            'Error',
+                            'Landlord could not to delete, server error',
+                    )
+                    setTimeout(() => this.appComponent.loading = false, 1000);
                   } else {
-                    this.alertService.success('Delete resident successful', true);
-                    alert(`Delete resident successful`);
+                    this._notificationsService.success(
+                            'Success',
+                            'Delete landlord successful',
+                    )
                     this.ngOnInit()
                   }
                 },
                 error=> {
                   console.log(error);
-                    alert(`resident could not be deleted, server Error.`);
+                    this._notificationsService.error(
+                            'Error',
+                            'Landlord could not to delete, server error',
+                    )
+                    setTimeout(() => this.appComponent.loading = false, 1000);
                 }
-            );
+            ); 
+        }else if (resident.type == 'tenant'){
+           this.unitservice.deleteTenant(resident._id, this.unit._id, this.name.default_development.name_url, resident.resident)
+            .then(
+                response => {
+                  if(response) {
+                    console.log(response);
+                    this._notificationsService.error(
+                            'Error',
+                            'Resident could not to delete, server error',
+                    )
+                    setTimeout(() => this.appComponent.loading = false, 1000);
+                  } else {
+                    this._notificationsService.success(
+                            'Success',
+                            'Delete resident successful',
+                    )
+                    this.ngOnInit()
+                  }
+                },
+                error=> {
+                  console.log(error);
+                    this._notificationsService.error(
+                            'Error',
+                            'Resident could not to delete, server error',
+                    )
+                    setTimeout(() => this.appComponent.loading = false, 1000);
+                }
+            ); 
+        }
+        
     }
 
     deleteResidentConfirmation(resident) {
-        this.confirmationService.confirm({
-            message: 'Are you sure that you want to delete this resident?',
-            header: 'Delete Confirmation',
-            icon: 'fa fa-trash',
-            accept: () => {
-                this.deleteResident(resident)
+        console.log(resident)
+        if(resident.type == 'owner'){
+            if(this.unit.tenant.length < 0){
+                this.confirmationService.confirm({
+                    message: 'Are you sure that you want to delete this landlord?',
+                    header: 'Delete Confirmation',
+                    icon: 'fa fa-trash',
+                    accept: () => {
+                        this.deleteResident(resident)
+                    }
+                });    
+            }else if(this.unit.tenant.length > 0){
+                this.confirmationService.confirm({
+                    message: 'This unit has tenant, Are you sure that you want to delete this landlord?',
+                    header: 'Delete Confirmation',
+                    icon: 'fa fa-trash',
+                    accept: () => {
+                        this.deleteResident(resident)
+                    }
+                });
             }
-        });
+                
+        }else if(resident.type == 'tenant'){
+            this.confirmationService.confirm({
+                message: 'Are you sure that you want to delete this resident?',
+                header: 'Delete Confirmation',
+                icon: 'fa fa-warning',
+                accept: () => {
+                    this.deleteResident(resident)
+                }
+            });    
+        }
+        
     }
 
     deleteVehicle(vehicle: any){
@@ -215,15 +302,15 @@ export class ViewUnitComponent implements OnInit {
     }
 
     goToUnit(){
-        this.router.navigate([this.name.default_development.name_url + '/unit']);  
+        window.history.back();
     }
 
     addResident(){
         this.addSubmitted = true;
          if(this.model.type == "tenant" && !this.hasLandlord){
-            this.errorMessage = "This unit did not has landlord yet, please add lanlord first"
+            this.errorMessage = "This unit did not has landlord yet, please add landlord first"
          }else if(this.model.type == "landlord" && this.hasLandlord){
-            this.errorMessage = "This unit already has a landlord, cannot add landlord"
+            this.errorMessage = "This unit already has a landlord, please remove landlord first"
          }else if(this.model.option == 'new'){
              this.router.navigate([this.name.default_development.name_url + '/user/add', this.unit._id, this.model.type]);  
          }
@@ -234,12 +321,12 @@ export class ViewUnitComponent implements OnInit {
          if(this.model.type == "tenant" && !this.hasLandlord){
             this.errorMessage = "This unit did not has landlord yet, please add landlord first"
          }else if(this.model.type == "landlord" && this.hasLandlord){
-            this.errorMessage = "This unit already has a landlord, cannot add landlord"
+            this.errorMessage = "This unit already has a landlord, please remove landlord first"
          }else {
              this.loading = true;
              this.appComponent.loading = true
              this.data.id_user         = this.model.user;
-             this.data.id_development  = this.name.default_development.id;
+             this.data.id_development  = this.name.default_development._id;
              this.data.id_property     = this.unit._id;
              this.data.type            = this.model.type;
              this.unitservice.createResident(this.data)
@@ -318,6 +405,8 @@ export class ViewUnitComponent implements OnInit {
             );
             this.vehicleSubmitted = false;
         }
+        this.loading = true;
+        this.vehicleSubmitted = false;
     }
 
 }

@@ -75,6 +75,23 @@ ul.ui-select-choices.dropdown-menu {
 .no-margin {
   margin: 0;
 }
+.content {
+    margin: 20px;
+}
+.open {
+    font-weight: bold;
+    color: #4990e2;
+}
+.close {
+    font-weight: bold;
+    color: #7ed321;
+}
+.content-column {
+    margin: 17px;
+}
+.row.content-column {
+    margin: 50px 17px;
+}
 
 /*.btn-primary {
   background-color: rgb(181,173,150) !important;
@@ -563,21 +580,23 @@ p.pull-down {
   background-color: #f7f7f7;
 }
 .btn-gray {
-  background-color: #f0f0f0;
-  border: 1px solid #dedede;
-  color: #4a4a4a;
-  height: 44px;
-  min-width: 130px !important;
-  font-weight: bold;
-  font-size: 13px;
-  font-family: arial;
-  margin-right: 10px;
-  padding: 10px;
+    background-color: #f0f0f0;
+    border: 1px solid #dedede;
+    color: #4a4a4a;
+    height: 44px;
+    min-width: 130px !important;
+    font-weight: bold;
+    font-size: 13px;
+    font-family: arial;
+    padding: 10px;
+    border-bottom: 0;
+    box-shadow: 0 4px 0 0 #dedede;
 }
 .btn-gray:active, .btn-gray:hover, .btn-gray:focus, .btn-gray:active:hover, .btn-gray:active:focus {
   color: #4a4a4a;
   background-color: #f7f7f7;
   border: 1px solid #dedede;
+  border-bottom: 0;
   outline-style: none;
 }
 .btn-brown {
@@ -591,25 +610,35 @@ p.pull-down {
   box-shadow: 0 3px 0 0 #9a8d6b;
 }
 .btn-brown:active, .btn-brown:hover, .btn-brown:focus, .btn-brown:active:hover, .btn-brown:active:focus {
-  background-color: #d4cab1;
-  color: #fff;
-  outline-style: none;
+    background-color: #9a8d6b;
+    color: #fff;
+    outline-style: none;
 }
 .btn-white {
-  height: 44px;
-  min-width: 130px !important;
-  border: 1px solid #efefef;
-  background-color: #ffffff;
-  margin: 18px;
-  color: #4a4a4a;
-  font-weight: bold;
-  outline-style: none;
-  font-family: arial;
-  font-size: 13px;
-  padding: 10px;
+    height: 44px;
+    min-width: 130px !important;
+    border: 1px solid #efefef;
+    background-color: #ffffff;
+    border-bottom: 0;
+    margin: 18px;
+    color: #4a4a4a;
+    font-weight: bold;
+    outline-style: none;
+    font-family: arial;
+    font-size: 13px;
+    padding: 10px;
+    box-shadow: 0 3px 0 0 #efefef;
 }
-.btn-white:hover {
-  background-color: #f9f9f9;
+.btn-white:active, .btn-white:hover, .btn-white:focus, .btn-white:active:hover, .btn-white:active:focus {
+    background-color: #efefef;
+    border: 1px solid #efefef;
+    border-bottom: 0;
+}
+.btn-tab-dark {
+    margin: 4px 0;
+    border-radius: 4px !important;
+    width: auto;
+    padding: 13px;
 }
 .bookinginformation hr {
   width: 323px;
@@ -649,22 +678,34 @@ p.pull-down {
   outline-style: none;
 }
 .btn-add {
-  background-color: #f0f0f0;
-  border: 1px solid #dedede;
-  color: #4a4a4a;
-  height: 44px;
-  width: auto;
-  padding: 0 20px;
-  margin: 0 0 0 10px;
+    background-color: #f0f0f0;
+    border: 1px solid #dedede;
+    border-bottom: 0;
+    color: #4a4a4a;
+    height: 44px;
+    width: auto;
+    padding: 0 20px;
+    margin: 0 0 0 10px;
+    box-shadow: 0 4px 0 0 #dedede !important;
+}
+.btn-add:hover, .btn-add:active, .btn-add:focus, .btn-add:active:hover, .btn-add:active:focus {
+  background-color: #f7f7f7;
+  outline-style: none;
 }
 .btn-print {
-  background-color: #f0f0f0;
-  border: 1px solid #dedede;
-  color: #4a4a4a;
-  height: 44px;
-  width: auto;
-  padding: 10px 35px;
-  margin: 0 10px 0 0;
+    background-color: #f0f0f0;
+    border: 1px solid #dedede;
+    color: #4a4a4a;
+    height: 44px;
+    width: auto;
+    padding: 12px 35px;
+    margin: 0 10px 0 0;
+    border-bottom: 0;
+    box-shadow: 0 4px 0 0 #dedede;
+}
+.btn-print:hover, .btn-print:active, .btn-print:focus, .btn-print:active:hover, .btn-print:active:focus {
+  background-color: #f7f7f7;
+  outline-style: none;
 }
 .btn-trash {
   background-color: #d8d8d8;
@@ -830,7 +871,6 @@ th.ui-state-default.ui-unselectable-text {
   color: #4a4a4a;
 }
 .tab-container li.nav-item {
-  width: 117px;
   height: 44px;
 }
 .tab-container a.nav-link {
@@ -886,20 +926,20 @@ span.ui-cell-data {
 /*costumize ui gallery view*/
 
 .ui-galleria.ui-widget.ui-widget-content.ui-corner-all {
-    width: 555px;
+    width: 555px !important;
     height: auto;
-    visibility: visible;
     border: 0;
     border-radius: 0;
+    margin: 20px;
 }
 ul.ui-galleria-panel-wrapper {
-    width: 555px;
-    height: 372px;
+    width: 555px !important;
+    height: 372px !important;
 }
 
 li.ui-galleria-panel {
-    width: 555px;
-    height: 372px;
+    width: 555px !important;
+    height: 372px !important;
 }
 img.ui-panel-images {
     position: absolute;
@@ -981,7 +1021,7 @@ p.field-box.no-margin {
     font-weight: bold;
 }
 
-/*costumize button input file*/
+/*costumize button input upload file*/
 
 .inputfile {
     width: 0.1px;
@@ -1001,5 +1041,25 @@ p.field-box.no-margin {
     box-shadow: 0px 4px 0 0 #dedede;
     color: #6d6e71;
     font-weight: bold;
+    font-size: 13px;
+}
+#contract .content.text {
+    font-size: 13px;
+    font-weight: bold;
+    color: #8c8c8c;
+}
+#contact-directory .title-content {
+    color: #786141;
+    font-size: 13px;
+}
+#contact-directory b {
+    font-size: 14px;
+    color: #786141;
+}
+#contact-directory strong {
+    font-size: 15px;
+    color: #6d6e71;
+}
+#contact-directory strong p {
     font-size: 13px;
 }
