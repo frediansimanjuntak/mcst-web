@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthenticationService, UserService } from '../../services/index';
+import { NotificationsService } from 'angular2-notifications';
 import { Router } from '@angular/router';
 import { AppComponent } from '../index';
 import { NotificationsService } from 'angular2-notifications';
@@ -121,9 +122,17 @@ export class LoginComponent implements OnInit {
         this.appComponent.loading = true
         this.AuthService.login(this.model.username, this.model.password)
             .subscribe(
-                data => {
-                    this.userService.getByToken()
-                    .subscribe(name => {
+                response => {
+                    if(response){
+                        console.log(response)
+                        // this._notificationsService.error(
+                        //     '',
+                        //    response,
+                        // )
+                        this.loading = false;
+                    }else{
+                        this.userService.getByToken()
+                            .subscribe(name => {
                         this.name = name;
                         this.appComponent.getToken()
                         this.router.navigate([this.name.default_development.name_url, 'dashboard']);
@@ -137,5 +146,14 @@ export class LoginComponent implements OnInit {
                             )
                     this.appComponent.loading = false
                 });
+                // response => {
+                //     this.error = 'Username or password is incorrect';
+                //     this._notificationsService.error(
+                //             '',
+                //            error,
+                //     )
+                //     this.loading = false;
+
+                // });
     }
 }

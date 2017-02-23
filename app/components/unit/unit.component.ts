@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Development } from '../../models/index';
 import { UnitService, AlertService, UserService} from '../../services/index';
+import {SlimLoadingBarService, SlimLoadingBarComponent} from 'ng2-slim-progress-bar';
 import '../../rxjs-operators';
 import { AppComponent } from '../index';
 import { Observable} from 'rxjs/Observable';
@@ -27,6 +28,7 @@ export class UnitComponent implements OnInit {
                 private unitservice: UnitService, 
                 private alertService: AlertService,
                 private userService: UserService,
+                private slimLoadingBarService: SlimLoadingBarService, 
                 private appComponent: AppComponent,) {
 
     }
@@ -79,4 +81,9 @@ export class UnitComponent implements OnInit {
     add(){
         this.router.navigate([this.name.default_development.name_url + '/unit/add']);  
     }
+
+    start(link:any) {
+        this.slimLoadingBarService.start(() => {});
+        this.router.navigate([this.name.default_development.name_url + link]);  
+  }
 }
