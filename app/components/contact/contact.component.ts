@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { AppComponent } from '../index';
 import '../../rxjs-operators';
 
@@ -8,6 +8,13 @@ import '../../rxjs-operators';
 
 })
 
-export class ContactComponent  { 
+export class ContactComponent  implements OnInit{ 
+
+	constructor(
+        private appComponent: AppComponent) {}
 	
+	ngOnInit(): void {
+        setTimeout(() => this.appComponent.loading = false, 1000);
+    }
+   
 }
