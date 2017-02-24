@@ -19,7 +19,7 @@ export class RegisterComponent {
 
     register() {
         this.loading = true;
-        this.userService.create(this.model)
+        this.userService.createResident(this.model)
         .then(
             data => {
                 this.alertService.success('Registration successful', true);

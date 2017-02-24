@@ -22,7 +22,13 @@
 							</template>
 						</p-column>
 						<p-column field="created_by.username" header="Uploaded by" sortable="true" [filter]="true" filterPlaceholder="Search Created by"></p-column>
-						<p-column field="attachment" header="Attachment" sortable="true" [filter]="true" filterPlaceholder="Search Attachment"></p-column>
+						<p-column field="attachment" header="Attachment" sortable="true">
+							<template let-dataAgm="rowData" pTemplate="body">
+								<span *ngFor="let a of dataAgm.attachment">
+									{{ a.name}},
+								</span>
+							</template>
+						</p-column>
 						<!-- </p-column> -->
 						<p-column styleClass="col-button">
 							<template let-dataAgm="rowData" class="pull-right" pTemplate="body">
@@ -41,8 +47,13 @@
 							</template>
 						</p-column>
 						<p-column field="created_by.username" header="Uploaded by" sortable="true" [filter]="true" filterPlaceholder="Search Created by"></p-column>
-						<p-column field="attachment" header="Attachment" sortable="true" [filter]="true" filterPlaceholder="Search Attachment"></p-column>
-						<!-- </p-column> -->
+						<p-column field="attachment" header="Attachment" sortable="true">
+							<template let-dataEgm="rowData" pTemplate="body">
+								<span *ngFor="let a of dataEgm.attachment">
+									{{ a.name}},
+								</span>
+							</template>
+						</p-column>
 						<p-column styleClass="col-button">
 							<template let-dataEgm="rowData" class="pull-right" pTemplate="body">
 								<button type="button" class="btn btn-trash pull-right" (click)="deleteConfirmation(dataEgm)"><i class="fa fa-trash" aria-hidden="true"></i></button>
@@ -60,8 +71,13 @@
 							</template>
 						</p-column>
 						<p-column field="created_by.username" header="Uploaded by" sortable="true" [filter]="true" filterPlaceholder="Search created by by"></p-column>
-						<p-column field="attachment" header="Attachment" sortable="true" [filter]="true" filterPlaceholder="Search Attachment"></p-column>
-						<!-- </p-column> -->
+						<p-column field="attachment" header="Attachment" sortable="true">
+							<template let-dataCircular="rowData" pTemplate="body">
+								<span *ngFor="let a of dataCircular.attachment">
+									{{ a.name}},
+								</span>
+							</template>
+						</p-column>
 						<p-column styleClass="col-button">
 							<template let-dataCircular="rowData" class="pull-right" pTemplate="body">
 								<button type="button" class="btn btn-trash pull-right" (click)="deleteConfirmation(dataCircular)"><i class="fa fa-trash" aria-hidden="true"></i></button>

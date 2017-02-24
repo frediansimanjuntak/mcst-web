@@ -9,6 +9,7 @@ import { Location }               from '@angular/common';
 import * as $ from "jquery";
 import { AppComponent } from '../index';
 import { ConfirmationService } from 'primeng/primeng';
+
 // import { Overlay } from 'angular2-modal';
 // import { Modal } from 'angular2-modal/plugins/bootstrap';
 // import { PublishAnnouncementModalComponent, PublishAnnouncementModalData } from './publish-announcement-modal.component';
@@ -23,6 +24,7 @@ import { ConfirmationService } from 'primeng/primeng';
 export class PetitionComponent implements OnInit {
 	petition: any;
     petitions: Petition[] = [];
+    archivedPetitions: Petition[] = [];
     validTillDateOptions: any = {};
     model: any = {};
     id: string;
@@ -31,6 +33,7 @@ export class PetitionComponent implements OnInit {
     selectedValues: string[] = [];
     btnArchive: boolean = false;
     dataUnit: any[]=[];
+    buttonViewArchive: boolean;
     public developmentId;
     public data;
     public petitionPending;
@@ -127,10 +130,23 @@ export class PetitionComponent implements OnInit {
         this.petitionService.getAll()
             .subscribe((data)=> {
                 setTimeout(()=> {
-                    this.petitions = data.filter(data => data.archieve === false && data.development._id == this.name.default_development._id );
+                    this.petitions         = data.filter(data => data.archieve === false && data.development._id == this.name.default_development._id );
+                    this.archivedPetitions = data.filter(data => data.archieve === true && data.development._id == this.name.default_development._id );
                     setTimeout(() => this.appComponent.loading = false, 1000);
                 }, 1000);
         });
+    }
+
+    viewArchieved(){
+        this.appComponent.loading = true
+        this.buttonViewArchive = true;
+        setTimeout(() => this.appComponent.loading = false, 500);
+    }
+
+    viewUnarchieved(){
+        this.appComponent.loading = true
+        this.buttonViewArchive = false;
+        setTimeout(() => this.appComponent.loading = false, 500);
     }
 
     viewPetition(petition: Petition){

@@ -150,6 +150,7 @@ export class EditBookingComponent implements OnInit  {
             for (let a = 0; a < facilities.length; ++a) {
                 if(this.facilities[a].schedule.filter(data => data.day == this.day)) {
                     this.selectedFacility.push(this.facilities[a])
+                    console.log(this.selectedFacility)
                 }
                 setTimeout(() => this.appComponent.loading = false, 1000);
             }
@@ -354,6 +355,7 @@ export class EditBookingComponent implements OnInit  {
         this.model.booking_date = booking_date
         this.day = this.days[this.dt.getDay()];
         this.filtered = null;
+        this.selectedFacility = [];
         this.ngOnInit();
     }
 
@@ -367,6 +369,9 @@ export class EditBookingComponent implements OnInit  {
         this.appComponent.loading = true
         this.step = 1
         this.selectedValues = []
+        this.model = {};
+        this.filtered = null
+        this.ngOnInit()
         setTimeout(() => this.appComponent.loading = false, 1000);
     }
 

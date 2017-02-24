@@ -24,24 +24,39 @@
                     <label class="control-label col-sm-4" for="poll_type">Poll Type :</label>
                     <div class="col-sm-8">
                         <select class="form-control" name="poll_type" [(ngModel)]="poll.poll_type">
-                          <option selected value="yes_or_no">Yes or No</option>
-                          <option value="multiple_choices">Multiple Choices</option>
+                          <option [selected]="poll.poll_type == 'yes_or_no'" value="yes_or_no">Yes or No</option>
+                          <option [selected]="poll.poll_type == 'multiple'" value="multiple">Multiple Choices</option>
                         </select>
                        
+                    </div>
+                </div>
+                <div *ngIf="poll.poll_type == 'multiple'" class="form-group"> 
+                    <label class="control-label col-sm-4" for="choices">Choices :</label>         
+                    <div class="col-sm-8">
+                        <div *ngFor="let c of poll.choices; let i=index">
+                            <span>Option {{i + 1}}</span>
+                                <span class="glyphicon glyphicon-remove pull-right" *ngIf="poll.choices.length > 1" (click)="removeChoice(i)"></span>
+                            <input type="text" class="form-control" #{{i}}="ngModel" [(ngModel)]="poll.choices[i]" required placeholder="Input choice name here" [ngModelOptions]="{standalone: true}"/>
+                        </div>
+                         <div class="margin-20">
+                            <a (click)="addChoice()" style="cursor: default">
+                                Add another choice +
+                            </a>
+                        </div>  
                     </div>
                 </div>
                 <div class="form-group">
                     <label class="control-label col-sm-4" for="auto_post_on">Commence date :</label>
                     <div class="col-sm-8">
                             <my-date-picker [options]="startTimeOptions"
-                            [selDate]="poll.start_time" (dateChanged)="startTimeDateChanged($event)"></my-date-picker>
+                            [selDate]="selectedStartTime" (dateChanged)="startTimeDateChanged($event)"></my-date-picker>
                     </div>
                 </div>
                 <div class="form-group" >
                     <label class="control-label col-sm-4" for="valid_till">Result date :</label>
                     <div class="col-sm-8">
                         <my-date-picker [options]="endTimeOptions"
-                            [selDate]="poll.end_time" (dateChanged)="endTimeDateChanged($event)"></my-date-picker>
+                            [selDate]="selectedEndTime" (dateChanged)="endTimeDateChanged($event)"></my-date-picker>
                     </div>
                 </div>
 
@@ -89,13 +104,15 @@
                 <div *ngIf="model.poll_type == 'multiple'" class="form-group"> 
                     <label class="control-label col-sm-4" for="choices">Choices :</label>         
                     <div class="col-sm-8">
-                        <div *ngFor="let c of model.choices; let i=index">
-                            <span>Option {{i + 1}}</span>
-                                <span class="glyphicon glyphicon-remove pull-right" *ngIf="model.choices.length > 1" (click)="removeChoice(i)"></span>
-                            <input type="text" class="form-control" #{{i}}="ngModel" [(ngModel)]="model.choices[i]" required placeholder="Input choice name here" [ngModelOptions]="{standalone: true}"/>
+                        <div *ngFor="let c of pollChoices; let i=index">
+                            <span> Option {{i + 1}} </span>
+                                <span style="cursor: pointer" class="glyphicon glyphicon-remove pull-right" *ngIf="pollChoices.length > 1" (click)="removeChoice(i)"></span>
+                            <input type="text" class="form-control" name="choice-{{i}}" [(ngModel)]="pollChoices[i]"  #{{pollChoices[i]}}="ngModel" placeholder="Input choice name here" />
                         </div>
-                         <div class="margin-20">
-                            <a (click)="addChoice()" style="cursor: default">
+
+                        <pre>{{ model.choices | json}}</pre>
+                        <div class="margin-20">
+                            <a (click)="addChoice()" style="cursor: pointer">
                                 Add another choice +
                             </a>
                         </div>  
@@ -104,8 +121,7 @@
                 <div class="form-group">
                     <label class="control-label col-sm-4" for="start_time">Commence date : </label>
                     <div class="col-sm-8">
-                        <my-date-picker [options]="startTimeOptions" 
-                            [selDate]="model.start_time" (dateChanged)="startTimeChanged($event)">
+                        <my-date-picker [options]="startTimeOptions" [selDate]="selectedStartTime" (dateChanged)="startTimeChanged($event)">
                         </my-date-picker>
                     </div>
                 </div>

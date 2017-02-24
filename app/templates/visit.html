@@ -67,6 +67,7 @@
 								</div>
 								<div class="col-md-7">
 									<span *ngIf="unit.landlord">{{ unit.landlord.username}}</span>
+									<span *ngIf="!unit.landlord">-</span>
 								</div>
 							</div>
 							<div class="row add-bottom-10px">
@@ -77,6 +78,7 @@
 								</div>
 								<div class="col-md-7">
 									<span *ngIf="unit.status">{{ unit.status}}</span>
+									<span *ngIf="!unit.status">-</span>
 								</div>
 							</div>
 							<div class="row add-bottom-10px">
@@ -87,6 +89,7 @@
 								</div>
 								<div class="col-md-7">
 									<span *ngIf="unit.landlord">{{ visitActive.visiting}}</span>
+									<span *ngIf="!unit.landlord">-</span>
 								</div>
 							</div>
 							<div class="row add-bottom-10px">
@@ -97,6 +100,7 @@
 								</div>
 								<div class="col-md-7">
 									<span *ngIf="unit.landlord">{{ unit.landlord.phone}}</span>
+									<span *ngIf="!unit.landlord">-</span>
 								</div>
 							</div>
 							<div class="row add-bottom-10px">
@@ -107,6 +111,7 @@
 								</div>
 								<div class="col-md-7">
 									<span *ngIf="unit.landlord">{{ unit.landlord.phone}}</span>
+									<span *ngIf="!unit.landlord">-</span>
 								</div>
 							</div>
 							<br>
@@ -115,7 +120,7 @@
 						<a style="cursor: pointer; color: blue;" class="btn-underline" [popover]="popTemplate" (click)="onUnitClick(visitActive.property)">{{visitActive.visiting}}</a>
 					</template>
 				</p-column>
-				<p-column field="purpose" header="Purpose of visit"></p-column>
+				<p-column field="purpose" header="Purpose of visit" [style]="{'width':'140px'}"></p-column>
 				<p-column header="Remarks" field="">
 					<template let-visitActive="rowData" pTemplate="body">
 						<span *ngIf="visitActive.remarks==''">No remarks</span>
@@ -129,13 +134,13 @@
 						<span>on {{visitActive.created_at | date:'d/M/y'}}</span>
 					</template>
 				</p-column>
-				<p-column header="Card no" field="visitor.pass" sortable="true">
+				<p-column header="Card no" [style]="{'width':'80px'}" field="visitor.pass" sortable="true">
 					<template let-visitActive="rowData" pTemplate="body">
 						<span *ngIf="visitActive.visitor.pass==''">-</span>
 						<span>{{visitActive.visitor.pass}}</span>
 					</template>
 				</p-column>
-				<p-column [style]="{'width':'300px'}" styleClass="col-button" field="" header="Check in/out">
+				<p-column [style]="{'width':'270px'}" styleClass="col-button" field="" header="Check in/out">
 					<template let-visitActive="rowData" pTemplate="body">
 						<div class="row">
 							<div class="col-md-4">

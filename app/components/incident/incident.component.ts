@@ -39,6 +39,7 @@ export class IncidentComponent implements OnInit {
     public dataNew;
     public dataInProgress;
     public dataResolved;
+    public dataArchieved;
 
     constructor(private router: Router, 
         private incidentService: IncidentService, 
@@ -87,6 +88,31 @@ export class IncidentComponent implements OnInit {
         })
     }
 
+    updateIncident(incident){
+        this.firstModal.close();
+        this.appComponent.loading = true
+        this.model._id = incident._id
+        this.model.attachment = null
+        console.log(this.model)
+        this.incidentService.resolve(this.model)
+        .then(
+            response => {
+                this._notificationsService.success(
+                            'Success',
+                            'Update incident successful',
+                )
+                this.ngOnInit()
+            },
+            error => {
+                this._notificationsService.error(
+                            'Error',
+                            'The incident report could not be update, server Error',
+                )
+                setTimeout(() => this.appComponent.loading = false, 1000);
+            }
+        );
+    }
+
     deleteIncident(incident: Incident) {
         this.appComponent.loading = true
         this.incidentService.delete(incident._id)
@@ -111,18 +137,12 @@ export class IncidentComponent implements OnInit {
 
 	private loadAllIncident() {
 		this.incidentService.getAll().subscribe(incidents => {
-	        this.incidents = incidents ;
-            this.dataInProgress = this.incidents.filter(incidents => incidents.status === 'inprogress' );
-            this.dataResolved   = this.incidents.filter(incidents => incidents.status === 'resolved' );
-            for (var i = 0; i < this.incidents.length; ++i) {
-                this.incidents[i].created_at = this.incidents[i].created_at.slice(0,10);
-            }
-            for (var i = 0; i < this.dataInProgress.length; ++i) {
-                this.dataInProgress[i].created_at = this.dataInProgress[i].created_at.slice(0,10);
-            }
-            for (var i = 0; i < this.dataResolved.length; ++i) {
-                this.dataResolved[i].created_at = this.dataResolved[i].created_at.slice(0,10);
-            }
+	        this.incidents = incidents.filter(incidents => incidents.archieve === false); ;
+            this.dataNew = this.incidents.filter(incidents => incidents.status === 'new' && incidents.archieve === false);
+            this.dataInProgress = this.incidents.filter(incidents => incidents.status === 'in progress' && incidents.archieve === false);
+            this.dataResolved   = this.incidents.filter(incidents => incidents.status === 'resolved' && incidents.archieve === false);
+            this.dataArchieved   = this.incidents.filter(incidents => incidents.archieve === true );
+            console.log(this.incidents)
             setTimeout(() => this.appComponent.loading = false, 1000);
 		});
     }

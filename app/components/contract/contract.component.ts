@@ -58,6 +58,7 @@ export class ContractComponent implements OnInit  {
         	this.contractService.getById(this.id)
             .subscribe(contract => {
                 this.contract = contract;
+                console.log(this.contract)
                 this.images = [];
                 for (var i = 0; i < this.contract.attachment.length; ++i) {
                     this.images.push({source:this.contract.attachment[i].url});
@@ -67,6 +68,7 @@ export class ContractComponent implements OnInit  {
             .subscribe(contractnotes => {
                 if(contractnotes[0].contract_note.length > 0) { 
                     this.contractnotes = contractnotes[0].contract_note;
+                    console.log(this.contractnotes)
                 }
             })
             this.contractnoticeService.getAll(this.id)
@@ -74,6 +76,7 @@ export class ContractComponent implements OnInit  {
                 if(contractnotices[0].contract_notice.length > 0) {
                     this.contractnotices = contractnotices[0].contract_notice;
                 }
+                console.log(this.contractnotices)
                 setTimeout(() => this.appComponent.loading = false, 1000);
             })
         }
@@ -112,60 +115,55 @@ export class ContractComponent implements OnInit  {
         });
     }
 
-    deleteContractNote(contractnote: any , id:any) {
+    deleteContractNote(contractnoteid: any , id:any) {
         this.appComponent.loading = true
-        this.contractnoteService.delete(id,contractnote._id)
+        this.contractnoteService.delete(id,contractnoteid)
         .then(
-            response => {
-                if(response) {
-                    console.log(response);
+            data => {
+                    this._notificationsService.success(
+                            'Success',
+                            'Delete Contract successful',
+                    )
+                    this.ngOnInit();
+                },
+                error => {
+                    console.log(error);
                     this._notificationsService.error(
                             'Error',
                             'The Contract could not be deleted, server Error',
                     )
-                    this.appComponent.loading = false;
-                } else {
-                    this._notificationsService.success(
-                            'Success',
-                            'Delete Contarct successful',
-                    )
-                    this.contractService.getById(id)
-                    .subscribe(contract => {
-                        this.contract = contract;
-                        this.images = [];
-                        for (var i = 0; i < this.contract.attachment.length; ++i) {
-                            this.images.push({source:this.contract.attachment[i].url});
-                        };
-                    });
-                    this.contractnoteService.getAll(id)
-                    .subscribe(contractnotes => {
-                        if(contractnotes[0].contract_note.length > 0) { 
-                            this.contractnotes = contractnotes[0].contract_note;
-                        }
-                    })
-                    this.contractnoticeService.getAll(id)
-                    .subscribe(contractnotices => {
-                        if(contractnotices[0].contract_notice.length > 0) {
-                            this.contractnotices = contractnotices[0].contract_notice;
-                            setTimeout(() => this.appComponent.loading = false, 1000);
-                        }
-                    })
-                }
-            },
-            error=> {
-                console.log(error);
-                this._notificationsService.error(
-                            'Success',
-                            'The Contract could not be deleted, server Error',
-                )
+                    setTimeout(() => this.appComponent.loading = false, 1000);
+            //     }
+            // response => {
+            //     if(response) {
+            //         console.log(response);
+            //         this._notificationsService.error(
+            //                 'Error',
+            //                 'The Contract could not be deleted, server Error',
+            //         )
+            //         this.appComponent.loading = false;
+            //     } else {
+            //         this._notificationsService.success(
+            //                 'Success',
+            //                 'Delete Contarct successful',
+            //         )
+            //         this.ngOnInit();
+            //     }
+            // },
+            // error=> {
+            //     console.log(error);
+            //     this._notificationsService.error(
+            //                 'Success',
+            //                 'The Contract could not be deleted, server Error',
+            //     )
             }
         );
     }
 
     deleteContractNoteConfirmation(contractnote: any , id:any) {
+        console.log(contractnote , id)
         this.confirmationService.confirm({
             message: 'Are you sure that you want to delete this project note?',
-            header: 'Delete Confirmation',
             icon: 'fa fa-trash',
             accept: () => {
                 this.deleteContractNote(id,contractnote._id)
@@ -233,5 +231,31 @@ export class ContractComponent implements OnInit  {
 
     back(){
         this.router.navigate([this.name.default_development.name_url + '/contract']);
+    }
+
+    publish(contract: Contract){
+        this.appComponent.loading = true
+        this.route.params.subscribe(params => {
+            this.id = params['id'];
+            this._id = params['_id'];
+        });
+        this.contractnoticeService.publish(this.id,contract._id)
+        .then(
+                data => {
+                    this._notificationsService.success(
+                            'Success',
+                            'Publish notice successful',
+                    )
+                    this.ngOnInit()
+                },
+                error => {
+                    console.log(error);
+                    this._notificationsService.error(
+                            'Error',
+                            'Publish failed, server Error',
+                    )
+                    setTimeout(() => this.appComponent.loading = false, 1000);
+                }
+            );
     }
 }

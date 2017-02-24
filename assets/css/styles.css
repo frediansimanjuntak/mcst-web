@@ -56,16 +56,10 @@ ul.ui-select-choices.dropdown-menu {
   border-radius: 0 !important;
 }
 .btn {
-  border-radius: 0 !important;
-  min-width: 45px !important;
-  height: 35px;
-  border-bottom-width: 4px !important;
-  border-bottom-style: solid;
- /* display: inline !important;*/
+    border-radius: 0 !important;
+    height: 35px;
+    border: 0;
 }
-/*.form-control {
-  display: inline !important;
-}*/
 .row-nomargin {
   margin: 0;
 }
@@ -568,13 +562,15 @@ p.pull-down {
   outline-style: none;
 }
 .btn-filter {
-  color: #333;
-  background-color: #f0f0f0;
-  font-weight: bold;
-  border-color: #dedede;
-  margin-top: 10px;
-  outline-style: none;
-  height: 44px;
+    color: #333 !important;
+    background-color: #f0f0f0 !important;
+    font-weight: bold;
+    border: 1px solid;
+    border-color: #dedede;
+    margin-top: 10px;
+    outline-style: none;
+    height: 44px;
+    box-shadow: 0 4px 0 0 #dedede;
 }
 .btn-filter:hover, .btn-primary:focus, .btn-primary:active, .btn-primary:active:hover, .btn-primary:active:focus {
   background-color: #f7f7f7;
@@ -588,6 +584,7 @@ p.pull-down {
     font-weight: bold;
     font-size: 13px;
     font-family: arial;
+    margin-right: 10px;
     padding: 10px;
     border-bottom: 0;
     box-shadow: 0 4px 0 0 #dedede;
@@ -600,14 +597,14 @@ p.pull-down {
   outline-style: none;
 }
 .btn-brown {
-  background-color: #b6ad96;
-  border: 0 !important;
-  color: #fff;
-  font-weight: bold;
-  height: 44px;
-  min-width: 130px !important;
-  padding: 10px;
-  box-shadow: 0 3px 0 0 #9a8d6b;
+    background-color: #b6ad96;
+    border: 1px solid #9a8d6b !important;
+    color: #fff;
+    font-weight: bold;
+    height: 44px;
+    min-width: 130px !important;
+    padding: 10px;
+    box-shadow: 0 3px 0 0 #9a8d6b;
 }
 .btn-brown:active, .btn-brown:hover, .btn-brown:focus, .btn-brown:active:hover, .btn-brown:active:focus {
     background-color: #9a8d6b;
@@ -645,23 +642,26 @@ p.pull-down {
   border-top: 1px solid #dedede;
 }
 .btn-in {
-  background-color: #f0f0f0;
-  border: 1px solid;
-  border-color: #dedede;
-  width: 50px;
-  height: 45px;
-  text-align: center;
-  padding: 0;
-  font-weight: bold;
+    background-color: #f0f0f0;
+    border: 1px solid;
+    border-color: #b9b9b9;
+    width: 50px;
+    height: 45px;
+    text-align: center;
+    padding: 0;
+    font-weight: bold;
+    margin-bottom: 4px;
+    box-shadow: 0 4px 0 0 #b9b9b9 !important;
 }
 .btn-in:hover, .btn-in:active, .btn-in:focus, .btn-in:active:focus, .btn-in:active:hover {
   background-color: #dcdcdc;
   border-color: #b9b9b9;
   outline-style: none;
+  box-shadow: 0 4px 0 0 #b9b9b9;
 }
 .btn-out {
   background-color: #9b9b9b;
-  border: 1px solid #dedede;
+  border: 1px solid #7c7c7c;
   border-bottom: 1px;
   border-top: 4px solid #7c7c7c;
   width: 50px;
@@ -678,19 +678,14 @@ p.pull-down {
   outline-style: none;
 }
 .btn-add {
-    background-color: #f0f0f0;
+    background-color: #f0f0f0 !important;
     border: 1px solid #dedede;
-    border-bottom: 0;
-    color: #4a4a4a;
+    color: #4a4a4a !important;
     height: 44px;
     width: auto;
     padding: 0 20px;
     margin: 0 0 0 10px;
-    box-shadow: 0 4px 0 0 #dedede !important;
-}
-.btn-add:hover, .btn-add:active, .btn-add:focus, .btn-add:active:hover, .btn-add:active:focus {
-  background-color: #f7f7f7;
-  outline-style: none;
+    box-shadow: 0 4px 0 0 #dedede;
 }
 .btn-print {
     background-color: #f0f0f0;
@@ -698,22 +693,22 @@ p.pull-down {
     color: #4a4a4a;
     height: 44px;
     width: auto;
-    padding: 12px 35px;
+    padding: 11px 35px;
     margin: 0 10px 0 0;
-    border-bottom: 0;
     box-shadow: 0 4px 0 0 #dedede;
 }
-.btn-print:hover, .btn-print:active, .btn-print:focus, .btn-print:active:hover, .btn-print:active:focus {
-  background-color: #f7f7f7;
+.btn-add:hover, .btn-print:hover, .btn-add:active, .btn-print:active, .btn-add:focus, .btn-print:focus, .btn-add:active:hover, .btn-print:active:hover, .btn-add:active:focus, .btn-print:active:focus {
+  border: 1px solid #dedede;
+  background-color: #f0f0f0;
   outline-style: none;
 }
 .btn-trash {
-  background-color: #d8d8d8;
-  height: 35px;
-  width: 35px !important;
-  margin-right: 10px;
-  border-radius: 4px !important;
-  box-shadow: 0 3px 0 0 #bbb;
+    background-color: #d8d8d8;
+    height: 35px;
+    min-width: 35px !important;
+    margin-right: 10px;
+    border-radius: 4px !important;
+    box-shadow: 0 3px 0 0 #bbb;
 }
 .btn-trash:hover {
   background-color: #bdbdbd;
@@ -819,6 +814,15 @@ p.pull-down {
 }
 .mydp .icon {
   color: #fff;
+}
+button.btn.btn-default.btn-sm.pull-left {
+    border: 0;
+}
+button.btn.btn-default.btn-sm.pull-right {
+    border: 0;
+}
+button.btn.btn-default.btn-sm {
+    border: 0;
 }
 
 /*costumize modal*/

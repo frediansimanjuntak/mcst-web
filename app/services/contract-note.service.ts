@@ -37,7 +37,7 @@ export class ContractNoteService {
     }
 
     delete(idcontract: string, id:string): Promise<void> {
-        return this.http.delete(url + 'contract_note/' + idcontract +'/'+ id, this.jwt())
+        return this.http.delete(url + 'contract_note/' + id +'/'+ idcontract, this.jwt())
             .toPromise()
             .then(() => null)
             .catch(this.handleError);

@@ -121,7 +121,7 @@
 						    <p-column field="status" header="Status" sortable="true" [filter]="true" filterPlaceholder="Search status"></p-column>
 						    <p-column field="remark" header="Remark" sortable="true" [filter]="true" filterPlaceholder="Search remark">
 						        <template let-col let-booking="rowData" pTemplate="body">
-						            <span [style.color]="booking[col.field]">{{booking[col.field]}}</span>
+						            <span *ngIf="!remark">-</span>
 						        </template>
 						    </p-column>
 						    <!-- </p-column> -->

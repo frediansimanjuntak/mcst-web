@@ -55,8 +55,9 @@ export class ContractNoteComponent implements OnInit  {
         if( this.id != null && this._id != null) {
             this.contractService.getById(this.id).subscribe(contract => {this.contract = contract;});
             this.contractnoteService.getById(this.id,this._id)
-            .subscribe(contractnotice => {
-                this.contractnote = contractnotice.contract_notice[0];
+            .subscribe(contractnote => {
+                console.log()
+                this.contractnote = contractnote.contract_note[0];
                 this.images = [];
                 for (var i = 0; i < this.contractnote.attachment.length; ++i) {
                     this.images.push({source:this.contractnote.attachment[i].url});
@@ -115,6 +116,7 @@ export class ContractNoteComponent implements OnInit  {
                 }
             );
         }
+        this.appComponent.loading = false
     }
 
     deleteContractNote(contract: Contract) {
