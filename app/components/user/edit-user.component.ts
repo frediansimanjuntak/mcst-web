@@ -245,7 +245,7 @@ export class EditUserComponent implements OnInit {
             if(model.username && model.email && model.password && model.confirmpassword && 
                model.phone && model.role)
                {
-                this.model.default_development = this.name.default_development._id;
+                model.default_development = this.name.default_development._id;
                 this.appComponent.loading = true;
                 this.userService.createStaff(model)
                 .then(
