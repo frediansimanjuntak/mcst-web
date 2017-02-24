@@ -237,4 +237,30 @@ export class ContractComponent implements OnInit  {
     back(){
         this.router.navigate([this.name.default_development.name_url + '/contract']);
     }
+
+    publish(contract: Contract){
+        this.appComponent.loading = true
+        this.route.params.subscribe(params => {
+            this.id = params['id'];
+            this._id = params['_id'];
+        });
+        this.contractnoticeService.publish(this.id,contract._id)
+        .then(
+                data => {
+                    this._notificationsService.success(
+                            'Success',
+                            'Publish notice successful',
+                    )
+                    this.ngOnInit()
+                },
+                error => {
+                    console.log(error);
+                    this._notificationsService.error(
+                            'Error',
+                            'Publish failed, server Error',
+                    )
+                    setTimeout(() => this.appComponent.loading = false, 1000);
+                }
+            );
+    }
 }

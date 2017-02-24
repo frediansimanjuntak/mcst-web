@@ -6,6 +6,11 @@
             </div>
             <p class="id-location">Home > Manage Projects > {{ contract.title }} > Contract Notice > {{ contractnotice.title }}</p>
             <div class="row">
+                    <div class="col-md-4">
+                        <a class="link-box" style="text-decoration:underline;" (click)="back()">Back to last page</a>
+                    </div>
+                </div>
+            <div class="row">
                 <div class="col-lg-6">
                     <p-galleria [images]="images" panelWidth="500" panelHeight="313"></p-galleria>
                 </div>
@@ -32,20 +37,8 @@
                         <div class="col-md-4">
                             <p>Description of Project :</p>
                         </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-md-12">
+                        <div class="col-md-8">
                             <p>{{ contractnotice.description }}</p>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-md-4">
-                            <p>Action :</p>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-md-12">
-                            <a class="btn btn-primary" (click)="edit(contractnotice._id)" style="cursor:pointer">Edit</a>
                         </div>
                     </div>
                 </div>
