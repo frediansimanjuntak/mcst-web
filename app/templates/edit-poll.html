@@ -110,7 +110,7 @@
                             <input type="text" class="form-control" name="choice-{{i}}" [(ngModel)]="pollChoices[i]"  #{{pollChoices[i]}}="ngModel" placeholder="Input choice name here" />
                         </div>
 
-                        <pre>{{ model.choices | json}}</pre>
+                       
                         <div class="margin-20">
                             <a (click)="addChoice()" style="cursor: pointer">
                                 Add another choice +
