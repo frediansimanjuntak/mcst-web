@@ -104,7 +104,7 @@
                     <div *ngFor="let owned of myForm.controls.schedule.controls; let i=index" class="panel panel-default">
                         <div class="panel-heading">
                             <span>Schedule {{i + 1}}</span>
-                            <span class="glyphicon glyphicon-remove pull-right" *ngIf="myForm.controls.schedule.controls.length > 1" (click)="removeOwned(i)"></span>
+                            <span class="glyphicon glyphicon-remove pull-right" *ngIf="myForm.controls.schedule.controls.length > 1" (click)="removeSchedule(i)"></span>
                         </div>
                         <div class="panel-body" [formGroupName]="i">
                             <div class="form-group col-xs-12">
