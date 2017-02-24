@@ -67,6 +67,7 @@
 								</div>
 								<div class="col-md-7">
 									<span *ngIf="unit.landlord">{{ unit.landlord.username}}</span>
+									<span *ngIf="!unit.landlord">-</span>
 								</div>
 							</div>
 							<div class="row add-bottom-10px">
@@ -77,6 +78,7 @@
 								</div>
 								<div class="col-md-7">
 									<span *ngIf="unit.status">{{ unit.status}}</span>
+									<span *ngIf="!unit.status">-</span>
 								</div>
 							</div>
 							<div class="row add-bottom-10px">
@@ -87,6 +89,7 @@
 								</div>
 								<div class="col-md-7">
 									<span *ngIf="unit.landlord">{{ visitActive.visiting}}</span>
+									<span *ngIf="!unit.landlord">-</span>
 								</div>
 							</div>
 							<div class="row add-bottom-10px">
@@ -97,6 +100,7 @@
 								</div>
 								<div class="col-md-7">
 									<span *ngIf="unit.landlord">{{ unit.landlord.phone}}</span>
+									<span *ngIf="!unit.landlord">-</span>
 								</div>
 							</div>
 							<div class="row add-bottom-10px">
@@ -107,6 +111,7 @@
 								</div>
 								<div class="col-md-7">
 									<span *ngIf="unit.landlord">{{ unit.landlord.phone}}</span>
+									<span *ngIf="!unit.landlord">-</span>
 								</div>
 							</div>
 							<br>
