@@ -37,9 +37,9 @@
         </div>
         <div *ngIf="contract && !contractnote">
             <div class="title"> 
-                Create a Project notice
+                Create a Project note
             </div>
-            <p>Home > Manage Project > {{contract.title}} > Create a Project notice</p>
+            <p>Home > Manage Project > {{contract.title}} > Create a Project note</p>
             <form class="form-horizontal col-md-6" name="form" (ngSubmit)="f.form.valid && createContractNote(contract._id)" #f="ngForm" novalidate>
                 <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !status.valid }">
                     <label class="control-label col-sm-4" for="status">Project Status :</label>

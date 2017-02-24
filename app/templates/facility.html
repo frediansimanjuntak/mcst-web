@@ -3,6 +3,7 @@
         <div *ngIf="facility">
             <div class="title">{{facility.name}}</div>
             <p class="id-location">Home > Facility > {{facility.name}}</p>
+            <p><a style="cursor:pointer" (click)="goBack()">Back to last page</a></p>
             <div class="row">
                 <div class="col-lg-12">
                     <div *ngFor="let schedule of facility.schedule" class="row">

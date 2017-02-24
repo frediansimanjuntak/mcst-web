@@ -45,6 +45,13 @@ export class IncidentService {
             .catch(this.handleError);
     }
 
+    resolve(body:Incident): Promise<Incident> {
+        return this.http.post(url + 'incidents/resolve/' + body._id,body, this.jwt())
+            .toPromise()
+            .then(res => res.json().data)
+            .catch(this.handleError);
+    }
+
     delete(id: string): Promise<void> {
         return this.http.delete(url + 'incidents/' + id, this.jwt())
             .toPromise()

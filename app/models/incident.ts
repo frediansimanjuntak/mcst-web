@@ -13,7 +13,7 @@ export class Incident {
   remark : string;
   status : string;
   starred_by : User[];
-  archive : boolean;
+  archieve : boolean;
   created_by : User;
   updated_at : string;
   created_at : string; 

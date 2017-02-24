@@ -115,6 +115,7 @@ export class ContractNoteComponent implements OnInit  {
                 }
             );
         }
+        this.appComponent.loading = false
     }
 
     deleteContractNote(contract: Contract) {

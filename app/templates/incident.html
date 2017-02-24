@@ -44,7 +44,7 @@
                         </div>
                         <div class="row">
                             <div class="col-md-5 col-padding">
-                                <a  class="btn btn-primary btn-gray" (click)="archive(incident._id)" style="cursor:pointer"><img src="assets/image/icon_archived.png" width="14px" height="12px"> Archive Report</a>
+                                <a  class="btn btn-primary btn-gray" (click)="archieveConfirmation(incident)" style="cursor:pointer"><img src="assets/image/icon_archived.png" width="14px" height="12px"> Archive Report</a>
                             </div>
                         </div> 
                     </div>
@@ -72,11 +72,15 @@
                 <tabset>
                 <!-- ALL -->
                     <tab heading="All">
-                        <p-dataTable [value]="incidents" [rows]="10" [paginator]="true" [responsive]="true" #dt>
+                        <p-dataTable [value]="incidents" [rows]="10" [paginator]="true" sortField="starred_by" [responsive]="true" #dt>
                             <p-column filterMatchMode="contains" field="reference_no" header="Report No." sortable="true" [filter]="true" filterPlaceholder="Search Report No."></p-column>
                             <p-column filterMatchMode="contains" [style]="{'text-transform': 'capitalize'}" field="incident_type" header="Type" sortable="true" [filter]="true" filterPlaceholder="Search Type"></p-column>
                             <p-column filterMatchMode="contains" field="created_by.username" header="Reported by" sortable="true" [filter]="true" filterPlaceholder="Search Reported by"></p-column>
-                            <p-column filterMatchMode="contains" field="created_at" header="Report time" sortable="true" [filter]="true" filterPlaceholder="Search Report time"></p-column>
+                            <p-column filterMatchMode="contains" field="created_at" header="Report time" sortable="true" [filter]="true" filterPlaceholder="Search Report time">
+                                <template let-data="rowData" pTemplate="body">
+                                    {{data.created_at | date:'d/M/y'}}
+                                </template>
+                            </p-column>
                             <p-column filterMatchMode="contains" field="title" header="Title" sortable="true" [filter]="true" filterPlaceholder="Search Title"></p-column>
                             <p-column filterMatchMode="contains" field="remark" header="Message" sortable="true" [filter]="true" filterPlaceholder="Search Message"></p-column>
                             <p-column [style]="{'width':'75px'}" header="Photo">
@@ -86,7 +90,7 @@
                                 </template>
                             </p-column>
                             <p-column [filter]="true" [style]="{'text-transform': 'capitalize'}" filterPlaceholder="Search status" filterMatchMode="contains" field="status" header="Status" sortable="true"></p-column>
-                            <p-column [style]="{'width':'150px'}" styleClass="col-button" header="Action">
+                            <p-column [style]="{'width':'150px'}" styleClass="col-button" header="Action" field="starred_by">
                                 <template let-data="rowData" pTemplate="body">
                                     <a *ngIf="data.status == 'new'" type="button" style="text-decoration: underline;cursor:pointer" (click)="openModal(data) || firstModal.open()">Resolved</a>
                                     <a type="button" style="text-decoration: underline;cursor:pointer" (click)="view(data)">View</a>
@@ -99,11 +103,15 @@
                     </tab>
                     <!-- NEW -->
                     <tab heading="New">
-                        <p-dataTable [value]="dataNew" [rows]="10" [responsive]="true" [paginator]="true">
+                        <p-dataTable [value]="dataNew" [rows]="10" [responsive]="true" sortField="starred_by.username" [paginator]="true">
                             <p-column filterMatchMode="contains" field="reference_no" header="Report No." sortable="true" [filter]="true" filterPlaceholder="Search Report No."></p-column>
                             <p-column filterMatchMode="contains" [style]="{'text-transform': 'capitalize'}" field="incident_type" header="Type" sortable="true" [filter]="true" filterPlaceholder="Search Type"></p-column>
                             <p-column filterMatchMode="contains" field="created_by.username" header="Reported by" sortable="true" [filter]="true" filterPlaceholder="Search Reported by"></p-column>
-                            <p-column filterMatchMode="contains" field="created_at" header="Report time" sortable="true" [filter]="true" filterPlaceholder="Search Report time"></p-column>
+                            <p-column filterMatchMode="contains" field="created_at" header="Report time" sortable="true" [filter]="true" filterPlaceholder="Search Report time">
+                                <template let-data="rowData" pTemplate="body">
+                                    {{data.created_at | date:'d/M/y'}}
+                                </template>
+                            </p-column>
                             <p-column filterMatchMode="contains" field="title" header="Title" sortable="true" [filter]="true" filterPlaceholder="Search Title"></p-column>
                             <p-column filterMatchMode="contains" field="remark" header="Message" sortable="true" [filter]="true" filterPlaceholder="Search Message"></p-column>
                             <p-column [style]="{'width':'75px'}" header="Photo">
@@ -113,24 +121,28 @@
                                 </template>
                             </p-column>
                             <p-column [filter]="true" [style]="{'text-transform': 'capitalize'}" filterPlaceholder="Search status" filterMatchMode="contains" field="status" header="Status" sortable="true"></p-column>
-                            <p-column [style]="{'width':'150px'}" styleClass="col-button" header="Action">
+                            <p-column [style]="{'width':'150px'}" styleClass="col-button" header="Action" field="starred_by.username">
                                 <template let-data="rowData" pTemplate="body">
                                     <a type="button" style="text-decoration: underline;cursor:pointer" (click)="openModal(data) || firstModal.open()">Resolved</a>
                                     <a type="button" style="text-decoration: underline;cursor:pointer" (click)="view(data)">View</a>
                                     <img *ngIf="data.archieve === false" title="archived" src="../../assets/image/icon_archived.png" (click)="archieveConfirmation(data)" />
-                                    <img *ngIf="data.starred_by == null" title="starred" src="../../assets/image/star_filled.png" width="24px" height="28px" (click)="starredConfirmation(data)" />
-                                    <img *ngIf="data.starred_by != null" title="unstarred" src="../../assets/image/icon_star_active@3x.png" width="24px" height="28px" (click)="unstarred(data)" />
+                                    <img *ngIf="data.starred_by.length < 1" title="starred" src="../../assets/image/star_filled.png" width="24px" height="28px" (click)="starredConfirmation(data)" />
+                                    <img *ngIf="data.starred_by.length > 0" title="unstarred" src="../../assets/image/icon_star_active@3x.png" width="24px" height="28px" (click)="unstarred(data)" />
                                 </template>
                             </p-column>
                         </p-dataTable>
                     </tab>
                     <!-- IN PROGRESS -->
                     <tab heading="In-Progress">
-                        <p-dataTable [value]="dataInProgress" [rows]="10" [responsive]="true" [paginator]="true" #dt>
+                        <p-dataTable [value]="dataInProgress" [rows]="10" [responsive]="true" sortField="starred_by.username" [paginator]="true" #dt>
                             <p-column filterMatchMode="contains" field="reference_no" header="Report No." sortable="true" [filter]="true" filterPlaceholder="Search Report No."></p-column>
                             <p-column filterMatchMode="contains" [style]="{'text-transform': 'capitalize'}" field="incident_type" header="Type" sortable="true" [filter]="true" filterPlaceholder="Search Type"></p-column>
                             <p-column filterMatchMode="contains" field="created_by.username" header="Reported by" sortable="true" [filter]="true" filterPlaceholder="Search Reported by"></p-column>
-                            <p-column filterMatchMode="contains" field="created_at" header="Report time" sortable="true" [filter]="true" filterPlaceholder="Search Report time"></p-column>
+                            <p-column filterMatchMode="contains" field="created_at" header="Report time" sortable="true" [filter]="true" filterPlaceholder="Search Report time">
+                                <template let-data="rowData" pTemplate="body">
+                                    {{data.created_at | date:'d/M/y'}}
+                                </template>
+                            </p-column>
                             <p-column filterMatchMode="contains" field="title" header="Title" sortable="true" [filter]="true" filterPlaceholder="Search Title"></p-column>
                             <p-column filterMatchMode="contains" field="remark" header="Message" sortable="true" [filter]="true" filterPlaceholder="Search Message"></p-column>
                             <p-column [style]="{'width':'75px'}" header="Photo">
@@ -140,23 +152,27 @@
                                 </template>
                             </p-column>
                             <p-column [filter]="true" [style]="{'text-transform': 'capitalize'}" filterPlaceholder="Search status" filterMatchMode="contains" field="status" header="Status" sortable="true"></p-column>
-                            <p-column [style]="{'width':'150px'}" styleClass="col-button" header="Action">
+                            <p-column [style]="{'width':'150px'}" styleClass="col-button" header="Action" field="starred_by.username">
                                 <template let-data="rowData" pTemplate="body">
                                     <a type="button" style="text-decoration: underline;cursor:pointer" (click)="view(data)">View</a>
                                     <img *ngIf="data.archieve === false" title="archived" src="../../assets/image/icon_archived.png" (click)="archieveConfirmation(data)" />
-                                    <img *ngIf="data.starred_by == null" title="starred" src="../../assets/image/star_filled.png" width="24px" height="28px" (click)="starredConfirmation(data)" />
-                                    <img *ngIf="data.starred_by != null" title="unstarred" src="../../assets/image/icon_star_active@3x.png" width="24px" height="28px" (click)="unstarred(data)" />
+                                    <img *ngIf="data.starred_by.length < 1" title="starred" src="../../assets/image/star_filled.png" width="24px" height="28px" (click)="starredConfirmation(data)" />
+                                    <img *ngIf="data.starred_by.length > 0" title="unstarred" src="../../assets/image/icon_star_active@3x.png" width="24px" height="28px" (click)="unstarred(data)" />
                                 </template>
                             </p-column>
                         </p-dataTable>
                     </tab>
                     <!-- RESOLVED -->
                     <tab heading="Resolved">
-                        <p-dataTable [value]="dataResolved" [rows]="10" [responsive]="true" [paginator]="true" #dt>
+                        <p-dataTable [value]="dataResolved" [rows]="10" [responsive]="true" sortField="starred_by.username" [paginator]="true" #dt>
                             <p-column filterMatchMode="contains" field="reference_no" header="Report No." sortable="true" [filter]="true" filterPlaceholder="Search Report No."></p-column>
                             <p-column filterMatchMode="contains" [style]="{'text-transform': 'capitalize'}" field="incident_type" header="Type" sortable="true" [filter]="true" filterPlaceholder="Search Type"></p-column>
                             <p-column filterMatchMode="contains" field="created_by.username" header="Reported by" sortable="true" [filter]="true" filterPlaceholder="Search Reported by"></p-column>
-                            <p-column filterMatchMode="contains" field="created_at" header="Report time" sortable="true" [filter]="true" filterPlaceholder="Search Report time"></p-column>
+                            <p-column filterMatchMode="contains" field="created_at" header="Report time" sortable="true" [filter]="true" filterPlaceholder="Search Report time">
+                                <template let-data="rowData" pTemplate="body">
+                                    {{data.created_at | date:'d/M/y'}}
+                                </template>
+                            </p-column>
                             <p-column filterMatchMode="contains" field="title" header="Title" sortable="true" [filter]="true" filterPlaceholder="Search Title"></p-column>
                             <p-column filterMatchMode="contains" field="remark" header="Message" sortable="true" [filter]="true" filterPlaceholder="Search Message"></p-column>
                             <p-column [style]="{'width':'75px'}" header="Photo">
@@ -166,12 +182,42 @@
                                 </template>
                             </p-column>
                             <p-column [filter]="true" [style]="{'text-transform': 'capitalize'}" filterPlaceholder="Search status" filterMatchMode="contains" field="status" header="Status" sortable="true"></p-column>
-                            <p-column [style]="{'width':'150px'}" styleClass="col-button" header="Action">
+                            <p-column [style]="{'width':'150px'}" styleClass="col-button" header="Action" field="starred_by.username">
                                 <template let-data="rowData" pTemplate="body">
                                     <a type="button" style="text-decoration: underline;cursor:pointer" (click)="view(data)">View</a>
                                     <img *ngIf="data.archieve === false" title="archived" src="../../assets/image/icon_archived.png" (click)="archieveConfirmation(data)" />
-                                    <img *ngIf="data.starred_by == null" title="starred" src="../../assets/image/star_filled.png" width="24px" height="28px" (click)="starredConfirmation(data)" />
-                                    <img *ngIf="data.starred_by != null" title="unstarred" src="../../assets/image/icon_star_active@3x.png" width="24px" height="28px" (click)="unstarred(data)" />
+                                    <img *ngIf="data.starred_by.length < 1" title="starred" src="../../assets/image/star_filled.png" width="24px" height="28px" (click)="starredConfirmation(data)" />
+                                    <img *ngIf="data.starred_by.length > 0" title="unstarred" src="../../assets/image/icon_star_active@3x.png" width="24px" height="28px" (click)="unstarred(data)" />
+                                </template>
+                            </p-column>
+                        </p-dataTable>
+                    </tab>
+                    <!-- Archieved -->
+                    <tab heading="Archieved">
+                        <p-dataTable [value]="dataArchieved" [rows]="10" [responsive]="true" sortField="starred_by.username" [paginator]="true" #dt>
+                            <p-column filterMatchMode="contains" field="reference_no" header="Report No." sortable="true" [filter]="true" filterPlaceholder="Search Report No."></p-column>
+                            <p-column filterMatchMode="contains" [style]="{'text-transform': 'capitalize'}" field="incident_type" header="Type" sortable="true" [filter]="true" filterPlaceholder="Search Type"></p-column>
+                            <p-column filterMatchMode="contains" field="created_by.username" header="Reported by" sortable="true" [filter]="true" filterPlaceholder="Search Reported by"></p-column>
+                            <p-column filterMatchMode="contains" field="created_at" header="Report time" sortable="true" [filter]="true" filterPlaceholder="Search Report time">
+                                <template let-data="rowData" pTemplate="body">
+                                    {{data.created_at | date:'d/M/y'}}
+                                </template>
+                            </p-column>
+                            <p-column filterMatchMode="contains" field="title" header="Title" sortable="true" [filter]="true" filterPlaceholder="Search Title"></p-column>
+                            <p-column filterMatchMode="contains" field="remark" header="Message" sortable="true" [filter]="true" filterPlaceholder="Search Message"></p-column>
+                            <p-column [style]="{'width':'75px'}" header="Photo">
+                                <template let-data="rowData" pTemplate="body">
+                                    <a *ngIf="data.attachment != null" style="text-decoration: underline;cursor:pointer" (click)="view(data)">View</a>
+                                    <a *ngIf="data.attachment == null">-</a>
+                                </template>
+                            </p-column>
+                            <p-column [filter]="true" [style]="{'text-transform': 'capitalize'}" filterPlaceholder="Search status" filterMatchMode="contains" field="status" header="Status" sortable="true"></p-column>
+                            <p-column [style]="{'width':'150px'}" styleClass="col-button" header="Action" field="starred_by.username">
+                                <template let-data="rowData" pTemplate="body">
+                                    <a type="button" style="text-decoration: underline;cursor:pointer" (click)="view(data)">View</a>
+                                    <img *ngIf="data.archieve === false" title="archived" src="../../assets/image/icon_archived.png" (click)="archieveConfirmation(data)" />
+                                    <img *ngIf="data.starred_by.length < 1" title="starred" src="../../assets/image/star_filled.png" width="24px" height="28px" (click)="starredConfirmation(data)" />
+                                    <img *ngIf="data.starred_by.length > 0" title="unstarred" src="../../assets/image/icon_star_active@3x.png" width="24px" height="28px" (click)="unstarred(data)" />
                                 </template>
                             </p-column>
                         </p-dataTable>
