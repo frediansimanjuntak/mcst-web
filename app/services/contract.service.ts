@@ -41,8 +41,8 @@ export class ContractService {
             .catch(this.handleError);
     }
 
-    update(body:Contract): Promise<Contract> {
-        return this.http.post(url + 'contracts/update/' + body._id,body, this.jwt())
+    update(body:any , id:any): Promise<Contract> {
+        return this.http.post(url + 'contracts/update/' + id,body, this.jwt())
             .toPromise()
             .then(res => res.json().data)
             .catch(this.handleError);

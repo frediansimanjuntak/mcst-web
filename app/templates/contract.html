@@ -248,19 +248,19 @@
                         <tab heading="All">
                             <p-dataTable [value]="contracts" [rows]="10" [paginator]="true" [responsive]="true">
                                 <p-column filterMatchMode="contains" [style]="{'width': '180px' , 'text-transform': 'capitalize'}" field="title" header="Project Title" sortable="true" [filter]="true" filterPlaceholder="Search Project Title"></p-column>
-                                <p-column filterMatchMode="contains" [style]="{'width': '120px'}" header="Commence on" sortable="true" [filter]="true" filterPlaceholder="Search Commence on">
+                                <p-column filterMatchMode="contains" field="start_time" [style]="{'width': '120px'}" header="Commence on" sortable="true" [filter]="true" filterPlaceholder="Search Commence on">
                                     <template let-contracts="rowData" pTemplate="body">
                                         <span>{{contracts.start_time | date:'d/M/y'}}</span>
                                     </template>
                                 </p-column>
-                                <p-column filterMatchMode="contains" [style]="{'width': '165px'}" header="Estimated Completion" sortable="true" [filter]="true" filterPlaceholder="Search Estimated Completion">
+                                <p-column filterMatchMode="contains" field="end_time" [style]="{'width': '165px'}" header="Estimated Completion" sortable="true" [filter]="true" filterPlaceholder="Search Estimated Completion">
                                     <template let-contracts="rowData" pTemplate="body">
                                         <span>{{contracts.end_time | date:'d/M/y'}}</span>
                                     </template>
                                 </p-column>
                                 <p-column filterMatchMode="contains" [style]="{'width': '155px'}" field="remark" header="Remarks" sortable="true" [filter]="true" filterPlaceholder="Search Remark"></p-column>
                                 <p-column filterMatchMode="contains" [style]="{'width': '112px' , 'text-transform': 'capitalize'}" field="status" header="Status" sortable="true" [filter]="true" filterPlaceholder="Search Status"></p-column>
-                                <p-column filterMatchMode="contains" field="" header="Created/Update" sortable="true" [filter]="true" filterPlaceholder="Search Issued on">
+                                <p-column filterMatchMode="contains" field="updated_at" header="Created/Update" sortable="true" [filter]="true" filterPlaceholder="Search Issued on">
                                     <template let-contracts="rowData" pTemplate="body">
                                         <span style="font-size:10px">Created:{{contracts.created_at | date:'d/M/y'}}</span><br>
                                         <span style="font-size:10px">Latest:{{contracts.updated_at | date:'d/M/y'}}</span>
@@ -278,19 +278,19 @@
                         <tab heading="Open">
                             <p-dataTable [value]="open" [rows]="10" [paginator]="true" [responsive]="true">
                                 <p-column filterMatchMode="contains" [style]="{'width': '180px' , 'text-transform': 'capitalize'}" field="title" header="Project Title" sortable="true" [filter]="true" filterPlaceholder="Search Project Title"></p-column>
-                                <p-column filterMatchMode="contains" [style]="{'width': '120px'}" header="Commence on" sortable="true" [filter]="true" filterPlaceholder="Search Commence on">
+                                <p-column filterMatchMode="contains" field="start_time" [style]="{'width': '120px'}" header="Commence on" sortable="true" [filter]="true" filterPlaceholder="Search Commence on">
                                     <template let-open="rowData" pTemplate="body">
                                         <span>{{open.start_time | date:'d/M/y'}}</span>
                                     </template>
                                 </p-column>
-                                <p-column filterMatchMode="contains" header="Estimated Completion" sortable="true" [style]="{'width': '165px'}" [filter]="true" filterPlaceholder="Search Estimated Completion">
+                                <p-column filterMatchMode="contains" field="end_time" header="Estimated Completion" sortable="true" [style]="{'width': '165px'}" [filter]="true" filterPlaceholder="Search Estimated Completion">
                                     <template let-open="rowData" pTemplate="body">
                                         <span>{{open.end_time | date:'d/M/y'}}</span>
                                     </template>
                                 </p-column>
                                 <p-column filterMatchMode="contains" [style]="{'width': '155px'}" field="remark" header="Remarks" sortable="true" [filter]="true" filterPlaceholder="Search Remark"></p-column>
                                 <p-column filterMatchMode="contains" [style]="{'width': '112px' , 'text-transform': 'capitalize'}" field="status" header="Status" sortable="true" [filter]="true" filterPlaceholder="Search Status"></p-column>
-                                <p-column filterMatchMode="contains" field="" header="Created/Update" sortable="true" [filter]="true" filterPlaceholder="Search Issued on">
+                                <p-column filterMatchMode="contains" field="updated_at" header="Created/Update" sortable="true" [filter]="true" filterPlaceholder="Search Issued on">
                                     <template let-open="rowData" pTemplate="body">
                                         <span style="font-size:10px">Created:{{open.created_at | date:'d/M/y'}}</span><br>
                                         <span style="font-size:10px">Latest:{{open.updated_at | date:'d/M/y'}}</span>
@@ -308,19 +308,19 @@
                         <tab heading="Closed">
                             <p-dataTable [value]="close" [rows]="10" [paginator]="true" [responsive]="true">
                                 <p-column filterMatchMode="contains" [style]="{'width': '180px' , 'text-transform': 'capitalize'}" field="title" header="Project Title" sortable="true" [filter]="true" filterPlaceholder="Search Project Title"></p-column>
-                                <p-column filterMatchMode="contains" [style]="{'width': '120px'}" header="Commence on" sortable="true" [filter]="true" filterPlaceholder="Search Commence on">
+                                <p-column filterMatchMode="contains" field="start_time" [style]="{'width': '120px'}" header="Commence on" sortable="true" [filter]="true" filterPlaceholder="Search Commence on">
                                     <template let-close="rowData" pTemplate="body">
                                         <span>{{close.start_time | date:'d/M/y'}}</span>
                                     </template>
                                 </p-column>
-                                <p-column filterMatchMode="contains" [style]="{'width': '165px'}" header="Estimated Completion" sortable="true" [filter]="true" filterPlaceholder="Search Estimated Completion">
+                                <p-column filterMatchMode="contains" field="end_time" [style]="{'width': '165px'}" header="Estimated Completion" sortable="true" [filter]="true" filterPlaceholder="Search Estimated Completion">
                                     <template let-close="rowData" pTemplate="body">
                                         <span>{{close.end_time | date:'d/M/y'}}</span>
                                     </template>
                                 </p-column>
                                 <p-column filterMatchMode="contains" field="remark" [style]="{'width': '155px'}" header="Remarks" sortable="true" [filter]="true" filterPlaceholder="Search Remark"></p-column>
                                 <p-column filterMatchMode="contains" [style]="{'width': '112px' , 'text-transform': 'capitalize'}" field="status" header="Status" sortable="true" [filter]="true" filterPlaceholder="Search Status"></p-column>
-                                <p-column filterMatchMode="contains" field="" header="Created/Update" sortable="true" [filter]="true" filterPlaceholder="Search Issued on">
+                                <p-column filterMatchMode="contains" field="updated_at" header="Created/Update" sortable="true" [filter]="true" filterPlaceholder="Search Issued on">
                                     <template let-close="rowData" pTemplate="body">
                                         <span style="font-size:10px">Created:{{close.created_at | date:'d/M/y'}}</span><br>
                                         <span style="font-size:10px">Latest:{{close.updated_at | date:'d/M/y'}}</span>

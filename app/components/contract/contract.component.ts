@@ -58,6 +58,7 @@ export class ContractComponent implements OnInit  {
         	this.contractService.getById(this.id)
             .subscribe(contract => {
                 this.contract = contract;
+                console.log(this.contract)
                 this.images = [];
                 for (var i = 0; i < this.contract.attachment.length; ++i) {
                     this.images.push({source:this.contract.attachment[i].url});
@@ -67,6 +68,7 @@ export class ContractComponent implements OnInit  {
             .subscribe(contractnotes => {
                 if(contractnotes[0].contract_note.length > 0) { 
                     this.contractnotes = contractnotes[0].contract_note;
+                    console.log(this.contractnotes)
                 }
             })
             this.contractnoticeService.getAll(this.id)
@@ -74,6 +76,7 @@ export class ContractComponent implements OnInit  {
                 if(contractnotices[0].contract_notice.length > 0) {
                     this.contractnotices = contractnotices[0].contract_notice;
                 }
+                console.log(this.contractnotices)
                 setTimeout(() => this.appComponent.loading = false, 1000);
             })
         }
