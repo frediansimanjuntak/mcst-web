@@ -248,7 +248,6 @@
 								</template>
 							</p-column>
 							<p-column field="preferred_method_of_contact" header="Preferred method of contact"></p-column>
-							<p-column field="created_at" header="Reported on" sortable="true"></p-column>
 							<p-column header="Reported on" sortable="true">
 								<template let-archievedLosts="rowData" pTemplate="body">
 									<span>{{archievedLosts.created_at | date:'d/M/y'}}</span>
