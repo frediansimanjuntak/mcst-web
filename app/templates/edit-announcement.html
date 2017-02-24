@@ -52,13 +52,13 @@
         <div class="form-group">
           <label class="control-label col-sm-4" for="auto_post_on">Auto post on :</label>
           <div class="col-sm-8">
-            <my-date-picker [options]="autoPostOnDateOptions" [placeholder]="autoPostOnDateTxt" [selDate]="model.auto_post_on" (dateChanged)="autoPostOnDateChanged($event)"></my-date-picker>
+            <my-date-picker [options]="autoPostOnDateOptions" [placeholder]="autoPostOnDateTxt" [selDate]="selectedAutoPostOn" (dateChanged)="autoPostOnDateChanged($event)"></my-date-picker>
           </div>
         </div>
         <div class="form-group">
           <label class="control-label col-sm-4" for="valid_till">Valid till :</label>
           <div class="col-sm-8">
-            <my-date-picker [options]="validTillDateOptions" [placeholder]="validTillDateTxt" [selDate]="model.valid_till" (dateChanged)="validTillDateChanged($event)"></my-date-picker>
+            <my-date-picker [options]="validTillDateOptions" [placeholder]="validTillDateTxt" [selDate]="selectedValidDate" (dateChanged)="validTillDateChanged($event)"></my-date-picker>
           </div>
         </div>
 
