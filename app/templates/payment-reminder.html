@@ -3,6 +3,7 @@
         <div *ngIf="paymentreminder">
             <div class="title">{{ paymentreminder.title }}</div>
             <p class="id-location">Home > Payment system > {{ paymentreminder.title }}</p>
+            <p><a style="cursor:pointer" (click)="goBack()">Back to last page</a></p>
             <div class="row">
                 <div class="col-md-12">
                     <div class="row">
@@ -11,7 +12,7 @@
                     </div>
                     <div class="row">
                         <div class="col-md-2 col-padding"><strong>Auto issue on :</strong></div>
-                        <div class="col-md-10 col-padding">{{ paymentreminder.auto_issue_on | date:'d/M/y' }}</div>
+                        <div class="col-md-10 col-padding">{{ paymentreminder.auto_issue_on }}</div>
                     </div>
                     <div class="row">
                         <div class="col-md-2 col-padding"><strong>Message to receiver :</strong></div>

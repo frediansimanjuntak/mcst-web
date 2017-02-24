@@ -6,6 +6,8 @@ import '../../rxjs-operators';
 import { NotificationsService } from 'angular2-notifications';
 import 'rxjs/add/operator/switchMap';
 import { AppComponent } from '../index';
+import * as moment from 'moment'
+import { Pipe, PipeTransform } from '@angular/core'
 
 @Component({
   // moduleId: module.id,
@@ -16,7 +18,7 @@ import { AppComponent } from '../index';
 export class EditContractComponent  implements OnInit {
     public reference_type: any; 
     public reference_id: any; 
-	contract: Contract;
+	contract: any;
     incident: any[] = [];
     model: any = {};
     id: string;
@@ -34,6 +36,7 @@ export class EditContractComponent  implements OnInit {
         private _notificationsService: NotificationsService,) {}
 
     ngOnInit(): void {
+        this.model.file = "null"
         this.route.params.subscribe(params => {
             this.id = params['id'];
             this.refno = params['refno'];
@@ -45,6 +48,8 @@ export class EditContractComponent  implements OnInit {
             this.contractService.getById(this.id)
             .subscribe(contract => {
                 this.contract = contract;
+                this.contract.start_time = this.contract.start_time.slice(0,10)
+                this.contract.end_time = this.contract.start_time.slice(0,10)
                 setTimeout(() => this.appComponent.loading = false, 1000);
             });
         }
@@ -62,7 +67,7 @@ export class EditContractComponent  implements OnInit {
         if(this.model.attachment.length > 0) {
             let formData:FormData = new FormData();
             for (var i = 0; i < this.model.attachment.length; i++) {
-                formData.append("attachment[]", this.model.attachment[i]);
+                formData.append("attachment", this.model.attachment[i]);
             }
             formData.append("reference_no", this.model.reference_no);
             formData.append("reference_type", this.reference_type);
@@ -102,27 +107,48 @@ export class EditContractComponent  implements OnInit {
         this.model.attachment.splice(i, 1)
     }
 
-    updateContract(id:any){
-        this.appComponent.loading = true
-        this.contract.attachment = this.model.attachment
-		this.contractService.update(this.contract)
-		.then(
+    updateOnChange(event: any) {
+       let files = [].slice.call(event.target.files);
+       this.contract.attachment = files;
+       this.model.file = "not null"
+    }
 
-			response => {
-                 this._notificationsService.success(
-                            'Success',
-                            'Update contract successful',
-                    )
-                this.router.navigate([this.name.default_development.name_url + '/contract/view', id ]);
-            },
-            error => {
-                this._notificationsService.error(
-                            'Error',
-                            'Update contract failed',
-                    )
-            	this.appComponent.loading = false
+    updateRemove(i: any){
+        this.contract.attachment.splice(i, 1)
+    }
+
+    updateContract(){
+        this.appComponent.loading = true
+        if(this.contract.attachment.length > 0) {
+            let formData:FormData = new FormData();
+            for (var i = 0; i < this.contract.attachment.length; i++) {
+                formData.append("attachment", this.contract.attachment[i]);
             }
-        );
+            formData.append("start_time", this.contract.start_time);
+            formData.append("end_time", this.contract.end_time);
+            formData.append("contract_type", this.contract.contract_type);
+            formData.append("title", this.contract.title);
+            formData.append("remark", this.contract.remark);
+            formData.append("file", this.model.file);
+            this.contractService.update(formData, this.contract._id)
+            .then(
+                response => {
+                     this._notificationsService.success(
+                                'Success',
+                                'Update contract successful',
+                        )
+                    this.router.navigate([this.name.default_development.name_url + '/contract/view', this.contract._id ]);
+                },
+                error => {
+                    this._notificationsService.error(
+                                'Error',
+                                'Update contract failed',
+                        )
+                    this.appComponent.loading = false
+                }
+            );
+        }
+        this.appComponent.loading = false
 	}
 
     cancel(){
