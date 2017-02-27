@@ -86,6 +86,12 @@ ul.ui-select-choices.dropdown-menu {
 .row.content-column {
     margin: 50px 17px;
 }
+thead {
+    border-style: solid;
+    border-width: 1px;
+    border-color: #dedede;
+    border-top: 0;
+}
 
 /*.btn-primary {
   background-color: rgb(181,173,150) !important;
@@ -959,22 +965,16 @@ img.ui-panel-images {
 li.ui-galleria-frame.ui-galleria-frame-active {
     width: 105px !important;
     height: 80px !important;
-    margin: 10px 10px 0 0 !important;
-}
-img.ui-galleria-frame-image {
-    width: 105px !important;
-    height: 80px !important;
 }
 .ui-galleria-caption {
     display: none !important;
 }
 .ui-galleria-filmstrip-wrapper {
-    height: 90px !important;
-    margin: 0 !important;
-    width: 555px !important;
+    margin: 10px 27px !important;
+    width: 500px !important;
 }
-.ui-galleria-nav-next.fa.fa-fw.fa-chevron-circle-right {
-    display: none;
+.fa.fa-fw {
+    margin: 2px 0 !important;
 }
 
 /*costumize panel*/
