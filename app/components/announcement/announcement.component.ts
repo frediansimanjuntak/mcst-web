@@ -29,6 +29,7 @@ export class AnnouncementComponent implements OnInit {
             height: '34px',
             width: '260px',
             inline: false,    
+            showClearDateBtn: false,
             disableUntil: {year: 0, month: 0, day: 0},
             editableDateField: false,
             selectionTxtFontSize: '16px'
