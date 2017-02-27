@@ -42,13 +42,13 @@ export class Galleria implements AfterViewChecked,AfterViewInit,OnDestroy {
 
     @Input() styleClass: string;
 
-    @Input() panelWidth: number = 600;
+    @Input() panelWidth: number = 555;
 
-    @Input() panelHeight: number = 400;
+    @Input() panelHeight: number = 372;
 
-    @Input() frameWidth: number = 60;
+    @Input() frameWidth: number = 105;
 
-    @Input() frameHeight: number = 40;
+    @Input() frameHeight: number = 80;
 
     @Input() activeIndex: number = 0;
 
@@ -129,7 +129,7 @@ export class Galleria implements AfterViewChecked,AfterViewInit,OnDestroy {
 
         if(this.showFilmstrip) {
             this.frames = this.domHandler.find(this.strip,'li.ui-galleria-frame');
-            this.stripWrapper.style.width = this.domHandler.width(this.panelWrapper) - 50 + 'px';
+            this.stripWrapper.style.width = this.domHandler.width(this.panelWrapper) - 105 + 'px';
             this.stripWrapper.style.height = this.frameHeight + 'px';
         }
 

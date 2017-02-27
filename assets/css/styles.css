@@ -966,23 +966,15 @@ li.ui-galleria-frame.ui-galleria-frame-active {
     width: 105px !important;
     height: 80px !important;
 }
-img.ui-galleria-frame-image {
-    width: 105px !important;
-    height: 80px !important;
-}
 .ui-galleria-caption {
     display: none !important;
 }
 .ui-galleria-filmstrip-wrapper {
-    height: 90px !important;
     margin: 10px 27px !important;
     width: 500px !important;
 }
-li.ui-galleria-frame {
-    width: 105px !important;
-}
 .fa.fa-fw {
-    margin: 26px 0 !important;
+    margin: 2px 0 !important;
 }
 
 /*costumize panel*/
