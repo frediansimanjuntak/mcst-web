@@ -3,6 +3,7 @@
         <div *ngIf="paymentreminder">
             <div class="title">{{ paymentreminder.title }}</div>
             <p class="id-location">Home > Payment system > {{ paymentreminder.title }}</p>
+            <p><a class="link-box" style="text-decoration:underline;" (click)="goBack()">Back to last page</a></p>
             <div class="row">
                 <div class="col-md-12">
                     <div class="row">
@@ -11,7 +12,7 @@
                     </div>
                     <div class="row">
                         <div class="col-md-2 col-padding"><strong>Auto issue on :</strong></div>
-                        <div class="col-md-10 col-padding">{{ paymentreminder.auto_issue_on | date:'d/M/y' }}</div>
+                        <div class="col-md-10 col-padding">{{ paymentreminder.auto_issue_on }}</div>
                     </div>
                     <div class="row">
                         <div class="col-md-2 col-padding"><strong>Message to receiver :</strong></div>
@@ -65,8 +66,8 @@
                             </p-column>
                             <p-column field="" header="Notification List" [style]="{'width': '150px'}" sortable="true" [filter]="true" filterPlaceholder="Search notification list">
                                 <template let-draft="rowData" pTemplate="body">
-                                    <span *ngIf="draft.notification_list.applies_to != all">Custom</span>
-                                    <span *ngIf="draft.notification_list.applies_to == all">All</span>
+                                    <span *ngIf="draft.notification_list.applies_to == 'resident with vehicle'">Custom</span>
+                                    <span *ngIf="draft.notification_list.applies_to == 'all'">All</span>
                                 </template>
                             </p-column>
                             <p-column field="created_at" header="Created on" [style]="{'width': '150px'}" sortable="true" [filter]="true" filterPlaceholder="Search created date">
@@ -96,7 +97,7 @@
                             </p-column>
                             <p-column field="" header="Notification List" [style]="{'width': '150px'}" sortable="true" [filter]="true" filterPlaceholder="Search notification list">
                                 <template let-published="rowData" pTemplate="body">
-                                    <span *ngIf="published.notification_list.applies_to != 'all'">Custom</span>
+                                    <span *ngIf="published.notification_list.applies_to != 'resident with vehicle'">Custom</span>
                                     <span *ngIf="published.notification_list.applies_to == 'all'">All</span>
                                 </template>
                             </p-column>

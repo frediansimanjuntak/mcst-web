@@ -47,6 +47,10 @@ export class PaymentReminderComponent implements OnInit {
         	this.paymentreminderService.getById(this.id)
             .subscribe(paymentreminder => {
                 this.paymentreminder = paymentreminder;
+                let y = this.paymentreminder.auto_issue_on.toString().slice(0,4);
+                let m = (this.paymentreminder.auto_issue_on+100).toString().slice(4,6);
+                let d = this.paymentreminder.auto_issue_on.toString().slice(6,8);
+                this.paymentreminder.auto_issue_on = y + '/' + m + '/' + d ;
                 this.notification_list = paymentreminder.notification_list;
                 for (let a = 0; a < this.notification_list.length; ++a) {
                     let total_amount = parseInt(this.notification_list[a].amount)
@@ -126,6 +130,10 @@ export class PaymentReminderComponent implements OnInit {
 
     view(paymentreminder: PaymentReminder){
         this.router.navigate([this.name.default_development.name_url + '/payment_system/view', paymentreminder._id]);
+    }
+
+    goBack(){
+        this.router.navigate([this.name.default_development.name_url + '/payment_system']);
     }
 
     publish(paymentreminder:PaymentReminder){

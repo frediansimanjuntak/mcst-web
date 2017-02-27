@@ -22,11 +22,17 @@
 							</template>
 						</p-column>
 						<p-column field="created_by.username" header="Uploaded by" sortable="true" [filter]="true" filterPlaceholder="Search Created by"></p-column>
-						<p-column field="attachment" header="Attachment" sortable="true" [filter]="true" filterPlaceholder="Search Attachment"></p-column>
+						<p-column field="attachment" header="Attachment" sortable="true">
+							<template let-dataAgm="rowData" pTemplate="body">
+								<span *ngFor="let a of dataAgm.attachment">
+									{{ a.name}},
+								</span>
+							</template>
+						</p-column>
 						<!-- </p-column> -->
 						<p-column styleClass="col-button">
 							<template let-dataAgm="rowData" class="pull-right" pTemplate="body">
-								<button type="button" class="btn btn-trash pull-right" (click)="deleteConfirmation(dataAgm)"><i class="fa fa-trash" aria-hidden="true"></i></button>
+								<button type="button" class="btn btn-trash pull-right" (click)="deleteConfirmation(dataAgm)"><i class="fa fa-trash-o" aria-hidden="true"></i></button>
 								<button class="btn btn-brown btn-publish pull-right" style="cursor:pointer; margin-right:5px" *ngIf="dataAgm.released == false" (click)="openModal(dataAgm) || firstModal.open()">Release</button>
 							</template>
 						</p-column>
@@ -41,11 +47,16 @@
 							</template>
 						</p-column>
 						<p-column field="created_by.username" header="Uploaded by" sortable="true" [filter]="true" filterPlaceholder="Search Created by"></p-column>
-						<p-column field="attachment" header="Attachment" sortable="true" [filter]="true" filterPlaceholder="Search Attachment"></p-column>
-						<!-- </p-column> -->
+						<p-column field="attachment" header="Attachment" sortable="true">
+							<template let-dataEgm="rowData" pTemplate="body">
+								<span *ngFor="let a of dataEgm.attachment">
+									{{ a.name}},
+								</span>
+							</template>
+						</p-column>
 						<p-column styleClass="col-button">
 							<template let-dataEgm="rowData" class="pull-right" pTemplate="body">
-								<button type="button" class="btn btn-trash pull-right" (click)="deleteConfirmation(dataEgm)"><i class="fa fa-trash" aria-hidden="true"></i></button>
+								<button type="button" class="btn btn-trash pull-right" (click)="deleteConfirmation(dataEgm)"><i class="fa fa-trash-o" aria-hidden="true"></i></button>
 								<button class="btn btn-brown btn-publish pull-right" style="cursor:pointer; margin-right:5px" *ngIf="dataEgm.released == false" (click)="openModal(dataEgm) || firstModal.open()">Release</button>
 							</template>
 						</p-column>
@@ -60,11 +71,16 @@
 							</template>
 						</p-column>
 						<p-column field="created_by.username" header="Uploaded by" sortable="true" [filter]="true" filterPlaceholder="Search created by by"></p-column>
-						<p-column field="attachment" header="Attachment" sortable="true" [filter]="true" filterPlaceholder="Search Attachment"></p-column>
-						<!-- </p-column> -->
-						<p-column styleClass="col-button">
+						<p-column field="attachment" header="Attachment" sortable="true">
+							<template let-dataCircular="rowData" pTemplate="body">
+								<span *ngFor="let a of dataCircular.attachment">
+									{{ a.name}},
+								</span>
+							</template>
+						</p-column>
+						<p-column styleClass="col-button" header="Action">
 							<template let-dataCircular="rowData" class="pull-right" pTemplate="body">
-								<button type="button" class="btn btn-trash pull-right" (click)="deleteConfirmation(dataCircular)"><i class="fa fa-trash" aria-hidden="true"></i></button>
+								<button type="button" class="btn btn-trash pull-right" (click)="deleteConfirmation(dataCircular)"><i class="fa fa-trash-o" aria-hidden="true"></i></button>
 								<button class="btn btn-brown btn-publish pull-right" style="cursor:pointer; margin-right:5px" *ngIf="dataCircular.released == false" (click)="openModal(dataCircular) || firstModal.open()">Release</button>
 							</template>
 						</p-column>

@@ -64,16 +64,16 @@ export class EditUserComponent implements OnInit {
                 confirmpassword : ['', Validators.required],
                 phone : ['', Validators.required],
                 role : ['', Validators.required],
-                default_property: this.formbuilder.group({
-                    property: [''],
-                    role : ['']
-                }),
-                rented_property: this.formbuilder.group({
-                    property: ['']
-                }),
-                owned_property: this.formbuilder.array([this.initOwned()]),
-                authorized_property: this.formbuilder.array([this.initAuthorized()]),
-                active: ['', Validators.required],
+                // default_property: this.formbuilder.group({
+                //     property: [''],
+                //     role : ['']
+                // }),
+                // rented_property: this.formbuilder.group({
+                //     property: ['']
+                // }),
+                // owned_property: this.formbuilder.array([this.initOwned()]),
+                // authorized_property: this.formbuilder.array([this.initAuthorized()]),
+                // active: ['', Validators.required],
 
             });
         }
@@ -207,40 +207,68 @@ export class EditUserComponent implements OnInit {
     }
 
     createUser(model:any , isValid: boolean) {
-        if(this.type=='tenant'){
-           model.rented_property.development = this.name.default_development._id;
-           
-        }
-
-        if(this.type=='landlord'){
-            for (let i = 0; i < model.owned_property.length; i++) {
-                 model.owned_property[i].development = this.name.default_development._id;
+        if(this.type){
+            if(this.type=='tenant'){
+               model.rented_property.development = this.name.default_development._id;
+               
             }
-        }
-        console.log(model);
-        if(model.username && model.email && model.password && model.confirmpassword && 
-           model.phone && model.role)
-           {
-            this.appComponent.loading = true;
-            this.userService.create(model)
-            .then(
-                data => {
-                    this._notificationsService.success(
-                                'Success',
-                                'Create ' + this.type + ' successful',
-                            )
-                    this.router.navigate([this.name.default_development.name_url + '/unit/view', this.id]);
-                },
-                error => {
-                    this._notificationsService.error(
-                                'Error',
-                                'Data could not be save, server Error.',
-                        )
-                    this.appComponent.loading = false;
+
+            if(this.type=='landlord'){
+                for (let i = 0; i < model.owned_property.length; i++) {
+                     model.owned_property[i].development = this.name.default_development._id;
                 }
-            );   
+            }
+            console.log(model);
+            if(model.username && model.email && model.password && model.confirmpassword && 
+               model.phone && model.role)
+               {
+                this.appComponent.loading = true;
+                this.userService.createResident(model)
+                .then(
+                    data => {
+                        this._notificationsService.success(
+                                    'Success',
+                                    'Create ' + this.type + ' successful',
+                                )
+                        this.router.navigate([this.name.default_development.name_url + '/unit/view', this.id]);
+                    },
+                    error => {
+                        this._notificationsService.error(
+                                    'Error',
+                                    'Data could not be save, server Error.',
+                            )
+                        this.appComponent.loading = false;
+                    }
+                );   
+            }
+        }else{
+            if(model.username && model.email && model.password && model.confirmpassword && 
+               model.phone && model.role)
+               {
+                model.default_development = this.name.default_development._id;
+                this.appComponent.loading = true;
+                this.userService.createStaff(model)
+                .then(
+                    data => {
+                        this._notificationsService.success(
+                                    'Success',
+                                    'Create ' + model.role + ' successful',
+                                )
+                        this.router.navigate([this.name.default_development.name_url + '/user']);
+                    },
+                    error => {
+                        this._notificationsService.error(
+                                    'Error',
+                                    'Data could not be save, server Error.',
+                            )
+                        this.appComponent.loading = false;
+                    }
+                );   
+            }
+
         }
     }
+
 
     updateUser(user:User){
         this.userService.update(this.user)

@@ -138,36 +138,48 @@ export class LostFoundComponent implements OnInit {
                     console.log(this.lostFounds);
                     this.archieveds      = this.lostFounds.filter(data => data.archieve === true );
                     for (var i = 0; i < this.archieveds.length; i++) {
-                        let unit = this.dataUnit.find(data => data._id ==  this.archieveds[i].property);
-                        this.archieveds[i].unit_no = '#' + unit.address.unit_no + '-' + unit.address.unit_no_2;
+                        if(this.archieveds[i].property){
+                            let unit = this.dataUnit.find(data => data._id ==  this.archieveds[i].property);
+                            this.archieveds[i].unit_no = '#' + unit.address.unit_no + '-' + unit.address.unit_no_2;
+                        }
                     }
                     this.archievedLosts = this.archieveds.filter(data => data.type == 'lost');
                     for (var i = 0; i < this.archievedLosts.length; i++) {
-                        let unit = this.dataUnit.find(data => data._id ==  this.archievedLosts[i].property);
-                        this.archievedLosts[i].unit_no = '#' + unit.address.unit_no + '-' + unit.address.unit_no_2;
+                        if(this.archievedLosts[i].property){
+                            let unit = this.dataUnit.find(data => data._id ==  this.archievedLosts[i].property);
+                            this.archievedLosts[i].unit_no = '#' + unit.address.unit_no + '-' + unit.address.unit_no_2;
+                        }
                     }
                     this.archievedFounds= this.archieveds.filter(data => data.type == 'found');
                     for (var i = 0; i < this.archievedFounds.length; i++) {
-                        let unit = this.dataUnit.find(data => data._id ==  this.archievedFounds[i].property);
-                        this.archievedFounds[i].unit_no = '#' + unit.address.unit_no + '-' + unit.address.unit_no_2;
+                        if(this.archievedFounds[i].property){
+                            let unit = this.dataUnit.find(data => data._id ==  this.archievedFounds[i].property);
+                            this.archievedFounds[i].unit_no = '#' + unit.address.unit_no + '-' + unit.address.unit_no_2;
+                        }
                     }
 
 
 
                     this.all             = this.lostFounds.filter(data => data.archieve === false );
                     for (var i = 0; i < this.all.length; i++) {
-                        let unit = this.dataUnit.find(data => data._id ==  this.all[i].property);
-                        this.all[i].unit_no = '#' + unit.address.unit_no + '-' + unit.address.unit_no_2;
+                        if(this.all[i].property){
+                            let unit = this.dataUnit.find(data => data._id ==  this.all[i].property);
+                            this.all[i].unit_no = '#' + unit.address.unit_no + '-' + unit.address.unit_no_2;
+                        }
                     }
                     this.losts           = this.all.filter(data => data.type == 'lost');
                     for (var i = 0; i < this.losts.length; i++) {
-                        let unit = this.dataUnit.find(data => data._id ==  this.losts[i].property);
-                        this.losts[i].unit_no = '#' + unit.address.unit_no + '-' + unit.address.unit_no_2;
+                        if(this.losts[i].property){
+                            let unit = this.dataUnit.find(data => data._id ==  this.losts[i].property);
+                            this.losts[i].unit_no = '#' + unit.address.unit_no + '-' + unit.address.unit_no_2;
+                        }
                     }
                     this.founds          = this.all.filter(data => data.type == 'found');
                     for (var i = 0; i < this.founds.length; i++) {
-                        let unit = this.dataUnit.find(data => data._id ==  this.founds[i].property);
-                        this.founds[i].unit_no = '#' + unit.address.unit_no + '-' + unit.address.unit_no_2;
+                        if(this.founds[i].property){
+                            let unit = this.dataUnit.find(data => data._id ==  this.founds[i].property);
+                            this.founds[i].unit_no = '#' + unit.address.unit_no + '-' + unit.address.unit_no_2;
+                        }
                     }
                     setTimeout(() => this.appComponent.loading = false, 1000);
                 }, 1000);

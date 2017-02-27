@@ -5,7 +5,7 @@
       <div class="title">
         Edit An Announcement
       </div>
-      <p>Home > Manage Announcement > Edit</p>
+      <p class="id-location">Home > Manage Announcement > Edit</p>
       <form class="form-horizontal col-md-6" (ngSubmit)="f.form.valid && updateAnnouncement()" name="form" #f="ngForm" novalidate>
         <div class="form-group" [ngClass]="{ 'has-error':   !title.valid }">
           <label class="control-label col-sm-4" for="title">Title :</label>
@@ -33,7 +33,7 @@
           </div>
         </div>
         <div class="form-group">
-          <label class="control-label col-sm-4" for="publish">Publish :</label>
+          <label class="control-label col-sm-4" for="publish">Publish now:</label>
           <div class="col-sm-8">
             <div class="col-sm-2 radio">
               Yes
@@ -52,13 +52,13 @@
         <div class="form-group">
           <label class="control-label col-sm-4" for="auto_post_on">Auto post on :</label>
           <div class="col-sm-8">
-            <my-date-picker [options]="autoPostOnDateOptions" [placeholder]="autoPostOnDateTxt" [selDate]="model.auto_post_on" (dateChanged)="autoPostOnDateChanged($event)"></my-date-picker>
+            <my-date-picker [options]="autoPostOnDateOptions" [placeholder]="autoPostOnDateTxt" [selDate]="selectedAutoPostOn" (dateChanged)="autoPostOnDateChanged($event)"></my-date-picker>
           </div>
         </div>
         <div class="form-group">
           <label class="control-label col-sm-4" for="valid_till">Valid till :</label>
           <div class="col-sm-8">
-            <my-date-picker [options]="validTillDateOptions" [placeholder]="validTillDateTxt" [selDate]="model.valid_till" (dateChanged)="validTillDateChanged($event)"></my-date-picker>
+            <my-date-picker [options]="validTillDateOptions" [placeholder]="validTillDateTxt" [selDate]="selectedValidDate" (dateChanged)="validTillDateChanged($event)"></my-date-picker>
           </div>
         </div>
 
@@ -79,7 +79,7 @@
       <div class="title">
         Make An Announcement
       </div>
-      <p>Home > Manage Announcement > Make An Announcement </p>
+      <p class="id-location">Home > Manage Announcement > Make an Announcement </p>
 
       <form class="form-horizontal col-md-6" name="form" (ngSubmit)="f.form.valid && createAnnouncement()" #f="ngForm" novalidate>
         <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !title.valid }">
@@ -107,7 +107,7 @@
         </div>
 
         <div class="form-group">
-          <label class="control-label col-sm-4" for="publish">Publish :</label>
+          <label class="control-label col-sm-4" for="publish">Publish now :</label>
           <div class="col-sm-8">
             <div class="col-sm-2 radio">
               Yes&nbsp;

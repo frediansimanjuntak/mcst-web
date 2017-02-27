@@ -140,6 +140,7 @@
                                 </p-column>
                                 <p-column styleClass="col-button" header="Action">
                                     <template let-data="rowData" pTemplate="body">
+                                        <button class="btn btn-brown btn-publish" style="cursor:pointer; margin-right:5px" (click)="publish(data)">Publish</button>
                                         <a type="button" style="cursor:pointer" (click)="viewNotice(contract._id,data)">View</a>
                                     </template>
                                 </p-column>

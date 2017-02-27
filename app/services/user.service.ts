@@ -37,8 +37,15 @@ export class UserService {
             .catch((error:any) => Observable.throw(error.json().error || 'Server error'));
     }
 
-    create(body:any): Promise<User> {
+    createResident(body:any): Promise<User> {
         return this.http.post(url +  'users', body, this.jwt())
+            .toPromise()
+            .then(res => res.json().data)
+            .catch(this.handleError);
+    }
+
+    createStaff(body:any): Promise<User> {
+        return this.http.post(url +  'users/super_admin' , body, this.jwt())
             .toPromise()
             .then(res => res.json().data)
             .catch(this.handleError);
