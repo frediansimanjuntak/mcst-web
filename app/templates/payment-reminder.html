@@ -29,7 +29,7 @@
                         <p-column field="amount" header="Amount"></p-column>
                         <p-footerColumnGroup>
                             <p-row>
-                                <p-column footer="Totals:" colspan="3"></p-column>
+                                <p-column footer="Total Amount:" colspan="3"></p-column>
                                 <p-column footer="">
                                     <template let-notification_list="rowData" pTemplate="footer">
                                         <p>${{ total }}</p>
@@ -57,7 +57,11 @@
                     <!-- Draft -->
                     <tab heading="Draft">
                         <p-dataTable [value]="draft" [rows]="10" [paginator]="true" [responsive]="true">
-                            <p-column field="title" header="Title" [style]="{'width': '225px'}" sortable="true" [filter]="true" filterPlaceholder="Search title"></p-column>
+                            <p-column field="title" header="Title" [style]="{'width': '225px','font-weight': 'bold'}" sortable="true" [filter]="true" filterPlaceholder="Search title">
+                                <template let-draft="rowData" pTemplate="body">
+                                    <span>{{draft.title | capitalize}}</span>
+                                </template>
+                            </p-column>
                             <p-column field="auto_issue_on" header="Auto issue on" [style]="{'width': '125px'}" sortable="true" [filter]="true" filterPlaceholder="Search auto issue date"></p-column>
                             <p-column field="due_on" header="Due on" [style]="{'width': '112px'}" sortable="true" [filter]="true" filterPlaceholder="Search due date">
                                 <template let-draft="rowData" pTemplate="body">
@@ -66,7 +70,7 @@
                             </p-column>
                             <p-column field="" header="Notification List" [style]="{'width': '150px'}" sortable="true" [filter]="true" filterPlaceholder="Search notification list">
                                 <template let-draft="rowData" pTemplate="body">
-                                    <span *ngIf="draft.notification_list.applies_to == 'resident with vehicle'">Custom</span>
+                                    <span *ngIf="draft.notification_list.applies_to != 'all'">Custom</span>
                                     <span *ngIf="draft.notification_list.applies_to == 'all'">All</span>
                                 </template>
                             </p-column>
@@ -75,10 +79,10 @@
                                     <p>{{draft.created_at | date:'d/M/y'}}</p>
                                 </template>
                             </p-column>
-                            <p-column styleClass="col-button" header="action">
+                            <p-column styleClass="col-button" header="Action">
                                 <template let-draft="rowData" pTemplate="body">
-                                    <a type="button" style="cursor:pointer; margin: 0 25px 0 5px;" (click)="view(draft)">&nbsp;<u>View</u></a>
-                                    <a type="button" style="cursor:pointer; margin-right: 15px; " (click)="edit(draft)"><i class="fa fa-edit" aria-hidden="true"></i>&nbsp;<u>Edit</u></a>
+                                    <a type="button" style="cursor:pointer; margin: 0 10px 0 5px;" (click)="view(draft)">&nbsp;<u>View</u></a>
+                                    <a type="button" style="cursor:pointer; margin-right: 10px; " (click)="edit(draft)"><i class="fa fa-edit" aria-hidden="true"></i>&nbsp;<u>Edit</u></a>
                                     <button class="btn btn-brown btn-publish" [disabled]="draft.publish == true" style="cursor:pointer; margin-right:5px" (click)="publishConfirmation(draft)">Publish</button>
                                     <button class="btn btn-trash" type="button" (click)="deleteConfirmation(draft)"><i class="fa fa-trash-o" aria-hidden="true"></i></button>
                                 </template>
@@ -88,7 +92,11 @@
                     <!-- Published -->
                     <tab heading="Published">
                         <p-dataTable [value]="published" [rows]="10" [paginator]="true" [responsive]="true">
-                            <p-column field="title" header="Title" [style]="{'width': '225px'}" sortable="true" [filter]="true" filterPlaceholder="Search title"></p-column>
+                            <p-column field="title" header="Title" [style]="{'width': '225px','font-weight': 'bold'}" sortable="true" [filter]="true" filterPlaceholder="Search title">
+                                <template let-published="rowData" pTemplate="body">
+                                    <span>{{published.title | capitalize}}</span>
+                                </template>
+                            </p-column>
                             <p-column field="auto_issue_on" header="Auto issue on" [style]="{'width': '125px'}" sortable="true" [filter]="true" filterPlaceholder="Search auto issue date"></p-column>
                             <p-column field="due_on" header="Due on" [style]="{'width': '112px'}" sortable="true" [filter]="true" filterPlaceholder="Search due date">
                                 <template let-published="rowData" pTemplate="body">
@@ -106,7 +114,7 @@
                                     <p>{{published.created_at | date:'d/M/y'}}</p>
                                 </template>
                             </p-column>
-                            <p-column styleClass="col-button" header="action">
+                            <p-column styleClass="col-button" header="Action">
                                 <template let-published="rowData" pTemplate="body">
                                     <a type="button" style="cursor:pointer; margin: 0 25px 0 5px;" (click)="view(published)">&nbsp;<u>View</u></a>
                                     <button type="button" class="btn btn-trash" (click)="deleteConfirmation(published)"><i class="fa fa-trash-o" aria-hidden="true"></i></button>
