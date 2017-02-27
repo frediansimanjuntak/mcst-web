@@ -114,6 +114,11 @@ export class EditBookingComponent implements OnInit  {
     }
 
 	ngOnInit() {
+        this.selectedFacility = [];
+        let date;
+        date     = new Date(this.dt.getTime());
+        date     = this.convertDate(date);
+        this.model.date = date
         this.day = this.days[this.dt.getDay()];
         this.paymentService.getAll().subscribe(payments => {
             this.payments = payments ;
@@ -155,11 +160,6 @@ export class EditBookingComponent implements OnInit  {
                 setTimeout(() => this.appComponent.loading = false, 1000);
             }
 		});
-        this.myForm = this.formbuilder.group({
-            id : [],
-            start : [],
-            end : []
-        })
         for (var a = 0; a < 24; ++a) {
             this.period.push(a)
         }
@@ -238,7 +238,6 @@ export class EditBookingComponent implements OnInit  {
         this.appComponent.loading = true
         this.times_end = [];
         this.times_start = []
-        this.model.facility = event.target.value.slice(3);
         this.facilityService.getById(this.model.facility)
         .subscribe(facility => {
             this.facility = facility;
@@ -259,19 +258,19 @@ export class EditBookingComponent implements OnInit  {
         this.appComponent.loading = false
     }
 
-	filter(data: any){
+	filter(){
         this.appComponent.loading = true
         this.booking_status = [];
         this.day = this.days[this.dt.getDay()];
-        if(data.start < 10) {
-            var start = "0" + data.start.toString() + ":00"
+        if(this.model.start < 10) {
+            var start = "0" + this.model.start.toString() + ":00"
         }else{
-            var start = data.start.toString() + ":00"
+            var start = this.model.start.toString() + ":00"
         }
-        if(data.end < 10) {
-            var end   = "0" + data.end.toString() + ":00"
+        if(this.model.end < 10) {
+            var end   = "0" + this.model.end.toString() + ":00"
         }else{
-            var end   = data.end.toString() + ":00"
+            var end   = this.model.end.toString() + ":00"
         } 
         this.facilityService.getById(this.model.facility)
         .subscribe(facility => {
@@ -289,12 +288,12 @@ export class EditBookingComponent implements OnInit  {
             
             if (this.filtered.length > 0) {   
                 this.min =    ":00"
-                for (var i = data.start; i < data.end; ++i) {
+                for (var i = this.model.start; i < this.model.end; ++i) {
                     this.timeStart.push(i)
                 }
-                while(data.start < data.end){       
-                    data.start += 1;
-                    this.timeEnd.push(data.start)
+                while(this.model.start < this.model.end){       
+                    this.model.start += 1;
+                    this.timeEnd.push(this.model.start)
                 }
             }
         });
@@ -345,17 +344,12 @@ export class EditBookingComponent implements OnInit  {
 
     public selectedDate() {  
         this.appComponent.loading = true
-        let date;
-        date     = new Date(this.dt.getTime());
-        date     = this.convertDate(date);
-        this.model.date = date
         let booking_date;
         booking_date     = new Date(this.dt.getTime());
         booking_date     = this.convertDate1(booking_date);
         this.model.booking_date = booking_date
         this.day = this.days[this.dt.getDay()];
         this.filtered = null;
-        this.selectedFacility = [];
         this.ngOnInit();
     }
 
@@ -371,6 +365,9 @@ export class EditBookingComponent implements OnInit  {
         this.selectedValues = []
         this.model = {};
         this.filtered = null
+        this.selectedFacility = [];
+        this.tstart = [];
+        this.tend = [];
         this.ngOnInit()
         setTimeout(() => this.appComponent.loading = false, 1000);
     }
