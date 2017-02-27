@@ -49,6 +49,7 @@ export class EditAnnouncementComponent  {
     myForm: FormGroup;
     id: string;
     selectedValidDate: any;
+    selectedAutoPostOn: any;
     name: any;
     constructor(private router: Router,
     	private anouncementService: AnnouncementService,
@@ -81,8 +82,8 @@ export class EditAnnouncementComponent  {
         this.autoPostOnDateOptions = copy;
         this.validTillDateOptions = copy;
         
-        this.model.auto_post_on = ""
-        this.model.valid_till = ""
+        this.model.auto_post_on = null;
+        this.model.valid_till = null;
         this.model.publish = false;
         this.model.sticky = 'no';
         
@@ -94,8 +95,29 @@ export class EditAnnouncementComponent  {
                                             .getById(this.id)
                                             .subscribe(announcement => {
                                                 this.announcement = announcement;
-                                                this.model.auto_post_on = this.announcement.auto_post_on;
-                                                this.model.valid_till = this.announcement.valid_till;
+
+                                                if(this.announcement.auto_post_on){
+                                                  let y = this.announcement.auto_post_on.toString().slice(0,4);
+                                                  let m = (this.announcement.auto_post_on+100).toString().slice(4,6);
+                                                  let d = this.announcement.auto_post_on.toString().slice(6,8);
+                                                  this.selectedAutoPostOn = y + '-' + m + '-' + d ;
+                                                  this.model.auto_post_on = new Date(m + '/' + d + '/' + y);
+
+                                                }else if(this.announcement.auto_post_on == null){
+                                                  this.selectedAutoPostOn = "";
+                                                  this.model.auto_post_on = null;
+                                                }     
+
+                                                if(this.announcement.valid_till){
+                                                  let y = this.announcement.valid_till.toString().slice(0,4);
+                                                  let m = (this.announcement.valid_till+100).toString().slice(4,6);
+                                                  let d = this.announcement.valid_till.toString().slice(6,8);
+                                                  this.selectedValidDate = y + '-' + m + '-' + d ;
+                                                  this.model.valid_till = new Date(m + '/' + d + '/' + y);
+                                                }else if(this.announcement.valid_till == null){
+                                                  this.selectedValidDate = "";
+                                                  this.model.valid_till = null;
+                                                }           
                                                 setTimeout(() => this.appComponent.loading = false, 1000);
                                             });
                                 };
@@ -107,21 +129,52 @@ export class EditAnnouncementComponent  {
         this.appComponent.loading = true
         console.log(this.model)
         this.anouncementService.create(this.model)
+            .then(
+                data => {
+                    this._notificationsService.success(
+                                'Success',
+                                'Create announcement successful',
+                    )
+                    this.router.navigate([this.name.default_development.name_url + '/announcement']);
+                },
+                error => {
+                    console.log(error);
+                    this._notificationsService.error(
+                                'Error',
+                                'The announcement could not be save, server error',
+                        )
+                    this.appComponent.loading = false
+                }
+            );
+    }
+
+    updateAnnouncement(){
+        this.appComponent.loading = true
+        this.announcement.auto_post_on  = this.model.auto_post_on;
+        this.announcement.valid_till = this.model.valid_till;
+        this.anouncementService.update(this.announcement)
         .then(
-            data => {
-                this._notificationsService.success(
+            response => {
+                if(response) {
+                    this._notificationsService.error(
+                            'Error',
+                            'Update announcement failed, server error',
+                    )
+                    this.appComponent.loading = false
+                } else {
+                     this._notificationsService.success(
                             'Success',
-                            'Create announcement successful',
-                )
-                this.router.navigate([this.name.default_development.name_url + '/announcement']);
+                            'Update announcement successful',
+                     )
+                     this.router.navigate([this.name.default_development.name_url + '/announcement']);
+                }
             },
-            error => {
-                console.log(error);
+            error=> {
                 this._notificationsService.error(
                             'Error',
-                            'The announcement could not be save, server error',
-                    )
-                this.appComponent.loading = false
+                            'Update announcement failed, server error',
+                )
+                    this.appComponent.loading = false
             }
         );
     }
@@ -135,8 +188,7 @@ export class EditAnnouncementComponent  {
     }
 
     autoPostOnDateChanged(event:any) {
-         this.model.auto_post_on = event.jsdate;
-
+        this.model.auto_post_on = event.jsdate;
         if(this.model.auto_post_on){
             (this.selectedValidDate = new Date()).setDate(event.jsdate.getDate() + 1);
             this.model.valid_till =  this.selectedValidDate;
@@ -147,6 +199,9 @@ export class EditAnnouncementComponent  {
         }
     }
 
+    validTillDateChanged(event:any) {
+        this.model.valid_till =  event.jsdate;
+    }
 
     convertDate(date) {
       var yyyy = date.getFullYear().toString();
@@ -158,31 +213,6 @@ export class EditAnnouncementComponent  {
 
       return yyyy + '-' + (mmChars[1]?mm:"0"+mmChars[0]) + '-' + (ddChars[1]?dd:"0"+ddChars[0]);
     }
-
-    validTillDateChanged(event:any) {
-      this.model.valid_till =  event.jsdate;
-    }
-
-    updateAnnouncement(){
-        this.appComponent.loading = true
-        this.announcement.auto_post_on  = this.model.auto_post_on;
-        this.announcement.valid_till = this.model.valid_till;
-        
-        this.anouncementService.update(this.announcement)
-		.then(
-			response => {
-				if(response) {
-	                this.alertService.error('Update announcement failed');
-	            } else {
-	                 this.alertService.success('Update announcement successful', true);
-                     this.router.navigate([this.name.default_development.name_url + '/announcement']);
-	            }
-            },
-            error=> {
-            	this.alertService.error(error);
-            }
-        );
-	}
 
     toAnnouncement(){
          this.router.navigate([this.name.default_development.name_url + '/announcement']);

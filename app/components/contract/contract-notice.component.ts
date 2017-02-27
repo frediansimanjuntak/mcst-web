@@ -81,6 +81,10 @@ export class ContractNoticeComponent implements OnInit  {
         this.router.navigate(['/contract/view', contract._id]);
     }
 
+    back(){
+        window.history.back();
+    }
+
     createContractNotice(id:any) {
         this.appComponent.loading = true
         if(this.model.attachment.length != 0) {

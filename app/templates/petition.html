@@ -83,15 +83,18 @@
 			</div>
 		</div>
 
-		<div *ngIf="!petition">
+		<div *ngIf="!petition && !buttonViewArchive">
 			<div class="title">
 				Manage Request
 			</div>
 			<p class="id-location">Home > Manage Request</p>
-			<div class="row">
-				<div class="col-md-4 pull-right">
+			<div class="row top-block">
+				<div class="col-md-12 pull-right">
 					<button class="btn btn-default btn-add pull-right" [disabled]="!btnArchive" (click)="archieveConfirmation()"><img class="img-btn" src="../../assets/image/icon_archived.png" />&nbsp;Archive Selected</button>
-					<a class="btn btn-default btn-gray pull-right" (click)="add()"><img class="img-btn" src="../../assets/image/icon_add.png" />&nbsp;Add Request</a>
+					<button class="btn btn-default btn-add pull-right" (click)="viewArchieved()">
+						<img class="img-btn" src="../../assets/image/icon_archived.png" />&nbsp;View Archived
+					</button>
+					<button class="btn btn-default btn-add pull-right" (click)="add()"><img class="img-btn" src="../../assets/image/icon_add.png" />&nbsp;Add Request</button>
 				</div>
 			</div>
 
@@ -119,7 +122,7 @@
 							<br>
 						</template>
 					</p-column>
-					<p-column header="Last Updated on">
+					<p-column field="updated_at" header="Last Updated on" sortable="true">
 						<template let-petitions="rowData" pTemplate="body">
 							<span>{{petitions.updated_at | date:'d/M/y'}}</span>
 							<br>
@@ -131,11 +134,69 @@
 							<span *ngIf="petitions.attachment.length > 0">Yes</span>
 						</template>
 					</p-column>
-					<p-column [style]="{'width':'300px'}" styleClass="col-button" header="action">
+					<p-column [style]="{'width':'250px'}" styleClass="col-button" header="Action">
 						<template class="pull-right" let-petitions="rowData" pTemplate="body">
-							<a type="button" class="btn-underline" (click)="viewPetition(petitions)">View</a>
-							<a (click)="viewPdf(petitions)" class="btn-underline"><img src="../../assets/image/icon_pdf.png" class="img-btn" />Pdf</a>
+							<a type="button" style="cursor:pointer; margin: 0 25px 0 5px;" class="btn-underline" (click)="viewPetition(petitions)">View</a>
+							<a (click)="viewPdf(petitions)" style="cursor:pointer; margin: 0 25px 0 5px;" class="btn-underline"><img src="../../assets/image/icon_pdf.png" class="img-btn" />Pdf</a>
 							<p-checkbox name="archive" (click)="checkSelected()" value="{{petitions._id}}" [(ngModel)]="selectedValues"></p-checkbox>
+						</template>
+					</p-column>
+				</p-dataTable>
+			</div>
+		</div>
+		<div *ngIf="!petition && buttonViewArchive">
+			<div class="title">
+				Manage Archived Request
+			</div>
+			<p class="id-location">Home > Manage Archived Request</p>
+			<div class="row top-block">
+				<div class="col-md-12 pull-right">
+					<button class="btn btn-default btn-add pull-right" (click)="viewUnarchieved()">
+						<img class="img-btn" src="../../assets/image/icon_archived.png" />&nbsp;View Unarchived
+					</button>
+					<button class="btn btn-default btn-add pull-right" (click)="add()"><img class="img-btn" src="../../assets/image/icon_add.png" />&nbsp;Add Request</button>
+				</div>
+			</div>
+			<div (click)="$event.preventDefault()">
+
+				<p-dataTable [value]="archivedPetitions" [rows]="10" [paginator]="true">
+					<p-column field="reference_no" header="Ticket Number" [filter]="true" filterPlaceholder="Search Ticket Number">
+						<template let-archivedPetitions="rowData" pTemplate="body">
+							<span>#{{archivedPetitions.reference_no}}</span>
+						</template>
+					</p-column>
+					<p-column field="petition_type" header="Type" sortable="true">
+						<template let-archivedPetitions="rowData" pTemplate="body">
+							<span *ngIf="archivedPetitions.petition_type == 'maintenance'">Maintenance</span>
+							<span *ngIf="archivedPetitions.petition_type == 'moving_in'">Moving-in</span>
+							<span *ngIf="archivedPetitions.petition_type == 'renovation'">Renovation</span>
+							<span *ngIf="archivedPetitions.petition_type == 'add_tenant/family'"> Add Tenant/family</span>
+						</template>
+					</p-column>
+					<p-column header="Requested by">
+						<template let-archivedPetitions="rowData" pTemplate="body">
+							<span class="btn-underline">{{archivedPetitions.created_by.username}}</span>
+							<br>
+							<span>on {{archivedPetitions.created_at | date:'shortTime'}}</span>
+							<br>
+						</template>
+					</p-column>
+					<p-column field="updated_at" header="Last Updated on" sortable="true">
+						<template let-archivedPetitions="rowData" pTemplate="body">
+							<span>{{archivedPetitions.updated_at | date:'d/M/y'}}</span>
+							<br>
+						</template>
+					</p-column>
+					<p-column header="Attachment">
+						<template let-archivedPetitions="rowData" pTemplate="body">
+							<span *ngIf="archivedPetitions.attachment.length === 0">No Files</span>
+							<span *ngIf="archivedPetitions.attachment.length > 0">Yes</span>
+						</template>
+					</p-column>
+					<p-column [style]="{'width':'250px'}" styleClass="col-button" header="Action">
+						<template class="pull-right" let-archivedPetitions="rowData" pTemplate="body">
+							<a type="button" class="btn-underline" style="cursor:pointer; margin: 0 25px 0 5px;" (click)="viewPetition(archivedPetitions)">View</a>
+							<a (click)="viewPdf(archivedPetitions)" style="cursor:pointer; margin: 0 25px 0 5px;" class="btn-underline"><img src="../../assets/image/icon_pdf.png" class="img-btn" />Pdf</a>
 						</template>
 					</p-column>
 				</p-dataTable>

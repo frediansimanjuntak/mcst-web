@@ -26,7 +26,7 @@
 								<span>{{announcementsDrafted.created_at | date:'y/M/d'}}</span>
 							</template>
 						</p-column>
-						<p-column [style]="{'width':'250px'}" styleClass="col-button">
+						<p-column [style]="{'width':'230px'}" styleClass="col-button">
 							<template class="pull-right" let-announcementsDrafted="rowData" pTemplate="body">
 								<a type="button" style="cursor:pointer; margin-right: 15px; " (click)="editAnnouncement(announcementsDrafted)"><i class="fa fa-edit" aria-hidden="true"></i>&nbsp;<u>Edit</u></a>
 								<button class="btn btn-brown btn-publish" style="cursor:pointer; margin-right:5px" (click)="openModal(announcementsDrafted) || firstModal.open()">Publish</button>

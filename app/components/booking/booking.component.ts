@@ -79,8 +79,8 @@ export class BookingComponent implements OnInit {
             start : [0],
             end : [23]
         })
-        this.facilityService.getFacilities()
-        .then(facilities => { 
+        this.facilityService.getAll()
+        .subscribe(facilities => { 
             this.facilities = facilities;
             this.start = facilities[0].schedule[0].start_time.slice(0,2);
             let start = +this.start
