@@ -4,7 +4,7 @@
 			User
 		</div>
 		<p class="id-location">Home > User</p>
-		<div class="row">
+		<div class="row top-block">
 			<div class="col-md-4 pull-right">
 				<button class="btn btn-default pull-right btn-gray" (click)="add()"> <img class="img-btn" src="../../assets/image/icon_add.png" />&nbsp;Add User</button>
 			</div>
@@ -18,10 +18,10 @@
 					<span [style.color]="data[col.field]">{{data[col.field]}}</span>
 				</template>
 			</p-column>
-			<p-column styleClass="col-button" header="action">
+			<p-column [style]="{'width':'120px'}" styleClass="col-button" header="Action">
 				<template let-data="rowData" pTemplate="body">
 					<a type="button" style="cursor:pointer" (click)="edit(data)"><i class="fa fa-edit" aria-hidden="true"></i>&nbsp;Edit</a>
-					<button type="button" (click)="deleteConfirmation(data)"><i class="fa fa-trash" aria-hidden="true"></i></button>
+					<button type="button"  class="btn btn-trash" (click)="deleteConfirmation(data)"><i class="fa fa-trash-o" aria-hidden="true"></i></button>
 				</template>
 			</p-column>
 		</p-dataTable>

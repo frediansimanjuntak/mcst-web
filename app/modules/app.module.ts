@@ -120,6 +120,10 @@ import {
   TestService,
 } from '../services/index';
 
+import {
+  CapitalizePipe,
+  } from '../pipes/index';
+
 @NgModule({
   imports:      [
     CommonModule, 
@@ -218,7 +222,8 @@ import {
     EditLostFoundComponent,
     FooterComponent,
     SignaturePadPage,
-    PdfViewerComponent
+    PdfViewerComponent,
+    CapitalizePipe
 ],
   providers: [ 
     AccessControlService,
