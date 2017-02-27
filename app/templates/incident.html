@@ -75,7 +75,11 @@
                         <p-dataTable [value]="incidents" [rows]="10" [paginator]="true" sortField="starred_by" [responsive]="true" #dt>
                             <p-column filterMatchMode="contains" field="reference_no" header="Report No." sortable="true" [filter]="true" filterPlaceholder="Search Report No."></p-column>
                             <p-column filterMatchMode="contains" [style]="{'text-transform': 'capitalize'}" field="incident_type" header="Type" sortable="true" [filter]="true" filterPlaceholder="Search Type"></p-column>
-                            <p-column filterMatchMode="contains" field="created_by.username" header="Reported by" sortable="true" [filter]="true" filterPlaceholder="Search Reported by"></p-column>
+                            <p-column filterMatchMode="contains" field="created_by.username" header="Reported by" sortable="true" [filter]="true" filterPlaceholder="Search Reported by">
+                                <template let-data="rowData" pTemplate="body">
+                                    <span>{{data.created_by.username | capitalize}}</span>
+                                </template>
+                            </p-column>
                             <p-column filterMatchMode="contains" field="created_at" header="Report time" sortable="true" [filter]="true" filterPlaceholder="Search Report time">
                                 <template let-data="rowData" pTemplate="body">
                                     {{data.created_at | date:'d/M/y'}}
@@ -86,7 +90,11 @@
                                     <span>{{data.title | capitalize}}</span>
                                 </template>
                             </p-column>
-                            <p-column filterMatchMode="contains" field="remark" header="Message" sortable="true" [filter]="true" filterPlaceholder="Search Message"></p-column>
+                            <p-column filterMatchMode="contains" field="remark" header="Message" sortable="true" [filter]="true" filterPlaceholder="Search Message">
+                                <template let-data="rowData" pTemplate="body">
+                                    <span>{{data.remark | capitalize}}</span>
+                                </template>
+                            </p-column>
                             <p-column [style]="{'width':'75px'}" header="Photo">
                                 <template let-data="rowData" pTemplate="body">
                                     <a *ngIf="data.attachment != null" style="text-decoration: underline;cursor:pointer" (click)="view(data)">View</a>
