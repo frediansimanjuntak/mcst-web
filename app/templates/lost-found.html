@@ -76,11 +76,15 @@
 							</p-column>
 							<p-column header="Made by">
 								<template let-all="rowData" pTemplate="body">
-									<span>{{all.created_by.username}}</span>
+									<span style="text-transform: capitalize;">{{all.created_by.username}}</span>
 								</template>
 							</p-column>
 							<p-column field="unit_no" header="Unit.no" sortable="true"></p-column>
-							<p-column field="type" header="Type" [filter]="true" filterPlaceholder="Search Type"></p-column>
+							<p-column header="Type" field="type" [filter]="true" filterPlaceholder="Search Type">
+								<template let-all="rowData" pTemplate="body">
+									<span style="text-transform: capitalize;">{{all.type}}</span>
+								</template>
+							</p-column>
 							<p-column field="description" header="Description"></p-column>
 							<p-column header="Photo">
 								<template let-all="rowData" pTemplate="body">
@@ -88,7 +92,11 @@
 									<span *ngIf="!all.photo">No</span>
 								</template>
 							</p-column>
-							<p-column field="preferred_method_of_contact" header="Preferred method of contact"></p-column>
+							<p-column header="Preferred method of contact" sortable="true">
+								<template let-all="rowData" pTemplate="body">
+									<span style="text-transform: capitalize;">{{all.preferred_method_of_contact}}</span>
+								</template>
+							</p-column>
 							<p-column header="Reported on" sortable="true">
 								<template let-all="rowData" pTemplate="body">
 									<span>{{all.created_at | date:'d/M/y'}}</span>
@@ -97,7 +105,7 @@
 							<p-column styleClass="col-button">
 								<template let-all="rowData" class="pull-right" pTemplate="body">
 									<a type="button" class="btn-underline" (click)="viewLostFound(all)">View</a>
-									<button type="button" (click)="archieveConfirmation(all)"><img class="img-btn" src="../../assets/image/icon_archived.png" /></button>
+									<img title="archived" style="cursor:pointer" src="../../assets/image/icon_archived.png"  (click)="archieveConfirmation(all)"/>
 								</template>
 							</p-column>
 						</p-dataTable>
@@ -111,11 +119,15 @@
 							</p-column>
 							<p-column header="Made by">
 								<template let-losts="rowData" pTemplate="body">
-									<span>{{losts.created_by.username}}</span>
+									<span style="text-transform: capitalize;">{{losts.created_by.username}}</span>
 								</template>
 							</p-column>
 							<p-column field="unit_no" header="Unit.no" sortable="true"></p-column>
-							<p-column field="type" header="Type" sortable="true" [filter]="true" filterPlaceholder="Search Type"></p-column>
+							<p-column header="Type" field="type" [filter]="true" filterPlaceholder="Search Type">
+								<template let-losts="rowData" pTemplate="body">
+									<span style="text-transform: capitalize;">{{losts.type}}</span>
+								</template>
+							</p-column>
 							<p-column field="description" header="Description"></p-column>
 							<p-column header="Photo">
 								<template let-losts="rowData" pTemplate="body">
@@ -123,7 +135,11 @@
 									<span *ngIf="!losts.photo">No</span>
 								</template>
 							</p-column>
-							<p-column field="preferred_method_of_contact" header="Preferred method of contact"></p-column>
+							<p-column header="Preferred method of contact" sortable="true">
+								<template let-losts="rowData" pTemplate="body">
+									<span style="text-transform: capitalize;">{{losts.preferred_method_of_contact}}</span>
+								</template>
+							</p-column>
 							<p-column header="Reported on" sortable="true">
 								<template let-losts="rowData" pTemplate="body">
 									<span>{{losts.created_at | date:'d/M/y'}}</span>
@@ -131,8 +147,8 @@
 							</p-column>
 							<p-column styleClass="col-button">
 								<template let-losts="rowData" class="pull-right" pTemplate="body">
-									<a type="button" class="btn-underline" (click)="viewLostFound(losts)">View</a>
-									<button type="button" (click)="archieveConfirmation(losts)"><img class="img-btn" src="../../assets/image/icon_archived.png" /></button>
+									<a type="button" class="btn-underline" style="cursor:pointer; margin: 0 25px 0 5px;"  (click)="viewLostFound(losts)">View</a>
+									<img title="archived" style="cursor:pointer" src="../../assets/image/icon_archived.png" (click)="archieveConfirmation(losts)"/>
 								</template>
 							</p-column>
 						</p-dataTable>
@@ -146,11 +162,15 @@
 							</p-column>
 							<p-column header="Made by">
 								<template let-founds="rowData" pTemplate="body">
-									<span>{{founds.created_by.username}}</span>
+									<span style="text-transform: capitalize;">{{founds.created_by.username}}</span>
 								</template>
 							</p-column>
 							<p-column field="unit_no" header="Unit.no" sortable="true"></p-column>
-							<p-column field="type" header="Type" sortable="true" [filter]="true" filterPlaceholder="Search Type"></p-column>
+							<p-column header="Type" field="type" [filter]="true" filterPlaceholder="Search Type">
+								<template let-founds="rowData" pTemplate="body">
+									<span style="text-transform: capitalize;">{{founds.type}}</span>
+								</template>
+							</p-column>
 							<p-column field="description" header="Description"></p-column>
 							<p-column header="Photo">
 								<template let-founds="rowData" pTemplate="body">
@@ -158,7 +178,11 @@
 									<span *ngIf="!founds.photo">No</span>
 								</template>
 							</p-column>
-							<p-column field="preferred_method_of_contact" header="Preferred method of contact"></p-column>
+							<p-column header="Preferred method of contact" sortable="true">
+								<template let-founds="rowData" pTemplate="body">
+									<span style="text-transform: capitalize;">{{founds.preferred_method_of_contact}}</span>
+								</template>
+							</p-column>
 							<p-column header="Reported on" sortable="true">
 								<template let-founds="rowData" pTemplate="body">
 									<span>{{founds.created_at | date:'d/M/y'}}</span>
@@ -166,8 +190,8 @@
 							</p-column>
 							<p-column styleClass="col-button">
 								<template let-founds="rowData" class="pull-right" pTemplate="body">
-									<a type="button" class="btn-underline" (click)="viewLostFound(founds)">View</a>
-									<button type="button" (click)="archieveConfirmation(founds)"><img class="img-btn" src="../../assets/image/icon_archived.png" /></button>
+									<a type="button" class="btn-underline" style="cursor:pointer; margin: 0 25px 0 5px;" (click)="viewLostFound(founds)">View</a>
+									<img title="archived"  style="cursor:pointer" src="../../assets/image/icon_archived.png" (click)="archieveConfirmation(founds)"/>
 								</template>
 							</p-column>
 						</p-dataTable>
@@ -201,11 +225,15 @@
 							</p-column>
 							<p-column header="Made by">
 								<template let-archieveds="rowData" pTemplate="body">
-									<span>{{archieveds.created_by.username}}</span>
+									<span style="text-transform: capitalize;">{{archieveds.created_by.username}}</span>
 								</template>
 							</p-column>
 							<p-column field="unit_no" header="Unit.no" sortable="true"></p-column>
-							<p-column field="type" header="Type" sortable="true" [filter]="true" filterPlaceholder="Search Type"></p-column>
+							<p-column header="Type" field="type" [filter]="true" filterPlaceholder="Search Type">
+								<template let-archieveds="rowData" pTemplate="body">
+									<span style="text-transform: capitalize;">{{archieveds.type}}</span>
+								</template>
+							</p-column>
 							<p-column field="description" header="Description"></p-column>
 							<p-column header="Photo">
 								<template let-archieveds="rowData" pTemplate="body">
@@ -213,7 +241,11 @@
 									<span *ngIf="!archieveds.photo">No</span>
 								</template>
 							</p-column>
-							<p-column field="preferred_method_of_contact" header="Preferred method of contact"></p-column>
+							<p-column header="Preferred method of contact" sortable="true">
+								<template let-archieveds="rowData" pTemplate="body">
+									<span style="text-transform: capitalize;">{{archieveds.preferred_method_of_contact}}</span>
+								</template>
+							</p-column>
 							<p-column header="Reported on" sortable="true">
 								<template let-archieveds="rowData" pTemplate="body">
 									<span>{{archieveds.created_at | date:'d/M/y'}}</span>
@@ -235,11 +267,15 @@
 							</p-column>
 							<p-column header="Made by">
 								<template let-archievedLosts="rowData" pTemplate="body">
-									<span>{{archievedLosts.created_by.username}}</span>
+									<span style="text-transform: capitalize;">{{archievedLosts.created_by.username}}</span>
 								</template>
 							</p-column>
 							<p-column field="unit_no" header="Unit.no" sortable="true"></p-column>
-							<p-column field="type" header="Type" sortable="true" [filter]="true" filterPlaceholder="Search Type"></p-column>
+							<p-column header="Type" field="type" [filter]="true" filterPlaceholder="Search Type">
+								<template let-archievedLosts="rowData" pTemplate="body">
+									<span style="text-transform: capitalize;">{{archievedLosts.type}}</span>
+								</template>
+							</p-column>
 							<p-column field="description" header="Description"></p-column>
 							<p-column header="Photo">
 								<template let-archievedLosts="rowData" pTemplate="body">
@@ -247,7 +283,11 @@
 									<span *ngIf="!archievedLosts.photo">No</span>
 								</template>
 							</p-column>
-							<p-column field="preferred_method_of_contact" header="Preferred method of contact"></p-column>
+							<p-column header="Preferred method of contact" sortable="true">
+								<template let-archievedLosts="rowData" pTemplate="body">
+									<span style="text-transform: capitalize;">{{archievedLosts.preferred_method_of_contact}}</span>
+								</template>
+							</p-column>
 							<p-column header="Reported on" sortable="true">
 								<template let-archievedLosts="rowData" pTemplate="body">
 									<span>{{archievedLosts.created_at | date:'d/M/y'}}</span>
@@ -269,11 +309,15 @@
 							</p-column>
 							<p-column header="Made by">
 								<template let-archievedFounds="rowData" pTemplate="body">
-									<span>{{archievedFounds.created_by.username}}</span>
+									<span style="text-transform: capitalize;">{{archievedFounds.created_by.username}}</span>
 								</template>
 							</p-column>
 							<p-column field="unit_no" header="Unit.no" sortable="true"></p-column>
-							<p-column field="type" header="Type" sortable="true" [filter]="true" filterPlaceholder="Search Type"></p-column>
+							<p-column header="Type" field="type" [filter]="true" filterPlaceholder="Search Type">
+								<template let-archievedFounds="rowData" pTemplate="body">
+									<span style="text-transform: capitalize;">{{archievedFounds.type}}</span>
+								</template>
+							</p-column>
 							<p-column field="description" header="Description"></p-column>
 							<p-column header="Photo">
 								<template let-archievedFounds="rowData" pTemplate="body">
@@ -281,7 +325,11 @@
 									<span *ngIf="!archievedFounds.photo">No</span>
 								</template>
 							</p-column>
-							<p-column field="preferred_method_of_contact" header="Preferred method of contact"></p-column>
+							<p-column header="Preferred method of contact" sortable="true">
+								<template let-archievedFounds="rowData" pTemplate="body">
+									<span style="text-transform: capitalize;">{{archievedFounds.preferred_method_of_contact}}</span>
+								</template>
+							</p-column>
 							<p-column header="Reported on" sortable="true">
 								<template let-archievedFounds="rowData" pTemplate="body">
 									<span>{{archievedFounds.created_at | date:'d/M/y'}}</span>
