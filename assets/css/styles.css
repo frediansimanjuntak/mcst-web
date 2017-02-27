@@ -86,6 +86,12 @@ ul.ui-select-choices.dropdown-menu {
 .row.content-column {
     margin: 50px 17px;
 }
+thead {
+    border-style: solid;
+    border-width: 1px;
+    border-color: #dedede;
+    border-top: 0;
+}
 
 /*.btn-primary {
   background-color: rgb(181,173,150) !important;

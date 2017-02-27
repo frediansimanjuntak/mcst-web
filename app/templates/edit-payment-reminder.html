@@ -61,7 +61,7 @@
                                             <option value="all">All</option>
                                             <option value="resident with vehicle">Resident with vehicle</option>
                                         </select> &nbsp;
-                                        <input (keypress)="number($event)" class="form-control" style="width: 100px" type="text" formControlName="amount" />
+                                        <input (keypress)="number($event)" class="form-control" style="width: 100px; float: left; margin-right: 5px" type="text" formControlName="amount" />
                                         <span *ngIf="myForm.controls.notification_list.controls.length > 1" (click)="removeNotification_list(i)"><img src="../../assets/image/icon_close_black.png" width="10px" height="10px"></span>
                                     </div>
                                 </div>
