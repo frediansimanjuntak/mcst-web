@@ -5,7 +5,7 @@
             <div class="title">
                 Edit Company
             </div>
-            <p>Home > Company > Edit</p>
+            <p class="id-location">Home > Company > Edit</p>
              <form class="form-horizontal col-md-6" (ngSubmit)="f.form.valid && updateCompany()" name="form" #f="ngForm" novalidate enctype="multipart/form-data">
                     <div class="form-group" [ngClass]="{ 'has-error': !name.valid }">
                         <label class="control-label col-sm-4" for="name">Name :</label>
@@ -166,7 +166,7 @@
             <div class="title">
                 Add a Company
             </div>
-            <p>Home > Company > Add > </p>
+            <p class="id-location">Home > Company > Add > </p>
 
             <form class="form-horizontal col-md-6" name="form" [formGroup]="myForm" (ngSubmit)="createCompany(myForm.value, myForm.valid)" #f="ngForm" novalidate enctype="multipart/form-data">
                 <div class="form-group" [ngClass]="{ 'has-error': submitted && !myForm.controls.name.valid }">

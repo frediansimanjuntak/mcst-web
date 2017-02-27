@@ -55,7 +55,7 @@
                             <div *ngFor="let owned of myForm.controls.notification_list.controls; let i=index" class="form-group">
                                 <div class="panel-body" [formGroupName]="i">
                                     <div class="col-md-12">
-                                        <input class="form-control" style="width: 150px; float: left; margin-right: 10px" type="text" formControlName="charge" />&nbsp;
+                                        <input class="form-control" style="width: 150px; float: left; margin-right: 10px;font-weight: bold" type="text" formControlName="charge" />&nbsp;
                                         <input class="form-control" style="width: 300px; float: left; margin-right: 10px" type="text" formControlName="remarks" /> &nbsp;
                                         <select class="form-control" style="width: 150px; float: left; margin-right: 20px" formControlName="applies_to">
                                             <option value="all">All</option>
@@ -68,7 +68,7 @@
                             </div>
                         </div>
                         <div class="margin-20">
-                            <a (click)="addNotification_list()" style="cursor: default">Add Line</a>
+                            <a (click)="addNotification_list()" style="cursor: pointer;"><button type="button" style="cursor: default" class="btn btn-trash"><img class="img-btn" src="../../assets/image/icon_add.png" /></button> Add Line</a>
                         </div>  
                     </div>    
                 </div>
@@ -137,7 +137,7 @@
                             <div *ngFor="let owned of myForm.controls.notification_list.controls; let i=index" class="form-group">
                                 <div class="panel-body" [formGroupName]="i">
                                     <div class="col-md-11">
-                                        <input class="form-control" style="width: 150px; float: left; margin-right: 10px" type="text" formControlName="charge" />&nbsp;
+                                        <input class="form-control" style="width: 150px; float: left; margin-right: 10px;font-weight: bold" type="text" formControlName="charge" />&nbsp;
                                         <input class="form-control" style="width: 300px; float: left; margin-right: 10px" type="text" formControlName="remarks" /> &nbsp;
                                         <select class="form-control" style="width: 150px; float: left; margin-right: 20px" formControlName="applies_to">
                                             <option value="all">All</option>
@@ -150,14 +150,14 @@
                             </div>
                         </div>
                         <div class="margin-20">
-                            <a (click)="addNotification_list()" style="cursor: default">Add Line</a>
+                            <a (click)="addNotification_list()" style="cursor: pointer;"><button type="button" style="cursor: default" class="btn btn-trash"><img class="img-btn" src="../../assets/image/icon_add.png" /></button> Add Line</a>
                         </div>  
                     </div>    
                 </div>
                 <!--owned-->
                 <div class="col-md-11">
                     <div class="form-group pull-right">
-                        <button [disabled]="loading" class="btn btn-brown btn-primary">Save</button>
+                        <button [disabled]="loading" class="btn btn-brown btn-primary">Create</button>
                         <img *ngIf="loading" src="data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA==" />
                         <button (click)="cancel()" class="btn btn-white">Cancel</button>
                     </div>

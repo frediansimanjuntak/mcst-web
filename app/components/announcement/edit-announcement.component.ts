@@ -103,9 +103,9 @@ export class EditAnnouncementComponent  {
                                                   this.selectedAutoPostOn = y + '-' + m + '-' + d ;
                                                   this.model.auto_post_on = new Date(m + '/' + d + '/' + y);
 
-                                                }else if(this.announcement.auto_post_on == ""){
+                                                }else if(this.announcement.auto_post_on == null){
                                                   this.selectedAutoPostOn = "";
-                                                  this.model.auto_post_on = "";
+                                                  this.model.auto_post_on = null;
                                                 }     
 
                                                 if(this.announcement.valid_till){
@@ -114,9 +114,9 @@ export class EditAnnouncementComponent  {
                                                   let d = this.announcement.valid_till.toString().slice(6,8);
                                                   this.selectedValidDate = y + '-' + m + '-' + d ;
                                                   this.model.valid_till = new Date(m + '/' + d + '/' + y);
-                                                }else if(this.announcement.valid_till == ""){
+                                                }else if(this.announcement.valid_till == null){
                                                   this.selectedValidDate = "";
-                                                  this.model.valid_till = "";
+                                                  this.model.valid_till = null;
                                                 }           
                                                 setTimeout(() => this.appComponent.loading = false, 1000);
                                             });
@@ -129,30 +129,29 @@ export class EditAnnouncementComponent  {
         this.appComponent.loading = true
         console.log(this.model)
         this.anouncementService.create(this.model)
-        .then(
-            data => {
-                this._notificationsService.success(
-                            'Success',
-                            'Create announcement successful',
-                )
-                this.router.navigate([this.name.default_development.name_url + '/announcement']);
-            },
-            error => {
-                console.log(error);
-                this._notificationsService.error(
-                            'Error',
-                            'The announcement could not be save, server error',
+            .then(
+                data => {
+                    this._notificationsService.success(
+                                'Success',
+                                'Create announcement successful',
                     )
-                this.appComponent.loading = false
-            }
-        );
+                    this.router.navigate([this.name.default_development.name_url + '/announcement']);
+                },
+                error => {
+                    console.log(error);
+                    this._notificationsService.error(
+                                'Error',
+                                'The announcement could not be save, server error',
+                        )
+                    this.appComponent.loading = false
+                }
+            );
     }
 
     updateAnnouncement(){
         this.appComponent.loading = true
         this.announcement.auto_post_on  = this.model.auto_post_on;
         this.announcement.valid_till = this.model.valid_till;
-        console.log(this.announcement)
         this.anouncementService.update(this.announcement)
         .then(
             response => {
@@ -189,8 +188,7 @@ export class EditAnnouncementComponent  {
     }
 
     autoPostOnDateChanged(event:any) {
-         this.model.auto_post_on = event.jsdate;
-
+        this.model.auto_post_on = event.jsdate;
         if(this.model.auto_post_on){
             (this.selectedValidDate = new Date()).setDate(event.jsdate.getDate() + 1);
             this.model.valid_till =  this.selectedValidDate;
@@ -202,7 +200,7 @@ export class EditAnnouncementComponent  {
     }
 
     validTillDateChanged(event:any) {
-      this.model.valid_till =  event.jsdate;
+        this.model.valid_till =  event.jsdate;
     }
 
     convertDate(date) {

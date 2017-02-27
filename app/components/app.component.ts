@@ -126,6 +126,7 @@ export class AppComponent implements OnInit {
                   this.name = name;
             },
             error => {
+                this.name = false;
                 this.router.navigate(['login']);
             }
         )

@@ -35,16 +35,25 @@ export class EditFacilityComponent  {
     start_time:any;
     name: any;
     time: any[] = [];
-
+    choosedDay: any[] = [];
+    schedule: any[] = [];
     days = [
-        { value: 'monday', name: 'Monday' },
-        { value: 'tuesday', name: 'Tuesday' },
-        { value: 'wednesday', name: 'Wednesday' },
-        { value: 'thursday', name: 'Thursday' },
-        { value: 'friday', name: 'Friday' },
-        { value: 'saturday', name: 'Saturday' },
-        { value: 'sunday', name: 'Sunday' },
+        { day:['monday','tuesday','wednesday','thursday','friday','saturday','sunday']},
+        { day:['monday','tuesday','wednesday','thursday','friday','saturday','sunday']},
+        { day:['monday','tuesday','wednesday','thursday','friday','saturday','sunday']},
+        { day:['monday','tuesday','wednesday','thursday','friday','saturday','sunday']},
+        { day:['monday','tuesday','wednesday','thursday','friday','saturday','sunday']},
+        { day:['monday','tuesday','wednesday','thursday','friday','saturday','sunday']},
+        { day:['monday','tuesday','wednesday','thursday','friday','saturday','sunday']}
     ];
+        // { value: 'monday', name: 'Monday' },
+        // { value: 'tuesday', name: 'Tuesday' },
+        // { value: 'wednesday', name: 'Wednesday' },
+        // { value: 'thursday', name: 'Thursday' },
+        // { value: 'friday', name: 'Friday' },
+        // { value: 'saturday', name: 'Saturday' },
+        // { value: 'sunday', name: 'Sunday' },
+    
 
     constructor(private router: Router,
     	private facilityService: FacilityService,
@@ -75,7 +84,10 @@ export class EditFacilityComponent  {
                     admin_fee : ['', Validators.required],
                     schedule: this.formbuilder.array([]),
                     status: ['', Validators.required],
-                    maintenance: [''],
+                    maintenance: this.formbuilder.group({
+                        start_date: [''],
+                        end_date: ['']
+                    }),
                     created_by : [''],
                     created_at : [''],
                     __v : [''],
@@ -141,9 +153,9 @@ export class EditFacilityComponent  {
     initSchedule() {
         return this.formbuilder.group({
             _id : [],
-            day : [''],
-            start_time : [''],
-            end_time : ['']
+            day : ['', Validators.required],
+            start_time : ['', Validators.required],
+            end_time : ['', Validators.required]
         });
     }
 
@@ -151,6 +163,7 @@ export class EditFacilityComponent  {
         const control = <FormArray>this.myForm.controls['schedule'];
         const scheduleCtrl = this.initSchedule();
         control.push(scheduleCtrl);
+        this.schedule.push(control.length);
     }
 
     removeSchedule(i: number) {
@@ -177,6 +190,16 @@ export class EditFacilityComponent  {
                 setTimeout(() => this.appComponent.loading = false, 1000);
             }
         );
+    }
+
+    getDay(day,a){
+        this.choosedDay.push(day)
+        for (let z = 0; z < this.choosedDay.length; ++z) {
+            var i = this.days[a+1].day.indexOf(this.choosedDay[z]);
+            if(i != -1) {
+                this.days[a+1].day.splice(i, 1);
+            }
+        }
     }
 
 

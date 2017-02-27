@@ -29,9 +29,11 @@ export class UserComponent implements OnInit {
         private appComponent: AppComponent,) {}
 
     ngOnInit() {
-        this.userService.getByToken().subscribe(name => {this.name = name;})
-        this.loadAllUsers();
-        setTimeout(() => this.appComponent.loading = false, 1000);
+        this.userService.getByToken()
+                        .subscribe(name => {
+                                this.name = name;
+                                this.loadAllUsers();
+                            })
     }
 
     deleteUser(user:User) {
@@ -73,7 +75,8 @@ export class UserComponent implements OnInit {
     private loadAllUsers() {
         this.userService.getAll().subscribe(users => { 
                                             this.users = users;
-                                            console.log(users) ;
+                                            console.log(users);
+                                            setTimeout(() => this.appComponent.loading = false, 1000);
                                         });
     }
 

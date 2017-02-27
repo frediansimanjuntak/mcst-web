@@ -44,14 +44,12 @@ export class EditSettingComponent {
             this.name = name;
             setTimeout(() => this.appComponent.loading = false, 1000);
         })
-        
         // this.developmentService.getAll().subscribe(developments => { this.developments = developments; });
     }
 
     updateSetting(){
         this.appComponent.loading = true
-        this.user.details.identification_proof.front = this.model.front;
-        this.user.details.identification_proof.back = this.model.back;
+        console.log(this.user)
 		this.userService.update(this.user)
 		    .then(
                     data => {
