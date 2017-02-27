@@ -10,12 +10,16 @@
 			</div>
 		</div>
 		<p-dataTable [value]="users" [rows]="10" [paginator]="true" [responsive]="true">
-			<p-column filterMatchMode="contains" field="username" header="Username" sortable="true" [filter]="true" filterPlaceholder="Search username"></p-column>
+			<p-column filterMatchMode="contains" field="username" header="Username" sortable="true" [filter]="true" filterPlaceholder="Search username">
+				<template let-users="rowData" pTemplate="body">
+					<span>{{users.username | capitalize }}</span>
+				</template>
+			</p-column>
 			<p-column filterMatchMode="contains" field="email" header="Email" sortable="true" [filter]="true" filterPlaceholder="Search email"></p-column>
 			<p-column filterMatchMode="contains" field="phone" header="Phone" sortable="true" [filter]="true" filterPlaceholder="Search phone"></p-column>
 			<p-column filterMatchMode="contains" field="role" header="Role" sortable="true" [filter]="true" filterPlaceholder="Search role">>
-				<template let-col let-data="rowData" pTemplate="body">
-					<span [style.color]="data[col.field]">{{data[col.field]}}</span>
+				<template let-users="rowData" pTemplate="body">
+					<span>{{users.role | capitalize }}</span>
 				</template>
 			</p-column>
 			<p-column [style]="{'width':'120px'}" styleClass="col-button" header="Action">
