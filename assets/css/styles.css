@@ -965,7 +965,6 @@ img.ui-panel-images {
 li.ui-galleria-frame.ui-galleria-frame-active {
     width: 105px !important;
     height: 80px !important;
-    margin: 10px 10px 0 0 !important;
 }
 img.ui-galleria-frame-image {
     width: 105px !important;
@@ -976,11 +975,14 @@ img.ui-galleria-frame-image {
 }
 .ui-galleria-filmstrip-wrapper {
     height: 90px !important;
-    margin: 0 !important;
-    width: 555px !important;
+    margin: 10px 27px !important;
+    width: 500px !important;
 }
-.ui-galleria-nav-next.fa.fa-fw.fa-chevron-circle-right {
-    display: none;
+li.ui-galleria-frame {
+    width: 105px !important;
+}
+.fa.fa-fw {
+    margin: 26px 0 !important;
 }
 
 /*costumize panel*/
