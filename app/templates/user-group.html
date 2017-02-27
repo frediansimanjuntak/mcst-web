@@ -19,10 +19,10 @@
 						<span *ngFor="let t of usergroups.users">{{t.username}},</span>
 					</template>
 				</p-column>
-				<p-column styleClass="col-button">
+				<p-column [style]="{'width':'80px'}" header="Action" styleClass="col-button">
 					<template let-usergroups="rowData" pTemplate="body">
 						<!-- <button type="button" (click)="editUserGroup(usergroups)">Edit</button> -->
-						<button  type="button" class="btn btn-trash" (click)="deleteConfirmation(usergroups)"><i class="fa fa-trash" aria-hidden="true"></i></button>
+						<button  type="button" class="btn btn-trash" (click)="deleteConfirmation(usergroups)"><i class="fa fa-trash-o" aria-hidden="true"></i></button>
 					</template>
 				</p-column>
 			</p-dataTable>

@@ -112,11 +112,11 @@
 						</p-column>
 						<p-column field="end_time" header="Result date" sortable="true">
 						</p-column>
-						<p-column [style]="{'width':'300px'}" styleClass="col-button">
+						<p-column [style]="{'width':'300px'}" header="Action" styleClass="col-button">
 					    	<template class="pull-right" let-pollsDraft="rowData" pTemplate="body">
 						    	<a type="button" style="cursor:pointer; margin-right: 15px;" (click)="editPoll(pollsDraft)"><i class="fa fa-edit" aria-hidden="true"></i>&nbsp;<u>Edit</u></a>
 						    	<button class="btn btn-publish btn-brown" style="cursor:pointer; margin-right:5px" (click)="openModal(pollsDraft) || firstModal.open()">Start Poll</button>
-						        <button  type="button" class="btn btn-trash" (click)="deleteConfirmation(pollsDraft)"><i class="fa fa-trash" aria-hidden="true"></i></button>
+						        <button  type="button" class="btn btn-trash" (click)="deleteConfirmation(pollsDraft)"><i class="fa fa-trash-o" aria-hidden="true"></i></button>
 					    	</template>
 					    </p-column>
 					</p-dataTable>
@@ -134,7 +134,7 @@
 						</p-column>>
 						<p-column header="Days Remaining" field="remaining" sortable="true">
 						</p-column>
-						<p-column [style]="{'width':'300px'}" styleClass="col-button">
+						<p-column [style]="{'width':'300px'}" header="Action" styleClass="col-button">
 					    	<template class="pull-right" let-pollsActive="rowData" pTemplate="body">
 					    	<a type="button" style="cursor:pointer" (click)="viewPoll(pollsActive)">&nbsp;<u>View Progress</u></a>
 					    	</template>
@@ -156,7 +156,7 @@
 						<p-column field="start_time" header="Commence date" sortable="true"></p-column>
 						<p-column field="end_time" header="Result date" sortable="true"></p-column>
 					    
-						<p-column [style]="{'width':'300px'}" styleClass="col-button">
+						<p-column [style]="{'width':'300px'}" header="Action" styleClass="col-button">
 					    	<template class="pull-right" let-pollsResult="rowData" pTemplate="body">
 					    	<a type="button" style="cursor:pointer" (click)="viewPoll(pollsResult)"><i class="fa fa-edit" aria-hidden="true"></i>&nbsp;View Result</a>
 					    	</template>
