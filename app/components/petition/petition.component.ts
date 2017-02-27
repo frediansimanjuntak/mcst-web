@@ -189,7 +189,7 @@ export class PetitionComponent implements OnInit {
 
     archieveConfirmation() {
         this.confirmationService.confirm({
-            message: 'Are you sure that you want to archieve this petition?',
+            message: 'Are you sure that you want to archieve these requests?',
             header: 'Archieve Confirmation',
             accept: () => {
                 this.archieveSelected()
