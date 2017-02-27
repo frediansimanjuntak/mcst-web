@@ -578,7 +578,7 @@ p.pull-down {
     height: 44px;
     box-shadow: 0 4px 0 0 #dedede;
 }
-.btn-filter:hover, .btn-primary:focus, .btn-primary:active, .btn-primary:active:hover, .btn-primary:active:focus {
+.btn-filter:hover, .btn-filter:focus, .btn-filter:active, .btn-filter:active:hover, .btn-filter:active:focus {
   background-color: #f7f7f7;
 }
 .btn-gray {
