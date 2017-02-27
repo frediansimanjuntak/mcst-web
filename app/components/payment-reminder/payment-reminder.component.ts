@@ -104,13 +104,13 @@ export class PaymentReminderComponent implements OnInit {
                 let y = this.published[i].auto_issue_on.toString().slice(0,4);
                 let m = (this.published[i].auto_issue_on+100).toString().slice(4,6);
                 let d = this.published[i].auto_issue_on.toString().slice(6,8);
-                this.published[i].auto_issue_on = y + '/' + m + '/' + d ;
+                this.published[i].auto_issue_on = d + '/' + m + '/' + y ;
             }
             for (var i = 0; i < this.draft.length; ++i) {
                 let y = this.draft[i].auto_issue_on.toString().slice(0,4);
                 let m = (this.draft[i].auto_issue_on+100).toString().slice(4,6);
                 let d = this.draft[i].auto_issue_on.toString().slice(6,8);
-                this.draft[i].auto_issue_on = y + '/' + m + '/' + d ;
+                this.draft[i].auto_issue_on = d + '/' + m + '/' + y ;
             }
             setTimeout(() => this.appComponent.loading = false, 1000);
         });
