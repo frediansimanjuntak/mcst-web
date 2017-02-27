@@ -66,8 +66,8 @@
                             </p-column>
                             <p-column field="" header="Notification List" [style]="{'width': '150px'}" sortable="true" [filter]="true" filterPlaceholder="Search notification list">
                                 <template let-draft="rowData" pTemplate="body">
-                                    <span *ngIf="draft.notification_list.applies_to != all">Custom</span>
-                                    <span *ngIf="draft.notification_list.applies_to == all">All</span>
+                                    <span *ngIf="draft.notification_list.applies_to == 'resident with vehicle'">Custom</span>
+                                    <span *ngIf="draft.notification_list.applies_to == 'all'">All</span>
                                 </template>
                             </p-column>
                             <p-column field="created_at" header="Created on" [style]="{'width': '150px'}" sortable="true" [filter]="true" filterPlaceholder="Search created date">
@@ -97,7 +97,7 @@
                             </p-column>
                             <p-column field="" header="Notification List" [style]="{'width': '150px'}" sortable="true" [filter]="true" filterPlaceholder="Search notification list">
                                 <template let-published="rowData" pTemplate="body">
-                                    <span *ngIf="published.notification_list.applies_to != 'all'">Custom</span>
+                                    <span *ngIf="published.notification_list.applies_to != 'resident with vehicle'">Custom</span>
                                     <span *ngIf="published.notification_list.applies_to == 'all'">All</span>
                                 </template>
                             </p-column>
