@@ -221,7 +221,7 @@
                                 </p-column>
                                 <p-column styleClass="col-button" header="Action">
                                     <template let-data="rowData" pTemplate="body">
-                                        <a type="button" style="text-decoration: underline;cursor:pointer" (click)="viewNote(contract._id, data)">View</a>
+                                        <a type="button" style="text-decoration: underline;cursor:pointer;margin-right: 10px" (click)="viewNote(contract._id, data)">View</a>
                                         <button type="button" (click)="deleteContractNoteConfirmation(data, contract._id)"><i class="fa fa-trash" aria-hidden="true"></i></button>
                                     </template>
                                 </p-column>
