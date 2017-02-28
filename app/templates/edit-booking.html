@@ -66,7 +66,7 @@
                                 <div class="row">
                                     <div class="col-md-3"><p class="pull-down">Facility :</p></div>
                                     <div class="col-md-9"><p>
-                                        <select name="name" class="form-control" (change)="time($event)" [(ngModel)]="model.facility" #facility="ngModel" style="width: 237px">
+                                        <select name="name" class="form-control" (change)="time()" [(ngModel)]="model.facility" #facility="ngModel" style="width: 237px">
                                             <option *ngFor="let facility of selectedFacility"  [ngValue]="facility._id">{{facility.name}}</option>
                                         </select>
                                     </p></div>
@@ -74,7 +74,7 @@
                                 <div class="row">
                                     <div class="col-md-3"><p class="pull-down">Period :</p></div>
                                     <div class="col-md-9"><p>
-                                        <select name="start" class="form-control" [(ngModel)]="model.start" #start="ngModel" style="width: 116px;float: left; margin-right: 5px;">
+                                        <select name="start" class="form-control" (change)="startTime(model.start)" [(ngModel)]="model.start" #start="ngModel" style="width: 116px;float: left; margin-right: 5px;">
                                             <option *ngFor="let start of times_start" [ngValue]="start"><span *ngIf="start < 10">0</span>{{start}}{{min}}</option>
                                         </select>
                                         <select name="end" class="form-control" [(ngModel)]="model.end" #end="ngModel" style="width: 116px">

@@ -24,13 +24,6 @@ export class SettingComponent implements OnInit {
         this.userService.getByToken()
         .subscribe(user => {
             this.user = user;
-            console.log(this.user)
-            // this.userService.getById(this.name._id)
-            // .subscribe(user => {
-            //     this.user = user;
-            //     console.log(this.user)
-            //     setTimeout(() => this.appComponent.loading = false, 1000);
-            // });
             setTimeout(() => this.appComponent.loading = false, 1000);
         })
     }

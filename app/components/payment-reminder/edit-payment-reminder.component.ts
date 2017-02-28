@@ -71,7 +71,6 @@ export class EditPaymentReminderComponent implements OnInit{
                 let d = this.paymentreminder.auto_issue_on.toString().slice(6,8);
                 this.paymentreminder.auto_issue_on = y + '-' + m + '-' + d ;
                 this.myForm.patchValue(this.paymentreminder);
-                console.log(this.paymentreminder.auto_issue_on , this.paymentreminder.due_on)
                 setTimeout(() => this.appComponent.loading = false, 1000);
             });
         }

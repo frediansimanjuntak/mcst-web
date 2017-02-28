@@ -93,7 +93,6 @@ export class IncidentComponent implements OnInit {
         this.appComponent.loading = true
         this.model._id = incident._id
         this.model.attachment = null
-        console.log(this.model)
         this.incidentService.resolve(this.model)
         .then(
             response => {
@@ -142,7 +141,6 @@ export class IncidentComponent implements OnInit {
             this.dataInProgress = this.incidents.filter(incidents => incidents.status === 'in progress' && incidents.archieve === false);
             this.dataResolved   = this.incidents.filter(incidents => incidents.status === 'resolved' && incidents.archieve === false);
             this.dataArchieved   = this.incidents.filter(incidents => incidents.archieve === true );
-            console.log(this.incidents)
             setTimeout(() => this.appComponent.loading = false, 1000);
 		});
     }

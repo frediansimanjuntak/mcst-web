@@ -127,8 +127,8 @@
 						    <!-- </p-column> -->
 						    <p-column header="Action" styleClass="col-button">
 						    	<template let-booking="rowData" pTemplate="body">
-						        	<a type="button" style="cursor:pointer; text-decoration: underline;" (click)="view(booking)">View</a>
-						        	<button type="button" (click)="deleteConfirmation(booking)"><i class="fa fa-trash" aria-hidden="true"></i></button>
+						        	<a type="button" style="cursor:pointer; text-decoration: underline; margin-right: 10px;" (click)="view(booking)">View</a>
+						        	<button type="button" class="btn btn-trash" (click)="deleteConfirmation(booking)"><i class="fa fa-trash-o" aria-hidden="true"></i></button>
 						    	</template>
 						    </p-column>
 						</p-dataTable>
@@ -143,13 +143,13 @@
 						    	</template>
 						    </p-column>
 						    <p-column field="unit" header="Booked by" [style]="{'width': '95px'}" sortable="true" [filter]="true" filterPlaceholder="Search booked by"></p-column>
-						    <p-column field="booking_date" header="On" sortable="true" [filter]="true" filterPlaceholder="Search date">
+						    <p-column field="booking_date" header="On" sortable="true" [style]="{'width': '70px'}" [filter]="true" filterPlaceholder="Search date">
 						    	<template let-booking="rowData" pTemplate="body">
 						    		{{booking.booking_date | date:'shortDate'}}
 						    	</template>
 						    </p-column>
-						    <p-column field="status" header="Status" sortable="true" [filter]="true" filterPlaceholder="Search status"></p-column>
-						    <p-column field="remark" header="Remark" sortable="true" [filter]="true" filterPlaceholder="Search remark">
+						    <p-column field="status" header="Status" [style]="{'width': '70px'}" sortable="true" [filter]="true" filterPlaceholder="Search status"></p-column>
+						    <p-column field="remark" header="Remark" [style]="{'width': '70px'}" sortable="true" [filter]="true" filterPlaceholder="Search remark">
 						        <template let-col let-booking="rowData" pTemplate="body">
 						            <span [style.color]="booking[col.field]">{{booking[col.field]}}</span>
 						        </template>
@@ -157,8 +157,8 @@
 						    <!-- </p-column> -->
 						    <p-column header="Action" styleClass="col-button">
 						    	<template let-booking="rowData" pTemplate="body">
-						        	<a type="button" style="cursor:pointer; text-decoration: underline;" (click)="view(booking)">View</a>
-						        	<button type="button" (click)="deleteConfirmation(booking)"><i class="fa fa-trash" aria-hidden="true"></i></button>
+						        	<a type="button" style="cursor:pointer; text-decoration: underline; margin-right: 10px;" (click)="view(booking)">View</a>
+						        	<button type="button" class="btn btn-trash" (click)="deleteConfirmation(booking)"><i class="fa fa-trash-o" aria-hidden="true"></i></button>
 						    	</template>
 						    </p-column>
 						</p-dataTable>
@@ -173,13 +173,13 @@
 						    	</template>
 						    </p-column>
 						    <p-column field="property" header="Booked by" [style]="{'width': '95px'}" sortable="true" [filter]="true" filterPlaceholder="Search booked by"></p-column>
-						    <p-column field="booking_date" header="On" sortable="true" [filter]="true" filterPlaceholder="Search date">
+						    <p-column field="booking_date" header="On" [style]="{'width': '70px'}" sortable="true" [filter]="true" filterPlaceholder="Search date">
 						    	<template let-booking="rowData" pTemplate="body">
 						    		{{booking.booking_date | date:'shortDate'}}
 						    	</template>
 						    </p-column>
-						    <p-column field="status" header="Status" sortable="true" [filter]="true" filterPlaceholder="Search status"></p-column>
-						    <p-column field="remark" header="Remark" sortable="true" [filter]="true" filterPlaceholder="Search remark">
+						    <p-column field="status" header="Status" [style]="{'width': '70px'}" sortable="true" [filter]="true" filterPlaceholder="Search status"></p-column>
+						    <p-column field="remark" header="Remark" [style]="{'width': '70px'}" sortable="true" [filter]="true" filterPlaceholder="Search remark">
 						        <template let-col let-booking="rowData" pTemplate="body">
 						            <span [style.color]="booking[col.field]">{{booking[col.field]}}</span>
 						        </template>
@@ -187,8 +187,8 @@
 						    <!-- </p-column> -->
 						    <p-column header="Action" styleClass="col-button">
 						    	<template let-booking="rowData" pTemplate="body">
-						        	<a type="button" style="cursor:pointer; text-decoration: underline;" (click)="view(booking)">View</a>
-						        	<button type="button" (click)="deleteConfirmation(booking)"><i class="fa fa-trash" aria-hidden="true"></i></button>
+						        	<a type="button" style="cursor:pointer; text-decoration: underline; margin-right: 10px;" (click)="view(booking)">View</a>
+						        	<button type="button" class="btn btn-trash" (click)="deleteConfirmation(booking)"><i class="fa fa-trash-o" aria-hidden="true"></i></button>
 						    	</template>
 						    </p-column>
 						</p-dataTable>
