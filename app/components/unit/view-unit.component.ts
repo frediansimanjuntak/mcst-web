@@ -316,7 +316,7 @@ export class ViewUnitComponent implements OnInit {
          }else if(this.model.option == 'new' && this.tenantTotal <= this.unit.max_tenant){
             this.router.navigate([this.name.default_development.name_url + '/user/add', this.unit._id, this.model.type]);  
          }else if(this.model.option == 'new' && this.tenantTotal >= this.unit.max_tenant){
-            this.errorMessage = "This unit has reach max. number of tenant" + this.tenantTotal + " , please remove a tenant first"
+            this.errorMessage = "This unit has reach max. number of tenant ( max :" + this.tenantTotal + ") , please remove a tenant first"
          }
     }
 
@@ -327,7 +327,7 @@ export class ViewUnitComponent implements OnInit {
          }else if(this.model.type == "landlord" && this.hasLandlord){
             this.errorMessage = "This unit already has a landlord, please remove landlord first"
          }else if(this.model.type == "tenant" && this.tenantTotal >= this.unit.max_tenant){
-            this.errorMessage = "This unit has reach max. number of tenant" + this.tenantTotal + " , please remove a tenant first"
+            this.errorMessage = "This unit has reach max. number of tenant ( max :" + this.tenantTotal + ") , please remove a tenant first"
          }else {
              this.loading = true;
              this.appComponent.loading = true
