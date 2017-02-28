@@ -24,13 +24,22 @@
 			<div class="row">
 				<div class="col-md-9">
 					<p-dataTable [value]="dataUnit" [rows]="10" [paginator]="true">
-						<p-column filterPlaceholder="Search Unit No" header="Unit No">
+						<p-column filterPlaceholder="Search Unit No" header="Unit no">
 							<template let-dataUnit="rowData" pTemplate="body">
 								<span>#{{dataUnit.address.unit_no}}-{{dataUnit.address.unit_no_2}}</span>
 							</template>
 						</p-column>
-						<p-column field="landlord.username" header="Owner" sortable="true" [filter]="true" filterPlaceholder="Search Lanlord"></p-column>
-						<p-column field="status" header="Status" sortable="true" [filter]="true" filterPlaceholder="Search Status"></p-column>
+						<p-column field="landlord.username" header="Owner" sortable="true" [filter]="true" filterPlaceholder="Search Owner">
+							<template let-dataUnit="rowData" pTemplate="body">
+								<span *ngIf="dataUnit.landlord">{{dataUnit.landlord.username | capitalize}}</span>
+							</template>
+						</p-column>
+						<p-column field="status" header="Status" sortable="true">
+							<template let-dataUnit="rowData" pTemplate="body">
+								<span *ngIf="dataUnit.status == 'own_stay'">Own stay</span>
+								<span *ngIf="dataUnit.status == 'tenanted'">Tenanted</span>
+							</template>
+						</p-column>
 						<p-column sortable="true" header="No. of Tenant">
 							<template let-dataUnit="rowData" pTemplate="body">
 								<span>{{dataUnit.tenant.length}}</span>
