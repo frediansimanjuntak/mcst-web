@@ -123,7 +123,7 @@
 							<p-column field="unit_no" header="Unit.no" sortable="true"></p-column>
 							<p-column header="Type" field="type" [filter]="true" filterPlaceholder="Search Type">
 								<template let-losts="rowData" pTemplate="body">
-									<span style="text-transform: initial">{{losts.type}}</span>
+									<span style="text-transform: initial">{{losts.type | capitalize}}</span>
 								</template>
 							</p-column>
 							<p-column field="description" header="Description"></p-column>

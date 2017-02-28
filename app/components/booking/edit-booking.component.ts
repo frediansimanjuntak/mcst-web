@@ -119,7 +119,6 @@ export class EditBookingComponent implements OnInit  {
         date     = new Date(this.dt.getTime());
         date     = this.convertDate(date);
         this.model.date = date
-        this.day = this.days[this.dt.getDay()];
         this.paymentService.getAll().subscribe(payments => {
             this.payments = payments ;
             if(payments.length > 0) { 
@@ -148,21 +147,18 @@ export class EditBookingComponent implements OnInit  {
             this.unitService.getAll(this.name.default_development.name_url).subscribe(units => {this.units = units.properties})
         })
         this.step = 1;
+        this.day = this.days[this.dt.getDay()];
         this.date     = new Date(this.dt.getTime());
 		this.facilityService.getAll()
 		.subscribe(facilities => {
 			this.facilities = facilities;
             for (let a = 0; a < facilities.length; ++a) {
-                if(this.facilities[a].schedule.filter(data => data.day == this.day)) {
+                if(this.facilities[a].schedule.filter(data => data.day == this.day).length > 0) {
                     this.selectedFacility.push(this.facilities[a])
-                    console.log(this.selectedFacility)
                 }
                 setTimeout(() => this.appComponent.loading = false, 1000);
             }
 		});
-        for (var a = 0; a < 24; ++a) {
-            this.period.push(a)
-        }
     }
 
     private loadAllBookings() {
@@ -234,7 +230,7 @@ export class EditBookingComponent implements OnInit  {
         return yyyy + '-' + (mmChars[1]?mm:"0"+mmChars[0]) + '-' + (ddChars[1]?dd:"0"+ddChars[0]);
     }
 
-    time(event:any){
+    time(){
         this.appComponent.loading = true
         this.times_end = [];
         this.times_start = []
@@ -254,8 +250,27 @@ export class EditBookingComponent implements OnInit  {
                    start += 1;
                    this.times_end.push(start)
             }
+            this.appComponent.loading = false
         });
-        this.appComponent.loading = false
+    }
+
+    startTime(start){
+        this.appComponent.loading = true
+        this.times_end = [];
+        this.facilityService.getById(this.model.facility)
+        .subscribe(facility => {
+            this.facility = facility;
+            this.selectedDay = this.facility.schedule.filter(data => data.day == this.day); 
+            this.end = this.selectedDay[0].end_time.slice(0,2);
+            let end = +this.end
+            this.min =    ":00"
+            while(this.model.start < end){       
+                   this.model.start += 1;
+                   this.times_end.push(this.model.start)
+            }
+            this.model.start = start
+            this.appComponent.loading = false
+        });
     }
 
 	filter(){

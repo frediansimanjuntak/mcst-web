@@ -56,7 +56,6 @@ export class ContractNoteComponent implements OnInit  {
             this.contractService.getById(this.id).subscribe(contract => {this.contract = contract;});
             this.contractnoteService.getById(this.id,this._id)
             .subscribe(contractnote => {
-                console.log()
                 this.contractnote = contractnote.contract_note[0];
                 this.images = [];
                 for (var i = 0; i < this.contractnote.attachment.length; ++i) {
