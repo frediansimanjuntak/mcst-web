@@ -70,7 +70,7 @@
                     <div class="col-md-8">
                         <div>
                             <select class="form-control" name="chief" [(ngModel)]="model.chief">
-                                <option disabled [selected]=true>Select chief</option>
+                                <option value="" disabled selected>Select chief</option>
                                 <option *ngFor="let u of users" [ngValue]="u._id">{{u.username}}</option>
                             </select>
                             <span *ngIf="f.submitted && !model.chief" class="help-block">Chief is required</span>
@@ -80,7 +80,7 @@
                 <div class="form-group">
                     <label class="control-label col-md-4" for="chief">Users :</label>
                     <div class="col-md-8">
-                        <div>
+                        <div class="styled-select">
                             <ng-select 
                                           [multiple]="true"
                                           [items]="items2"

@@ -127,7 +127,6 @@ export class EditAnnouncementComponent  {
 
     createAnnouncement() {
         this.appComponent.loading = true
-        console.log(this.model)
         this.anouncementService.create(this.model)
             .then(
                 data => {

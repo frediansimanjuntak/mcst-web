@@ -22,6 +22,7 @@ export class Development {
       tenant : any[],
       registered_vehicle : any[],
       status: string,
+      max_tenant: number,
       created_by: User,
       created_at : string
     }
