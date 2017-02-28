@@ -49,7 +49,6 @@ export class EditSettingComponent {
 
     updateSetting(){
         this.appComponent.loading = true
-        console.log(this.user)
 		this.userService.update(this.user)
 		    .then(
                     data => {

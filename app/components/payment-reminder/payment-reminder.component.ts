@@ -55,7 +55,6 @@ export class PaymentReminderComponent implements OnInit {
                 for (let a = 0; a < this.notification_list.length; ++a) {
                     let total_amount = parseInt(this.notification_list[a].amount)
                     this.total = this.total + total_amount;
-                    console.log(this.total);
                 }
                 setTimeout(() => this.appComponent.loading = false, 1000);
             });
