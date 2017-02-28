@@ -23,7 +23,7 @@
                         <div class="col-sm-8">
                             <div>
                                 <select class="form-control" formControlName="property" name="property">
-                                    <option disabled [selected]=true>Select unit no.</option>
+                                    <option value="" disabled selected>Select unit no.</option>
                                     <option *ngFor="let u of units" [ngValue]="u._id">#{{u.address.unit_no}}-{{u.address.unit_no_2}}</option>
                                 </select>
                                 <small style="color: red" [hidden]="myForm.controls.property.valid || (myForm.controls.property.pristine && !submitted)">Unit no is required</small>

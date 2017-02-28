@@ -185,7 +185,7 @@ export class EditFacilityComponent  {
             error => {
                 this._notificationsService.error(
                             'Error',
-                            'Create data failed, server Error',
+                            'Create facility failed, server Error',
                     )
                 setTimeout(() => this.appComponent.loading = false, 1000);
             }
@@ -210,14 +210,14 @@ export class EditFacilityComponent  {
 			response => {
                 this._notificationsService.success(
                             'Success',
-                            'Update development successful',
+                            'Update facility successful',
                     )
                 this.router.navigate([this.name.default_development.name_url + '/facility']);
             },
             error => {
                 this._notificationsService.error(
                             'Error',
-                            'Update data failed, server Error',
+                            'Update facility failed, server Error',
                     )
                 setTimeout(() => this.appComponent.loading = false, 1000);
             }
