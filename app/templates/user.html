@@ -6,7 +6,7 @@
 		<p class="id-location">Home > User</p>
 		<div class="row top-block">
 			<div class="col-md-4 pull-right">
-				<button class="btn btn-default pull-right btn-gray" (click)="add()"> <img class="img-btn" src="../../assets/image/icon_add.png" />&nbsp;Add User</button>
+				<button class="btn btn-default pull-right btn-gray" style="margin-right:0;" (click)="add()"> <img class="img-btn" src="../../assets/image/icon_add.png" />&nbsp;Add User</button>
 			</div>
 		</div>
 		<p-dataTable [value]="users" [rows]="10" [paginator]="true" [responsive]="true">
@@ -24,8 +24,8 @@
 			</p-column>
 			<p-column [style]="{'width':'120px'}" styleClass="col-button" header="Action">
 				<template let-data="rowData" pTemplate="body">
-					<a type="button" style="cursor:pointer" (click)="edit(data)"><i class="fa fa-edit" aria-hidden="true"></i>&nbsp;Edit</a>
-					<button type="button"  class="btn btn-trash" (click)="deleteConfirmation(data)"><i class="fa fa-trash-o" aria-hidden="true"></i></button>
+					<a type="button" style="cursor:pointer; margin-right:10px; margin-left:7px;" (click)="edit(data)"><i class="fa fa-edit" aria-hidden="true"></i>&nbsp;Edit</a>
+					<button type="button"  class="btn btn-trash" style="margin-right:0;" (click)="deleteConfirmation(data)"><i class="fa fa-trash-o" aria-hidden="true"></i></button>
 				</template>
 			</p-column>
 		</p-dataTable>
