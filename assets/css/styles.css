@@ -836,8 +836,9 @@ button.btn.btn-default.btn-sm {
 .modal-content .close {
   font-size: 30px;
   line-height: 1;
-  color: #fff;
+  color: #fff !important;
   padding: 3px 0;
+  opacity: 1 !important;
 }
 .form-group .control-label {
   text-align: left !important;
