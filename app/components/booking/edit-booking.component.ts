@@ -255,7 +255,6 @@ export class EditBookingComponent implements OnInit  {
     }
 
     startTime(start){
-        console.log(start)
         this.appComponent.loading = true
         this.times_end = [];
         this.facilityService.getById(this.model.facility)

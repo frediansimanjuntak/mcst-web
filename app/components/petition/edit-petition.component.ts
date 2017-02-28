@@ -60,9 +60,9 @@ export class EditPetitionComponent implements OnInit {
                             .subscribe(name => {
                                 this.name = name;
                                 this.loadAllUnits();
-                                this.getLastRefNo();
                                 if( this.id != null) {
                                     this.petitionService.getPetition(this.id).then(petition => {this.petition = petition;});
+                                    this.appComponent.loading = false;
                                 }
                             })
         this.selectedType = 'Maintenance';
@@ -102,7 +102,7 @@ export class EditPetitionComponent implements OnInit {
                 this.model.reference_no = '0001'
             }
         
-        setTimeout(() => this.appComponent.loading = false, 1000); 
+        this.appComponent.loading = false;
         });
     }
 
@@ -163,6 +163,7 @@ export class EditPetitionComponent implements OnInit {
                     }
                     this.myOptions = opts.slice(0);
                     this.items = this.myOptions;
+                    this.getLastRefNo();
                 }, 1000);
             });
     }
