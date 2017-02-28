@@ -346,34 +346,28 @@ export class EditBookingComponent implements OnInit  {
 		if(this.tstart.length < 1) {
 			this.tstart.push(start)
 			this.tend.push(end)
-			console.log('masuk')
 		}else{
 			for (let a = 0; a < this.tstart.length; ++a) {
 				if(this.tstart[a] != start) {
 					this.tstart.push(start)
-					console.log('masuk start')
 				}
 				if(this.tend[a] != end) {
 					this.tend.push(end)
-					console.log('masuk end')
 				}
 				if(this.tstart[a] == start) {
 					var i = this.tstart.indexOf(start);
 		            if(i != -1) {
 		                this.tstart.splice(i, 1);
 		            }
-		            console.log('aaa')
 				}
 				if(this.tend[a] == end) {
 					var i = this.tend.indexOf(end);
 		            if(i != -1) {
 		                this.tend.splice(i, 1);
 		            }
-		            console.log('bbb')
 				}
 			}
 		}
-		console.log(this.tend , this.tstart)
 		var time_start = Math.min.apply(Math,this.tstart);
 		var time_end = Math.max.apply(Math,this.tend);
 		let booking_fee = this.model.booking_fee * (time_end - time_start);
