@@ -12,23 +12,26 @@
                     <div class="col-md-6 col-padding" style="color:#eee;">
                         <h5>General Details</h5>
                     </div>
-                    <div class="col-md-6">
+                   <!--  <div class="col-md-6">
                         <a class="btn btn-gray btn-tab-dark pull-right" ><img class="img-btn" src="../../assets/image/icon_add.png" />&nbsp;Generate Code</a>
-                    </div>
+                    </div> -->
                 </div>
                 <div class="row no-margin" style="border: 1px solid grey; padding: 5px;">
                     <div class="row content">
                         <div class="col-md-4">
-                                <b>Unit No :</b>#{{unit.address.unit_no}}-{{unit.address.unit_no_2}}<br>
-                                <b>Block :</b>{{unit.address.block_no}}
+                                <b>Unit No. :&nbsp;</b>#{{unit.address.unit_no}}-{{unit.address.unit_no_2}}<br>
+                                <b>Block :&nbsp;</b>{{unit.address.block_no}}
                             </div>
                             <div class="col-md-4">
-                                <span *ngIf="hasLandlord"><b>Owner :</b>{{unit.landlord.username}}<br></span>
-                                <b>Status :</b>{{unit.status}}
+                                <span *ngIf="hasLandlord"><b>Owner :&nbsp;</b>{{unit.landlord.username | capitalize}}<br></span>
+                                <b>Status :&nbsp;</b>
+                                <span *ngIf="unit.status == 'own_stay'">Own stay</span>
+                                <span *ngIf="unit.status == 'tenanted'">Tenanted</span>
                             </div>
                             <div class="col-md-4">
-                                <b>No of Tenant :</b>{{ unit.tenant.length }}<br>
-                                <b>Vehicle :</b> <p *ngIf>{{vehicles.length}}</p>
+                                <span *ngIf="unit.tenant"><b>No of Tenant :&nbsp;</b>{{ unit.tenant.length }}<br></span>
+                                <span  *ngIf="vehicles"><b>Vehicle :&nbsp;</b>{{vehicles.length}}</span>
+                                
                             </div>
                     </div>
                 </div><br>
@@ -43,21 +46,24 @@
                 </div>
                 <div class="row no-margin">
                    <p-dataTable [value]="residents">
-                        <p-column header="no" [style]="{'width':'42px'}" field="i">
+                        <p-column header="No." [style]="{'width':'42px'}" field="i">
                         </p-column>
                         <p-column header="Resident" >
                             <template let-residents="rowData" pTemplate="body">
-                                <span *ngIf="residents.resident.username">{{residents.resident.username}}</span>
+                                <span *ngIf="residents.resident.username">{{residents.resident.username | capitalize}}</span>
                             </template>
                         </p-column>
                         <p-column header="Type" sortable="true" field="type">
+                            <template let-residents="rowData" pTemplate="body">
+                                <span>{{residents.type | capitalize}}</span>
+                            </template>
                         </p-column>
                         <p-column header="Added on" sortable="true">
                             <template let-residents="rowData" pTemplate="body">
                                 <span>{{residents.created_at | date:'d/M/y'}}</span>
                             </template>
                         </p-column> 
-                        <p-column header="Social page" sortable="true">
+                        <p-column header="Social Page" sortable="true">
                             <template let-residents="rowData" pTemplate="body">
                                 <span *ngIf="residents.social_page">{{residents.social_page}}</span>
                                 <span *ngIf="!residents.social_page">-</span>
@@ -71,13 +77,13 @@
                         </p-column>
                         <p-column header="Remarks" sortable="true">
                             <template let-residents="rowData" pTemplate="body">
-                                <span *ngIf="residents.remarks">{{residents.remarks}}</span>
+                                <span *ngIf="residents.remarks">{{residents.remarks | capitalize}}</span>
                                 <span *ngIf="!residents.remarks">-</span>
                             </template>
                         </p-column> 
                         <p-column [style]="{'width':'160px'}" header="Action" styleClass="col-button" >
                             <template let-residents="rowData" pTemplate="body">
-                                    <a type="button" class="btn-underline"  (click)="openResidentDetail(residents) || residentDetail.open()">View details</a>
+                                    <a type="button"  style="cursor:pointer; margin-right: 15px;" class="btn-underline"  (click)="openResidentDetail(residents) || residentDetail.open()">View details</a>
                                     <button class="btn btn-trash" type="button" (click)="deleteResidentConfirmation(residents)"><i class="fa fa-trash-o" aria-hidden="true"></i></button>
                             </template>
                         </p-column>
@@ -95,11 +101,14 @@
                 </div>
                 <div class="row no-margin">
                    <p-dataTable [value]="vehicles">
-                        <p-column header="no" [style]="{'width':'42px'}" field="i">
+                        <p-column header="No." [style]="{'width':'42px'}" field="i">
                         </p-column>
                         <p-column header="License Plate" field="license_plate">
                         </p-column>
                         <p-column header="Owner" sortable="true" field="user">
+                             <template let-vehicles="rowData" pTemplate="body">
+                                <span>{{vehicles.user | capitalize}}</span>
+                            </template>
                         </p-column>
                          <p-column header="Transponder">
                             <template let-vehicles="rowData" pTemplate="body">
@@ -109,20 +118,20 @@
                         </p-column> 
                         <p-column header="Document" field="document">
                         </p-column>
-                         <p-column header="Registered On" sortable="true">
+                         <p-column header="Registered on" sortable="true">
                             <template let-vehicles="rowData" pTemplate="body">
                                 <span>{{vehicles.registered_on | date:'d/M/y'}}</span>
                             </template>
                         </p-column> 
                         <p-column header="Remarks">
                             <template let-vehicles="rowData" pTemplate="body">
-                                <span *ngIf="vehicles.remarks">{{vehicles.remarks}}</span>
+                                <span *ngIf="vehicles.remarks">{{vehicles.remarks | capitalize}}</span>
                                 <span *ngIf="!vehicles.remarks">-</span>
                             </template>
                         </p-column> 
                         <p-column  [style]="{'width':'160px'}" header="Action" styleClass="col-button" >
                             <template let-vehicles="rowData" pTemplate="body">
-                                    <a type="button" class="btn-underline" (click)="openVehicleDetail(vehicles) || vehicleDetail.open()">View details</a>
+                                    <a type="button"  style="cursor:pointer; margin-right: 15px;" class="btn-underline" (click)="openVehicleDetail(vehicles) || vehicleDetail.open()">View details</a>
                                     <button class="btn btn-trash" type="button" (click)="deleteVehicleConfirmation(vehicles)"><i class="fa fa-trash-o" aria-hidden="true"></i></button>
                             </template>
                         </p-column>
