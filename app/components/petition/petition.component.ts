@@ -25,9 +25,13 @@ export class PetitionComponent implements OnInit {
 	petition: any;
     petitions: Petition[] = [];
     archivedPetitions: Petition[] = [];
+    public ticketNumberFilter: string = '';
     validTillDateOptions: any = {};
     model: any = {};
     id: string;
+    filterType: string;
+    all: any[] = [];
+    allArchieved: any[] = [];
     cols: any[];
     checked: string[] = [];
     selectedValues: string[] = [];
@@ -106,6 +110,18 @@ export class PetitionComponent implements OnInit {
         
     }
 
+    filter(){
+        this.appComponent.loading=true;
+        this.petitions = this.all.filter(data => data.reference_no.toLowerCase().indexOf(this.ticketNumberFilter.toLowerCase()) !==  -1);
+        setTimeout(() => this.appComponent.loading = false, 500);
+    }
+
+    filterArchieved(){
+        this.appComponent.loading=true;
+        this.archivedPetitions = this.allArchieved.filter(data => data.reference_no.toLowerCase().indexOf(this.ticketNumberFilter.toLowerCase()) !==  -1);
+        setTimeout(() => this.appComponent.loading = false, 500);   
+    }
+
     private loadAllUnits(): void {
         this.unitService.getAll(this.name.default_development.name_url)
             .subscribe((data)=> {
@@ -130,6 +146,8 @@ export class PetitionComponent implements OnInit {
         this.petitionService.getAll()
             .subscribe((data)=> {
                 setTimeout(()=> {
+                    this.all               = data.filter(data => data.archieve === false && data.development._id == this.name.default_development._id );
+                    this.allArchieved      = data.filter(data => data.archieve === true && data.development._id == this.name.default_development._id );
                     this.petitions         = data.filter(data => data.archieve === false && data.development._id == this.name.default_development._id );
                     this.archivedPetitions = data.filter(data => data.archieve === true && data.development._id == this.name.default_development._id );
                     setTimeout(() => this.appComponent.loading = false, 1000);

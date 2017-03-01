@@ -31,7 +31,7 @@ export class EditUnitComponent implements OnInit {
     myForm: FormGroup;
     public submitted: boolean; // keep track on whether form is submitted
     public events: any[] = []; // use later to display form changes
-     name: any;
+    name: any;
 
     constructor(
         private router: Router,
@@ -65,6 +65,7 @@ export class EditUnitComponent implements OnInit {
                     full_address : ['', <any>Validators.required]
                 }),
                 status: ['own_stay'],
+                max_tenant: [],
         });
 
         this.route.params.subscribe(params => {
@@ -82,28 +83,29 @@ export class EditUnitComponent implements OnInit {
 
     createUnit(model: any, isValid: boolean) {
         this.submitted = true;
-        
+        console.log(model);
         if(isValid){
-
-            this.appComponent.loading = true
-            this.unitservice.create(model, this.name.default_development.name_url)
-            .then(
-                data => {
-                    this._notificationsService.success(
-                            'Success',
-                            'Create Unit successful',
+            if(model.max_tenant <= 20){
+                this.appComponent.loading = true
+                this.unitservice.create(model, this.name.default_development.name_url)
+                .then(
+                    data => {
+                        this._notificationsService.success(
+                                'Success',
+                                'Create Unit successful',
+                            )
+                        this.router.navigate([this.name.default_development.name_url + '/unit']);
+                    },
+                    error => {
+                        console.log(error);
+                        this._notificationsService.error(
+                                'Error',
+                                'The Unit could not be save, server Error.',
                         )
-                    this.router.navigate([this.name.default_development.name_url + '/unit']);
-                },
-                error => {
-                    console.log(error);
-                    this._notificationsService.error(
-                            'Error',
-                            'The Unit could not be save, server Error.',
-                    )
-                    this.appComponent.loading = false;
-                }
-            );
+                        this.appComponent.loading = false;
+                    }
+                );  
+            }            
         }
     }
 

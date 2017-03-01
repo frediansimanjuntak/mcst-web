@@ -40,7 +40,7 @@
 								<span *ngIf="dataUnit.status == 'tenanted'">Tenanted</span>
 							</template>
 						</p-column>
-						<p-column sortable="true" header="No. of Tenant">
+						<p-column sortable="true" field="tenant.length" header="No. of Tenant">
 							<template let-dataUnit="rowData" pTemplate="body">
 								<span>{{dataUnit.tenant.length}}</span>
 							</template>

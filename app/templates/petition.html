@@ -89,7 +89,27 @@
 			</div>
 			<p class="id-location">Home > Manage Request</p>
 			<div class="row top-block">
-				<div class="col-md-12 pull-right">
+				<div class="col-md-6 no-padding">
+					<div class="input-group filter-search">
+						<input type="text" class="form-control input-search" (keyup.enter)="filter()" [(ngModel)]="ticketNumberFilter" placeholder="Search Ticket Number" name="filter">
+						<span (click)="filter()" class="input-group-btn">
+							<button class="btn btn-secondary btn-search" type="button"><i class="fa fa-search fa-inverse" aria-hidden="true"></i></button>
+						</span>
+					</div>
+				    <div class="input-group">
+				        <label class="control-label" for="type">Type :</label>
+				        <div class="col-sm-8">
+				          <select class="form-control" name="selectedType" [(ngModel)]="filterType">
+				            <option value="al">All</option>
+				            <option value="moving_in">Moving in</option>
+				            <option value="renovation">Renovation</option>
+				            <option value="add_tenant">Add Tenant/family</option>
+				            <option value="maintenance">Maintenance</option>
+				          </select>
+				        </div>
+				    </div>
+				</div>
+				<div class="col-md-6 pull-right">
 					<button class="btn btn-default btn-add pull-right" [disabled]="!btnArchive" (click)="archieveConfirmation()"><img class="img-btn" src="../../assets/image/icon_archived.png" />&nbsp;Archive Selected</button>
 					<button class="btn btn-default btn-add pull-right" (click)="viewArchieved()">
 						<img class="img-btn" src="../../assets/image/icon_archived.png" />&nbsp;View Archived
@@ -98,7 +118,7 @@
 				</div>
 			</div>
 
-			<div (click)="$event.preventDefault()">
+			<div class="row">
 
 				<p-dataTable [value]="petitions" [rows]="10" [paginator]="true">
 					<p-column field="reference_no" header="Ticket Number" [filter]="true" filterPlaceholder="Search Ticket Number">
@@ -150,14 +170,22 @@
 			</div>
 			<p class="id-location">Home > Manage Archived Request</p>
 			<div class="row top-block">
-				<div class="col-md-12 pull-right">
+				<div class="col-md-6 no-padding">
+					<div class="input-group filter-search">
+						<input type="text" class="form-control input-search" [(ngModel)]="ticketNumberFilter" placeholder="Search Ticket Number" name="filter">
+						<span (click)="filterArchieved()" class="input-group-btn">
+							<button class="btn btn-secondary btn-search" type="button"><i class="fa fa-search fa-inverse" aria-hidden="true"></i></button>
+						</span>
+					</div>
+				</div>
+				<div class="col-md-6 pull-right">
 					<button class="btn btn-default btn-add pull-right" (click)="viewUnarchieved()">
 						<img class="img-btn" src="../../assets/image/icon_archived.png" />&nbsp;View Unarchived
 					</button>
 					<button class="btn btn-default btn-add pull-right" (click)="add()"><img class="img-btn" src="../../assets/image/icon_add.png" />&nbsp;Add Request</button>
 				</div>
 			</div>
-			<div (click)="$event.preventDefault()">
+			<div class="row">
 
 				<p-dataTable [value]="archivedPetitions" [rows]="10" [paginator]="true">
 					<p-column field="reference_no" header="Ticket Number" [filter]="true" filterPlaceholder="Search Ticket Number">

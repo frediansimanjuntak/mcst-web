@@ -52,10 +52,8 @@ export class ContractComponent implements OnInit  {
         this.route.params.subscribe(params => {
             this.id = params['id'];
         });
-        if( this.id == null) {
-            this.loadAllContract();
-        }else{
-        	this.contractService.getById(this.id)
+        if(this.id != null) {
+            this.contractService.getById(this.id)
             .subscribe(contract => {
                 this.contract = contract;
                 this.images = [];
@@ -76,6 +74,9 @@ export class ContractComponent implements OnInit  {
                 }
                 setTimeout(() => this.appComponent.loading = false, 1000);
             })
+        }
+        if(this.id == null) {
+            this.loadAllContract();
         }
     }
 

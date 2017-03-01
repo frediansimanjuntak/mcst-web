@@ -23,12 +23,15 @@ export class NewsletterComponent implements OnInit {
     model: any = {};
     cols: any[];
     users: any;
+    public filterField: string = '';
     public developmentId;
     public data;
     public dataAgm;
     public dataEgm;
     public dataCircular;
-    public filterQuery = "";
+    allAgm: any[] = [];
+    allEgm: any[] = [];
+    allCircular: any[] = [];
     public rowsOnPage = 10;
     public sortBy = "email";
     public sortOrder = "asc";
@@ -125,12 +128,32 @@ export class NewsletterComponent implements OnInit {
                 setTimeout(()=> {
                     console.log(data)
                   this.data = data.newsletter;
+                  this.allAgm       = this.data.filter(data => data.type === 'agm' );
+                  this.allEgm       = this.data.filter(data => data.type === 'egm' );
+                  this.allCircular  = this.data.filter(data => data.type === 'circular' );
                   this.dataAgm       = this.data.filter(data => data.type === 'agm' );
                   this.dataEgm       = this.data.filter(data => data.type === 'egm' );
                   this.dataCircular  = this.data.filter(data => data.type === 'circular' );
                   setTimeout(() => this.appComponent.loading = false, 1000);
                 }, 1000);
             });
+    }
+
+    filter(){
+        this.appComponent.loading=true;
+        this.dataAgm   = this.allAgm.filter(data => 
+                            data.title.toLowerCase().indexOf(this.filterField.toLowerCase()) !==  -1 ||
+                            data.created_by.username.toLowerCase().indexOf(this.filterField.toLowerCase()) !==  -1
+                            );
+        this.dataEgm   = this.allEgm.filter(data => 
+                            data.title.toLowerCase().indexOf(this.filterField.toLowerCase()) !==  -1 ||
+                            data.created_by.username.toLowerCase().indexOf(this.filterField.toLowerCase()) !==  -1
+                            );
+        this.dataCircular   = this.allCircular.filter(data => 
+                            data.title.toLowerCase().indexOf(this.filterField.toLowerCase()) !==  -1 ||
+                            data.created_by.username.toLowerCase().indexOf(this.filterField.toLowerCase()) !==  -1
+                            );
+        setTimeout(() => this.appComponent.loading = false, 500);
     }
 
     openModal(newsletter:any){
