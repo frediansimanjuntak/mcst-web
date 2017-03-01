@@ -14,7 +14,7 @@
                     </div>
                 </div>
                 <div class="form-group" [ngClass]="{ 'has-error': !unit_no_2.valid }">
-                    <label class="control-label col-sm-4" for="unit_no_2">Unit number :</label>
+                    <label class="control-label col-sm-4" for="unit_no_2">Unit Number :</label>
                     <div class="col-sm-8">
                         <input type="text" class="form-control" name="unit_no_2" [(ngModel)]="unit.address.unit_no_2" #unit_no_2="ngModel" required />
                         <span *ngIf=" !unit_no_2.valid" class="help-block">Unit no 2 is required</span>
@@ -89,44 +89,44 @@
                     </div>
                 </div>
                 <div class="form-group" [ngClass]="{ 'has-error': submitted && !myForm.controls.address.controls.unit_no_2.valid }" formGroupName="address">
-                    <label class="control-label col-sm-4" for="unit_no_2">Unit number :</label>
+                    <label class="control-label col-sm-4" for="unit_no_2">Unit Number :</label>
                     <div class="col-sm-8">
-                        <input type="text" class="form-control" name="unit_no_2" formControlName="unit_no_2">
+                        <input type="text" placeholder="Input unit number here" class="form-control" name="unit_no_2" formControlName="unit_no_2">
                         <small style="color: red" [hidden]="myForm.controls.address.controls.unit_no_2.valid || (myForm.controls.address.controls.unit_no_2.pristine && !submitted)">Unit No 2 is required</small>
                     </div>
                 </div>
                 <div class="form-group" formGroupName="address" [ngClass]="{ 'has-error': submitted && !myForm.controls.address.controls.block_no.valid }">
                     <label class="control-label col-sm-4" for="block_no">Block Number :</label>
                     <div class="col-sm-8">
-                        <input type="text" class="form-control" name="block_no" formControlName="block_no">
+                        <input type="text" class="form-control" placeholder="Input block number here" name="block_no" formControlName="block_no">
                         <small style="color: red" [hidden]="myForm.controls.address.controls.block_no.valid || (myForm.controls.address.controls.block_no.pristine && !submitted)">Block No is required</small>
                     </div>
                 </div>
                 <div class="form-group" formGroupName="address" [ngClass]="{ 'has-error': submitted && !myForm.controls.address.controls.street_name.valid }">
                     <label class="control-label col-sm-4" for="street_name">Street Name :</label>
                     <div class="col-sm-8">
-                        <input type="text" class="form-control" name="street_name" formControlName="street_name">
+                        <input type="text" class="form-control" placeholder="Input street name here" name="street_name" formControlName="street_name">
                         <small style="color: red" [hidden]="myForm.controls.address.controls.street_name.valid || (myForm.controls.address.controls.street_name.pristine && !submitted)">Street name is required</small>
                     </div>
                 </div>
                 <div class="form-group" formGroupName="address" [ngClass]="{ 'has-error': submitted && !myForm.controls.address.controls.postal_code.valid }">
                     <label class="control-label col-sm-4" for="postal_code">Postal Code :</label>
                     <div class="col-sm-8">
-                        <input type="text" class="form-control" name="postal_code" formControlName="postal_code">
+                        <input type="text" class="form-control" placeholder="Input postal code here" name="postal_code" formControlName="postal_code">
                         <small style="color: red" [hidden]="myForm.controls.address.controls.postal_code.valid || (myForm.controls.address.controls.postal_code.pristine && !submitted)">Postal code is required</small>
                     </div>
                 </div>
                 <div class="form-group" formGroupName="address" [ngClass]="{ 'has-error': submitted && !myForm.controls.address.controls.country.valid }">
                     <label class="control-label col-sm-4" for="country">Country :</label>
                     <div class="col-sm-8">
-                        <input type="text" class="form-control" formControlName="country" name="country">
+                        <input type="text" class="form-control" placeholder="Input country name here" formControlName="country" name="country">
                         <small style="color: red" [hidden]="myForm.controls.address.controls.country.valid || (myForm.controls.address.controls.country.pristine && !submitted)">Country is required</small>
                     </div>
                 </div>
                 <div class="form-group" formGroupName="address" [ngClass]="{ 'has-error': submitted && !myForm.controls.address.controls.full_address.valid }">
                     <label class="control-label col-sm-4" for="full_address">Full Address :</label>
                     <div class="col-sm-8">
-                        <textarea type="text" class="form-control" name="full_address" formControlName="full_address"></textarea>
+                        <textarea type="text" class="form-control" placeholder="Input full address here" name="full_address" formControlName="full_address"></textarea>
                         <small style="color: red" [hidden]="myForm.controls.address.controls.full_address.valid || (myForm.controls.address.controls.full_address.pristine && !submitted)">Full address No is required</small>
                     </div>
                 </div>
@@ -135,7 +135,7 @@
                     <div class="row no-margin">
                         <label class="control-label col-sm-4" for="max_tenant">Max. number of tenant :</label>
                             <div class="col-sm-8">
-                                <input type="number" max="20" min="0" class="form-control" formControlName="max_tenant" name="max_tenant">
+                                <input type="number" max="20" min="0" class="form-control"  placeholder="If any (max. 20)" formControlName="max_tenant" name="max_tenant">
                                 <small style="color: red" [hidden]="myForm.controls.max_tenant.value <= 20">Max number of tenant must below or equal to 20</small>
                             </div>
                         </div>

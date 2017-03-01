@@ -284,6 +284,28 @@ export class ViewUnitComponent implements OnInit {
             );
     }
 
+    generateCode(){
+        this.appComponent.loading = true
+        this.unitservice.generateCode(this.unit._id, this.name.default_development.name_url)
+            .then(
+                 data => {
+                    this._notificationsService.success(
+                            'Success',
+                            'Generate unit code successful',
+                    )
+                    this.ngOnInit();
+                },
+                error => {
+                    console.log(error);
+                    this._notificationsService.error(
+                            'Error',
+                            'Failed to generate code, server error',
+                    )
+                    setTimeout(() => this.appComponent.loading = false, 1000);
+                }
+            );
+    }
+
     deleteVehicleConfirmation(vehicle) {
         this.confirmationService.confirm({
             message: 'Are you sure that you want to delete this vehicle?',
