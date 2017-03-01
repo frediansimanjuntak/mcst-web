@@ -584,7 +584,7 @@ p.pull-down {
     background-color: #f0f0f0;
     border: 1px solid #dedede;
     color: #4a4a4a;
-    height: 44px;
+    height: 40px;
     min-width: 130px !important;
     font-weight: bold;
     font-size: 13px;
@@ -696,7 +696,7 @@ p.pull-down {
     background-color: #f0f0f0;
     border: 1px solid #dedede;
     color: #4a4a4a;
-    height: 44px;
+    height: 40px;
     width: auto;
     padding: 11px 35px;
     margin: 0 10px 0 0;
