@@ -45,6 +45,16 @@
       		<p class="id-location">Home > Facilities System</p>
       		<div class="row">
         		<div class="col-lg-4">
+        			<div class="row top-block">
+	        			<div class="no-padding">
+	                        <div class="input-group filter-search">
+	                            <input type="text" style="width: 300px" class="form-control input-search" [(ngModel)]="dataFilter" placeholder="Search Ref.no" name="filter">
+	                            <span (click)="filter()" class="input-group-btn">
+	                                <button class="btn btn-secondary btn-search" type="button"><i class="fa fa-search fa-inverse" aria-hidden="true"></i></button>
+	                            </span>
+	                        </div>
+	                    </div>
+					</div>
             		<div style="width:335px;">
               			<datepicker (click)="test()" [style]="{'width':'300px'}" [(ngModel)]="dt" [minDate]="minDate" [showWeeks]="false"></datepicker>
             		</div>
