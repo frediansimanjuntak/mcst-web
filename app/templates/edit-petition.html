@@ -9,7 +9,7 @@
                         <label class="control-label col-sm-4" for="petition_type">Request Type :</label>
                         <div class="col-sm-8">
                             <select class="form-control" name="petition_type" id="petition_type" formControlName="petition_type" placeholder="Choose Petition Type">
-                                <option disabled [selected]=true>Select request type</option>
+                                <option disabled [selected]=true><span style="color:#999" >Select request type</span></option>
                                 <option value="maintenance" selected>Maintenance</option>
                                 <option value="moving_in" >Moving In</option>
                                 <option value="renovation" >Renovation</option>
@@ -23,7 +23,7 @@
                         <div class="col-sm-8">
                             <div>
                                 <select class="form-control" formControlName="property" name="property">
-                                    <option value="" disabled selected>Select unit no.</option>
+                                    <option style="color:#999" value="" disabled selected>Select unit no.</option>
                                     <option *ngFor="let u of units" [ngValue]="u._id">#{{u.address.unit_no}}-{{u.address.unit_no_2}}</option>
                                 </select>
                                 <small style="color: red" [hidden]="myForm.controls.property.valid || (myForm.controls.property.pristine && !submitted)">Unit no is required</small>

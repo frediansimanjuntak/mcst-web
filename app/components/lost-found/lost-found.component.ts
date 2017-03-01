@@ -10,6 +10,7 @@ import { Location }               from '@angular/common';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import * as $ from "jquery";
 import { ConfirmationService } from 'primeng/primeng';
+import { DatePipe } from '@angular/common';
 // import { Overlay } from 'angular2-modal';
 // import { Modal } from 'angular2-modal/plugins/bootstrap';
 // import { PublishAnnouncementModalComponent, PublishAnnouncementModalData } from './publish-announcement-modal.component';
@@ -26,7 +27,10 @@ export class LostFoundComponent implements OnInit {
     @ViewChild('firstModal') firstModal;
 	lostFound: any;
     lostFoundforModal: any;
+    public filterField: string = '';
     lostFounds: any[] = [];
+    allArchived: any[]= [];
+    allNotArchived: any[]= [];
     all: any[]= [];
     losts: any[] = [];
     founds: any[] = [];
@@ -45,6 +49,7 @@ export class LostFoundComponent implements OnInit {
 
     constructor(
                 private router: Router,
+                private datePipe: DatePipe,
                 private lostFoundService: LostFoundService,
                 private alertService: AlertService,
                 private route: ActivatedRoute,
@@ -135,55 +140,57 @@ export class LostFoundComponent implements OnInit {
             .subscribe((data)=> {
                 setTimeout(()=> {
                     this.lostFounds      = data.filter(data => data.development._id == this.name.default_development._id);
-                    console.log(this.lostFounds);
+                    
+                    for (var i = 0; i < this.lostFounds.length; i++) {
+                        if(this.lostFounds[i].property){
+                            let unit = this.dataUnit.find(data => data._id ==  this.lostFounds[i].property);
+                            this.lostFounds[i].unit_no = '#' + unit.address.unit_no + '-' + unit.address.unit_no_2;
+                        }
+                    }
+
+                    this.allArchived     = this.lostFounds.filter(data => data.archieve === true );
                     this.archieveds      = this.lostFounds.filter(data => data.archieve === true );
-                    for (var i = 0; i < this.archieveds.length; i++) {
-                        if(this.archieveds[i].property){
-                            let unit = this.dataUnit.find(data => data._id ==  this.archieveds[i].property);
-                            this.archieveds[i].unit_no = '#' + unit.address.unit_no + '-' + unit.address.unit_no_2;
-                        }
-                    }
-                    this.archievedLosts = this.archieveds.filter(data => data.type == 'lost');
-                    for (var i = 0; i < this.archievedLosts.length; i++) {
-                        if(this.archievedLosts[i].property){
-                            let unit = this.dataUnit.find(data => data._id ==  this.archievedLosts[i].property);
-                            this.archievedLosts[i].unit_no = '#' + unit.address.unit_no + '-' + unit.address.unit_no_2;
-                        }
-                    }
-                    this.archievedFounds= this.archieveds.filter(data => data.type == 'found');
-                    for (var i = 0; i < this.archievedFounds.length; i++) {
-                        if(this.archievedFounds[i].property){
-                            let unit = this.dataUnit.find(data => data._id ==  this.archievedFounds[i].property);
-                            this.archievedFounds[i].unit_no = '#' + unit.address.unit_no + '-' + unit.address.unit_no_2;
-                        }
-                    }
-
-
-
+                    this.archievedLosts  = this.archieveds.filter(data => data.type == 'lost');
+                    this.archievedFounds = this.archieveds.filter(data => data.type == 'found');
+                    
+                    this.allNotArchived  = this.lostFounds.filter(data => data.archieve === false );
                     this.all             = this.lostFounds.filter(data => data.archieve === false );
-                    for (var i = 0; i < this.all.length; i++) {
-                        if(this.all[i].property){
-                            let unit = this.dataUnit.find(data => data._id ==  this.all[i].property);
-                            this.all[i].unit_no = '#' + unit.address.unit_no + '-' + unit.address.unit_no_2;
-                        }
-                    }
                     this.losts           = this.all.filter(data => data.type == 'lost');
-                    for (var i = 0; i < this.losts.length; i++) {
-                        if(this.losts[i].property){
-                            let unit = this.dataUnit.find(data => data._id ==  this.losts[i].property);
-                            this.losts[i].unit_no = '#' + unit.address.unit_no + '-' + unit.address.unit_no_2;
-                        }
-                    }
                     this.founds          = this.all.filter(data => data.type == 'found');
-                    for (var i = 0; i < this.founds.length; i++) {
-                        if(this.founds[i].property){
-                            let unit = this.dataUnit.find(data => data._id ==  this.founds[i].property);
-                            this.founds[i].unit_no = '#' + unit.address.unit_no + '-' + unit.address.unit_no_2;
-                        }
-                    }
+                    
                     setTimeout(() => this.appComponent.loading = false, 1000);
                 }, 1000);
             });
+    }
+
+    filter(){
+        this.appComponent.loading=true;
+        this.all   = this.allNotArchived.filter(data => 
+                            data.serial_number.toLowerCase().indexOf(this.filterField.toLowerCase()) !==  -1 ||
+                            data.created_by.username.toLowerCase().indexOf(this.filterField.toLowerCase()) !==  -1 ||
+                            data.unit_no.toLowerCase().indexOf(this.filterField.toLowerCase()) !==  -1 ||
+                            data.description.toLowerCase().indexOf(this.filterField.toLowerCase()) !==  -1 ||
+                            this.datePipe.transform(data.created_at, 'd/M/y').toLowerCase().indexOf(this.filterField.toLowerCase()) !==  -1
+                            );
+        this.losts           = this.all.filter(data => data.type == 'lost');
+        this.founds          = this.all.filter(data => data.type == 'found');
+
+        setTimeout(() => this.appComponent.loading = false, 500);
+    }
+
+    filterArchieved(){
+        this.appComponent.loading=true;
+        this.archieveds   = this.allArchived.filter(data => 
+                            data.serial_number.toLowerCase().indexOf(this.filterField.toLowerCase()) !==  -1 ||
+                            data.created_by.username.toLowerCase().indexOf(this.filterField.toLowerCase()) !==  -1 ||
+                            data.unit_no.toLowerCase().indexOf(this.filterField.toLowerCase()) !==  -1 ||
+                            data.description.toLowerCase().indexOf(this.filterField.toLowerCase()) !==  -1 ||
+                            this.datePipe.transform(data.created_at, 'd/M/y').toLowerCase().indexOf(this.filterField.toLowerCase()) !==  -1
+                            );
+        this.archievedLosts           = this.archieveds.filter(data => data.type == 'lost');
+        this.archievedFounds          = this.archieveds.filter(data => data.type == 'found');
+
+        setTimeout(() => this.appComponent.loading = false, 500);
     }
 
     add(){
