@@ -43,28 +43,33 @@
                     </div>
                 </div>
                 <!--owned-->
-                <div class="col-md-12">
+                <div class="col-md-10 form-group">
                     <div formArrayName="notification_list">
                         <div class="panel panel-default">
                             <div class="panel-heading">
                                 <span>Charge/Bill</span>
                                 <span style="margin-left: 88px">Remarks</span>
                                 <span style="margin-left: 250px">Applies to</span>
-                                <span style="margin-left: 100px">Amount</span>
+                                <span style="margin-left: 105px">Amount</span>
                             </div>
                             <div *ngFor="let owned of myForm.controls.notification_list.controls; let i=index" class="form-group">
                                 <div class="panel-body" [formGroupName]="i">
                                     <div class="col-md-12">
                                         <input class="form-control" style="width: 150px; float: left; margin-right: 10px;font-weight: bold" type="text" formControlName="charge" />&nbsp;
                                         <input class="form-control" style="width: 300px; float: left; margin-right: 10px" type="text" formControlName="remarks" /> &nbsp;
-                                        <select class="form-control" style="width: 150px; float: left; margin-right: 20px" formControlName="applies_to">
+                                        <select class="form-control" style="width: 160px; float: left; margin-right: 10px" formControlName="applies_to">
                                             <option value="all">All</option>
                                             <option value="resident with vehicle">Resident with vehicle</option>
                                         </select> &nbsp;
-                                        <input (keypress)="number($event)" class="form-control" style="width: 100px; float: left; margin-right: 5px" type="text" formControlName="amount" />
+                                        <input (keypress)="number($event)" class="form-control" (change)="total(myForm.value.notification_list[i].amount)" style="width: 100px; float: left; margin-right: 5px" type="text" formControlName="amount" />
                                         <span *ngIf="myForm.controls.notification_list.controls.length > 1" (click)="removeNotification_list(i)"><img src="../../assets/image/icon_close_black.png" width="10px" height="10px"></span>
                                     </div>
                                 </div>
+                            </div>
+                            <div class="panel-footer">
+                            
+                                <span style="margin-left: 610px"><b>Total: </b></span>
+                                <span style="margin-left: 70px"><b>${{totalAmount}}</b></span>
                             </div>
                         </div>
                         <div class="margin-20">
@@ -72,7 +77,8 @@
                         </div>  
                     </div>    
                 </div>
-                <div class="col-md-12">
+                <!--owned-->
+                <div class="col-md-10 form-group">
                     <div class="form-group pull-right">
                         <button [disabled]="loading" class="btn btn-brown btn-primary">Save</button>
                         <img *ngIf="loading" src="data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA==" />
@@ -125,7 +131,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-md-11">
+                <div class="col-md-10 form-group">
                     <div formArrayName="notification_list">
                         <div class="panel panel-default">
                             <div class="panel-heading">
@@ -136,17 +142,22 @@
                             </div>
                             <div *ngFor="let owned of myForm.controls.notification_list.controls; let i=index" class="form-group">
                                 <div class="panel-body" [formGroupName]="i">
-                                    <div class="col-md-11">
+                                    <div class="col-md-12">
                                         <input class="form-control" style="width: 150px; float: left; margin-right: 10px;font-weight: bold" type="text" formControlName="charge" />&nbsp;
                                         <input class="form-control" style="width: 300px; float: left; margin-right: 10px" type="text" formControlName="remarks" /> &nbsp;
                                         <select class="form-control" style="width: 160px; float: left; margin-right: 10px" formControlName="applies_to">
                                             <option value="all">All</option>
                                             <option value="resident with vehicle">Resident with vehicle</option>
                                         </select> &nbsp;
-                                        <input (keypress)="number($event)" class="form-control" style="width: 100px; float: left; margin-right: 5px" type="text" formControlName="amount" />
+                                        <input (keypress)="number($event)" class="form-control" (change)="total(myForm.value.notification_list[i].amount)" style="width: 100px; float: left; margin-right: 5px" type="text" formControlName="amount" />
                                         <span *ngIf="myForm.controls.notification_list.controls.length > 1" (click)="removeNotification_list(i)"><img src="../../assets/image/icon_close_black.png" width="10px" height="10px"></span>
                                     </div>
                                 </div>
+                            </div>
+                            <div class="panel-footer">
+                            
+                                <span style="margin-left: 610px"><b>Total: </b></span>
+                                <span style="margin-left: 70px"><b>${{totalAmount}}</b></span>
                             </div>
                         </div>
                         <div class="margin-20">
@@ -155,7 +166,7 @@
                     </div>    
                 </div>
                 <!--owned-->
-                <div class="col-md-11">
+                <div class="col-md-10 form-group">
                     <div class="form-group pull-right">
                         <button [disabled]="loading" class="btn btn-brown btn-primary">Create</button>
                         <img *ngIf="loading" src="data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA==" />

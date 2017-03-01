@@ -66,7 +66,7 @@
 			<div class="row">
 				<div class="col-md-4">Requested By </div>
 				<div class="col-md-8">
-					<p>: {{ petition.created_by.username }}</p>
+					<p *ngIf="petition.created_by">: {{ petition.created_by.username }}</p>
 				</div>
 			</div>
 			<div class="row">
@@ -97,10 +97,10 @@
 						</span>
 					</div>
 				    <div class="input-group">
-				        <label class="control-label" for="type">Type :</label>
+				        <label class="control-label col-sm-4" for="type">Type :</label>
 				        <div class="col-sm-8">
-				          <select class="form-control" name="selectedType" [(ngModel)]="filterType">
-				            <option value="al">All</option>
+				          <select class="form-control" name="selectedType" (change)="filterType($event)" [(ngModel)]="typeFilter">
+				            <option value="" selected="selected">All</option>
 				            <option value="moving_in">Moving in</option>
 				            <option value="renovation">Renovation</option>
 				            <option value="add_tenant">Add Tenant/family</option>
@@ -136,7 +136,7 @@
 					</p-column>
 					<p-column header="Requested by">
 						<template let-petitions="rowData" pTemplate="body">
-							<span class="btn-underline">{{petitions.created_by.username}}</span>
+							<span *ngIf="petitions.created_by" class="btn-underline">{{petitions.created_by.username}}</span>
 							<br>
 							<span>on {{petitions.created_at | date:'shortTime'}}</span>
 							<br>
@@ -170,14 +170,27 @@
 			</div>
 			<p class="id-location">Home > Manage Archived Request</p>
 			<div class="row top-block">
-				<div class="col-md-6 no-padding">
+				<div class="col-md-4">
 					<div class="input-group filter-search">
-						<input type="text" class="form-control input-search" [(ngModel)]="ticketNumberFilter" placeholder="Search Ticket Number" name="filter">
+						<input type="text" class="form-control input-search"  (keyup.enter)="filterArchieved()" [(ngModel)]="ticketNumberFilter" placeholder="Search Ticket Number" name="filter">
 						<span (click)="filterArchieved()" class="input-group-btn">
 							<button class="btn btn-secondary btn-search" type="button"><i class="fa fa-search fa-inverse" aria-hidden="true"></i></button>
 						</span>
 					</div>
 				</div>
+				<div class="input-group">
+				        <label class="control-label col-sm-4" for="type">Type :</label>
+				        <div class="col-sm-8">
+				          <select class="form-control" name="selectedType" (change)="filterTypeArchieved($event)" [(ngModel)]="typeFilter">
+				            <option value="" selected="selected">All</option>
+				            <option value="moving_in">Moving in</option>
+				            <option value="renovation">Renovation</option>
+				            <option value="add_tenant">Add Tenant/family</option>
+				            <option value="maintenance">Maintenance</option>
+				          </select>
+				        </div>
+				</div>
+
 				<div class="col-md-6 pull-right">
 					<button class="btn btn-default btn-add pull-right" (click)="viewUnarchieved()">
 						<img class="img-btn" src="../../assets/image/icon_archived.png" />&nbsp;View Unarchived
@@ -203,7 +216,7 @@
 					</p-column>
 					<p-column header="Requested by">
 						<template let-archivedPetitions="rowData" pTemplate="body">
-							<span class="btn-underline">{{archivedPetitions.created_by.username}}</span>
+							<span class="btn-underline" *ngIf="archivedPetitions.created_by">{{archivedPetitions.created_by.username}}</span>
 							<br>
 							<span>on {{archivedPetitions.created_at | date:'shortTime'}}</span>
 							<br>

@@ -54,6 +54,14 @@
             <div class="title">PAYMENT SYSTEM</div>
             <p class="id-location">Home > Payment system</p>
             <div class="row top-block">
+                <div class="col-md-8 no-padding">
+                    <div class="input-group filter-search">
+                        <input type="text" class="form-control input-search" [(ngModel)]="dataFilter" placeholder="Search..." name="filter">
+                        <span (click)="filter()" class="input-group-btn">
+                            <button class="btn btn-secondary btn-search" type="button"><i class="fa fa-search fa-inverse" aria-hidden="true"></i></button>
+                        </span>
+                    </div>
+                </div>
                 <div class="col-md-4 pull-right">
                     <button class="btn btn-default pull-right btn-add" (click)="add()">
                         <img class="img-btn" src="../../assets/image/icon_add.png" />&nbsp;Create payment reminder
