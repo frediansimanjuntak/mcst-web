@@ -25,7 +25,7 @@ import { BootstrapModalModule }         from 'angular2-modal/plugins/bootstrap';
 import { SlimLoadingBarModule }         from 'ng2-slim-progress-bar';
 import { MomentModule }                 from 'angular2-moment';
 import { PdfViewerComponent }           from 'ng2-pdf-viewer';
-
+import { DatePipe } from '@angular/common';
 import { 
   TokenComponent,
   AccessControlComponent,
@@ -257,6 +257,7 @@ import {
     TestService,
     EditContractComponent,
     AppComponent,
+    DatePipe
   ],
   bootstrap:    [ AppComponent ],
   // entryComponents: [ PublishAnnouncementModalComponent ] 

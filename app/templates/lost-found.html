@@ -54,7 +54,15 @@
 				Manage Lost & Found
 			</div>
 			<p class="id-location">Home > Manage Lost & Found</p>
-			<div class="row">
+			<div class="row top-block">
+				<div class="col-md-6 no-padding">
+					<div class="input-group filter-search">
+						<input type="text" class="form-control input-search" (keyup.enter)="filter()" [(ngModel)]="filterField" placeholder="Search..." name="filter">
+						<span (click)="filter()" class="input-group-btn">
+							<button class="btn btn-secondary btn-search" type="button"><i class="fa fa-search fa-inverse" aria-hidden="true"></i></button>
+						</span>
+					</div>
+				</div>
 				<div class="col-md-4 pull-right">
 					<a class="btn btn-default btn-gray pull-right" (click)="viewArchieved()">
 						<img class="img-btn" src="../../assets/image/icon_archived.png" />&nbsp;View Archived
@@ -203,7 +211,15 @@
 				Manage Archieved Lost & Found
 			</div>
 			<p class="id-location">Home > Manage Lost & Found > Archieved</p>
-			<div class="row">
+			<div class="row top-block">
+				<div class="col-md-6 no-padding">
+					<div class="input-group filter-search">
+						<input type="text" class="form-control input-search" (keyup.enter)="filterArchieved()" [(ngModel)]="filterField" placeholder="Search..." name="filter">
+						<span (click)="filterArchieved()" class="input-group-btn">
+							<button class="btn btn-secondary btn-search" type="button"><i class="fa fa-search fa-inverse" aria-hidden="true"></i></button>
+						</span>
+					</div>
+				</div>
 				<div class="col-md-4 pull-right">
 					<a class="btn btn-default btn-gray pull-right" (click)="viewUnarchieved()">View Unarchived
 					</a>

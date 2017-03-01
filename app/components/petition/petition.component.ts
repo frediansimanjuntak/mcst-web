@@ -113,9 +113,9 @@ export class PetitionComponent implements OnInit {
     filter(){
         this.appComponent.loading=true;
         if(this.typeFilter != ''){
-            this.petitions = this.petitions.filter(data => data.reference_no.toLowerCase().indexOf(this.ticketNumberFilter.toLowerCase()) !==  -1);
+            this.petitions = this.petitions.filter(data => ('#'+data.reference_no.toLowerCase()).indexOf(this.ticketNumberFilter.toLowerCase()) !==  -1);
         }else{
-            this.petitions = this.all.filter(data => data.reference_no.toLowerCase().indexOf(this.ticketNumberFilter.toLowerCase()) !==  -1);    
+            this.petitions = this.all.filter(data => ('#'+data.reference_no.toLowerCase()).indexOf(this.ticketNumberFilter.toLowerCase()) !==  -1);    
         }
         setTimeout(() => this.appComponent.loading = false, 500);
     }
@@ -123,9 +123,9 @@ export class PetitionComponent implements OnInit {
     filterArchieved(){
         this.appComponent.loading=true;
         if(this.typeFilter != ''){
-            this.archivedPetitions = this.archivedPetitions.filter(data => data.reference_no.toLowerCase().indexOf(this.ticketNumberFilter.toLowerCase()) !==  -1);
+            this.archivedPetitions = this.archivedPetitions.filter(data => ('#'+ data.reference_no.toLowerCase()).indexOf(this.ticketNumberFilter.toLowerCase()) !==  -1);
         }else{
-            this.archivedPetitions = this.allArchieved.filter(data => data.reference_no.toLowerCase().indexOf(this.ticketNumberFilter.toLowerCase()) !==  -1);            
+            this.archivedPetitions = this.allArchieved.filter(data => ('#'+data.reference_no.toLowerCase()).indexOf(this.ticketNumberFilter.toLowerCase()) !==  -1);            
         }
         
         setTimeout(() => this.appComponent.loading = false, 500);   

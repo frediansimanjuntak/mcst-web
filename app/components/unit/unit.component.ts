@@ -19,10 +19,13 @@ export class UnitComponent implements OnInit {
     development: any;
     units: Development[] = [];
     users: any;
+    public unitFilter : string = '';
+    public typeFilter: string = '';
     public developmentId;
     public data;
     public dataUnit;
     name: any;
+    all: any[] = [];
     loading = false;
     constructor(private router: Router,
                 private unitservice: UnitService, 
@@ -66,12 +69,34 @@ export class UnitComponent implements OnInit {
         this.unitservice.getAll(this.name.default_development.name_url)
             .subscribe((data)=> {
                 setTimeout(()=> {
+                    this.all = data.properties;
                     this.dataUnit = data.properties;
                     console.log(this.dataUnit)
                     this.loading = false;
                     setTimeout(() => this.appComponent.loading = false, 1000);
                 }, 1000);
             });
+    }
+
+
+    filter(){
+        this.appComponent.loading=true;
+        if(this.typeFilter != ''){
+            this.dataUnit = this.dataUnit.filter(data => ('#'+data.address.unit_no+'-'+data.address.unit_no_2.toLowerCase()).indexOf(this.unitFilter.toLowerCase()) !==  -1);
+        }else{
+            this.dataUnit = this.all.filter(data => ('#'+data.address.unit_no+'-'+data.address.unit_no_2.toLowerCase()).indexOf(this.unitFilter.toLowerCase()) !==  -1);  
+        }
+        setTimeout(() => this.appComponent.loading = false, 500);
+    }
+
+    filterType(event:any){
+        this.appComponent.loading = true
+        if(this.unitFilter != ''){
+            this.dataUnit = this.dataUnit.filter(data => data.status.toLowerCase().indexOf(this.typeFilter.toLowerCase()) !==  -1);    
+        }else{
+            this.dataUnit = this.all.filter(data => data.status.toLowerCase().indexOf(this.typeFilter.toLowerCase()) !==  -1);  
+        }
+        setTimeout(() => this.appComponent.loading = false, 500);
     }
 
     view(unit: any){
