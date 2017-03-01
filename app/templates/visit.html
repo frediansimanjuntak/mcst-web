@@ -9,8 +9,8 @@
 			<div class="col-md-6 no-padding">
 				<div class="col-md-7">
 					<div class="input-group filter-search">
-						<input type="text" class="form-control input-search" placeholder="Search name, vehicle no., unit no." name="filter">
-						<span class="input-group-btn">
+						<input type="text" class="form-control input-search" (keyup.enter)="filter()" [(ngModel)]="filterField"  placeholder="Search name, vehicle no., unit no." name="filter">
+						<span  (click)="filter()" class="input-group-btn">
 							<button class="btn btn-secondary btn-search" type="button"><i class="fa fa-search fa-inverse" aria-hidden="true"></i></button>
 						</span>
 					</div>
@@ -43,7 +43,7 @@
 			<p-dataTable [value]="visitActive" scrollable="true" scrollHeight="360px">
 				<p-column header="No" [style]="{'width':'42px'}" field="i">
 				</p-column>
-				<p-column header="Visitor/Guest" field="visitor.full_name" [filter]="true" filterPlaceholder="Search Name">
+				<p-column header="Visitor/Guest" field="visitor.full_name">
 					<template let-visitActive="rowData" pTemplate="body">
 						<span>{{visitActive.visitor.prefix}} {{visitActive.visitor.full_name}}</span>
 					</template>
