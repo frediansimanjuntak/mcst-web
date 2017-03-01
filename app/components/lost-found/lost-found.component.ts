@@ -166,7 +166,7 @@ export class LostFoundComponent implements OnInit {
     filter(){
         this.appComponent.loading=true;
         this.all   = this.allNotArchived.filter(data => 
-                            data.serial_number.toLowerCase().indexOf(this.filterField.toLowerCase()) !==  -1 ||
+                            ('#' + data.serial_number.toLowerCase()).indexOf(this.filterField.toLowerCase()) !==  -1 ||
                             data.created_by.username.toLowerCase().indexOf(this.filterField.toLowerCase()) !==  -1 ||
                             data.unit_no.toLowerCase().indexOf(this.filterField.toLowerCase()) !==  -1 ||
                             data.description.toLowerCase().indexOf(this.filterField.toLowerCase()) !==  -1 ||
@@ -181,7 +181,7 @@ export class LostFoundComponent implements OnInit {
     filterArchieved(){
         this.appComponent.loading=true;
         this.archieveds   = this.allArchived.filter(data => 
-                            data.serial_number.toLowerCase().indexOf(this.filterField.toLowerCase()) !==  -1 ||
+                            ('#' + data.serial_number.toLowerCase()).indexOf(this.filterField.toLowerCase()) !==  -1 ||
                             data.created_by.username.toLowerCase().indexOf(this.filterField.toLowerCase()) !==  -1 ||
                             data.unit_no.toLowerCase().indexOf(this.filterField.toLowerCase()) !==  -1 ||
                             data.description.toLowerCase().indexOf(this.filterField.toLowerCase()) !==  -1 ||
