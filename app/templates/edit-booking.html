@@ -59,7 +59,7 @@
                     </div>
                     <div class="row">
                         <div class="col-lg-4">
-                            <div style="width:335px;">
+                            <div style="width:335px; margin-top:15px;">
                                 <datepicker (click)="selectedDate()" [style]="{'width':'300px'}" [(ngModel)]="dt" [minDate]="minDate" [showWeeks]="false"></datepicker>
                             </div>
                             <form name="form" (ngSubmit)="f.form.valid && filter()" #f="ngForm" novalidate>

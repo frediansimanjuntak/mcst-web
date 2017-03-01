@@ -606,7 +606,7 @@ p.pull-down {
     border: 1px solid #9a8d6b !important;
     color: #fff;
     font-weight: bold;
-    height: 44px;
+    height: 40px;
     min-width: 130px !important;
     padding: 10px;
     box-shadow: 0 3px 0 0 #9a8d6b;
@@ -1050,8 +1050,8 @@ p.field-box.no-margin {
 }
 .btn-upload {
     width: 150px;
-    height: 44px;
-    padding: 14px;
+    height: 40px;
+    padding: 12px;
     background-color: #f8f8f8;
     border: 1px solid #dedede;
     border-bottom: none;
