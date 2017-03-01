@@ -13,7 +13,7 @@
                         <h5>General Details</h5>
                     </div>
                     <div class="col-md-6">
-                        <a (click)="generateCode()" class="btn btn-gray btn-tab-dark pull-right" ><img class="img-btn" src="../../assets/image/icon_add.png" />&nbsp;Generate Code</a>
+                        <a (click)="generateCode.open()" class="btn btn-gray btn-tab-dark pull-right" ><img class="img-btn" src="../../assets/image/icon_add.png" />&nbsp;Generate Code</a>
                     </div>
                 </div>
                 <div class="row no-margin" style="border: 1px solid grey; padding: 5px;">
@@ -345,6 +345,39 @@
                 </modal-content>
                 <modal-footer>
                       <button class="btn btn-default" (click)="vehicleDetail.close()">Close</button>
+                </modal-footer>
+            </modal>
+        </div>  
+
+        <div class="row">
+            <modal #generateCode>
+                <modal-header>
+                    <h5>Generate code for resident</h5>
+                </modal-header>
+                <modal-content>
+                    
+                    <div class="form-group">
+                                <div class="col-sm-8">
+                                    <div class="col-sm-2">
+                                        <label>
+                                            <input type="radio" name="code" [(ngModel)]="codeType" value='landlord'>Landlord
+                                        </label>
+                                    </div>
+                                    <div class="col-sm-2">
+                                        <label>
+                                            <input type="radio" name="code" [(ngModel)]="codeType" value='tenant'>Tenant
+                                        </label>
+                                    </div>
+                                    <div class="col-sm-2">
+                                        <label>
+                                            <input type="radio" name="code" [(ngModel)]="codeType" value='all'>Landlord and Tenant
+                                        </label>
+                                    </div>                                    
+                                </div>
+                    </div>
+                </modal-content>
+                <modal-footer>
+                      <button class="btn btn-default" (click)="generateCode()">Close</button>
                 </modal-footer>
             </modal>
         </div>  
