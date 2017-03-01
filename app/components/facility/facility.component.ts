@@ -97,4 +97,8 @@ export class FacilityComponent implements OnInit {
     view(facility: Facility){
         this.router.navigate([this.name.default_development.name_url + '/facility/view', facility._id]);
     }
+
+    goBack(){
+        this.router.navigate([this.name.default_development.name_url + '/facility']);
+    }
 }

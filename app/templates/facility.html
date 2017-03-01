@@ -3,7 +3,7 @@
         <div *ngIf="facility">
             <div class="title">{{facility.name}}</div>
             <p class="id-location">Home > Facility > {{facility.name}}</p>
-            <p><a style="cursor:pointer" (click)="goBack()">Back to last page</a></p>
+            <p><a class="link-box" style="text-decoration:underline;" (click)="goBack()">Back to last page</a></p>
             <div class="row">
                 <div class="col-lg-12">
                     <div *ngFor="let schedule of facility.schedule" class="row">
@@ -26,36 +26,36 @@
             </div>
             <div (click)="$event.preventDefault()">
                 <p-dataTable [value]="facilities" [rows]="10" [paginator]="true">
-                    <p-column filterMatchMode="contains" field="name" header="Name" sortable="true" [filter]="true" filterPlaceholder="Search Name">
+                    <p-column filterMatchMode="contains" [style]="{'width': '148px'}" field="name" header="Name" sortable="true" [filter]="true" filterPlaceholder="Search Name">
                         <template let-data="rowData" pTemplate="body">
                             <span>{{data.name | capitalize}}</span>
                         </template>
                     </p-column>
-                    <p-column filterMatchMode="contains" field="description" header="Description" sortable="true" [filter]="true" filterPlaceholder="Search Description">
+                    <p-column filterMatchMode="contains" [style]="{'width': '148px'}" field="description" header="Description" sortable="true" [filter]="true" filterPlaceholder="Search Description">
                         <template let-data="rowData" pTemplate="body">
                             <span>{{data.description | capitalize}}</span>
                         </template>
                     </p-column>
-                    <p-column filterMatchMode="contains" field="payment_type" header="Payment Type" sortable="true" [filter]="true" filterPlaceholder="Search Payment Type">
+                    <p-column filterMatchMode="contains" [style]="{'width': '143px'}" field="payment_type" header="Payment Type" sortable="true" [filter]="true" filterPlaceholder="Search Payment Type">
                         <template let-data="rowData" pTemplate="body">
                             <span>{{data.payment_type | capitalize}}</span>
                         </template>
                     </p-column>
-                    <p-column filterMatchMode="contains" field="booking_type" header="Booking Type" sortable="true" [filter]="true" filterPlaceholder="Search Booking Type">
+                    <p-column filterMatchMode="contains" [style]="{'width': '143px'}" field="booking_type" header="Booking Type" sortable="true" [filter]="true" filterPlaceholder="Search Booking Type">
                         <template let-data="rowData" pTemplate="body">
                             <span>{{data.booking_type | capitalize}}</span>
                         </template>
                     </p-column>
-                    <p-column filterMatchMode="contains" field="booking_fee" header="Booking Fee" sortable="true" [filter]="true" filterPlaceholder="Search Booking Fee"></p-column>
-                    <p-column filterMatchMode="contains" field="status" header="Status" sortable="true" [filter]="true" filterPlaceholder="Search Status">
+                    <p-column filterMatchMode="contains" [style]="{'width': '143px'}" field="booking_fee" header="Booking Fee" sortable="true" [filter]="true" filterPlaceholder="Search Booking Fee"></p-column>
+                    <p-column filterMatchMode="contains" [style]="{'width': '143px'}" field="status" header="Status" sortable="true" [filter]="true" filterPlaceholder="Search Status">
                         <template let-data="rowData" pTemplate="body">
                             <span>{{data.status | capitalize}}</span>
                         </template>
                     </p-column>
-                    <p-column styleClass="col-button" header="action">
+                    <p-column [style]="{'width': '168px'}" styleClass="col-button" header="Action">
                         <template let-data="rowData" pTemplate="body">
-                            <a type="button" style="text-decoration: underline;cursor:pointer" (click)="view(data)">View</a>
-                            <a type="button" style="cursor:pointer" (click)="edit(data)"><i class="fa fa-edit" aria-hidden="true"></i>&nbsp;Edit</a>
+                            <a type="button" style="text-decoration: underline;cursor:pointer; margin-right: 10px;" (click)="view(data)">View</a>
+                            <a type="button" style="cursor:pointer; margin-right: 10px;" (click)="edit(data)"><i class="fa fa-edit" aria-hidden="true"></i>&nbsp;Edit</a>
                             <button type="button" class="btn btn-trash" (click)="deleteConfirmation(data)"><i class="fa fa-trash-o" aria-hidden="true"></i></button>
                         </template>
                     </p-column>

@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, Params, ActivatedRoute } from '@angular/router';
 import { Development } from '../../models/index';
-import { DevelopmentService, AlertService } from '../../services/index';
+import { DevelopmentService, AlertService, UserService } from '../../services/index';
 import { NotificationsService } from 'angular2-notifications';
 import '../../rxjs-operators';
 import 'rxjs/add/operator/switchMap';
@@ -17,15 +17,18 @@ export class EditDevelopmentComponent implements OnInit {
 	development: Development;
     model: any = {};
     id: string;
+    name: any;
 
     constructor(private router: Router,
     	private developmentService: DevelopmentService,
     	private alertService: AlertService,
         private appComponent: AppComponent,
         private _notificationsService: NotificationsService,
+        private userService: UserService,
         private route: ActivatedRoute,) {}
 
     ngOnInit(): void {
+        this.userService.getByToken().subscribe(name => {this.name = name;})
         this.route.params.subscribe(params => {
             this.id = params['id'];
         });
@@ -47,7 +50,7 @@ export class EditDevelopmentComponent implements OnInit {
                             'Success',
                             'Create development successful',
                     )
-                this.router.navigate(['/development']);
+                this.router.navigate([ this.name.default_development.name_url + '/development']);
             },
             error => {
                 this._notificationsService.error(
@@ -68,7 +71,7 @@ export class EditDevelopmentComponent implements OnInit {
                             'Success',
                             'Update development successful',
                     )
-                this.router.navigate(['/development']);
+                this.router.navigate([this.name.default_development.name_url + '/development']);
             },
             error => {
             	this._notificationsService.error(
