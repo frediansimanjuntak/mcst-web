@@ -28,6 +28,8 @@ export class ContractComponent implements OnInit  {
     public open;
     public close;
     name: any;
+    dataFilter: string = '';
+    all: any[] = [];
     
 
     constructor(private router: Router, 
@@ -171,10 +173,21 @@ export class ContractComponent implements OnInit  {
 	private loadAllContract() {
 		this.contractService.getAll().subscribe(contracts => {
 			this.contracts = contracts ;
+            this.all       = contracts;
             this.open      = this.contracts.filter(contracts => contracts.status === 'open' );
             this.close     = this.contracts.filter(contracts => contracts.status === 'closed' );
             setTimeout(() => this.appComponent.loading = false, 1000);
 		});
+    }
+
+    filter(){
+        this.appComponent.loading = true;
+        this.contracts  = this.all.filter(data => 
+                data.title.toLowerCase().indexOf(this.dataFilter.toLowerCase()) !==  -1
+            );
+        this.open       = this.contracts.filter(data => data.status === 'open');
+        this.close      = this.contracts.filter(data => data.status === 'closed');
+        setTimeout(() => this.appComponent.loading = false, 500);
     }
 
     view(contract: Contract){

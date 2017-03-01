@@ -23,6 +23,9 @@ export class EditPaymentReminderComponent implements OnInit{
     development : Development;
     name: any;
     id: any;
+    amount:number[] = [];
+    totalAmount:number = 0;
+
 
     constructor(private router: Router,
     	private paymentreminderService: PaymentReminderService,
@@ -63,6 +66,7 @@ export class EditPaymentReminderComponent implements OnInit{
                 this.paymentreminder = paymentreminder; 
                 this.paymentreminder.due_on = this.paymentreminder.due_on.slice(0,10);
                 for (let i = 0; i < this.paymentreminder.notification_list.length; i++) {
+                    this.totalAmount = this.totalAmount + parseInt(this.paymentreminder.notification_list[i].amount)
                     const control = <FormArray>this.myForm.controls['notification_list'];
                     control.push(this.initNotification_list());
                 }
@@ -152,7 +156,15 @@ export class EditPaymentReminderComponent implements OnInit{
         );
     }
 
-    
+    total(amount){
+        console.log(amount)
+        this.totalAmount = 0
+        this.amount.push(amount)
+        for (let a = 0; a < this.amount.length; ++a) {
+            this.totalAmount = this.totalAmount + +this.amount[a]
+        }
+    }
+
     cancel(){
         this.router.navigate([this.name.default_development.name_url + '/payment_system' ]);
     }
