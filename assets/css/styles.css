@@ -683,11 +683,11 @@ p.pull-down {
   border-top: 4px solid #b3b2b2;
   outline-style: none;
 }
-.btn-add {
+.btn-add, .btn-add[disabled] {
     background-color: #f0f0f0 !important;
     border: 1px solid #dedede;
     color: #4a4a4a !important;
-    height: 44px;
+    height: 40px;
     width: auto;
     padding: 0 20px;
     margin: 0 0 0 10px;
@@ -705,8 +705,9 @@ p.pull-down {
 }
 .btn-add:hover, .btn-print:hover, .btn-add:active, .btn-print:active, .btn-add:focus, .btn-print:focus, .btn-add:active:hover, .btn-print:active:hover, .btn-add:active:focus, .btn-print:active:focus {
   border: 1px solid #dedede;
-  background-color: #f0f0f0;
+  background-color: #dedede !important;
   outline-style: none;
+  box-shadow: 0 4px 0 0 #dedede;
 }
 .btn-trash {
     background-color: #d8d8d8;
@@ -739,9 +740,11 @@ p.pull-down {
 }
 .top-block {
   margin-bottom: 20px;
+  height: 44px;
+  line-height: 44px;
 }
 .filter-search {
-  width: 60%;
+  width: 100%;
 }
 .input-search {
   height: 44px;
@@ -752,6 +755,9 @@ p.pull-down {
 .btn-search {
   height: 44px;
   background-color: #2f3033;
+}
+.top-block select {
+    height: 44px;
 }
 
 /*color of circle on table*/
@@ -841,8 +847,6 @@ button.btn.btn-default.btn-sm {
   opacity: 1 !important;
 }
 .form-group .control-label {
-  text-align: left !important;
-  padding: 0 !important;
   margin-bottom: 10px
 }
 .modal-header {
