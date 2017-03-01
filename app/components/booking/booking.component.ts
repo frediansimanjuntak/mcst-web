@@ -39,6 +39,7 @@ export class BookingComponent implements OnInit {
 	model: any = {}; 
 	id: string;
 	units: any[];
+	all: any[] = [];
 	unit: any;
 	times_start : any[] = [];
 	times_end : any[] = [];
@@ -56,6 +57,7 @@ export class BookingComponent implements OnInit {
 	status: any;
 	period1: any;
 	period2: any
+	noFilter: string = '';
 
 	constructor(
 		private router: Router,
@@ -81,19 +83,6 @@ export class BookingComponent implements OnInit {
 		this.facilityService.getAll()
 		.subscribe(facilities => { 
 			this.facilities = facilities;
-			this.start = facilities[0].schedule[0].start_time.slice(0,2);
-			let start = +this.start
-			this.end = facilities[0].schedule[0].end_time.slice(0,2);
-			let end = +this.end    
-			this.min =    facilities[0].schedule[0].start_time.slice(2,5);
-			for (var i = start; i < end; ++i) {
-					this.times_start.push(i)
-			}
-			while(start < end){       
-				   start += 1;
-				   this.times_end.push(start)
-			}
-
 		});
 		for (var a = 0; a < 24; ++a) {
 			this.period.push(a)
