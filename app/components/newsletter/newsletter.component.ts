@@ -8,6 +8,7 @@ import { FileUploader } from 'ng2-file-upload';
 import { AppComponent } from '../index';
 import { Observable} from 'rxjs/Observable';
 import { ConfirmationService } from 'primeng/primeng';
+import { DatePipe } from '@angular/common';
 
 @Component({
   // moduleId: module.id,
@@ -38,6 +39,7 @@ export class NewsletterComponent implements OnInit {
     name: any;
 
     constructor(
+                private datePipe: DatePipe,
                 private router: Router,
                 private newsletterservice: NewsletterService, 
                 private alertService: AlertService,
@@ -143,15 +145,18 @@ export class NewsletterComponent implements OnInit {
         this.appComponent.loading=true;
         this.dataAgm   = this.allAgm.filter(data => 
                             data.title.toLowerCase().indexOf(this.filterField.toLowerCase()) !==  -1 ||
-                            data.created_by.username.toLowerCase().indexOf(this.filterField.toLowerCase()) !==  -1
+                            data.created_by.username.toLowerCase().indexOf(this.filterField.toLowerCase()) !==  -1 ||
+                            this.datePipe.transform(data.created_at, 'd/M/y').toLowerCase().indexOf(this.filterField.toLowerCase()) !==  -1
                             );
         this.dataEgm   = this.allEgm.filter(data => 
                             data.title.toLowerCase().indexOf(this.filterField.toLowerCase()) !==  -1 ||
-                            data.created_by.username.toLowerCase().indexOf(this.filterField.toLowerCase()) !==  -1
+                            data.created_by.username.toLowerCase().indexOf(this.filterField.toLowerCase()) !==  -1 ||
+                            this.datePipe.transform(data.created_at, 'd/M/y').toLowerCase().indexOf(this.filterField.toLowerCase()) !==  -1
                             );
         this.dataCircular   = this.allCircular.filter(data => 
                             data.title.toLowerCase().indexOf(this.filterField.toLowerCase()) !==  -1 ||
-                            data.created_by.username.toLowerCase().indexOf(this.filterField.toLowerCase()) !==  -1
+                            data.created_by.username.toLowerCase().indexOf(this.filterField.toLowerCase()) !==  -1 ||
+                            this.datePipe.transform(data.created_at, 'd/M/y').toLowerCase().indexOf(this.filterField.toLowerCase()) !==  -1
                             );
         setTimeout(() => this.appComponent.loading = false, 500);
     }
