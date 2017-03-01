@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Development } from '../../models/index';
-import { DevelopmentService, AlertService } from '../../services/index';
+import { DevelopmentService, AlertService, UserService } from '../../services/index';
 import '../../rxjs-operators';
 import { NotificationsService } from 'angular2-notifications';
 import { Observable} from 'rxjs/Observable';
@@ -19,15 +19,18 @@ export class DevelopmentComponent implements OnInit {
 	development: Development;
     developments: Development[] = [];
     model: any = {};
+    name: any;
 
     constructor(private router: Router,
                 private developmentService: DevelopmentService,
                 private appComponent: AppComponent,
                 private alertService: AlertService,
                 private confirmationService: ConfirmationService,
+                private userService: UserService,
                 private _notificationsService: NotificationsService,) {}
 
     ngOnInit() {
+        this.userService.getByToken().subscribe(name => {this.name = name;})
         this.loadAllDevelopments();
     }
 
@@ -73,10 +76,10 @@ export class DevelopmentComponent implements OnInit {
     }
 
     add(){
-        this.router.navigate(['/development/add']);
+        this.router.navigate([this.name.default_development.name_url + '/development/add']);
     }
 
     edit(development: Development){
-        this.router.navigate(['/development/edit', development._id]);
+        this.router.navigate([this.name.default_development.name_url + '/development/edit', development._id]);
     }
 }

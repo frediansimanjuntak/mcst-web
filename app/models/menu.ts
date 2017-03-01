@@ -86,7 +86,7 @@ export const MENUS: any[] = [
       },
       { name : 'User', link: '/user' },
       { name : 'User Group', link: '/user_group' },
-      // { name : 'Development', link: '/development' },
+      { name : 'Development', link: '/development' },
       { name : 'Facility', link: '/facility' },
       // { name : 'Company', link: '/company' },
       // { name : 'Contractor', link: '/contractor' },
