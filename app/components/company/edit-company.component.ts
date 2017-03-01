@@ -136,11 +136,9 @@ export class EditCompanyComponent implements OnInit {
     }
 
     public selected(value:any):void {
-        // console.log('Selected value is: ', value);
     }
 
     public removed(value:any):void {
-        // console.log('Removed value is: ', value);
     }
 
     public refreshValueEmployee(value:any):void {
@@ -212,10 +210,7 @@ export class EditCompanyComponent implements OnInit {
 
         control.push(userCtrl);
 
-        /* subscribe to individual address value changes */
-        // addrCtrl.valueChanges.subscribe(x => {
-        //   console.log(x);
-        // })
+        
     }
 
     removeUser(i: number) {

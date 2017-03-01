@@ -43,6 +43,7 @@ export class ViewUnitComponent implements OnInit {
     errorMessage: string;
     hasLandlord: boolean;
     hasTenants: boolean;
+    tenantTotal: number;
     loading: boolean;
     myForm: FormGroup;
     myForm2: FormGroup;
@@ -107,10 +108,10 @@ export class ViewUnitComponent implements OnInit {
                     this.unitservice
                         .getById(this.id, this.name.default_development.name_url)
                             .subscribe(unit => {
-
                                 this.unit = unit.properties[0];
                                 console.log(this.unit)
                                 this.residents = this.unit.tenant;
+                                this.tenantTotal = this.unit.tenant.length;
                                 this.vehicles = this.unit.registered_vehicle;
                                 
                                 if(this.residents){
@@ -150,6 +151,7 @@ export class ViewUnitComponent implements OnInit {
                                     }
                                 }
                                 setTimeout(() => this.appComponent.loading = false, 1000);
+                                console.log(this.tenantTotal);
                             });
             }
         });
@@ -311,8 +313,10 @@ export class ViewUnitComponent implements OnInit {
             this.errorMessage = "This unit did not has landlord yet, please add landlord first"
          }else if(this.model.type == "landlord" && this.hasLandlord){
             this.errorMessage = "This unit already has a landlord, please remove landlord first"
-         }else if(this.model.option == 'new'){
-             this.router.navigate([this.name.default_development.name_url + '/user/add', this.unit._id, this.model.type]);  
+         }else if(this.model.option == 'new' && this.tenantTotal >= this.unit.max_tenant){
+            this.errorMessage = "This unit has reach max. number of tenant ( max :" + this.tenantTotal + ") , please remove a tenant first"
+         }else if(this.model.option == 'new' && this.tenantTotal < this.unit.max_tenant){
+            this.router.navigate([this.name.default_development.name_url + '/user/add', this.unit._id, this.model.type]);  
          }
     }
 
@@ -322,6 +326,8 @@ export class ViewUnitComponent implements OnInit {
             this.errorMessage = "This unit did not has landlord yet, please add landlord first"
          }else if(this.model.type == "landlord" && this.hasLandlord){
             this.errorMessage = "This unit already has a landlord, please remove landlord first"
+         }else if(this.model.type == "tenant" && this.tenantTotal >= this.unit.max_tenant){
+            this.errorMessage = "This unit has reach max. number of tenant ( max :" + this.tenantTotal + ") , please remove a tenant first"
          }else {
              this.loading = true;
              this.appComponent.loading = true
@@ -403,10 +409,8 @@ export class ViewUnitComponent implements OnInit {
                     this.appComponent.loading = false
                 }
             );
-            this.vehicleSubmitted = false;
         }
-        this.loading = true;
-        this.vehicleSubmitted = false;
+        this.loading = false;
     }
 
 }

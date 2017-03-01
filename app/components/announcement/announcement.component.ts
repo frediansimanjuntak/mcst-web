@@ -37,8 +37,9 @@ export class AnnouncementComponent implements OnInit {
 
 
     @ViewChild('firstModal') firstModal;
-	announcement: Announcement;
+    announcement: Announcement;
     announcements: any[] = [];
+    all: any[] = [];
     model: any = {};
     publishData: any = {};
     cols: any[];
@@ -50,6 +51,7 @@ export class AnnouncementComponent implements OnInit {
     public rowsOnPage = 10;
     public sortBy = "email";
     public sortOrder = "asc";
+    public titleFilter: string = '';
     valid_tillStatus: string;
     stickyStatus: string;
     name: any;
@@ -143,6 +145,43 @@ export class AnnouncementComponent implements OnInit {
         
     }
 
+    filter(){
+      this.appComponent.loading=true;
+      
+        this.announcements            = this.all.filter(data => data.title.toLowerCase().indexOf(this.titleFilter.toLowerCase()) !==  -1);
+        this.announcementsDrafted     = this.announcements.filter(data => data.publish === false && data.valid === true);
+        this.announcementsPublished   = this.announcements.filter(data => data.publish === true && data.valid === true);
+                          
+        for (var i = 0; i < this.announcementsDrafted.length; i++) {
+          if(this.announcementsDrafted[i].auto_post_on){
+            let y = this.announcementsDrafted[i].auto_post_on.toString().slice(0,4);
+            let m = (this.announcementsDrafted[i].auto_post_on+100).toString().slice(4,6);
+            let d = this.announcementsDrafted[i].auto_post_on.toString().slice(6,8);
+            this.announcementsDrafted[i].auto_post_date = y + '/' + m + '/' + d ;
+          }    
+        }
+
+        for (var i = 0; i < this.announcementsDrafted.length; i++) {
+          if(this.announcementsDrafted[i].valid_till){
+            let y = this.announcementsDrafted[i].valid_till.toString().slice(0,4);
+            let m = (this.announcementsDrafted[i].valid_till+100).toString().slice(4,6);
+            let d = this.announcementsDrafted[i].valid_till.toString().slice(6,8);
+            this.announcementsDrafted[i].valid_till_date = y + '/' + m + '/' + d ;
+          }
+        }
+
+        for (var i = 0; i < this.announcementsPublished.length; i++) {
+          if(this.announcementsPublished[i].valid_till){
+            let y = this.announcementsPublished[i].valid_till.toString().slice(0,4);
+            let m = (this.announcementsPublished[i].valid_till+100).toString().slice(4,6);
+            let d = this.announcementsPublished[i].valid_till.toString().slice(6,8);
+            this.announcementsPublished[i].valid_till_date = y + '/' + m + '/' + d ;
+          }
+        }
+        setTimeout(() => this.appComponent.loading = false, 500);
+  
+    }
+
     publishAnnouncement(){
         this.appComponent.loading = true
         if ( this.valid_tillStatus == ""){
@@ -187,6 +226,7 @@ export class AnnouncementComponent implements OnInit {
         this.announcementService.getAll()
             .subscribe((data)=> {
                 setTimeout(()=> {
+                          this.all                      = data.filter(data => data.development._id === this.name.default_development._id );
                           this.announcements            = data.filter(data => data.development._id === this.name.default_development._id );
                           this.announcementsDrafted     = this.announcements.filter(data => data.publish === false && data.valid === true);
                           this.announcementsPublished   = this.announcements.filter(data => data.publish === true && data.valid === true);
