@@ -43,18 +43,16 @@
         		FACILITIES BOOKING
       		</div>
       		<p class="id-location">Home > Facilities System</p>
+      		<div class="row top-block no-margin">
+	            <div class="input-group filter-search" style="width:32.33%">
+	                <input type="text" class="form-control input-search" [(ngModel)]="dataFilter" placeholder="Search Ref.no" name="filter">
+	                <span (click)="filter()" class="input-group-btn">
+	                <button class="btn btn-secondary btn-search" type="button"><i class="fa fa-search fa-inverse" aria-hidden="true"></i></button>
+	                </span>
+	            </div>
+      		</div>
       		<div class="row">
         		<div class="col-lg-4">
-        			<div class="row top-block">
-	        			<div class="no-padding">
-	                        <div class="input-group filter-search">
-	                            <input type="text" style="width: 300px" class="form-control input-search" [(ngModel)]="dataFilter" placeholder="Search Ref.no" name="filter">
-	                            <span (click)="filter()" class="input-group-btn">
-	                                <button class="btn btn-secondary btn-search" type="button"><i class="fa fa-search fa-inverse" aria-hidden="true"></i></button>
-	                            </span>
-	                        </div>
-	                    </div>
-					</div>
             		<div style="width:335px;">
               			<datepicker (click)="test()" [style]="{'width':'300px'}" [(ngModel)]="dt" [minDate]="minDate" [showWeeks]="false"></datepicker>
             		</div>
@@ -100,17 +98,14 @@
 	        		</form>
 	        	</div>
 	        	<div class="col-lg-8">
-	        		<div class="row top-block">
+	        		<div class="row">
 	        			<div class="col-md-8">
-	        				<br/>
 	        				Results generated for
-	        				<P><b>{{ day | date:'longDate' }} <span *ngIf="facility">{{ facility }},</span> <span *ngIf="status">{{ status }} Status,</span> <span *ngIf="period1 && period2">Period {{ period1 }} to {{ period2 }}</span></b></P>
+	        				<p><b>{{ day | date:'longDate' }} <span *ngIf="facility">{{ facility }},</span> <span *ngIf="status">{{ status }} Status,</span> <span *ngIf="period1 && period2">Period {{ period1 }} to {{ period2 }}</span></b></p>
 	        			</div>
 						<div class="col-md-4 pull-right">
-							<br/>
-							<p><button class="btn btn-default btn-add pull-right" (click)="add()">
-							<img src="../../assets/image/icon_addbooking.png" width="15px" height="15px" />&nbsp;Add Booking</button></p>
-							<br/>
+							<button class="btn btn-default btn-add pull-right" (click)="add()">
+							<img src="../../assets/image/icon_addbooking.png" width="15px" height="15px" />&nbsp;Add Booking</button>
 						</div>
 					</div>
 					<div *ngIf="!selectedDay && !filtered">
