@@ -50,7 +50,9 @@ export class PaymentReminderComponent implements OnInit {
                 let y = this.paymentreminder.auto_issue_on.toString().slice(0,4);
                 let m = (this.paymentreminder.auto_issue_on+100).toString().slice(4,6);
                 let d = this.paymentreminder.auto_issue_on.toString().slice(6,8);
-                this.paymentreminder.auto_issue_on = y + '/' + m + '/' + d ;
+                this.paymentreminder.auto_issue_on = d + '/' + m + '/' + y ;
+                this.paymentreminder.due_on = this.convertDate(this.paymentreminder.due_on);
+                this.paymentreminder.created_at = this.convertDate(this.paymentreminder.created_at);
                 this.notification_list = paymentreminder.notification_list;
                 for (let a = 0; a < this.notification_list.length; ++a) {
                     let total_amount = parseInt(this.notification_list[a].amount)
@@ -94,22 +96,45 @@ export class PaymentReminderComponent implements OnInit {
         });
     }
 
+    convertDate(date) {
+        var yyyy = date.slice(0,4).toString();
+        var mm = date.slice(5,7).toString();
+        var dd  = date.slice(8,10).toString();
+        return dd + '/' + mm + '/' + yyyy;
+    }
+
 	private loadAllPaymentReminder() {
 		this.paymentreminderService.getAll()
         .subscribe(paymentreminders => {
             this.published = paymentreminders.filter(data => data.publish === true );
             this.draft   = paymentreminders.filter(data => data.publish === false );
             for (var i = 0; i < this.published.length; ++i) {
+                this.published[i].notif_list = 'All'
                 let y = this.published[i].auto_issue_on.toString().slice(0,4);
                 let m = (this.published[i].auto_issue_on+100).toString().slice(4,6);
                 let d = this.published[i].auto_issue_on.toString().slice(6,8);
                 this.published[i].auto_issue_on = d + '/' + m + '/' + y ;
+                this.published[i].due_on = this.convertDate(this.published[i].due_on);
+                this.published[i].created_at = this.convertDate(this.published[i].created_at);
+                for (let a = 0; a < this.published[i].notification_list.length; ++a) {
+                    if(this.published[i].notification_list[a].applies_to != 'all') {
+                        this.published[i].notif_list = 'Custom'
+                    }
+                }
             }
             for (var i = 0; i < this.draft.length; ++i) {
+                this.draft[i].notif_list = 'All'
                 let y = this.draft[i].auto_issue_on.toString().slice(0,4);
                 let m = (this.draft[i].auto_issue_on+100).toString().slice(4,6);
                 let d = this.draft[i].auto_issue_on.toString().slice(6,8);
                 this.draft[i].auto_issue_on = d + '/' + m + '/' + y ;
+                this.draft[i].due_on = this.convertDate(this.draft[i].due_on);
+                this.draft[i].created_at = this.convertDate(this.draft[i].created_at);
+                for (let a = 0; a < this.draft[i].notification_list.length; ++a) {
+                    if(this.draft[i].notification_list[a].applies_to != 'all') {
+                        this.draft[i].notif_list = 'Custom'
+                    }
+                }
             }
             setTimeout(() => this.appComponent.loading = false, 1000);
         });

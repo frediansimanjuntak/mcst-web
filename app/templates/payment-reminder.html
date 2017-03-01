@@ -24,8 +24,16 @@
                 <div class="col-md-9">
                     <p-dataTable [value]="notification_list">
                         <p-column field="charge" header="Charge/Bill"></p-column>
-                        <p-column field="remarks" header="Remarks"></p-column>
-                        <p-column field="applies_to" header="Applies to" sortable="true"></p-column>
+                        <p-column field="remarks" header="Remarks">
+                            <template let-notification_list="rowData" pTemplate="body">
+                                <span>{{notification_list.remarks | capitalize}}</span>
+                            </template>
+                        </p-column>
+                        <p-column field="applies_to" header="Applies to" sortable="true">
+                            <template let-notification_list="rowData" pTemplate="body">
+                                <span>{{notification_list.applies_to | capitalize}}</span>
+                            </template>
+                        </p-column>
                         <p-column field="amount" header="Amount"></p-column>
                         <p-footerColumnGroup>
                             <p-row>
@@ -63,22 +71,14 @@
                                 </template>
                             </p-column>
                             <p-column field="auto_issue_on" header="Auto issue on" [style]="{'width': '125px'}" sortable="true" [filter]="true" filterPlaceholder="Search auto issue date"></p-column>
-                            <p-column field="due_on" header="Due on" [style]="{'width': '112px'}" sortable="true" [filter]="true" filterPlaceholder="Search due date">
-                                <template let-draft="rowData" pTemplate="body">
-                                    <p>{{draft.due_on | date:'d/M/y'}}</p>
-                                </template>
-                            </p-column>
-                            <p-column field="" header="Notification List" [style]="{'width': '150px'}" sortable="true" [filter]="true" filterPlaceholder="Search notification list">
-                                <template let-draft="rowData" pTemplate="body">
+                            <p-column field="due_on" header="Due on" [style]="{'width': '112px'}" sortable="true" [filter]="true" filterPlaceholder="Search due date"></p-column>
+                            <p-column field="notif_list" header="Notification List" [style]="{'width': '150px'}" sortable="true" [filter]="true" filterPlaceholder="Search notification list">
+                                <!-- <template let-draft="rowData" pTemplate="body">
                                     <span *ngIf="draft.notification_list.applies_to != 'all'">Custom</span>
                                     <span *ngIf="draft.notification_list.applies_to == 'all'">All</span>
-                                </template>
+                                </template> -->
                             </p-column>
-                            <p-column field="created_at" header="Created on" [style]="{'width': '150px'}" sortable="true" [filter]="true" filterPlaceholder="Search created date">
-                                <template let-draft="rowData" pTemplate="body">
-                                    <p>{{draft.created_at | date:'d/M/y'}}</p>
-                                </template>
-                            </p-column>
+                            <p-column field="created_at" header="Created on" [style]="{'width': '150px'}" sortable="true" [filter]="true" filterPlaceholder="Search created date"></p-column>
                             <p-column styleClass="col-button" header="Action">
                                 <template let-draft="rowData" pTemplate="body">
                                     <a type="button" style="cursor:pointer; margin: 0 10px 0 5px;" (click)="view(draft)">&nbsp;<u>View</u></a>
@@ -98,22 +98,14 @@
                                 </template>
                             </p-column>
                             <p-column field="auto_issue_on" header="Auto issue on" [style]="{'width': '125px'}" sortable="true" [filter]="true" filterPlaceholder="Search auto issue date"></p-column>
-                            <p-column field="due_on" header="Due on" [style]="{'width': '112px'}" sortable="true" [filter]="true" filterPlaceholder="Search due date">
-                                <template let-published="rowData" pTemplate="body">
-                                    <p>{{published.due_on | date:'d/M/y'}}</p>
-                                </template>
-                            </p-column>
-                            <p-column field="" header="Notification List" [style]="{'width': '150px'}" sortable="true" [filter]="true" filterPlaceholder="Search notification list">
-                                <template let-published="rowData" pTemplate="body">
+                            <p-column field="due_on" header="Due on" [style]="{'width': '112px'}" sortable="true" [filter]="true" filterPlaceholder="Search due date"></p-column>
+                            <p-column field="notif_list" header="Notification List" [style]="{'width': '150px'}" sortable="true" [filter]="true" filterPlaceholder="Search notification list">
+                                <!-- <template let-published="rowData" pTemplate="body">
                                     <span *ngIf="published.notification_list.applies_to != 'resident with vehicle'">Custom</span>
                                     <span *ngIf="published.notification_list.applies_to == 'all'">All</span>
-                                </template>
+                                </template> -->
                             </p-column>
-                            <p-column field="created_at" header="Created on" [style]="{'width': '150px'}" sortable="true" [filter]="true" filterPlaceholder="Search created date">
-                                <template let-published="rowData" pTemplate="body">
-                                    <p>{{published.created_at | date:'d/M/y'}}</p>
-                                </template>
-                            </p-column>
+                            <p-column field="created_at" header="Created on" [style]="{'width': '150px'}" sortable="true" [filter]="true" filterPlaceholder="Search created date"></p-column>
                             <p-column styleClass="col-button" header="Action">
                                 <template let-published="rowData" pTemplate="body">
                                     <a type="button" style="cursor:pointer; margin: 0 25px 0 5px;" (click)="view(published)">&nbsp;<u>View</u></a>
