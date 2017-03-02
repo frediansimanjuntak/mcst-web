@@ -46,8 +46,8 @@
       		<div class="row top-block" style="line-height:23px;">
       			<div class="col-md-4">
       				<div class="input-group filter-search" style="width:335px">
-		                <input type="text" class="form-control input-search" [(ngModel)]="dataFilter" placeholder="Search Ref.no" name="filter">
-		                <span (click)="filter()" class="input-group-btn">
+		                <input type="text" class="form-control input-search" [(ngModel)]="dataFilter" (keyup.enter)="filterRefno()" placeholder="Search Ref.no" name="filter">
+		                <span (click)="filterRefno()" class="input-group-btn">
 		                <button class="btn btn-secondary btn-search" type="button"><i class="fa fa-search fa-inverse" aria-hidden="true"></i></button>
 		                </span>
 		            </div>
@@ -111,13 +111,13 @@
 	        		</form>
 	        	</div>
 	        	<div class="col-lg-8">
-	        		<div *ngIf="!selectedDay && !filtered">
+	        		<div *ngIf="!selectedDay && !filtered && bookings">
 		        		<p-dataTable [value]="bookings" [rows]="10" [paginator]="true">
 						    <p-column field="start_time" [style]="{'width': '70px'}" header="Time" sortable="true" [filter]="true" filterPlaceholder="Search time"></p-column>
 						    <p-column field="reference_no" [style]="{'width': '70px'}" header="Ref." sortable="true" [filter]="true" filterPlaceholder="Search ref."></p-column>
 						    <p-column field="" header="Facility" [style]="{'width': '80px'}" sortable="true" [filter]="true" filterPlaceholder="Search facility">
 						    	<template let-booking="rowData" pTemplate="body">
-						    		{{booking.facility.name}} {{booking.facility.facility_type}}
+						    		{{booking.facility.name}}
 						    	</template>
 						    </p-column>
 						    <p-column field="unit" header="Booked by" [style]="{'width': '95px'}" sortable="true" [filter]="true" filterPlaceholder="Search booked by"></p-column>
@@ -152,7 +152,7 @@
 						    <p-column field="reference_no" [style]="{'width': '70px'}" header="Ref." sortable="true" [filter]="true" filterPlaceholder="Search ref."></p-column>
 						    <p-column field="" header="Facility" [style]="{'width': '80px'}" sortable="true" [filter]="true" filterPlaceholder="Search facility">
 						    	<template let-booking="rowData" pTemplate="body">
-						    		{{booking.facility.name}} {{booking.facility.facility_type}}
+						    		{{booking.facility.name}}
 						    	</template>
 						    </p-column>
 						    <p-column field="unit" header="Booked by" [style]="{'width': '95px'}" sortable="true" [filter]="true" filterPlaceholder="Search booked by"></p-column>
@@ -187,7 +187,7 @@
 						    <p-column field="reference_no" [style]="{'width': '70px'}" header="Ref." sortable="true" [filter]="true" filterPlaceholder="Search ref."></p-column>
 						    <p-column field="" header="Facility" [style]="{'width': '80px'}" sortable="true" [filter]="true" filterPlaceholder="Search facility">
 						    	<template let-booking="rowData" pTemplate="body">
-						    		{{booking.facility.name}} {{booking.facility.facility_type}}
+						    		{{booking.facility.name}}
 						    	</template>
 						    </p-column>
 						    <p-column field="unit" header="Booked by" [style]="{'width': '95px'}" sortable="true" [filter]="true" filterPlaceholder="Search booked by"></p-column>
