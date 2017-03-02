@@ -130,6 +130,7 @@ export class FeedbackComponent implements OnInit {
                 data.title.toLowerCase().indexOf(this.dataFilter.toLowerCase()) !==  -1
             );
             this.published     = this.feedbacks.filter(feedbacks => feedbacks.status === 'publish' );
+            setTimeout(() => this.appComponent.loading = false, 500);
         }
     }
 
@@ -179,11 +180,67 @@ export class FeedbackComponent implements OnInit {
 
     viewArchived(){
         this.appComponent.loading = true
-        this.feedbackService.getAll().subscribe(feedbacks => {
-            this.feedbacks = feedbacks ;
-            this.archived  = this.feedbacks.filter(feedbacks => feedbacks.archieve === true );
-            setTimeout(() => this.appComponent.loading = false, 1000);
+        this.userService.getByToken()
+        .subscribe(name => {
+            this.name = name;
+            this.unitService.getAll(this.name.default_development.name_url)
+            .subscribe(units => {
+                this.units = units.properties;
+                this.feedbackService.getAll().subscribe(feedbacks => {
+                    this.feedbacks = feedbacks ;
+                    for (var i = 0; i < this.feedbacks.length; ++i) {
+                        this.feedbacks[i].created_at = this.convertDate(this.feedbacks[i].created_at);
+                        let a = this.units.find(data => data._id == this.feedbacks[i].property);
+                        this.feedbacks[i].property = '#'+a.address.unit_no +'-'+ a.address.unit_no_2;
+                    }
+                    this.all       = this.feedbacks.filter(feedbacks => feedbacks.archieve === true );
+                    this.archived  = this.feedbacks.filter(feedbacks => feedbacks.archieve === true );
+                    setTimeout(() => this.appComponent.loading = false, 1000);
+                });
+            })
         });
+    }
+
+    filterArchieved(){
+        this.appComponent.loading=true;
+        if(this.statusFilter != ''){
+            this.archived  = this.all.filter(data => 
+                data.title.toLowerCase().indexOf(this.dataFilter.toLowerCase()) !==  -1 &&
+                data.status.toLowerCase().indexOf(this.statusFilter.toLowerCase()) !==  -1
+            );
+            setTimeout(() => this.appComponent.loading = false, 500);
+        }else{
+            this.archived  = this.all.filter(data => 
+                data.title.toLowerCase().indexOf(this.dataFilter.toLowerCase()) !==  -1
+            );
+            setTimeout(() => this.appComponent.loading = false, 500);
+        }
+        if(this.statusFilter == 'publish') {
+            this.archived = this.all.filter(data => 
+                data.title.toLowerCase().indexOf(this.dataFilter.toLowerCase()) !==  -1 &&
+                data.status == 'publish'
+            );
+            setTimeout(() => this.appComponent.loading = false, 500);
+        }
+    }
+
+    filterStatusArchieved(event:any){
+        this.appComponent.loading = true
+        if(this.dataFilter != ''){
+            this.archived = this.all.filter(data => data.status.toLowerCase().indexOf(this.statusFilter.toLowerCase()) !==  -1 && data.title.toLowerCase().indexOf(this.dataFilter.toLowerCase()) !==  -1);    
+        }else{
+            this.archived = this.all.filter(data => data.status.toLowerCase().indexOf(this.statusFilter.toLowerCase()) !==  -1);
+        }
+        if(this.statusFilter == 'publish' && this.dataFilter == '') {
+            this.archived = this.all.filter(data => data.status == 'publish');
+        }
+        if(this.statusFilter == 'publish' && this.dataFilter != '') {
+            this.archived = this.all.filter(data => 
+                data.title.toLowerCase().indexOf(this.dataFilter.toLowerCase()) !==  -1 &&
+                data.status == 'publish'
+            );
+        }
+        setTimeout(() => this.appComponent.loading = false, 500);
     }
 
     viewUnarchived(){
