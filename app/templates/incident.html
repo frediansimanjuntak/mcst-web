@@ -64,6 +64,29 @@
             </div>
             <p class="id-location">Home > Incident Reports</p>
             <div class="row top-block">
+                <div class="col-md-8 no-padding">
+                    <div class="col-md-6">
+                        <div class="input-group filter-search" style="width:100%">
+                            <input type="text" class="form-control input-search" (keyup.enter)="filter()" [(ngModel)]="dataFilter" placeholder="Search Report Number" name="filter">
+                            <span (click)="filter()" class="input-group-btn">
+                                <button class="btn btn-secondary btn-search" type="button"><i class="fa fa-search fa-inverse" aria-hidden="true"></i></button>
+                            </span>
+                        </div>
+                    </div>
+                    <div class="col-md-6 no-padding">
+                        <div class="input-group">
+                            <label class="control-label col-sm-4" for="type">Type :</label>
+                            <div class="col-sm-8 no-padding">
+                              <select class="form-control" style="width:120px" name="selectedType" (change)="filterType($event)" [(ngModel)]="typeFilter">
+                                <option value="" selected="selected">All</option>
+                                <option value="general">General</option>
+                                <option value="hygiene">Hygiene</option>
+                                <option value="damage">Damage</option>
+                              </select>
+                            </div>
+                        </div>
+                    </div>
+                </div>
                 <div class="col-md-4 pull-right">
                     <a class="btn btn-default pull-right btn-gray" (click)="add()"><i class="fa fa-plus" aria-hidden="true"></i>&nbsp;Create Report</a>
                 </div>
