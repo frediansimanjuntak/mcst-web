@@ -88,7 +88,7 @@
                     </div>
                 </div>
                 <div class="col-md-4 pull-right">
-                    <a class="btn btn-default pull-right btn-gray" (click)="add()"><i class="fa fa-plus" aria-hidden="true"></i>&nbsp;Create Report</a>
+                    <a class="btn btn-default pull-right btn-gray" style="margin-right:0;" (click)="add()"><i class="fa fa-plus" aria-hidden="true"></i>&nbsp;Create Report</a>
                 </div>
             </div>
             <div (click)="$event.preventDefault()">
@@ -316,7 +316,9 @@
                         <form class="form-horizontal" name="form" (ngSubmit)="f.form.valid && updateIncident(resolveIncident)" #f="ngForm" novalidate><br><br>
                             <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !remark.valid }">
                                 <div class="row no-margin">
-                                    <label class="control-label col-sm-4" for="remark">Remark :</label>
+                                    <div class="col-sm-4">
+                                        <label class="control-label" for="remark">Remark :</label>
+                                    </div>
                                     <div class="col-sm-8">
                                         <input type="text" class="form-control" name="remark" [(ngModel)]="model.remark" #remark="ngModel" required placeholder="Input remark here">
                                         <small *ngIf="f.submitted && !remark.valid" class="help-block">Remark is required</small>
@@ -325,7 +327,9 @@
                             </div>
                             <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !resolved_by.valid }">
                                 <div class="row no-margin">
-                                    <label class="control-label col-sm-4" for="resolved_by">Resolved by :</label>
+                                    <div class="col-sm-4">
+                                        <label class="control-label" for="resolved_by">Resolved by :</label>
+                                    </div>
                                     <div class="col-sm-8">
                                         <select class="form-control" required name="resolved_by" [(ngModel)]="model.resolved_by" #resolved_by="ngModel">
                                             <option *ngFor="let user of users" [ngValue]="user._id">
