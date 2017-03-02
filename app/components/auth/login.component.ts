@@ -125,10 +125,18 @@ export class LoginComponent implements OnInit {
                 error => {
                     setTimeout(() => this.loading = false, 1000);
                     this.error = 'Username or password is incorrect';
-                    this._notificationsService.error(
-                        'Login Failed',
-                        this.error,
-                    )
+                    let internetError = 'Connection error, please try again later'
+                    if(error.status === 0) {
+                        this._notificationsService.error(
+                            'Login Failed',
+                            internetError,
+                        )
+                    }else{
+                        this._notificationsService.error(
+                            'Login Failed',
+                            this.error,
+                        )
+                    }
                 });
     }
 }

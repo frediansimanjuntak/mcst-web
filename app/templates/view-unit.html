@@ -13,10 +13,10 @@
                         <h5>General Details</h5>
                     </div>
                     <div class="col-md-6">
-                        <a (click)="generateCode()" class="btn btn-gray btn-tab-dark pull-right" ><img class="img-btn" src="../../assets/image/icon_add.png" />&nbsp;Generate Code</a>
+                        <a (click)="codeModal.open()" class="btn btn-gray btn-tab-dark pull-right" ><img class="img-btn" src="../../assets/image/icon_add.png" />&nbsp;Generate Code</a>
                     </div>
                 </div>
-                <div class="row no-margin" style="border: 1px solid grey; padding: 5px;">
+                <div class="row no-margin" style="border: 1px solid grey">
                     <div class="row content">
                         <div class="col-md-4">
                                 <b>Unit No. :&nbsp;</b>#{{unit.address.unit_no}}-{{unit.address.unit_no_2}}<br>
@@ -29,12 +29,41 @@
                                 <span *ngIf="unit.status == 'tenanted'">Tenanted</span>
                             </div>
                             <div class="col-md-4">
-                                <span *ngIf="unit.tenant"><b>No of Tenant :&nbsp;</b>{{ unit.tenant.length }}<br></span>
+                                <span *ngIf="unit.tenant"><b>No of Tenant :&nbsp;</b>{{ tenantTotal }}<br></span>
                                 <span  *ngIf="vehicles"><b>Vehicle :&nbsp;</b>{{vehicles.length}}</span>
                                 
                             </div>
                     </div>
-                </div><br>
+                         <table *ngIf="unit.code" class="table table-striped">
+                            <thead>
+                              <tr style="background-color: #d8d8d8">
+                                <td>Code</td>
+                                <td>Authentication Type</td>
+                                <td>Generated on</td>
+                                <td></td>
+                              </tr>
+                            </thead>
+                            <tbody>
+                              <tr *ngIf="unit.code.landlord">
+                                <td>{{unit.code.landlord | uppercase}}</td>
+                                <td>Owner</td>
+                                <td>{{unit.code.create_at_landlord | date:'d/M/y'}}</td>
+                                <td>
+                                    <button class="btn btn-trash pull-right" type="button" (click)="deleteCode('landlord')"><i class="fa fa-trash-o" aria-hidden="true"></i></button>
+                                </td>
+                              </tr>
+                              <tr *ngIf="unit.code.tenant">
+                                <td>{{unit.code.tenant | uppercase}}</td>
+                                <td>Tenant</td>
+                                <td>{{unit.code.create_at_tenant | date:'d/M/y'}}</td>
+                                <td>
+                                    <button class="btn btn-trash pull-right" type="button" (click)="deleteCode('tenant')"><i class="fa fa-trash-o" aria-hidden="true"></i></button>
+                                </td>
+                              </tr>
+                            </tbody>
+                        </table>
+                </div>
+                <br>
 
                 <div class="row bg-dark no-margin">
                     <div class="col-md-6 col-padding" style="color:#eee;">
@@ -116,7 +145,10 @@
                                 <span *ngIf="!vehicles.transponder">-</span>
                             </template>
                         </p-column> 
-                        <p-column header="Document" field="document">
+                        <p-column header="Document" field="doc">
+                             <template let-vehicles="rowData" pTemplate="body">
+                                <span *ngIf="vehicles.doc.name">{{vehicles.doc.name}}</span>
+                            </template>
                         </p-column>
                          <p-column header="Registered on" sortable="true">
                             <template let-vehicles="rowData" pTemplate="body">
@@ -180,7 +212,7 @@
                         </div>
                          <div class="row no-margin pull-bottom-right">
                             <button  *ngIf="model.option == 'new'" class="btn btn-primary btn-brown" (click)="addResident()">Go to Form</button>
-                            <button  *ngIf="model.option == 'exist'" class="btn btn-primary btn-brown" (click)="addExistResident()">Add resident<span>
+                            <button [disabled]="loading" *ngIf="model.option == 'exist'" class="btn btn-primary btn-brown" (click)="addExistResident()">Add resident<span>
                                     <img *ngIf="loading" src="data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA==" />
                                 </span></button>
                             <button class="btn btn-white" (click)="firstModal.close()">Cancel</button>
@@ -248,7 +280,7 @@
                             </div>
                         </div>
                         <div class="row no-margin pull-bottom-right">
-                            <button  class="btn btn-primary btn-brown" (click)="addVehicle(myForm2.value, myForm2.valid)">Add
+                            <button  class="btn btn-primary btn-brown" [disabled]="loading" (click)="addVehicle(myForm2.value, myForm2.valid)">Add
                                 <span>
                                     <img *ngIf="loading" src="data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA==" />
                                 </span>
@@ -330,7 +362,9 @@
                     </div>
                    <div class="row">
                         <div class="col-md-4">Document</div>
-                        <div class="col-md-8"><p>: {{ vehicle.document }}</p></div>
+                        <div class="col-md-8">
+                        <p *ngIf="vehicle.doc">: <a style="cursor: pointer;" (click)="openDoc()"> {{vehicle.doc.name}} </a></p>
+                        </div>
                     </div>
                      <div class="row">
                         <div class="col-md-4">Registered on </div>
@@ -340,11 +374,53 @@
                     </div>
                     <div class="row">
                         <div class="col-md-4">Remarks </div>
-                        <div class="col-md-8"><p>: {{ vehicle.remarks }}</p></div>
+                        <div class="col-md-8">
+                            <p *ngIf="vehicle.remarks">: {{ vehicle.remarks }}</p>
+                            <p *ngIf="!vehicle.remarks">: -</p>
+                        </div>
+
                     </div>
                 </modal-content>
                 <modal-footer>
                       <button class="btn btn-default" (click)="vehicleDetail.close()">Close</button>
+                </modal-footer>
+            </modal>
+        </div>  
+
+        <div class="row">
+            <modal #codeModal>
+                <modal-header>
+                    <h5>Generate code for resident</h5>
+                </modal-header>
+                <modal-content>
+                    Choose which type of resident do you want to generete the code for ? Existing code will be replace with new code :
+                    <div class="form-group">
+                                <div class="col-sm-12">
+                                    <div class="col-sm-3">
+                                        <label>
+                                            <input type="radio" name="code" [checked]=true [(ngModel)]="codeType" value='landlord'>Landlord
+                                        </label>
+                                    </div>
+                                    <div class="col-sm-3">
+                                        <label>
+                                            <input type="radio" name="code" [(ngModel)]="codeType" value='tenant'>Tenant
+                                        </label>
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <label>
+                                            <input type="radio" name="code" [(ngModel)]="codeType" value='all'>Landlord and Tenant
+                                        </label>
+                                    </div>                                    
+                                </div>
+                    </div>
+                </modal-content>
+                <modal-footer>
+                      <button class="btn btn-default btn-brown" (click)="generateCode()">Generate
+                            <span>
+                                <img *ngIf="loading" src="data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA==" />
+                            </span>
+                      </button>
+                      <button class="btn btn-default btn-gray" (click)="codeModal.close()">Close</button>
                 </modal-footer>
             </modal>
         </div>  

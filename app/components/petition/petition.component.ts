@@ -172,11 +172,16 @@ export class PetitionComponent implements OnInit {
             });
     }
 
+    viewPdf(petitions:any){
+        window.open(petitions.attachment[0].url, '_blank');
+    }
+
 	private loadAllPetitions() {
         this.petitionService.getAll()
             .subscribe((data)=> {
                 setTimeout(()=> {
                     this.all               = data.filter(data => data.archieve === false && data.development._id == this.name.default_development._id );
+                    console.log(this.all)
                     this.allArchieved      = data.filter(data => data.archieve === true && data.development._id == this.name.default_development._id );
                     this.petitions         = data.filter(data => data.archieve === false && data.development._id == this.name.default_development._id );
                     this.archivedPetitions = data.filter(data => data.archieve === true && data.development._id == this.name.default_development._id );

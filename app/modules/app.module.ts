@@ -118,6 +118,7 @@ import {
   VisitService,
   LostFoundService,
   TestService,
+  AttachmentService
 } from '../services/index';
 
 import {
@@ -257,7 +258,8 @@ import {
     TestService,
     EditContractComponent,
     AppComponent,
-    DatePipe
+    DatePipe,
+    AttachmentService
   ],
   bootstrap:    [ AppComponent ],
   // entryComponents: [ PublishAnnouncementModalComponent ] 

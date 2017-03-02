@@ -22,7 +22,8 @@ export class VisitComponent implements OnInit {
     @ViewChild('firstModal') firstModal;
 	visit: Visit;
     visitOut: Visit;
-    visits: Visit[] = [];
+    public filterField: string = '';
+    visits: any[] = [];
     visitActive: any[] = [];
     visitDateCreateOptions: any = {};
     DateOptions: any = {};
@@ -87,7 +88,7 @@ export class VisitComponent implements OnInit {
                     full_name : ['',  <any>Validators.required],
                     vehicle : [''],
                     pass : [''],
-                    prefix: ['']
+                    prefix: ['Mr']
                 }),
                 purpose: ['house_visit'],
                 remarks : [''],
@@ -291,16 +292,30 @@ export class VisitComponent implements OnInit {
         this.visitService.getAll()
             .subscribe((data)=> {
                 setTimeout(()=> {
-                    this.visits            = data.filter(data => data.development == this.name.default_development._id);
-                    this.visitActive       = data.filter(data => data.visit_date.slice(0, 10)  == this.activeDate );
-                    for (var i = 0; i < this.visitActive.length; i++) {
-                        this.visitActive[i].i = i+1;
-                        let visiting = this.dataUnit.find(data => data._id ==  this.visitActive[i].property);
-                        this.visitActive[i].visiting = '#' + visiting.address.unit_no + '-' + visiting.address.unit_no_2;
+                    this.visits            = data.filter(data => data.development._id == this.name.default_development._id);
+                    console.log(data)
+                    for (var i = 0; i < this.visits.length; i++) {
+                        this.visits[i].i = i+1;
+                        let visiting = this.dataUnit.find(data => data._id ==  this.visits[i].property);
+                        this.visits[i].visiting = '#' + visiting.address.unit_no + '-' + visiting.address.unit_no_2;
                     }
+
+                    this.visits            = this.visits.filter(data => data.visit_date.slice(0, 10)  == this.activeDate );
+                    this.visitActive       = this.visits.filter(data => data.visit_date.slice(0, 10)  == this.activeDate );
                     setTimeout(() => this.appComponent.loading = false, 1000);
                 }, 1000);
             });
+    }
+
+    filter(){
+        this.appComponent.loading=true;
+        this.visitActive   = this.visits.filter(data => 
+                            (data.visitor.prefix+' '+data.visitor.full_name).toLowerCase().indexOf(this.filterField.toLowerCase()) !==  -1 ||
+                            data.visitor.vehicle.toLowerCase().indexOf(this.filterField.toLowerCase()) !==  -1 ||
+                            data.visiting.toLowerCase().indexOf(this.filterField.toLowerCase()) !==  -1
+                            );
+
+        setTimeout(() => this.appComponent.loading = false, 500);
     }
 
     private loadAllUnits(): void {

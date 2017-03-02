@@ -71,8 +71,8 @@ export class UnitService {
             .catch(this.handleError);
     }
 
-    generateCode(id:string, name:string): Promise<any> {
-        return this.http.post(url + 'properties/' + name + '/generate_code/' + id, '', this.jwt())
+    generateCode(id:string, name:string, body:any): Promise<any> {
+        return this.http.post(url + 'properties/' + name + '/generate_code/' + id, body, this.jwt())
             .toPromise()
             .then(res => res.json().data)
             .catch(this.handleError);

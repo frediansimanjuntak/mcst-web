@@ -1,7 +1,7 @@
 import { Component, OnInit, ViewContainerRef, ViewEncapsulation, ViewChild } from '@angular/core';
 import { Router, Params, ActivatedRoute } from '@angular/router';
 import { Development, Developments } from '../../models/index';
-import { UnitService, AlertService, UserService } from '../../services/index';
+import { UnitService, AlertService, UserService, AttachmentService } from '../../services/index';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { NotificationsService } from 'angular2-notifications';
 import { Location }               from '@angular/common';
@@ -20,6 +20,7 @@ import { ConfirmationService } from 'primeng/primeng';
 export class ViewUnitComponent implements OnInit {
     @ViewChild('firstModal') firstModal;
     @ViewChild('secondModal') secondModal;
+    @ViewChild('codeModal') codeModal;
     public items:Array<any> = [];
     public addSubmitted: boolean = false;
     public vehicleSubmitted: boolean;
@@ -30,7 +31,10 @@ export class ViewUnitComponent implements OnInit {
     units: any;
     user: any;
     users: any;
+    attachments: any;
     allUsers: any;
+    codeType: string;
+    modelForCode: any = {};
     model: any = {};
     data: any = {};
     filesToUpload: Array<File>;
@@ -38,7 +42,7 @@ export class ViewUnitComponent implements OnInit {
     resident :any;
     selectedResident : any = {};
     vehicles : any;
-    vehicle :any = {};
+    vehicle :any;
     id: string;
     errorMessage: string;
     hasLandlord: boolean;
@@ -57,6 +61,7 @@ export class ViewUnitComponent implements OnInit {
     	private unitservice: UnitService,
     	private alertService: AlertService,
         private userService: UserService,
+        private attachmentService :AttachmentService,
         private formbuilder: FormBuilder,
         private location: Location,
         private confirmationService: ConfirmationService,
@@ -70,7 +75,7 @@ export class ViewUnitComponent implements OnInit {
         this.route.params.subscribe(params => {
             this.id = params['id'];
         });
-
+        this.errorMessage = "";
         this.userService.getByToken()
                             .subscribe(name => {
                                 this.name = name;
@@ -85,7 +90,6 @@ export class ViewUnitComponent implements OnInit {
                 social_page: [''],
                 remarks: [''],
         });
-
         this.myForm2 = this.formbuilder.group({
                 license_plate: ['', <any>Validators.required],
                 owner: ['', <any>Validators.required],
@@ -98,63 +102,70 @@ export class ViewUnitComponent implements OnInit {
 
     getUsers(): void {
         this.userService.getAll().subscribe(users => {
+            console.log(users)
             this.allUsers =this.users = users;
-            
-            let roleFilter =  ['master' , 'super admin', 'admin'];
-            for (var i = 0; i < roleFilter.length; i++) {
-                this.users = this.users.filter(data => data.role != roleFilter[i]); 
-            }
-            if( this.id != null) {
-                    this.unitservice
-                        .getById(this.id, this.name.default_development.name_url)
-                            .subscribe(unit => {
-                                this.unit = unit.properties[0];
-                                console.log(this.unit)
-                                this.residents = this.unit.tenant;
-                                this.tenantTotal = this.unit.tenant.length;
-                                this.vehicles = this.unit.registered_vehicle;
-                                
-                                if(this.residents){
-                                    this.hasTenants = true;
-                                }else{
-                                    this.hasTenants = false;
-                                }
-
-                                if(this.unit.landlord){ 
-                                    var landlordForResidentTable :any = {
-                                    type : 'owner',
-                                    i    :  1,
-                                    resident : this.unit.landlord
-                                    }
+            this.attachmentService.getAll().subscribe(attachments => {
+                this.attachments =attachments;
+                let roleFilter =  ['master' , 'super admin', 'admin'];
+                for (var i = 0; i < roleFilter.length; i++) {
+                    this.users = this.users.filter(data => data.role != roleFilter[i]); 
+                }
+                if( this.id != null) {
+                        this.unitservice
+                            .getById(this.id, this.name.default_development.name_url)
+                                .subscribe(unit => {
+                                    this.unit = unit.properties[0];
+                                    console.log(this.unit)
+                                    this.residents = this.unit.tenant;
+                                    this.tenantTotal = this.unit.tenant.length;
+                                    this.vehicles = this.unit.registered_vehicle;
                                     
-                                    this.residents.unshift(landlordForResidentTable);
-                                    this.hasLandlord = true;
-                                    this.model.type  = 'tenant'
-                                }else{
-                                    this.hasLandlord = false;
-                                    this.model.type  = 'landlord'
-                                }
+                                    if(this.residents){
+                                        this.hasTenants = true;
+                                    }else{
+                                        this.hasTenants = false;
+                                    }
 
-                                if(this.residents){
-                                    for (var i = 0; i < this.residents.length; i++) {
-                                        this.users = this.users.filter(data => data._id != this.residents[i].resident._id);
+                                    if(this.unit.landlord){ 
+                                        var landlordForResidentTable :any = {
+                                        type : 'owner',
+                                        i    :  1,
+                                        resident : this.unit.landlord
+                                        }
+                                        
+                                        this.residents.unshift(landlordForResidentTable);
+                                        this.hasLandlord = true;
+                                        this.model.type  = 'tenant'
+                                    }else{
+                                        this.hasLandlord = false;
+                                        this.model.type  = 'landlord'
                                     }
-                                    for (var i = 0; i < this.residents.length; i++) {
-                                             this.residents[i].i = i + 1;
-                                    }
-                                }
 
-                                if(this.vehicles){
-                                    for (var i = 0; i < this.vehicles.length; i++) {
-                                        this.vehicles[i].i = i + 1;
-                                        this.vehicles[i].user = this.allUsers.find(data => data._id == this.vehicles[i].owner).username;
+                                    if(this.residents){
+                                        for (var i = 0; i < this.residents.length; i++) {
+                                            this.users = this.users.filter(data => data._id != this.residents[i].resident._id);
+                                        }
+                                        for (var i = 0; i < this.residents.length; i++) {
+                                                 this.residents[i].i = i + 1;
+                                        }
                                     }
-                                }
-                                setTimeout(() => this.appComponent.loading = false, 1000);
-                                console.log(this.tenantTotal);
-                            });
-            }
+
+                                    if(this.vehicles){
+                                        for (var i = 0; i < this.vehicles.length; i++) {
+                                            this.vehicles[i].i = i + 1;
+                                            this.vehicles[i].user = this.allUsers.find(data => data._id == this.vehicles[i].owner).username;
+                                            this.vehicles[i].doc = this.attachments.find(data => data._id == this.vehicles[i].document);
+                                        }
+                                    }
+                                    setTimeout(() => this.appComponent.loading = false, 1000);
+                                });
+                }
+            })
         });
+    }
+
+    public openDoc(){
+        window.open(this.vehicle.doc.url, '_blank');
     }
 
     public refreshValueResident(value:any):void {
@@ -285,14 +296,18 @@ export class ViewUnitComponent implements OnInit {
     }
 
     generateCode(){
+        this.loading = true;
         this.appComponent.loading = true
-        this.unitservice.generateCode(this.unit._id, this.name.default_development.name_url)
+        this.modelForCode.type = this.codeType;
+        this.unitservice.generateCode(this.unit._id, this.name.default_development.name_url, this.modelForCode)
             .then(
                  data => {
                     this._notificationsService.success(
                             'Success',
                             'Generate unit code successful',
                     )
+                    this.loading = false;
+                    this.codeModal.close();
                     this.ngOnInit();
                 },
                 error => {
@@ -301,9 +316,19 @@ export class ViewUnitComponent implements OnInit {
                             'Error',
                             'Failed to generate code, server error',
                     )
-                    setTimeout(() => this.appComponent.loading = false, 1000);
+                    this.codeModal.close();
+                    this.loading = false;
+                    this.appComponent.loading = false
                 }
             );
+    }
+
+    deleteCode(type:string){
+        if(type == 'landlord'){
+
+        }else{
+            
+        }
     }
 
     deleteVehicleConfirmation(vehicle) {
@@ -394,11 +419,11 @@ export class ViewUnitComponent implements OnInit {
 
     addVehicle(model: any, isValid: boolean){
          this.vehicleSubmitted = true;
-         this.loading = true;
          model.registered_on = new Date();
 
         if(isValid && this.model.document.length > 0){
             this.appComponent.loading = true
+            this.loading = true;
             let formData:FormData = new FormData();
                 for (var i = 0; i < this.model.document.length; i++) {
                     formData.append("document[]", this.model.document[i]);
@@ -432,7 +457,6 @@ export class ViewUnitComponent implements OnInit {
                 }
             );
         }
-        this.loading = false;
     }
 
 }

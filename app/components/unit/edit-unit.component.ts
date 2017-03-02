@@ -83,9 +83,16 @@ export class EditUnitComponent implements OnInit {
 
     createUnit(model: any, isValid: boolean) {
         this.submitted = true;
-        console.log(model);
+        
         if(isValid){
             if(model.max_tenant <= 20){
+                if(model.address.unit_no.length == 1){
+                   model.address.unit_no = '0'+model.address.unit_no.toString();
+                }
+                if(model.address.unit_no_2.length == 1){
+                          model.address.unit_no_2 = '0'+model.address.unit_no_2.toString();
+                   }
+                   console.log(model);
                 this.appComponent.loading = true
                 this.unitservice.create(model, this.name.default_development.name_url)
                 .then(
