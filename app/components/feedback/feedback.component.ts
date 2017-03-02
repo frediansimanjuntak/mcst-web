@@ -80,6 +80,13 @@ export class FeedbackComponent implements OnInit {
         });
     }
 
+    convertDate(date) {
+		var yyyy = date.slice(0,4).toString();
+		var mm = date.slice(5,7).toString();
+		var dd  = date.slice(8,10).toString();
+		return dd + '/' + mm + '/' + yyyy;
+	}
+
 	private loadAllFeedback() {
         this.userService.getByToken()
         .subscribe(name => {
@@ -90,15 +97,12 @@ export class FeedbackComponent implements OnInit {
                 this.feedbackService.getAll().subscribe(feedbacks => {
                     this.all           =  feedbacks.filter(feedbacks => feedbacks.archieve === false );
                     this.feedbacks     = feedbacks.filter(feedbacks => feedbacks.archieve === false );
-                    this.published     = feedbacks.filter(feedbacks => feedbacks.status === 'published' && feedbacks.archieve === false );
                     for (var i = 0; i < this.feedbacks.length; ++i) {
+                    	this.feedbacks[i].created_at = this.convertDate(this.feedbacks[i].created_at);
                         let a = this.units.find(data => data._id == this.feedbacks[i].property);
                         this.feedbacks[i].property = '#'+a.address.unit_no +'-'+ a.address.unit_no_2;
                     }
-                    for (var i = 0; i < this.published.length; ++i) {
-                        let a = this.units.find(data => data._id == this.published[i].property);
-                        this.published[i].property = '#'+a.address.unit_no +'-'+ a.address.unit_no_2;
-                    }
+                    this.published     = this.feedbacks.filter(feedbacks => feedbacks.status === 'publish' && feedbacks.archieve === false );
                     setTimeout(() => this.appComponent.loading = false, 1000);
                 });
             })
@@ -112,14 +116,20 @@ export class FeedbackComponent implements OnInit {
                 data.title.toLowerCase().indexOf(this.dataFilter.toLowerCase()) !==  -1 &&
                 data.status.toLowerCase().indexOf(this.statusFilter.toLowerCase()) !==  -1
             );
-            this.published     = this.feedbacks.filter(feedbacks => feedbacks.status === 'published' );
+            this.published     = this.feedbacks.filter(feedbacks => feedbacks.status === 'publish' );
             setTimeout(() => this.appComponent.loading = false, 500);
         }else{
             this.feedbacks  = this.all.filter(data => 
                 data.title.toLowerCase().indexOf(this.dataFilter.toLowerCase()) !==  -1
             );
-            this.published     = this.feedbacks.filter(feedbacks => feedbacks.status === 'published' );
+            this.published     = this.feedbacks.filter(feedbacks => feedbacks.status === 'publish' );
             setTimeout(() => this.appComponent.loading = false, 500);
+        }
+        if(this.statusFilter == 'publish') {
+        	this.feedbacks = this.published.filter(data => 
+                data.title.toLowerCase().indexOf(this.dataFilter.toLowerCase()) !==  -1
+            );
+            this.published     = this.feedbacks.filter(feedbacks => feedbacks.status === 'publish' );
         }
         
         
@@ -132,6 +142,12 @@ export class FeedbackComponent implements OnInit {
             this.feedbacks = this.all.filter(data => data.status.toLowerCase().indexOf(this.statusFilter.toLowerCase()) !==  -1 && data.title.toLowerCase().indexOf(this.dataFilter.toLowerCase()) !==  -1);    
         }else{
             this.feedbacks = this.all.filter(data => data.status.toLowerCase().indexOf(this.statusFilter.toLowerCase()) !==  -1);
+        }
+        if(this.statusFilter == 'publish' && this.dataFilter == '') {
+        	this.feedbacks = this.published
+        }
+        if(this.statusFilter == 'publish' && this.dataFilter != '') {
+        	this.feedbacks = this.published.filter(data => data.title.toLowerCase().indexOf(this.dataFilter.toLowerCase()) !==  -1);
         }
         setTimeout(() => this.appComponent.loading = false, 500);
     }
@@ -168,7 +184,7 @@ export class FeedbackComponent implements OnInit {
         this.appComponent.loading = true
         this.feedbackService.getAll().subscribe(feedbacks => {
             this.feedbacks = feedbacks ;
-            this.archived  = this.feedbacks.filter(feedbacks => feedbacks.archive === true );
+            this.archived  = this.feedbacks.filter(feedbacks => feedbacks.archieve === true );
             setTimeout(() => this.appComponent.loading = false, 1000);
         });
     }
@@ -177,7 +193,7 @@ export class FeedbackComponent implements OnInit {
         this.appComponent.loading = true
         this.feedbackService.getAll().subscribe(feedbacks => {
             this.feedbacks     = feedbacks.filter(feedbacks => feedbacks.archive === false );
-            this.published     = feedbacks.filter(feedbacks => feedbacks.status === 'published' && feedbacks.archive === false );
+            this.published     = feedbacks.filter(feedbacks => feedbacks.status === 'publish' && feedbacks.archive === false );
             setTimeout(() => this.appComponent.loading = false, 1000);
         });       
         this.archived = '';
