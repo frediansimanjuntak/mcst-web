@@ -52,10 +52,10 @@
                             </p-column>
                             <p-column [style]="{'width':'175px'}" styleClass="col-button" header="action">
                                 <template let-feedback="rowData" pTemplate="body">
-                                    <a type="button" style="cursor:pointer; margin-right: 5px;" (click)="openModal(feedback) || firstModal.open()"><img src="../../assets/image/icon_reply.png" class="pull-left" width="10px" height="10x" style="margin:9px 0;text-decoration: underline;">&nbsp;Reply</a>
-                                    <button class="btn btn-brown btn-publish" disabled="feedback.status == unpublished" style="cursor:pointer" (click)="publishConfirmation(feedback)">Publish</button>
-                                    <img *ngIf="feedback.archive == false" title="archived" src="../../assets/image/icon_archived.png" style="margin:10px" (click)="archiveConfirmation(feedback)" />
-                                    <img *ngIf="feedback.archive == true" title="unarchived" src="../../assets/image/icon_archived.png" style="margin:10px" (click)="unarchived(feedback)" />
+                                    <a type="button" style="cursor:pointer; margin-right: 5px;text-decoration: underline;" (click)="openModal(feedback) || firstModal.open()"><img src="../../assets/image/icon_reply.png" class="pull-left" width="10px" height="10x" style="margin:9px 0;">&nbsp;<span style="text-decoration: underline;">Reply</span></a>
+                                    <button *ngIf="feedback.status == 'unpublish'" class="btn btn-brown btn-publish" style="cursor:pointer" (click)="publishConfirmation(feedback)">Publish</button>
+                                    <img *ngIf="feedback.archive === false" title="archived" src="../../assets/image/icon_archived.png" style="margin:10px" (click)="archiveConfirmation(feedback)" />
+                                    <img *ngIf="feedback.archive === true" title="unarchived" src="../../assets/image/icon_archived.png" style="margin:10px" (click)="unarchived(feedback)" />
                                 </template>
                             </p-column>
                         </p-dataTable>
@@ -78,10 +78,9 @@
                             </p-column>
                             <p-column [style]="{'width':'150px'}" styleClass="col-button" header="action">
                                 <template let-feedback="rowData" pTemplate="body">
-                                    <a type="button" style="cursor:pointer; margin-right: 5px;" (click)="openModal(feedback) || firstModal.open()"><img src="../../assets/image/icon_reply.png" class="pull-left" width="10px" height="10x" style="margin:9px 0;text-decoration: underline;">&nbsp;Reply</a>
-                                    <button disabled="feedback.status == unpublished" style="text-decoration: underline;cursor:pointer" (click)="publishConfirmation(feedback)">Publish</button>
-                                    <img *ngIf="feedback.archive == false" title="archived" src="../../assets/image/icon_archived.png" style="margin:10px" (click)="archiveConfirmation(feedback)" />
-                                    <img *ngIf="feedback.archive == true" title="unarchived" src="../../assets/image/icon_archived.png" style="margin:10px" (click)="unarchived(feedback)" />
+                                    <a type="button" style="cursor:pointer; margin-right: 5px;" (click)="openModal(feedback) || firstModal.open()"><img src="../../assets/image/icon_reply.png" class="pull-left" width="10px" height="10x" style="margin:9px 0;text-decoration: underline;">&nbsp;<span style="text-decoration: underline;">Reply</span></a>
+                                    <img *ngIf="feedback.archive === false" title="archived" src="../../assets/image/icon_archived.png" style="margin:10px" (click)="archiveConfirmation(feedback)" />
+                                    <img *ngIf="feedback.archive === true" title="unarchived" src="../../assets/image/icon_archived.png" style="margin:10px" (click)="unarchived(feedback)" />
                                 </template>
                             </p-column>
                         </p-dataTable>
