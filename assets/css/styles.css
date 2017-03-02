@@ -54,6 +54,10 @@ ul.ui-select-choices.dropdown-menu {
 }
 .form-control {
   border-radius: 0 !important;
+  color: #999;
+}
+option {
+    color: #000;
 }
 .btn {
     border-radius: 0 !important;
