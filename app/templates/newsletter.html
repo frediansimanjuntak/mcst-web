@@ -5,13 +5,15 @@
 		</div>
 		<p class="id-location">Home > EGM/AGM & Circular</p>
 		<div class="row top-block">
-			<div class="col-md-6 no-padding">
+			<div class="col-md-4 no-padding">
+				<div class="col-md-12">
 					<div class="input-group filter-search">
 						<input type="text" class="form-control input-search" (keyup.enter)="filter()" [(ngModel)]="filterField" placeholder="Search..." name="filter">
 						<span (click)="filter()" class="input-group-btn">
 							<button class="btn btn-secondary btn-search" type="button"><i class="fa fa-search fa-inverse" aria-hidden="true"></i></button>
 						</span>
 					</div>
+				</div>
 			</div>
 			<div class="col-md-4 pull-right">
 				<button class="btn btn-default pull-right btn-add" (click)="add()">
@@ -20,93 +22,95 @@
 			</div>
 		</div>
 		<div class="row">
-			<tabset>
-				<tab heading="AGM">
-					<p-dataTable [value]="dataAgm" [rows]="10" [paginator]="true">
-						<p-column field="title" header="Title" sortable="true" [filter]="true" filterPlaceholder="Search Title"></p-column>
-						<p-column header="Uploaded on" sortable="true">
-							<template let-dataAgm="rowData" pTemplate="body">
-								<span>{{dataAgm.created_at | date:'d/M/y'}}</span>
-							</template>
-						</p-column>
-						<p-column field="created_by.username" header="Uploaded by" sortable="true" [filter]="true" filterPlaceholder="Search Uploaded by">
-							<template let-dataAgm="rowData" pTemplate="body">
-								<span>{{dataAgm.created_by.username | capitalize}}</span>
-							</template>
-						</p-column>
-						<p-column field="attachment" header="Attachments" sortable="true">
-							<template let-dataAgm="rowData" pTemplate="body">
-								<span *ngFor="let a of dataAgm.attachment">
-									{{ a.name}},
-								</span>
-							</template>
-						</p-column>
-						<!-- </p-column> -->
-						<p-column styleClass="col-button" header="Action">
-							<template let-dataAgm="rowData" class="pull-right" pTemplate="body">
-								<button type="button" class="btn btn-trash pull-right" (click)="deleteConfirmation(dataAgm)"><i class="fa fa-trash-o" aria-hidden="true"></i></button>
-								<button class="btn btn-brown btn-publish pull-right" style="cursor:pointer; margin-right:5px" *ngIf="dataAgm.released == false" (click)="openModal(dataAgm) || firstModal.open()">Release</button>
-							</template>
-						</p-column>
-					</p-dataTable>
-				</tab>
-				<tab heading="EGM">
-					<p-dataTable [value]="dataEgm" [rows]="10" [paginator]="true">
-						<p-column field="title" header="Title" sortable="true" [filter]="true" filterPlaceholder="Search Title"></p-column>
-						<p-column header="Uploaded on" sortable="true">
-							<template let-dataEgm="rowData" pTemplate="body">
-								<span>{{dataEgm.created_at | date:'d/M/y'}}</span>
-							</template>
-						</p-column>
-						<p-column field="created_by.username" header="Uploaded by" sortable="true" [filter]="true" filterPlaceholder="Search Uploaded by">
-							<template let-dataEgm="rowData" pTemplate="body">
-								<span>{{dataEgm.created_by.username | capitalize}}</span>
-							</template>
-						</p-column>
-						<p-column field="attachment" header="Attachments" sortable="true">
-							<template let-dataEgm="rowData" pTemplate="body">
-								<span *ngFor="let a of dataEgm.attachment">
-									{{ a.name}},
-								</span>
-							</template>
-						</p-column>
-						<p-column styleClass="col-button" header="Action">
-							<template let-dataEgm="rowData" class="pull-right" pTemplate="body">
-								<button type="button" class="btn btn-trash pull-right" (click)="deleteConfirmation(dataEgm)"><i class="fa fa-trash-o" aria-hidden="true"></i></button>
-								<button class="btn btn-brown btn-publish pull-right" style="cursor:pointer; margin-right:5px" *ngIf="dataEgm.released == false" (click)="openModal(dataEgm) || firstModal.open()">Release</button>
-							</template>
-						</p-column>
-					</p-dataTable>
-				</tab>
-				<tab heading="Circular">
-					<p-dataTable [value]="dataCircular" [rows]="10" [paginator]="true">
-						<p-column field="title" header="Title" sortable="true" [filter]="true" filterPlaceholder="Search Title"></p-column>
-						<p-column header="Uploaded on" sortable="true">
-							<template let-dataCircular="rowData" pTemplate="body">
-								<span>{{dataCircular.created_at | date:'d/M/y'}}</span>
-							</template>
-						</p-column>
-						<p-column field="created_by.username" header="Uploaded by" sortable="true" [filter]="true" filterPlaceholder="Search Uploaded by">
-							<template let-dataCircular="rowData" pTemplate="body">
-								<span>{{dataCircular.created_by.username | capitalize}}</span>
-							</template>
-						</p-column>
-						<p-column field="attachment" header="Attachments" sortable="true">
-							<template let-dataCircular="rowData" pTemplate="body">
-								<span *ngFor="let a of dataCircular.attachment">
-									{{ a.name}},
-								</span>
-							</template>
-						</p-column>
-						<p-column styleClass="col-button" header="Action">
-							<template let-dataCircular="rowData" class="pull-right" pTemplate="body">
-								<button type="button" class="btn btn-trash pull-right" (click)="deleteConfirmation(dataCircular)"><i class="fa fa-trash-o" aria-hidden="true"></i></button>
-								<button class="btn btn-brown btn-publish pull-right" style="cursor:pointer; margin-right:5px" *ngIf="dataCircular.released == false" (click)="openModal(dataCircular) || firstModal.open()">Release</button>
-							</template>
-						</p-column>
-					</p-dataTable>
-				</tab>
-			</tabset>
+			<div class="col-md-12">
+				<tabset>
+					<tab heading="AGM">
+						<p-dataTable [value]="dataAgm" [rows]="10" [paginator]="true">
+							<p-column field="title" header="Title" sortable="true" [filter]="true" filterPlaceholder="Search Title"></p-column>
+							<p-column header="Uploaded on" sortable="true">
+								<template let-dataAgm="rowData" pTemplate="body">
+									<span>{{dataAgm.created_at | date:'d/M/y'}}</span>
+								</template>
+							</p-column>
+							<p-column field="created_by.username" header="Uploaded by" sortable="true" [filter]="true" filterPlaceholder="Search Uploaded by">
+								<template let-dataAgm="rowData" pTemplate="body">
+									<span>{{dataAgm.created_by.username | capitalize}}</span>
+								</template>
+							</p-column>
+							<p-column field="attachment" header="Attachments" sortable="true">
+								<template let-dataAgm="rowData" pTemplate="body">
+									<span *ngFor="let a of dataAgm.attachment">
+										{{ a.name}},
+									</span>
+								</template>
+							</p-column>
+							<!-- </p-column> -->
+							<p-column styleClass="col-button" header="Action">
+								<template let-dataAgm="rowData" class="pull-right" pTemplate="body">
+									<button type="button" class="btn btn-trash pull-right" (click)="deleteConfirmation(dataAgm)"><i class="fa fa-trash-o" aria-hidden="true"></i></button>
+									<button class="btn btn-brown btn-publish pull-right" style="cursor:pointer; margin-right:5px" *ngIf="dataAgm.released == false" (click)="openModal(dataAgm) || firstModal.open()">Release</button>
+								</template>
+							</p-column>
+						</p-dataTable>
+					</tab>
+					<tab heading="EGM">
+						<p-dataTable [value]="dataEgm" [rows]="10" [paginator]="true">
+							<p-column field="title" header="Title" sortable="true" [filter]="true" filterPlaceholder="Search Title"></p-column>
+							<p-column header="Uploaded on" sortable="true">
+								<template let-dataEgm="rowData" pTemplate="body">
+									<span>{{dataEgm.created_at | date:'d/M/y'}}</span>
+								</template>
+							</p-column>
+							<p-column field="created_by.username" header="Uploaded by" sortable="true" [filter]="true" filterPlaceholder="Search Uploaded by">
+								<template let-dataEgm="rowData" pTemplate="body">
+									<span>{{dataEgm.created_by.username | capitalize}}</span>
+								</template>
+							</p-column>
+							<p-column field="attachment" header="Attachments" sortable="true">
+								<template let-dataEgm="rowData" pTemplate="body">
+									<span *ngFor="let a of dataEgm.attachment">
+										{{ a.name}},
+									</span>
+								</template>
+							</p-column>
+							<p-column styleClass="col-button" header="Action">
+								<template let-dataEgm="rowData" class="pull-right" pTemplate="body">
+									<button type="button" class="btn btn-trash pull-right" (click)="deleteConfirmation(dataEgm)"><i class="fa fa-trash-o" aria-hidden="true"></i></button>
+									<button class="btn btn-brown btn-publish pull-right" style="cursor:pointer; margin-right:5px" *ngIf="dataEgm.released == false" (click)="openModal(dataEgm) || firstModal.open()">Release</button>
+								</template>
+							</p-column>
+						</p-dataTable>
+					</tab>
+					<tab heading="Circular">
+						<p-dataTable [value]="dataCircular" [rows]="10" [paginator]="true">
+							<p-column field="title" header="Title" sortable="true" [filter]="true" filterPlaceholder="Search Title"></p-column>
+							<p-column header="Uploaded on" sortable="true">
+								<template let-dataCircular="rowData" pTemplate="body">
+									<span>{{dataCircular.created_at | date:'d/M/y'}}</span>
+								</template>
+							</p-column>
+							<p-column field="created_by.username" header="Uploaded by" sortable="true" [filter]="true" filterPlaceholder="Search Uploaded by">
+								<template let-dataCircular="rowData" pTemplate="body">
+									<span>{{dataCircular.created_by.username | capitalize}}</span>
+								</template>
+							</p-column>
+							<p-column field="attachment" header="Attachments" sortable="true">
+								<template let-dataCircular="rowData" pTemplate="body">
+									<span *ngFor="let a of dataCircular.attachment">
+										{{ a.name}},
+									</span>
+								</template>
+							</p-column>
+							<p-column styleClass="col-button" header="Action">
+								<template let-dataCircular="rowData" class="pull-right" pTemplate="body">
+									<button type="button" class="btn btn-trash pull-right" (click)="deleteConfirmation(dataCircular)"><i class="fa fa-trash-o" aria-hidden="true"></i></button>
+									<button class="btn btn-brown btn-publish pull-right" style="cursor:pointer; margin-right:5px" *ngIf="dataCircular.released == false" (click)="openModal(dataCircular) || firstModal.open()">Release</button>
+								</template>
+							</p-column>
+						</p-dataTable>
+					</tab>
+				</tabset>
+			</div>
 		</div>
 
 		<div class="row">
