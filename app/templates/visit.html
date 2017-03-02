@@ -9,8 +9,8 @@
 			<div class="col-md-6 no-padding">
 				<div class="col-md-7">
 					<div class="input-group filter-search">
-						<input type="text" class="form-control input-search" placeholder="Search name, vehicle no., unit no." name="filter">
-						<span class="input-group-btn">
+						<input type="text" class="form-control input-search" (keyup.enter)="filter()" [(ngModel)]="filterField"  placeholder="Search name, vehicle no., unit no." name="filter">
+						<span  (click)="filter()" class="input-group-btn">
 							<button class="btn btn-secondary btn-search" type="button"><i class="fa fa-search fa-inverse" aria-hidden="true"></i></button>
 						</span>
 					</div>
@@ -43,7 +43,7 @@
 			<p-dataTable [value]="visitActive" scrollable="true" scrollHeight="360px">
 				<p-column header="No" [style]="{'width':'42px'}" field="i">
 				</p-column>
-				<p-column header="Visitor/Guest" field="visitor.full_name" [filter]="true" filterPlaceholder="Search Name">
+				<p-column header="Visitor/Guest" field="visitor.full_name">
 					<template let-visitActive="rowData" pTemplate="body">
 						<span>{{visitActive.visitor.prefix}} {{visitActive.visitor.full_name}}</span>
 					</template>
@@ -79,7 +79,8 @@
 									</strong>
 								</div>
 								<div class="col-md-7">
-									<span *ngIf="unit.status">{{ unit.status}}</span>
+									<span *ngIf="unit.status=='tenanted'">Tenanted</span>
+									<span *ngIf="unit.status=='own_stay'">Own stay</span>
 									<span *ngIf="!unit.status">-</span>
 								</div>
 							</div>
@@ -122,23 +123,29 @@
 						<a style="cursor: pointer; color: blue;" class="btn-underline" [popover]="popTemplate" (click)="onUnitClick(visitActive.property)">{{visitActive.visiting}}</a>
 					</template>
 				</p-column>
-				<p-column field="purpose" header="Purpose of visit" [style]="{'width':'140px'}"></p-column>
+				<p-column field="purpose" header="Purpose of visit" [style]="{'width':'140px'}">
+					<template let-visitActive="rowData" pTemplate="body">
+						<span *ngIf="visitActive.purpose=='house_visit'">House visit</span>
+						<span *ngIf="visitActive.purpose=='maintenance_work'">Maintenance work</span>
+						<span *ngIf="!visitActive.purpose">-</span>
+					</template>
+				</p-column>
 				<p-column header="Remarks" field="">
 					<template let-visitActive="rowData" pTemplate="body">
 						<span *ngIf="visitActive.remarks==''">No remarks</span>
-						<span>{{visitActive.remarks}}</span>
+						<span>{{visitActive.remarks | capitalize}}</span>
 					</template>
 				</p-column>
 				<p-column header="Added by" field="created_at" sortable="true">visitActive
 					<template let-visitActive="rowData" pTemplate="body">
-						<span class="btn-underline">{{visitActive.created_by.username}}</span>
+						<span class="btn-underline">{{visitActive.created_by.username | capitalize}}</span>
 						<br>
 						<span>on {{visitActive.created_at | date:'d/M/y'}}</span>
 					</template>
 				</p-column>
 				<p-column header="Card no" [style]="{'width':'80px'}" field="visitor.pass" sortable="true">
 					<template let-visitActive="rowData" pTemplate="body">
-						<span *ngIf="visitActive.visitor.pass==''">-</span>
+						<span *ngIf="!visitActive.visitor.pass">-</span>
 						<span>{{visitActive.visitor.pass}}</span>
 					</template>
 				</p-column>

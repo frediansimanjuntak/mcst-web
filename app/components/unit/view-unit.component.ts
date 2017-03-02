@@ -31,6 +31,8 @@ export class ViewUnitComponent implements OnInit {
     user: any;
     users: any;
     allUsers: any;
+    codeType: string;
+    modelForCode: any = {};
     model: any = {};
     data: any = {};
     filesToUpload: Array<File>;
@@ -286,7 +288,8 @@ export class ViewUnitComponent implements OnInit {
 
     generateCode(){
         this.appComponent.loading = true
-        this.unitservice.generateCode(this.unit._id, this.name.default_development.name_url)
+        this.modelForCode.type = this.codeType;
+        this.unitservice.generateCode(this.unit._id, this.name.default_development.name_url, this.modelForCode)
             .then(
                  data => {
                     this._notificationsService.success(
