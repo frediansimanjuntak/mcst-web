@@ -112,13 +112,13 @@ export class FeedbackComponent implements OnInit {
                 data.title.toLowerCase().indexOf(this.dataFilter.toLowerCase()) !==  -1 &&
                 data.status.toLowerCase().indexOf(this.statusFilter.toLowerCase()) !==  -1
             );
-            this.published     = this.feedbacks.filter(feedbacks => feedbacks.status === 'published' && feedbacks.archieve === false );
+            this.published     = this.feedbacks.filter(feedbacks => feedbacks.status === 'published' );
             setTimeout(() => this.appComponent.loading = false, 500);
         }else{
             this.feedbacks  = this.all.filter(data => 
                 data.title.toLowerCase().indexOf(this.dataFilter.toLowerCase()) !==  -1
             );
-            this.published     = this.feedbacks.filter(feedbacks => feedbacks.status === 'published' && feedbacks.archieve === false );
+            this.published     = this.feedbacks.filter(feedbacks => feedbacks.status === 'published' );
             setTimeout(() => this.appComponent.loading = false, 500);
         }
         

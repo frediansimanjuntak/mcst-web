@@ -8,7 +8,7 @@ export class Feedback {
   feedback_type : string;
   feedback_reply : string;
   feedback_privacy : string;
-  archive : boolean;
+  archieve : boolean;
   remark : string;
   status : string;
   reply_at : string;
