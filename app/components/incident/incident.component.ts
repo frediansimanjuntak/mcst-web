@@ -34,6 +34,9 @@ export class IncidentComponent implements OnInit {
     isFavorite = false;
     isArchieved = false;
     resolveIncident: any;
+    dataFilter: string = '';
+    all: any[] = [];
+    typeFilter: any = '';
     change = new EventEmitter();
     public data;
     public dataNew;
@@ -136,6 +139,7 @@ export class IncidentComponent implements OnInit {
 
 	private loadAllIncident() {
 		this.incidentService.getAll().subscribe(incidents => {
+            this.all = incidents
 	        this.incidents = incidents.filter(incidents => incidents.archieve === false); ;
             this.dataNew = this.incidents.filter(incidents => incidents.status === 'new' && incidents.archieve === false);
             this.dataInProgress = this.incidents.filter(incidents => incidents.status === 'in progress' && incidents.archieve === false);
@@ -143,6 +147,51 @@ export class IncidentComponent implements OnInit {
             this.dataArchieved   = this.incidents.filter(incidents => incidents.archieve === true );
             setTimeout(() => this.appComponent.loading = false, 1000);
 		});
+    }
+
+    filter(){
+        this.appComponent.loading=true;
+        if(this.typeFilter != ''){
+            this.incidents  = this.all.filter(data => 
+                data.reference_no.toLowerCase().indexOf(this.dataFilter.toLowerCase()) !==  -1 &&
+                data.incident_type.toLowerCase().indexOf(this.typeFilter.toLowerCase()) !==  -1 &&
+                data.archieve === false
+            );
+            this.dataNew = this.incidents.filter(incidents => incidents.status === 'new' && incidents.archieve === false);
+            this.dataInProgress = this.incidents.filter(incidents => incidents.status === 'in progress' && incidents.archieve === false);
+            this.dataResolved   = this.incidents.filter(incidents => incidents.status === 'resolved' && incidents.archieve === false);
+            this.dataArchieved   = this.incidents.filter(data => 
+                    data.reference_no.toLowerCase().indexOf(this.dataFilter.toLowerCase()) !==  -1 &&
+                    data.archieve === true
+                );
+            setTimeout(() => this.appComponent.loading = false, 500);
+        }else{
+            this.incidents  = this.all.filter(data => 
+                data.reference_no.toLowerCase().indexOf(this.dataFilter.toLowerCase()) !==  -1 &&
+                data.archieve === false
+            );
+            this.dataNew = this.incidents.filter(incidents => incidents.status === 'new' && incidents.archieve === false);
+            this.dataInProgress = this.incidents.filter(incidents => incidents.status === 'in progress' && incidents.archieve === false);
+            this.dataResolved   = this.incidents.filter(incidents => incidents.status === 'resolved' && incidents.archieve === false);
+            this.dataArchieved   = this.all.filter(data => 
+                    data.reference_no.toLowerCase().indexOf(this.dataFilter.toLowerCase()) !==  -1 &&
+                    data.archieve === true
+                );
+            setTimeout(() => this.appComponent.loading = false, 500);
+        }
+        
+        
+  
+    }
+
+    filterType(event:any){
+        this.appComponent.loading = true
+        if(this.dataFilter != ''){
+            this.incidents = this.all.filter(data => data.incident_type.toLowerCase().indexOf(this.typeFilter.toLowerCase()) !==  -1 && data.reference_no.toLowerCase().indexOf(this.dataFilter.toLowerCase()) !==  -1);    
+        }else{
+            this.incidents = this.all.filter(data => data.incident_type.toLowerCase().indexOf(this.typeFilter.toLowerCase()) !==  -1 && data.archieve === false);
+        }
+        setTimeout(() => this.appComponent.loading = false, 500);
     }
 
     view(incident: Incident){

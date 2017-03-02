@@ -8,7 +8,7 @@
 			<div class="row top-block">
 				<div class="col-md-9">
 					<div class="row top-block">
-						<div class="col-md-8 no-padding">
+						<div class="col-md-9 no-padding">
 							<div class="col-md-7">
 								<div class="input-group filter-search">
 									<input type="text" class="form-control input-search" (keyup.enter)="filter()" [(ngModel)]="unitFilter" placeholder="Search for unit.no" name="filter">
@@ -18,7 +18,7 @@
 								</div>
 							</div>
 							<div class="col-md-5 no-padding">
-							    <div class="input-group">
+							    <div class="input-group pull-right">
 							          <select class="form-control" name="selectedType" (change)="filterType($event)" [(ngModel)]="typeFilter">
 							          	<option value="" disabled="" selected="selected">Type of Resident</option>
 							            <option value="">All</option>
@@ -28,7 +28,7 @@
 							    </div>
 						    </div>
 						</div>
-						<div class="col-md-4  pull-right">
+						<div class="col-md-3  pull-right">
 							<button class="btn btn-default btn-add pull-right" (click)="add()"><img class="img-btn" src="../../assets/image/icon_addresident.png" />&nbsp;Add Resident</button>
 
 						</div>

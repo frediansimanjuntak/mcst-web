@@ -237,9 +237,9 @@
                 </div>
                 <p class="id-location">Home > Manage Projects</p>
                 <div class="row top-block">
-                    <div class="col-md-8 no-padding">
+                    <div class="col-md-8">
                         <div class="input-group filter-search">
-                            <input type="text" class="form-control input-search" [(ngModel)]="dataFilter" placeholder="Search for projects..." name="filter">
+                            <input type="text" class="form-control input-search" (keyup.enter)="filter()" [(ngModel)]="dataFilter" placeholder="Search for projects..." name="filter">
                             <span (click)="filter()" class="input-group-btn">
                                 <button class="btn btn-secondary btn-search" type="button"><i class="fa fa-search fa-inverse" aria-hidden="true"></i></button>
                             </span>

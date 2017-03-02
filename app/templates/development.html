@@ -4,9 +4,9 @@
 			Development
 		</div>
 		<p class="id-location">Home > Development</p>
-		<div class="row">
+		<div class="row top-block">
 			<div class="col-md-4 pull-right">
-					  		<a class="btn btn-default pull-right" (click)="add()">
+					  		<a class="btn btn-add pull-right" style="padding: 10px 20px;" (click)="add()">
 					  		<i class="fa fa-plus" aria-hidden="true"></i>&nbsp;Add Development</a>
 			</div>
 		</div>
@@ -23,7 +23,7 @@
 		    <p-column header="Action" styleClass="col-button">
 		    	<template let-development="rowData" pTemplate="body">
 		        	<button type="button" (click)="edit(development)">Edit</button>
-		        	<button type="button" (click)="deleteConfirmation(development)">Delete</button>
+		        	<button type="button" class="btn btn-trash" (click)="deleteConfirmation(development)"><i class="fa fa-trash-o" aria-hidden="true"></i></button>
 		    	</template>
 		    </p-column>
 		</p-dataTable>

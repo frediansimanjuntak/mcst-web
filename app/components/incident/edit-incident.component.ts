@@ -25,9 +25,9 @@ export class EditIncidentComponent implements OnInit {
     no:any
     myForm: FormGroup;
     types = [
-        { value: 'General', name: 'General' },
-        { value: 'Hygiene', name: 'Hygiene' },
-        { value: 'Damage', name: 'Damage' },
+        { value: 'general', name: 'General' },
+        { value: 'hygiene', name: 'Hygiene' },
+        { value: 'damage', name: 'Damage' },
 
     ];
     selectedType = '';
