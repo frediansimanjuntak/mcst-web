@@ -131,9 +131,6 @@ export class FeedbackComponent implements OnInit {
             );
             this.published     = this.feedbacks.filter(feedbacks => feedbacks.status === 'publish' );
         }
-        
-        
-  
     }
 
     filterStatus(event:any){
