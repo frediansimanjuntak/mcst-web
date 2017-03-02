@@ -7,24 +7,28 @@
 			<p class="id-location">Home > Resident's Database</p>
 			<div class="row top-block">
 				<div class="col-md-9">
-					<div class="row">
-						<div class="col-md-8">
-							<div class="input-group filter-search">
-								<input type="text" class="form-control input-search" (keyup.enter)="filter()" [(ngModel)]="unitFilter" placeholder="Search for unit.no" name="filter">
-								<span (click)="filter()" class="input-group-btn">
-									<button class="btn btn-secondary btn-search" type="button"><i class="fa fa-search fa-inverse" aria-hidden="true"></i></button>
-								</span>
+					<div class="row top-block">
+						<div class="col-md-8 no-padding">
+							<div class="col-md-7">
+								<div class="input-group filter-search">
+									<input type="text" class="form-control input-search" (keyup.enter)="filter()" [(ngModel)]="unitFilter" placeholder="Search for unit.no" name="filter">
+									<span (click)="filter()" class="input-group-btn">
+										<button class="btn btn-secondary btn-search" type="button"><i class="fa fa-search fa-inverse" aria-hidden="true"></i></button>
+									</span>
+								</div>
 							</div>
-						    <div class="input-group">
-						          <select class="form-control" name="selectedType" (change)="filterType($event)" [(ngModel)]="typeFilter">
-						          	<option value="" disabled="" selected="selected">Type of Resident</option>
-						            <option value="">All</option>
-						            <option value="own_stay">Own stay</option>
-						            <option value="tenanted">Tenanted</option>
-						          </select>
+							<div class="col-md-5 no-padding">
+							    <div class="input-group">
+							          <select class="form-control" name="selectedType" (change)="filterType($event)" [(ngModel)]="typeFilter">
+							          	<option value="" disabled="" selected="selected">Type of Resident</option>
+							            <option value="">All</option>
+							            <option value="own_stay">Own stay</option>
+							            <option value="tenanted">Tenanted</option>
+							          </select>
+							    </div>
 						    </div>
 						</div>
-						<div class="col-md-4">
+						<div class="col-md-4  pull-right">
 							<button class="btn btn-default btn-add pull-right" (click)="add()"><img class="img-btn" src="../../assets/image/icon_addresident.png" />&nbsp;Add Resident</button>
 
 						</div>
