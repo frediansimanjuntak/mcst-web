@@ -53,7 +53,7 @@ export class FeedbackService {
     }
 
     archieve(id: string): Promise<Feedback> {
-        return this.http.post(url + 'feedback/achieve/' + id,'', this.jwt())
+        return this.http.post(url + 'feedback/archieve/' + id,'', this.jwt())
             .toPromise()
             .then(res => res.json().data)
             .catch(this.handleError);
@@ -67,7 +67,7 @@ export class FeedbackService {
     }
 
     unarchieve(id: string): Promise<Feedback> {
-        return this.http.put(url + 'feedback/achieve/' + id,'', this.jwt())
+        return this.http.put(url + 'feedback/archieve/' + id,'', this.jwt())
             .toPromise()
             .then(res => res.json().data)
             .catch(this.handleError);

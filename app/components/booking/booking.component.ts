@@ -57,7 +57,7 @@ export class BookingComponent implements OnInit {
 	status: any;
 	period1: any;
 	period2: any
-	noFilter: string = '';
+	dataFilter: string = '';
 
 	constructor(
 		private router: Router,
@@ -136,6 +136,15 @@ export class BookingComponent implements OnInit {
 		});
 	}
 
+	filterRefno(){
+		
+        this.appComponent.loading=true;
+		this.bookings  = this.all.filter(data => data.reference_no.toLowerCase().indexOf(this.dataFilter.toLowerCase()) !==  -1);
+		this.selectedDay = this.bookings;
+		this.filtered = this.bookings;
+		setTimeout(() => this.appComponent.loading = false, 1000);
+    }
+
 	private loadAllBookings() {
 		this.day     = new Date(this.dt.getTime());
 		this.day     = this.convertDate(this.day);
@@ -147,11 +156,16 @@ export class BookingComponent implements OnInit {
 				this.units = units.properties;
 				this.bookingService.getAll()
 				.subscribe(bookings => {
+					this.all = bookings
 					this.bookings = bookings;
 					this.selectedDay = this.bookings.filter(data => data.booking_date.slice(0,10) == this.day);
 					for (var i = 0; i < this.selectedDay.length; ++i) {
 						let a = this.units.find(data => data._id == this.selectedDay[i].property);
 						this.selectedDay[i].unit = '#'+a.address.unit_no +'-'+ a.address.unit_no_2;
+					}
+					for (var i = 0; i < this.all.length; ++i) {
+						let a = this.units.find(data => data._id == this.all[i].property);
+						this.all[i].unit = '#'+a.address.unit_no +'-'+ a.address.unit_no_2;
 					}
 					for (var i = 0; i < this.bookings.length; ++i) {
 						let a = this.units.find(data => data._id == this.bookings[i].property);
