@@ -64,7 +64,7 @@ export class EditUnitComponent implements OnInit {
                     country : ['', <any>Validators.required],
                     full_address : ['', <any>Validators.required]
                 }),
-                status: ['own_stay'],
+                // status: ['no landlord'],
                 max_tenant: [],
         });
 
