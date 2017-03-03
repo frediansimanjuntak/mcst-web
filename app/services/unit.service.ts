@@ -78,6 +78,14 @@ export class UnitService {
             .catch(this.handleError);
     }
 
+    deleteCode(id:string, name:string, body:any): Promise<any> {
+        return this.http.put(url + 'properties/' + name + '/generate_code/' + id, body, this.jwt())
+            .toPromise()
+            .then(res => res.json().data)
+            .catch(this.handleError);
+    }
+
+
     delete(id: string, name: string): Promise<void> {
         return this.http.delete( url + 'properties/' + name + '/' + id, this.jwt())
           .toPromise()

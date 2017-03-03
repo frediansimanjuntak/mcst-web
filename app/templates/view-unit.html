@@ -25,8 +25,9 @@
                             <div class="col-md-4">
                                 <span *ngIf="hasLandlord"><b>Owner :&nbsp;</b>{{unit.landlord.username | capitalize}}<br></span>
                                 <b>Status :&nbsp;</b>
-                                <span *ngIf="unit.status == 'own_stay'">Own stay</span>
+                                <span *ngIf="unit.status == 'own stay'">Own stay</span>
                                 <span *ngIf="unit.status == 'tenanted'">Tenanted</span>
+                                <span *ngIf="unit.status == 'no landlord'">No landlord</span>
                             </div>
                             <div class="col-md-4">
                                 <span *ngIf="unit.tenant"><b>No of Tenant :&nbsp;</b>{{ tenantTotal }}<br></span>
