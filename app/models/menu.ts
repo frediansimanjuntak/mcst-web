@@ -65,7 +65,7 @@ export const MENUS: any[] = [
   	sub : [
   		{ name : 'Manage Announcement', link: '/announcement' , img: '../../assets/image/icon_announcement.png'},
   		{ name : 'E-voting', link: '/poll' },
-  		{ name : 'Manage Feedbacks', link: '/feedback', img: '../../assets/image/icon_feedbacks.png' },
+  		{ name : 'Manage Feedback', link: '/feedback', img: '../../assets/image/icon_feedbacks.png' },
   		{ name : 'Lost & Found', link: '/lost_found', img: '../../assets/image/icon_lost&found.png' },
   	]
   },
