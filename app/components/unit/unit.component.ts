@@ -82,7 +82,9 @@ export class UnitComponent implements OnInit {
     filter(){
         this.appComponent.loading=true;
         if(this.typeFilter != ''){
-            this.dataUnit = this.dataUnit.filter(data => ('#'+data.address.unit_no+'-'+data.address.unit_no_2.toLowerCase()).indexOf(this.unitFilter.toLowerCase()) !==  -1);
+            this.dataUnit = this.all.filter(data => ('#'+data.address.unit_no+'-'+data.address.unit_no_2.toLowerCase()).indexOf(this.unitFilter.toLowerCase()) !==  -1 &&
+                                                    data.status.toLowerCase().indexOf(this.typeFilter.toLowerCase()) !==  -1
+                                                    );
         }else{
             this.dataUnit = this.all.filter(data => ('#'+data.address.unit_no+'-'+data.address.unit_no_2.toLowerCase()).indexOf(this.unitFilter.toLowerCase()) !==  -1);  
         }
@@ -92,7 +94,9 @@ export class UnitComponent implements OnInit {
     filterType(event:any){
         this.appComponent.loading = true
         if(this.unitFilter != ''){
-            this.dataUnit = this.dataUnit.filter(data => data.status.toLowerCase().indexOf(this.typeFilter.toLowerCase()) !==  -1);    
+            this.dataUnit = this.all.filter(data => data.status.toLowerCase().indexOf(this.typeFilter.toLowerCase()) !==  -1 &&
+                                                    ('#'+data.address.unit_no+'-'+data.address.unit_no_2.toLowerCase()).indexOf(this.unitFilter.toLowerCase()) !==  -1
+                                            );    
         }else{
             this.dataUnit = this.all.filter(data => data.status.toLowerCase().indexOf(this.typeFilter.toLowerCase()) !==  -1);  
         }

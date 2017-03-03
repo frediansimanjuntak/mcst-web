@@ -25,8 +25,9 @@
                             <div class="col-md-4">
                                 <span *ngIf="hasLandlord"><b>Owner :&nbsp;</b>{{unit.landlord.username | capitalize}}<br></span>
                                 <b>Status :&nbsp;</b>
-                                <span *ngIf="unit.status == 'own_stay'">Own stay</span>
+                                <span *ngIf="unit.status == 'own stay'">Own stay</span>
                                 <span *ngIf="unit.status == 'tenanted'">Tenanted</span>
+                                <span *ngIf="unit.status == 'no landlord'">No landlord</span>
                             </div>
                             <div class="col-md-4">
                                 <span *ngIf="unit.tenant"><b>No of Tenant :&nbsp;</b>{{ tenantTotal }}<br></span>
@@ -49,7 +50,7 @@
                                 <td>Owner</td>
                                 <td>{{unit.code.create_at_landlord | date:'d/M/y'}}</td>
                                 <td>
-                                    <button class="btn btn-trash pull-right" type="button" (click)="deleteCode('landlord')"><i class="fa fa-trash-o" aria-hidden="true"></i></button>
+                                    <button class="btn btn-trash pull-right" type="button" (click)="deleteCodeConfirmation('landlord')"><i class="fa fa-trash-o" aria-hidden="true"></i></button>
                                 </td>
                               </tr>
                               <tr *ngIf="unit.code.tenant">
@@ -57,7 +58,7 @@
                                 <td>Tenant</td>
                                 <td>{{unit.code.create_at_tenant | date:'d/M/y'}}</td>
                                 <td>
-                                    <button class="btn btn-trash pull-right" type="button" (click)="deleteCode('tenant')"><i class="fa fa-trash-o" aria-hidden="true"></i></button>
+                                    <button class="btn btn-trash pull-right" type="button" (click)="deleteCodeConfirmation('tenant')"><i class="fa fa-trash-o" aria-hidden="true"></i></button>
                                 </td>
                               </tr>
                             </tbody>
@@ -87,12 +88,12 @@
                                 <span>{{residents.type | capitalize}}</span>
                             </template>
                         </p-column>
-                        <p-column header="Added on" sortable="true">
+                        <p-column header="Added on" field="created_at" sortable="true">
                             <template let-residents="rowData" pTemplate="body">
                                 <span>{{residents.created_at | date:'d/M/y'}}</span>
                             </template>
                         </p-column> 
-                        <p-column header="Social Page" sortable="true">
+                        <p-column header="Social Page" field="social_page" sortable="true">
                             <template let-residents="rowData" pTemplate="body">
                                 <span *ngIf="residents.social_page">{{residents.social_page}}</span>
                                 <span *ngIf="!residents.social_page">-</span>
@@ -104,7 +105,7 @@
                                 <span *ngIf="residents.resident.email">{{residents.resident.email}}<br></span>
                             </template>
                         </p-column>
-                        <p-column header="Remarks" sortable="true">
+                        <p-column header="Remarks">
                             <template let-residents="rowData" pTemplate="body">
                                 <span *ngIf="residents.remarks">{{residents.remarks | capitalize}}</span>
                                 <span *ngIf="!residents.remarks">-</span>
@@ -150,7 +151,7 @@
                                 <span *ngIf="vehicles.doc.name">{{vehicles.doc.name}}</span>
                             </template>
                         </p-column>
-                         <p-column header="Registered on" sortable="true">
+                         <p-column header="Registered on" field="registered_on" sortable="true">
                             <template let-vehicles="rowData" pTemplate="body">
                                 <span>{{vehicles.registered_on | date:'d/M/y'}}</span>
                             </template>

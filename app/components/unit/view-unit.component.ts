@@ -273,6 +273,17 @@ export class ViewUnitComponent implements OnInit {
         
     }
 
+    deleteCodeConfirmation(type:string){
+         this.confirmationService.confirm({
+                    message: 'Are you sure that you want to delete this code?',
+                    header: 'Delete Confirmation',
+                    icon: 'fa fa-trash',
+                    accept: () => {
+                        this.deleteCode(type)
+                    }
+        });    
+    }
+
     deleteVehicle(vehicle: any){
         this.appComponent.loading = true
         this.unitservice.deleteRegVehicle(vehicle._id, this.unit._id, this.name.default_development.name_url)
@@ -308,6 +319,7 @@ export class ViewUnitComponent implements OnInit {
                     )
                     this.loading = false;
                     this.codeModal.close();
+                    this.modelForCode = {}
                     this.ngOnInit();
                 },
                 error => {
@@ -319,16 +331,36 @@ export class ViewUnitComponent implements OnInit {
                     this.codeModal.close();
                     this.loading = false;
                     this.appComponent.loading = false
+                    this.modelForCode = {}
                 }
             );
     }
 
     deleteCode(type:string){
-        if(type == 'landlord'){
-
-        }else{
-            
-        }
+        this.appComponent.loading = true
+        this.modelForCode.type = type;
+        this.unitservice.deleteCode(this.unit._id, this.name.default_development.name_url, this.modelForCode)
+            .then(
+                 data => {
+                    this._notificationsService.success(
+                            'Success',
+                            'Delete unit code successful',
+                    )
+                    this.codeModal.close();
+                    this.modelForCode = {}
+                    this.ngOnInit();
+                },
+                error => {
+                    console.log(error);
+                    this._notificationsService.error(
+                            'Error',
+                            'Failed to delete code, server error',
+                    )
+                    this.codeModal.close();
+                    this.appComponent.loading = false
+                    this.modelForCode = {}
+                }
+            );
     }
 
     deleteVehicleConfirmation(vehicle) {
