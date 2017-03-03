@@ -47,6 +47,8 @@ export class PetitionComponent implements OnInit {
     public rowsOnPage = 10;
     public sortBy = "email";
     public sortOrder = "asc";
+    public pdfSrc: string;
+    public page: number;
     public options = {
         position: ["bottom", "right"],
         timeOut: 3000,
@@ -113,7 +115,10 @@ export class PetitionComponent implements OnInit {
     filter(){
         this.appComponent.loading=true;
         if(this.typeFilter != ''){
-            this.petitions = this.petitions.filter(data => ('#'+data.reference_no.toLowerCase()).indexOf(this.ticketNumberFilter.toLowerCase()) !==  -1);
+            this.petitions = this.all.filter(data => 
+                                                            ('#'+data.reference_no.toLowerCase()).indexOf(this.ticketNumberFilter.toLowerCase()) !==  -1 &&
+                                                            data.petition_type.toLowerCase().indexOf(this.typeFilter.toLowerCase()) !==  -1
+                                                            );
         }else{
             this.petitions = this.all.filter(data => ('#'+data.reference_no.toLowerCase()).indexOf(this.ticketNumberFilter.toLowerCase()) !==  -1);    
         }
@@ -123,7 +128,10 @@ export class PetitionComponent implements OnInit {
     filterArchieved(){
         this.appComponent.loading=true;
         if(this.typeFilter != ''){
-            this.archivedPetitions = this.archivedPetitions.filter(data => ('#'+ data.reference_no.toLowerCase()).indexOf(this.ticketNumberFilter.toLowerCase()) !==  -1);
+            this.archivedPetitions = this.allArchieved.filter(data => 
+                                                            ('#'+ data.reference_no.toLowerCase()).indexOf(this.ticketNumberFilter.toLowerCase()) !==  -1 &&
+                                                            data.petition_type.toLowerCase().indexOf(this.typeFilter.toLowerCase()) !==  -1
+                                                                            );
         }else{
             this.archivedPetitions = this.allArchieved.filter(data => ('#'+data.reference_no.toLowerCase()).indexOf(this.ticketNumberFilter.toLowerCase()) !==  -1);            
         }
@@ -135,7 +143,10 @@ export class PetitionComponent implements OnInit {
     filterType(event:any){
         this.appComponent.loading = true
         if(this.ticketNumberFilter != ''){
-            this.petitions = this.petitions.filter(data => data.petition_type.toLowerCase().indexOf(this.typeFilter.toLowerCase()) !==  -1);    
+            this.petitions = this.all.filter(data => 
+                                                data.petition_type.toLowerCase().indexOf(this.typeFilter.toLowerCase()) !==  -1 &&
+                                                ('#'+data.reference_no.toLowerCase()).indexOf(this.ticketNumberFilter.toLowerCase()) !==  -1
+                                            );    
         }else{
             this.petitions = this.all.filter(data => data.petition_type.toLowerCase().indexOf(this.typeFilter.toLowerCase()) !==  -1);
         }
@@ -145,7 +156,10 @@ export class PetitionComponent implements OnInit {
     filterTypeArchieved(event:any){
         this.appComponent.loading = true
         if(this.ticketNumberFilter != ''){
-           this.archivedPetitions = this.archivedPetitions.filter(data => data.petition_type.toLowerCase().indexOf(this.typeFilter.toLowerCase()) !==  -1);
+           this.archivedPetitions = this.archivedPetitions.filter(data => 
+                                                data.petition_type.toLowerCase().indexOf(this.typeFilter.toLowerCase()) !==  -1 &&
+                                                ('#'+data.reference_no.toLowerCase()).indexOf(this.ticketNumberFilter.toLowerCase()) !==  -1
+                                                );
         }else{
            this.archivedPetitions = this.allArchieved.filter(data => data.petition_type.toLowerCase().indexOf(this.typeFilter.toLowerCase()) !==  -1); 
         }
@@ -163,9 +177,12 @@ export class PetitionComponent implements OnInit {
                                     this.petitionService.getById(this.id)
                                         .subscribe(petition => {
                                             this.petition = petition;
+                                            console.log(this.petition)
                                             let property = this.dataUnit.find(data => data._id ==  this.petition.property);
                                             this.petition.unit_no = '#' + property.address.unit_no + '-' + property.address.unit_no_2;
                                             setTimeout(() => this.appComponent.loading = false, 1000);
+                                            this.pdfSrc =  'https://vadimdez.github.io/ng2-pdf-viewer/pdf-test.pdf';
+                                            this.page = 1;
                                         });
                                 }
                 }, 1000);
