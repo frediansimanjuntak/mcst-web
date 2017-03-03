@@ -273,6 +273,17 @@ export class ViewUnitComponent implements OnInit {
         
     }
 
+    deleteCodeConfirmation(type:string){
+         this.confirmationService.confirm({
+                    message: 'Are you sure that you want to delete this code?',
+                    header: 'Delete Confirmation',
+                    icon: 'fa fa-trash',
+                    accept: () => {
+                        this.deleteCode(type)
+                    }
+        });    
+    }
+
     deleteVehicle(vehicle: any){
         this.appComponent.loading = true
         this.unitservice.deleteRegVehicle(vehicle._id, this.unit._id, this.name.default_development.name_url)
