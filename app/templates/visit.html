@@ -191,7 +191,7 @@
 							<div class="row no-margin">
 								<label class="control-label col-sm-4" for="full_name">Name of Guest/visitor :</label>
 								<div class="col-sm-8">
-									<input type="text" class="form-control" name="full_name" formControlName="full_name">
+									<input type="text" placeholder="Type here" class="form-control" name="full_name" formControlName="full_name">
 									<small style="color: red" [hidden]="myForm.controls.visitor.controls.full_name.valid || (myForm.controls.visitor.controls.full_name.pristine && !addSubmitted)">Name is required</small>
 								</div>
 							</div>
@@ -227,7 +227,8 @@
 							<div class="row no-margin">
 								<label class="control-label col-sm-4" for="unit_no">Visiting :</label>
 								<div class="col-sm-8">
-									<select class="form-control" formControlName="property" name="property">
+									<select  [ngClass]="{ 'form-control-blur': myForm.controls.property.value =='' }" class="form-control" formControlName="property" name="property">
+										<option selected="" value="">Search Unit.no here</option>
 										<option *ngFor="let u of dataUnit" [ngValue]="u._id">#{{u.address.unit_no}}-{{u.address.unit_no_2}}</option>
 									</select>
 									<small style="color: red" [hidden]="myForm.controls.property.valid || (myForm.controls.property.pristine && !addSubmitted)">Unit no is required</small>
