@@ -1116,3 +1116,17 @@ p.field-box.no-margin {
 #contact-directory strong p {
     font-size: 13px;
 }
+
+/*rating*/
+.ui-rating-star a, .ui-rating-cancel a {
+    width: 16px;
+    height: 15px;
+    display: block;
+    background: url(../image/rating.png) no-repeat 0 0;
+}
+.ui-rating-star-on a {
+    background-position: 0px -32px;
+}
+.ui-rating-star a {
+    background-position: 0 -80px;
+}
