@@ -43,6 +43,11 @@ export class EditUserComponent implements OnInit {
 
 
     ngOnInit(): void {
+        this.route.params.subscribe(params => {
+            this.id = params['id'];
+            this.type = params['type'];
+        });
+
         this.userService.getByToken()
         .subscribe(name => {
             this.name = name;
@@ -52,10 +57,7 @@ export class EditUserComponent implements OnInit {
                                 setTimeout(() => this.appComponent.loading = false, 1000);
                             ;})
         })
-        this.route.params.subscribe(params => {
-            this.id = params['id'];
-            this.type = params['type'];
-        });
+        
         if(this.id == null){
             this.myForm = this.formbuilder.group({
                 username : ['', Validators.required],
@@ -76,44 +78,29 @@ export class EditUserComponent implements OnInit {
                 // active: ['', Validators.required],
 
             });
-        }
-        
-        if( this.id != null &&  this.type == null) {
-            this.userService.getById(this.id)
-            .subscribe(user => {
-                this.user = user;
-                this.myForm = this.formbuilder.group({
+        }else if( this.id != null &&  this.type == null) {
+            this.myForm = this.formbuilder.group({
                     _id : [''],
                     username : ['', Validators.required],
                     email : ['', Validators.required],
-                    password : ['', Validators.required],
                     phone : ['', Validators.required],
+                    password : ['', Validators.required],
+                    confirmpassword : ['', Validators.required],
                     role : ['', Validators.required],
-                    default_property: this.formbuilder.group({
-                        development: ['', Validators.required],
-                        property: ['', Validators.required],
-                        role : ['', Validators.required]
-                    }),
-                    rented_property: this.formbuilder.group({
-                        development: [''],
-                        property: ['']
-                    }),
-                    owned_property: this.formbuilder.array([]),
-                    authorized_property: this.formbuilder.array([]),
-                    active: ['', Validators.required],
-                    default_development: [],
-                    salt: [],
-                    __v: [],
+
                 });
-                for (let i = 0; i < this.user.owned_property.length; i++) {
-                    const control = <FormArray>this.myForm.controls['owned_property'];
-                    control.push(this.initOwned());
-                }
-                for (let i = 0; i < this.user.authorized_property.length; i++) {
-                    const control = <FormArray>this.myForm.controls['authorized_property'];
-                    control.push(this.initAuthorized());
-                }
-                this.myForm.patchValue(this.user);
+            this.userService.getById(this.id)
+            .subscribe(user => {
+                this.user = user;
+                console.log(this.user)
+               this.myForm = this.formbuilder.group({
+                    _id : [this.user._id],
+                    username : [this.user.username, Validators.required],
+
+                    email : [this.user.email, Validators.required],
+                    phone : [this.user.phone, Validators.required],
+                });
+                // this.myForm.patchValue(this.user);
             });
         }else if( this.id != null &&  this.type != null){
             if(this.type == 'tenant'){
@@ -134,7 +121,7 @@ export class EditUserComponent implements OnInit {
                     }),
                     authorized_property: this.formbuilder.array([this.initAuthorized()]),
                     active: [''],
-                    remarks_tenant: [''],
+                    remarks: [''],
                     });    
             }else if(this.type == 'landlord'){
                      this.myForm = this.formbuilder.group({
@@ -151,6 +138,7 @@ export class EditUserComponent implements OnInit {
                     owned_property: this.formbuilder.array([this.initOwned()]),
                     authorized_property: this.formbuilder.array([this.initAuthorized()]),
                     active: [''],
+                    remarks: [''],
                     });    
             }
             
@@ -270,8 +258,8 @@ export class EditUserComponent implements OnInit {
     }
 
 
-    updateUser(user:User){
-        this.userService.update(this.user)
+    updateUser(user:any){
+        this.userService.update(user)
         .then(
             response => {
                  this._notificationsService.success(
