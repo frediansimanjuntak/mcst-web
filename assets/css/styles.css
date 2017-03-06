@@ -311,7 +311,7 @@ thead {
   }
   .nav-justified>li, .nav-tabs.nav-justified>li {
     display: table-cell;
-    width: 0;
+    width: auto;
   }
 }
 .nav>li>a:focus, .nav>li>a:hover {
