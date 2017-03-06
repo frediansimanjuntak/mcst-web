@@ -130,7 +130,9 @@ export class ViewUnitComponent implements OnInit {
                                         var landlordForResidentTable :any = {
                                         type : 'owner',
                                         i    :  1,
-                                        resident : this.unit.landlord
+                                        resident : this.unit.landlord.resident,
+                                        created_at : this.unit.landlord.created_at,
+                                        remarks : this.unit.landlord.remarks
                                         }
                                         
                                         this.residents.unshift(landlordForResidentTable);
@@ -414,6 +416,7 @@ export class ViewUnitComponent implements OnInit {
              this.data.id_development  = this.name.default_development._id;
              this.data.id_property     = this.unit._id;
              this.data.type            = this.model.type;
+             this.data.remarks  = this.model.remarks;
              this.unitservice.createResident(this.data)
                 .then(
                     data => {

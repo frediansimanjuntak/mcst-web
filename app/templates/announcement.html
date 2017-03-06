@@ -24,12 +24,12 @@
 				<tabset>
 					<tab heading="Draft">
 						<p-dataTable [value]="announcementsDrafted" [rows]="10" [paginator]="true">
-							<p-column [style]="{'width':'200px'}" field="title" header="Title" sortable="true">
+							<p-column [style]="{'width':'180px'}" field="title" header="Title" sortable="true">
 								<template let-announcementsDrafted="rowData" pTemplate="body">
 									<span>{{announcementsDrafted.title | capitalize}}</span>
 								</template>
 							</p-column>
-							<p-column [style]="{'width':'250px'}" field="message" header="Message" sortable="true">
+							<p-column [style]="{'width':'200px'}" field="message" header="Message" sortable="true">
 								<template let-announcementsDrafted="rowData" pTemplate="body">
 									<span>{{announcementsDrafted.message | capitalize}}</span>
 								</template>
@@ -39,8 +39,17 @@
 									<span>{{announcementsDrafted.sticky | capitalize}}</span>
 								</template>
 							</p-column>
-							<p-column field="auto_post_date" header="Auto post on" sortable="true" filterPlaceholder="Search Date "></p-column>
+							<p-column field="auto_post_date" header="Auto post on" sortable="true" filterPlaceholder="Search Date ">
+								<template let-announcementsDrafted="rowData" pTemplate="body">
+									<span *ngIf="announcementsDrafted.auto_post_date">{{announcementsDrafted.auto_post_date}}</span>
+									<span *ngIf="!announcementsDrafted.auto_post_date">-</span>
+								</template>
+							</p-column>
 							<p-column header="Valid till" field="valid_till_date" sortable="true">
+								<template let-announcementsDrafted="rowData" pTemplate="body">
+									<span *ngIf="announcementsDrafted.valid_till_date">{{announcementsDrafted.valid_till_date}}</span>
+									<span *ngIf="!announcementsDrafted.valid_till_date">-</span>
+								</template>
 							</p-column>
 							<p-column header="Created on" sortable="true">
 								<template let-announcementsDrafted="rowData" pTemplate="body">
@@ -58,12 +67,12 @@
 					</tab>
 					<tab heading="Published">
 						<p-dataTable [value]="announcementsPublished" [rows]="10" [paginator]="true">
-							<p-column [style]="{'width':'200px'}" field="title" header="Title" sortable="true" [filter]="true" filterPlaceholder="Search title">
+							<p-column [style]="{'width':'200px'}" field="title" header="Title" sortable="true" >
 								<template let-announcementsPublished="rowData" pTemplate="body">
 									<span>{{announcementsPublished.title | capitalize}}</span>
 								</template>
 							</p-column>
-							<p-column [style]="{'width':'250px'}" field="message" header="Message" sortable="true" [filter]="true" filterPlaceholder="Search Message">
+							<p-column [style]="{'width':'250px'}" field="message" header="Message" sortable="true" >
 								<template let-announcementsPublished="rowData" pTemplate="body">
 									<span>{{announcementsPublished.message | capitalize}}</span>
 								</template>
@@ -74,6 +83,10 @@
 								</template>
 							</p-column>
 							<p-column header="Valid till" field="valid_till_date" sortable="true">
+								<template let-announcementsPublished="rowData" pTemplate="body">
+									<span *ngIf="announcementsPublished.valid_till_date">{{announcementsPublished.valid_till_date}}</span>
+									<span *ngIf="!announcementsPublished.valid_till_date">-</span>
+								</template>
 							</p-column>
 							<p-column header="Created on" sortable="true">
 								<template let-announcementsPublished="rowData" pTemplate="body">
