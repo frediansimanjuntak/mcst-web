@@ -97,6 +97,41 @@ thead {
     border-top: 0;
 }
 
+/*bootstrap 5 column*/
+.col-xs-5ths,
+.col-sm-5ths,
+.col-md-5ths,
+.col-lg-5ths {
+    position: relative;
+    min-height: 1px;
+    padding-right: 10px;
+    padding-left: 10px;
+}
+
+.col-xs-5ths {
+    width: 20%;
+    float: left;
+}
+@media (min-width: 768px) {
+.col-sm-5ths {
+        width: 20%;
+        float: left;
+    }
+}
+@media (min-width: 992px) {
+    .col-md-5ths {
+        width: 20%;
+        float: left;
+    }
+}
+@media (min-width: 1200px) {
+    .col-lg-5ths {
+        width: 20%;
+        float: left;
+    }
+}
+/*bootstrap 5 column*/
+
 /*.btn-primary {
   background-color: rgb(181,173,150) !important;
   color: white;
@@ -311,7 +346,7 @@ thead {
   }
   .nav-justified>li, .nav-tabs.nav-justified>li {
     display: table-cell;
-    width: 0;
+    width: auto;
   }
 }
 .nav>li>a:focus, .nav>li>a:hover {
@@ -1080,4 +1115,18 @@ p.field-box.no-margin {
 }
 #contact-directory strong p {
     font-size: 13px;
+}
+
+/*rating*/
+.ui-rating-star a, .ui-rating-cancel a {
+    width: 16px;
+    height: 15px;
+    display: block;
+    background: url(../image/rating.png) no-repeat 0 0;
+}
+.ui-rating-star-on a {
+    background-position: 0px -32px;
+}
+.ui-rating-star a {
+    background-position: 0 -80px;
 }
