@@ -17,7 +17,7 @@ import { SignaturePad } from 'angular2-signaturepad/signature-pad';
 // import { SELECT_DIRECTIVES }            from 'ng2-select';
 import { AppRoutingModule }     		    from './app-routing.module';
 import { url }                          from '../global'
-import { DataTableModule,SharedModule,ScheduleModule,DialogModule,InputMaskModule,CheckboxModule,PanelModule,FieldsetModule,CalendarModule,DropdownModule,ConfirmDialogModule,ConfirmationService } from 'primeng/primeng';
+import { DataTableModule,SharedModule,ScheduleModule,DialogModule,InputMaskModule,CheckboxModule,PanelModule,FieldsetModule,CalendarModule,DropdownModule,ConfirmDialogModule,ConfirmationService,RatingModule } from 'primeng/primeng';
 import { EqualValidator }               from '../components/user/equal-validator.directive';
 import { ImageUploadModule }            from 'ng2-imageupload';
 import { ModalModule }                  from "ngx-modal";
@@ -156,6 +156,7 @@ import {
     MyDatePickerModule,
     PopoverModule.forRoot(),
     CalendarModule,
+    RatingModule,
     ImageUploadModule,
     MomentModule,
     SlimLoadingBarModule.forRoot(),
