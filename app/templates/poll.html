@@ -107,18 +107,31 @@
 								</template>
 							</p-column>
 
-					    <p-column field="" header="Open to" sortable="true" ></p-column>
-						<p-column field="start_time" [style]="{'width':'150px'}" header="Commence date" sortable="true">
-						</p-column>
-						<p-column field="end_time" header="Result date" sortable="true">
-						</p-column>
-						<p-column [style]="{'width':'300px'}" header="Action" styleClass="col-button">
-					    	<template class="pull-right" let-pollsDraft="rowData" pTemplate="body">
-						    	<a type="button" style="cursor:pointer; margin-right: 15px;" (click)="editPoll(pollsDraft)"><i class="fa fa-edit" aria-hidden="true"></i>&nbsp;<u>Edit</u></a>
-						    	<button class="btn btn-publish btn-brown" style="cursor:pointer; margin-right:5px" (click)="openModal(pollsDraft) || firstModal.open()">Start Poll</button>
-						        <button  type="button" class="btn btn-trash" (click)="deleteConfirmation(pollsDraft)"><i class="fa fa-trash-o" aria-hidden="true"></i></button>
-					    	</template>
-					    </p-column>
+						    <p-column field="open_to" header="Open to" sortable="true" >
+						    		<template let-pollsDraft="rowData" pTemplate="body">
+										<span *ngIf="pollsDraft.open_to">{{ pollsDraft.open_to }}</span>
+										<span *ngIf="!pollsDraft.open_to">-</span>
+									</template>
+						    </p-column>
+							<p-column field="start_time" [style]="{'width':'150px'}" header="Commence date" sortable="true">
+								<template let-pollsDraft="rowData" pTemplate="body">
+										<span *ngIf="pollsDraft.start_time">{{ pollsDraft.start_time }}</span>
+										<span *ngIf="!pollsDraft.start_time">-</span>
+								</template>
+							</p-column>
+							<p-column field="end_time" header="Result date" sortable="true">
+								<template let-pollsDraft="rowData" pTemplate="body">
+										<span *ngIf="pollsDraft.end_time">{{ pollsDraft.end_time }}</span>
+										<span *ngIf="!pollsDraft.end_time">-</span>
+								</template>
+							</p-column>
+							<p-column [style]="{'width':'300px'}" header="Action" styleClass="col-button">
+						    	<template class="pull-right" let-pollsDraft="rowData" pTemplate="body">
+							    	<a type="button" style="cursor:pointer; margin-right: 15px;" (click)="editPoll(pollsDraft)"><i class="fa fa-edit" aria-hidden="true"></i>&nbsp;<u>Edit</u></a>
+							    	<button class="btn btn-publish btn-brown" style="cursor:pointer; margin-right:5px" (click)="openModal(pollsDraft) || firstModal.open()">Start Poll</button>
+							        <button  type="button" class="btn btn-trash" (click)="deleteConfirmation(pollsDraft)"><i class="fa fa-trash-o" aria-hidden="true"></i></button>
+						    	</template>
+						    </p-column>
 					</p-dataTable>
 			    </tab>
 			    <tab heading="Active Poll">
@@ -131,6 +144,10 @@
 						        </template>
 						</p-column>
 						<p-column field="end_time" header="Result date" sortable="true">
+								<template let-pollsActive="rowData" pTemplate="body">
+						            <span *ngIf="pollsActive.end_time">{{pollsActive.end_time}}</span>
+						            <span *ngIf="!pollsActive.end_time">-</span>
+						        </template>
 						</p-column>>
 						<p-column header="Days Remaining" field="remaining" sortable="true">
 						</p-column>
@@ -146,7 +163,12 @@
 					    <p-column field="title" header="Poll Title" sortable="true" [filter]="true" filterPlaceholder="Search Title"></p-column>
 					    <p-column field="description" header="Poll" sortable="true" [filter]="true" filterPlaceholder="Search Poll"></p-column>
 					    <p-column field="poll_type" header="Poll Type" sortable="true" [filter]="true" filterPlaceholder="Search Type"></p-column>
-					    <p-column field="" header="Open to" sortable="true" [filter]="true" filterPlaceholder="Search Type"></p-column>
+					    <p-column field="open_to" header="Open to" sortable="true" [filter]="true" filterPlaceholder="Search Type">
+					    		<template let-pollsResult="rowData" pTemplate="body">
+						            <span *ngIf="pollsResult.open_to">{{pollsResult.open_to}}</span>
+						            <span *ngIf="!pollsResult.open_to">-</span>
+						        </template>
+					    </p-column>
 					    <p-column header="no. of Poll" sortable="true">
 						    	<template let-pollsResult="rowData" pTemplate="body">
 						            <span>{{pollsResult.votes.length}}</span>

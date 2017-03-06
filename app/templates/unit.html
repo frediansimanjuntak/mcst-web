@@ -54,7 +54,11 @@
 						</p-column>
 						<p-column field="landlord.username" header="Owner" sortable="true" [filter]="true" filterPlaceholder="Search Owner">
 							<template let-dataUnit="rowData" pTemplate="body">
-								<span *ngIf="dataUnit.landlord">{{dataUnit.landlord.username | capitalize}}</span>
+								<span *ngIf="dataUnit.landlord">
+									<span *ngIf="dataUnit.landlord.resident">
+										{{dataUnit.landlord.resident.username | capitalize}}
+									</span>
+								</span>
 								<span *ngIf="!dataUnit.landlord">-</span>
 							</template>
 						</p-column>
