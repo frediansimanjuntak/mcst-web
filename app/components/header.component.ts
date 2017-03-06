@@ -138,3 +138,4 @@ export class HeaderComponent implements OnInit{
         this.unreadNotificationsToShow.unshift(dummyNotif);
         this.unreadNotificationTotal = this.unreadNotificationsToShow.length;
     }
+}
