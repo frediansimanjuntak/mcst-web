@@ -53,6 +53,7 @@ export class EditIncidentComponent implements OnInit {
                 setTimeout(() => this.appComponent.loading = false, 1000);
             });
         }
+        this.model.incident_type = 'general';
         this.model.attachment = [];
         this.incidentService.getAll().subscribe(incidents => {
             this.incidents = incidents ;

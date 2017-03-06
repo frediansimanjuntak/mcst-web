@@ -1,7 +1,7 @@
 import { Component, OnInit, ElementRef } from '@angular/core';
 import { Notification } from '../models/index';
 import { Router} from '@angular/router';
-import { NotificationService, AlertService, UserService, AuthenticationService} from '../services/index';
+import { NotificationService, AlertService, UserService, AuthenticationService, LostFoundService} from '../services/index';
 import '../rxjs-operators';
 import { Observable} from 'rxjs/Observable';
 import { AppComponent } from './index';
@@ -26,12 +26,14 @@ export class HeaderComponent implements OnInit{
     user: string;
     NotificationClicked: boolean;
     name: any;
+    lostFounds: any[];
 
 	constructor(
                 private notificationService: NotificationService,
                 private alertService: AlertService,
                 private userService: UserService,
                 private authService: AuthenticationService,
+                private lostFoundService:LostFoundService,
                 private appComponent: AppComponent,
                 private router: Router,
                 ) {
@@ -42,6 +44,12 @@ export class HeaderComponent implements OnInit{
     	this.userService.getByToken()
                             .subscribe(name => {
                                 this.name = name;
+                                 this.lostFoundService.getAll()
+                                .subscribe((data)=> {
+                                    setTimeout(()=> {
+                                        this.lostFounds      = data.filter(data => data.development._id == this.name.default_development._id);
+                                    })
+                                })
                                 if(this.authToken){
                                     this.loadUnread();
                                 }
@@ -113,4 +121,20 @@ export class HeaderComponent implements OnInit{
         this.authService.logout()
         this.appComponent.getToken();
     }
-}
+
+    createDummyNotif(){
+        var dummyNotif :any = {
+                                        _id  : '1',
+                                        user : this.name._id,
+                                        type : '1',
+                                        message : 'New ' + this.lostFounds[0].type + ' From XXX' ,
+                                        ref: 'lost_found',
+                                        ref_id: this.lostFounds[0]._id,
+                                        created_by: '',
+                                        read_at : '',
+                                        created_at : '2017-03-05T03:31:07'
+                              }
+                                        
+        this.unreadNotificationsToShow.unshift(dummyNotif);
+        this.unreadNotificationTotal = this.unreadNotificationsToShow.length;
+    }
