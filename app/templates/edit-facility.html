@@ -129,6 +129,9 @@
                                     <small *ngIf="f.submitted && !myForm.controls.schedule.controls[i].controls.start_time.valid" class="text-danger">
                                         Start time is required
                                     </small>
+                                    <small *ngIf="f.submitted && myForm.value.schedule[i].start_time > myForm.value.schedule[i].end_time" class="text-danger">
+                                        Start time must be earlier than the end time
+                                    </small>
                                 </div>
                                 <div class="form-group col-sm-6">
                                     <label>End Time :</label>
@@ -137,6 +140,9 @@
                                     </select>
                                     <small *ngIf="f.submitted && !myForm.controls.schedule.controls[i].controls.end_time.valid" class="text-danger">
                                         End time is required
+                                    </small>
+                                    <small *ngIf="f.submitted && myForm.value.schedule[i].end_time < myForm.value.schedule[i].start_time" class="text-danger">
+                                        End time must not earlier than the start time
                                     </small>
                                 </div>
                             </div>
@@ -278,6 +284,9 @@
                                     <small *ngIf="f.submitted && !myForm.controls.schedule.controls[i].controls.start_time.valid" class="text-danger">
                                         Start time is required
                                     </small>
+                                    <small *ngIf="f.submitted && myForm.value.schedule[i].start_time > myForm.value.schedule[i].end_time" class="text-danger">
+                                        Start time must be earlier than the end time
+                                    </small>
                                 </div>
                                 <div class="form-group col-sm-6">
                                     <label>End Time :</label>
@@ -286,6 +295,9 @@
                                     </select>
                                     <small *ngIf="f.submitted && !myForm.controls.schedule.controls[i].controls.end_time.valid" class="text-danger">
                                         End time is required
+                                    </small>
+                                    <small *ngIf="f.submitted && myForm.value.schedule[i].end_time < myForm.value.schedule[i].start_time" class="text-danger">
+                                        End time must not earlier than the start time
                                     </small>
                                 </div>
                             </div>
