@@ -282,6 +282,8 @@
 					<h5>Check-in {{ visit.visitor.prefix }}&nbsp;{{ visit.visitor.full_name }}</h5>
 				</modal-header>
 				<modal-content *ngIf="visit">
+				<br>
+				<br>
 					<form name="form" [formGroup]="checkInForm" novalidate>
 						<div class="form-group" formGroupName="visitor">
 							<div class="row no-margin">
