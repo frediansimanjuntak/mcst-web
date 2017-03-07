@@ -430,7 +430,7 @@ export class EditBookingComponent implements OnInit  {
 		this.unitService.getById(this.model.property , this.name.default_development.name_url)
 		.subscribe(unit => {
 			this.unit = unit.properties[0];
-			this.model.sender = this.unit.landlord.username;
+			this.model.sender = this.unit.landlord.resident.username;
 		});
 		this.appComponent.loading = false
 	}
