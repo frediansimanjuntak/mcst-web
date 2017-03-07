@@ -909,6 +909,9 @@ button.btn.btn-default.btn-sm {
 .modal-footer {
   border-top: 0;
 }
+label.control-label {
+    line-height: 30px;
+}
 
 /*costumize table*/
 
@@ -964,7 +967,7 @@ th.ui-state-default.ui-unselectable-text {
     width: 15px;
     height: 15px;
     float: right;
-    margin: 2px 5px;
+    margin: 10px 5px;
 }
 .tab-container .col-button {
     padding: 10px !important;
