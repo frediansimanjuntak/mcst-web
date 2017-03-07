@@ -23,13 +23,14 @@
                                 <b>Block :&nbsp;</b>{{unit.address.block_no}}
                             </div>
                             <div class="col-md-4">
-                                <span *ngIf="hasLandlord"><b>Owner :&nbsp;</b>{{unit.landlord.username | capitalize}}<br></span>
-                                <b>Status :&nbsp;</b>
-                                <span *ngIf="unit.status == 'own_stay'">Own stay</span>
+                                <span *ngIf="hasLandlord"><b>Owner :&nbsp;</b>{{unit.landlord.resident.username | capitalize}}<br></span>
+                                <b>Status :</b>
+                                <span *ngIf="unit.status == 'own stay'">Own stay</span>
                                 <span *ngIf="unit.status == 'tenanted'">Tenanted</span>
+                                <span style="color: red" *ngIf="unit.status == 'no landlord'">No landlord</span>
                             </div>
                             <div class="col-md-4">
-                                <span *ngIf="unit.tenant"><b>No of Tenant :&nbsp;</b>{{ tenantTotal }}<br></span>
+                                <span *ngIf="unit.tenant"><b>No. of Tenant :&nbsp;</b>{{ tenantTotal }}<br></span>
                                 <span  *ngIf="vehicles"><b>Vehicle :&nbsp;</b>{{vehicles.length}}</span>
                                 
                             </div>
@@ -210,6 +211,12 @@
                                 </div>
                             </div>
                         </div>
+                        <div class="form-group" *ngIf="model.option == 'exist'" >
+                            <label class="control-label col-sm-4" for="remarks">Remarks :</label>
+                            <div class="col-sm-8">
+                                <input type="text" class="form-control" name="remarks" [(ngModel)]="model.remarks" placeholder="Input remarks here"/>                
+                            </div>
+                        </div>
                          <div class="row no-margin pull-bottom-right">
                             <button  *ngIf="model.option == 'new'" class="btn btn-primary btn-brown" (click)="addResident()">Go to Form</button>
                             <button [disabled]="loading" *ngIf="model.option == 'exist'" class="btn btn-primary btn-brown" (click)="addExistResident()">Add resident<span>
@@ -299,15 +306,15 @@
                 </modal-header>
                 <modal-content *ngIf="resident">
                     <div class="row">
-                        <div class="col-md-4">Resident</div>
-                        <div class="col-md-8"> <p>: {{ resident.resident.username }}</p></div>
+                        <div class="col-md-4"><b>Resident</b></div>
+                        <div class="col-md-8"> <p>: {{ resident.resident.username | capitalize }}</p></div>
                     </div>
                     <div class="row">
-                        <div class="col-md-4">Type</div>
-                        <div class="col-md-8"><p>: {{ resident.type }}</p></div>
+                        <div class="col-md-4"><b>Type</b></div>
+                        <div class="col-md-8"><p>: {{ resident.type | capitalize}}</p></div>
                     </div>
                     <div class="row">
-                        <div class="col-md-4">Added on </div>
+                        <div class="col-md-4"><b>Added on </b></div>
                         <div class="col-md-8">
                             <p>: 
                                 {{ resident.created_at | date:'fullDate' }} 
@@ -315,26 +322,26 @@
                         </div>
                     </div>
                     <div class="row">
-                        <div class="col-md-4">Contact No </div>
+                        <div class="col-md-4"><b>Contact No </b></div>
                         <div class="col-md-8"><p>: {{resident.resident.phone}}, {{resident.resident.email}}</p></div>
                     </div>
                     <div class="row">
-                        <div class="col-md-4">Social Page </div>
+                        <div class="col-md-4"><b>Social Page </b></div>
                         <div class="col-md-8">
-                            <p *ngIf="resident.resident.social_page">: {{ resident.resident.social_page }}</p>
-                            <p *ngIf="!resident.resident.social_page">: -</p>
+                            <p *ngIf="resident.social_page">: {{ resident.social_page }}</p>
+                            <p *ngIf="!resident.social_page">: -</p>
                         </div>
                     </div>
                     <div class="row">
-                        <div class="col-md-4">Remarks </div>
+                        <div class="col-md-4"><b>Remarks </b></div>
                         <div class="col-md-8">
-                            <p *ngIf="resident.resident.social_page">: {{ resident.remarks }}</p>
-                            <p *ngIf="!resident.resident.social_page">: -</p>
+                            <p *ngIf="resident.remarks">: {{ resident.remarks | capitalize}}</p>
+                            <p *ngIf="!resident.remarks">: -</p>
                         </div>
                     </div>
                 </modal-content>
                 <modal-footer>
-                      <button class="btn btn-default" (click)="residentDetail.close()">Close</button>
+                      <button class="btn btn-default btn-gray" (click)="residentDetail.close()">Close</button>
                 </modal-footer>
             </modal>
         </div>  
@@ -346,43 +353,43 @@
                 </modal-header>
                 <modal-content *ngIf="vehicle">
                     <div class="row">
-                        <div class="col-md-4">License Plate</div>
+                        <div class="col-md-4"><b>License Plate</b></div>
                         <div class="col-md-8"> <p>: {{ vehicle.license_plate }}</p></div>
                     </div>
                     <div class="row">
-                        <div class="col-md-4">Owner</div>
-                        <div class="col-md-8"><p>: {{ vehicle.user }}</p></div>
+                        <div class="col-md-4"><b>Owner</b></div>
+                        <div class="col-md-8"><p>: {{ vehicle.user | capitalize}}</p></div>
                     </div>
                     <div class="row">
-                        <div class="col-md-4">Transponder</div>
+                        <div class="col-md-4"><b>Transponder</b></div>
                         <div class="col-md-8">
                             <p *ngIf="vehicle.transponder">: {{ vehicle.transponder }}</p>
                             <p *ngIf="!vehicle.transponder">: -</p>
                         </div>
                     </div>
                    <div class="row">
-                        <div class="col-md-4">Document</div>
+                        <div class="col-md-4"><b>Document</b></div>
                         <div class="col-md-8">
                         <p *ngIf="vehicle.doc">: <a style="cursor: pointer;" (click)="openDoc()"> {{vehicle.doc.name}} </a></p>
                         </div>
                     </div>
                      <div class="row">
-                        <div class="col-md-4">Registered on </div>
+                        <div class="col-md-4"><b>Registered on </b></div>
                         <div class="col-md-8">
                             <p>: {{ vehicle.registered_on | date:'fullDate'}}</p>
                         </div>
                     </div>
                     <div class="row">
-                        <div class="col-md-4">Remarks </div>
+                        <div class="col-md-4"><b>Remarks </b></div>
                         <div class="col-md-8">
-                            <p *ngIf="vehicle.remarks">: {{ vehicle.remarks }}</p>
+                            <p *ngIf="vehicle.remarks">: {{ vehicle.remarks | capitalize}}</p>
                             <p *ngIf="!vehicle.remarks">: -</p>
                         </div>
 
                     </div>
                 </modal-content>
                 <modal-footer>
-                      <button class="btn btn-default" (click)="vehicleDetail.close()">Close</button>
+                      <button class="btn btn-default btn-gray" (click)="vehicleDetail.close()">Close</button>
                 </modal-footer>
             </modal>
         </div>  

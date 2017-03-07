@@ -32,6 +32,7 @@ export class UserComponent implements OnInit {
         this.userService.getByToken()
                         .subscribe(name => {
                                 this.name = name;
+                                console.log(this.name)
                                 this.loadAllUsers();
                             })
     }
@@ -74,8 +75,13 @@ export class UserComponent implements OnInit {
 
     private loadAllUsers() {
         this.userService.getAll().subscribe(users => { 
-                                            this.users = users;
-                                            console.log(users);
+                                            if(this.name.role == 'admin'){
+                                                this.users = users.filter(data=> data.role == 'user')
+                                            }else if(this.name.role == 'super admin'){
+                                                this.users = users.filter(data=> data.role == 'user' || data.role == 'admin')
+                                            }else{
+                                                this.users = users;  
+                                            }
                                             setTimeout(() => this.appComponent.loading = false, 1000);
                                         });
     }

@@ -22,8 +22,9 @@
 							          <select class="form-control" name="selectedType" (change)="filterType($event)" [(ngModel)]="typeFilter">
 							          	<option value="" disabled="" selected="selected">Type of Resident</option>
 							            <option value="">All</option>
-							            <option value="own_stay">Own stay</option>
+							            <option value="own stay">Own stay</option>
 							            <option value="tenanted">Tenanted</option>
+							            <option value="no landlord">No landlord</option>
 							          </select>
 							    </div>
 						    </div>
@@ -53,13 +54,19 @@
 						</p-column>
 						<p-column field="landlord.username" header="Owner" sortable="true" [filter]="true" filterPlaceholder="Search Owner">
 							<template let-dataUnit="rowData" pTemplate="body">
-								<span *ngIf="dataUnit.landlord">{{dataUnit.landlord.username | capitalize}}</span>
+								<span *ngIf="dataUnit.landlord">
+									<span *ngIf="dataUnit.landlord.resident">
+										{{dataUnit.landlord.resident.username | capitalize}}
+									</span>
+								</span>
+								<span *ngIf="!dataUnit.landlord">-</span>
 							</template>
 						</p-column>
 						<p-column field="status" header="Status" sortable="true">
 							<template let-dataUnit="rowData" pTemplate="body">
-								<span *ngIf="dataUnit.status == 'own_stay'">Own stay</span>
+								<span *ngIf="dataUnit.status == 'own stay'">Own stay</span>
 								<span *ngIf="dataUnit.status == 'tenanted'">Tenanted</span>
+								<span style="color: red" *ngIf="dataUnit.status == 'no landlord'">No landlord</span>
 							</template>
 						</p-column>
 						<p-column sortable="true" field="tenant.length" header="No. of Tenant">

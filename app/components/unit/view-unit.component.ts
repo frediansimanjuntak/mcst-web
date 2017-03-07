@@ -130,7 +130,9 @@ export class ViewUnitComponent implements OnInit {
                                         var landlordForResidentTable :any = {
                                         type : 'owner',
                                         i    :  1,
-                                        resident : this.unit.landlord
+                                        resident : this.unit.landlord.resident,
+                                        created_at : this.unit.landlord.created_at,
+                                        remarks : this.unit.landlord.remarks
                                         }
                                         
                                         this.residents.unshift(landlordForResidentTable);
@@ -319,6 +321,7 @@ export class ViewUnitComponent implements OnInit {
                     )
                     this.loading = false;
                     this.codeModal.close();
+                    this.modelForCode = {}
                     this.ngOnInit();
                 },
                 error => {
@@ -330,16 +333,36 @@ export class ViewUnitComponent implements OnInit {
                     this.codeModal.close();
                     this.loading = false;
                     this.appComponent.loading = false
+                    this.modelForCode = {}
                 }
             );
     }
 
     deleteCode(type:string){
-        if(type == 'landlord'){
-
-        }else{
-            
-        }
+        this.appComponent.loading = true
+        this.modelForCode.type = type;
+        this.unitservice.deleteCode(this.unit._id, this.name.default_development.name_url, this.modelForCode)
+            .then(
+                 data => {
+                    this._notificationsService.success(
+                            'Success',
+                            'Delete unit code successful',
+                    )
+                    this.codeModal.close();
+                    this.modelForCode = {}
+                    this.ngOnInit();
+                },
+                error => {
+                    console.log(error);
+                    this._notificationsService.error(
+                            'Error',
+                            'Failed to delete code, server error',
+                    )
+                    this.codeModal.close();
+                    this.appComponent.loading = false
+                    this.modelForCode = {}
+                }
+            );
     }
 
     deleteVehicleConfirmation(vehicle) {
@@ -393,6 +416,7 @@ export class ViewUnitComponent implements OnInit {
              this.data.id_development  = this.name.default_development._id;
              this.data.id_property     = this.unit._id;
              this.data.type            = this.model.type;
+             this.data.remarks  = this.model.remarks;
              this.unitservice.createResident(this.data)
                 .then(
                     data => {

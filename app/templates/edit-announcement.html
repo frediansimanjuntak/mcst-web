@@ -109,16 +109,16 @@
         <div class="form-group">
           <label class="control-label col-sm-4" for="publish">Publish now :</label>
           <div class="col-sm-8">
-            <div class="col-sm-2 radio">
-              Yes&nbsp;
+            <div class="col-sm-4 radio">
+              
               <label>
-                <input type="radio" name="publish" [(ngModel)]="model.publish" [value]=true>
+                <input type="radio" name="publish" [(ngModel)]="model.publish" [value]=true>Yes
               </label>
             </div>
-            <div class="col-sm-2 radio">
-              No&nbsp;
+            <div class="col-sm-4 radio">
+              
               <label>
-                <input type="radio" [checked]="model.publish==false" name="publish" [(ngModel)]="model.publish" [value]=false>
+                <input type="radio" [checked]="model.publish==false" name="publish" [(ngModel)]="model.publish" [value]=false>No
               </label>
             </div>
           </div>
