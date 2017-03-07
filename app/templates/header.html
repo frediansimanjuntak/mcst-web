@@ -24,18 +24,21 @@
         <li>
           <!-- [popover]="myPopover"  -->
           <template #popTemplate>
-            <table class="tableSection table-striped">
+          <div style="overflow: auto; height: 170px">
+            <table style="width: 100%;">
               <tbody>
                 <tr *ngFor="let u of unreadNotificationsToShow">
                   <td (click)="goToPage(u)" style="cursor: pointer">
                     <b>{{ u.message }}</b>
                     <br>
-                    <small>{{ u.created_at | date:'medium'}}</small>
+                    <small>{{ u.created_at | date:'medium'}}</small><hr style="margin-top: 3px;margin-bottom: 3px">
                   </td>
                 </tr>
               </tbody>
             </table>
-            <a *ngIf="name" style="color: black" [routerLink]="'/' + name.default_development.name + '/notification'">See more Notifications</a>
+          </div>
+            
+            <a *ngIf="name" style="color: black;" class="pull-right" [routerLink]="'/' + name.default_development.name + '/notification'">See more Notifications</a>
           </template>
           <a style="cursor: pointer" placement="bottom" [popover]="popTemplate" popoverTitle="New Notifications" (click)="onNotificationClick()"><i class="fa fa-bell-o" aria-hidden="true"></i><span *ngIf="unreadNotificationTotal > 0" class="badge badge-danger">{{ unreadNotificationTotal }}</span></a>
          
