@@ -54,6 +54,8 @@ ul.ui-select-choices.dropdown-menu {
 }
 .form-control {
   border-radius: 0 !important;
+}
+.form-control-blur {
   color: #999;
 }
 option {
@@ -828,6 +830,7 @@ p.pull-down {
   border-radius: 4px;
   font-size: 13px;
   font-weight: normal;
+  color: black;
 }
 .popover {
   max-width: 344px;
@@ -847,6 +850,10 @@ p.pull-down {
 }
 .popover-content strong {
   margin: 5px;
+}
+.popover-title{
+  color: black;
+  font-weight: bold;
 }
 .add-bottom-10px {
   margin-bottom: 10px;
