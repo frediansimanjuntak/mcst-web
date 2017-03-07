@@ -49,8 +49,8 @@
                                     <div class="row">
                                         <div class="col-md-6 col-padding"><strong>Linked incident report :</strong></div>
                                         <div class="col-md-6 col-padding">
-                                            <span *ngIf="!contract.reference_no"></span>
-                                            <span *ngIf="contract.reference_no"><a style="text-decoration: underline;cursor:pointer" (click)="viewIncident(contract.reference_id)">#{{ contract.reference_no }}</a></span>
+                                            <span *ngIf="contract.reference_no == 'undefined'">-</span>
+                                            <span *ngIf="contract.reference_no != 'undefined'"><a style="text-decoration: underline;cursor:pointer" (click)="viewIncident(contract.reference_id)">#{{ contract.reference_no }}</a></span>
                                         </div>
                                     </div>
                                     <div class="row">
