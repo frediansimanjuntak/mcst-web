@@ -95,6 +95,7 @@ export class FeedbackComponent implements OnInit {
             .subscribe(units => {
                 this.units = units.properties;
                 this.feedbackService.getAll().subscribe(feedbacks => {
+                    console.log(this.all)
                     this.all           =  feedbacks.filter(feedbacks => feedbacks.archieve === false );
                     this.feedbacks     = feedbacks.filter(feedbacks => feedbacks.archieve === false );
                     for (var i = 0; i < this.feedbacks.length; ++i) {
@@ -162,11 +163,12 @@ export class FeedbackComponent implements OnInit {
         this.feedbackService.reply(this.feedback)
         .then(
             response => {
+                this.firstModal.close()
                 this._notificationsService.success(
                             'Success',
                             'Reply feedback successful',
                     )
-                this.router.navigate([this.name.default_development.name_url + '/feddback']);
+                this.ngOnInit()
             },
             error=> {
                 this._notificationsService.error(
@@ -245,12 +247,13 @@ export class FeedbackComponent implements OnInit {
 
     viewUnarchived(){
         this.appComponent.loading = true
-        this.feedbackService.getAll().subscribe(feedbacks => {
-            this.feedbacks     = feedbacks.filter(feedbacks => feedbacks.archive === false );
-            this.published     = feedbacks.filter(feedbacks => feedbacks.status === 'publish' && feedbacks.archive === false );
-            setTimeout(() => this.appComponent.loading = false, 1000);
-        });       
+        // this.feedbackService.getAll().subscribe(feedbacks => {
+        //     this.feedbacks     = feedbacks.filter(feedbacks => feedbacks.archive === false );
+        //     this.published     = feedbacks.filter(feedbacks => feedbacks.status === 'publish' && feedbacks.archive === false );
+        //     setTimeout(() => this.appComponent.loading = false, 1000);
+        // });       
         this.archived = '';
+        this.ngOnInit()
     }
 
     archive(feedback:Feedback){
