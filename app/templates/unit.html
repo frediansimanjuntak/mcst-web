@@ -52,7 +52,7 @@
 								<span>#{{dataUnit.address.unit_no}}-{{dataUnit.address.unit_no_2}}</span>
 							</template>
 						</p-column>
-						<p-column field="landlord.username" header="Owner" sortable="true" [filter]="true" filterPlaceholder="Search Owner">
+						<p-column field="landlord.resident.username" header="Owner" sortable="true" [filter]="true" filterPlaceholder="Search Owner">
 							<template let-dataUnit="rowData" pTemplate="body">
 								<span *ngIf="dataUnit.landlord">
 									<span *ngIf="dataUnit.landlord.resident">
