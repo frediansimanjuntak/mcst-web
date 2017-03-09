@@ -658,7 +658,7 @@ p.pull-down {
     outline-style: none;
 }
 .btn-white {
-    height: 44px;
+    height: 40px;
     min-width: 130px !important;
     border: 1px solid #efefef;
     background-color: #ffffff;
@@ -670,7 +670,7 @@ p.pull-down {
     font-family: arial;
     font-size: 13px;
     padding: 10px;
-    box-shadow: 0 3px 0 0 #efefef;
+    box-shadow: 0 4px 0 0 #efefef;
 }
 .btn-white:active, .btn-white:hover, .btn-white:focus, .btn-white:active:hover, .btn-white:active:focus {
     background-color: #efefef;
@@ -904,9 +904,13 @@ button.btn.btn-default.btn-sm {
 .modal-body {
   height: auto;
   margin-bottom: 100px;
+  margin-left: 15px;
 }
 .modal-footer {
   border-top: 0;
+}
+label.control-label {
+    line-height: 30px;
 }
 
 /*costumize table*/
@@ -963,7 +967,7 @@ th.ui-state-default.ui-unselectable-text {
     width: 15px;
     height: 15px;
     float: right;
-    margin: 2px 5px;
+    margin: 10px 5px;
 }
 .tab-container .col-button {
     padding: 10px !important;
@@ -1049,7 +1053,15 @@ img.ui-galleria-frame-image {
 #resident-database td {
     padding: 15px 10px !important;
 }
-
+#incident .modal-body {
+    margin-left: 0;
+}
+#feedback .modal-body {
+    margin-left: 9px;
+}
+.col-button span {
+    line-height: 33px;
+}
 .right-box {
     background-color: #f9f9f9;
 }

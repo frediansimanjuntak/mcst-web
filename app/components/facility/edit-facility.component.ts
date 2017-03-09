@@ -126,7 +126,9 @@ export class EditFacilityComponent  {
         this.userService.getByToken()
         .subscribe(name => {
             this.name = name;
-            setTimeout(() => this.appComponent.loading = false, 1000);
+            if(this.id == null) {
+                setTimeout(() => this.appComponent.loading = false, 1000);
+            }
         })
         for (let i = 0; i < 24; ++i) {
             let time = i.toString();
@@ -172,24 +174,27 @@ export class EditFacilityComponent  {
     }
 
     createFacility(model:any) {
-        this.appComponent.loading = true
-        this.facilityService.create(model)
-        .then(
-            response => {
-                this._notificationsService.success(
-                            'Success',
-                            'Create facility successful',
-                    )
-                this.router.navigate([this.name.default_development.name_url + '/facility']);
-            },
-            error => {
-                this._notificationsService.error(
-                            'Error',
-                            'Create facility failed, server Error',
-                    )
-                setTimeout(() => this.appComponent.loading = false, 1000);
-            }
-        );
+        if(model.start_time < model.end_time && model.end_time > model.start_time) {
+            this.appComponent.loading = true
+            this.facilityService.create(model)
+            .then(
+                response => {
+                    this._notificationsService.success(
+                                'Success',
+                                'Create facility successful',
+                        )
+                    this.router.navigate([this.name.default_development.name_url + '/facility']);
+                },
+                error => {
+                    this._notificationsService.error(
+                                'Error',
+                                'Create facility failed, server Error',
+                        )
+                    setTimeout(() => this.appComponent.loading = false, 1000);
+                }
+            );
+        }
+        
     }
 
     getDay(day,a){
@@ -203,25 +208,27 @@ export class EditFacilityComponent  {
     }
 
 
-    updateFacility(facility:Facility){
-        this.appComponent.loading = true
-		this.facilityService.update(facility)
-		.then(
-			response => {
-                this._notificationsService.success(
-                            'Success',
-                            'Update facility successful',
-                    )
-                this.router.navigate([this.name.default_development.name_url + '/facility']);
-            },
-            error => {
-                this._notificationsService.error(
-                            'Error',
-                            'Update facility failed, server Error',
-                    )
-                setTimeout(() => this.appComponent.loading = false, 1000);
-            }
-        );
+    updateFacility(facility:any){
+        if(facility.start_time < facility.end_time && facility.end_time > facility.start_time) {
+            this.appComponent.loading = true
+            this.facilityService.update(facility)
+            .then(
+                response => {
+                    this._notificationsService.success(
+                                'Success',
+                                'Update facility successful',
+                        )
+                    this.router.navigate([this.name.default_development.name_url + '/facility']);
+                },
+                error => {
+                    this._notificationsService.error(
+                                'Error',
+                                'Update facility failed, server Error',
+                        )
+                    setTimeout(() => this.appComponent.loading = false, 1000);
+                }
+            );
+        }
 	}
 
     number(event: any) {

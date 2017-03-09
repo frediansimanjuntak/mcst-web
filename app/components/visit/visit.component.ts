@@ -1,8 +1,8 @@
 import { Component, OnInit, ViewContainerRef, ViewEncapsulation, ViewChild } from '@angular/core';
 import { Router, Params, ActivatedRoute } from '@angular/router';
 import { AppComponent } from '../index';
-import { Visit, Visits } from '../../models/index';
-import { VisitService, AlertService, UserService, UnitService} from '../../services/index';
+import { Visit, Visits, Contract } from '../../models/index';
+import { VisitService, AlertService, UserService, UnitService, ContractService} from '../../services/index';
 import { NotificationsService } from 'angular2-notifications';
 import '../../rxjs-operators';
 import { Observable} from 'rxjs/Observable';
@@ -22,6 +22,7 @@ export class VisitComponent implements OnInit {
     @ViewChild('firstModal') firstModal;
 	visit: Visit;
     visitOut: Visit;
+    contracts: Contract[] = [];
     public filterField: string = '';
     visits: any[] = [];
     visitActive: any[] = [];
@@ -52,6 +53,7 @@ export class VisitComponent implements OnInit {
                 private alertService: AlertService,
                 private route: ActivatedRoute,
                 private location: Location,
+                private contractService: ContractService,
                 private formbuilder: FormBuilder,
                 private userService: UserService,
                 private unitService: UnitService,
@@ -94,6 +96,7 @@ export class VisitComponent implements OnInit {
                 remarks : [''],
                 check_in: [false,<any>Validators.required],
                 check_out: [''],
+                contract: ['']
         });
 
         this.visitDateCreateOptions = {
@@ -258,6 +261,16 @@ export class VisitComponent implements OnInit {
             model.check_in = ''
         }
         model.visit_date =  this.visitDateCreate;
+
+        if(model.purpose == 'house_visit'){
+            delete model['contract'];
+            
+        }else{
+            if(model.contract == ''){
+                isValid = false;
+            }
+        }
+
         if(isValid === true){
             this.loading = true;
             this.visitService.create(model)
@@ -291,19 +304,21 @@ export class VisitComponent implements OnInit {
 	private loadVisits() {
         this.visitService.getAll()
             .subscribe((data)=> {
-                setTimeout(()=> {
                     this.visits            = data.filter(data => data.development._id == this.name.default_development._id);
-                    console.log(data)
+                    
+                    this.visits            = this.visits.filter(data => data.visit_date.slice(0, 10)  == this.activeDate );
                     for (var i = 0; i < this.visits.length; i++) {
                         this.visits[i].i = i+1;
-                        let visiting = this.dataUnit.find(data => data._id ==  this.visits[i].property);
-                        this.visits[i].visiting = '#' + visiting.address.unit_no + '-' + visiting.address.unit_no_2;
+                        if(this.visits[i].property){
+                            let visiting = this.dataUnit.find(data => data._id ==  this.visits[i].property);
+                                this.visits[i].property_detail = visiting;
+                                this.visits[i].visiting = '#' + visiting.address.unit_no + '-' + visiting.address.unit_no_2;
+                        }
                     }
 
-                    this.visits            = this.visits.filter(data => data.visit_date.slice(0, 10)  == this.activeDate );
                     this.visitActive       = this.visits.filter(data => data.visit_date.slice(0, 10)  == this.activeDate );
+                    console.log(this.visitActive)
                     setTimeout(() => this.appComponent.loading = false, 1000);
-                }, 1000);
             });
     }
 
@@ -321,10 +336,11 @@ export class VisitComponent implements OnInit {
     private loadAllUnits(): void {
         this.unitService.getAll(this.name.default_development.name_url)
             .subscribe((data)=> {
-                setTimeout(()=> {
                     this.dataUnit       = data.properties;
-                    this.loadVisits();
-                }, 1000);
+                    this.contractService.getAll().subscribe(contracts => {
+                        this.contracts = contracts ;
+                        this.loadVisits();
+                    });
             });
     }
 
@@ -368,4 +384,8 @@ export class VisitComponent implements OnInit {
    	goBack(): void {
     	this.location.back();
   	}
+
+    toView(type:string, id: string) {
+        this.router.navigate([this.name.default_development.name_url + type + '/view/' + id]);  
+  }
 }
