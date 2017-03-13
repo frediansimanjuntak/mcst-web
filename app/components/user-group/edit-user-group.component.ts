@@ -136,9 +136,7 @@ export class EditUserGroupComponent implements OnInit {
     getUsers(): void {
         this.userService.getAll().subscribe(users => {
             this.users = users.filter(data => data.default_development == this.name.default_development._id);
-            console.log(users)
             this.usersForMember = this.users.filter(data => data.user_group == undefined || data.user_group == null || data.user_group == '');
-            console.log(this.usersForMember)
             let numOptions =  this.users.length;
             let opts = new Array(numOptions);
 

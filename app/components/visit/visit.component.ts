@@ -317,7 +317,6 @@ export class VisitComponent implements OnInit {
                     }
 
                     this.visitActive       = this.visits.filter(data => data.visit_date.slice(0, 10)  == this.activeDate );
-                    console.log(this.visitActive)
                     setTimeout(() => this.appComponent.loading = false, 1000);
             });
     }

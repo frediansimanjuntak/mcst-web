@@ -128,7 +128,6 @@ export class NewsletterComponent implements OnInit {
         this.newsletterservice.getAll(this.name.default_development.name_url)
             .subscribe((data)=> {
                 setTimeout(()=> {
-                    console.log(data)
                   this.data = data.newsletter;
                   this.allAgm       = this.data.filter(data => data.type === 'agm' );
                   this.allEgm       = this.data.filter(data => data.type === 'egm' );

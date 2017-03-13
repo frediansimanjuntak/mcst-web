@@ -32,7 +32,6 @@ export class UserComponent implements OnInit {
         this.userService.getByToken()
                         .subscribe(name => {
                                 this.name = name;
-                                console.log(this.name)
                                 this.loadAllUsers();
                             })
     }
