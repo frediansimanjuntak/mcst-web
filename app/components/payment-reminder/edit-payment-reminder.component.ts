@@ -157,7 +157,6 @@ export class EditPaymentReminderComponent implements OnInit{
     }
 
     total(amount){
-        console.log(amount)
         this.totalAmount = 0
         this.amount.push(amount)
         for (let a = 0; a < this.amount.length; ++a) {

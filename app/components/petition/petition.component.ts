@@ -177,7 +177,6 @@ export class PetitionComponent implements OnInit {
                                     this.petitionService.getById(this.id)
                                         .subscribe(petition => {
                                             this.petition = petition;
-                                            console.log(this.petition)
                                             let property = this.dataUnit.find(data => data._id ==  this.petition.property);
                                             this.petition.unit_no = '#' + property.address.unit_no + '-' + property.address.unit_no_2;
                                             setTimeout(() => this.appComponent.loading = false, 1000);
@@ -198,7 +197,6 @@ export class PetitionComponent implements OnInit {
             .subscribe((data)=> {
                 setTimeout(()=> {
                     this.all               = data.filter(data => data.archieve === false && data.development._id == this.name.default_development._id );
-                    console.log(this.all)
                     this.allArchieved      = data.filter(data => data.archieve === true && data.development._id == this.name.default_development._id );
                     this.petitions         = data.filter(data => data.archieve === false && data.development._id == this.name.default_development._id );
                     this.archivedPetitions = data.filter(data => data.archieve === true && data.development._id == this.name.default_development._id );

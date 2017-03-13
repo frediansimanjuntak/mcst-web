@@ -102,7 +102,6 @@ export class ViewUnitComponent implements OnInit {
 
     getUsers(): void {
         this.userService.getAll().subscribe(users => {
-            console.log(users)
             this.allUsers =this.users = users;
             this.attachmentService.getAll().subscribe(attachments => {
                 this.attachments =attachments;
@@ -115,7 +114,6 @@ export class ViewUnitComponent implements OnInit {
                             .getById(this.id, this.name.default_development.name_url)
                                 .subscribe(unit => {
                                     this.unit = unit.properties[0];
-                                    console.log(this.unit)
                                     this.residents = this.unit.tenant;
                                     this.tenantTotal = this.unit.tenant.length;
                                     this.vehicles = this.unit.registered_vehicle;
@@ -240,7 +238,6 @@ export class ViewUnitComponent implements OnInit {
     }
 
     deleteResidentConfirmation(resident) {
-        console.log(resident)
         if(resident.type == 'owner'){
             if(this.unit.tenant.length < 0){
                 this.confirmationService.confirm({

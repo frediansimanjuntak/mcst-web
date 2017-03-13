@@ -92,7 +92,6 @@ export class EditUnitComponent implements OnInit {
                 if(model.address.unit_no_2.length == 1){
                           model.address.unit_no_2 = '0'+model.address.unit_no_2.toString();
                    }
-                   console.log(model);
                 this.appComponent.loading = true
                 this.unitservice.create(model, this.name.default_development.name_url)
                 .then(
@@ -121,7 +120,7 @@ export class EditUnitComponent implements OnInit {
     }
 
     public selected(value:any):void {
-        // console.log('Selected value is: ', value);
+        
     }
 
     updateUnit(){

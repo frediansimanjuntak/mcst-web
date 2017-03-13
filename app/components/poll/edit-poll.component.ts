@@ -44,7 +44,7 @@ export class EditPollComponent  {
         };
 
   	@Input('group')
-	poll: Poll;
+	poll: any;
     model: any = {};
     myForm: FormGroup;
     id: string;
@@ -70,8 +70,9 @@ export class EditPollComponent  {
         });
         this.pollChoices = [];
         this.model.choices  = [];
-        this.pollChoices.push('');
-        this.model.choices.push('');
+        this.pollChoices.push({
+            name: ''
+        });
 
     	let copy: IMyOptions = this.getCopyOfstartTimeOptions();
         let copy1: IMyOptions = this.getCopyOfendTimeOptions();
@@ -136,7 +137,18 @@ export class EditPollComponent  {
                                                 }else if(this.poll.end_time == null){
                                                   this.selectedEndTime = "";
                                                   this.model.end_time = null;
-                                                }        
+                                                }   
+                                                
+                                                if(this.poll.poll_type == 'multiple'){
+                                                     this.pollChoices = [];
+                                                }
+                                                for (var i = 0; i < this.poll.choices.length; i++) {
+                                                     // this.pollChoices[i].name = this.poll.choices[i];
+                                                     this.pollChoices.push({
+                                                         name:  this.poll.choices[i]
+                                                     }) 
+                                                }
+
                                                 setTimeout(() => this.appComponent.loading = false, 1000);
 											});
 						        };
@@ -187,6 +199,10 @@ export class EditPollComponent  {
     	this.model.status = 'draft';
         if (this.model.poll_type == 'yes_or_no'){
             this.model.choices = ['yes', 'no'];
+        }else{
+            for (var i = 0; i < this.pollChoices.length; i++) {
+                 this.model.choices[i] = this.pollChoices[i].name ;
+            }
         }
         this.pollService.create(this.model)
         .then(
@@ -212,6 +228,14 @@ export class EditPollComponent  {
         this.appComponent.loading = true
         this.poll.start_time = this.model.start_time;
         this.poll.end_time = this.model.end_time;
+        if (this.poll.poll_type == 'yes_or_no'){
+            this.poll.choices = ['yes', 'no'];
+        }else{
+            this.poll.choices = [];
+            for (var i = 0; i < this.pollChoices.length; i++) {
+                 this.poll.choices[i] = this.pollChoices[i].name ;
+            }
+        }
         this.pollService.update(this.poll)
 		.then(
             data => {
@@ -233,21 +257,19 @@ export class EditPollComponent  {
 	}
 
     addChoice() {
-        if(this.poll){
-            this.poll.choices.push('');
-        }else{
+
             // this.model.choices.push('');
-            this.pollChoices.push('');
-        }
+            this.pollChoices.push({
+                name: ''
+            });
+       
     }
 
     removeChoice(i: number) {
-        if(this.poll){
-            this.poll.choices.splice(i,1);
-        }else{
+       
             // this.model.choices.splice(i,1);  
             this.pollChoices.splice(i,1);              
-        }
+        
     }
 
     toPoll(){
