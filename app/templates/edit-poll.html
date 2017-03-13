@@ -33,13 +33,13 @@
                 <div *ngIf="poll.poll_type == 'multiple'" class="form-group"> 
                     <label class="control-label col-sm-4" for="choices">Choices :</label>         
                     <div class="col-sm-8">
-                        <div *ngFor="let c of poll.choices; let i=index">
+                        <div *ngFor="let c of pollChoices; let i=index">
                             <span>Option {{i + 1}}</span>
-                                <span class="glyphicon glyphicon-remove pull-right" *ngIf="poll.choices.length > 1" (click)="removeChoice(i)"></span>
-                            <input type="text" class="form-control" #{{i}}="ngModel" [(ngModel)]="poll.choices[i]" required placeholder="Input choice name here" [ngModelOptions]="{standalone: true}"/>
+                                <span class="glyphicon glyphicon-remove pull-right" style="cursor: pointer;" *ngIf="pollChoices.length > 1" (click)="removeChoice(i)"></span>
+                            <input type="text" class="form-control" [(ngModel)]="pollChoices[i].name" required placeholder="Input choice name here" [ngModelOptions]="{standalone: true}"/>
                         </div>
                          <div class="margin-20">
-                            <a (click)="addChoice()" style="cursor: default">
+                            <a (click)="addChoice()" style="cursor: pointer;">
                                 Add another choice +
                             </a>
                         </div>  
@@ -107,7 +107,7 @@
                         <div *ngFor="let c of pollChoices; let i=index">
                             <span> Option {{i + 1}} </span>
                                 <span style="cursor: pointer" class="glyphicon glyphicon-remove pull-right" *ngIf="pollChoices.length > 1" (click)="removeChoice(i)"></span>
-                            <input type="text" class="form-control" name="choice-{{i}}" [(ngModel)]="pollChoices[i]"  #{{pollChoices[i]}}="ngModel" placeholder="Input choice name here" />
+                            <input type="text" class="form-control" [(ngModel)]="pollChoices[i].name" [ngModelOptions]="{standalone: true}" placeholder="Input choice name here" />
                         </div>
 
                        
