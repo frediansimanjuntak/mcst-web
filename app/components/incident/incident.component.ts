@@ -141,10 +141,10 @@ export class IncidentComponent implements OnInit {
 		this.incidentService.getAll().subscribe(incidents => {
             this.all = incidents
 	        this.incidents = incidents.filter(incidents => incidents.archieve === false); ;
-            this.dataNew = this.incidents.filter(incidents => incidents.status === 'new' && incidents.archieve === false);
-            this.dataInProgress = this.incidents.filter(incidents => incidents.status === 'in progress' && incidents.archieve === false);
-            this.dataResolved   = this.incidents.filter(incidents => incidents.status === 'resolved' && incidents.archieve === false);
-            this.dataArchieved   = this.incidents.filter(incidents => incidents.archieve === true );
+            this.dataNew = this.incidents.filter(incidents => incidents.status === 'new');
+            this.dataInProgress = this.incidents.filter(incidents => incidents.status === 'in progress');
+            this.dataResolved   = this.incidents.filter(incidents => incidents.status === 'resolve');
+            this.dataArchieved   = this.all.filter(incidents => incidents.archieve === true );
             setTimeout(() => this.appComponent.loading = false, 1000);
 		});
     }
