@@ -83,8 +83,8 @@ export class ContractNoteComponent implements OnInit  {
     }
 
     createContractNote(id:any) {
-        this.appComponent.loading = true
-        if(this.model.attachment.length > 0) {
+        if(this.model.attachment.length != 0) {
+            this.appComponent.loading = true
             let formData:FormData = new FormData();
             for (var i = 0; i < this.model.attachment.length; i++) {
                 formData.append("attachment", this.model.attachment[i]);
@@ -109,13 +109,12 @@ export class ContractNoteComponent implements OnInit  {
                     console.log(error);
                     this._notificationsService.error(
                             'Error',
-                            'failed create data, server Error',
+                            'Failed create data, server Error',
                     )
                     setTimeout(() => this.appComponent.loading = false, 1000);
                 }
             );
         }
-        this.appComponent.loading = false
     }
 
     deleteContractNote(contract: Contract) {
