@@ -2,31 +2,25 @@
     <div class="main">
         <div *ngIf="contractnote && contract">
             <div class="title">
-                {{ contractnote.posted_by }}
+                {{ contractnote.posted_by.username }}
             </div>
-            <p class="id-location">Home > Manage Projects > {{ contract.title }} > Contract Note > {{ contractnote.posted_by }}</p>
+            <p class="id-location">Home > Manage Projects > {{ contract.title }} > Contract Note > {{ contractnote.posted_by.username }}</p>
             <div class="row">
-                <div class="col-lg-6">
+                <div class="col-lg-7">
                     <p-galleria [images]="images" panelWidth="500" panelHeight="313"></p-galleria>
                 </div>
-                <div class="col-lg-6">
+                <div class="col-lg-5">
                     <div class="row">
-                        <div class="col-md-4">Posted by :</div>
-                        <div class="col-md-8">
-                            <p>{{ contractnote.posted_by }}</p>
-                        </div>
+                        <div class="col-md-6 col-padding">Posted by :</div>
+                        <div class="col-md-6 col-padding">{{ contractnote.posted_by.username }}</div>
                     </div>
                     <div class="row">
-                        <div class="col-md-4">Posted on :</div>
-                        <div class="col-md-8">
-                            <p>{{ contractnote.posted_on | date:'d/M/y' }}</p>
-                        </div>
+                        <div class="col-md-6 col-padding">Posted on :</div>
+                        <div class="col-md-6 col-padding">{{ contractnote.posted_on | date:'d/M/y' }}</div>
                     </div>
                     <div class="row">
-                        <div class="col-md-4">Project note remark :</div>
-                        <div class="col-md-8">
-                            <p>{{ contractnote.note_remark }}</p>
-                        </div>
+                        <div class="col-md-6 col-padding">Project note remark :</div>
+                        <div class="col-md-6 col-padding">{{ contractnote.note_remark }}</div>
                     </div>
                 </div>
             </div>
@@ -70,7 +64,7 @@
                 <div class="form-group pull-right">
                     <button [disabled]="loading" class="btn btn-primary btn-brown">Post</button>
                     <img *ngIf="loading" src="data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA==" />
-                        <button (click)="cancel(contract._id)" class="btn btn-info btn-white">Cancel</button>
+                    <button (click)="cancel(contract._id)" class="btn btn-info btn-white">Cancel</button>
                 </div>
             </form>
         </div>  
