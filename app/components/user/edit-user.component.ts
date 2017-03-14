@@ -92,8 +92,7 @@ export class EditUserComponent implements OnInit {
             this.userService.getById(this.id)
             .subscribe(user => {
                 this.user = user;
-                console.log(this.user)
-               this.myForm = this.formbuilder.group({
+                this.myForm = this.formbuilder.group({
                     _id : [this.user._id],
                     username : [this.user.username, Validators.required],
 
@@ -206,7 +205,6 @@ export class EditUserComponent implements OnInit {
                      model.owned_property[i].development = this.name.default_development._id;
                 }
             }
-            console.log(model);
             if(model.username && model.email && model.password && model.confirmpassword && 
                model.phone && model.role)
                {

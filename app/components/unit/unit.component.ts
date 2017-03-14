@@ -71,7 +71,6 @@ export class UnitComponent implements OnInit {
                 setTimeout(()=> {
                     this.all = data.properties;
                     this.dataUnit = data.properties;
-                    console.log(this.dataUnit)
                     this.loading = false;
                     setTimeout(() => this.appComponent.loading = false, 1000);
                 }, 1000);

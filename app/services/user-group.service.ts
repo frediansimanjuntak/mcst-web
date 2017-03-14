@@ -34,7 +34,6 @@ export class UserGroupService {
     }
 
     create(body:any): Promise<UserGroup> {
-        console.log(body)
         return this.http.post(url +  'user_groups', JSON.stringify(body), this.jwt())
             .toPromise()
             .then(res => res.json().data)

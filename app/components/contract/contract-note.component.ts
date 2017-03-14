@@ -150,7 +150,6 @@ export class ContractNoteComponent implements OnInit  {
     }
 
     remove(i: any){
-        console.log(this.model.attachment)
         this.model.attachment.splice(i, 1)
     }
 
