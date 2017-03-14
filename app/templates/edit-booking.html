@@ -62,30 +62,59 @@
                             <div style="width:335px; margin-top:15px;">
                                 <datepicker (click)="selectedDate()" [style]="{'width':'300px'}" [(ngModel)]="dt" [minDate]="minDate" [showWeeks]="false"></datepicker>
                             </div>
-                            <form name="form" (ngSubmit)="f.form.valid && filter()" #f="ngForm" novalidate>
-                                <div class="row">
-                                    <div class="col-md-3"><p class="pull-down">Facility :</p></div>
-                                    <div class="col-md-9"><p>
-                                        <select name="name" class="form-control" (change)="time()" [(ngModel)]="model.facility" #facility="ngModel" style="width: 237px">
-                                            <option *ngFor="let facility of selectedFacility"  [ngValue]="facility._id">{{facility.name}}</option>
-                                        </select>
-                                    </p></div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-md-3"><p class="pull-down">Period :</p></div>
-                                    <div class="col-md-9"><p>
-                                        <select name="start" class="form-control" (change)="startTime(model.start)" [(ngModel)]="model.start" #start="ngModel" style="width: 116px;float: left; margin-right: 5px;">
-                                            <option *ngFor="let start of times_start" [ngValue]="start"><span *ngIf="start < 10">0</span>{{start}}{{min}}</option>
-                                        </select>
-                                        <select name="end" class="form-control" [(ngModel)]="model.end" #end="ngModel" style="width: 116px">
-                                            <option *ngFor="let end of times_end" [ngValue]="end"><span *ngIf="end < 10">0</span>{{end}}{{min}}</option>
-                                        </select>
-                                    </p></div>
-                                </div>
-                                <div class="form-group">
-                                    <button style="width: 327px" class="btn btn-filter">Filter</button>
-                                </div>
-                            </form>
+                            <div *ngIf="selectedFacility.length < 1">
+                                <form name="form" (ngSubmit)="f.form.valid && filter()" #f="ngForm" novalidate>
+                                    <div class="row">
+                                        <div class="col-md-3"><p class="pull-down">Facility :</p></div>
+                                        <div class="col-md-9"><p>
+                                            <select disabled name="name" class="form-control" (change)="time()" [(ngModel)]="model.facility" #facility="ngModel" style="width: 237px">
+                                                <option *ngFor="let facility of selectedFacility"  [ngValue]="facility._id">{{facility.name}}</option>
+                                            </select>
+                                        </p></div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-3"><p class="pull-down">Period :</p></div>
+                                        <div class="col-md-9"><p>
+                                            <select disabled name="start" class="form-control" (change)="startTime(model.start)" [(ngModel)]="model.start" #start="ngModel" style="width: 116px;float: left; margin-right: 5px;">
+                                                <option *ngFor="let start of times_start" [ngValue]="start"><span *ngIf="start < 10">0</span>{{start}}{{min}}</option>
+                                            </select>
+                                            <select disabled name="end" class="form-control" [(ngModel)]="model.end" #end="ngModel" style="width: 116px">
+                                                <option *ngFor="let end of times_end" [ngValue]="end"><span *ngIf="end < 10">0</span>{{end}}{{min}}</option>
+                                            </select>
+                                        </p></div>
+                                    </div>
+                                    <div class="form-group">
+                                        <button style="width: 327px" class="btn btn-filter">Filter</button>
+                                    </div>
+                                </form>
+                            </div>
+                            <div *ngIf="selectedFacility.length > 0">
+                                <form name="form" (ngSubmit)="f.form.valid && filter()" #f="ngForm" novalidate>
+                                    <div class="row">
+                                        <div class="col-md-3"><p class="pull-down">Facility :</p></div>
+                                        <div class="col-md-9"><p>
+                                            <select name="name" class="form-control" (change)="time()" [(ngModel)]="model.facility" #facility="ngModel" style="width: 237px">
+                                                <option *ngFor="let facility of selectedFacility"  [ngValue]="facility._id">{{facility.name}}</option>
+                                            </select>
+                                        </p></div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-3"><p class="pull-down">Period :</p></div>
+                                        <div class="col-md-9"><p>
+                                            <select name="start" class="form-control" (change)="startTime(model.start)" [(ngModel)]="model.start" #start="ngModel" style="width: 116px;float: left; margin-right: 5px;">
+                                                <option *ngFor="let start of times_start" [ngValue]="start"><span *ngIf="start < 10">0</span>{{start}}{{min}}</option>
+                                            </select>
+                                            <select name="end" class="form-control" [(ngModel)]="model.end" #end="ngModel" style="width: 116px">
+                                                <option *ngFor="let end of times_end" [ngValue]="end"><span *ngIf="end < 10">0</span>{{end}}{{min}}</option>
+                                            </select>
+                                        </p></div>
+                                    </div>
+                                    <div class="form-group">
+                                        <button style="width: 327px" class="btn btn-filter">Filter</button>
+                                    </div>
+                                </form>
+                            </div>
+                                
                         </div>
                         <div class="col-lg-8">
                             <div class="table-tags">
@@ -117,8 +146,8 @@
                                 </div>
                             </div>
                             <div *ngIf="filtered == null">
-                                <span *ngIf="!selectedFacility">Data not found</span>
-                                <span *ngIf="selectedFacility">Please filter first</span>
+                                <span *ngIf="selectedFacility.length < 1">No facility available</span>
+                                <span *ngIf="selectedFacility.length > 0">Please choose facility first</span>
                             </div>
                         </div>
                     </div>
