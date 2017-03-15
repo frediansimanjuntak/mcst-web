@@ -10,17 +10,19 @@
                     <p-galleria [images]="images" panelWidth="500" panelHeight="313"></p-galleria>
                 </div>
                 <div class="col-lg-5">
-                    <div class="row">
-                        <div class="col-md-6 col-padding">Posted by :</div>
-                        <div class="col-md-6 col-padding">{{ contractnote.posted_by.username }}</div>
-                    </div>
-                    <div class="row">
-                        <div class="col-md-6 col-padding">Posted on :</div>
-                        <div class="col-md-6 col-padding">{{ contractnote.posted_on | date:'d/M/y' }}</div>
-                    </div>
-                    <div class="row">
-                        <div class="col-md-6 col-padding">Project note remark :</div>
-                        <div class="col-md-6 col-padding">{{ contractnote.note_remark }}</div>
+                    <div class="content">
+                        <div class="row">
+                            <div class="col-md-6 col-padding">Posted by :</div>
+                            <div class="col-md-6 col-padding">{{ contractnote.posted_by.username }}</div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6 col-padding">Posted on :</div>
+                            <div class="col-md-6 col-padding">{{ contractnote.posted_on | date:'d/M/y' }}</div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6 col-padding">Project note remark :</div>
+                            <div class="col-md-6 col-padding">{{ contractnote.note_remark }}</div>
+                        </div>
                     </div>
                 </div>
             </div>
