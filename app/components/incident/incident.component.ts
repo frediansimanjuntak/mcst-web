@@ -71,6 +71,7 @@ export class IncidentComponent implements OnInit {
             this.incidentService.getById(this.id)
             .subscribe(incident => {
                 this.incident = incident;
+                console.log(this.incident)
                 this.images = [];
                 this.incident.created_at = this.incident.created_at.slice(0,10);
                 for (var i = 0; i < this.incident.attachment.length; ++i) {

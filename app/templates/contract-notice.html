@@ -11,34 +11,26 @@
                     </div>
                 </div>
             <div class="row">
-                <div class="col-lg-6">
+                <div class="col-lg-7">
                     <p-galleria [images]="images" panelWidth="500" panelHeight="313"></p-galleria>
                 </div>
-                <div class="col-lg-6">
-                    <div class="row">
-                        <div class="col-md-4">Title</div>
-                        <div class="col-md-8">
-                            <p>{{ contractnotice.title }}</p>
+                <div class="col-lg-5 col-padding">
+                    <div class="content">
+                        <div class="row">
+                            <div class="col-md-6 col-padding"><b>Title :</b></div>
+                            <div class="col-md-6 col-padding">{{ contractnotice.title }}</div>
                         </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-md-4">Commence date :</div>
-                        <div class="col-md-8">
-                            <p>{{ contractnotice.start_time | date:'d/M/y' }}</p>
+                        <div class="row">
+                            <div class="col-md-6 col-padding"><b>Commence date :</b></div>
+                            <div class="col-md-6 col-padding">{{ contractnotice.start_time | date:'d/M/y' }}</div>
                         </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-md-4">Estimated date of completion :</div>
-                        <div class="col-md-8">
-                            <p>{{ contractnotice.end_time | date:'d/M/y' }}</p>
+                        <div class="row">
+                            <div class="col-md-6 col-padding"><b>Estimated date of completion :</b></div>
+                            <div class="col-md-6 col-padding">{{ contractnotice.end_time | date:'d/M/y' }}</div>
                         </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-md-4">
-                            <p>Description of Project :</p>
-                        </div>
-                        <div class="col-md-8">
-                            <p>{{ contractnotice.description }}</p>
+                        <div class="row">
+                            <div class="col-md-6 col-padding"><b>Description of Project :</b></div>
+                            <div class="col-md-6 col-padding">{{ contractnotice.description }}</div>
                         </div>
                     </div>
                 </div>

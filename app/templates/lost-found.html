@@ -7,10 +7,11 @@
 			<p class="id-location">Home > Manage Lost & Founds > #{{lostFound.serial_number}}</p>
 			<a class="btn-underline" (click)="goToLostFound()">Back to last page</a>
 			<div class="row">
-				<div class="col-lg-6">
+				<div class="col-lg-7">
 					<p-galleria [images]="images" panelWidth="500" panelHeight="313"></p-galleria>
 				</div>
-				<div class="col-lg-6">
+				<div class="col-lg-5">
+					<div class="content">
 						<div class="row">
 							<div class="col-md-6 col-padding"><b>Reported by :</b></div>
 							<div class="col-md-6 col-padding"> {{ lostFound.created_by.username | capitalize}}</div>
@@ -44,6 +45,7 @@
 								<span *ngIf="!lostFound.archieved"><a class="btn btn-gray btn-primary" (click)="archieveConfirmation(lostFound)" style="cursor:pointer"><img src="assets/image/icon_archived.png" width="14px" height="12px">&nbsp;Archive Report</a></span>
 							</div>
 						</div>
+					</div>
 				</div>
 			</div>
 		</div>
