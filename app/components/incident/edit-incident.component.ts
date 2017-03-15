@@ -62,11 +62,11 @@ export class EditIncidentComponent implements OnInit {
                 this.no = +this.incidents[a].reference_no + 1
                 if(this.no > 1 && this.no < 10) {
                     this.model.reference_no = '000' + this.no.toString();
-                }if(this.no > 10 && this.no < 100) {
+                }if(this.no > 9 && this.no < 100) {
                     this.model.reference_no = '00' + this.no.toString();
-                }if(this.no > 100 && this.no < 1000) { 
+                }if(this.no > 99 && this.no < 1000) { 
                     this.model.reference_no = '0' + this.no.toString();
-                }if(this.no > 1000) {
+                }if(this.no > 999) {
                     this.model.reference_no = this.no.toString();
                 }
             }else {
