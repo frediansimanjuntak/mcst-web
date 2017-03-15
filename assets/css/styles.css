@@ -1014,7 +1014,7 @@ img.ui-panel-images {
     left: 0;
     right: 0;
     width: auto !important;
-    height: 372px !important;
+    height: auto !important;
 }
 li.ui-galleria-frame.ui-galleria-frame-active {
     width: 105px !important;
