@@ -15,21 +15,23 @@
                     <p-galleria [images]="images" panelWidth="500" panelHeight="313"></p-galleria>
                 </div>
                 <div class="col-lg-5 col-padding">
-                    <div class="row">
-                        <div class="col-md-6 col-padding"><b>Title :</b></div>
-                        <div class="col-md-6 col-padding">{{ contractnotice.title }}</div>
-                    </div>
-                    <div class="row">
-                        <div class="col-md-6 col-padding"><b>Commence date :</b></div>
-                        <div class="col-md-6 col-padding">{{ contractnotice.start_time | date:'d/M/y' }}</div>
-                    </div>
-                    <div class="row">
-                        <div class="col-md-6 col-padding"><b>Estimated date of completion :</b></div>
-                        <div class="col-md-6 col-padding">{{ contractnotice.end_time | date:'d/M/y' }}</div>
-                    </div>
-                    <div class="row">
-                        <div class="col-md-6 col-padding"><b>Description of Project :</b></div>
-                        <div class="col-md-6 col-padding">{{ contractnotice.description }}</div>
+                    <div class="content">
+                        <div class="row">
+                            <div class="col-md-6 col-padding"><b>Title :</b></div>
+                            <div class="col-md-6 col-padding">{{ contractnotice.title }}</div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6 col-padding"><b>Commence date :</b></div>
+                            <div class="col-md-6 col-padding">{{ contractnotice.start_time | date:'d/M/y' }}</div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6 col-padding"><b>Estimated date of completion :</b></div>
+                            <div class="col-md-6 col-padding">{{ contractnotice.end_time | date:'d/M/y' }}</div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6 col-padding"><b>Description of Project :</b></div>
+                            <div class="col-md-6 col-padding">{{ contractnotice.description }}</div>
+                        </div>
                     </div>
                 </div>
             </div>
