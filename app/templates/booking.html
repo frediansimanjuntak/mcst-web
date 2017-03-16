@@ -129,7 +129,7 @@
 						    <p-column field="status" header="Status" [style]="{'width': '80px'}" sortable="true" [filter]="true" filterPlaceholder="Search status">
 						    	<template let-booking="rowData" pTemplate="body">
 						    		<span *ngIf="booking.status == 'paid'" class="label label-success">{{booking.status | capitalize}}</span>
-						    		<span *ngIf="booking.status == 'not paid'" class="label label-danger">{{booking.status | capitalize}}</span>
+						    		<span *ngIf="booking.status == 'unpaid'" class="label label-danger">{{booking.status | capitalize}}</span>
 						    	</template>
 						    </p-column>
 						    <p-column field="remark" header="Remark" [style]="{'width': '90px'}" sortable="true" [filter]="true" filterPlaceholder="Search remark">
@@ -164,7 +164,7 @@
 						    <p-column field="status" header="Status" [style]="{'width': '80px'}" sortable="true" [filter]="true" filterPlaceholder="Search status">
 						    	<template let-booking="rowData" pTemplate="body">
 						    		<span *ngIf="booking.status == 'paid'" class="label label-success">{{booking.status | capitalize}}</span>
-						    		<span *ngIf="booking.status == 'not paid'" class="label label-danger">{{booking.status | capitalize}}</span>
+						    		<span *ngIf="booking.status == 'unpaid'" class="label label-danger">{{booking.status | capitalize}}</span>
 						    	</template>
 						    </p-column>
 						    <p-column field="remark" header="Remark" [style]="{'width': '90px'}" sortable="true" [filter]="true" filterPlaceholder="Search remark">
@@ -199,7 +199,7 @@
 						    <p-column field="unit" header="Status" [style]="{'width': '80px'}" sortable="true" [filter]="true" filterPlaceholder="Search status">
 						    	<template let-booking="rowData" pTemplate="body">
 						    		<span *ngIf="booking.status == 'paid'" class="label label-success">{{booking.status | capitalize}}</span>
-						    		<span *ngIf="booking.status == 'not paid'" class="label label-danger">{{booking.status | capitalize}}</span>
+						    		<span *ngIf="booking.status == 'unpaid'" class="label label-danger">{{booking.status | capitalize}}</span>
 						    	</template>
 						    </p-column>
 						    <p-column field="remark" header="Remark" [style]="{'width': '90px'}" sortable="true" [filter]="true" filterPlaceholder="Search remark">
