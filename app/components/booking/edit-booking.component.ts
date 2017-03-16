@@ -114,6 +114,7 @@ export class EditBookingComponent implements OnInit  {
 	}
 
 	ngOnInit() {
+		this.model.payment_proof = []
 		this.selectedFacility = [];
 		let booking_date;
 		booking_date     = new Date(this.dt.getTime());
@@ -130,11 +131,11 @@ export class EditBookingComponent implements OnInit  {
 				this.no = +this.payments[a].serial_no + 1
 				if(this.no > 1 && this.no < 10) {
 					this.model.serial_no = '000' + this.no.toString();
-				}if(this.no > 10 && this.no < 100) {
+				}if(this.no > 9 && this.no < 100) {
 					this.model.serial_no = '00' + this.no.toString();
-				}if(this.no > 100 && this.no < 1000) { 
+				}if(this.no > 99 && this.no < 1000) { 
 					this.model.serial_no = '0' + this.no.toString();
-				}if(this.no > 1000) {
+				}if(this.no > 999) {
 					this.model.serial_no = this.no.toString();
 				}
 			} else {
@@ -176,8 +177,10 @@ export class EditBookingComponent implements OnInit  {
 	createBooking() { 
 		this.appComponent.loading = true
 		let formData:FormData = new FormData();
-		for (var i = 0; i < this.model.payment_proof.length; i++) {
-			formData.append("payment_proof[]", this.model.payment_proof[i]);
+		if(this.model.payment_proof.length > 0) {
+			for (var i = 0; i < this.model.payment_proof.length; i++) {
+				formData.append("payment_proof[]", this.model.payment_proof[i]);
+			}
 		}
 		formData.append("reference_no", this.model.serial_no);
 		formData.append("serial_no", this.model.serial_no);
@@ -185,9 +188,6 @@ export class EditBookingComponent implements OnInit  {
 		formData.append("start_time", this.model.start_time);
 		formData.append("end_time", this.model.end_time);
 		formData.append("name", this.model.name);
-		// for (var i = 0; i < this.model.fees.length; i++) {
-		//     formData.append("fees[]", this.model.fees[i]);
-		// }
 		formData.append("fees.deposit_fee", this.model.fees[0].deposit_fee);
 		formData.append("fees.booking_fee", this.model.fees[0].booking_fee);
 		formData.append("fees.admin_fee", this.model.fees[0].admin_fee);
@@ -200,17 +200,17 @@ export class EditBookingComponent implements OnInit  {
 		.then(
 			data => {
 				this._notificationsService.success(
-							'Success',
-							'Create booking successful',
-					)
+					'Success',
+					'Create booking successful',
+				)
 				this.router.navigate([this.name.default_development.name_url + '/booking']);
 			},
 			error => {
 				console.log(error);
 				this._notificationsService.success(
-							'Success',
-							'Booking could not be save, server Error',
-					)
+					'Failed',
+					'Booking could not be save, server Error',
+				)
 				this.appComponent.loading = false
 			}
 		);
