@@ -186,7 +186,31 @@
 					</p-dataTable>
 			    </tab>
 			    <tab heading="Past Polls">
-			    	
+			    		<p-dataTable [value]="pollsPast" [rows]="10" [paginator]="true">
+					    <p-column field="title" header="Poll Title" sortable="true" [filter]="true" filterPlaceholder="Search Title"></p-column>
+					    <p-column field="description" header="Poll" sortable="true" [filter]="true" filterPlaceholder="Search Poll"></p-column>
+					    <p-column field="poll_type" header="Poll Type" sortable="true" [filter]="true" filterPlaceholder="Search Type"></p-column>
+					    <p-column field="open_to" header="Open to" sortable="true" [filter]="true" filterPlaceholder="Search Type">
+					    		<template let-pollsPast="rowData" pTemplate="body">
+						            <span *ngIf="pollsPast.open_to">{{pollsPast.open_to}}</span>
+						            <span *ngIf="!pollsPast.open_to">-</span>
+						        </template>
+					    </p-column>
+					    <p-column header="no. of Poll" sortable="true">
+						    	<template let-pollsPast="rowData" pTemplate="body">
+						            <span>{{pollsPast.votes.length}}</span>
+						        </template>
+						</p-column>
+						<p-column field="outcome" header="Outcome" sortable="true"></p-column>
+						<p-column field="start_time" header="Commence date" sortable="true"></p-column>
+						<p-column field="end_time" header="Result date" sortable="true"></p-column>
+					    
+						<p-column [style]="{'width':'300px'}" header="Action" styleClass="col-button">
+					    	<template class="pull-right" let-pollsPast="rowData" pTemplate="body">
+					    	<a type="button" style="cursor:pointer" (click)="viewPoll(pollsPast)"><i class="fa fa-edit" aria-hidden="true"></i>&nbsp;View Result</a>
+					    	</template>
+					    </p-column>
+					</p-dataTable>
 			    </tab>
 			   
 			  </tabset>
