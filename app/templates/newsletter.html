@@ -39,7 +39,7 @@
 							</p-column>
 							<p-column field="attachment" header="Attachments" sortable="true">
 								<template let-dataAgm="rowData" pTemplate="body">
-									<span *ngFor="let a of dataAgm.attachment">
+									<span *ngFor="let a of dataAgm.attachment" (click)="openDoc(a)" style="cursor: pointer;">
 										{{ a.name}},
 									</span>
 								</template>
