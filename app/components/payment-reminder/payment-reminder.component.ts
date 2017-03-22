@@ -91,7 +91,7 @@ export class PaymentReminderComponent implements OnInit {
 
 	deleteConfirmation(paymentreminder) {
 		this.confirmationService.confirm({
-			message: 'Are you sure that you want to delete this payment reminder ?',
+			message: 'Are you sure that you want to delete this payment reminder?',
 			header: 'Delete Confirmation',
 			icon: 'fa fa-trash',
 			accept: () => {
@@ -249,7 +249,7 @@ export class PaymentReminderComponent implements OnInit {
 
 	publishConfirmation(paymentreminder) {
 		this.confirmationService.confirm({
-			message: 'Are you sure that you want to publish this payment reminder ?',
+			message: 'Are you sure that you want to publish this payment reminder?',
 			header: 'Publish Confirmation',
 			accept: () => {
 				this.publish(paymentreminder)
