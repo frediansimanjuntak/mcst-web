@@ -1151,3 +1151,7 @@ p.field-box.no-margin {
 .ui-rating-star a {
     background-position: 0 -80px;
 }
+
+.btn-empty {
+    background: #fd8989;
+}
