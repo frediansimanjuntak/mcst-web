@@ -258,7 +258,7 @@
                             <p-dataTable [value]="contracts" [rows]="10" [paginator]="true" [responsive]="true">
                                 <p-column filterMatchMode="contains" [style]="{'width': '180px'}" field="title" header="Project Title" sortable="true" [filter]="true" filterPlaceholder="Search Project Title">
                                     <template let-contracts="rowData" pTemplate="body">
-                                        <span>{{contracts.title | capitalize}}</span>
+                                        <span>{{contracts.title | capitalizeFirst}}</span>
                                     </template>
                                 </p-column>
                                 <p-column filterMatchMode="contains" field="start_time" [style]="{'width': '120px'}" header="Commence on" sortable="true" [filter]="true" filterPlaceholder="Search Commence on">
