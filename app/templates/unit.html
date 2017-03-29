@@ -21,8 +21,10 @@
 							    <div class="input-group pull-right">
 							          <select class="form-control" name="selectedType" (change)="filterType($event)" [(ngModel)]="typeFilter">
 							          	<option value="" disabled="" selected="selected">Type of Resident</option>
+							          	<option value="">All</option>
 							            <option value="own stay">Owner</option>
 							            <option value="tenanted">Tenant</option>
+							            <option value="no landlord">Empty</option>
 							          </select>
 							    </div>
 						    </div>
