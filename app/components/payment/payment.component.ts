@@ -39,8 +39,8 @@ export class PaymentComponent implements OnInit {
         if( this.id == null) {
             this.loadAllPayment();
         }else{
-        	this.paymentService.getPayment(this.id)
-            .then(payment => {
+        	this.paymentService.getById(this.id)
+            .subscribe(payment => {
                 this.payment = payment;
                 setTimeout(() => this.appComponent.loading = false, 1000);
             });
@@ -81,18 +81,18 @@ export class PaymentComponent implements OnInit {
     }
 
 	private loadAllPayment() {
-		this.paymentService.getPayments()
-        .then(payments => {
+		this.paymentService.getAll()
+        .subscribe(payments => {
             this.payments = payments;
             setTimeout(() => this.appComponent.loading = false, 1000);
         });
     }
 
     view(payment: Payment){
-        this.router.navigate([this.name.default_development.name_url + '/payment/view', payment._id]);
+        this.router.navigate([this.name.default_development.name_url + '/payment_system/view', payment._id]);
     }
 
     add(){
-        this.router.navigate([this.name.default_development.name_url + '/payment/add']);
+        this.router.navigate([this.name.default_development.name_url + '/payment_system/add']);
     }
 }

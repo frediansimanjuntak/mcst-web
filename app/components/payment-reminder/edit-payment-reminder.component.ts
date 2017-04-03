@@ -23,6 +23,7 @@ export class EditPaymentReminderComponent implements OnInit{
     development : Development;
     name: any;
     id: any;
+    no: any;
     amount:number[] = [];
     totalAmount:number = 0;
 
@@ -38,8 +39,28 @@ export class EditPaymentReminderComponent implements OnInit{
         private formbuilder: FormBuilder ) {}
 
     ngOnInit():void{ 
+        this.paymentreminderService.getAll().subscribe(paymentreminder => {
+            this.paymentreminders = paymentreminder ;
+            if(this.paymentreminders.length > 0) { 
+                var a = this.paymentreminders.length - 1;
+                this.no = +this.paymentreminders[a].reference_no + 1
+                if(this.no > 1 && this.no < 10) {
+                    this.model.reference_no = '000' + this.no.toString();
+                }if(this.no > 9 && this.no < 100) {
+                    this.model.reference_no = '00' + this.no.toString();
+                }if(this.no > 99 && this.no < 1000) { 
+                    this.model.reference_no = '0' + this.no.toString();
+                }if(this.no > 999) {
+                    this.model.reference_no = this.no.toString();
+                }
+            }else {
+                this.model.reference_no = '0001'
+            }  
+        });
+        console.log(this.model.reference_no)
         this.myForm = this.formbuilder.group({
             title : ['', Validators.required],
+            reference_no : [{value: this.model.reference_no, disabled: true}],
             auto_issue_on : ['', Validators.required],
             due_on : ['', Validators.required],
             message_to_receiver : ['', Validators.required],
@@ -53,6 +74,7 @@ export class EditPaymentReminderComponent implements OnInit{
                 _id : [''],
                 development : [''],
                 title : ['', Validators.required],
+                reference_no : [''],
                 auto_issue_on : ['', Validators.required],
                 due_on : ['', Validators.required],
                 message_to_receiver : ['', Validators.required],
