@@ -48,12 +48,6 @@ export class EditUnitComponent implements OnInit {
     }
 
     ngOnInit() {
-        this.userService.getByToken()
-                            .subscribe(name => {
-                                this.name = name;
-                                setTimeout(() => this.appComponent.loading = false, 1000);
-                            })
-        this.submitted = false;
         this.myForm = this.formbuilder.group({
                 address: this.formbuilder.group({
                     unit_no : ['',  <any>Validators.required],
@@ -67,6 +61,24 @@ export class EditUnitComponent implements OnInit {
                 // status: ['no landlord'],
                 max_tenant: [],
         });
+        this.userService.getByToken()
+                            .subscribe(name => {
+                                this.name = name;
+                                this.myForm.patchValue({
+                                    address: {
+                                        unit_no : '',
+                                        unit_no_2 : '',
+                                        block_no : '',
+                                        street_name : this.name.default_development.address.street_name,
+                                        postal_code : this.name.default_development.address.postal_code,
+                                        country : this.name.default_development.address.country,
+                                        full_address : this.name.default_development.address.full_address
+                                    },
+                                    max_tenant: [],
+                                });
+                                setTimeout(() => this.appComponent.loading = false, 1000);
+                            })
+        this.submitted = false;
 
         this.route.params.subscribe(params => {
             this.id = params['id'];
@@ -83,7 +95,7 @@ export class EditUnitComponent implements OnInit {
 
     createUnit(model: any, isValid: boolean) {
         this.submitted = true;
-        
+        console.log(model);
         if(isValid){
             if(model.max_tenant <= 20){
                 if(model.address.unit_no.length == 1){
