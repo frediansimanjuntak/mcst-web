@@ -1,29 +1,112 @@
 <div class="container">
-	<div class="main">
-		<div class="title">
-			Payment
-		</div>
-		<p class="id-location">Home > Payment</p>
-		<div class="row">
-			<div class="col-md-4 pull-right">
-				<a class="btn btn-default pull-right" (click)="add()">
-					<i class="fa fa-plus" aria-hidden="true"></i>&nbsp;Add Payment</a>
-			</div>
-		</div>
-		<p-dataTable [value]="payments" [rows]="10" [paginator]="true">
-			<p-column filterMatchMode="contains" field="serial_no" header="Serial No." sortable="true" [filter]="true" filterPlaceholder="Search serial no"></p-column>
-			<p-column filterMatchMode="contains" field="payment_type" header="Payment type" sortable="true" [filter]="true" filterPlaceholder="Search payment type"></p-column>
-			<p-column filterMatchMode="contains" field="payment_proof" header="Payment proof"></p-column>
-			<p-column filterMatchMode="contains" field="sender.username" header="Sender" sortable="true" [filter]="true" filterPlaceholder="Search sender"></p-column>
-			<p-column filterMatchMode="contains" field="total_amount" header="Total Amount" sortable="true" [filter]="true" filterPlaceholder="Search total amount"></p-column>
-			<p-column filterMatchMode="contains" field="remark" header="Remark" sortable="true" [filter]="true" filterPlaceholder="Search remark"></p-column>
-			<p-column filterMatchMode="contains" field="status" header="Status" sortable="true" [filter]="true" filterPlaceholder="Search Status"></p-column>
-			<p-column header="Action" styleClass="col-button">
-				<template let-payment="rowData" pTemplate="body">
-					<button type="button" (click)="view(payment)">View</button>
-					<button type="button" (click)="deleteConfirmation(payment)">Delete</button>
-				</template>
-			</p-column>
-		</p-dataTable>
-	</div>
+    <div class="main">
+        <div *ngIf="payment">
+            <div class="title">PAYMENT SYSTEM</div>
+            <p class="id-location">Home > Payment > Payment system</p>
+            <p><a class="link-box" style="text-decoration:underline;" (click)="goBack()">Back to last page</a></p>
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="row">
+                        <div class="col-md-2 col-padding"><strong>Serial no :</strong></div>
+                        <div class="col-md-10 col-padding">
+                            <span *ngIf="serial_no"><a style="text-decoration: underline;cursor:pointer" (click)="viewReference(payment.reference_id , payment.payment_type)">#{{ payment.serial_no }}</a></span>
+                            <span *ngIf="!serial_no">-</span>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-2 col-padding"><strong>Payment type :</strong></div>
+                        <div class="col-md-10 col-padding">{{ payment.payment_type }}</div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-2 col-padding"><strong>Payment Method :</strong></div>
+                        <div class="col-md-10 col-padding">{{ payment.payment_method }}</div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-2 col-padding"><strong>For :</strong></div>
+                        <div class="col-md-10 col-padding">{{ payment.sender.username }}</div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-2 col-padding"><strong>Total Amount :</strong></div>
+                        <div class="col-md-10 col-padding">{{ payment.total_amount }}</div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-2 col-padding"><strong>Status :</strong></div>
+                        <div class="col-md-10 col-padding">{{ payment.status }}</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div *ngIf="!payment">
+            <div class="title">PAYMENT SYSTEM</div>
+            <p class="id-location">Home > Payment system</p>
+            <div class="row top-block">
+                <div class="col-md-8">
+                    <div class="input-group filter-search">
+                        <input type="text" class="form-control input-search" (keyup.enter)="filterRefno()" [(ngModel)]="dataFilter" placeholder="Search serial no" name="filter">
+                        <span (click)="filter()" class="input-group-btn">
+                            <button class="btn btn-secondary btn-search" type="button"><i class="fa fa-search fa-inverse" aria-hidden="true"></i></button>
+                        </span>
+                    </div>
+                </div>
+                <div class="col-md-4 pull-right">
+                    <button class="btn btn-default pull-right btn-add" (click)="add()">
+                        <img class="img-btn" src="../../assets/image/icon_add.png" />&nbsp;Create payment
+                    </button>
+                </div>
+            </div>
+            <div (click)="$event.preventDefault()">
+                <tabset>
+                    <!-- UNPAID -->
+                    <tab heading="Unpaid">
+                        <p-dataTable [value]="unpaid" [rows]="10" [paginator]="true">
+							<p-column filterMatchMode="contains" field="serial_no" header="Serial No." sortable="true" [filter]="true" filterPlaceholder="Search serial no"></p-column>
+							<p-column filterMatchMode="contains" field="payment_type" header="Payment type" sortable="true" [filter]="true" filterPlaceholder="Search payment type"></p-column>
+							<p-column filterMatchMode="contains" field="payment_proof" header="Payment proof">
+								<template let-data="rowData" pTemplate="body">
+				                    <a *ngIf="data.payment_proof.length > 0" style="text-decoration: underline;cursor:pointer" (click)="view(data)">View</a>
+				                    <a *ngIf="data.payment_proof < 1">-</a>
+				                </template>
+							</p-column>
+							<p-column filterMatchMode="contains" field="sender.username" header="Sender" sortable="true" [filter]="true" filterPlaceholder="Search sender"></p-column>
+							<p-column filterMatchMode="contains" field="total_amount" header="Total Amount" sortable="true" [filter]="true" filterPlaceholder="Search total amount"></p-column>
+							<p-column filterMatchMode="contains" field="remark" header="Remark" sortable="true" [filter]="true" filterPlaceholder="Search remark"></p-column>
+							<p-column filterMatchMode="contains" field="status" header="Status" sortable="true" [filter]="true" filterPlaceholder="Search Status"></p-column>
+							<p-column [style]="{'width': '168px'}" header="Action" styleClass="col-button">
+								<template let-payment="rowData" pTemplate="body">
+									<a type="button" style="text-decoration: underline;cursor:pointer; margin-right: 10px;" (click)="view(payment)">View</a>
+									<a type="button" style="cursor:pointer; margin-right: 10px;" (click)="edit(payment)"><i class="fa fa-edit" aria-hidden="true"></i>&nbsp;Edit</a>
+									<button type="button" class="btn btn-trash" (click)="deleteConfirmation(payment)"><i class="fa fa-trash-o" aria-hidden="true"></i></button>
+								</template>
+							</p-column>
+						</p-dataTable>
+                    </tab>
+                    <!-- PAID -->
+                    <tab heading="Paid">
+                        <p-dataTable [value]="paid" [rows]="10" [paginator]="true">
+							<p-column filterMatchMode="contains" field="serial_no" header="Serial No." sortable="true" [filter]="true" filterPlaceholder="Search serial no"></p-column>
+							<p-column filterMatchMode="contains" field="payment_type" header="Payment type" sortable="true" [filter]="true" filterPlaceholder="Search payment type"></p-column>
+							<p-column filterMatchMode="contains" field="payment_proof" header="Payment proof">
+								<template let-data="rowData" pTemplate="body">
+				                    <a *ngIf="data.payment_proof.length > 0" style="text-decoration: underline;cursor:pointer" (click)="view(data)">View</a>
+				                    <a *ngIf="data.payment_proof < 1">-</a>
+				                </template>
+							</p-column>
+							<p-column filterMatchMode="contains" field="sender.username" header="Sender" sortable="true" [filter]="true" filterPlaceholder="Search sender"></p-column>
+							<p-column filterMatchMode="contains" field="total_amount" header="Total Amount" sortable="true" [filter]="true" filterPlaceholder="Search total amount"></p-column>
+							<p-column filterMatchMode="contains" field="remark" header="Remark" sortable="true" [filter]="true" filterPlaceholder="Search remark"></p-column>
+							<p-column filterMatchMode="contains" field="status" header="Status" sortable="true" [filter]="true" filterPlaceholder="Search Status"></p-column>
+							<p-column [style]="{'width': '168px'}" header="Action" styleClass="col-button">
+								<template let-payment="rowData" pTemplate="body">
+									<a type="button" style="text-decoration: underline;cursor:pointer; margin-right: 10px;" (click)="view(payment)">View</a>
+									<a type="button" style="cursor:pointer; margin-right: 10px;" (click)="edit(payment)"><i class="fa fa-edit" aria-hidden="true"></i>&nbsp;Edit</a>
+									<button type="button" class="btn btn-trash" (click)="deleteConfirmation(payment)"><i class="fa fa-trash-o" aria-hidden="true"></i></button>
+								</template>
+							</p-column>
+						</p-dataTable>
+                    </tab>
+                </tabset>
+            </div>
+        </div>
+    </div>
 </div>
+

@@ -118,62 +118,63 @@ export class PollComponent implements OnInit {
     private loadPolls(){
     	  this.pollService.getAll()
             .subscribe((data)=> {
-                setTimeout(()=> {
+                    console.log(data);
                     this.polls 		   = data.filter(data => data.development._id == this.name.default_development._id );
                     this.pollsDraft  = this.polls.filter(data => data.status == "draft" );
                     this.pollsActive = this.polls.filter(data => data.status == "active" );
-                    this.pollsResult = this.polls.filter(data => data.status == "result" && data.end_time == this.todayNumber);
-                    this.pollsPast   = this.polls.filter(data => data.status == "result" && data.end_time < this.todayNumber);
+                    this.pollsResult = this.polls.filter(data => data.status == "end poll" && data.end_time == this.todayNumber);
+                    this.pollsPast   = this.polls.filter(data => data.status == "end poll" && data.end_time < this.todayNumber);
 
-                    for (var i = 0; i < this.pollsDraft.length; i++) {
-                              if(this.pollsDraft[i].start_time){
-                                  let y = this.pollsDraft[i].start_time.toString().slice(0,4);
-                                  let m = (this.pollsDraft[i].start_time+100).toString().slice(4,6);
-                                  let d = this.pollsDraft[i].start_time.toString().slice(6,8);
-                                  this.pollsDraft[i].start_time = y + '/' + m + '/' + d ;
-                            }    
-                    }
+                    // for (var i = 0; i < this.pollsDraft.length; i++) {
+                    //           if(this.pollsDraft[i].start_time){
+                    //               let y = this.pollsDraft[i].start_time.toString().slice(0,4);
+                    //               let m = (this.pollsDraft[i].start_time+100).toString().slice(4,6);
+                    //               let d = this.pollsDraft[i].start_time.toString().slice(6,8);
+                    //               this.pollsDraft[i].start_time = y + '/' + m + '/' + d ;
+                    //         }    
+                    // }
+
+                    // for (var i = 0; i < this.pollsDraft.length; i++) {
+                    //           if(this.pollsDraft[i].end_time){
+                    //               let y = this.pollsDraft[i].end_time.toString().slice(0,4);
+                    //               let m = (this.pollsDraft[i].end_time+100).toString().slice(4,6);
+                    //               let d = this.pollsDraft[i].end_time.toString().slice(6,8);
+                    //               this.pollsDraft[i].end_time = y + '/' + m + '/' + d ;
+                    //           }    
+                    // }
 
                     for (var i = 0; i < this.pollsDraft.length; i++) {
                               if(this.pollsDraft[i].end_time){
-                                  let y = this.pollsDraft[i].end_time.toString().slice(0,4);
-                                  let m = (this.pollsDraft[i].end_time+100).toString().slice(4,6);
-                                  let d = this.pollsDraft[i].end_time.toString().slice(6,8);
-                                  this.pollsDraft[i].end_time = y + '/' + m + '/' + d ;
+                                  // let y = this.pollsDraft[i].end_time.toString().slice(0,4);
+                                  // let m = (this.pollsDraft[i].end_time+100).toString().slice(4,6);
+                                  // let d = this.pollsDraft[i].end_time.toString().slice(6,8);
+                                  // this.pollsDraft[i].end_time = y + '/' + m + '/' + d ;
+                                  // let date2 = new Date(m + '-' + d + '-' + y);
+                                  let timeDiff = Math.abs(this.pollsDraft[i].end_time.getTime() - this.today.getTime());
+                                  this.pollsDraft[i].remaining = Math.ceil(timeDiff / (1000 * 3600 * 24)); 
+
                               }    
                     }
 
-                    for (var i = 0; i < this.pollsActive.length; i++) {
-                              if(this.pollsActive[i].end_time){
-                                  let y = this.pollsActive[i].end_time.toString().slice(0,4);
-                                  let m = (this.pollsActive[i].end_time+100).toString().slice(4,6);
-                                  let d = this.pollsActive[i].end_time.toString().slice(6,8);
-                                  this.pollsActive[i].end_time = y + '/' + m + '/' + d ;
-                                  let date2 = new Date(m + '/' + d + '/' + y);
-                                  let timeDiff = Math.abs(date2.getTime() - this.today.getTime());
-                                  this.pollsActive[i].remaining = Math.ceil(timeDiff / (1000 * 3600 * 24)); 
-                              }    
-                    }
+                    // for (var i = 0; i < this.pollsResult.length; i++) {
+                    //           if(this.pollsResult[i].start_time){
+                    //               let y = this.pollsResult[i].start_time.toString().slice(0,4);
+                    //               let m = (this.pollsResult[i].start_time+100).toString().slice(4,6);
+                    //               let d = this.pollsResult[i].start_time.toString().slice(6,8);
+                    //               this.pollsResult[i].start_time = y + '/' + m + '/' + d ;
+                    //           }    
+                    // }
 
-                    for (var i = 0; i < this.pollsResult.length; i++) {
-                              if(this.pollsResult[i].start_time){
-                                  let y = this.pollsResult[i].start_time.toString().slice(0,4);
-                                  let m = (this.pollsResult[i].start_time+100).toString().slice(4,6);
-                                  let d = this.pollsResult[i].start_time.toString().slice(6,8);
-                                  this.pollsResult[i].start_time = y + '/' + m + '/' + d ;
-                              }    
-                    }
-
-                    for (var i = 0; i < this.pollsResult.length; i++) {
-                              if(this.pollsResult[i].end_time){
-                                  let y = this.pollsResult[i].end_time.toString().slice(0,4);
-                                  let m = (this.pollsResult[i].end_time+100).toString().slice(4,6);
-                                  let d = this.pollsResult[i].end_time.toString().slice(6,8);
-                                  this.pollsResult[i].end_time = y + '/' + m + '/' + d ;
-                              }    
-                    }
+                    // for (var i = 0; i < this.pollsResult.length; i++) {
+                    //           if(this.pollsResult[i].end_time){
+                    //               let y = this.pollsResult[i].end_time.toString().slice(0,4);
+                    //               let m = (this.pollsResult[i].end_time+100).toString().slice(4,6);
+                    //               let d = this.pollsResult[i].end_time.toString().slice(6,8);
+                    //               this.pollsResult[i].end_time = y + '/' + m + '/' + d ;
+                    //           }    
+                    // }
+                    console.log(this.pollsDraft)
                     setTimeout(() => this.appComponent.loading = false, 1000);
-                }, 1000);
         });
 	}
 

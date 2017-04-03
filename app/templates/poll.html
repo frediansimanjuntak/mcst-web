@@ -115,13 +115,13 @@
 						    </p-column>
 							<p-column field="start_time" [style]="{'width':'150px'}" header="Commence date" sortable="true">
 								<template let-pollsDraft="rowData" pTemplate="body">
-										<span *ngIf="pollsDraft.start_time">{{ pollsDraft.start_time }}</span>
+										<span *ngIf="pollsDraft.start_time">{{ pollsDraft.start_time | date:'d/M/y' }}</span>
 										<span *ngIf="!pollsDraft.start_time">-</span>
 								</template>
 							</p-column>
 							<p-column field="end_time" header="Result date" sortable="true">
 								<template let-pollsDraft="rowData" pTemplate="body">
-										<span *ngIf="pollsDraft.end_time">{{ pollsDraft.end_time }}</span>
+										<span *ngIf="pollsDraft.end_time">{{ pollsDraft.end_time | date:'d/M/y'}}</span>
 										<span *ngIf="!pollsDraft.end_time">-</span>
 								</template>
 							</p-column>
@@ -145,10 +145,10 @@
 						</p-column>
 						<p-column field="end_time" header="Result date" sortable="true">
 								<template let-pollsActive="rowData" pTemplate="body">
-						            <span *ngIf="pollsActive.end_time">{{pollsActive.end_time}}</span>
+						            <span *ngIf="pollsActive.end_time">{{pollsActive.end_time | date:'d/M/y'}}</span>
 						            <span *ngIf="!pollsActive.end_time">-</span>
 						        </template>
-						</p-column>>
+						</p-column>
 						<p-column header="Days Remaining" field="remaining" sortable="true">
 						</p-column>
 						<p-column [style]="{'width':'300px'}" header="Action" styleClass="col-button">
@@ -175,10 +175,19 @@
 						        </template>
 						</p-column>
 						<p-column field="outcome" header="Outcome" sortable="true"></p-column>
-						<p-column field="start_time" header="Commence date" sortable="true"></p-column>
-						<p-column field="end_time" header="Result date" sortable="true"></p-column>
-					    
-						<p-column [style]="{'width':'300px'}" header="Action" styleClass="col-button">
+						<p-column field="start_time" header="Commence date" sortable="true">
+								<template let-pollsResult="rowData" pTemplate="body">
+						            <span *ngIf="pollsResult.start_time">{{pollsResult.start_time | date:'d/M/y'}}</span>
+						            <span *ngIf="!pollsResult.start_time">-</span>
+						        </template>
+						</p-column>
+						<p-column field="end_time" header="Result date" sortable="true">
+								<template let-pollsResult="rowData" pTemplate="body">
+						            <span *ngIf="pollsResult.end_time">{{pollsResult.end_time | date:'d/M/y'}}</span>
+						            <span *ngIf="!pollsResult.end_time">-</span>
+						        </template>
+						</p-column>
+					    <p-column [style]="{'width':'300px'}" header="Action" styleClass="col-button">
 					    	<template class="pull-right" let-pollsResult="rowData" pTemplate="body">
 					    	<a type="button" style="cursor:pointer" (click)="viewPoll(pollsResult)"><i class="fa fa-edit" aria-hidden="true"></i>&nbsp;View Result</a>
 					    	</template>
@@ -202,8 +211,18 @@
 						        </template>
 						</p-column>
 						<p-column field="outcome" header="Outcome" sortable="true"></p-column>
-						<p-column field="start_time" header="Commence date" sortable="true"></p-column>
-						<p-column field="end_time" header="Result date" sortable="true"></p-column>
+						<p-column field="start_time" header="Commence date" sortable="true">
+								<template let-pollsPast="rowData" pTemplate="body">
+						            <span *ngIf="pollsPast.start_time">{{pollsPast.start_time | date:'d/M/y'}}</span>
+						            <span *ngIf="!pollsPast.start_time">-</span>
+						        </template>
+						</p-column>
+						<p-column field="end_time" header="Result date" sortable="true">
+								<template let-pollsPast="rowData" pTemplate="body">
+						            <span *ngIf="pollsPast.end_time">{{pollsPast.end_time | date:'d/M/y'}}</span>
+						            <span *ngIf="!pollsPast.end_time">-</span>
+						        </template>
+						</p-column>
 					    
 						<p-column [style]="{'width':'300px'}" header="Action" styleClass="col-button">
 					    	<template class="pull-right" let-pollsPast="rowData" pTemplate="body">

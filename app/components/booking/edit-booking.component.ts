@@ -128,12 +128,14 @@ export class EditBookingComponent implements OnInit  {
 		
 		if (monday.date() > 7) monday.add(7,'d');
 		var month = monday.month();
-		console.log(month)
+		console.log(monday)
 		while(month === monday.month()){
+			console.log(monday.toString())
 			// document.body.innerHTML += "<p>"+monday.toString()+"</p>";
 			monday.add(7,'d');
 			var day = new Date(monday.toString());
 			var dayWrapper = moment(day);
+			console.log(dayWrapper)
 			this.customClass.push({
 				date: dayWrapper,
 				mode: 'day',

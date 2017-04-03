@@ -15,6 +15,12 @@
                         </div>
                     </div>
                     <div class="form-group">
+                        <label class="control-label col-sm-4" for="reference_no">Reference no :</label>
+                        <div class="col-sm-8">
+                            <input type="text" class="form-control" name="reference_no" formControlName="reference_no" required placeholder="Input auto issue date here" />
+                        </div>
+                    </div>
+                    <div class="form-group">
                         <label class="control-label col-sm-4" for="auto_issue_on">Auto issue on :</label>
                         <div class="col-sm-8">
                             <input type="date" class="form-control" name="auto_issue_on" formControlName="auto_issue_on" required placeholder="Input auto issue date here" />
@@ -101,6 +107,12 @@
                             <small *ngIf="f.submitted && !myForm.controls.title.valid" class="text-danger">
                                 Title is required
                             </small>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-sm-4" for="reference_no">Reference no :</label>
+                        <div class="col-sm-8">
+                            <input type="text" class="form-control" name="reference_no" formControlName="reference_no" required />
                         </div>
                     </div>
                     <div class="form-group">

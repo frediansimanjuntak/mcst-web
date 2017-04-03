@@ -20,11 +20,9 @@
 							<div class="col-md-5 no-padding">
 							    <div class="input-group pull-right">
 							          <select class="form-control" name="selectedType" (change)="filterType($event)" [(ngModel)]="typeFilter">
-							          	<option value="" disabled="" selected="selected">Type of Resident</option>
-							          	<option value="">All</option>
-							            <option value="own stay">Owner</option>
-							            <option value="tenanted">Tenant</option>
-							            <option value="no landlord">Empty</option>
+							          	<option value="">Status (default/all)</option>
+							            <option value="own stay">Owned</option>
+							            <option value="tenanted">Tenanted</option>
 							          </select>
 							    </div>
 						    </div>
@@ -47,12 +45,12 @@
 			<div class="row">
 				<div class="col-md-9">
 					<p-dataTable [value]="dataUnit" [rows]="10" [paginator]="true">
-						<p-column filterPlaceholder="Search Unit No" header="Unit no">
+						<p-column field="address.unit_no" filterPlaceholder="Search Unit No" header="Unit no" sortable="true">
 							<template let-dataUnit="rowData" pTemplate="body">
 								<span>#{{dataUnit.address.unit_no}}-{{dataUnit.address.unit_no_2}}</span>
 							</template>
 						</p-column>
-						<p-column field="landlord.resident.username" header="Owner" sortable="true" [filter]="true" filterPlaceholder="Search Owner">
+						<p-column header="Owner" [filter]="true" filterPlaceholder="Search Owner">
 							<template let-dataUnit="rowData" pTemplate="body">
 								<span *ngIf="dataUnit.landlord">
 									<span *ngIf="dataUnit.landlord.resident">

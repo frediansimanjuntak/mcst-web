@@ -6,6 +6,7 @@ export class Payment {
   development : Development;
   property : string;
   payment_type : string;
+  payment_method : string;
   payment_proof : Attachment[];/*link to attachment*/
   sender : User;
   receiver : User;
