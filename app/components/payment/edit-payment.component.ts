@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { Router, Params, ActivatedRoute } from '@angular/router';
 import { Payment, User, Development } from '../../models/index';
-import { PaymentService, DevelopmentService, UserService, AlertService } from '../../services/index';
+import { PaymentService, DevelopmentService, UserService, AlertService, UnitService } from '../../services/index';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { NotificationsService } from 'angular2-notifications';
 import '../../rxjs-operators';
@@ -16,65 +16,139 @@ import { AppComponent } from '../index';
 
 export class EditPaymentComponent implements OnInit{
 	payment: Payment;
-    payments: Payment[] = [];
-    model: any = {};
-    myForm: FormGroup;
-    user: User;
-    development : Development;
-    name: any;
+	payments: Payment[] = [];
+	model: any = {};
+	myForm: FormGroup;
+	user: User;
+	development : Development;
+	name: any;
+	id: any;
+	units: any;
+	unit: any;
 
-    constructor(private router: Router,
-    	private paymentService: PaymentService,
-    	private developmentService: DevelopmentService,
-    	private userService: UserService,
-    	private alertService: AlertService,
-        private appComponent: AppComponent,
-        private _notificationsService: NotificationsService,
-        private formbuilder: FormBuilder ) {
+	constructor(private router: Router,
+		private paymentService: PaymentService,
+		private developmentService: DevelopmentService,
+		private userService: UserService,
+		private unitService: UnitService,
+		private alertService: AlertService,
+		private appComponent: AppComponent,
+		private _notificationsService: NotificationsService,
+		private formbuilder: FormBuilder,
+		private route: ActivatedRoute, ) {}
 
-        // this.user = JSON.parse(localStorage.getItem('user'));
-    }
+	ngOnInit():void{ 
+		this.model.payment_proof = []
+		this.route.params.subscribe(params => {
+			this.id = params['id'];
+		});
+		if( this.id != null) {
+			this.paymentService.getById(this.id)
+			.subscribe(payment => {
+				this.payment = payment;
+				console.log(this.payment)
+				setTimeout(() => this.appComponent.loading = false, 1000);
+			});
+		}
+		this.userService.getByToken()
+		.subscribe(name => {
+			this.name = name;
+			this.unitService.getAll(this.name.default_development.name_url).subscribe(units => {this.units = units.properties})
+			setTimeout(() => this.appComponent.loading = false, 1000);
+		})
+	}
 
-    ngOnInit():void{ 
-        this.userService.getByToken()
-        .subscribe(name => {
-            this.name = name;
-            setTimeout(() => this.appComponent.loading = false, 1000);
-        })
-    }
+	createPayment() {
+		this.appComponent.loading = true
+		let formData:FormData = new FormData();
+		for (var i = 0; i < this.model.payment_proof.length; i++) {
+			formData.append("payment_proof", this.model.payment_proof[i]);
+		}
+		formData.append("serial_no", this.model.serial_no);
+		formData.append("property", this.model.property);
+		formData.append("sender", this.model.sender);
+		formData.append("remark", this.model.remark);
+		formData.append("payment_type", this.model.payment_type);
+		formData.append("payment_method", this.model.payment_method);
+		this.paymentService.create(formData)
+		.then(
+			data => {
+				this._notificationsService.success(
+					'Success',
+					'Create payment successful',
+				)
+				this.router.navigate([this.name.default_development.name_url + '/payment_system']);
+			},
+			error => {
+				console.log(error);
+				this._notificationsService.error(
+					'Error',
+					'The payment could not be save, server Error',
+				)
+				this.appComponent.loading = false;
+			}
+		);
+	}
 
-    createPayment() {
-        this.appComponent.loading = true
-        this.paymentService.create(this.model)
-        .then(
-            data => {
-                this._notificationsService.success(
-                                'Success',
-                                'Create payment successful',
-                )
-                this.router.navigate([this.name.default_development.name_url + '/payment_system']);
-            },
-            error => {
-                console.log(error);
-                this._notificationsService.error(
-                                'Error',
-                                'The payment could not be save, server Error',
-                        )
-                this.appComponent.loading = false;
-            }
-        );
-    }
+	updatePayment() {
+		if(this.payment.payment_proof.length > 0) {
+			this.appComponent.loading = true
+			let formData:FormData = new FormData();
+			for (var i = 0; i < this.payment.payment_proof.length; i++) {
+				formData.append("payment_proof", this.payment.payment_proof[i]);
+			}
+			formData.append("remark", this.payment.remark);
+			formData.append("payment_method", this.payment.payment_method);
+			this.paymentService.update(formData , this.payment._id)
+			.then(
+				data => {
+					this._notificationsService.success(
+									'Success',
+									'Update payment successful',
+					)
+					this.router.navigate([this.name.default_development.name_url + '/payment_system']);
+				},
+				error => {
+					console.log(error);
+					this._notificationsService.error(
+									'Error',
+									'The payment could not be update, server Error',
+							)
+					this.appComponent.loading = false;
+				}
+			);
+		}
+	}
 
-    onChange(event: any) {
+	onChange(event: any) {
+	   let files = [].slice.call(event.target.files);
+	   this.model.payment_proof = files;
+	}
+
+	updateOnChange(event: any) {
        let files = [].slice.call(event.target.files);
-       this.model.payment_proof = files;
+       this.payment.payment_proof = files;
     }
 
-    remove(i: any){
-        this.model.payment_proof.splice(i, 1)
-    }
+	getLandlord(event:any){
+		this.appComponent.loading = true
+		this.unitService.getById(this.model.property , this.name.default_development.name_url)
+		.subscribe(unit => {
+			this.unit = unit.properties[0];
+			if(this.unit.landlord.resident.username) {
+				this.model.sender = this.unit.landlord.resident.username;
+			}else{
+				this.model.sender = this.unit.tenant.resident.username;
+			}
+		});
+		this.appComponent.loading = false
+	}
 
-    cancel(){
-        this.router.navigate([this.name.default_development.name_url + '/payment_system' ]);
-    }
+	remove(i: any){
+		this.model.payment_proof.splice(i, 1)
+	}
+
+	cancel(){
+		this.router.navigate([this.name.default_development.name_url + '/payment_system' ]);
+	}
 }

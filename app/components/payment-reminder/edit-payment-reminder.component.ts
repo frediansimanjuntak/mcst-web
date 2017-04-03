@@ -39,6 +39,21 @@ export class EditPaymentReminderComponent implements OnInit{
         private formbuilder: FormBuilder ) {}
 
     ngOnInit():void{ 
+    	this.myForm = this.formbuilder.group({
+            title : ['', Validators.required],
+            reference_no : [{value: '', disabled: true}],
+            auto_issue_on : ['', Validators.required],
+            due_on : ['', Validators.required],
+            message_to_receiver : ['', Validators.required],
+            notification_list: this.formbuilder.array([this.initNotification_list()]),
+        });
+        this.userService.getByToken()
+        .subscribe(name => {
+            this.name = name;
+        })
+        this.route.params.subscribe(params => {
+            this.id = params['id'];
+        });
         this.paymentreminderService.getAll().subscribe(paymentreminder => {
             this.paymentreminders = paymentreminder ;
             if(this.paymentreminders.length > 0) { 
@@ -56,18 +71,15 @@ export class EditPaymentReminderComponent implements OnInit{
             }else {
                 this.model.reference_no = '0001'
             }  
-        });
-        console.log(this.model.reference_no)
-        this.myForm = this.formbuilder.group({
-            title : ['', Validators.required],
-            reference_no : [{value: this.model.reference_no, disabled: true}],
-            auto_issue_on : ['', Validators.required],
-            due_on : ['', Validators.required],
-            message_to_receiver : ['', Validators.required],
-            notification_list: this.formbuilder.array([this.initNotification_list()]),
-        });
-        this.route.params.subscribe(params => {
-            this.id = params['id'];
+            this.myForm = this.formbuilder.group({
+                title : ['', Validators.required],
+                reference_no : [{value: this.model.reference_no, disabled: true}],
+                auto_issue_on : ['', Validators.required],
+                due_on : ['', Validators.required],
+                message_to_receiver : ['', Validators.required],
+                notification_list: this.formbuilder.array([this.initNotification_list()]),
+            });
+            setTimeout(() => this.appComponent.loading = false, 1000);
         });
         if( this.id != null) {
             this.myForm = this.formbuilder.group({
@@ -100,11 +112,6 @@ export class EditPaymentReminderComponent implements OnInit{
                 setTimeout(() => this.appComponent.loading = false, 1000);
             });
         }
-        this.userService.getByToken()
-        .subscribe(name => {
-            this.name = name;
-            setTimeout(() => this.appComponent.loading = false, 1000);
-        })
     }
 
     initNotification_list() {
@@ -136,7 +143,9 @@ export class EditPaymentReminderComponent implements OnInit{
     }
 
     createPaymentReminder(model:PaymentReminder) {
+    	model.reference_no = this.model.reference_no;
         this.appComponent.loading = true
+        console.log(model)
         this.paymentreminderService.create(model)
         .then(
             data => {
