@@ -6,9 +6,8 @@ import { BookingService, AlertService, FacilityService, UserService, UnitService
 import '../../rxjs-operators';
 import { NotificationsService } from 'angular2-notifications';
 import { Observable} from 'rxjs/Observable';
-import * as moment from 'moment';
 import { AppComponent } from '../index';
-
+var moment = require('moment');
 export var Binformation: any[] = []
 
 @Component({
@@ -97,6 +96,7 @@ export class EditBookingComponent implements OnInit  {
 	unit: any;
 	available: any;
 	date: any;
+	customClass: any[] = []
 
 	constructor(
 		private router: Router,
@@ -122,6 +122,24 @@ export class EditBookingComponent implements OnInit  {
 		this.model.booking_date = booking_date
 		let date;
 		date     = new Date(this.dt.getTime());
+		var monday = moment(date)
+			.startOf('month')
+			.day("Monday");
+		
+		if (monday.date() > 7) monday.add(7,'d');
+		var month = monday.month();
+		console.log(month)
+		while(month === monday.month()){
+			// document.body.innerHTML += "<p>"+monday.toString()+"</p>";
+			monday.add(7,'d');
+			var day = new Date(monday.toString());
+			var dayWrapper = moment(day);
+			this.customClass.push({
+				date: dayWrapper,
+				mode: 'day',
+				clazz: 'btn-empty'
+			})
+		}
 		date     = this.convertDate(date);
 		this.model.date = date
 		this.paymentService.getAll().subscribe(payments => {
@@ -347,29 +365,24 @@ export class EditBookingComponent implements OnInit  {
 			this.tstart.push(start)
 			this.tend.push(end)
 		}else{
-			for (let a = 0; a < this.tstart.length; ++a) {
-				if(this.tstart[a] != start) {
-					this.tstart.push(start)
-				}
-				if(this.tend[a] != end) {
-					this.tend.push(end)
-				}
-				if(this.tstart[a] == start) {
-					var i = this.tstart.indexOf(start);
-		            if(i != -1) {
-		                this.tstart.splice(i, 1);
-		            }
-				}
-				if(this.tend[a] == end) {
-					var i = this.tend.indexOf(end);
-		            if(i != -1) {
-		                this.tend.splice(i, 1);
-		            }
-				}
+			var i = this.tstart.indexOf(start);
+			if(i != -1) {
+				this.tstart.splice(i, 1);
+			}else{
+				this.tstart.push(start)
+			}
+			var i = this.tend.indexOf(end);
+			if(i != -1) {
+				this.tend.splice(i, 1);
+			}else{
+				this.tend.push(end)
 			}
 		}
+		console.log(this.tstart)
+		console.log(this.tend)
 		var time_start = Math.min.apply(Math,this.tstart);
 		var time_end = Math.max.apply(Math,this.tend);
+		console.log(time_start,time_end)
 		let booking_fee = this.model.booking_fee * (time_end - time_start);
 		this.model.fees = [{
 			deposit_fee : this.model.deposit_fee ,
