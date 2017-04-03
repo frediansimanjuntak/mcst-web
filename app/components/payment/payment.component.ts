@@ -21,6 +21,10 @@ export class PaymentComponent implements OnInit {
     model: any = {};
     id: string;
     name: any;
+    paid: any;
+    unpaid: any;
+    all: any;
+    dataFilter: string = '';
 
     constructor(private router: Router, 
         private paymentService: PaymentService, 
@@ -39,12 +43,20 @@ export class PaymentComponent implements OnInit {
         if( this.id == null) {
             this.loadAllPayment();
         }else{
-        	this.paymentService.getPayment(this.id)
-            .then(payment => {
+        	this.paymentService.getById(this.id)
+            .subscribe(payment => {
                 this.payment = payment;
                 setTimeout(() => this.appComponent.loading = false, 1000);
             });
         }
+    }
+
+    filterRefno(){
+        this.appComponent.loading=true;
+        this.payments  = this.all.filter(data => data.serial_no.toLowerCase().indexOf(this.dataFilter.toLowerCase()) !==  -1);
+        this.paid = this.payments.filter(data => data.status == 'paid');
+        this.unpaid = this.payments.filter(data => data.status == 'unpaid');
+        setTimeout(() => this.appComponent.loading = false, 1000);
     }
 
     deletePayment(payment: Payment) {
@@ -81,18 +93,39 @@ export class PaymentComponent implements OnInit {
     }
 
 	private loadAllPayment() {
-		this.paymentService.getPayments()
-        .then(payments => {
+		this.paymentService.getAll()
+        .subscribe(payments => {
             this.payments = payments;
+            this.all = payments
+            this.paid = payments.filter(data => data.status == 'paid');
+            this.unpaid = payments.filter(data => data.status == 'unpaid');
             setTimeout(() => this.appComponent.loading = false, 1000);
         });
     }
 
     view(payment: Payment){
-        this.router.navigate([this.name.default_development.name_url + '/payment/view', payment._id]);
+        this.router.navigate([this.name.default_development.name_url + '/payment_system/view', payment._id]);
+    }
+
+    viewReference(id:string , type:string){
+        if(type == 'booking') {
+            this.router.navigate([this.name.default_development.name_url + '/booking/view', id]);
+        }
+         if(type == 'payment-reminder') {
+            this.router.navigate([this.name.default_development.name_url + '/payment_reminder/view', id]);
+        }
+        
     }
 
     add(){
-        this.router.navigate([this.name.default_development.name_url + '/payment/add']);
+        this.router.navigate([this.name.default_development.name_url + '/payment_system/add']);
+    }
+
+    goBack(){
+        this.router.navigate([this.name.default_development.name_url + '/payment_system']);
+    }
+
+    edit(payment: Payment){
+        this.router.navigate([this.name.default_development.name_url + '/payment_system/edit', payment._id]);
     }
 }

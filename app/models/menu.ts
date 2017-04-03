@@ -48,6 +48,7 @@ export const MENUS: any[] = [
     img: '../../assets/image/menu_payment.png',
     sub : [
       { name : 'Payment Reminder', link: '/payment_reminder'}, 
+      { name : 'Payment System', link: '/payment_system'}, 
     ]
   },
   {
@@ -56,7 +57,7 @@ export const MENUS: any[] = [
     img: '../../assets/image/menu_residentdatabase.png' ,
   	sub : [
   		{ name : 'Browse Database', link :'/unit' },
-  		{ name : 'Add Resident', link: '/unit/add' },
+  		{ name : 'Add Unit', link: '/unit/add' },
   		// { name : 'Manage Access control', link: '/access_control' }
   	]
   },
@@ -92,7 +93,6 @@ export const MENUS: any[] = [
       { name : 'Facility', link: '/facility' },
       // { name : 'Company', link: '/company' },
       // { name : 'Contractor', link: '/contractor' },
-      // { name : 'Payment', link: '/payment' },
       // { name : 'Test', link: '/test' },
     ]
   },
