@@ -4,6 +4,7 @@ export class PaymentReminder {
   _id : string;
   development : Development;
   title : string;
+  reference_no : string;
   auto_issue_on : string;
   due_on : string;
   message_to_receiver : string;
