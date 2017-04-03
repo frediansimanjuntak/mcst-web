@@ -57,7 +57,7 @@ export const MENUS: any[] = [
     img: '../../assets/image/menu_residentdatabase.png' ,
   	sub : [
   		{ name : 'Browse Database', link :'/unit' },
-  		{ name : 'Add Resident', link: '/unit/add' },
+  		{ name : 'Add Unit', link: '/unit/add' },
   		// { name : 'Manage Access control', link: '/access_control' }
   	]
   },
