@@ -448,7 +448,6 @@ dashboard .title {
   top: 0;
   bottom: 0;
   height: 70px;
-  width: 70px;
   padding: 5px;
   margin: auto;
 }
@@ -751,17 +750,20 @@ p.pull-down {
 }
 .btn-trash {
     background-color: #d8d8d8;
-    height: 35px;
-    min-width: 35px !important;
+    height: 30px;
+    max-width: 32px !important;
     margin-right: 10px;
+    margin-bottom: 3px;
     border-radius: 4px !important;
-    box-shadow: 0 3px 0 0 #bbb;
+    box-shadow: 0 2px 0 0 #bbb;
 }
 .btn-trash:hover {
   background-color: #bdbdbd;
 }
 .btn-trash .fa.fa-trash-o {
-  font-size: 18px;
+    font-size: 16px;
+    line-height: 19px;
+    margin: 0px 0px 0px -2px;
 }
 .btn-publish {
   border-radius: 4px !important;
@@ -1148,4 +1150,8 @@ p.field-box.no-margin {
 }
 .ui-rating-star a {
     background-position: 0 -80px;
+}
+
+.btn-empty {
+    background: #fd8989;
 }

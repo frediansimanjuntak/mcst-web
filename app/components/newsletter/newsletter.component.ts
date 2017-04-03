@@ -1,7 +1,7 @@
 import { Component, OnInit, ViewContainerRef, ViewEncapsulation, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { Development } from '../../models/index';
-import { NewsletterService, AlertService, UserService} from '../../services/index';
+import { NewsletterService, AlertService, UserService, AttachmentService} from '../../services/index';
 import { NotificationsService } from 'angular2-notifications';
 import '../../rxjs-operators';
 import { FileUploader } from 'ng2-file-upload';
@@ -46,7 +46,8 @@ export class NewsletterComponent implements OnInit {
                 private userService: UserService,
                 private appComponent: AppComponent,
                 private confirmationService: ConfirmationService,
-                private _notificationsService: NotificationsService) {
+                private _notificationsService: NotificationsService,
+                private attachmentService: AttachmentService) {
     }
 
           
@@ -166,6 +167,22 @@ export class NewsletterComponent implements OnInit {
 
     add(){
       this.router.navigate([this.name.default_development.name_url + '/newsletter/add']);  
+    }
+    public openDoc(file:any){
+        if(file.type=="application/pdf"){
+            this.attachmentService.downloadPDF(file.url).subscribe(
+                (res) => {
+                var fileURL = URL.createObjectURL(res);
+                window.open(fileURL, '_blank');
+                }
+            );  
+        }
+        else if(file.type.indexOf("image")!==  -1){
+            var myWindow = window.open("", file.name, "_blank");
+            myWindow.document.write("<head><title>" + file.name + "</title></head>");
+            myWindow.document.write("<img src=" + file.url + ">");
+            return myWindow;
+        }
     }
 
 }
