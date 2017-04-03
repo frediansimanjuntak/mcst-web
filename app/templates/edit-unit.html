@@ -133,10 +133,10 @@
 
                 <div class="form-group" [ngClass]="{ 'has-error': submitted && myForm.controls.max_tenant.value > 20 }">
                     <div class="row no-margin">
-                        <label class="control-label col-sm-4" for="max_tenant">Max. number of tenant :</label>
+                        <label class="control-label col-sm-4" for="max_tenant">Number of occupants :</label>
                             <div class="col-sm-8">
                                 <input type="number" max="20" min="0" class="form-control"  placeholder="If any (max. 20)" formControlName="max_tenant" name="max_tenant">
-                                <small style="color: red" [hidden]="myForm.controls.max_tenant.value <= 20">Max number of tenant must below or equal to 20</small>
+                                <small style="color: red" [hidden]="myForm.controls.max_tenant.value <= 20">Max number of occupants must below or equal to 20</small>
                             </div>
                         </div>
                  </div>
