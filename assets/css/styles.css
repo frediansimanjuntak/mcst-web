@@ -550,7 +550,7 @@ button.btn.btn-sm.btn-default {
   border: 2px solid #d1c2af;
 }
 .btn-info.active.focus, .btn-info.active:focus, .btn-info.active:hover, .btn-info:active.focus, .btn-info:active:focus, .btn-info:active:hover, .open>.btn-info.dropdown-toggle.focus, .open>.btn-info.dropdown-toggle:focus, .open>.btn-info.dropdown-toggle:hover {
-  color: #fff;
+  color: #333;
   background-color: #f1f1f1;
   border-color: #b3b3b3;
 }
@@ -1152,6 +1152,6 @@ p.field-box.no-margin {
     background-position: 0 -80px;
 }
 
-.btn-empty {
+.btn-empty, .btn-empty:hover, .btn-empty:focus, .btn-empty:active {
     background: #fd8989;
 }
