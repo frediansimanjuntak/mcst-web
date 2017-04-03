@@ -48,6 +48,7 @@ export const MENUS: any[] = [
     img: '../../assets/image/menu_payment.png',
     sub : [
       { name : 'Payment Reminder', link: '/payment_reminder'}, 
+      { name : 'Payment System', link: '/payment_system'}, 
     ]
   },
   {
@@ -92,7 +93,6 @@ export const MENUS: any[] = [
       { name : 'Facility', link: '/facility' },
       // { name : 'Company', link: '/company' },
       // { name : 'Contractor', link: '/contractor' },
-      // { name : 'Payment', link: '/payment' },
       // { name : 'Test', link: '/test' },
     ]
   },
