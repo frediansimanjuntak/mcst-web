@@ -250,7 +250,7 @@
                                 <label class="control-label col-sm-4" for="unit_no">Owner :</label>
                                 <div class="col-sm-8">
                                     <select class="form-control" formControlName="owner" name="owner">
-                                        <option *ngFor="let u of residents" [ngValue]="u.resident._id">{{u.resident.username}}</option>
+                                        <option *ngFor="let u of unit.tenant" [ngValue]="u.resident._id">{{u.resident.username}}</option>
                                     </select>
                                    <small style="color: red" [hidden]="myForm2.controls.owner.valid || (myForm2.controls.owner.pristine && !vehicleSubmitted)">Owner is required</small>
                                 </div>
