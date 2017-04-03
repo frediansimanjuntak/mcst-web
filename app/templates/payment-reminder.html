@@ -1,8 +1,8 @@
 <div class="container">
     <div class="main">
         <div *ngIf="paymentreminder">
-            <div class="title">{{ paymentreminder.title }}</div>
-            <p class="id-location">Home > Payment system > {{ paymentreminder.title }}</p>
+            <div class="title">PAYMENT REMINDER</div>
+            <p class="id-location">Home > Payment > Payment reminder</p>
             <p><a class="link-box" style="text-decoration:underline;" (click)="goBack()">Back to last page</a></p>
             <div class="row">
                 <div class="col-md-12">
@@ -51,8 +51,8 @@
             </div>
         </div>
         <div *ngIf="!paymentreminder">
-            <div class="title">PAYMENT SYSTEM</div>
-            <p class="id-location">Home > Payment system</p>
+            <div class="title">PAYMENT REMINDER</div>
+            <p class="id-location">Home > Payment reminder</p>
             <div class="row top-block">
                 <div class="col-md-8">
                     <div class="input-group filter-search">
@@ -75,7 +75,7 @@
                         <p-dataTable [value]="draft" [rows]="10" [paginator]="true" [responsive]="true">
                             <p-column field="title" header="Title" [style]="{'width': '225px','font-weight': 'bold'}" sortable="true" [filter]="true" filterPlaceholder="Search title">
                                 <template let-draft="rowData" pTemplate="body">
-                                    <span>{{draft.title | capitalize}}</span>
+                                    <span>{{draft.title | capitalizeFirst}}</span>
                                 </template>
                             </p-column>
                             <p-column field="auto_issue_on" header="Auto issue on" [style]="{'width': '125px'}" sortable="true" [filter]="true" filterPlaceholder="Search auto issue date"></p-column>

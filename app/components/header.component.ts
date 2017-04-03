@@ -134,7 +134,7 @@ export class HeaderComponent implements OnInit{
                                         read_at : '',
                                         created_at : '2017-03-05T03:31:07'
                               }
-                                        
+        this.router.navigate([this.name.default_development.name_url + '/dashboard',]);                                
         this.unreadNotificationsToShow.unshift(dummyNotif);
         this.unreadNotificationTotal = this.unreadNotificationsToShow.length;
     }

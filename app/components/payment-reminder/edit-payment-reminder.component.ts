@@ -122,7 +122,7 @@ export class EditPaymentReminderComponent implements OnInit{
                                 'Success',
                                 'Create payment successful',
                         )
-                this.router.navigate([this.name.default_development.name_url + '/payment_system']);
+                this.router.navigate([this.name.default_development.name_url + '/payment_reminder']);
             },
             error => {
                 console.log(error);
@@ -144,7 +144,7 @@ export class EditPaymentReminderComponent implements OnInit{
                                 'Success',
                                 'Update payment reminder successful',
                         )
-                this.router.navigate([this.name.default_development.name_url + '/payment_system']);
+                this.router.navigate([this.name.default_development.name_url + '/payment_reminder']);
             },
             error => {
                 this._notificationsService.error(
@@ -165,6 +165,6 @@ export class EditPaymentReminderComponent implements OnInit{
     }
 
     cancel(){
-        this.router.navigate([this.name.default_development.name_url + '/payment_system' ]);
+        this.router.navigate([this.name.default_development.name_url + '/payment_reminder' ]);
     }
 }

@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Http, Headers, RequestOptions, Response } from '@angular/http';
+import { Http, Headers, RequestOptions, Response, ResponseContentType} from '@angular/http';
 import { Observable } from 'rxjs/Rx';
 import { url } from '../global';
 import { Attachment } from '../models/index';
@@ -36,6 +36,14 @@ export class AttachmentService {
           .toPromise()
           .then(() => null)
           .catch(this.handleError);
+    }
+
+    downloadPDF(link): any {
+    return this.http.get(link, { responseType: ResponseContentType.Blob }).map(
+        (res) => {
+                return new Blob([res.blob()], { type: 'application/pdf' })
+            }
+        )
     }
 
     private handleError(error: any): Promise<any> {

@@ -24,11 +24,13 @@ export class PollComponent implements OnInit {
     pollsDraft:  any[] = [];
     pollsActive: any[] = [];
     pollsResult: any[] = [];
+    pollsPast: any[] = [];
     pollStart: Poll;
-	model: any = {};
+	  model: any = {};
     id: string;
     name: any;
     today:Date;
+    todayNumber: number;
     nextDay: Date;
     constructor(
                 private router: Router,
@@ -49,6 +51,20 @@ export class PollComponent implements OnInit {
             this.id = params['id'];
         });
 
+        var yyyy:any = this.today.getFullYear();
+        var mm:any = (this.today.getMonth());
+        var dd:any  = this.today.getDate();
+        
+        if(dd<10)   
+        {  
+            dd='0'+dd;  
+        }   
+          
+        if(mm<10)   
+        {  
+            mm='0'+mm;  
+        }  
+        this.todayNumber = +yyyy+mm+dd;
         this.userService.getByToken()
                             .subscribe(name => {
                                 this.name = name;
@@ -103,10 +119,11 @@ export class PollComponent implements OnInit {
     	  this.pollService.getAll()
             .subscribe((data)=> {
                 setTimeout(()=> {
-                    this.polls 		= data.filter(data => data.development._id == this.name.default_development._id );
-                    this.pollsDraft = this.polls.filter(data => data.status == "draft" );
+                    this.polls 		   = data.filter(data => data.development._id == this.name.default_development._id );
+                    this.pollsDraft  = this.polls.filter(data => data.status == "draft" );
                     this.pollsActive = this.polls.filter(data => data.status == "active" );
-                    this.pollsResult= this.polls.filter(data => data.status == "result" );
+                    this.pollsResult = this.polls.filter(data => data.status == "result" && data.end_time == this.todayNumber);
+                    this.pollsPast   = this.polls.filter(data => data.status == "result" && data.end_time < this.todayNumber);
 
                     for (var i = 0; i < this.pollsDraft.length; i++) {
                               if(this.pollsDraft[i].start_time){

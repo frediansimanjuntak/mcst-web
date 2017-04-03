@@ -27,7 +27,8 @@
 			<div class="row">
 				<div class="col-md-4">Attachment </div>
 				<div class="col-md-8">
-					:<a [attr.href]="a.url" *ngFor="let a of petition.attachment"> {{a.name}},&nbsp; </a>
+					:<!-- <a [attr.href]="a.url" *ngFor="let a of petition.attachment"> {{a.name}},&nbsp; </a> -->
+					<a  style="cursor:pointer" *ngFor="let a of petition.attachment" (click)="preview(a)" title="{{a.name}}">{{a.name}},&nbsp;</a>
 				</div>
 			</div>
 			<div class="row" *ngIf="petition.contract">

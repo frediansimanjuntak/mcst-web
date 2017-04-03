@@ -43,10 +43,12 @@ export const MENUS: any[] = [
     img: '../../assets/image/menu_booking.png' 
   },
   { 
-  	name: 'Payment System', 
-  	link: '/payment_system',
+  	name: 'Payment',
     description: 'Manage monthly MCST, deposits and other payments', 
-    img: '../../assets/image/menu_payment.png' 
+    img: '../../assets/image/menu_payment.png',
+    sub : [
+      { name : 'Payment Reminder', link: '/payment_reminder'}, 
+    ]
   },
   {
   	name: 'Resident Database',

@@ -164,8 +164,21 @@ export class ViewUnitComponent implements OnInit {
         });
     }
 
-    public openDoc(){
-        window.open(this.vehicle.doc.url, '_blank');
+    public openDoc(file:any){
+        if(file.type=="application/pdf"){
+            this.attachmentService.downloadPDF(file.url).subscribe(
+                (res) => {
+                var fileURL = URL.createObjectURL(res);
+                window.open(fileURL, '_blank');
+                }
+            );  
+        }
+        else if(file.type.indexOf("image")!==  -1){
+            var myWindow = window.open("", file.name, "_blank");
+            myWindow.document.write("<head><title>" + file.name + "</title></head>");
+            myWindow.document.write("<img src=" + file.url + ">");
+            return myWindow;
+        }
     }
 
     public refreshValueResident(value:any):void {
