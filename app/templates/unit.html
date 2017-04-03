@@ -20,11 +20,9 @@
 							<div class="col-md-5 no-padding">
 							    <div class="input-group pull-right">
 							          <select class="form-control" name="selectedType" (change)="filterType($event)" [(ngModel)]="typeFilter">
-							          	<option value="" disabled="" selected="selected">Type of Resident</option>
-							          	<option value="">All</option>
-							            <option value="own stay">Owner</option>
-							            <option value="tenanted">Tenant</option>
-							            <option value="no landlord">Empty</option>
+							          	<option value="">Status (default/all)</option>
+							            <option value="own stay">Owned</option>
+							            <option value="tenanted">Tenanted</option>
 							          </select>
 							    </div>
 						    </div>
