@@ -137,7 +137,6 @@ export class BookingComponent implements OnInit {
 	}
 
 	filterRefno(){
-		
         this.appComponent.loading=true;
 		this.bookings  = this.all.filter(data => data.reference_no.toLowerCase().indexOf(this.dataFilter.toLowerCase()) !==  -1);
 		this.selectedDay = this.bookings;
