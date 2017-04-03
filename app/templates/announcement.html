@@ -26,7 +26,7 @@
 						<p-dataTable [value]="announcementsDrafted" [rows]="10" [paginator]="true">
 							<p-column [style]="{'width':'180px'}" field="title" header="Title" sortable="true">
 								<template let-announcementsDrafted="rowData" pTemplate="body">
-									<span>{{announcementsDrafted.title | capitalize}}</span>
+									<span>{{announcementsDrafted.title | capitalizeFirst}}</span>
 								</template>
 							</p-column>
 							<p-column [style]="{'width':'200px'}" field="message" header="Message" sortable="true">

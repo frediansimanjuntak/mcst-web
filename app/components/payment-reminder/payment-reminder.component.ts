@@ -210,19 +210,19 @@ export class PaymentReminderComponent implements OnInit {
 	// }
 
 	edit(paymentreminder: PaymentReminder){
-		this.router.navigate([this.name.default_development.name_url + '/payment_system/edit', paymentreminder._id]);
+		this.router.navigate([this.name.default_development.name_url + '/payment_reminder/edit', paymentreminder._id]);
 	}
 
 	add(){
-		this.router.navigate([this.name.default_development.name_url + '/payment_system/add']);
+		this.router.navigate([this.name.default_development.name_url + '/payment_reminder/add']);
 	}
 
 	view(paymentreminder: PaymentReminder){
-		this.router.navigate([this.name.default_development.name_url + '/payment_system/view', paymentreminder._id]);
+		this.router.navigate([this.name.default_development.name_url + '/payment_reminder/view', paymentreminder._id]);
 	}
 
 	goBack(){
-		this.router.navigate([this.name.default_development.name_url + '/payment_system']);
+		this.router.navigate([this.name.default_development.name_url + '/payment_reminder']);
 	}
 
 	publish(paymentreminder:PaymentReminder){
@@ -249,7 +249,7 @@ export class PaymentReminderComponent implements OnInit {
 
 	publishConfirmation(paymentreminder) {
 		this.confirmationService.confirm({
-			message: 'Are you sure that you want to publish this paymentreminder?',
+			message: 'Are you sure that you want to publish this payment reminder?',
 			header: 'Publish Confirmation',
 			accept: () => {
 				this.publish(paymentreminder)

@@ -84,8 +84,8 @@ export class EditIncidentComponent implements OnInit {
     }
 
     createIncident(event: any) {
-        this.appComponent.loading = true
         if(this.model.attachment.length > 0) {
+            this.appComponent.loading = true
            let formData:FormData = new FormData();
             for (var i = 0; i < this.model.attachment.length; i++) {
                 formData.append("attachment", this.model.attachment[i]);

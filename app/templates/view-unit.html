@@ -306,37 +306,33 @@
                 </modal-header>
                 <modal-content *ngIf="resident">
                     <div class="row">
-                        <div class="col-md-4"><b>Resident</b></div>
-                        <div class="col-md-8"> <p>: {{ resident.resident.username | capitalize }}</p></div>
+                        <div class="col-md-4 col-padding"><b>Resident</b></div>
+                        <div class="col-md-8 col-padding">: {{ resident.resident.username | capitalize }}</div>
                     </div>
                     <div class="row">
-                        <div class="col-md-4"><b>Type</b></div>
-                        <div class="col-md-8"><p>: {{ resident.type | capitalize}}</p></div>
+                        <div class="col-md-4 col-padding"><b>Type</b></div>
+                        <div class="col-md-8 col-padding">: {{ resident.type | capitalize}}</div>
                     </div>
                     <div class="row">
-                        <div class="col-md-4"><b>Added on </b></div>
-                        <div class="col-md-8">
-                            <p>: 
-                                {{ resident.created_at | date:'fullDate' }} 
-                            </p>
+                        <div class="col-md-4 col-padding"><b>Added on </b></div>
+                        <div class="col-md-8 col-padding">: {{ resident.created_at | date:'fullDate' }}</div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-4 col-padding"><b>Contact No </b></div>
+                        <div class="col-md-8 col-padding">: {{resident.resident.phone}}, {{resident.resident.email}}</div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-4 col-padding"><b>Social Page </b></div>
+                        <div class="col-md-8 col-padding">
+                            <span *ngIf="resident.social_page">: {{ resident.social_page }}</span>
+                            <span *ngIf="!resident.social_page">: -</span>
                         </div>
                     </div>
                     <div class="row">
-                        <div class="col-md-4"><b>Contact No </b></div>
-                        <div class="col-md-8"><p>: {{resident.resident.phone}}, {{resident.resident.email}}</p></div>
-                    </div>
-                    <div class="row">
-                        <div class="col-md-4"><b>Social Page </b></div>
-                        <div class="col-md-8">
-                            <p *ngIf="resident.social_page">: {{ resident.social_page }}</p>
-                            <p *ngIf="!resident.social_page">: -</p>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-md-4"><b>Remarks </b></div>
-                        <div class="col-md-8">
-                            <p *ngIf="resident.remarks">: {{ resident.remarks | capitalize}}</p>
-                            <p *ngIf="!resident.remarks">: -</p>
+                        <div class="col-md-4 col-padding"><b>Remarks </b></div>
+                        <div class="col-md-8 col-padding">
+                            <span *ngIf="resident.remarks">: {{ resident.remarks | capitalize}}</span>
+                            <span *ngIf="!resident.remarks">: -</span>
                         </div>
                     </div>
                 </modal-content>
@@ -353,37 +349,36 @@
                 </modal-header>
                 <modal-content *ngIf="vehicle">
                     <div class="row">
-                        <div class="col-md-4"><b>License Plate</b></div>
-                        <div class="col-md-8"> <p>: {{ vehicle.license_plate }}</p></div>
+                        <div class="col-md-4 col-padding"><b>License Plate</b></div>
+                        <div class="col-md-8 col-padding">: {{ vehicle.license_plate }}</div>
                     </div>
                     <div class="row">
-                        <div class="col-md-4"><b>Owner</b></div>
-                        <div class="col-md-8"><p>: {{ vehicle.user | capitalize}}</p></div>
+                        <div class="col-md-4 col-padding"><b>Owner</b></div>
+                        <div class="col-md-8 col-padding">: {{ vehicle.user | capitalize}}</div>
                     </div>
                     <div class="row">
-                        <div class="col-md-4"><b>Transponder</b></div>
-                        <div class="col-md-8">
-                            <p *ngIf="vehicle.transponder">: {{ vehicle.transponder }}</p>
-                            <p *ngIf="!vehicle.transponder">: -</p>
+                        <div class="col-md-4 col-padding"><b>Transponder</b></div>
+                        <div class="col-md-8 col-padding">
+                            <span *ngIf="vehicle.transponder">: {{ vehicle.transponder }}</span>
+                            <span *ngIf="!vehicle.transponder">: -</span>
                         </div>
                     </div>
                    <div class="row">
-                        <div class="col-md-4"><b>Document</b></div>
-                        <div class="col-md-8">
-                        <p *ngIf="vehicle.doc">: <a style="cursor: pointer;" (click)="openDoc()"> {{vehicle.doc.name}} </a></p>
+                        <div class="col-md-4 col-padding"><b>Document</b></div>
+                        <div class="col-md-8 col-padding">
+                        <span *ngIf="vehicle.doc">: <a style="cursor: pointer; word-break:break-all;" (click)="openDoc(vehicle.doc)"> {{vehicle.doc.name}} </a></span>
                         </div>
                     </div>
                      <div class="row">
-                        <div class="col-md-4"><b>Registered on </b></div>
-                        <div class="col-md-8">
-                            <p>: {{ vehicle.registered_on | date:'fullDate'}}</p>
+                        <div class="col-md-4 col-padding"><b>Registered on </b></div>
+                        <div class="col-md-8 col-padding">: {{ vehicle.registered_on | date:'fullDate'}}
                         </div>
                     </div>
                     <div class="row">
-                        <div class="col-md-4"><b>Remarks </b></div>
-                        <div class="col-md-8">
-                            <p *ngIf="vehicle.remarks">: {{ vehicle.remarks | capitalize}}</p>
-                            <p *ngIf="!vehicle.remarks">: -</p>
+                        <div class="col-md-4 col-padding"><b>Remarks </b></div>
+                        <div class="col-md-8 col-padding">
+                            <span *ngIf="vehicle.remarks">: {{ vehicle.remarks | capitalize}}</span>
+                            <span *ngIf="!vehicle.remarks">: -</span>
                         </div>
 
                     </div>

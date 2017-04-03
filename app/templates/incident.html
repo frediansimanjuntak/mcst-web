@@ -112,7 +112,7 @@
                                 </p-column>
                                 <p-column filterMatchMode="contains" field="title" header="Title" sortable="true" [filter]="true" filterPlaceholder="Search Title">
                                     <template let-data="rowData" pTemplate="body">
-                                        <span>{{data.title | capitalize}}</span>
+                                        <span>{{data.title | capitalizeFirst}}</span>
                                     </template>
                                 </p-column>
                                 <p-column filterMatchMode="contains" field="remark" header="Message" sortable="true" [filter]="true" filterPlaceholder="Search Message">

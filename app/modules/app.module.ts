@@ -123,6 +123,7 @@ import {
 
 import {
   CapitalizePipe,
+  CapitalizeFirstPipe
   } from '../pipes/index';
 
 @NgModule({
@@ -225,7 +226,8 @@ import {
     FooterComponent,
     SignaturePadPage,
     PdfViewerComponent,
-    CapitalizePipe
+    CapitalizePipe,
+    CapitalizeFirstPipe
 ],
   providers: [ 
     AccessControlService,

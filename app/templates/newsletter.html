@@ -26,7 +26,11 @@
 				<tabset>
 					<tab heading="AGM">
 						<p-dataTable [value]="dataAgm" [rows]="10" [paginator]="true">
-							<p-column field="title" header="Title" sortable="true" [filter]="true" filterPlaceholder="Search Title"></p-column>
+							<p-column field="title" header="Title" sortable="true" [filter]="true" filterPlaceholder="Search Title">
+								<template let-dataAgm="rowData" pTemplate="body">
+									<span>{{dataAgm.title | capitalizeFirst}}</span>
+								</template>
+							</p-column>
 							<p-column header="Uploaded on" sortable="true">
 								<template let-dataAgm="rowData" pTemplate="body">
 									<span>{{dataAgm.created_at | date:'d/M/y'}}</span>
@@ -39,7 +43,7 @@
 							</p-column>
 							<p-column field="attachment" header="Attachments" sortable="true">
 								<template let-dataAgm="rowData" pTemplate="body">
-									<span *ngFor="let a of dataAgm.attachment">
+									<span *ngFor="let a of dataAgm.attachment" (click)="openDoc(a)" style="cursor: pointer;">
 										{{ a.name}},
 									</span>
 								</template>
@@ -55,7 +59,11 @@
 					</tab>
 					<tab heading="EGM">
 						<p-dataTable [value]="dataEgm" [rows]="10" [paginator]="true">
-							<p-column field="title" header="Title" sortable="true" [filter]="true" filterPlaceholder="Search Title"></p-column>
+							<p-column field="title" header="Title" sortable="true" [filter]="true" filterPlaceholder="Search Title">
+								<template let-dataEgm="rowData" pTemplate="body">
+									<span>{{dataEgm.title | capitalizeFirst}}</span>
+								</template>
+							</p-column>
 							<p-column header="Uploaded on" sortable="true">
 								<template let-dataEgm="rowData" pTemplate="body">
 									<span>{{dataEgm.created_at | date:'d/M/y'}}</span>
@@ -83,7 +91,11 @@
 					</tab>
 					<tab heading="Circular">
 						<p-dataTable [value]="dataCircular" [rows]="10" [paginator]="true">
-							<p-column field="title" header="Title" sortable="true" [filter]="true" filterPlaceholder="Search Title"></p-column>
+							<p-column field="title" header="Title" sortable="true" [filter]="true" filterPlaceholder="Search Title">
+								<template let-dataCircular="rowData" pTemplate="body">
+									<span>{{dataCircular.title | capitalizeFirst}}</span>
+								</template>
+							</p-column>
 							<p-column header="Uploaded on" sortable="true">
 								<template let-dataCircular="rowData" pTemplate="body">
 									<span>{{dataCircular.created_at | date:'d/M/y'}}</span>
