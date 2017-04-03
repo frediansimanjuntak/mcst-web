@@ -38,8 +38,8 @@ export class PaymentService {
             .catch(this.handleError);
     }
 
-    update(body:Payment): Promise<Payment> {
-        return this.http.post(url + 'payment/update/' + body._id,body, this.jwt())
+    update(body:any , id:string): Promise<Payment> {
+        return this.http.post(url + 'payment/update/' + id, body, this.jwt())
             .toPromise()
             .then(res => res.json().data)
             .catch(this.handleError);
