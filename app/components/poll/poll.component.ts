@@ -145,14 +145,12 @@ export class PollComponent implements OnInit {
 
                     for (var i = 0; i < this.pollsDraft.length; i++) {
                               if(this.pollsDraft[i].end_time){
-                                  // let y = this.pollsDraft[i].end_time.toString().slice(0,4);
-                                  // let m = (this.pollsDraft[i].end_time+100).toString().slice(4,6);
-                                  // let d = this.pollsDraft[i].end_time.toString().slice(6,8);
-                                  // this.pollsDraft[i].end_time = y + '/' + m + '/' + d ;
-                                  // let date2 = new Date(m + '-' + d + '-' + y);
-                                  let timeDiff = Math.abs(this.pollsDraft[i].end_time.getTime() - this.today.getTime());
+                                  let y = this.pollsDraft[i].end_time.slice(0,4);
+                                  let m = (this.pollsDraft[i].end_time+100).slice(5,7);
+                                  let d = this.pollsDraft[i].end_time.slice(8,10);
+                                  let date2 = new Date(m + '-' + d + '-' + y);
+                                  let timeDiff = Math.abs(date2.getTime() - this.today.getTime());
                                   this.pollsDraft[i].remaining = Math.ceil(timeDiff / (1000 * 3600 * 24)); 
-
                               }    
                     }
 
@@ -173,7 +171,6 @@ export class PollComponent implements OnInit {
                     //               this.pollsResult[i].end_time = y + '/' + m + '/' + d ;
                     //           }    
                     // }
-                    console.log(this.pollsDraft)
                     setTimeout(() => this.appComponent.loading = false, 1000);
         });
 	}
