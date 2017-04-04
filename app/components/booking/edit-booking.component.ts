@@ -67,7 +67,7 @@ export class EditBookingComponent implements OnInit  {
 	model: any = {};
 	start : any;
 	loading = false;
-	selectedValues: string[] = [];
+	selectedValues: number[] = [];
 	times_start : any[] = [];
 	times_end : any[] = [];
 	period : any[] = [];
@@ -335,9 +335,9 @@ export class EditBookingComponent implements OnInit  {
 		.subscribe(facility => {
 			this.facility = facility;
 			this.facility_name = facility.name;
-			this.model.deposit_fee = facility.deposit_fee;
-			this.model.booking_fee = facility.booking_fee;
-			this.model.admin_fee = facility.admin_fee;
+			this.model.deposit_fee = facility.fee.deposit;
+			this.model.booking_fee = facility.fee.booking;
+			this.model.admin_fee = facility.fee.admin;
 			this.timeStart = [];
 			this.timeEnd = [];
 			this.filtered = this.facility.schedule.filter(facility => 
@@ -382,7 +382,7 @@ export class EditBookingComponent implements OnInit  {
 		})
 	}
 
-	public archieveSelected(start:any,end:any,min:any,name:any,type:any){
+	public getSelected(start:any,end:any,min:any,name:any,type:any){
 		if(this.tstart.length < 1) {
 			this.tstart.push(start)
 			this.tend.push(end)
@@ -421,28 +421,6 @@ export class EditBookingComponent implements OnInit  {
 		this.appComponent.loading = true
 		this.day = this.days[this.dt.getDay()];
 		this.filtered = null;
-		for (let y = 0; y < this.unavailableDay.length; ++y) {
-				let selectedDate;
-				selectedDate = new Date(this.dt.getTime());
-				var monday = moment(date)
-					.startOf('month')
-					.day(this.unavailableDay[y]);
-				if (monday.date() > 7) monday.add(7,'d');
-				var month = monday.month();
-				while(month === monday.month()){
-					// document.body.innerHTML += "<p>"+monday.toString()+"</p>";
-					var day = new Date(monday.toString());
-					var dayWrapper = moment(day);
-					this.customClass.push({
-						date: dayWrapper,
-						mode: 'day',
-						clazz: 'btn-empty'
-					})
-					monday.add(7,'d');
-				}
-			}
-			console.log(this.customClass.length)
-		this.ref.reattach
 		this.ngOnInit()
 	}
 

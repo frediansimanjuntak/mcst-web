@@ -133,8 +133,8 @@
                                                 <i *ngIf="booking_status[i] == 'Not Available'" class="fa fa-circle circle-red" aria-hidden="true"></i>
                                                 {{booking_status[i]}}
                                             </td>
-                                            <p-checkbox *ngIf="booking_status[i] == 'Not Available'" disabled="true" name="archive" (click)="archieveSelected(timeStart[i],timeEnd[i],min,facility_name,facility_type)" [(ngModel)]="selectedValues"></p-checkbox>
-                                            <p-checkbox *ngIf="booking_status[i] == 'Available'" name="archive" (click)="archieveSelected(timeStart[i],timeEnd[i],min,facility_name,facility_type)" [(ngModel)]="selectedValues"></p-checkbox>
+                                            <p-checkbox *ngIf="booking_status[i] == 'Not Available'" disabled="true" name="archive" (click)="getSelected(timeStart[i],timeEnd[i],min,facility_name,facility_type)" [(ngModel)]="selectedValues"></p-checkbox>
+                                            <p-checkbox *ngIf="booking_status[i] == 'Available'" name="archive" (click)="getSelected(timeStart[i],timeEnd[i],min,facility_name,facility_type)" [(ngModel)]="selectedValues"></p-checkbox>
                                         </tr>
                                     </tbody>
                                 </table>
