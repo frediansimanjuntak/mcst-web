@@ -59,8 +59,8 @@
                     </div>
                     <div class="row">
                         <div class="col-lg-4">
-                            <div style="width:335px; margin-top:15px;">
-                                <datepicker (click)="selectedDate()" [style]="{'width':'300px'}" [(ngModel)]="dt" [minDate]="minDate" [customClass]="customClass" [showWeeks]="false"></datepicker>
+                            <div style="width:335px; margin-top:15px;"  *ngIf="customClass.length > 0">
+                                <datepicker (click)="selectedDate(dt)" (activeDateChange)="selectedDate(dt)" [style]="{'width':'300px'}" [(ngModel)]="dt" [minDate]="minDate" [customClass]="customClass" [showWeeks]="false"></datepicker>
                             </div>
                             <div *ngIf="selectedFacility.length < 1">
                                 <form name="form" (ngSubmit)="f.form.valid && filter()" #f="ngForm" novalidate>
