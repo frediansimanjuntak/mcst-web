@@ -13,7 +13,7 @@ export class Facility {
     end_date :string
   }];
   schedule : [{
-    day : string[],
+    day : string,
     start_time : string,
     end_time : string
   }];
