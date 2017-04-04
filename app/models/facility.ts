@@ -7,7 +7,11 @@ export class Facility {
   description : string;
   payment_type : string;
   booking_type : string;
-  booking_fee : string;
+  fee:[{
+    booking : string,
+    deposit :string,
+    admin :string
+  }];
   maintenance:[{
     start_date : string,
     end_date :string

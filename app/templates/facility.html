@@ -46,7 +46,7 @@
                             <span>{{data.booking_type | capitalize}}</span>
                         </template>
                     </p-column>
-                    <p-column filterMatchMode="contains" [style]="{'width': '143px'}" field="booking_fee" header="Booking Fee" sortable="true" [filter]="true" filterPlaceholder="Search Booking Fee"></p-column>
+                    <p-column filterMatchMode="contains" [style]="{'width': '143px'}" field="fee.booking" header="Booking Fee" sortable="true" [filter]="true" filterPlaceholder="Search Booking Fee"></p-column>
                     <p-column filterMatchMode="contains" [style]="{'width': '143px'}" field="status" header="Status" sortable="true" [filter]="true" filterPlaceholder="Search Status">
                         <template let-data="rowData" pTemplate="body">
                             <span>{{data.status | capitalize}}</span>
