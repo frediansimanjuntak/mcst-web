@@ -151,11 +151,6 @@ export class EditBookingComponent implements OnInit  {
 		this.route.params.subscribe(params => {
 			this.id = params['id'];
 		});
-		this.userService.getByToken()
-		.subscribe(name => {
-			this.name = name;
-			this.unitService.getAll(this.name.default_development.name_url).subscribe(units => {this.units = units.properties})
-		})
 		this.step = 1;
 		this.day = this.days[this.dt.getDay()];
 		this.date     = new Date(this.dt.getTime());
@@ -202,8 +197,16 @@ export class EditBookingComponent implements OnInit  {
 				}
 				no = no + 1;
 			}
-			setTimeout(() => this.appComponent.loading = false, 1000);
 		});
+		this.userService.getByToken()
+		.subscribe(name => {
+			this.name = name;
+			this.unitService.getAll(this.name.default_development.name_url)
+			.subscribe(units => {
+				this.units = units.properties;
+				setTimeout(() => this.appComponent.loading = false, 1000);
+			})
+		})
 	}
 
 	private loadAllBookings() {
