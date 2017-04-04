@@ -91,12 +91,10 @@ export class EditLostFoundComponent  {
                             'Success',
                             'Create Report successful',
                     )
-                    this.alertService.success('Create Report successful', true);
                     this.router.navigate([this.name.default_development.name_url + '/lost_found']);
                 },
                 error => {
                     console.log(error);
-                    alert(`The Report could not be save, server Error.`);
                     this._notificationsService.error(
                             'Error',
                             'The Report could not be save, server Error',

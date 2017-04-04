@@ -58,7 +58,7 @@ export class EditUnitComponent implements OnInit {
                     country : ['', <any>Validators.required],
                     full_address : ['', <any>Validators.required]
                 }),
-                // status: ['no landlord'],
+                status: ['empty'],
                 max_tenant: [],
         });
         this.userService.getByToken()
