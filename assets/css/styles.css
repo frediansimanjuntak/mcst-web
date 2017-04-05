@@ -350,6 +350,9 @@ thead {
     display: table-cell;
     width: auto;
   }
+  ul.nav.nav-nav.nav-justified {
+    margin: 0px 54px;
+}
 }
 .nav>li>a:focus, .nav>li>a:hover {
   text-decoration: none;
