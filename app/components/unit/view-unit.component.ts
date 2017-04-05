@@ -87,7 +87,6 @@ export class ViewUnitComponent implements OnInit {
                 resident: [''],
                 type: ['', <any>Validators.required],
                 added_on: [''],
-                social_page: [''],
                 remarks: [''],
         });
         this.myForm2 = this.formbuilder.group({
@@ -114,8 +113,9 @@ export class ViewUnitComponent implements OnInit {
                             .getById(this.id, this.name.default_development.name_url)
                                 .subscribe(unit => {
                                     this.unit = unit.properties[0];
-                                    this.residents = this.unit.tenant;
-                                    this.tenantTotal = this.unit.tenant.length;
+                                    console.log(unit);
+                                    this.residents = this.unit.tenant.data;
+                                    this.tenantTotal = this.unit.tenant.data.length;
                                     this.vehicles = this.unit.registered_vehicle;
                                     
                                     if(this.residents){
@@ -124,13 +124,13 @@ export class ViewUnitComponent implements OnInit {
                                         this.hasTenants = false;
                                     }
 
-                                    if(this.unit.landlord){ 
+                                    if(this.unit.landlord.data){ 
                                         var landlordForResidentTable :any = {
                                         type : 'owner',
                                         i    :  1,
-                                        resident : this.unit.landlord.resident,
-                                        created_at : this.unit.landlord.created_at,
-                                        remarks : this.unit.landlord.remarks
+                                        resident : this.unit.landlord.data.resident,
+                                        created_at : this.unit.landlord.data.created_at,
+                                        remarks : this.unit.landlord.data.remarks
                                         }
                                         
                                         this.residents.unshift(landlordForResidentTable);
@@ -252,7 +252,7 @@ export class ViewUnitComponent implements OnInit {
 
     deleteResidentConfirmation(resident) {
         if(resident.type == 'owner'){
-            if(this.unit.tenant.length < 0){
+            if(this.unit.tenant.data.length < 0){
                 this.confirmationService.confirm({
                     message: 'Are you sure that you want to delete this landlord?',
                     header: 'Delete Confirmation',
@@ -261,7 +261,7 @@ export class ViewUnitComponent implements OnInit {
                         this.deleteResident(resident)
                     }
                 });    
-            }else if(this.unit.tenant.length > 0){
+            }else if(this.unit.tenant.data.length > 0){
                 this.confirmationService.confirm({
                     message: 'This unit has tenant, Are you sure that you want to delete this landlord?',
                     header: 'Delete Confirmation',

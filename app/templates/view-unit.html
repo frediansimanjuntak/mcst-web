@@ -23,14 +23,14 @@
                                 <b>Block :&nbsp;</b>{{unit.address.block_no}}
                             </div>
                             <div class="col-md-4">
-                                <span *ngIf="hasLandlord"><b>Owner :&nbsp;</b>{{unit.landlord.resident.username | capitalize}}<br></span>
+                                <span *ngIf="hasLandlord"><b>Owner :&nbsp;</b>{{unit.landlord.data.resident.username | capitalize}}<br></span>
                                 <b>Status :</b>
                                 <span *ngIf="unit.status == 'own stay'">Owned</span>
                                 <span *ngIf="unit.status == 'tenanted'">Tenanted</span>
                                 <span style="color: red" *ngIf="unit.status == 'empty'">Empty</span>
                             </div>
                             <div class="col-md-4">
-                                <span *ngIf="unit.tenant"><b>No. of Tenant :&nbsp;</b>{{ tenantTotal }}<br></span>
+                                <span *ngIf="unit.tenant.data"><b>No. of Tenant :&nbsp;</b>{{ tenantTotal }}<br></span>
                                 <span  *ngIf="vehicles"><b>Vehicle :&nbsp;</b>{{vehicles.length}}</span>
                                 
                             </div>
@@ -93,10 +93,10 @@
                                 <span>{{residents.created_at | date:'d/M/y'}}</span>
                             </template>
                         </p-column> 
-                        <p-column header="Social Page" field="social_page" sortable="true">
+                        <p-column header="Social Page" field="residents.resident.social_profile" sortable="true">
                             <template let-residents="rowData" pTemplate="body">
-                                <span *ngIf="residents.social_page">{{residents.social_page}}</span>
-                                <span *ngIf="!residents.social_page">-</span>
+                                <span *ngIf="residents.resident.social_profile">{{residents.resident.social_profile}}</span>
+                                <span *ngIf="!residents.resident.social_profile">-</span>
                             </template>
                         </p-column> 
                         <p-column header="Contact No." >
@@ -184,7 +184,7 @@
                                 <div class="col-sm-8">
                                     <select class="form-control" name="type" [(ngModel)]="model.type">
                                         <option [selected]="hasLandlord" value="tenant">Tenant</option>
-                                        <option [selected]="!hasLandlord" value="landlord">Landlord</option>
+                                        <option [selected]="!hasLandlord" value="landlord">Owner</option>
                                     </select>
                                     <span *ngIf="!valid" style="color: red">{{errorMessage}}</span>
                                 </div>
@@ -250,7 +250,7 @@
                                 <label class="control-label col-sm-4" for="unit_no">Owner :</label>
                                 <div class="col-sm-8">
                                     <select class="form-control" formControlName="owner" name="owner">
-                                        <option *ngFor="let u of unit.tenant" [ngValue]="u.resident._id">{{u.resident.username}}</option>
+                                        <option *ngFor="let u of unit.tenant.data" [ngValue]="u.resident._id">{{u.resident.username}}</option>
                                     </select>
                                    <small style="color: red" [hidden]="myForm2.controls.owner.valid || (myForm2.controls.owner.pristine && !vehicleSubmitted)">Owner is required</small>
                                 </div>
@@ -324,8 +324,8 @@
                     <div class="row">
                         <div class="col-md-4 col-padding"><b>Social Page </b></div>
                         <div class="col-md-8 col-padding">
-                            <span *ngIf="resident.social_page">: {{ resident.social_page }}</span>
-                            <span *ngIf="!resident.social_page">: -</span>
+                            <span *ngIf="resident.resident.social_profile">: {{ resident.resident.social_profile }}</span>
+                            <span *ngIf="!resident.resident.social_profile">: -</span>
                         </div>
                     </div>
                     <div class="row">
@@ -366,7 +366,8 @@
                    <div class="row">
                         <div class="col-md-4 col-padding"><b>Document</b></div>
                         <div class="col-md-8 col-padding">
-                        <span *ngIf="vehicle.doc">: <a style="cursor: pointer; word-break:break-all;" (click)="openDoc(vehicle.doc)"> {{vehicle.doc.name}} </a></span>
+                        <!-- <span *ngIf="vehicle.doc">: <a style="cursor: pointer; word-break:break-all;" (click)="openDoc(vehicle.doc)"> {{vehicle.doc.name}} </a></span> -->
+                        <span *ngIf="vehicle.doc">: <a style="cursor: pointer; word-break:break-all;" [attr.href]="vehicle.doc.url" download> {{vehicle.doc.name}} </a></span>
                         </div>
                     </div>
                      <div class="row">
@@ -400,7 +401,7 @@
                                 <div class="col-sm-12">
                                     <div class="col-sm-3">
                                         <label>
-                                            <input type="radio" name="code" [checked]=true [(ngModel)]="codeType" value='landlord'>Landlord
+                                            <input type="radio" name="code" [checked]=true [(ngModel)]="codeType" value='landlord'>Owner
                                         </label>
                                     </div>
                                     <div class="col-sm-3">
@@ -410,7 +411,7 @@
                                     </div>
                                     <div class="col-sm-6">
                                         <label>
-                                            <input type="radio" name="code" [(ngModel)]="codeType" value='all'>Landlord and Tenant
+                                            <input type="radio" name="code" [(ngModel)]="codeType" value='all'>Owner and Tenant
                                         </label>
                                     </div>                                    
                                 </div>

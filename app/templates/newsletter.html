@@ -43,9 +43,9 @@
 							</p-column>
 							<p-column field="attachment" header="Attachments" sortable="true">
 								<template let-dataAgm="rowData" pTemplate="body">
-									<span *ngFor="let a of dataAgm.attachment" (click)="openDoc(a)" style="cursor: pointer;">
+									<a *ngFor="let a of dataAgm.attachment" [attr.href]="a.url" style="cursor: pointer;" download>
 										{{ a.name}},
-									</span>
+									</a>
 								</template>
 							</p-column>
 							<!-- </p-column> -->
@@ -76,9 +76,9 @@
 							</p-column>
 							<p-column field="attachment" header="Attachments" sortable="true">
 								<template let-dataEgm="rowData" pTemplate="body">
-									<span *ngFor="let a of dataEgm.attachment">
+									<a *ngFor="let a of dataEgm.attachment" [attr.href]="a.url" download>
 										{{ a.name}},
-									</span>
+									</a>
 								</template>
 							</p-column>
 							<p-column styleClass="col-button" header="Action">
@@ -108,9 +108,9 @@
 							</p-column>
 							<p-column field="attachment" header="Attachments" sortable="true">
 								<template let-dataCircular="rowData" pTemplate="body">
-									<span *ngFor="let a of dataCircular.attachment">
+									<a *ngFor="let a of dataCircular.attachment" [attr.href]="a.url" download>
 										{{ a.name}},
-									</span>
+									</a>
 								</template>
 							</p-column>
 							<p-column styleClass="col-button" header="Action">

@@ -27,8 +27,10 @@
 			<div class="row">
 				<div class="col-md-4">Attachment </div>
 				<div class="col-md-8">
-					:<!-- <a [attr.href]="a.url" *ngFor="let a of petition.attachment"> {{a.name}},&nbsp; </a> -->
-					<a  style="cursor:pointer" *ngFor="let a of petition.attachment" (click)="preview(a)" title="{{a.name}}">{{a.name}},&nbsp;</a>
+					:
+					<!-- <a  style="cursor:pointer" *ngFor="let a of petition.attachment" (click)="preview(a)" title="{{a.name}}">{{a.name}},&nbsp;</a> -->
+					<a  style="cursor:pointer" *ngFor="let a of petition.attachment" [attr.href]="a.url" title="{{a.name}}" download>{{a.name}},&nbsp;</a>
+
 				</div>
 			</div>
 			<div class="row" *ngIf="petition.contract">
@@ -168,7 +170,8 @@
 						<p-column [style]="{'width':'250px'}" styleClass="col-button" header="Action">
 							<template class="pull-right" let-petitions="rowData" pTemplate="body">
 								<a type="button" style="cursor:pointer; margin: 0 25px 0 5px;" class="btn-underline" (click)="viewPetition(petitions)">View</a>
-								<a (click)="viewPdf(petitions)" style="cursor:pointer; margin: 0 25px 0 5px;" class="btn-underline"><img src="../../assets/image/icon_pdf.png" class="img-btn" />Pdf</a>
+								<!-- <a (click)="viewPdf(petitions)" style="cursor:pointer; margin: 0 25px 0 5px;" class="btn-underline"><img src="../../assets/image/icon_pdf.png" class="img-btn" />Pdf</a> -->
+								<a style="cursor:pointer; margin: 0 25px 0 5px;" class="btn-underline"><img src="../../assets/image/icon_pdf.png" class="img-btn" />Pdf</a>
 								<p-checkbox name="archive" (click)="checkSelected()" value="{{petitions._id}}" [(ngModel)]="selectedValues"></p-checkbox>
 							</template>
 						</p-column>
