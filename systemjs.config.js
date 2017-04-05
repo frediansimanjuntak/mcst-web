@@ -48,7 +48,8 @@
       'ng2-slim-progress-bar': 'node_modules/ng2-slim-progress-bar/bundles/index.umd.js',
       'angular2-notifications': 'node_modules/angular2-notifications',
       'ng2-pdf-viewer': 'node_modules/ng2-pdf-viewer',
-      'pdfjs-dist': 'node_modules/pdfjs-dist'
+      'pdfjs-dist': 'node_modules/pdfjs-dist',
+      "underscore" : "npm:underscore/underscore.js",
     },
     // packages tells the System loader how to load when no filename and/or no extension
     packages: {

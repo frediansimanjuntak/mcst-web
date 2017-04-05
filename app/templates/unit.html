@@ -62,9 +62,9 @@
 						</p-column>
 						<p-column field="status" header="Status" sortable="true">
 							<template let-dataUnit="rowData" pTemplate="body">
-								<span *ngIf="dataUnit.status == 'own stay'">Own stay</span>
+								<span *ngIf="dataUnit.status == 'own stay'">Owned</span>
 								<span *ngIf="dataUnit.status == 'tenanted'">Tenanted</span>
-								<span style="color: red" *ngIf="dataUnit.status == 'no landlord'">No landlord</span>
+								<span style="color: red" *ngIf="dataUnit.status == 'empty'">Empty</span>
 							</template>
 						</p-column>
 						<p-column sortable="true" field="tenant.length" header="No. of Tenant">

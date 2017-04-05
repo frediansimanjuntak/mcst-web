@@ -115,13 +115,9 @@ export class EditPollComponent  {
 						                    .getById(this.id)
 						                    .subscribe(poll => {
 						                       	this.poll = poll;
-
                                                 if(this.poll.start_time){
-                                                  let y = this.poll.start_time.toString().slice(0,4);
-                                                  let m = (this.poll.start_time+100).toString().slice(4,6);
-                                                  let d = this.poll.start_time.toString().slice(6,8);
-                                                  this.selectedStartTime = y + '-' + m + '-' + d ;
-                                                  this.model.start_time = new Date(m + '/' + d + '/' + y);
+                                                  this.model.start_time = new Date(this.poll.start_time);
+                                                  this.selectedStartTime = this.convertDate(this.model.start_time);
 
                                                 }else if(this.poll.start_time == null){
                                                   this.selectedStartTime = "";
@@ -129,11 +125,8 @@ export class EditPollComponent  {
                                                 }     
 
                                                 if(this.poll.end_time){
-                                                  let y = this.poll.end_time.toString().slice(0,4);
-                                                  let m = (this.poll.end_time+100).toString().slice(4,6);
-                                                  let d = this.poll.end_time.toString().slice(6,8);
-                                                  this.selectedEndTime = y + '-' + m + '-' + d ;
-                                                  this.model.end_time = new Date(m + '/' + d + '/' + y);
+                                                  this.model.end_time = new Date(this.poll.end_time);
+                                                  this.selectedEndTime = this.convertDate(this.model.end_time);
                                                 }else if(this.poll.end_time == null){
                                                   this.selectedEndTime = "";
                                                   this.model.end_time = null;

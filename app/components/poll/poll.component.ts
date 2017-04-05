@@ -52,7 +52,7 @@ export class PollComponent implements OnInit {
         });
 
         var yyyy:any = this.today.getFullYear();
-        var mm:any = (this.today.getMonth());
+        var mm:any = (this.today.getMonth()+1);
         var dd:any  = this.today.getDate();
         
         if(dd<10)   
@@ -76,17 +76,6 @@ export class PollComponent implements OnInit {
                                             this.poll = poll;
                                             this.max = this.poll.votes.length;
                                             
-                                            let y = this.poll.start_time.toString().slice(0,4);
-                                            let m = (this.poll.start_time+100).toString().slice(4,6);
-                                            let d = this.poll.start_time.toString().slice(6,8);
-                                            this.poll.start_time = y + '/' + m + '/' + d ;
-
-                                            y = this.poll.end_time.toString().slice(0,4);
-                                            m = (this.poll.end_time+100).toString().slice(4,6);
-                                            d = this.poll.end_time.toString().slice(6,8);
-                                            this.poll.end_time = y + '/' + m + '/' + d ;
-
-
                                             let numOptions =  this.poll.choices.length;
                                             let opts = new Array(numOptions);
 
@@ -116,64 +105,60 @@ export class PollComponent implements OnInit {
     }
 
     private loadPolls(){
+          let self = this
     	  this.pollService.getAll()
             .subscribe((data)=> {
-                    console.log(data);
                     this.polls 		   = data.filter(data => data.development._id == this.name.default_development._id );
                     this.pollsDraft  = this.polls.filter(data => data.status == "draft" );
                     this.pollsActive = this.polls.filter(data => data.status == "active" );
-                    this.pollsResult = this.polls.filter(data => data.status == "end poll" && data.end_time == this.todayNumber);
-                    this.pollsPast   = this.polls.filter(data => data.status == "end poll" && data.end_time < this.todayNumber);
+                    this.pollsResult = this.polls.filter(function(data:any) {
+                        
+                        let a:any = new Date(data.end_time)
+                        let yyyy:any = a.getFullYear();
+                        let mm:any = (a.getMonth()+1);
+                        let dd:any  = a.getDate();
+                        if(dd<10)   
+                        {  
+                            dd='0'+dd;  
+                        }   
+                          
+                        if(mm<10)   
+                        {  
+                            mm='0'+mm;  
+                        }  
+                        a = +yyyy+mm+dd;
+                        return data.status == "end poll" && a == self.todayNumber});
 
-                    // for (var i = 0; i < this.pollsDraft.length; i++) {
-                    //           if(this.pollsDraft[i].start_time){
-                    //               let y = this.pollsDraft[i].start_time.toString().slice(0,4);
-                    //               let m = (this.pollsDraft[i].start_time+100).toString().slice(4,6);
-                    //               let d = this.pollsDraft[i].start_time.toString().slice(6,8);
-                    //               this.pollsDraft[i].start_time = y + '/' + m + '/' + d ;
-                    //         }    
-                    // }
-
-                    // for (var i = 0; i < this.pollsDraft.length; i++) {
-                    //           if(this.pollsDraft[i].end_time){
-                    //               let y = this.pollsDraft[i].end_time.toString().slice(0,4);
-                    //               let m = (this.pollsDraft[i].end_time+100).toString().slice(4,6);
-                    //               let d = this.pollsDraft[i].end_time.toString().slice(6,8);
-                    //               this.pollsDraft[i].end_time = y + '/' + m + '/' + d ;
-                    //           }    
-                    // }
-
-                    for (var i = 0; i < this.pollsDraft.length; i++) {
-                              if(this.pollsDraft[i].end_time){
-                                  // let y = this.pollsDraft[i].end_time.toString().slice(0,4);
-                                  // let m = (this.pollsDraft[i].end_time+100).toString().slice(4,6);
-                                  // let d = this.pollsDraft[i].end_time.toString().slice(6,8);
-                                  // this.pollsDraft[i].end_time = y + '/' + m + '/' + d ;
-                                  // let date2 = new Date(m + '-' + d + '-' + y);
-                                  let timeDiff = Math.abs(this.pollsDraft[i].end_time.getTime() - this.today.getTime());
-                                  this.pollsDraft[i].remaining = Math.ceil(timeDiff / (1000 * 3600 * 24)); 
-
+                    this.pollsPast   = this.polls.filter(function(data:any) {
+                        let a:any = new Date(data.end_time)
+                        let yyyy:any = a.getFullYear();
+                        let mm:any = (a.getMonth()+1);
+                        let dd:any  = a.getDate();
+                        if(dd<10)   
+                        {  
+                            dd='0'+dd;  
+                        }   
+                          
+                        if(mm<10)   
+                        {  
+                            mm='0'+mm;  
+                        }  
+                        a = +yyyy+mm+dd;
+                        return data.status == "end poll" && a < self.todayNumber
+                    });
+                    
+                    for (var i = 0; i < this.pollsActive.length; i++) {
+                              if(this.pollsActive[i].end_time){
+                                  // let y = this.pollsActive[i].end_time.slice(0,4);
+                                  // let m = (this.pollsActive[i].end_time+100).slice(5,7);
+                                  // let d = this.pollsActive[i].end_time.slice(8,10);
+                                  let date2 = new Date(this.pollsActive[i].end_time);
+                                  let timeDiff = Math.abs(date2.getTime() - this.today.getTime());
+                                  this.pollsActive[i].remaining = Math.ceil(timeDiff / (1000 * 3600 * 24)); 
+                                  this.pollsActive[i].remaining = Math.ceil(timeDiff / (1000 * 3600 * 24)); 
                               }    
                     }
 
-                    // for (var i = 0; i < this.pollsResult.length; i++) {
-                    //           if(this.pollsResult[i].start_time){
-                    //               let y = this.pollsResult[i].start_time.toString().slice(0,4);
-                    //               let m = (this.pollsResult[i].start_time+100).toString().slice(4,6);
-                    //               let d = this.pollsResult[i].start_time.toString().slice(6,8);
-                    //               this.pollsResult[i].start_time = y + '/' + m + '/' + d ;
-                    //           }    
-                    // }
-
-                    // for (var i = 0; i < this.pollsResult.length; i++) {
-                    //           if(this.pollsResult[i].end_time){
-                    //               let y = this.pollsResult[i].end_time.toString().slice(0,4);
-                    //               let m = (this.pollsResult[i].end_time+100).toString().slice(4,6);
-                    //               let d = this.pollsResult[i].end_time.toString().slice(6,8);
-                    //               this.pollsResult[i].end_time = y + '/' + m + '/' + d ;
-                    //           }    
-                    // }
-                    console.log(this.pollsDraft)
                     setTimeout(() => this.appComponent.loading = false, 1000);
         });
 	}

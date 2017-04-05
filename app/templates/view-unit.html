@@ -25,9 +25,9 @@
                             <div class="col-md-4">
                                 <span *ngIf="hasLandlord"><b>Owner :&nbsp;</b>{{unit.landlord.resident.username | capitalize}}<br></span>
                                 <b>Status :</b>
-                                <span *ngIf="unit.status == 'own stay'">Own stay</span>
+                                <span *ngIf="unit.status == 'own stay'">Owned</span>
                                 <span *ngIf="unit.status == 'tenanted'">Tenanted</span>
-                                <span style="color: red" *ngIf="unit.status == 'no landlord'">No landlord</span>
+                                <span style="color: red" *ngIf="unit.status == 'empty'">Empty</span>
                             </div>
                             <div class="col-md-4">
                                 <span *ngIf="unit.tenant"><b>No. of Tenant :&nbsp;</b>{{ tenantTotal }}<br></span>
@@ -250,7 +250,7 @@
                                 <label class="control-label col-sm-4" for="unit_no">Owner :</label>
                                 <div class="col-sm-8">
                                     <select class="form-control" formControlName="owner" name="owner">
-                                        <option *ngFor="let u of residents" [ngValue]="u.resident._id">{{u.resident.username}}</option>
+                                        <option *ngFor="let u of unit.tenant" [ngValue]="u.resident._id">{{u.resident.username}}</option>
                                     </select>
                                    <small style="color: red" [hidden]="myForm2.controls.owner.valid || (myForm2.controls.owner.pristine && !vehicleSubmitted)">Owner is required</small>
                                 </div>

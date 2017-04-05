@@ -1155,6 +1155,11 @@ p.field-box.no-margin {
     background-position: 0 -80px;
 }
 
-.btn-empty, .btn-empty:hover, .btn-empty:focus, .btn-empty:active {
-    background: #fd8989;
+.btn-empty, .btn-empty:hover, .btn-empty:focus, .btn-empty:active, .btn-empty:active:hover, .btn-empty:active:focus {
+    background: #fd8989 !important;
+}
+
+.btn-empty.btn-info.active {
+    background: #fd8989 !important;
+    box-shadow: inset 0 0 5px 0 #444 !important;
 }

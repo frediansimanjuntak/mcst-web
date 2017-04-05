@@ -50,22 +50,24 @@
 					<p style="color: red">: <b>{{poll.outcome}}</b></p>
 				</div>
 			</div>
-			<div class="row">
+			<div *ngIf="poll.status=='end poll'" class="row">
 				<div class="col-md-4">Commence Date</div>
 				<div class="col-md-8">
-					<p>: {{poll.start_time}}</p>
+					<p>: {{poll.start_time | date: 'd/M/y'}}</p>
 				</div>
 			</div>
 			<div class="row">
 				<div class="col-md-4">Result Date</div>
 				<div class="col-md-8">
-					<p>: {{poll.end_time}}</p>
+					<p>: {{poll.end_time | date: 'd/M/y'}}</p>
 				</div>
 			</div>
 			<div class="row">
 				<div class="col-md-4">Status</div>
 				<div class="col-md-8">
-					<p>: {{poll.status}}</p>
+					<p *ngIf="poll.status=='draft'">: Draft</p>
+					<p *ngIf="poll.status=='active'">: Active</p>
+					<p *ngIf="poll.status=='end poll'">: End</p>
 				</div>
 			</div>
 			<div class="row">
@@ -153,7 +155,7 @@
 						</p-column>
 						<p-column [style]="{'width':'300px'}" header="Action" styleClass="col-button">
 					    	<template class="pull-right" let-pollsActive="rowData" pTemplate="body">
-					    	<a type="button" style="cursor:pointer" (click)="viewPoll(pollsActive)">&nbsp;<u>View Progress</u></a>
+					    	<a type="button" style="cursor:pointer" (click)="viewPoll(pollsActive)"><u>View Progress</u></a>
 					    	</template>
 					    </p-column>
 					</p-dataTable>
@@ -162,7 +164,12 @@
 			    	<p-dataTable [value]="pollsResult" [rows]="10" [paginator]="true">
 					    <p-column field="title" header="Poll Title" sortable="true" [filter]="true" filterPlaceholder="Search Title"></p-column>
 					    <p-column field="description" header="Poll" sortable="true" [filter]="true" filterPlaceholder="Search Poll"></p-column>
-					    <p-column field="poll_type" header="Poll Type" sortable="true" [filter]="true" filterPlaceholder="Search Type"></p-column>
+					    <p-column field="poll_type" header="Poll Type" sortable="true" [filter]="true" filterPlaceholder="Search Type">
+					    	<template let-pollsResult="rowData" pTemplate="body">
+									<span *ngIf="pollsResult.poll_type == 'yes_or_no'">Yes / No</span>
+									<span *ngIf="pollsResult.poll_type == 'multiple'">Multiple</span>
+							</template>
+					    </p-column>
 					    <p-column field="open_to" header="Open to" sortable="true" [filter]="true" filterPlaceholder="Search Type">
 					    		<template let-pollsResult="rowData" pTemplate="body">
 						            <span *ngIf="pollsResult.open_to">{{pollsResult.open_to}}</span>
@@ -189,7 +196,7 @@
 						</p-column>
 					    <p-column [style]="{'width':'300px'}" header="Action" styleClass="col-button">
 					    	<template class="pull-right" let-pollsResult="rowData" pTemplate="body">
-					    	<a type="button" style="cursor:pointer" (click)="viewPoll(pollsResult)"><i class="fa fa-edit" aria-hidden="true"></i>&nbsp;View Result</a>
+					    	<a type="button" style="cursor:pointer" (click)="viewPoll(pollsResult)"><u>View Result</u></a>
 					    	</template>
 					    </p-column>
 					</p-dataTable>
@@ -198,7 +205,12 @@
 			    		<p-dataTable [value]="pollsPast" [rows]="10" [paginator]="true">
 					    <p-column field="title" header="Poll Title" sortable="true" [filter]="true" filterPlaceholder="Search Title"></p-column>
 					    <p-column field="description" header="Poll" sortable="true" [filter]="true" filterPlaceholder="Search Poll"></p-column>
-					    <p-column field="poll_type" header="Poll Type" sortable="true" [filter]="true" filterPlaceholder="Search Type"></p-column>
+					    <p-column field="poll_type" header="Poll Type" sortable="true" [filter]="true" filterPlaceholder="Search Type">
+					    	<template let-pollsPast="rowData" pTemplate="body">
+									<span *ngIf="pollsPast.poll_type == 'yes_or_no'">Yes / No</span>
+									<span *ngIf="pollsPast.poll_type == 'multiple'">Multiple</span>
+							</template>
+					    </p-column>
 					    <p-column field="open_to" header="Open to" sortable="true" [filter]="true" filterPlaceholder="Search Type">
 					    		<template let-pollsPast="rowData" pTemplate="body">
 						            <span *ngIf="pollsPast.open_to">{{pollsPast.open_to}}</span>
@@ -226,7 +238,7 @@
 					    
 						<p-column [style]="{'width':'300px'}" header="Action" styleClass="col-button">
 					    	<template class="pull-right" let-pollsPast="rowData" pTemplate="body">
-					    	<a type="button" style="cursor:pointer" (click)="viewPoll(pollsPast)"><i class="fa fa-edit" aria-hidden="true"></i>&nbsp;View Result</a>
+					    	<a type="button" style="cursor:pointer" (click)="viewPoll(pollsPast)"><u>View Result</u></a>
 					    	</template>
 					    </p-column>
 					</p-dataTable>
