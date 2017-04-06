@@ -216,7 +216,7 @@
                                 <label class="control-label col-sm-4" for="username">Username :</label>
                                 <div class="col-sm-8">
                                     <!-- <input type="text" class="form-control" name="username" formControlName="username" required placeholder="Input username here" /> -->
-                                    <p-autoComplete [(ngModel)]="username" [suggestions]="filteredBrands" (completeMethod)="filterBrands($event)" (onSelect)="onAutoCompleteChange($event)" field="username" [size]="30" placeholder="Username" [minLength]="1" [(ngModel)]="showMoreControls" [ngModelOptions]="{standalone: true}"></p-autoComplete>
+                                    <p-autoComplete [(ngModel)]="username" [suggestions]="filteredBrands" (completeMethod)="filterBrands($event)" (onSelect)="onAutoCompleteChange($event)" field="username" [size]="30" placeholder="Username" [minLength]="1" [ngModelOptions]="{standalone: true}"></p-autoComplete>
                                     <span style="cursor:pointer; color: blue;" (click)="resetForm()">Reset</span><br>
                                     <small *ngIf="addSubmitted && username=='' && !useAutocomplete" class="text-danger">
                                     Name is required
