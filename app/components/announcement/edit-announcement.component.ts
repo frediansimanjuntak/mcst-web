@@ -187,7 +187,7 @@ export class EditAnnouncementComponent  {
     }
 
     autoPostOnDateChanged(event:any) {
-        this.model.auto_post_on = event.jsdate;
+        this.model.auto_post_on = event.formatted;
         if(this.model.auto_post_on){
             (this.selectedValidDate = new Date()).setDate(event.jsdate.getDate() + 1);
             this.model.valid_till =  this.selectedValidDate;
@@ -199,7 +199,7 @@ export class EditAnnouncementComponent  {
     }
 
     validTillDateChanged(event:any) {
-        this.model.valid_till =  event.jsdate;
+        this.model.valid_till =  event.formatted;
     }
 
     convertDate(date) {
