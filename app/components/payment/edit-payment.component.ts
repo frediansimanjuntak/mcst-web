@@ -134,13 +134,15 @@ export class EditPaymentComponent implements OnInit{
 		this.unitService.getById(this.model.property , this.name.default_development.name_url)
 		.subscribe(unit => {
 			this.unit = unit.properties[0];
-			if(this.unit.landlord.resident.username) {
-				this.model.sender = this.unit.landlord.resident.username;
+			if(this.unit.landlord.data) {
+				this.model.sender = this.unit.landlord.data.resident._id;
+				this.model.sender_name = this.unit.landlord.data.resident.username;
 			}else{
-				this.model.sender = this.unit.tenant.resident.username;
+				this.model.sender = this.unit.tenant.data[0].resident._id;
+				this.model.sender_name = this.unit.tenant.data[0].resident.username;
 			}
+			setTimeout(() => this.appComponent.loading = false, 1000);
 		});
-		this.appComponent.loading = false
 	}
 
 	remove(i: any){
