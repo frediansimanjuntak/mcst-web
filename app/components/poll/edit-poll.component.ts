@@ -163,7 +163,7 @@ export class EditPollComponent  {
     }
 
     startTimeChanged(event:any) {
-         this.model.start_time = event.jsdate;
+         this.model.start_time = event.formatted;
 
         if(this.model.start_time){
             (this.selectedEndTime = new Date()).setDate(event.jsdate.getDate() + 1);
@@ -176,7 +176,7 @@ export class EditPollComponent  {
     }
 
     endTimeChanged(event:any) {
-      this.model.end_time =  event.jsdate;
+        this.model.end_time =  event.formatted;
     }
 
     getCopyOfendTimeOptions(): IMyOptions {
