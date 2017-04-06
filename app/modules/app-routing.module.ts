@@ -63,7 +63,7 @@ import {
 
 const routes: Routes = [
   { path: '', component: TokenComponent },
-  { path: ':name', component: DashboardComponent, canActivate: [AuthGuard] },
+  // { path: ':name', component: TokenComponent },
   { path: 'login',  component: LoginComponent },
   { path: 'register', component: RegisterComponent },
   { path: ':name/user',     component: UserComponent, canActivate: [AuthGuard] },
