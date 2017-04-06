@@ -131,12 +131,7 @@ export class AnnouncementComponent implements OnInit {
     openModal(announcement){
         this.announcement = announcement;
         this.valid_tillStatus = announcement.valid_till;
-        if(this.valid_tillStatus){
-                                  let y = this.valid_tillStatus.toString().slice(0,4);
-                                  let m = (this.valid_tillStatus+100).toString().slice(4,6);
-                                  let d = this.valid_tillStatus.toString().slice(6,8);
-                                  this.valid_tillStatus = y + '-' + m + '-' + d ;
-        }else if(this.valid_tillStatus == ""){
+        if(this.valid_tillStatus == ""){
               this.valid_tillStatus = "";
         }
 
@@ -151,33 +146,7 @@ export class AnnouncementComponent implements OnInit {
         this.announcements            = this.all.filter(data => data.title.toLowerCase().indexOf(this.titleFilter.toLowerCase()) !==  -1);
         this.announcementsDrafted     = this.announcements.filter(data => data.publish === false && data.valid === true);
         this.announcementsPublished   = this.announcements.filter(data => data.publish === true && data.valid === true);
-                          
-        for (var i = 0; i < this.announcementsDrafted.length; i++) {
-          if(this.announcementsDrafted[i].auto_post_on){
-            let y = this.announcementsDrafted[i].auto_post_on.toString().slice(0,4);
-            let m = (this.announcementsDrafted[i].auto_post_on+100).toString().slice(4,6);
-            let d = this.announcementsDrafted[i].auto_post_on.toString().slice(6,8);
-            this.announcementsDrafted[i].auto_post_date = y + '/' + m + '/' + d ;
-          }    
-        }
-
-        for (var i = 0; i < this.announcementsDrafted.length; i++) {
-          if(this.announcementsDrafted[i].valid_till){
-            let y = this.announcementsDrafted[i].valid_till.toString().slice(0,4);
-            let m = (this.announcementsDrafted[i].valid_till+100).toString().slice(4,6);
-            let d = this.announcementsDrafted[i].valid_till.toString().slice(6,8);
-            this.announcementsDrafted[i].valid_till_date = y + '/' + m + '/' + d ;
-          }
-        }
-
-        for (var i = 0; i < this.announcementsPublished.length; i++) {
-          if(this.announcementsPublished[i].valid_till){
-            let y = this.announcementsPublished[i].valid_till.toString().slice(0,4);
-            let m = (this.announcementsPublished[i].valid_till+100).toString().slice(4,6);
-            let d = this.announcementsPublished[i].valid_till.toString().slice(6,8);
-            this.announcementsPublished[i].valid_till_date = y + '/' + m + '/' + d ;
-          }
-        }
+        
         setTimeout(() => this.appComponent.loading = false, 500);
   
     }
@@ -219,7 +188,7 @@ export class AnnouncementComponent implements OnInit {
     }
 
     validTillDateChanged(event:any) {
-       this.valid_tillStatus = event.formatted.replace(/-/g, "/");;
+       this.valid_tillStatus = event.formatted.replace(/-/g, "/");
     }
 
     private loadAllAnnouncements() {
@@ -231,32 +200,6 @@ export class AnnouncementComponent implements OnInit {
                           this.announcementsDrafted     = this.announcements.filter(data => data.publish === false && data.valid === true);
                           this.announcementsPublished   = this.announcements.filter(data => data.publish === true && data.valid === true);
                           
-                          for (var i = 0; i < this.announcementsDrafted.length; i++) {
-                              if(this.announcementsDrafted[i].auto_post_on){
-                                  let y = this.announcementsDrafted[i].auto_post_on.toString().slice(0,4);
-                                  let m = (this.announcementsDrafted[i].auto_post_on+100).toString().slice(4,6);
-                                  let d = this.announcementsDrafted[i].auto_post_on.toString().slice(6,8);
-                                  this.announcementsDrafted[i].auto_post_date = y + '/' + m + '/' + d ;
-                              }    
-                          }
-
-                          for (var i = 0; i < this.announcementsDrafted.length; i++) {
-                              if(this.announcementsDrafted[i].valid_till){
-                                  let y = this.announcementsDrafted[i].valid_till.toString().slice(0,4);
-                                  let m = (this.announcementsDrafted[i].valid_till+100).toString().slice(4,6);
-                                  let d = this.announcementsDrafted[i].valid_till.toString().slice(6,8);
-                                  this.announcementsDrafted[i].valid_till_date = y + '/' + m + '/' + d ;
-                              }
-                          }
-
-                           for (var i = 0; i < this.announcementsPublished.length; i++) {
-                              if(this.announcementsPublished[i].valid_till){
-                                  let y = this.announcementsPublished[i].valid_till.toString().slice(0,4);
-                                  let m = (this.announcementsPublished[i].valid_till+100).toString().slice(4,6);
-                                  let d = this.announcementsPublished[i].valid_till.toString().slice(6,8);
-                                  this.announcementsPublished[i].valid_till_date = y + '/' + m + '/' + d ;
-                              }
-                          }
                           setTimeout(() => this.appComponent.loading = false, 1000);   
 
                 }, 1000);

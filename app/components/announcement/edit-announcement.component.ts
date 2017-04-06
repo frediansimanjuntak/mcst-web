@@ -97,11 +97,8 @@ export class EditAnnouncementComponent  {
                                                 this.announcement = announcement;
 
                                                 if(this.announcement.auto_post_on){
-                                                  let y = this.announcement.auto_post_on.toString().slice(0,4);
-                                                  let m = (this.announcement.auto_post_on+100).toString().slice(4,6);
-                                                  let d = this.announcement.auto_post_on.toString().slice(6,8);
-                                                  this.selectedAutoPostOn = y + '-' + m + '-' + d ;
-                                                  this.model.auto_post_on = new Date(m + '/' + d + '/' + y);
+                                                  this.model.auto_post_on = new Date(this.announcement.auto_post_on);
+                                                  this.selectedAutoPostOn = this.convertDate(this.model.auto_post_on);
 
                                                 }else if(this.announcement.auto_post_on == null){
                                                   this.selectedAutoPostOn = "";
@@ -109,11 +106,8 @@ export class EditAnnouncementComponent  {
                                                 }     
 
                                                 if(this.announcement.valid_till){
-                                                  let y = this.announcement.valid_till.toString().slice(0,4);
-                                                  let m = (this.announcement.valid_till+100).toString().slice(4,6);
-                                                  let d = this.announcement.valid_till.toString().slice(6,8);
-                                                  this.selectedValidDate = y + '-' + m + '-' + d ;
-                                                  this.model.valid_till = new Date(m + '/' + d + '/' + y);
+                                                  this.model.valid_till = new Date(this.announcement.valid_till);
+                                                  this.selectedValidDate = this.convertDate(this.model.valid_till);
                                                 }else if(this.announcement.valid_till == null){
                                                   this.selectedValidDate = "";
                                                   this.model.valid_till = null;
@@ -127,6 +121,7 @@ export class EditAnnouncementComponent  {
 
     createAnnouncement() {
         this.appComponent.loading = true
+        console.log(this.model)
         this.anouncementService.create(this.model)
             .then(
                 data => {
@@ -187,19 +182,19 @@ export class EditAnnouncementComponent  {
     }
 
     autoPostOnDateChanged(event:any) {
-        this.model.auto_post_on = event.jsdate;
+        this.model.auto_post_on = event.formatted;
         if(this.model.auto_post_on){
             (this.selectedValidDate = new Date()).setDate(event.jsdate.getDate() + 1);
-            this.model.valid_till =  this.selectedValidDate;
-            this.selectedValidDate = this.convertDate(this.selectedValidDate)
+            this.selectedValidDate = this.model.valid_till = this.convertDate(this.selectedValidDate)
             let copy: IMyOptions = this.getCopyOfValidTillDateOptions();
             copy.disableUntil = event.date;
             this.validTillDateOptions = copy;
         }
+
     }
 
     validTillDateChanged(event:any) {
-        this.model.valid_till =  event.jsdate;
+        this.model.valid_till =  event.formatted;
     }
 
     convertDate(date) {

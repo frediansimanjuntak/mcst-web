@@ -31,7 +31,7 @@
 							</p-column>
 							<p-column [style]="{'width':'200px'}" field="message" header="Message" sortable="true">
 								<template let-announcementsDrafted="rowData" pTemplate="body">
-									<span>{{announcementsDrafted.message | capitalize}}</span>
+									<span>{{announcementsDrafted.message | capitalizeFirst}}</span>
 								</template>
 							</p-column>
 							<p-column [style]="{'width':'70px'}" field="sticky" header="Sticky" sortable="true">
@@ -41,14 +41,16 @@
 							</p-column>
 							<p-column field="auto_post_date" header="Auto post on" sortable="true" filterPlaceholder="Search Date ">
 								<template let-announcementsDrafted="rowData" pTemplate="body">
-									<span *ngIf="announcementsDrafted.auto_post_date">{{announcementsDrafted.auto_post_date}}</span>
-									<span *ngIf="!announcementsDrafted.auto_post_date">-</span>
+									<span *ngIf="announcementsDrafted.auto_post_on">{{announcementsDrafted.auto_post_on | date: 'd/M/y'}}</span>
+									<span *ngIf="!announcementsDrafted.auto_post_on">-</span>
 								</template>
 							</p-column>
-							<p-column header="Valid till" field="valid_till_date" sortable="true">
+							<p-column header="Valid till" field="valid_till" sortable="true">
 								<template let-announcementsDrafted="rowData" pTemplate="body">
-									<span *ngIf="announcementsDrafted.valid_till_date">{{announcementsDrafted.valid_till_date}}</span>
-									<span *ngIf="!announcementsDrafted.valid_till_date">-</span>
+									<span *ngIf="announcementsDrafted.valid_till">
+										{{announcementsDrafted.valid_till | date: 'd/M/y'}}
+									</span>
+									<span *ngIf="!announcementsDrafted.valid_till">-</span>
 								</template>
 							</p-column>
 							<p-column header="Created on" sortable="true">
@@ -74,7 +76,7 @@
 							</p-column>
 							<p-column [style]="{'width':'250px'}" field="message" header="Message" sortable="true" >
 								<template let-announcementsPublished="rowData" pTemplate="body">
-									<span>{{announcementsPublished.message | capitalize}}</span>
+									<span>{{announcementsPublished.message | capitalizeFirst}}</span>
 								</template>
 							</p-column>
 							<p-column [style]="{'width':'70px'}" field="sticky" header="Sticky" sortable="true">
@@ -82,10 +84,10 @@
 									<span>{{announcementsPublished.sticky | capitalize}}</span>
 								</template>
 							</p-column>
-							<p-column header="Valid till" field="valid_till_date" sortable="true">
+							<p-column header="Valid till" field="valid_till" sortable="true">
 								<template let-announcementsPublished="rowData" pTemplate="body">
-									<span *ngIf="announcementsPublished.valid_till_date">{{announcementsPublished.valid_till_date}}</span>
-									<span *ngIf="!announcementsPublished.valid_till_date">-</span>
+									<span *ngIf="announcementsPublished.valid_till">{{announcementsPublished.valid_till | date: 'd/M/y'}}</span>
+									<span *ngIf="!announcementsPublished.valid_till">-</span>
 								</template>
 							</p-column>
 							<p-column header="Created on" sortable="true">

@@ -133,9 +133,10 @@
 						    	</template>
 						    </p-column>
 						    <p-column field="remark" header="Remark" [style]="{'width': '90px'}" sortable="true" [filter]="true" filterPlaceholder="Search remark">
-						        <template let-col let-booking="rowData" pTemplate="body">
-						            <span [style.color]="booking[col.field]">{{booking[col.field]}}</span>
-						        </template>
+						        <template let-booking="rowData" pTemplate="body">
+						    		<span *ngIf="booking.remark">{{booking.remark}}</span>
+						    		<span *ngIf="!booking.remark">-</span>
+						    	</template>
 						    </p-column>
 						    <!-- </p-column> -->
 						    <p-column header="Action" styleClass="col-button">
@@ -168,9 +169,10 @@
 						    	</template>
 						    </p-column>
 						    <p-column field="remark" header="Remark" [style]="{'width': '90px'}" sortable="true" [filter]="true" filterPlaceholder="Search remark">
-						        <template let-col let-booking="rowData" pTemplate="body">
-						            <span [style.color]="booking[col.field]">{{booking[col.field]}}</span>
-						        </template>
+						        <template let-booking="rowData" pTemplate="body">
+						    		<span *ngIf="booking.remark">{{booking.remark}}</span>
+						    		<span *ngIf="!booking.remark">-</span>
+						    	</template>
 						    </p-column>
 						    <!-- </p-column> -->
 						    <p-column header="Action" styleClass="col-button">
@@ -203,9 +205,10 @@
 						    	</template>
 						    </p-column>
 						    <p-column field="remark" header="Remark" [style]="{'width': '90px'}" sortable="true" [filter]="true" filterPlaceholder="Search remark">
-						        <template let-col let-booking="rowData" pTemplate="body">
-						            <span [style.color]="booking[col.field]">{{booking[col.field]}}</span>
-						        </template>
+						       <template let-booking="rowData" pTemplate="body">
+						    		<span *ngIf="booking.remark">{{booking.remark}}</span>
+						    		<span *ngIf="!booking.remark">-</span>
+						    	</template>
 						    </p-column>
 						    <!-- </p-column> -->
 						    <p-column header="Action" styleClass="col-button">
