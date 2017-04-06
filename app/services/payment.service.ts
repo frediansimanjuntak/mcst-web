@@ -25,7 +25,7 @@ export class PaymentService {
             .catch((error:any) => Observable.throw(error.json().error || 'Server error'));
     }
 
-    getById(id:string){
+    getById(id:any){
         return this.http.get(url + 'payment/' + id, this.jwt())
             .map((res:Response) => res.json())
             .catch((error:any) => Observable.throw(error.json().error || 'Server error'));

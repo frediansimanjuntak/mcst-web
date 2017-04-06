@@ -39,13 +39,13 @@
 			<div class="row">
 				<div class="col-md-4">Booked by</div>
 				<div class="col-md-8">
-					<p>: {{booking.status}}</p>
+					<p>: {{user?.username}}</p>
 				</div>
 			</div>
 			<div class="row">
 				<div class="col-md-4">Payment link</div>
 				<div class="col-md-8">
-					<p>:<a style="cursor:pointer" (click)="viewPayment(booking.payment)">See payment</a></p>
+					<p>:<a style="cursor:pointer" (click)="viewPayment(booking.payment)"> See payment</a></p>
 				</div>
 			</div>
     	</div>

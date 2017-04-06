@@ -3,7 +3,7 @@ import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import { DatePipe  } from '@angular/common';
 import { Router, Params, ActivatedRoute } from '@angular/router'; 
 import { Booking, Facility } from '../../models/index';
-import { BookingService, AlertService, FacilityService, UserService, UnitService } from '../../services/index';
+import { BookingService, AlertService, FacilityService, UserService, UnitService, PaymentService } from '../../services/index';
 import '../../rxjs-operators';
 import { NotificationsService } from 'angular2-notifications';
 import { Observable} from 'rxjs/Observable';
@@ -56,7 +56,8 @@ export class BookingComponent implements OnInit {
 	type: any;
 	status: any;
 	period1: any;
-	period2: any
+	period2: any;
+	user:any;
 	dataFilter: string = '';
 
 	constructor(
@@ -70,6 +71,7 @@ export class BookingComponent implements OnInit {
 		private appComponent: AppComponent,
 		private unitService: UnitService,
 		private confirmationService: ConfirmationService,
+		private paymentService: PaymentService,
 		private _notificationsService: NotificationsService,){}
 
 	ngOnInit() {
@@ -98,8 +100,11 @@ export class BookingComponent implements OnInit {
 		   this.bookingService.getById(this.id)
 			.subscribe(booking => {
 				this.booking = booking;
-				console.log(booking)
-				setTimeout(() => this.appComponent.loading = false, 1000);
+				this.paymentService.getById(this.booking.payment)
+				.subscribe(payment => {
+					this.user = payment.sender;
+					setTimeout(() => this.appComponent.loading = false, 1000);
+				})
 			});
 		}
 	}
