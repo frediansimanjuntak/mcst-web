@@ -50,14 +50,14 @@
 								<span>#{{dataUnit.address.unit_no}}-{{dataUnit.address.unit_no_2}}</span>
 							</template>
 						</p-column>
-						<p-column header="Owner" [filter]="true" filterPlaceholder="Search Owner">
+						<p-column header="Owner" field="landlord.data.resident.username" [filter]="true" filterPlaceholder="Search Owner">
 							<template let-dataUnit="rowData" pTemplate="body">
-								<span *ngIf="dataUnit.landlord">
-									<span *ngIf="dataUnit.landlord.resident">
-										{{dataUnit.landlord.resident.username | capitalize}}
+								<span *ngIf="dataUnit.landlord.data">
+									<span *ngIf="dataUnit.landlord.data.resident">
+										{{dataUnit.landlord.data.resident.username | capitalize}}
 									</span>
 								</span>
-								<span *ngIf="!dataUnit.landlord">-</span>
+								<span *ngIf="!dataUnit.landlord.data">-</span>
 							</template>
 						</p-column>
 						<p-column field="status" header="Status" sortable="true">
@@ -67,9 +67,9 @@
 								<span style="color: red" *ngIf="dataUnit.status == 'empty'">Empty</span>
 							</template>
 						</p-column>
-						<p-column sortable="true" field="tenant.length" header="No. of Tenant">
+						<p-column sortable="true" field="tenant.data.length" header="No. of Tenant">
 							<template let-dataUnit="rowData" pTemplate="body">
-								<span>{{dataUnit.tenant.length}}</span>
+								<span *ngIf="dataUnit.tenant.data">{{dataUnit.tenant.data.length}}</span>
 							</template>
 						</p-column>
 						<p-column [style]="{'width':'300px'}" styleClass="col-button" header="Action">

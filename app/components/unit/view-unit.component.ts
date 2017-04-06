@@ -52,9 +52,11 @@ export class ViewUnitComponent implements OnInit {
     myForm: FormGroup;
     myForm2: FormGroup;
     valid: boolean;
+    useAutocomplete: boolean;
 
     name: any;
-
+    filteredBrands: any[];
+    username: string;
     constructor(
         private router: Router,
         private route: ActivatedRoute,
@@ -83,13 +85,13 @@ export class ViewUnitComponent implements OnInit {
                             });
         this.model.option = "new";                    
         this.model.document = [];
-        this.myForm = this.formbuilder.group({
-                resident: [''],
-                type: ['', <any>Validators.required],
-                added_on: [''],
-                social_page: [''],
-                remarks: [''],
-        });
+        this.useAutocomplete= false;
+        // this.myForm = this.formbuilder.group({
+        //         resident: [''],
+        //         type: ['', <any>Validators.required],
+        //         added_on: [''],
+        //         remarks: [''],
+        // });
         this.myForm2 = this.formbuilder.group({
                 license_plate: ['', <any>Validators.required],
                 owner: ['', <any>Validators.required],
@@ -98,6 +100,32 @@ export class ViewUnitComponent implements OnInit {
                 registered_on: [''],
                 remarks: [''],
         });
+        this.myForm = this.formbuilder.group({
+                    username : ['', Validators.required],
+                    email : ['', Validators.required],
+                    phone : ['', Validators.required],
+                    role : ['user'],
+                    default_property: this.formbuilder.group({
+                        property: [''],
+                        role : ['']
+                    }),
+                    rented_property: this.formbuilder.group({
+                        development: [''],
+                        property: [this.id]
+                    }),
+                    active: [''],
+                    remarks: [''],
+                    details:  this.formbuilder.group({
+                        first_name: [''],
+                        last_name: [''],
+                        identification_no: [''],
+                    }),
+                    owned_property: this.formbuilder.array([this.formbuilder.group({
+                                                development: [''],
+                                                property: [this.id]
+                                            })
+                    ]),
+                }); 
     }
 
     getUsers(): void {
@@ -114,8 +142,8 @@ export class ViewUnitComponent implements OnInit {
                             .getById(this.id, this.name.default_development.name_url)
                                 .subscribe(unit => {
                                     this.unit = unit.properties[0];
-                                    this.residents = this.unit.tenant;
-                                    this.tenantTotal = this.unit.tenant.length;
+                                    this.residents = this.unit.tenant.data;
+                                    this.tenantTotal = this.unit.tenant.data.length;
                                     this.vehicles = this.unit.registered_vehicle;
                                     
                                     if(this.residents){
@@ -124,21 +152,62 @@ export class ViewUnitComponent implements OnInit {
                                         this.hasTenants = false;
                                     }
 
-                                    if(this.unit.landlord){ 
+                                    if(this.unit.landlord.data){ 
                                         var landlordForResidentTable :any = {
                                         type : 'owner',
                                         i    :  1,
-                                        resident : this.unit.landlord.resident,
-                                        created_at : this.unit.landlord.created_at,
-                                        remarks : this.unit.landlord.remarks
+                                        resident : this.unit.landlord.data.resident,
+                                        created_at : this.unit.landlord.data.created_at,
+                                        remarks : this.unit.landlord.data.remarks
                                         }
                                         
                                         this.residents.unshift(landlordForResidentTable);
                                         this.hasLandlord = true;
-                                        this.model.type  = 'tenant'
+                                        this.model.type  = 'tenant';
+                                        this.myForm = this.formbuilder.group({
+                                            username : ['', Validators.required],
+                                            email : ['', Validators.required],
+                                            phone : ['', Validators.required],
+                                            role : ['user'],
+                                            default_property: this.formbuilder.group({
+                                                property: [''],
+                                                role : ['']
+                                            }),
+                                            rented_property: this.formbuilder.group({
+                                                development: [''],
+                                                property: [this.id]
+                                            }),
+                                            details:  this.formbuilder.group({
+                                                first_name: [''],
+                                                last_name: [''],
+                                                identification_no: [''],
+                                            }),
+                                            authorized_property: this.formbuilder.array([this.initAuthorized()]),
+                                            active: [''],
+                                            remarks: [''],
+                                            });    
                                     }else{
                                         this.hasLandlord = false;
                                         this.model.type  = 'landlord'
+                                        this.myForm = this.formbuilder.group({
+                                            username : ['', Validators.required],
+                                            email : ['', Validators.required],
+                                            phone : ['', Validators.required],
+                                            role : ['user'],
+                                            default_property: this.formbuilder.group({
+                                                property: [''],
+                                                role : ['']
+                                            }),
+                                            details:  this.formbuilder.group({
+                                                first_name: [''],
+                                                last_name: [''],
+                                                identification_no: [''],
+                                            }),
+                                            owned_property: this.formbuilder.array([this.initOwned()]),
+                                            authorized_property: this.formbuilder.array([this.initAuthorized()]),
+                                            active: [''],
+                                            remarks: [''],
+                                            });  
                                     }
 
                                     if(this.residents){
@@ -188,23 +257,37 @@ export class ViewUnitComponent implements OnInit {
     public selected(value:any):void {
     }
 
+    initOwned() {
+        return this.formbuilder.group({
+            development: [''],
+            property: [this.id]
+        }); 
+    }
+
+    initAuthorized() {
+        return this.formbuilder.group({
+            development: [''],
+            property: ['']
+        });
+    }
+
     deleteResident(resident: any){
         this.appComponent.loading = true
         if(resident.type == 'owner'){
-            this.unitservice.deleteLandlord(this.unit._id, this.name.default_development.name_url, resident.resident)
+            this.unitservice.deleteLandlord(this.unit._id, this.name.default_development.name_url)
             .then(
                 response => {
                   if(response) {
                     console.log(response);
                     this._notificationsService.error(
                             'Error',
-                            'Landlord could not to delete, server error',
+                            'Owner could not to delete, server error',
                     )
                     setTimeout(() => this.appComponent.loading = false, 1000);
                   } else {
                     this._notificationsService.success(
                             'Success',
-                            'Delete landlord successful',
+                            'Delete owner successful',
                     )
                     this.ngOnInit()
                   }
@@ -213,7 +296,7 @@ export class ViewUnitComponent implements OnInit {
                   console.log(error);
                     this._notificationsService.error(
                             'Error',
-                            'Landlord could not to delete, server error',
+                            'Owner could not to delete, server error',
                     )
                     setTimeout(() => this.appComponent.loading = false, 1000);
                 }
@@ -252,18 +335,18 @@ export class ViewUnitComponent implements OnInit {
 
     deleteResidentConfirmation(resident) {
         if(resident.type == 'owner'){
-            if(this.unit.tenant.length < 0){
+            if(this.unit.tenant.data.length < 0){
                 this.confirmationService.confirm({
-                    message: 'Are you sure that you want to delete this landlord?',
+                    message: 'Are you sure that you want to delete this owner?',
                     header: 'Delete Confirmation',
                     icon: 'fa fa-trash',
                     accept: () => {
                         this.deleteResident(resident)
                     }
                 });    
-            }else if(this.unit.tenant.length > 0){
+            }else if(this.unit.tenant.data.length > 0){
                 this.confirmationService.confirm({
-                    message: 'This unit has tenant, Are you sure that you want to delete this landlord?',
+                    message: 'This unit has tenant, Are you sure that you want to delete this owner?',
                     header: 'Delete Confirmation',
                     icon: 'fa fa-trash',
                     accept: () => {
@@ -274,7 +357,7 @@ export class ViewUnitComponent implements OnInit {
                 
         }else if(resident.type == 'tenant'){
             this.confirmationService.confirm({
-                message: 'Are you sure that you want to delete this resident?',
+                message: 'Are you sure that you want to delete this tenant?',
                 header: 'Delete Confirmation',
                 icon: 'fa fa-warning',
                 accept: () => {
@@ -398,35 +481,35 @@ export class ViewUnitComponent implements OnInit {
         window.history.back();
     }
 
-    addResident(){
+    addResident(model:any){
         this.addSubmitted = true;
          if(this.model.type == "tenant" && !this.hasLandlord){
-            this.errorMessage = "This unit did not has landlord yet, please add landlord first"
+            this.errorMessage = "This unit did not has owner yet, please add owner first"
          }else if(this.model.type == "landlord" && this.hasLandlord){
-            this.errorMessage = "This unit already has a landlord, please remove landlord first"
-         }else if(this.model.option == 'new' && this.tenantTotal >= this.unit.max_tenant){
+            this.errorMessage = "This unit already has a owner, please remove owner first"
+         }else if(this.tenantTotal >= this.unit.max_tenant){
             this.errorMessage = "This unit has reach max. number of tenant ( max :" + this.tenantTotal + ") , please remove a tenant first"
-         }else if(this.model.option == 'new' && this.tenantTotal < this.unit.max_tenant){
-            this.router.navigate([this.name.default_development.name_url + '/user/add', this.unit._id, this.model.type]);  
+         }else if(this.tenantTotal < this.unit.max_tenant){
+            this.createUser(model);
          }
     }
 
     addExistResident(){
         this.addSubmitted = true;
          if(this.model.type == "tenant" && !this.hasLandlord){
-            this.errorMessage = "This unit did not has landlord yet, please add landlord first"
+            this.errorMessage = "This unit did not has owner yet, please add owner first"
          }else if(this.model.type == "landlord" && this.hasLandlord){
-            this.errorMessage = "This unit already has a landlord, please remove landlord first"
+            this.errorMessage = "This unit already has an owner, please remove owner first"
          }else if(this.model.type == "tenant" && this.tenantTotal >= this.unit.max_tenant){
             this.errorMessage = "This unit has reach max. number of tenant ( max :" + this.tenantTotal + ") , please remove a tenant first"
          }else {
              this.loading = true;
              this.appComponent.loading = true
-             this.data.id_user         = this.model.user;
+             this.data.id_user         = this.user._id;
              this.data.id_development  = this.name.default_development._id;
              this.data.id_property     = this.unit._id;
              this.data.type            = this.model.type;
-             this.data.remarks  = this.model.remarks;
+             this.data.remarks         = this.model.remarks;
              this.unitservice.createResident(this.data)
                 .then(
                     data => {
@@ -437,6 +520,7 @@ export class ViewUnitComponent implements OnInit {
                         this.firstModal.close();
                         this.addSubmitted = false;
                         this.loading = false;
+                        this.username = '';
                         this.ngOnInit();
                     },
                     error => {
@@ -503,5 +587,196 @@ export class ViewUnitComponent implements OnInit {
             );
         }
     }
+
+    createUser(model:any) {
+        this.loading= true;
+        model.username = this.username;
+        model.remarks = this.model.remarks;
+        if(this.model.type=='tenant'){
+               model.rented_property.development = this.name.default_development._id;
+             if(model.owned_property){
+                 delete model.owned_property;
+             }
+        }
+
+        if(this.model.type=='landlord'){
+            if(model.rented_property){
+                delete model.rented_property;
+            }
+            for (let i = 0; i < model.owned_property.length; i++) {
+                model.owned_property[i].development = this.name.default_development._id;
+            }
+        }
+        if(model.username && model.email && 
+            model.phone && model.details.first_name && model.details.last_name && model.details.identification_no)
+            {
+                this.appComponent.loading = true;
+                this.userService.createResident(model)
+                .then(
+                    data => {
+                        this._notificationsService.success(
+                                    'Success',
+                                    'Create ' + this.model.type + ' successful',
+                                )
+                        this.firstModal.close();
+                        this.addSubmitted = false;
+                        this.loading = false;
+                        this.useAutocomplete = false;
+                        this.username = '';
+                        this.ngOnInit();
+                    },
+                    error => {
+                        this._notificationsService.error(
+                                    'Error',
+                                    'Data could not be save, server Error.',
+                            )
+                        this.loading = false;
+                        this.appComponent.loading = false;
+                    }
+                );   
+            }else{
+                this.loading= false;
+            }
+        
+    }
+
+
+    filterBrands(event) {
+        this.filteredBrands = [];
+        for(let i = 0; i < this.users.length; i++) {
+            let user = this.users[i];
+            if(user.username.toLowerCase().indexOf(event.query.toLowerCase()) == 0) {
+                this.filteredBrands.push(user);
+            }
+        }
+        if(this.filteredBrands.length==0){
+            this.useAutocomplete = false;
+             this.myForm = this.formbuilder.group({
+                    username : ['', Validators.required],
+                    email : ['', Validators.required],
+                    phone : ['', Validators.required],
+                    role : ['user'],
+                    default_property: this.formbuilder.group({
+                        property: [''],
+                        role : ['']
+                    }),
+                    rented_property: this.formbuilder.group({
+                        development: [''],
+                        property: [this.id]
+                    }),
+                    active: [''],
+                    remarks: [''],
+                    details:  this.formbuilder.group({
+                        first_name: [''],
+                        last_name: [''],
+                        identification_no: [''],
+                    }),
+                    owned_property: this.formbuilder.array([this.formbuilder.group({
+                                                development: [''],
+                                                property: [this.id]
+                                            })
+                    ]),
+                });    
+        }
+    }
+
+    onAutoCompleteChange(event){
+        this.addSubmitted= false;
+        this.useAutocomplete = true;
+        this.user = event;
+        this.myForm = this.formbuilder.group({
+                    username :[{value: event.username, disabled: true}],
+                    email : [{value: event.email, disabled: true}],
+                    phone : [{value: event.phone, disabled: true}],
+                    remarks: [''],
+                    details:  this.formbuilder.group({
+                        first_name:  [{value: event.details.first_name, disabled: true}],
+                        last_name:  [{value: event.details.last_name, disabled: true}],
+                        identification_no:  [{value: event.details.identification_no, disabled: true}],
+                    }),
+                }); 
+    }
+
+    resetForm(){
+         this.username= '';
+         this.model.remarks= '';
+         this.addSubmitted= false;
+         this.useAutocomplete = false;
+         this.myForm = this.formbuilder.group({
+                    username : ['', Validators.required],
+                    email : ['', Validators.required],
+                    phone : ['', Validators.required],
+                    role : ['user'],
+                    default_property: this.formbuilder.group({
+                        property: [''],
+                        role : ['']
+                    }),
+                    rented_property: this.formbuilder.group({
+                        development: [''],
+                        property: [this.id]
+                    }),
+                    active: [''],
+                    remarks: [''],
+                    details:  this.formbuilder.group({
+                        first_name: [''],
+                        last_name: [''],
+                        identification_no: [''],
+                    }),
+                    owned_property: this.formbuilder.array([this.formbuilder.group({
+                                                development: [''],
+                                                property: [this.id]
+                                            })
+                    ]),
+                });  
+    }
+
+    residentTypeChange(event){
+        if(this.model.type=='tenant'){
+            this.myForm = this.formbuilder.group({
+                username : ['', Validators.required],
+                email : ['', Validators.required],
+                phone : ['', Validators.required],
+                role : ['user'],
+                default_property: this.formbuilder.group({
+                    property: [''],
+                    role : ['']
+                }),
+                rented_property: this.formbuilder.group({
+                    development: [''],
+                property: [this.id]
+                }),
+                details:  this.formbuilder.group({
+                        first_name: [''],
+                        last_name: [''],
+                        identification_no: [''],
+                    }),
+                authorized_property: this.formbuilder.array([this.initAuthorized()]),
+                active: [''],
+                remarks: [''],
+                });    
+        }else{
+            this.myForm = this.formbuilder.group({
+                username : ['', Validators.required],
+                email : ['', Validators.required],
+                phone : ['', Validators.required],
+                role : ['user'],
+                default_property: this.formbuilder.group({
+                    property: [''],
+                    role : ['']
+                }),
+                details:  this.formbuilder.group({
+                        first_name: [''],
+                        last_name: [''],
+                        identification_no: [''],
+                }),
+                owned_property: this.formbuilder.array([this.initOwned()]),
+                authorized_property: this.formbuilder.array([this.initAuthorized()]),
+                active: [''],
+                remarks: [''],
+                });  
+        }
+        this.useAutocomplete = false;
+    }
+    
 
 }
