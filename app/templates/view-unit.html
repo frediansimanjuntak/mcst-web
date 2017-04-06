@@ -177,12 +177,12 @@
                     <h5>Adding a Resident</h5>
                 </modal-header>
                 <modal-content>
-                     <form name="form">
+                    <form name="form" [formGroup]="myForm" #f="ngForm" novalidate>
                         <div class="form-group">
                             <div class="row no-margin">
                                 <label  class="control-label col-sm-4" for="type">Type :</label>
                                 <div class="col-sm-8">
-                                    <select class="form-control" name="type" [(ngModel)]="model.type">
+                                    <select class="form-control" name="type"  (change)="residentTypeChange($event)" [(ngModel)]="model.type" [ngModelOptions]="{standalone: true}">
                                         <option [selected]="hasLandlord" value="tenant">Tenant</option>
                                         <option [selected]="!hasLandlord" value="landlord">Owner</option>
                                     </select>
@@ -190,7 +190,7 @@
                                 </div>
                             </div>
                         </div>  
-                        <div class="form-group">      
+                        <!-- <div class="form-group">      
                             <div class="row no-margin">
                                 <label  class="control-label col-sm-4" for="type">User Option :</label>
                                 <div class="col-sm-8">
@@ -210,21 +210,93 @@
                                     </select>
                                 </div>
                             </div>
+                        </div> -->
+                        <div class="form-group">
+                            <div class="row no-margin">
+                                <label class="control-label col-sm-4" for="username">Username :</label>
+                                <div class="col-sm-8">
+                                    <!-- <input type="text" class="form-control" name="username" formControlName="username" required placeholder="Input username here" /> -->
+                                    <p-autoComplete [(ngModel)]="username" [suggestions]="filteredBrands" (completeMethod)="filterBrands($event)" (onSelect)="onAutoCompleteChange($event)" field="username" [size]="30" placeholder="Username" [minLength]="1" [(ngModel)]="showMoreControls" [ngModelOptions]="{standalone: true}"></p-autoComplete>
+                                    <span style="cursor:pointer; color: blue;" (click)="resetForm()">Reset</span><br>
+                                    <small *ngIf="addSubmitted && username=='' && !useAutocomplete" class="text-danger">
+                                    Name is required
+                                    </small>
+                                </div>
+                            </div>
                         </div>
-                        <div class="form-group" *ngIf="model.option == 'exist'" >
-                            <label class="control-label col-sm-4" for="remarks">Remarks :</label>
-                            <div class="col-sm-8">
-                                <input type="text" class="form-control" name="remarks" [(ngModel)]="model.remarks" placeholder="Input remarks here"/>                
+                        <div class="form-group" formGroupName="details">
+                            <div class="row no-margin">
+                                <label class="control-label col-sm-4" for="username">Full name :</label>
+                                <div class="col-sm-8">
+                                    <input type="text" [attr.disabled]="useAutocomplete?true:null" class="form-control" name="first_name" formControlName="first_name" required placeholder="Input first name here" />
+                                    <small *ngIf="addSubmitted && !myForm.controls.details.controls.first_name.valid && !useAutocomplete" class="text-danger">
+                                    First name is required
+                                    </small>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group" formGroupName="details">
+                            <div class="row no-margin">
+                                <label class="control-label col-sm-4" for="username">Last name :</label>
+                                <div class="col-sm-8">
+                                    <input type="text"  [attr.disabled]="useAutocomplete?true:null" class="form-control" name="last_name" formControlName="last_name" required placeholder="Input last name here" />
+                                    <small *ngIf="addSubmitted && !myForm.controls.details.controls.last_name.valid && !useAutocomplete" class="text-danger">
+                                    Last name is required
+                                    </small>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group" formGroupName="details">
+                            <div class="row no-margin">
+                                <label class="control-label col-sm-4" for="identification_no">ID number :</label>
+                                <div class="col-sm-8">
+                                    <input type="text" [attr.disabled]="useAutocomplete?true:null"  class="form-control" name="identification_no" formControlName="identification_no" required placeholder="Input ID number here" />
+                                    <small *ngIf="addSubmitted && !myForm.controls.details.controls.identification_no.valid && !useAutocomplete" class="text-danger">
+                                    ID number is required
+                                    </small>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="row no-margin">
+                                <label class="control-label col-sm-4" for="email">Email :</label>
+                                <div class="col-sm-8">
+                                    <input type="email" [attr.disabled]="useAutocomplete?true:null" class="form-control" name="email" formControlName="email" placeholder="Input email here"/>
+                                    <small *ngIf="addSubmitted && !myForm.controls.email.valid && !useAutocomplete" class="text-danger">
+                                    Email is required
+                                    </small>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="row no-margin">
+                                <label class="control-label col-sm-4" for="phone">Phone :</label>
+                                <div class="col-sm-8">
+                                    <input [attr.disabled]="useAutocomplete?true:null" type="text" class="form-control" name="phone" formControlName="phone" required placeholder="Input phone number here"/>
+                                    <small *ngIf="addSubmitted && !myForm.controls.phone.valid && !useAutocomplete" class="text-danger">
+                                        Phone is required
+                                    </small>                    
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="row no-margin">
+                                <label class="control-label col-sm-4" for="phone">Remarks :</label>
+                                <div class="col-sm-8">
+                                    <input type="text" class="form-control" name="remarks" [(ngModel)]="model.remarks" required [ngModelOptions]="{standalone: true}" placeholder="Input remarks here"/>                
+                                </div>
                             </div>
                         </div>
                          <div class="row no-margin pull-bottom-right">
-                            <button  *ngIf="model.option == 'new'" class="btn btn-primary btn-brown" (click)="addResident()">Go to Form</button>
-                            <button [disabled]="loading" *ngIf="model.option == 'exist'" class="btn btn-primary btn-brown" (click)="addExistResident()">Add resident<span>
+                            <button [disabled]="loading" *ngIf="!useAutocomplete" class="btn btn-primary btn-brown" (click)="addResident(myForm.value)">Submit<span>
                                     <img *ngIf="loading" src="data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA==" />
                                 </span></button>
-                            <button class="btn btn-white" (click)="firstModal.close()">Cancel</button>
+                            <button [disabled]="loading" *ngIf="useAutocomplete" class="btn btn-primary btn-brown" (click)="addExistResident()">Submit<span>
+                                    <img *ngIf="loading" src="data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA==" />
+                                </span></button>
+                            <button class="btn btn-white" (click)="useAutocomplete=false;addSubmitted=false;firstModal.close()">Cancel</button>
                         </div>
-                    </form>   
+                    </form> 
                 </modal-content>
             </modal>
         </div>  
