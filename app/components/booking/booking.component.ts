@@ -98,6 +98,7 @@ export class BookingComponent implements OnInit {
 		   this.bookingService.getById(this.id)
 			.subscribe(booking => {
 				this.booking = booking;
+				console.log(booking)
 				setTimeout(() => this.appComponent.loading = false, 1000);
 			});
 		}
@@ -235,4 +236,8 @@ export class BookingComponent implements OnInit {
 		this.day     = this.convertDate(this.day);
 		this.ngOnInit();
 	}
+
+	viewPayment(payment: any){
+        this.router.navigate([this.name.default_development.name_url + '/payment_system/view', payment]);
+    }
 }
