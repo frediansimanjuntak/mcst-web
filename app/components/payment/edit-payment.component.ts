@@ -46,7 +46,6 @@ export class EditPaymentComponent implements OnInit{
 			this.paymentService.getById(this.id)
 			.subscribe(payment => {
 				this.payment = payment;
-				console.log(this.payment)
 				setTimeout(() => this.appComponent.loading = false, 1000);
 			});
 		}
