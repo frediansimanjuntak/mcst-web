@@ -14,7 +14,7 @@
 			</div>
 			<div class="row">
 				<div class="col-md-4">Facility</div>
-				<div class="col-md-8">
+				<div class="col-md-8">	
 					<p>: {{booking.facility.name}}</p>
 				</div>
 			</div>
@@ -34,6 +34,18 @@
 				<div class="col-md-4">Status</div>
 				<div class="col-md-8">
 					<p>: {{booking.status}}</p>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-md-4">Booked by</div>
+				<div class="col-md-8">
+					<p>: {{user?.username}}</p>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-md-4">Payment link</div>
+				<div class="col-md-8">
+					<p>:<a style="cursor:pointer" (click)="viewPayment(booking.payment)"> See payment</a></p>
 				</div>
 			</div>
     	</div>
@@ -133,9 +145,10 @@
 						    	</template>
 						    </p-column>
 						    <p-column field="remark" header="Remark" [style]="{'width': '90px'}" sortable="true" [filter]="true" filterPlaceholder="Search remark">
-						        <template let-col let-booking="rowData" pTemplate="body">
-						            <span [style.color]="booking[col.field]">{{booking[col.field]}}</span>
-						        </template>
+						        <template let-booking="rowData" pTemplate="body">
+						    		<span *ngIf="booking.remark">{{booking.remark}}</span>
+						    		<span *ngIf="!booking.remark">-</span>
+						    	</template>
 						    </p-column>
 						    <!-- </p-column> -->
 						    <p-column header="Action" styleClass="col-button">
@@ -168,9 +181,10 @@
 						    	</template>
 						    </p-column>
 						    <p-column field="remark" header="Remark" [style]="{'width': '90px'}" sortable="true" [filter]="true" filterPlaceholder="Search remark">
-						        <template let-col let-booking="rowData" pTemplate="body">
-						            <span [style.color]="booking[col.field]">{{booking[col.field]}}</span>
-						        </template>
+						        <template let-booking="rowData" pTemplate="body">
+						    		<span *ngIf="booking.remark">{{booking.remark}}</span>
+						    		<span *ngIf="!booking.remark">-</span>
+						    	</template>
 						    </p-column>
 						    <!-- </p-column> -->
 						    <p-column header="Action" styleClass="col-button">
@@ -203,9 +217,10 @@
 						    	</template>
 						    </p-column>
 						    <p-column field="remark" header="Remark" [style]="{'width': '90px'}" sortable="true" [filter]="true" filterPlaceholder="Search remark">
-						        <template let-col let-booking="rowData" pTemplate="body">
-						            <span [style.color]="booking[col.field]">{{booking[col.field]}}</span>
-						        </template>
+						       <template let-booking="rowData" pTemplate="body">
+						    		<span *ngIf="booking.remark">{{booking.remark}}</span>
+						    		<span *ngIf="!booking.remark">-</span>
+						    	</template>
 						    </p-column>
 						    <!-- </p-column> -->
 						    <p-column header="Action" styleClass="col-button">

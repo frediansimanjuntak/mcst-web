@@ -116,10 +116,10 @@ export class EditPaymentReminderComponent implements OnInit{
 
     initNotification_list() {
         return this.formbuilder.group({
-            charge : [''],
-            remarks : [''],
-            applies_to : [''],
-            amount : ['']
+            charge : ['', Validators.required],
+            remarks : ['', Validators.required],
+            applies_to : ['', Validators.required],
+            amount : ['', Validators.required]
         });
     }
 

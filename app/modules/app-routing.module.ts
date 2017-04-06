@@ -63,6 +63,7 @@ import {
 
 const routes: Routes = [
   { path: '', component: TokenComponent },
+  // { path: ':name', redirectTo: '', pathMatch: 'full'},
   { path: 'login',  component: LoginComponent },
   { path: 'register', component: RegisterComponent },
   { path: ':name/user',     component: UserComponent, canActivate: [AuthGuard] },

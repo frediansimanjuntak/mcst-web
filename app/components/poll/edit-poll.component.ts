@@ -163,12 +163,11 @@ export class EditPollComponent  {
     }
 
     startTimeChanged(event:any) {
-         this.model.start_time = event.jsdate;
+         this.model.start_time = event.formatted;
 
         if(this.model.start_time){
             (this.selectedEndTime = new Date()).setDate(event.jsdate.getDate() + 1);
-            this.model.end_time =  this.selectedEndTime;
-            this.selectedEndTime = this.convertDate(this.selectedEndTime)
+            this.selectedEndTime = this.model.end_time = this.convertDate(this.selectedEndTime)
             let copy: IMyOptions = this.getCopyOfendTimeOptions();
             copy.disableUntil = event.date;
             this.endTimeOptions = copy;
@@ -176,7 +175,7 @@ export class EditPollComponent  {
     }
 
     endTimeChanged(event:any) {
-      this.model.end_time =  event.jsdate;
+        this.model.end_time =  event.formatted;
     }
 
     getCopyOfendTimeOptions(): IMyOptions {

@@ -58,7 +58,7 @@ export class EditUnitComponent implements OnInit {
                     country : ['', <any>Validators.required],
                     full_address : ['', <any>Validators.required]
                 }),
-                status: ['empty'],
+                status: ['owned'],
                 max_tenant: [],
         });
         this.userService.getByToken()
@@ -95,7 +95,6 @@ export class EditUnitComponent implements OnInit {
 
     createUnit(model: any, isValid: boolean) {
         this.submitted = true;
-        console.log(model);
         if(isValid){
             if(model.max_tenant <= 20){
                 if(model.address.unit_no.length == 1){

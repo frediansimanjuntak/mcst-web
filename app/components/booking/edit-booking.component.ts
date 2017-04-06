@@ -203,7 +203,7 @@ export class EditBookingComponent implements OnInit  {
 			this.name = name;
 			this.unitService.getAll(this.name.default_development.name_url)
 			.subscribe(units => {
-				this.units = units.properties;
+				this.units = units.properties.filter(data => data.landlord.data != null || data.tenant.data.length > 0);
 				setTimeout(() => this.appComponent.loading = false, 1000);
 			})
 		})
@@ -235,7 +235,7 @@ export class EditBookingComponent implements OnInit  {
 		formData.append("fees.booking_fee", this.model.fees[0].booking_fee);
 		formData.append("fees.admin_fee", this.model.fees[0].admin_fee);
 		formData.append("booking_date", this.model.booking_date);
-		formData.append("payment_type", this.model.payment_type);
+		formData.append("payment_method", this.model.payment_method);
 		formData.append("sender", this.model.sender);
 		formData.append("property", this.model.property);
 		formData.append("facility", this.model.facility);
@@ -250,7 +250,7 @@ export class EditBookingComponent implements OnInit  {
 			},
 			error => {
 				console.log(error);
-				this._notificationsService.success(
+				this._notificationsService.error(
 					'Failed',
 					'Booking could not be save, server Error',
 				)
@@ -464,13 +464,15 @@ export class EditBookingComponent implements OnInit  {
 		this.unitService.getById(this.model.property , this.name.default_development.name_url)
 		.subscribe(unit => {
 			this.unit = unit.properties[0];
-			if(this.unit.landlord.resident.username) {
-				this.model.sender = this.unit.landlord.resident.username;
+			if(this.unit.landlord.data) {
+				this.model.sender = this.unit.landlord.data.resident._id;
+				this.model.sender_name = this.unit.landlord.data.resident.username;
 			}else{
-				this.model.sender = this.unit.tenant.resident.username;
+				this.model.sender = this.unit.tenant.data[0].resident._id;
+				this.model.sender_name = this.unit.tenant.data[0].resident.username;
 			}
+			setTimeout(() => this.appComponent.loading = false, 1000);
 		});
-		this.appComponent.loading = false
 	}
 	
 }

@@ -25,7 +25,7 @@
                         <div class="col-sm-8">
                             <input type="date" class="form-control" name="auto_issue_on" formControlName="auto_issue_on" required placeholder="Input auto issue date here" />
                             <small *ngIf="f.submitted && !myForm.controls.auto_issue_on.valid" class="text-danger">
-                                Description is required
+                                Auto issue is required
                             </small>
                         </div>
                     </div>
@@ -34,7 +34,7 @@
                         <div class="col-sm-8">
                             <input type="date" class="form-control" name="due_on" formControlName="due_on" required placeholder="Input due date here" />
                             <small *ngIf="f.submitted && !myForm.controls.due_on.valid" class="text-danger">
-                                Description is required
+                                Due on is required
                             </small>
                         </div>
                     </div>
@@ -43,7 +43,7 @@
                         <div class="col-sm-8">
                             <textarea class="form-control" name="message_to_receiver" formControlName="message_to_receiver" placeholder="Input message to receiver here"></textarea>
                             <small *ngIf="f.submitted && !myForm.controls.message_to_receiver.valid" class="text-danger">
-                                Description is required
+                                Message is required
                             </small>
                         </div>
                     </div>
@@ -61,13 +61,33 @@
                             <div *ngFor="let owned of myForm.controls.notification_list.controls; let i=index" class="form-group">
                                 <div class="panel-body" [formGroupName]="i">
                                     <div class="col-md-12">
-                                        <input class="form-control" style="width: 150px; float: left; margin-right: 10px;font-weight: bold" type="text" formControlName="charge" />&nbsp;
-                                        <input class="form-control" style="width: 300px; float: left; margin-right: 10px" type="text" formControlName="remarks" /> &nbsp;
-                                        <select class="form-control" style="width: 160px; float: left; margin-right: 10px" formControlName="applies_to">
-                                            <option value="all">All</option>
-                                            <option value="resident with vehicle">Resident with vehicle</option>
-                                        </select> &nbsp;
-                                        <input (keypress)="number($event)" class="form-control" (change)="total(myForm.value.notification_list[i].amount)" style="width: 100px; float: left; margin-right: 5px" type="text" formControlName="amount" />
+                                    	<div style="width: 150px; float: left; margin-right: 10px;font-weight: bold">
+                                    		<input class="form-control" type="text" formControlName="charge" required/>
+                                    		<small *ngIf="f.submitted && !myForm.controls.notification_list.controls[i].controls.charge.valid" class="text-danger">
+		                                        Charge/Bill is required
+		                                    </small>
+                                    	</div>
+                                        <div style="width: 300px; float: left; margin-right: 10px" >
+                                        	<input class="form-control" type="text" formControlName="remarks" required/>
+                                        	<small *ngIf="f.submitted && !myForm.controls.notification_list.controls[i].controls.remarks.valid" class="text-danger">
+		                                        Remark is required
+		                                    </small>
+                                        </div>
+                                        <div style="width: 160px; float: left; margin-right: 10px">
+                                        	<select class="form-control" formControlName="applies_to">
+	                                            <option value="all">All</option>
+	                                            <option value="resident with vehicle">Resident with vehicle</option>
+	                                        </select>
+	                                        <small *ngIf="f.submitted && !myForm.controls.notification_list.controls[i].controls.applies_to.valid" class="text-danger">
+		                                        Applies to is required
+		                                    </small>
+                                        </div>
+                                        <div style="width: 100px; float: left; margin-right: 5px">
+                                        	<input (keypress)="number($event)" class="form-control" (change)="total(myForm.value.notification_list[i].amount)" type="text" formControlName="amount" />
+                                        	<small *ngIf="f.submitted && !myForm.controls.notification_list.controls[i].controls.amount.valid" class="text-danger">
+		                                        Amount is required
+		                                    </small>
+                                        </div>
                                         <span *ngIf="myForm.controls.notification_list.controls.length > 1" (click)="removeNotification_list(i)"><img src="../../assets/image/icon_close_black.png" width="10px" height="10px"></span>
                                     </div>
                                 </div>
@@ -120,7 +140,7 @@
                         <div class="col-sm-8">
                             <input type="date" class="form-control" name="auto_issue_on" formControlName="auto_issue_on" required placeholder="Input auto issue date here" />
                             <small *ngIf="f.submitted && !myForm.controls.auto_issue_on.valid" class="text-danger">
-                                Description is required
+                                Auto issue on is required
                             </small>
                         </div>
                     </div>
@@ -129,7 +149,7 @@
                         <div class="col-sm-8">
                             <input type="date" class="form-control" name="due_on" formControlName="due_on" required placeholder="Input due date here" />
                             <small *ngIf="f.submitted && !myForm.controls.due_on.valid" class="text-danger">
-                                Description is required
+                                Due on is required
                             </small>
                         </div>
                     </div>
@@ -138,7 +158,7 @@
                         <div class="col-sm-8">
                             <textarea class="form-control" name="message_to_receiver" formControlName="message_to_receiver" placeholder="Input message to receiver here"></textarea>
                             <small *ngIf="f.submitted && !myForm.controls.message_to_receiver.valid" class="text-danger">
-                                Description is required
+                                Message is required
                             </small>
                         </div>
                     </div>
@@ -155,13 +175,33 @@
                             <div *ngFor="let owned of myForm.controls.notification_list.controls; let i=index" class="form-group">
                                 <div class="panel-body" [formGroupName]="i">
                                     <div class="col-md-12">
-                                        <input class="form-control" style="width: 150px; float: left; margin-right: 10px;font-weight: bold" type="text" formControlName="charge" />&nbsp;
-                                        <input class="form-control" style="width: 300px; float: left; margin-right: 10px" type="text" formControlName="remarks" /> &nbsp;
-                                        <select class="form-control" style="width: 160px; float: left; margin-right: 10px" formControlName="applies_to">
-                                            <option value="all">All</option>
-                                            <option value="resident with vehicle">Resident with vehicle</option>
-                                        </select> &nbsp;
-                                        <input (keypress)="number($event)" class="form-control" (change)="total(myForm.value.notification_list[i].amount)" style="width: 100px; float: left; margin-right: 5px" type="text" formControlName="amount" />
+                                       <div style="width: 150px; float: left; margin-right: 10px;font-weight: bold">
+                                    		<input class="form-control" type="text" formControlName="charge" required/>
+                                    		<small *ngIf="f.submitted && !myForm.controls.notification_list.controls[i].controls.charge.valid" class="text-danger">
+		                                        Charge/Bill is required
+		                                    </small>
+                                    	</div>
+                                        <div style="width: 300px; float: left; margin-right: 10px" >
+                                        	<input class="form-control" type="text" formControlName="remarks" required/>
+                                        	<small *ngIf="f.submitted && !myForm.controls.notification_list.controls[i].controls.remarks.valid" class="text-danger">
+		                                        Remark is required
+		                                    </small>
+                                        </div>
+                                        <div style="width: 160px; float: left; margin-right: 10px">
+                                        	<select class="form-control" formControlName="applies_to">
+	                                            <option value="all">All</option>
+	                                            <option value="resident with vehicle">Resident with vehicle</option>
+	                                        </select>
+	                                        <small *ngIf="f.submitted && !myForm.controls.notification_list.controls[i].controls.applies_to.valid" class="text-danger">
+		                                        Applies to is required
+		                                    </small>
+                                        </div>
+                                        <div style="width: 100px; float: left; margin-right: 5px">
+                                        	<input (keypress)="number($event)" class="form-control" (change)="total(myForm.value.notification_list[i].amount)" type="text" formControlName="amount" />
+                                        	<small *ngIf="f.submitted && !myForm.controls.notification_list.controls[i].controls.amount.valid" class="text-danger">
+		                                        Amount is required
+		                                    </small>
+                                        </div>
                                         <span *ngIf="myForm.controls.notification_list.controls.length > 1" (click)="removeNotification_list(i)"><img src="../../assets/image/icon_close_black.png" width="10px" height="10px"></span>
                                     </div>
                                 </div>
