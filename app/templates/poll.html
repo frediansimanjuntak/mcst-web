@@ -6,80 +6,64 @@
 			</div>
 			<p>Home > Manage Poll > {{poll.title}}</p>
 			<a style="cursor:pointer" (click)="goBack()">Back to last page</a>
-			<div class="row">
-				<div class="col-md-4">Title</div>
-				<div class="col-md-8">
-					<p>: {{poll.title}}</p>
+			<div class="content">
+				<div class="row">
+					<div class="col-md-4 col-padding"><b>Title</b></div>
+					<div class="col-md-8 col-padding">: {{poll.title}}</div>
 				</div>
-			</div>
-			<div class="row">
-				<div class="col-md-4">Description</div>
-				<div class="col-md-8">
-					<p>: {{poll.description}}</p>
+				<div class="row">
+					<div class="col-md-4 col-padding"><b>Description</b></div>
+					<div class="col-md-8 col-padding">: {{poll.description}}</div>
 				</div>
-			</div>
-			<div class="row">
-				<div class="col-md-4">Type</div>
-				<div class="col-md-8">
-					<p>:
-						<span *ngIf="poll.poll_type == 'yes_or_no'">Yes / No</span>
-						<span *ngIf="poll.poll_type == 'multiple'">Multiple</span>
-					</p>
-				</div>
-			</div>
-			<div class="row">
-				<div class="col-md-4">Voted Total</div>
-				<div class="col-md-8">
-					<p>: {{poll.votes.length}}</p>
-				</div>
-			</div>
-			<div class="row" *ngIf="poll.votes.length > 0 ">
-				<div *ngIf="!poll.outcome" class="col-md-4">Answers Progress </div>
-				<div *ngIf="poll.outcome" class="col-md-4">Answer Results </div>
-				<div class="col-md-8">
-					<div *ngFor="let a of poll.answers">
-						<progressbar [max]="max" [value]="a.progress">
-							{{a.choice}}&nbsp;: <span style="color:white; white-space:nowrap;">{{a.progress}} / {{max}}</span>
-						</progressbar>
+				<div class="row">
+					<div class="col-md-4 col-padding"><b>Type</b></div>
+					<div class="col-md-8 col-padding">:
+							<span *ngIf="poll.poll_type == 'yes_or_no'">Yes / No</span>
+							<span *ngIf="poll.poll_type == 'multiple'">Multiple</span>
 					</div>
 				</div>
-			</div>
-			<div class="row" *ngIf="poll.outcome">
-				<div class="col-md-4">Outcome</div>
-				<div class="col-md-8">
-					<p style="color: red">: <b>{{poll.outcome}}</b></p>
+				<div class="row">
+					<div class="col-md-4 col-padding"><b>Voted Total</b></div>
+					<div class="col-md-8 col-padding">: {{poll.votes.length}}</div>
 				</div>
-			</div>
-			<div *ngIf="poll.status=='end poll'" class="row">
-				<div class="col-md-4">Commence Date</div>
-				<div class="col-md-8">
-					<p>: {{poll.start_time | date: 'd/M/y'}}</p>
+				<div class="row" *ngIf="poll.votes.length > 0 ">
+					<div *ngIf="!poll.outcome" class="col-md-4 col-padding"><b>Answers Progress </b></div>
+					<div *ngIf="poll.outcome" class="col-md-4 col-padding"><b>Answer Results </b></div>
+					<div class="col-md-8 col-padding">
+						<div *ngFor="let a of poll.answers">
+							<progressbar [max]="max" [value]="a.progress">
+								{{a.choice}}&nbsp;: <span style="color:white; white-space:nowrap;">{{a.progress}} / {{max}}</span>
+							</progressbar>
+						</div>
+					</div>
 				</div>
-			</div>
-			<div class="row">
-				<div class="col-md-4">Result Date</div>
-				<div class="col-md-8">
-					<p>: {{poll.end_time | date: 'd/M/y'}}</p>
+				<div class="row" *ngIf="poll.outcome">
+					<div class="col-md-4 col-padding"><b>Outcome</b></div>
+					<div class="col-md-8 col-padding"><span style="color: red">: <b>{{poll.outcome}}</b></span></div>
 				</div>
-			</div>
-			<div class="row">
-				<div class="col-md-4">Status</div>
-				<div class="col-md-8">
-					<p *ngIf="poll.status=='draft'">: Draft</p>
-					<p *ngIf="poll.status=='active'">: Active</p>
-					<p *ngIf="poll.status=='end poll'">: End</p>
+				<div *ngIf="poll.status=='end poll'" class="row">
+					<div class="col-md-4 col-padding"><b>Commence Date</b></div>
+					<div class="col-md-8 col-padding">: {{poll.start_time | date: 'd/M/y'}}</div>
 				</div>
-			</div>
-			<div class="row">
-				<div class="col-md-4">Created By</div>
-				<div class="col-md-8">
-					<p>: {{poll.created_by.username}}</p>
+				<div class="row">
+					<div class="col-md-4 col-padding"><b>Result Date</b></div>
+					<div class="col-md-8 col-padding">: {{poll.end_time | date: 'd/M/y'}}</div>
 				</div>
-			</div>
-			<div class="row">
-				<div class="col-md-4">Created at</div>
-				<div class="col-md-8">
-					<p>: {{poll.created_at | date: 'd/M/y'}}</p>
+				<div class="row">
+					<div class="col-md-4 col-padding"><b>Status</b></div>
+					<div class="col-md-8 col-padding">
+						<span *ngIf="poll.status=='draft'">: Draft</span>
+						<span *ngIf="poll.status=='active'">: Active</span>
+						<span *ngIf="poll.status=='end poll'">: End</span>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-md-4 col-padding"><b>Created By</b></div>
+					<div class="col-md-8 col-padding">: {{poll.created_by.username}}</div>
+				</div>
+				<div class="row">
+					<div class="col-md-4 col-padding"><b>Created at</b></div>
+					<div class="col-md-8 col-padding">: {{poll.created_at | date: 'd/M/y'}}</div>
 				</div>
 			</div>
 		</div>
