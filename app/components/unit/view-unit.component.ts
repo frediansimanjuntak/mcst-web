@@ -133,7 +133,7 @@ export class ViewUnitComponent implements OnInit {
             this.allUsers =this.users = users;
             this.attachmentService.getAll().subscribe(attachments => {
                 this.attachments =attachments;
-                let roleFilter =  ['master' , 'super admin', 'admin'];
+                let roleFilter =  ['master' , 'super admin', 'admin', 'superadmin', 'super_admin'];
                 for (var i = 0; i < roleFilter.length; i++) {
                     this.users = this.users.filter(data => data.role != roleFilter[i]); 
                 }
