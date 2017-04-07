@@ -6,84 +6,59 @@
 			</div>
 			<p class="id-location">Home > Manage Request > #{{petition.reference_no}}</p>
 			<a style="cursor:pointer" (click)="goBack()">Back to last page</a>
-			<div class="row">
-				<div class="col-md-4">Reference Number</div>
-				<div class="col-md-8">
-					<p>: #{{petition.reference_no}}</p>
+			<div class="content">
+				<div class="row">
+					<div class="col-md-4 col-padding"><b>Reference Number </b></div>
+					<div class="col-md-8 col-padding">: #{{petition.reference_no}}</div>
+				</div>
+				<div class="row">
+					<div class="col-md-4 col-padding"><b>Development </b></div>
+					<div class="col-md-8 col-padding">: {{ petition.development.name }}</div>
+				</div>
+				<div class="row">
+					<div class="col-md-4 col-padding"><b>Unit No </b></div>
+					<div class="col-md-8 col-padding">: {{ petition.unit_no }}</div>
+				</div>
+				<div class="row">
+					<div class="col-md-4 col-padding"><b>Attachment </b></div>
+					<div class="col-md-8 col-padding">:
+						<!-- <a  style="cursor:pointer" *ngFor="let a of petition.attachment" (click)="preview(a)" title="{{a.name}}">{{a.name}},&nbsp;</a> -->
+						<a  style="cursor:pointer" *ngFor="let a of petition.attachment" [attr.href]="a.url" title="{{a.name}}" download>{{a.name}},&nbsp;</a>
+					</div>
+				</div>
+				<div class="row" *ngIf="petition.contract">
+					<div class="col-md-4 col-padding"><b>Contract </b></div>
+					<div class="col-md-8 col-padding">: {{ petition.contract }}</div>
+				</div>
+				<div class="row">
+					<div class="col-md-4 col-padding"><b>Type </b></div>
+					<div *ngIf="petition.petition_type == 'maintenance'" class="col-md-8 col-padding">: Maintenance</div>
+					<div *ngIf="petition.petition_type == 'moving_in'" class="col-md-8 col-padding">: Moving-in</div>
+					<div *ngIf="petition.petition_type == 'renovation'" class="col-md-8 col-padding">: Renovation</div>
+					<div *ngIf="petition.petition_type == 'add_tenant/family'" class="col-md-8 col-padding">: Add Tenant/family</div>
+				</div>
+				<div class="row">
+					<div class="col-md-4 col-padding"><b>Remark </b></div>
+					<div class="col-md-8 col-padding">: {{ petition.remark }}</div>
+				</div>
+				<div class="row">
+					<div class="col-md-4 col-padding"><b>Status </b></div>
+					<div class="col-md-8 col-padding">: {{ petition.status }}</div>
+				</div>
+				<div class="row">
+					<div class="col-md-4 col-padding"><b>Requested By </b></div>
+					<div class="col-md-8 col-padding"><span *ngIf="petition.created_by">: {{ petition.created_by.username }}</span></div>
+				</div>
+				<div class="row">
+					<div class="col-md-4 col-padding"><b>Since </b></div>
+					<div class="col-md-8 col-padding">: {{ petition.created_at | date:'longDate' }}</div>
+				</div>
+				<div class="row">
+					<div class="col-md-4 col-padding"><b>Last Updated on </b></div>
+					<div class="col-md-8 col-padding">: {{ petition.updated_at | date:'longDate'}}</div>
 				</div>
 			</div>
-			<div class="row">
-				<div class="col-md-4">Development </div>
-				<div class="col-md-8">
-					<p>: {{ petition.development.name }}</p>
-				</div>
-			</div>
-			<div class="row">
-				<div class="col-md-4">Unit No </div>
-				<div class="col-md-8">
-					<p>: {{ petition.unit_no }}</p>
-				</div>
-			</div>
-			<div class="row">
-				<div class="col-md-4">Attachment </div>
-				<div class="col-md-8">
-					:
-					<!-- <a  style="cursor:pointer" *ngFor="let a of petition.attachment" (click)="preview(a)" title="{{a.name}}">{{a.name}},&nbsp;</a> -->
-					<a  style="cursor:pointer" *ngFor="let a of petition.attachment" [attr.href]="a.url" title="{{a.name}}" download>{{a.name}},&nbsp;</a>
-
-				</div>
-			</div>
-			<div class="row" *ngIf="petition.contract">
-				<div class="col-md-4">Contract </div>
-				<div class="col-md-8">
-					<p>: {{ petition.contract }}</p>
-				</div>
-			</div>
-			<div class="row">
-				<div class="col-md-4">Type </div>
-				<div *ngIf="petition.petition_type == 'maintenance'" class="col-md-8">
-					<p>: Maintenance</p>
-				</div>
-				<div *ngIf="petition.petition_type == 'moving_in'" class="col-md-8">
-					<p>: Moving-in</p>
-				</div>
-				<div *ngIf="petition.petition_type == 'renovation'" class="col-md-8">
-					<p>: Renovation</p>
-				</div>
-				<div *ngIf="petition.petition_type == 'add_tenant/family'" class="col-md-8">
-					<p>: Add Tenant/family</p>
-				</div>
-			</div>
-			<div class="row">
-				<div class="col-md-4">Remark </div>
-				<div class="col-md-8">
-					<p>: {{ petition.remark }}</p>
-				</div>
-			</div>
-			<div class="row">
-				<div class="col-md-4">Status </div>
-				<div class="col-md-8">
-					<p>: {{ petition.status }}</p>
-				</div>
-			</div>
-			<div class="row">
-				<div class="col-md-4">Requested By </div>
-				<div class="col-md-8">
-					<p *ngIf="petition.created_by">: {{ petition.created_by.username }}</p>
-				</div>
-			</div>
-			<div class="row">
-				<div class="col-md-4">Since </div>
-				<div class="col-md-8">
-					<p>: {{ petition.created_at | date:'longDate' }}</p>
-				</div>
-			</div>
-			<div class="row">
-				<div class="col-md-4">Last Updated on </div>
-				<div class="col-md-8">
-					<p>: {{ petition.updated_at | date:'longDate'}}</p>
-				</div>
-			</div>
+				
 			
 			<!-- <pdf-viewer [src]="pdfSrc" 
               [page]="page" 
