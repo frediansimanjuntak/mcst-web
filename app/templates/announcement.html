@@ -53,7 +53,7 @@
 									<span *ngIf="!announcementsDrafted.valid_till">-</span>
 								</template>
 							</p-column>
-							<p-column header="Created on" sortable="true">
+							<p-column header="Created on" field="created_at" sortable="true">
 								<template let-announcementsDrafted="rowData" pTemplate="body">
 									<span>{{announcementsDrafted.created_at | date:'y/M/d'}}</span>
 								</template>
@@ -90,7 +90,7 @@
 									<span *ngIf="!announcementsPublished.valid_till">-</span>
 								</template>
 							</p-column>
-							<p-column header="Created on" sortable="true">
+							<p-column header="Created on" field="created_at" sortable="true">
 								<template let-announcementsPublished="rowData" pTemplate="body">
 									<span>{{announcementsPublished.created_at | date:'y/M/d'}}</span>
 								</template>
