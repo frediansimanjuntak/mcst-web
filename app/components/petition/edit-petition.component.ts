@@ -83,28 +83,28 @@ export class EditPetitionComponent implements OnInit {
         });
     }
 
-    getLastRefNo(){
-        this.petitionService.getAll().subscribe(petitions => {
-            this.petitions = petitions ;
-            if(petitions.length > 0) { 
-                var a = this.petitions.length - 1;
-                this.no = +this.petitions[a].reference_no + 1
-                if(this.no > 1 && this.no < 10) {
-                    this.model.reference_no = '000' + this.no.toString();
-                }if(this.no > 9 && this.no < 100) {
-                    this.model.reference_no = '00' + this.no.toString();
-                }if(this.no > 99 && this.no < 1000) { 
-                    this.model.reference_no = '0' + this.no.toString();
-                }if(this.no > 999) {
-                    this.model.reference_no = this.no.toString();
-                }
-            } else {
-                this.model.reference_no = '0001'
-            }
+    // getLastRefNo(){
+    //     this.petitionService.getAll().subscribe(petitions => {
+    //         this.petitions = petitions ;
+    //         if(petitions.length > 0) { 
+    //             var a = this.petitions.length - 1;
+    //             this.no = +this.petitions[a].reference_no + 1
+    //             if(this.no > 1 && this.no < 10) {
+    //                 this.model.reference_no = '000' + this.no.toString();
+    //             }if(this.no > 9 && this.no < 100) {
+    //                 this.model.reference_no = '00' + this.no.toString();
+    //             }if(this.no > 99 && this.no < 1000) { 
+    //                 this.model.reference_no = '0' + this.no.toString();
+    //             }if(this.no > 999) {
+    //                 this.model.reference_no = this.no.toString();
+    //             }
+    //         } else {
+    //             this.model.reference_no = '0001'
+    //         }
         
-        this.appComponent.loading = false;
-        });
-    }
+    //     this.appComponent.loading = false;
+    //     });
+    // }
 
     createPetition(model: any, isValid: boolean) {
         this.submitted = true;
@@ -119,7 +119,7 @@ export class EditPetitionComponent implements OnInit {
                 }
             }
                 
-            formData.append("reference_no", this.model.reference_no);
+            // formData.append("reference_no", this.model.reference_no);
             formData.append("property", model.property);
             formData.append("petition_type", model.petition_type);
             formData.append("remark", model.remark);
@@ -163,7 +163,8 @@ export class EditPetitionComponent implements OnInit {
                     }
                     this.myOptions = opts.slice(0);
                     this.items = this.myOptions;
-                    this.getLastRefNo();
+                    this.appComponent.loading = false;
+                    // this.getLastRefNo();
                 }, 1000);
             });
     }

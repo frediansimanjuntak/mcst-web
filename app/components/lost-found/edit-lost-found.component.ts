@@ -115,6 +115,7 @@ export class EditLostFoundComponent  {
             .subscribe((data)=> {
                 setTimeout(()=> {
                     this.dataUnit      = data.properties;
+                    setTimeout(() => this.appComponent.loading = false, 1000);
                     // this.getLastSerialNo();
                 }, 1000);
             });
