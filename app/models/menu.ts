@@ -21,6 +21,7 @@ export const MENUS: any[] = [
       { 
         name : 'Lost & Found', 
         link: '/lost_found', 
+        description: 'Manage lost & found',
         img: '../../assets/image/icon_lost&found.png' 
       },
   		{ 
