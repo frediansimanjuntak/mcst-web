@@ -78,7 +78,7 @@ export class EditLostFoundComponent  {
                 formData.append("photo[]", this.model.photo[i]);
             }
 
-            formData.append("serial_number", this.model.serial_number);
+            // formData.append("serial_number", this.model.serial_number);
             formData.append("archieve", this.model.archieve);
             formData.append("property", this.model.property);
             formData.append("type", this.model.type);
@@ -115,32 +115,32 @@ export class EditLostFoundComponent  {
             .subscribe((data)=> {
                 setTimeout(()=> {
                     this.dataUnit      = data.properties;
-                    this.getLastSerialNo();
+                    // this.getLastSerialNo();
                 }, 1000);
             });
     }
 
-    getLastSerialNo(){
-        this.lostFoundService.getAll().subscribe(lostfounds => {
-            this.lostFounds = lostfounds ;
-            if(lostfounds.length > 0) { 
-                var a = this.lostFounds.length - 1;
-                this.no = +this.lostFounds[a].serial_number + 1
-                if(this.no > 1 && this.no < 10) {
-                    this.model.serial_number = '000' + this.no.toString();
-                }if(this.no > 9 && this.no < 100) {
-                    this.model.serial_number = '00' + this.no.toString();
-                }if(this.no > 99 && this.no < 1000) { 
-                    this.model.serial_number = '0' + this.no.toString();
-                }if(this.no > 999) {
-                    this.model.serial_number = this.no.toString();
-                }
-            } else {
-                this.model.serial_number = '0001'
-            }
-            setTimeout(() => this.appComponent.loading = false, 1000);
-        });
-    }
+    // getLastSerialNo(){
+    //     this.lostFoundService.getAll().subscribe(lostfounds => {
+    //         this.lostFounds = lostfounds ;
+    //         if(lostfounds.length > 0) { 
+    //             var a = this.lostFounds.length - 1;
+    //             this.no = +this.lostFounds[a].serial_number + 1
+    //             if(this.no > 1 && this.no < 10) {
+    //                 this.model.serial_number = '000' + this.no.toString();
+    //             }if(this.no > 9 && this.no < 100) {
+    //                 this.model.serial_number = '00' + this.no.toString();
+    //             }if(this.no > 99 && this.no < 1000) { 
+    //                 this.model.serial_number = '0' + this.no.toString();
+    //             }if(this.no > 999) {
+    //                 this.model.serial_number = this.no.toString();
+    //             }
+    //         } else {
+    //             this.model.serial_number = '0001'
+    //         }
+    //         setTimeout(() => this.appComponent.loading = false, 1000);
+    //     });
+    // }
 
     remove(i: any){
         this.model.photo.splice(i, 1)

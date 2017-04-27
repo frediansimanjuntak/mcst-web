@@ -55,7 +55,9 @@ export class DashboardComponent implements OnInit{
     this.menus1[3] = this.menus[5];
     this.menus1[4] = this.menus[6];
 
-    this.menus2 = this.menus[1].sub;
+    this.menus2[0] = this.menus[1].sub[0];
+    this.menus2[1] = this.menus[1].sub[1];
+    this.menus2[2] = this.menus[1].sub[3];
     this.menus3 = this.menus[7].sub;
   }
 

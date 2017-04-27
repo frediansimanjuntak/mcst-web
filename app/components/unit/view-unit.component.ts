@@ -113,7 +113,6 @@ export class ViewUnitComponent implements OnInit {
                         development: [''],
                         property: [this.id]
                     }),
-                    active: [''],
                     remarks: [''],
                     details:  this.formbuilder.group({
                         first_name: [''],
@@ -183,7 +182,6 @@ export class ViewUnitComponent implements OnInit {
                                                 identification_no: [''],
                                             }),
                                             authorized_property: this.formbuilder.array([this.initAuthorized()]),
-                                            active: [''],
                                             remarks: [''],
                                             });    
                                     }else{
@@ -205,7 +203,6 @@ export class ViewUnitComponent implements OnInit {
                                             }),
                                             owned_property: this.formbuilder.array([this.initOwned()]),
                                             authorized_property: this.formbuilder.array([this.initAuthorized()]),
-                                            active: [''],
                                             remarks: [''],
                                             });  
                                     }
@@ -664,7 +661,6 @@ export class ViewUnitComponent implements OnInit {
                         development: [''],
                         property: [this.id]
                     }),
-                    active: [''],
                     remarks: [''],
                     details:  this.formbuilder.group({
                         first_name: [''],
@@ -715,7 +711,6 @@ export class ViewUnitComponent implements OnInit {
                         development: [''],
                         property: [this.id]
                     }),
-                    active: [''],
                     remarks: [''],
                     details:  this.formbuilder.group({
                         first_name: [''],
@@ -751,7 +746,6 @@ export class ViewUnitComponent implements OnInit {
                         identification_no: [''],
                     }),
                 authorized_property: this.formbuilder.array([this.initAuthorized()]),
-                active: [''],
                 remarks: [''],
                 });    
         }else{
@@ -771,7 +765,6 @@ export class ViewUnitComponent implements OnInit {
                 }),
                 owned_property: this.formbuilder.array([this.initOwned()]),
                 authorized_property: this.formbuilder.array([this.initAuthorized()]),
-                active: [''],
                 remarks: [''],
                 });  
         }
