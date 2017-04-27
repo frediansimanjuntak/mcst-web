@@ -95,7 +95,7 @@
                         </p-column> 
                         <p-column header="Social Page" field="residents.resident.social_profile" sortable="true">
                             <template let-residents="rowData" pTemplate="body">
-                                <span *ngIf="residents.resident.social_profile">{{residents.resident.social_profile}}</span>
+                                <span *ngIf="residents.resident.social_profile">Yes</span>
                                 <span *ngIf="!residents.resident.social_profile">-</span>
                             </template>
                         </p-column> 
