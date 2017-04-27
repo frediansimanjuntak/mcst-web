@@ -129,7 +129,7 @@ export class NewsletterComponent implements OnInit {
         this.newsletterservice.getAll(this.name.default_development.name_url)
             .subscribe((data)=> {
                 setTimeout(()=> {
-                  this.data = data.newsletter;
+                  this.data = data;
                   this.allAgm       = this.data.filter(data => data.type === 'agm' );
                   this.allEgm       = this.data.filter(data => data.type === 'egm' );
                   this.allCircular  = this.data.filter(data => data.type === 'circular' );
