@@ -589,6 +589,9 @@ export class ViewUnitComponent implements OnInit {
         this.loading= true;
         model.username = this.username;
         model.remarks = this.model.remarks;
+        model.default_property = {
+             property: this.id
+        }
         if(this.model.type=='tenant'){
                model.rented_property.development = this.name.default_development._id;
              if(model.owned_property){
