@@ -57,6 +57,7 @@ export class ViewUnitComponent implements OnInit {
     name: any;
     filteredBrands: any[];
     username: string;
+    makeAsDefaultProperty:string = 'no';
     constructor(
         private router: Router,
         private route: ActivatedRoute,
@@ -507,6 +508,17 @@ export class ViewUnitComponent implements OnInit {
              this.data.id_property     = this.unit._id;
              this.data.type            = this.model.type;
              this.data.remarks         = this.model.remarks;
+             var defaultProperty: string;
+
+             if(this.makeAsDefaultProperty == 'yes'){
+                defaultProperty = this.id
+             }else{
+                defaultProperty = this.user.default_property.property
+             }
+
+             this.data.default_property = {
+                 property: defaultProperty
+             }
              this.unitservice.createResident(this.data)
                 .then(
                     data => {
