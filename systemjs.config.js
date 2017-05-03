@@ -58,7 +58,7 @@
       'angular2-moment': { main: './index.js', defaultExtension: 'js' },
       'ng2-table': { main: 'ng2-table.js', defaultExtension: 'js' },
       mydatepicker: { defaultExtension: 'js' },
-      'ng2-bootstrap': { main: '/bundles/ng2-bootstrap.umd.js', defaultExtension: 'js' },
+      'ng2-bootstrap': { main: '/bundles/ngx-bootstrap.umd.js', defaultExtension: 'js' },
       'ng2-file-upload' : { main: './ng2-file-upload.js', defaultExtension: 'js' },
       'ng2-select' : { main: './ng2-select.js', defaultExtension: 'js' },
       'jquery': { main: 'jquery.js', defaultExtension: 'js' },
