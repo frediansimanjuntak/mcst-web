@@ -200,7 +200,7 @@ export class EditBookingComponent implements OnInit  {
 		});
 		this.userService.getByToken()
 		.subscribe(name => {
-			this.name = name;
+			this.name = name.user;
 			this.unitService.getAll(this.name.default_development.name_url)
 			.subscribe(units => {
 				this.units = units.properties.filter(data => data.landlord.data != null || data.tenant.data.length > 0);

@@ -44,7 +44,7 @@ export class ContractComponent implements OnInit  {
         private contractnoticeService:ContractNoticeService) {}
 
     ngOnInit(): void {
-        this.userService.getByToken().subscribe(name => {this.name = name;})
+        this.userService.getByToken().subscribe(name => {this.name = name.user;})
         this.images = [];
         this.images.push({source:'/assets/image/1.png'});
         this.images.push({source:'/assets/image/2.png'});

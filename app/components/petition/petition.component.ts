@@ -79,10 +79,10 @@ export class PetitionComponent implements OnInit {
         });
 
         this.userService.getByToken()
-                            .subscribe(name => {
-                                this.name = name;
-                                this.loadAllUnits();
-                            })
+        .subscribe(name => {
+            this.name = name.user;
+            this.loadAllUnits();
+        })
     }
 
     private logCheckbox(element: HTMLInputElement): void {

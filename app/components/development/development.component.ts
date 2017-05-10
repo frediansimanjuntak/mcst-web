@@ -30,7 +30,7 @@ export class DevelopmentComponent implements OnInit {
                 private _notificationsService: NotificationsService,) {}
 
     ngOnInit() {
-        this.userService.getByToken().subscribe(name => {this.name = name;})
+        this.userService.getByToken().subscribe(name => {this.name = name.user;})
         this.loadAllDevelopments();
     }
 

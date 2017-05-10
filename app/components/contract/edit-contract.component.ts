@@ -56,7 +56,7 @@ export class EditContractComponent  implements OnInit {
         this.model.attachment = [];
         this.userService.getByToken().subscribe(
             name => {
-                this.name = name;
+                this.name = name.user;
                 setTimeout(() => this.appComponent.loading = false, 1000);
             })
         

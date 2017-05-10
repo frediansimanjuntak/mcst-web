@@ -41,7 +41,7 @@ export class EditContactComponent {
         };
         this.userService.getByToken()
         .subscribe(name => {
-            this.name = name;
+            this.name = name.user;
             setTimeout(() => this.appComponent.loading = false, 1000);
         })
         // this.developmentService.getAll().subscribe(developments => { this.developments = developments; });

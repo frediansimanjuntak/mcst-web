@@ -71,10 +71,10 @@ export class VisitComponent implements OnInit {
     	this.checkInSsubmitted = false;
         this.checkOutSsubmitted = false;
 		this.userService.getByToken()
-                            .subscribe(name => {
-                                this.name = name;
-                                this.loadAllUnits();
-                            })
+        .subscribe(name => {
+            this.name = name.user;
+            this.loadAllUnits();
+        })
 
         if(typeof this.visitDateCreate !== "string"){
             this.visitDateCreate = this.convertDate(this.visitDateCreate);

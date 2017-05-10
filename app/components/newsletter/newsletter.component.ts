@@ -54,7 +54,7 @@ export class NewsletterComponent implements OnInit {
     ngOnInit(): void {
         this.userService.getByToken()
           .subscribe(name => {
-            this.name = name;
+            this.name = name.user;
             this.loadAllNewsletters();
           })
     }

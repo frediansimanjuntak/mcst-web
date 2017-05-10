@@ -57,14 +57,14 @@ export class EditPetitionComponent implements OnInit {
             this.id = params['id'];
         });
         this.userService.getByToken()
-                            .subscribe(name => {
-                                this.name = name;
-                                this.loadAllUnits();
-                                if( this.id != null) {
-                                    this.petitionService.getPetition(this.id).then(petition => {this.petition = petition;});
-                                    this.appComponent.loading = false;
-                                }
-                            })
+        .subscribe(name => {
+            this.name = name.user;
+            this.loadAllUnits();
+            if( this.id != null) {
+                this.petitionService.getPetition(this.id).then(petition => {this.petition = petition;});
+                this.appComponent.loading = false;
+            }
+        })
         this.selectedType = 'Maintenance';
         this.model.attachment = [];
         this.myForm = this.formbuilder.group({

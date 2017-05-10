@@ -42,18 +42,18 @@ export class HeaderComponent implements OnInit{
 
     ngOnInit(){
     	this.userService.getByToken()
-                            .subscribe(name => {
-                                this.name = name;
-                                 this.lostFoundService.getAll()
-                                .subscribe((data)=> {
-                                    setTimeout(()=> {
-                                        this.lostFounds      = data.filter(data => data.development._id == this.name.default_development._id);
-                                    })
-                                })
-                                if(this.authToken){
-                                    this.loadUnread();
-                                }
-                            })
+        .subscribe(name => {
+            this.name = name.user;
+             this.lostFoundService.getAll()
+            .subscribe((data)=> {
+                setTimeout(()=> {
+                    this.lostFounds      = data.filter(data => data.development._id == this.name.default_development._id);
+                })
+            })
+            if(this.authToken){
+                this.loadUnread();
+            }
+        })
         this.NotificationClicked = false;
 
 	}

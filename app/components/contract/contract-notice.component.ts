@@ -38,7 +38,7 @@ export class ContractNoticeComponent implements OnInit  {
 
     ngOnInit(): void {
         this.model.attachment = [];
-        this.userService.getByToken().subscribe(name => {this.name = name;})
+        this.userService.getByToken().subscribe(name => {this.name = name.user;})
         this.route.params.subscribe(params => {
             this.id = params['id'];
             this._id = params['_id'];

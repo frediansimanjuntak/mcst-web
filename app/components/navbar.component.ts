@@ -15,7 +15,7 @@ export class NavbarComponent implements OnInit {
 	constructor(private slimLoadingBarService: SlimLoadingBarService, private userService: UserService) { }
 
 	ngOnInit(){
-		this.userService.getByToken().subscribe(name => { this.name = name;})
+		this.userService.getByToken().subscribe(name => { this.name = name.user;})
 	}
 
 	start() {

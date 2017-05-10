@@ -80,10 +80,10 @@ export class ViewUnitComponent implements OnInit {
         });
         this.errorMessage = "";
         this.userService.getByToken()
-                            .subscribe(name => {
-                                this.name = name;
-                                this.getUsers();
-                            });
+        .subscribe(name => {
+            this.name = name.user;
+            this.getUsers();
+        });
         this.model.option = "new";                    
         this.model.document = [];
         this.useAutocomplete= false;

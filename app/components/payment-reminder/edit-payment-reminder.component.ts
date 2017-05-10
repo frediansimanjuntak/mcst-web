@@ -49,7 +49,7 @@ export class EditPaymentReminderComponent implements OnInit{
         });
         this.userService.getByToken()
         .subscribe(name => {
-            this.name = name;
+            this.name = name.user;
         })
         this.route.params.subscribe(params => {
             this.id = params['id'];

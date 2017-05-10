@@ -50,10 +50,10 @@ export class EditLostFoundComponent  {
 
     ngOnInit() {
         this.userService.getByToken()
-                            .subscribe(name => {
-                                this.name = name;
-                                this.loadAllUnits();
-                            })
+        .subscribe(name => {
+            this.name = name.user;
+            this.loadAllUnits();
+        })
         this.model.photo = [];                            
         
     }

@@ -88,35 +88,35 @@ export class EditAnnouncementComponent  {
         this.model.sticky = 'no';
         
         this.userService.getByToken()
-                            .subscribe(name => {
-                                this.name = name;
-                                if( this.id != null) {
-                                    this.anouncementService
-                                            .getById(this.id)
-                                            .subscribe(announcement => {
-                                                this.announcement = announcement;
+        .subscribe(name => {
+            this.name = name.user;
+            if( this.id != null) {
+                this.anouncementService
+                .getById(this.id)
+                .subscribe(announcement => {
+                    this.announcement = announcement;
 
-                                                if(this.announcement.auto_post_on){
-                                                  this.model.auto_post_on = new Date(this.announcement.auto_post_on);
-                                                  this.selectedAutoPostOn = this.convertDate(this.model.auto_post_on);
+                    if(this.announcement.auto_post_on){
+                      this.model.auto_post_on = new Date(this.announcement.auto_post_on);
+                      this.selectedAutoPostOn = this.convertDate(this.model.auto_post_on);
 
-                                                }else if(this.announcement.auto_post_on == null){
-                                                  this.selectedAutoPostOn = "";
-                                                  this.model.auto_post_on = null;
-                                                }     
+                    }else if(this.announcement.auto_post_on == null){
+                      this.selectedAutoPostOn = "";
+                      this.model.auto_post_on = null;
+                    }     
 
-                                                if(this.announcement.valid_till){
-                                                  this.model.valid_till = new Date(this.announcement.valid_till);
-                                                  this.selectedValidDate = this.convertDate(this.model.valid_till);
-                                                }else if(this.announcement.valid_till == null){
-                                                  this.selectedValidDate = "";
-                                                  this.model.valid_till = null;
-                                                }           
-                                                setTimeout(() => this.appComponent.loading = false, 1000);
-                                            });
-                                };
-                                setTimeout(() => this.appComponent.loading = false, 1000);
-                            })
+                    if(this.announcement.valid_till){
+                      this.model.valid_till = new Date(this.announcement.valid_till);
+                      this.selectedValidDate = this.convertDate(this.model.valid_till);
+                    }else if(this.announcement.valid_till == null){
+                      this.selectedValidDate = "";
+                      this.model.valid_till = null;
+                    }           
+                    setTimeout(() => this.appComponent.loading = false, 1000);
+                });
+            };
+            setTimeout(() => this.appComponent.loading = false, 1000);
+        })
     }
 
     createAnnouncement() {

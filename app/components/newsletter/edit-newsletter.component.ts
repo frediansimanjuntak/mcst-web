@@ -39,10 +39,10 @@ export class EditNewsletterComponent  {
 
     ngOnInit() {
         this.userService.getByToken()
-                        .subscribe(name => {
-                            this.name = name;
-                            setTimeout(() => this.appComponent.loading = false, 1000);
-                        })
+        .subscribe(name => {
+            this.name = name.user;
+            setTimeout(() => this.appComponent.loading = false, 1000);
+        })
         this.model.released = false;
         this.model.type = 'agm';
         this.model.attachment = [];

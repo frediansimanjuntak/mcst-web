@@ -132,7 +132,7 @@ export class EditFacilityComponent  {
 		}
 		this.userService.getByToken()
 		.subscribe(name => {
-			this.name = name;
+			this.name = name.user;
 			if(this.id == null) {
 				setTimeout(() => this.appComponent.loading = false, 1000);
 			}

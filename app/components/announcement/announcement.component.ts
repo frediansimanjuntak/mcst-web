@@ -72,10 +72,10 @@ export class AnnouncementComponent implements OnInit {
 
     ngOnInit(): void {
         this.userService.getByToken()
-                            .subscribe(name => {
-                                this.name = name;
-                                this.loadAllAnnouncements();
-                            })
+        .subscribe(name => {
+            this.name = name.user;
+            this.loadAllAnnouncements();
+        })
         let copy: IMyOptions = this.getCopyOfValidTillDateOptions();
         let today = new Date();
         let month = today.getUTCMonth() + 1; //months from 1-12
