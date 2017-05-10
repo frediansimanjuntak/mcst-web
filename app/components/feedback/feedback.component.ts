@@ -8,6 +8,7 @@ import { NotificationsService } from 'angular2-notifications';
 import { FileUploader } from 'ng2-file-upload';
 import { AppComponent } from '../index';
 import { ConfirmationService } from 'primeng/primeng';
+import * as moment from 'moment'
 
 @Component({
     // moduleId: module.id,
@@ -99,10 +100,12 @@ export class FeedbackComponent implements OnInit {
                     this.feedbacks     = feedbacks.filter(feedbacks => feedbacks.archieve === false );
                     for (var i = 0; i < this.feedbacks.length; ++i) {
                     	this.feedbacks[i].created_at = this.convertDate(this.feedbacks[i].created_at);
+                        if (this.feedbacks[i].reply_at) {
+                            this.feedbacks[i].reply_at = this.convertDate(this.feedbacks[i].reply_at);
+                        }
                         let a = this.units.find(data => data._id == this.feedbacks[i].property);
                         this.feedbacks[i].property = '#'+a.address.unit_no +'-'+ a.address.unit_no_2;
                     }
-                    this.published     = this.feedbacks.filter(feedbacks => feedbacks.status === 'publish' && feedbacks.archieve === false );
                     setTimeout(() => this.appComponent.loading = false, 1000);
                 });
             })
@@ -116,20 +119,17 @@ export class FeedbackComponent implements OnInit {
                 data.title.toLowerCase().indexOf(this.dataFilter.toLowerCase()) !==  -1 &&
                 data.status.toLowerCase().indexOf(this.statusFilter.toLowerCase()) !==  -1
             );
-            this.published     = this.feedbacks.filter(feedbacks => feedbacks.status === 'publish' );
             setTimeout(() => this.appComponent.loading = false, 500);
         }else{
             this.feedbacks  = this.all.filter(data => 
                 data.title.toLowerCase().indexOf(this.dataFilter.toLowerCase()) !==  -1
             );
-            this.published     = this.feedbacks.filter(feedbacks => feedbacks.status === 'publish' );
             setTimeout(() => this.appComponent.loading = false, 500);
         }
         if(this.statusFilter == 'publish') {
         	this.feedbacks = this.published.filter(data => 
                 data.title.toLowerCase().indexOf(this.dataFilter.toLowerCase()) !==  -1
             );
-            this.published     = this.feedbacks.filter(feedbacks => feedbacks.status === 'publish' );
             setTimeout(() => this.appComponent.loading = false, 500);
         }
     }
