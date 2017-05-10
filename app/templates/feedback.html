@@ -39,8 +39,16 @@
                     <p-column filterMatchMode="contains" [style]="{'width': '120px'}" field="title" header="Topic / Title" sortable="true" [filter]="true" filterPlaceholder="Search Topic / Title"></p-column>
                     <p-column  filterMatchMode="contains" [style]="{'width': '80px' , 'text-transform': 'capitalize'}" field="type" header="Type" sortable="true" [filter]="true" filterPlaceholder="Search Type"></p-column>>
                     <p-column filterMatchMode="contains" [style]="{'width': '100px' , 'text-transform': 'capitalize'}" field="privacy" header="Privacy" sortable="true" [filter]="true" filterPlaceholder="Search Privacy"></p-column>
-                    <p-column [style]="{'width': '100px'}" field="content" header="Feedback" sortable="true"></p-column>
-                    <p-column [style]="{'width': '100px'}" field="reply" header="Reply" sortable="true"></p-column>
+                    <p-column [style]="{'width': '100px'}" field="content" header="Feedback" sortable="true">
+                        <template let-feedback="rowData" pTemplate="body">
+                            <a type="button" style="cursor:pointer;" (click)="showModal('content', feedback) || viewModal.open()"><span>View more</span></a>
+                        </template>
+                    </p-column>
+                    <p-column [style]="{'width': '100px'}" field="reply" header="Reply" sortable="true">
+                        <template let-feedback="rowData" pTemplate="body">
+                            <a type="button" style="cursor:pointer;" (click)="showModal('reply', feedback) || viewModal.open()"><span>View more</span></a>
+                        </template>
+                    </p-column>
                     <p-column [style]="{'width': '120px'}" filterMatchMode="contains" field="" header="Commented on" sortable="true" [filter]="true" filterPlaceholder="Search Commented on">
                         <template let-feedback="rowData" pTemplate="body">
                             <p>{{feedback.created_at}}</p>
@@ -49,8 +57,8 @@
                     </p-column>
                     <p-column [style]="{'width':'175px'}" styleClass="col-button" header="Action">
                         <template let-feedback="rowData" pTemplate="body">
-                            <a type="button" style="cursor:pointer; margin-right: 5px;" (click)="openModal(feedback) || firstModal.open()"><img src="../../assets/image/icon_reply.png" class="pull-left" width="10px" height="10x" style="margin:9px 0;">&nbsp;<span style="text-decoration: underline;">Reply</span></a>
-                            <!-- <button *ngIf="feedback.status == 'unpublish'" class="btn btn-brown btn-publish" style="cursor:pointer" (click)="publishConfirmation(feedback)">Publish</button> -->
+                            <a type="button" style="cursor:pointer; margin-right: 5px;" (click)="showModal('reply feedback', feedback) || firstModal.open()"><img src="../../assets/image/icon_reply.png" class="pull-left" width="10px" height="10x" style="margin:9px 0;">&nbsp;<span style="text-decoration: underline;">Reply</span></a>
+                            <button *ngIf="feedback.status == 'unpublish'" class="btn btn-brown btn-publish" style="cursor:pointer" (click)="publishConfirmation(feedback)">Publish</button>
                             <img *ngIf="feedback.archieve === false" title="archived" src="../../assets/image/icon_archived.png" style="margin:10px" (click)="archiveConfirmation(feedback)" />
                             <img *ngIf="feedback.archieve === true" title="unarchived" src="../../assets/image/icon_archived.png" style="margin:10px" (click)="unarchived(feedback)" />
                         </template>
@@ -78,6 +86,26 @@
                                             <a class="btn btn-white" style="margin-right:9px;" (click)="firstModal.close()">Cancel</a>
                                         </div>
                                     </form>
+                            </div>
+                        </modal-content>
+                    </modal>
+                </div>
+                <div class="row">
+                    <modal #viewModal>
+                        <modal-header>
+                            <h5>View {{type}}</h5>
+                        </modal-header>
+                        <modal-content>
+                            <div class="row" *ngIf="type == 'content'">
+                                <div class="col-md-6 col-padding"><strong>Content :</strong></div>
+                                <div class="col-md-6 col-padding">{{ feedback.content }}</div>
+                            </div>
+                            <div class="row" *ngIf="type == 'reply'">
+                                <div class="col-md-6 col-padding"><strong>Reply :</strong></div>
+                                <div class="col-md-6 col-padding">{{ feedback.reply }}</div>
+                            </div>
+                            <div class="row no-margin pull-bottom-right">
+                                <button class="btn btn-default btn-gray" (click)="viewModal.close()">Close</button>
                             </div>
                         </modal-content>
                     </modal>
