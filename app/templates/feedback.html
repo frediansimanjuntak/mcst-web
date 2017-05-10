@@ -33,61 +33,29 @@
                         <a class="btn btn-default pull-right btn-gray" style="margin-right:0;" (click)="viewArchived()">View Archived</a>
                     </div>
                 </div>
-                <div (click)="$event.preventDefault()">
-                    <tabset>
-                        <!-- ALL -->
-                        <tab heading="All Feedback">
-                            <p-dataTable [value]="feedbacks" [rows]="10" [paginator]="true">
-                                <p-column filterMatchMode="contains" [style]="{'width': '100px'}" field="created_by.username" header="Made by" sortable="true" [filter]="true" filterPlaceholder="Search Made by"></p-column>
-                                <p-column [style]="{'width': '70px'}" filterMatchMode="contains" field="property" header="Unit.no" sortable="true" [filter]="true" filterPlaceholder="Search Unit.no"></p-column>
-                                <p-column filterMatchMode="contains" [style]="{'width': '120px'}" field="title" header="Topic / Title" sortable="true" [filter]="true" filterPlaceholder="Search Topic / Title"></p-column>
-                                <p-column  filterMatchMode="contains" [style]="{'width': '80px' , 'text-transform': 'capitalize'}" field="type" header="Type" sortable="true" [filter]="true" filterPlaceholder="Search Type"></p-column>>
-                                <p-column filterMatchMode="contains" [style]="{'width': '100px' , 'text-transform': 'capitalize'}" field="privacy" header="Privacy" sortable="true" [filter]="true" filterPlaceholder="Search Privacy"></p-column>
-                                <p-column filterMatchMode="contains" [style]="{'width': '100px'}" field="content" header="Feedback" sortable="true" [filter]="true" filterPlaceholder="Search Feedback"></p-column>
-                                <p-column [style]="{'width': '100px'}" filterMatchMode="contains" field="reply" header="Reply" sortable="true" [filter]="true" filterPlaceholder="Search Reply"></p-column>
-                                <p-column [style]="{'width': '120px'}" filterMatchMode="contains" field="" header="Commented on" sortable="true" [filter]="true" filterPlaceholder="Search Commented on">
-                                    <template let-feedback="rowData" pTemplate="body">
-                                        <p>{{feedback.created_at}}</p>
-                                        <span *ngIf="feedback.reply_at != null">replied at {{feedback.reply_at}}</span>
-                                    </template>
-                                </p-column>
-                                <p-column [style]="{'width':'175px'}" styleClass="col-button" header="action">
-                                    <template let-feedback="rowData" pTemplate="body">
-                                        <a type="button" style="cursor:pointer; margin-right: 5px;" (click)="openModal(feedback) || firstModal.open()"><img src="../../assets/image/icon_reply.png" class="pull-left" width="10px" height="10x" style="margin:9px 0;">&nbsp;<span style="text-decoration: underline;">Reply</span></a>
-                                        <button *ngIf="feedback.status == 'unpublish'" class="btn btn-brown btn-publish" style="cursor:pointer" (click)="publishConfirmation(feedback)">Publish</button>
-                                        <img *ngIf="feedback.archieve === false" title="archived" src="../../assets/image/icon_archived.png" style="margin:10px" (click)="archiveConfirmation(feedback)" />
-                                        <img *ngIf="feedback.archieve === true" title="unarchived" src="../../assets/image/icon_archived.png" style="margin:10px" (click)="unarchived(feedback)" />
-                                    </template>
-                                </p-column>
-                            </p-dataTable>
-                        </tab>
-                        <!-- Published -->
-                        <tab heading="Published Feedback">
-                            <p-dataTable [value]="published" [rows]="10" [paginator]="true">
-                                <p-column filterMatchMode="contains" [style]="{'width': '100px'}" field="created_by.username" header="Made by" sortable="true" [filter]="true" filterPlaceholder="Search Made by"></p-column>
-                                <p-column [style]="{'width': '70px'}" filterMatchMode="contains" field="property" header="Unit.no" sortable="true" [filter]="true" filterPlaceholder="Search Unit.no"></p-column>
-                                <p-column filterMatchMode="contains" [style]="{'width': '120px'}" field="title" header="Topic / Title" sortable="true" [filter]="true" filterPlaceholder="Search Topic / Title"></p-column>
-                                <p-column  filterMatchMode="contains" [style]="{'width': '100px' , 'text-transform': 'capitalize'}" field="type" header="Type" sortable="true" [filter]="true" filterPlaceholder="Search Type"></p-column>>
-                                <p-column filterMatchMode="contains" [style]="{'width': '100px' , 'text-transform': 'capitalize'}" field="privacy" header="Privacy" sortable="true" [filter]="true" filterPlaceholder="Search Privacy"></p-column>
-                                <p-column filterMatchMode="contains" [style]="{'width': '100px'}" field="content" header="Feedback" sortable="true" [filter]="true" filterPlaceholder="Search Feedback"></p-column>
-                                <p-column [style]="{'width': '100px'}" filterMatchMode="contains" field="reply" header="Reply" sortable="true" [filter]="true" filterPlaceholder="Search Reply"></p-column>
-                                <p-column [style]="{'width': '120px'}" filterMatchMode="contains" field="" header="Commented on" sortable="true" [filter]="true" filterPlaceholder="Search Commented on">
-                                    <template let-feedback="rowData" pTemplate="body">
-                                        <p>{{feedback.created_at}}</p>
-                                        <span *ngIf="feedback.reply_at != null">replied at {{feedback.reply_at}}</span>
-                                    </template>
-                                </p-column>
-                                <p-column [style]="{'width':'150px'}" styleClass="col-button" header="action">
-                                    <template let-feedback="rowData" pTemplate="body">
-                                        <a type="button" style="cursor:pointer; margin-right: 5px;" (click)="openModal(feedback) || firstModal.open()"><img src="../../assets/image/icon_reply.png" class="pull-left" width="10px" height="10x" style="margin:9px 0;">&nbsp;<span style="text-decoration: underline;">Reply</span></a>
-                                        <img *ngIf="feedback.archieve === false" title="archived" src="../../assets/image/icon_archived.png" style="margin:10px" (click)="archiveConfirmation(feedback)" />
-                                        <img *ngIf="feedback.archieve === true" title="unarchived" src="../../assets/image/icon_archived.png" style="margin:10px" (click)="unarchived(feedback)" />
-                                    </template>
-                                </p-column>
-                            </p-dataTable>
-                        </tab>
-                    </tabset>
-                </div>
+                <p-dataTable [value]="feedbacks" [rows]="10" [paginator]="true">
+                    <p-column filterMatchMode="contains" [style]="{'width': '100px'}" field="created_by.username" header="Made by" sortable="true" [filter]="true" filterPlaceholder="Search Made by"></p-column>
+                    <p-column [style]="{'width': '70px'}" filterMatchMode="contains" field="property" header="Unit.no" sortable="true" [filter]="true" filterPlaceholder="Search Unit.no"></p-column>
+                    <p-column filterMatchMode="contains" [style]="{'width': '120px'}" field="title" header="Topic / Title" sortable="true" [filter]="true" filterPlaceholder="Search Topic / Title"></p-column>
+                    <p-column  filterMatchMode="contains" [style]="{'width': '80px' , 'text-transform': 'capitalize'}" field="type" header="Type" sortable="true" [filter]="true" filterPlaceholder="Search Type"></p-column>>
+                    <p-column filterMatchMode="contains" [style]="{'width': '100px' , 'text-transform': 'capitalize'}" field="privacy" header="Privacy" sortable="true" [filter]="true" filterPlaceholder="Search Privacy"></p-column>
+                    <p-column [style]="{'width': '100px'}" field="content" header="Feedback" sortable="true"></p-column>
+                    <p-column [style]="{'width': '100px'}" field="reply" header="Reply" sortable="true"></p-column>
+                    <p-column [style]="{'width': '120px'}" filterMatchMode="contains" field="" header="Commented on" sortable="true" [filter]="true" filterPlaceholder="Search Commented on">
+                        <template let-feedback="rowData" pTemplate="body">
+                            <p>{{feedback.created_at}}</p>
+                            <span *ngIf="feedback.reply_at != null">replied at {{feedback.reply_at}}</span>
+                        </template>
+                    </p-column>
+                    <p-column [style]="{'width':'175px'}" styleClass="col-button" header="Action">
+                        <template let-feedback="rowData" pTemplate="body">
+                            <a type="button" style="cursor:pointer; margin-right: 5px;" (click)="openModal(feedback) || firstModal.open()"><img src="../../assets/image/icon_reply.png" class="pull-left" width="10px" height="10x" style="margin:9px 0;">&nbsp;<span style="text-decoration: underline;">Reply</span></a>
+                            <!-- <button *ngIf="feedback.status == 'unpublish'" class="btn btn-brown btn-publish" style="cursor:pointer" (click)="publishConfirmation(feedback)">Publish</button> -->
+                            <img *ngIf="feedback.archieve === false" title="archived" src="../../assets/image/icon_archived.png" style="margin:10px" (click)="archiveConfirmation(feedback)" />
+                            <img *ngIf="feedback.archieve === true" title="unarchived" src="../../assets/image/icon_archived.png" style="margin:10px" (click)="unarchived(feedback)" />
+                        </template>
+                    </p-column>
+                </p-dataTable>
                 <!--MODAL-->
                 <div class="row">
                     <modal #firstModal>
@@ -107,7 +75,7 @@
                                             <button [disabled]="loading" class="btn btn-brown">Save</button>
                                             <img *ngIf="loading" src="data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA=="
                                             />
-                                            <button class="btn btn-white" style="margin-right:9px;" (click)="firstModal.close()">Cancel</button>
+                                            <a class="btn btn-white" style="margin-right:9px;" (click)="firstModal.close()">Cancel</a>
                                         </div>
                                     </form>
                             </div>
