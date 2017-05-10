@@ -5,7 +5,7 @@ import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/map';
 import { URLSearchParams } from '@angular/http';
 import 'rxjs/add/operator/catch';
-import { url } from '../global';
+import { authUrl } from '../global';
  
 @Injectable()
 export class AuthenticationService {
@@ -20,7 +20,7 @@ export class AuthenticationService {
     }
     
     login(username: string, password: string): Observable<void> {
-        return this.http.post('http://139.59.110.204:5000/' + 'auth/local', { username: username, password: password })
+        return this.http.post(authUrl + 'auth/local', { username: username, password: password })
             .map((response: Response) => {
                  // login successful if there's a jwt token in the response
                 let user = response.json();
