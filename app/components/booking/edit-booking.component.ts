@@ -429,7 +429,11 @@ export class EditBookingComponent implements OnInit  {
 
 	next(){ 
 		this.appComponent.loading = true
-		this.step = 2;
+		if (this.model.total_amount && this.model.start_time && this.model.end_time) {
+			this.step = 2;
+		}else{
+			this._notificationsService.error('Failed','Please choose booking time before go to next step.')
+		}
 		setTimeout(() => this.appComponent.loading = false, 1000);
 	}
 
