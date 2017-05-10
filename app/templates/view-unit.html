@@ -287,6 +287,23 @@
                                 </div>
                             </div>
                         </div>
+                        <div *ngIf="useAutocomplete" class="form-group">
+                            <div class="row no-margin">
+                                <label class="control-label col-sm-4">Set as default property :</label>
+                                <div class="col-sm-8">
+                                    <div class="col-sm-3">
+                                        <label>
+                                            <input type="radio" name="make-as-default" [(ngModel)]="makeAsDefaultProperty" value='yes' [ngModelOptions]="{standalone: true}">Yes
+                                        </label>
+                                    </div>
+                                    <div class="col-sm-3">
+                                        <label>
+                                            <input type="radio" name="make-as-default" [(ngModel)]="makeAsDefaultProperty" value='no' [checked]='true' [ngModelOptions]="{standalone: true}">No
+                                        </label>
+                                    </div>                
+                                </div>
+                            </div>
+                        </div>
                          <div class="row no-margin pull-bottom-right">
                             <button [disabled]="loading" *ngIf="!useAutocomplete" class="btn btn-primary btn-brown" (click)="addResident(myForm.value)">Submit<span>
                                     <img *ngIf="loading" src="data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA==" />
@@ -396,7 +413,7 @@
                     <div class="row">
                         <div class="col-md-4 col-padding"><b>Social Page </b></div>
                         <div class="col-md-8 col-padding">
-                            <span *ngIf="resident.resident.social_profile">: {{ resident.resident.social_profile }}</span>
+                            <span *ngIf="resident.resident.social_profile">: Yes</span>
                             <span *ngIf="!resident.resident.social_profile">: -</span>
                         </div>
                     </div>
