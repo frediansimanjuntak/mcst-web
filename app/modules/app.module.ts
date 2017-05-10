@@ -88,6 +88,7 @@ import {
   EditLostFoundComponent,
   FooterComponent,
   SignaturePadPage,
+  EditContactComponent
 } from '../components/index';
 
 import {
@@ -228,7 +229,8 @@ import {
     SignaturePadPage,
     PdfViewerComponent,
     CapitalizePipe,
-    CapitalizeFirstPipe
+    CapitalizeFirstPipe,
+    EditContactComponent
 ],
   providers: [ 
     AccessControlService,

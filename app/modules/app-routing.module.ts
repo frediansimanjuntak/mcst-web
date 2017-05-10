@@ -58,6 +58,7 @@ import {
   LostFoundComponent,
   EditLostFoundComponent,
   TokenComponent,
+  EditContactComponent
   
 } from '../components/index';
 
@@ -86,6 +87,8 @@ const routes: Routes = [
   { path: ':name/payment_reminder/edit/:id',   component: EditPaymentReminderComponent, canActivate: [AuthGuard] },
   { path: ':name/payment_reminder/view/:id',   component: PaymentReminderComponent, canActivate: [AuthGuard] },
   { path: ':name/contact',   component: ContactComponent, canActivate: [AuthGuard] },
+  { path: ':name/contact/add',   component: EditContactComponent, canActivate: [AuthGuard] },
+  { path: ':name/contact/edit/:id',   component: EditContactComponent, canActivate: [AuthGuard] },
   { path: ':name/contract',   component: ContractComponent, canActivate: [AuthGuard] },
   { path: ':name/contract/add',   component: EditContractComponent, canActivate: [AuthGuard] },
   { path: ':name/add/contract/:type/:refid/:refno',   component: EditContractComponent, canActivate: [AuthGuard] },
