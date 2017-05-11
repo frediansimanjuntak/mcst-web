@@ -99,6 +99,7 @@ export class FeedbackComponent implements OnInit {
             .subscribe(units => {
                 this.units = units.properties;
                 this.feedbackService.getAll().subscribe(feedbacks => {
+                    console.log(feedbacks, ' ini feedback')
                     this.all           =  feedbacks.filter(feedbacks => feedbacks.archieve === false );
                     this.feedbacks     = feedbacks.filter(feedbacks => feedbacks.archieve === false );
                     for (var i = 0; i < this.feedbacks.length; ++i) {
