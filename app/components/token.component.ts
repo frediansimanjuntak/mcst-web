@@ -37,7 +37,7 @@ export class TokenComponent implements OnInit {
         this.userService.getByToken()
         .subscribe(
         	name => {
-          		this.name = name;
+          		this.name = name.user;
           		this.appComponent.getToken()
           		this.router.navigate([this.name.default_development.name_url, 'dashboard']);
         	},
