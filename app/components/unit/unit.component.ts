@@ -39,7 +39,7 @@ export class UnitComponent implements OnInit {
     ngOnInit(): void {
         this.loading = true;
         this.userService.getByToken().subscribe(name => {
-                this.name = name;
+                this.name = name.user;
                 this.loadAllUnits();
             })
     }

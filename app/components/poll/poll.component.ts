@@ -66,31 +66,31 @@ export class PollComponent implements OnInit {
         }  
         this.todayNumber = +yyyy+mm+dd;
         this.userService.getByToken()
-                            .subscribe(name => {
-                                this.name = name;
-                                if( this.id == null) {
-                                    this.loadPolls();
-                                }else{
-                                    this.pollService.getById(this.id)
-                                        .subscribe(poll => {
-                                            this.poll = poll;
-                                            this.max = this.poll.votes.length;
-                                            
-                                            let numOptions =  this.poll.choices.length;
-                                            let opts = new Array(numOptions);
+        .subscribe(name => {
+            this.name = name.user;
+            if( this.id == null) {
+                this.loadPolls();
+            }else{
+                this.pollService.getById(this.id)
+                .subscribe(poll => {
+                    this.poll = poll;
+                    this.max = this.poll.votes.length;
+                    
+                    let numOptions =  this.poll.choices.length;
+                    let opts = new Array(numOptions);
 
-                                            for (let i = 0; i < numOptions; i++) {
-                                                opts[i] = {
-                                                    choice: this.poll.choices[i],
-                                                    progress: this.poll.votes.filter(data => data.answer == this.poll.choices[i] ).length,
-                                                    
-                                                };
-                                            }
-                                            this.poll.answers = opts.slice(0);
-                                            setTimeout(() => this.appComponent.loading = false, 1000);
-                                        });
-                                }
-                            })
+                    for (let i = 0; i < numOptions; i++) {
+                        opts[i] = {
+                            choice: this.poll.choices[i],
+                            progress: this.poll.votes.filter(data => data.answer == this.poll.choices[i] ).length,
+                            
+                        };
+                    }
+                    this.poll.answers = opts.slice(0);
+                    setTimeout(() => this.appComponent.loading = false, 1000);
+                });
+            }
+        })
     }
 
     convertDate(date) {

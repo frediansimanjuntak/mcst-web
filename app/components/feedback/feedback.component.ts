@@ -8,6 +8,7 @@ import { NotificationsService } from 'angular2-notifications';
 import { FileUploader } from 'ng2-file-upload';
 import { AppComponent } from '../index';
 import { ConfirmationService } from 'primeng/primeng';
+import { ModalDirective } from 'ng2-bootstrap';
 import * as moment from 'moment'
 
 @Component({
@@ -18,6 +19,7 @@ import * as moment from 'moment'
 
 export class FeedbackComponent implements OnInit {
     @ViewChild('firstModal') firstModal;
+    @ViewChild('viewModal') viewModal;
 	feedback: Feedback;
     feedbacks: Feedback[] = [];
     model: any = {};
@@ -25,6 +27,7 @@ export class FeedbackComponent implements OnInit {
     images: any[];
     id: string;
     name: any;
+    type: string;
     feedback_reply: any;
     archived: any;
     isArchieved = false;
@@ -44,7 +47,7 @@ export class FeedbackComponent implements OnInit {
         private userService: UserService) {}
 
     ngOnInit(): void {
-        this.userService.getByToken().subscribe(name => {this.name = name;})
+        this.userService.getByToken().subscribe(name => {this.name = name.user;})
         this.loadAllFeedback();
     }
 
@@ -91,11 +94,12 @@ export class FeedbackComponent implements OnInit {
 	private loadAllFeedback() {
         this.userService.getByToken()
         .subscribe(name => {
-            this.name = name;
+            this.name = name.user;
             this.unitService.getAll(this.name.default_development.name_url)
             .subscribe(units => {
                 this.units = units.properties;
                 this.feedbackService.getAll().subscribe(feedbacks => {
+                    console.log(feedbacks, ' ini feedback')
                     this.all           =  feedbacks.filter(feedbacks => feedbacks.archieve === false );
                     this.feedbacks     = feedbacks.filter(feedbacks => feedbacks.archieve === false );
                     for (var i = 0; i < this.feedbacks.length; ++i) {
@@ -150,11 +154,13 @@ export class FeedbackComponent implements OnInit {
         setTimeout(() => this.appComponent.loading = false, 500);
     }
 
-    openModal(feedback){
-        this.appComponent.loading = true
+    showModal(type:string, feedback:any){
+        this.appComponent.loading = true;
+        this.type = type;
         this.feedback = feedback;
         this.feedback_reply = feedback.feedback_reply;   
         setTimeout(() => this.appComponent.loading = false, 1000);
+        
     }
 
     replyFeedback(){
@@ -183,7 +189,7 @@ export class FeedbackComponent implements OnInit {
         this.appComponent.loading = true
         this.userService.getByToken()
         .subscribe(name => {
-            this.name = name;
+            this.name = name.user;
             this.unitService.getAll(this.name.default_development.name_url)
             .subscribe(units => {
                 this.units = units.properties;

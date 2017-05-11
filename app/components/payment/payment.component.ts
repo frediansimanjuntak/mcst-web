@@ -36,7 +36,7 @@ export class PaymentComponent implements OnInit {
         private userService: UserService) {}
 
     ngOnInit(): void {
-        this.userService.getByToken().subscribe(name => {this.name = name;})
+        this.userService.getByToken().subscribe(name => {this.name = name.user;})
         this.route.params.subscribe(params => {
             this.id = params['id'];
         });

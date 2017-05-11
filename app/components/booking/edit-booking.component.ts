@@ -200,7 +200,7 @@ export class EditBookingComponent implements OnInit  {
 		});
 		this.userService.getByToken()
 		.subscribe(name => {
-			this.name = name;
+			this.name = name.user;
 			this.unitService.getAll(this.name.default_development.name_url)
 			.subscribe(units => {
 				this.units = units.properties.filter(data => data.landlord.data != null || data.tenant.data.length > 0);
@@ -429,7 +429,11 @@ export class EditBookingComponent implements OnInit  {
 
 	next(){ 
 		this.appComponent.loading = true
-		this.step = 2;
+		if (this.model.total_amount && this.model.start_time && this.model.end_time) {
+			this.step = 2;
+		}else{
+			this._notificationsService.error('Failed','Please choose booking time before go to next step.')
+		}
 		setTimeout(() => this.appComponent.loading = false, 1000);
 	}
 

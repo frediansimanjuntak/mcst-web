@@ -44,10 +44,10 @@ export class DashboardComponent implements OnInit{
   ngOnInit(): void {
 
     this.userService.getByToken()
-                    .subscribe(name => { 
-                        this.name = name;
-                        setTimeout(() => this.appComponent.loading = false, 1000);
-                      })
+    .subscribe(name => { 
+      this.name = name.user;
+      setTimeout(() => this.appComponent.loading = false, 1000);
+    })
 
     this.menus1[0] = this.menus[2];
     this.menus1[1] = this.menus[3];

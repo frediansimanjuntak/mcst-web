@@ -10,15 +10,15 @@ import { EqualValidator } from '../user/equal-validator.directive';
 
 @Component({
     // moduleId: module.id,
-    selector: 'edit-setting',
-    templateUrl: 'app/templates/edit-setting.html',
+    selector: 'edit-contact',
+    templateUrl: 'app/templates/edit-contact.html',
 })
 
-export class EditSettingComponent {
-    user: User;
+export class EditContactComponent {
     model: any = {};
-    name: any;
+    contact: any = {};
     id: string;
+    name: any;
 
     constructor(private router: Router,
         private userService: UserService,
@@ -34,8 +34,8 @@ export class EditSettingComponent {
         });
         if( this.id != null) {
             this.userService.getById(this.id)
-            .subscribe(user => {
-                this.user = user;
+            .subscribe(contact => {
+                this.contact = contact;
                 setTimeout(() => this.appComponent.loading = false, 1000);
             });
         };
@@ -49,20 +49,20 @@ export class EditSettingComponent {
 
     updateSetting(){
         this.appComponent.loading = true
-		this.userService.update(this.user)
+		this.userService.update(this.contact)
 		    .then(
                     data => {
                         this._notificationsService.success(
                                 'Success',
-                                'Update setting successful',
+                                'Update contact successful',
                         )
-                        this.router.navigate([this.name.default_development.name_url + '/user']);
+                        this.router.navigate([this.name.default_development.name_url + '/contact']);
                     },
                     error => {
                         console.log(error);
                         this._notificationsService.error(
                                 'Error',
-                                'Update setting failed, server Error',
+                                'Update contact failed, server Error',
                         )
                         setTimeout(() => this.appComponent.loading = false, 1000);
                     }
@@ -85,25 +85,7 @@ export class EditSettingComponent {
         }
     }
 
-    // onChange(event: any) {
-    //     let files = [].slice.call(event.target.files);
-    //     this.model.front =  files;
-    // }
-
-    // onChange1(event: any) {
-    //    let files = [].slice.call(event.target.files);
-    //    this.model.back =  files;
-    // }
-
-    // remove(i: any){
-    //     this.model.front.splice(i, 1)
-    // }
-
-    // remove1(i: any){
-    //     this.model.back.splice(i, 1)
-    // }
-
     cancel(){
-        this.router.navigate([this.name.default_development.name_url + '/setting' ]);
+        this.router.navigate([this.name.default_development.name_url + '/contact' ]);
     }
 }

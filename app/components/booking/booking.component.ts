@@ -75,7 +75,7 @@ export class BookingComponent implements OnInit {
 		private _notificationsService: NotificationsService,){}
 
 	ngOnInit() {
-		this.userService.getByToken().subscribe(name => {this.name = name;})
+		this.userService.getByToken().subscribe(name => {this.name = name.user;})
 		this.myForm = this.formbuilder.group({
 			name : [''],
 			status : ['all'],
@@ -155,7 +155,7 @@ export class BookingComponent implements OnInit {
 		this.day     = this.convertDate(this.day);
 		this.userService.getByToken()
 		.subscribe(name => {
-			this.name = name;
+			this.name = name.user;
 			this.unitService.getAll(this.name.default_development.name_url)
 			.subscribe(units => {
 				this.units = units.properties;

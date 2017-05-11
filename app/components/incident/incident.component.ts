@@ -61,7 +61,7 @@ export class IncidentComponent implements OnInit {
         // this.status.push({label: 'New', value: 'new'});
         // this.status.push({label: 'In Progress', value: 'in progress'});
         // this.status.push({label: 'Resolved', value: 'resolved'});
-        this.userService.getByToken().subscribe(name => {this.name = name;})
+        this.userService.getByToken().subscribe(name => {this.name = name.user;})
         this.route.params.subscribe(params => {
             this.id = params['id'];
         });

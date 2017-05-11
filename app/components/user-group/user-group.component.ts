@@ -43,10 +43,10 @@ export class UserGroupComponent implements OnInit {
 
     ngOnInit(): void {
         this.userService.getByToken()
-                        .subscribe(name => {
-                            this.name = name;
-                            this.loadAllUserGroup();
-                        })
+        .subscribe(name => {
+            this.name = name.user;
+            this.loadAllUserGroup();
+        })
     }
 
     loadAllUserGroup(){

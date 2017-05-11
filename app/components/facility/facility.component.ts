@@ -31,7 +31,7 @@ export class FacilityComponent implements OnInit {
         private userService: UserService) {}
 
     ngOnInit() {
-        this.userService.getByToken().subscribe(name => {this.name = name;})
+        this.userService.getByToken().subscribe(name => {this.name = name.user;})
         this.route.params.subscribe(params => {
             this.id = params['id'];
         });

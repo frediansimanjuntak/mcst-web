@@ -30,10 +30,10 @@ export class UserComponent implements OnInit {
 
     ngOnInit() {
         this.userService.getByToken()
-                        .subscribe(name => {
-                                this.name = name;
-                                this.loadAllUsers();
-                            })
+        .subscribe(name => {
+            this.name = name.user;
+            this.loadAllUsers();
+        })
     }
 
     deleteUser(user:User) {

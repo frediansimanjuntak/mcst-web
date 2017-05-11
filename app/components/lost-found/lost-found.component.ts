@@ -68,10 +68,10 @@ export class LostFoundComponent implements OnInit {
             this.id = params['id'];
         });
 		this.userService.getByToken()
-                        .subscribe(name => {
-                            this.name = name;
-                            this.loadAllUnits();
-                        })
+        .subscribe(name => {
+            this.name = name.user;
+            this.loadAllUnits();
+        })
         this.buttonViewArchive = false;
         this.images = [];
     }

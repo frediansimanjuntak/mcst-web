@@ -75,7 +75,7 @@ export class EditIncidentComponent implements OnInit {
         });
         this.userService.getByToken()
         .subscribe(name => {
-            this.name = name;
+            this.name = name.user;
             setTimeout(() => this.appComponent.loading = false, 1000);
         })
     	this.selectedType = 'general';

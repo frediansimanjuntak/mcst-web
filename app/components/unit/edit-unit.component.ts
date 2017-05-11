@@ -62,22 +62,22 @@ export class EditUnitComponent implements OnInit {
                 max_tenant: [],
         });
         this.userService.getByToken()
-                            .subscribe(name => {
-                                this.name = name;
-                                this.myForm.patchValue({
-                                    address: {
-                                        unit_no : '',
-                                        unit_no_2 : '',
-                                        block_no : '',
-                                        street_name : this.name.default_development.address.street_name,
-                                        postal_code : this.name.default_development.address.postal_code,
-                                        country : this.name.default_development.address.country,
-                                        full_address : this.name.default_development.address.full_address
-                                    },
-                                    max_tenant: [],
-                                });
-                                setTimeout(() => this.appComponent.loading = false, 1000);
-                            })
+        .subscribe(name => {
+            this.name = name.user;
+            this.myForm.patchValue({
+                address: {
+                    unit_no : '',
+                    unit_no_2 : '',
+                    block_no : '',
+                    street_name : this.name.default_development.address.street_name,
+                    postal_code : this.name.default_development.address.postal_code,
+                    country : this.name.default_development.address.country,
+                    full_address : this.name.default_development.address.full_address
+                },
+                max_tenant: [],
+            });
+            setTimeout(() => this.appComponent.loading = false, 1000);
+        })
         this.submitted = false;
 
         this.route.params.subscribe(params => {

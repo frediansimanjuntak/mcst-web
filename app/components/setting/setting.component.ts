@@ -23,7 +23,7 @@ export class SettingComponent implements OnInit {
     ngOnInit() {
         this.userService.getByToken()
         .subscribe(user => {
-            this.user = user;
+            this.user = user.user;
             setTimeout(() => this.appComponent.loading = false, 1000);
         })
     }

@@ -108,45 +108,45 @@ export class EditPollComponent  {
 
         this.model.poll_type = "yes_or_no";
         this.userService.getByToken()
-        					.subscribe(name => {
-        						this.name = name;
-        						if( this.id != null) {
-						            this.pollService
-						                    .getById(this.id)
-						                    .subscribe(poll => {
-						                       	this.poll = poll;
-                                                if(this.poll.start_time){
-                                                  this.model.start_time = new Date(this.poll.start_time);
-                                                  this.selectedStartTime = this.convertDate(this.model.start_time);
+		.subscribe(name => {
+			this.name = name.user;
+			if( this.id != null) {
+	            this.pollService
+                .getById(this.id)
+                .subscribe(poll => {
+                   	this.poll = poll;
+                    if(this.poll.start_time){
+                      this.model.start_time = new Date(this.poll.start_time);
+                      this.selectedStartTime = this.convertDate(this.model.start_time);
 
-                                                }else if(this.poll.start_time == null){
-                                                  this.selectedStartTime = "";
-                                                  this.model.start_time = null;
-                                                }     
+                    }else if(this.poll.start_time == null){
+                      this.selectedStartTime = "";
+                      this.model.start_time = null;
+                    }     
 
-                                                if(this.poll.end_time){
-                                                  this.model.end_time = new Date(this.poll.end_time);
-                                                  this.selectedEndTime = this.convertDate(this.model.end_time);
-                                                }else if(this.poll.end_time == null){
-                                                  this.selectedEndTime = "";
-                                                  this.model.end_time = null;
-                                                }   
-                                                
-                                                if(this.poll.poll_type == 'multiple'){
-                                                     this.pollChoices = [];
-                                                }
-                                                for (var i = 0; i < this.poll.choices.length; i++) {
-                                                     // this.pollChoices[i].name = this.poll.choices[i];
-                                                     this.pollChoices.push({
-                                                         name:  this.poll.choices[i]
-                                                     }) 
-                                                }
+                    if(this.poll.end_time){
+                      this.model.end_time = new Date(this.poll.end_time);
+                      this.selectedEndTime = this.convertDate(this.model.end_time);
+                    }else if(this.poll.end_time == null){
+                      this.selectedEndTime = "";
+                      this.model.end_time = null;
+                    }   
+                    
+                    if(this.poll.poll_type == 'multiple'){
+                         this.pollChoices = [];
+                    }
+                    for (var i = 0; i < this.poll.choices.length; i++) {
+                         // this.pollChoices[i].name = this.poll.choices[i];
+                         this.pollChoices.push({
+                             name:  this.poll.choices[i]
+                         }) 
+                    }
 
-                                                setTimeout(() => this.appComponent.loading = false, 1000);
-											});
-						        };
-                                setTimeout(() => this.appComponent.loading = false, 1000);
-        					})
+                    setTimeout(() => this.appComponent.loading = false, 1000);
+				});
+	        };
+            setTimeout(() => this.appComponent.loading = false, 1000);
+		})
         
     }
 
