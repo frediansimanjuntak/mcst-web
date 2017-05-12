@@ -19,6 +19,17 @@ export class EditSettingComponent {
     model: any = {};
     name: any;
     id: string;
+    emailError: boolean = false;
+    emailErrorMessage: string = 'any';
+    oldPasswordError: boolean = false;
+    oldPasswordErrorMessage: string = 'any';
+    passwordValue: string
+    passwordError: boolean = false;
+    passwordErrorMessage: string = 'any';
+    passwordConfirmationValue: string
+    passwordConfirmationError: boolean = false;
+    passwordConfirmationErrorMessage: string = 'any';
+    valid: boolean = true;
 
     constructor(private router: Router,
         private userService: UserService,
@@ -48,25 +59,27 @@ export class EditSettingComponent {
     }
 
     updateSetting(){
-        this.appComponent.loading = true
-		this.userService.update(this.user)
-		    .then(
-                    data => {
-                        this._notificationsService.success(
-                                'Success',
-                                'Update setting successful',
-                        )
-                        this.router.navigate([this.name.default_development.name_url + '/user']);
-                    },
-                    error => {
-                        console.log(error);
-                        this._notificationsService.error(
-                                'Error',
-                                'Update setting failed, server Error',
-                        )
-                        setTimeout(() => this.appComponent.loading = false, 1000);
-                    }
-        );
+        if (this.valid) {
+            this.appComponent.loading = true
+            this.userService.update(this.user)
+            .then(
+                data => {
+                    this._notificationsService.success(
+                            'Success',
+                            'Update setting successful',
+                    )
+                    this.router.navigate([this.name.default_development.name_url + '/user']);
+                },
+                error => {
+                    console.log(error);
+                    this._notificationsService.error(
+                            'Error',
+                            'Update setting failed, server Error',
+                    )
+                    setTimeout(() => this.appComponent.loading = false, 1000);
+                }
+            );
+        }
 	}
 
     number(event: any) {
@@ -82,6 +95,65 @@ export class EditSettingComponent {
         let inputChar = String.fromCharCode(event.charCode);
         if (!pattern.test(inputChar)) {
             event.preventDefault();
+        }
+    }
+
+    validate(event: any, field: any) {
+        if (field == 'oldPassword') {
+            if (event.target.value.length < 6) {
+                this.oldPasswordError = true;
+                this.valid = false
+                this.oldPasswordErrorMessage = "Passwords at least 6 characters.";
+            }else {
+                this.oldPasswordError = false
+                this.valid = true
+            }
+        }else if (field == 'newPassword') {
+            this.passwordValue = event.target.value
+            if (this.passwordValue.length < 6) {
+                this.passwordError = true;
+                this.valid = false
+                this.passwordErrorMessage = "Passwords at least 6 characters.";
+            }
+            else {
+                this.passwordError = false;
+                if (this.passwordValue != this.passwordConfirmationValue) {
+                    this.passwordConfirmationError = true;
+                    this.valid = false
+                    this.passwordConfirmationErrorMessage = "Passwords doesn't match.";
+                }
+                else {
+                    this.passwordConfirmationError = false;
+                    this.valid = true
+                }
+            }
+        }else if (field == 'confirmPassword'){
+            this.passwordConfirmationValue = event.target.value
+            if (event.target.value.length < 6) {
+                this.passwordConfirmationError = true;
+                this.valid = false
+                this.passwordConfirmationErrorMessage = "Passwords at least 6 characters.";
+            }
+            else {
+                if (this.passwordConfirmationValue != this.passwordValue) {
+                    this.passwordConfirmationError = true;
+                    this.valid = false
+                    this.passwordConfirmationErrorMessage = "Passwords doesn't match.";
+                }
+                else {
+                    this.passwordConfirmationError = false;
+                    this.valid = true
+                }
+            }
+        }else {
+            if (event.target.value.match(/[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?/)) {
+                this.emailError = false;
+                this.valid = true
+            } else {
+                this.emailError = true;
+                this.valid = false
+                this.emailErrorMessage = "Invalid email address.";
+            }
         }
     }
 
