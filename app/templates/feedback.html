@@ -62,7 +62,7 @@
                     </p-column>
                     <p-column [style]="{'width':'185px'}" styleClass="col-button" header="Action">
                         <template let-feedback="rowData" pTemplate="body">
-                            <a type="button" style="cursor:pointer; margin-right: 5px;" (click)="showModal('reply feedback', feedback) || firstModal.open()"><img src="../../assets/image/icon_reply.png" class="pull-left" width="10px" height="10x" style="margin:9px 0;">&nbsp;<span style="text-decoration: underline;">Reply</span></a>
+                            <a type="button" style="cursor:pointer; margin-right: 5px;" (click)="showModal('replyFeedback', feedback)"><img src="../../assets/image/icon_reply.png" class="pull-left" width="10px" height="10x" style="margin:9px 0;">&nbsp;<span style="text-decoration: underline;">Reply</span></a>
                             <button *ngIf="feedback.status == 'unpublish'" class="btn btn-brown btn-publish" style="cursor:pointer" (click)="publishConfirmation(feedback)">Publish</button>
                             <img *ngIf="feedback.archieve === false" title="archived" src="../../assets/image/icon_archived.png" style="margin:10px" (click)="archiveConfirmation(feedback)" />
                             <img *ngIf="feedback.archieve === true" title="unarchived" src="../../assets/image/icon_archived.png" style="margin:10px" (click)="unarchived(feedback)" />
@@ -71,7 +71,7 @@
                 </p-dataTable>
                 <!--MODAL-->
                 <div class="row">
-                    <modal #firstModal>
+                    <modal #firstModal [closeOnOutsideClick]="false">
                         <modal-header>
                             <h5>Reply Feedback</h5>
                         </modal-header>
@@ -79,16 +79,16 @@
                             <div *ngIf="feedback">
                                 <br>
                                     <form class="" name="form" (ngSubmit)="f.form.valid && replyFeedback()" #f="ngForm" novalidate>
-                                        <div class="row no-margin" [ngClass]="{ 'has-error': f.submitted && !feedback_reply.valid }">
-                                            <label class="control-label" for="feedback_reply">Reply :</label>
-                                            <textarea style="width: 550px" type="text" name="feedback_reply" [(ngModel)]="feedback.feedback_reply" #feedback_reply="ngModel" required placeholder="Input feedback reply here"></textarea>
-                                            <span *ngIf="f.submitted && !feedback_reply.valid" class="help-block">Feedback reply is required</span>
+                                        <div class="row no-margin" [ngClass]="{ 'has-error': f.submitted && !reply.valid }">
+                                            <label class="control-label" for="reply">Reply :</label>
+                                            <textarea style="width: 550px" type="text" name="reply" [(ngModel)]="feedback.reply" #reply="ngModel" required placeholder="Input feedback reply here"></textarea>
+                                            <span *ngIf="f.submitted && !reply.valid" class="help-block">Feedback reply is required</span>
                                         </div>
                                         <div class="pull-right">
                                             <button [disabled]="loading" class="btn btn-brown">Save</button>
                                             <img *ngIf="loading" src="data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA=="
                                             />
-                                            <a class="btn btn-white" style="margin-right:9px;" (click)="firstModal.close()">Cancel</a>
+                                            <a class="btn btn-white" style="margin-right:9px;" (click)="hideModal(f)">Cancel</a>
                                         </div>
                                     </form>
                             </div>
