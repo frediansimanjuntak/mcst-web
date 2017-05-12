@@ -509,15 +509,22 @@ export class ViewUnitComponent implements OnInit {
              this.data.type            = this.model.type;
              this.data.remarks         = this.model.remarks;
              var defaultProperty: string;
-
+             var role: string;
              if(this.makeAsDefaultProperty == 'yes'){
                 defaultProperty = this.id
+                if(this.model.type == "tenant"){
+                    role = "tenant";
+                }else{
+                    role = "owner";
+                }
              }else{
                 defaultProperty = this.user.default_property.property
+                role = this.user.default_property.role
              }
 
              this.data.default_property = {
-                 property: defaultProperty
+                 property: defaultProperty,
+                 role: role
              }
              this.unitservice.createResident(this.data)
                 .then(

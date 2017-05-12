@@ -28,7 +28,7 @@ export class FeedbackComponent implements OnInit {
     id: string;
     name: any;
     type: string;
-    feedback_reply: any;
+    reply: any;
     archived: any;
     isArchieved = false;
     change = new EventEmitter();
@@ -99,13 +99,14 @@ export class FeedbackComponent implements OnInit {
             .subscribe(units => {
                 this.units = units.properties;
                 this.feedbackService.getAll().subscribe(feedbacks => {
-                    console.log(feedbacks, ' ini feedback')
                     this.all           =  feedbacks.filter(feedbacks => feedbacks.archieve === false );
                     this.feedbacks     = feedbacks.filter(feedbacks => feedbacks.archieve === false );
                     for (var i = 0; i < this.feedbacks.length; ++i) {
-                    	this.feedbacks[i].created_at = this.convertDate(this.feedbacks[i].created_at);
+                        let create_at = new Date(this.feedbacks[i].created_at)
+                    	this.feedbacks[i].created_at = moment(create_at).format('DD-MM-YYYY');
                         if (this.feedbacks[i].reply_at) {
-                            this.feedbacks[i].reply_at = this.convertDate(this.feedbacks[i].reply_at);
+                            let reply_at = new Date(this.feedbacks[i].reply_at)
+                            this.feedbacks[i].reply_at = moment(reply_at).format('DD-MM-YYYY');
                         }
                         let a = this.units.find(data => data._id == this.feedbacks[i].property);
                         this.feedbacks[i].property = '#'+a.address.unit_no +'-'+ a.address.unit_no_2;
@@ -157,10 +158,19 @@ export class FeedbackComponent implements OnInit {
     showModal(type:string, feedback:any){
         this.appComponent.loading = true;
         this.type = type;
+        if (type == 'replyFeedback' ) {
+            this.firstModal.open()
+        }else{
+            this.viewModal.open()
+        }
         this.feedback = feedback;
-        this.feedback_reply = feedback.feedback_reply;   
+        this.reply = feedback.reply;   
         setTimeout(() => this.appComponent.loading = false, 1000);
-        
+    }
+
+    hideModal(form:any){
+        form.reset()
+        this.firstModal.close()
     }
 
     replyFeedback(){
