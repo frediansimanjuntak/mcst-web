@@ -56,7 +56,6 @@ export class EditBookingComponent implements OnInit  {
 	public dt: Date = new Date();
 	public minDate: Date = void 0;
 	private opened: boolean = false;
-	valid: boolean = false
 	booking: Booking;
 	bookings: Booking[] = [];
 	facilities: Facility[] = [];
@@ -468,7 +467,6 @@ export class EditBookingComponent implements OnInit  {
 		this.appComponent.loading = true
 		this.unitService.getById(this.model.property , this.name.default_development.name_url)
 		.subscribe(unit => {
-			this.valid = true;
 			this.unit = unit.properties[0];
 			if(this.unit.landlord.data) {
 				this.model.sender = this.unit.landlord.data.resident._id;
