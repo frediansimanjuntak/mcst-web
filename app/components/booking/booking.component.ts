@@ -163,19 +163,19 @@ export class BookingComponent implements OnInit {
 				.subscribe(bookings => {
 					this.all = bookings
 					this.bookings = bookings;
-					this.selectedDay = this.bookings.filter(data => data.booking_date.slice(0,10) == this.day);
-					for (var i = 0; i < this.selectedDay.length; ++i) {
-						let a = this.units.find(data => data._id == this.selectedDay[i].property);
-						this.selectedDay[i].unit = '#'+a.address.unit_no +'-'+ a.address.unit_no_2;
-					}
 					for (var i = 0; i < this.all.length; ++i) {
 						let a = this.units.find(data => data._id == this.all[i].property);
-						this.all[i].unit = '#'+a.address.unit_no +'-'+ a.address.unit_no_2;
+						if (a && a != undefined) {
+							this.all[i].unit = '#'+a.address.unit_no +'-'+ a.address.unit_no_2;
+						}
 					}
 					for (var i = 0; i < this.bookings.length; ++i) {
 						let a = this.units.find(data => data._id == this.bookings[i].property);
-						this.bookings[i].unit = '#'+a.address.unit_no +'-'+ a.address.unit_no_2;
+						if (a && a != undefined) {
+							this.bookings[i].unit = '#'+a.address.unit_no +'-'+ a.address.unit_no_2;
+						}
 					}
+					this.selectedDay = this.bookings.filter(data => moment(data.booking_date).format('YYYY-MM-DD') == this.day);
 					setTimeout(() => this.appComponent.loading = false, 1000);
 				})
 			})
