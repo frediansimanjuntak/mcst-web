@@ -13,27 +13,32 @@
 						<span *ngIf="f.submitted && !username.valid" class="help-block">Username is required</span>
 					</div>
 				</div>
-				<div class="form-group" [ngClass]="{ 'has-error': f.submitted && !email.valid }">
+				<div class="form-group" [ngClass]="{ 'has-error': f.submitted && emailError }">
 					<label class="control-label col-sm-4" for="email">Email :</label>
 					<div class="col-sm-10">
-						<input type="email" class="form-control" name="email" [(ngModel)]="user.email" #email="ngModel" required placeholder="Input email here" />
-						<span *ngIf="f.submitted && !email.valid" class="help-block">Email is required</span>
+						<input type="email" class="form-control" name="email" (change)="validate($event, 'email')" [(ngModel)]="user.email" #email="ngModel" required placeholder="Input email here" />
+						<span *ngIf="f.submitted && emailError" class="help-block">{{emailErrorMessage}}</span>
 					</div>
 				</div>
-				<div class="form-group" [ngClass]="{ 'has-error': f.submitted && !password.valid }">
+				<div class="form-group" [ngClass]="{ 'has-error': f.submitted && oldPasswordError }">
+					<label class="control-label col-sm-4" for="password">Old password :</label>
+					<div class="col-sm-10">
+						<input type="password" (change)="validate($event, 'oldPassword')" class="form-control" name="oldPassword" [(ngModel)]="user.oldPassword" #oldPassword="ngModel" placeholder="Input old password here" />
+						<span *ngIf="f.submitted && oldPasswordError" class="help-block">{{oldPasswordErrorMessage}}</span>
+					</div>
+				</div>
+				<div class="form-group" [ngClass]="{ 'has-error': f.submitted && passwordError }">
 					<label class="control-label col-sm-4" for="password">New password :</label>
 					<div class="col-sm-10">
-						<input type="password" class="form-control" name="password" [(ngModel)]="user.password" #password="ngModel" required validateEqual="confirmPassword" reverse="true" placeholder="Input password here" />
-						<span *ngIf="f.submitted && !password.valid" class="help-block">Password is required</span>
+						<input type="password" (change)="validate($event, 'newPassword')" class="form-control" name="password" [(ngModel)]="user.newPassword" #newPassword="ngModel" validateEqual="confirmPassword" reverse="true" placeholder="Input new password here" />
+						<span *ngIf="f.submitted && passwordError" class="help-block">{{passwordErrorMessage}}</span>
 					</div>
 				</div>
-				<div class="form-group" [ngClass]="{ 'has-error': f.submitted && !repassword.valid }">
+				<div class="form-group" [ngClass]="{ 'has-error': f.submitted && passwordConfirmationError }">
 					<label class="control-label col-sm-4" for="repassword">Repeat password :</label>
 					<div class="col-sm-10">
-						<input type="password" validateEqual="password" class="form-control" name="repassword" [(ngModel)]="model.repassword" #repassword="ngModel" required placeholder="Input password here" />
-						<span [hidden]="repassword.valid ||  (repassword.pristine && !f.submitted)">
-					    	Password mismatch
-					   	</span>
+						<input type="password" (change)="validate($event, 'confirmPassword')" validateEqual="password" class="form-control" name="repassword" [(ngModel)]="model.repassword" #repassword="ngModel" placeholder="Input confirm password here" />
+						<span *ngIf="f.submitted && passwordConfirmationError" class="help-block">{{passwordConfirmationErrorMessage}}</span>
 					</div>
 				</div>
 				<div class="form-group" [ngClass]="{ 'has-error': f.submitted && !phone.valid }">
