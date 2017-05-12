@@ -4,7 +4,7 @@
             <div class="title">
                 Edit A Poll
             </div>
-            <p class="id-location">Home > Manage Poll > Edit</p>
+            <p class="id-location">Home > E-Voting > Edit</p>
             <form class="form-horizontal col-md-6" (ngSubmit)="f.form.valid && updatePoll()" name="form" #f="ngForm" novalidate>
                 <div class="form-group" [ngClass]="{ 'has-error': !title.valid }">
                     <label class="control-label col-sm-4" for="title">Title :</label>
@@ -75,7 +75,7 @@
             <div class="title">
                 Create a Poll
             </div>
-            <p class="id-location">Home > Manage Poll > Create a Poll </p>
+            <p class="id-location">Home > E-Voting > Create a Poll </p>
             
             <form class="form-horizontal col-md-6" name="form" (ngSubmit)="f.form.valid && createPoll()" #f="ngForm" novalidate>
                 <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !title.valid }">
