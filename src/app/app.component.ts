@@ -19,8 +19,7 @@ import {
     NavigationEnd,
     NavigationCancel,
     NavigationError,
-    Router,
-    ActivatedRoute
+    Router
 } from '@angular/router'
 
 @Component({
@@ -75,8 +74,9 @@ export class AppComponent implements OnInit {
         clickToClose: true,
         animate: "fromLeft"
     }
+    public user : any = {};
     public angularclassLogo = 'assets/img/angularclass-avatar.png';
-    public name = 'Angular 2 Webpack Starter';
+    public name = 'MCST';
     public url = 'https://twitter.com/AngularClass';
     constructor(
         private slimLoadingBarService: SlimLoadingBarService,
@@ -84,7 +84,6 @@ export class AppComponent implements OnInit {
         private userService:UserService,
         private _notificationsService: NotificationsService,
         public appState: AppState,
-        private route: ActivatedRoute,
     ) {
         router.events.subscribe((event: RouterEvent) => {
             this.navigationInterceptor(event);
@@ -118,9 +117,9 @@ export class AppComponent implements OnInit {
         this.userService.getByToken()
         .subscribe(
             name => {
-                  this.name = name.user;
-                  if (this.route._routerState.snapshot.url == '/') {
-                    this.router.navigate([this.name.default_development.name_url, 'dashboard']);
+                  this.user = name.user;
+                  if (this.router.url == '/') {
+                    this.router.navigate([this.user.default_development.name_url, 'dashboard']);
                   }
             },
             error => {
