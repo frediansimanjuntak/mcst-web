@@ -1,0 +1,525 @@
+<loading *ngIf="loading"></loading> 
+<div class="container">
+    <div class="main">
+        <div *ngIf="unit">
+            <div class="title">
+                Unit #{{unit.address.unit_no}}-{{unit.address.unit_no_2}}
+            </div>
+            <p class="id-location">Home > Residents' Database > #{{unit.address.unit_no}}-{{unit.address.unit_no_2}}</p>
+            <div class="row top-block no-margin">
+                <a class="btn-underline" (click)="goToUnit()">Back to last page</a>
+            </div>
+                <div class="row bg-dark no-margin">
+                    <div class="col-md-6 col-padding" style="color:#eee;">
+                        <h5>General Details</h5>
+                    </div>
+                    <div class="col-md-6">
+                        <a (click)="codeModal.open()" class="btn btn-gray btn-tab-dark pull-right" ><img class="img-btn" src="../../assets/image/icon_add.png" />&nbsp;Generate Code</a>
+                    </div>
+                </div>
+                <div class="row no-margin" style="border: 1px solid grey">
+                    <div class="row content">
+                        <div class="col-md-4">
+                                <b>Unit No. :&nbsp;</b>#{{unit.address.unit_no}}-{{unit.address.unit_no_2}}<br>
+                                <b>Block :&nbsp;</b>{{unit.address.block_no}}
+                            </div>
+                            <div class="col-md-4">
+                                <span *ngIf="hasLandlord"><b>Owner :&nbsp;</b>{{unit.landlord.data.resident.username | capitalize}}<br></span>
+                                <b>Status :</b>
+                                <span *ngIf="unit.status == 'own stay'">Owned</span>
+                                <span *ngIf="unit.status == 'tenanted'">Tenanted</span>
+                                <span style="color: red" *ngIf="unit.status == 'empty'">Empty</span>
+                            </div>
+                            <div class="col-md-4">
+                                <span *ngIf="unit.tenant.data"><b>No. of Tenant :&nbsp;</b>{{ tenantTotal }}<br></span>
+                                <span  *ngIf="vehicles"><b>Vehicle :&nbsp;</b>{{vehicles.length}}</span>
+                                
+                            </div>
+                    </div>
+                         <table *ngIf="unit.code" class="table table-striped">
+                            <thead>
+                              <tr style="background-color: #d8d8d8">
+                                <td>Code</td>
+                                <td>Authentication Type</td>
+                                <td>Generated on</td>
+                                <td></td>
+                              </tr>
+                            </thead>
+                            <tbody>
+                              <tr *ngIf="unit.code.landlord">
+                                <td>{{unit.code.landlord | uppercase}}</td>
+                                <td>Owner</td>
+                                <td>{{unit.code.create_at_landlord | date:'d/M/y'}}</td>
+                                <td>
+                                    <button class="btn btn-trash pull-right" type="button" (click)="deleteCodeConfirmation('landlord')"><i class="fa fa-trash-o" aria-hidden="true"></i></button>
+                                </td>
+                              </tr>
+                              <tr *ngIf="unit.code.tenant">
+                                <td>{{unit.code.tenant | uppercase}}</td>
+                                <td>Tenant</td>
+                                <td>{{unit.code.create_at_tenant | date:'d/M/y'}}</td>
+                                <td>
+                                    <button class="btn btn-trash pull-right" type="button" (click)="deleteCodeConfirmation('tenant')"><i class="fa fa-trash-o" aria-hidden="true"></i></button>
+                                </td>
+                              </tr>
+                            </tbody>
+                        </table>
+                </div>
+                <br>
+
+                <div class="row bg-dark no-margin">
+                    <div class="col-md-6 col-padding" style="color:#eee;">
+                        <h5>Resident/Tenant</h5>
+                    </div>
+                    <div class="col-md-6">
+                        <a class="btn btn-gray btn-tab-dark pull-right" (click)="firstModal.open()"><img class="img-btn" src="../../assets/image/icon_addresident.png"   />&nbsp;Add Resident</a>
+                    </div>
+                </div>
+                <div class="row no-margin">
+                   <p-dataTable [value]="residents">
+                        <p-column header="No." [style]="{'width':'42px'}" field="i">
+                        </p-column>
+                        <p-column header="Resident" >
+                            <template let-residents="rowData" pTemplate="body">
+                                <span *ngIf="residents.resident.username">{{residents.resident.username | capitalize}}</span>
+                            </template>
+                        </p-column>
+                        <p-column header="Type" sortable="true" field="type">
+                            <template let-residents="rowData" pTemplate="body">
+                                <span>{{residents.type | capitalize}}</span>
+                            </template>
+                        </p-column>
+                        <p-column header="Added on" field="created_at" sortable="true">
+                            <template let-residents="rowData" pTemplate="body">
+                                <span>{{residents.created_at | date:'d/M/y'}}</span>
+                            </template>
+                        </p-column> 
+                        <p-column header="Social Page" field="residents.resident.social_profile" sortable="true">
+                            <template let-residents="rowData" pTemplate="body">
+                                <span *ngIf="residents.resident.social_profile">Yes</span>
+                                <span *ngIf="!residents.resident.social_profile">-</span>
+                            </template>
+                        </p-column> 
+                        <p-column header="Contact No." >
+                            <template let-residents="rowData" pTemplate="body">
+                                <span *ngIf="residents.resident.phone">{{residents.resident.phone}}<br></span>
+                                <span *ngIf="residents.resident.email">{{residents.resident.email}}<br></span>
+                            </template>
+                        </p-column>
+                        <p-column header="Remarks">
+                            <template let-residents="rowData" pTemplate="body">
+                                <span *ngIf="residents.remarks">{{residents.remarks | capitalize}}</span>
+                                <span *ngIf="!residents.remarks">-</span>
+                            </template>
+                        </p-column> 
+                        <p-column [style]="{'width':'160px'}" header="Action" styleClass="col-button" >
+                            <template let-residents="rowData" pTemplate="body">
+                                    <a type="button"  style="cursor:pointer; margin-right: 15px;" class="btn-underline"  (click)="openResidentDetail(residents) || residentDetail.open()">View details</a>
+                                    <button class="btn btn-trash" type="button" (click)="deleteResidentConfirmation(residents)"><i class="fa fa-trash-o" aria-hidden="true"></i></button>
+                            </template>
+                        </p-column>
+                    </p-dataTable>
+                </div><br>
+
+
+                <div class="row bg-dark no-margin">
+                    <div class="col-md-6 col-padding" style="color:#eee;">
+                        <h5>Registered Vehicle</h5>
+                    </div>
+                    <div class="col-md-6">
+                        <button [disabled]="!hasTenants" class="btn btn-gray btn-tab-dark pull-right" (click)="secondModal.open()"><img class="img-btn" src="../../assets/image/icon_addresident.png" />&nbsp;Register Vehicle</button>
+                    </div>
+                </div>
+                <div class="row no-margin">
+                   <p-dataTable [value]="vehicles">
+                        <p-column header="No." [style]="{'width':'42px'}" field="i">
+                        </p-column>
+                        <p-column header="License Plate" field="license_plate">
+                        </p-column>
+                        <p-column header="Owner" sortable="true" field="user">
+                             <template let-vehicles="rowData" pTemplate="body">
+                                <span>{{vehicles.user | capitalize}}</span>
+                            </template>
+                        </p-column>
+                         <p-column header="Transponder">
+                            <template let-vehicles="rowData" pTemplate="body">
+                                <span *ngIf="vehicles.transponder">{{vehicles.transponder}}</span>
+                                <span *ngIf="!vehicles.transponder">-</span>
+                            </template>
+                        </p-column> 
+                        <p-column header="Document" field="doc">
+                             <template let-vehicles="rowData" pTemplate="body">
+                                <span *ngIf="vehicles.doc.name">{{vehicles.doc.name}}</span>
+                            </template>
+                        </p-column>
+                         <p-column header="Registered on" field="registered_on" sortable="true">
+                            <template let-vehicles="rowData" pTemplate="body">
+                                <span>{{vehicles.registered_on | date:'d/M/y'}}</span>
+                            </template>
+                        </p-column> 
+                        <p-column header="Remarks">
+                            <template let-vehicles="rowData" pTemplate="body">
+                                <span *ngIf="vehicles.remarks">{{vehicles.remarks | capitalize}}</span>
+                                <span *ngIf="!vehicles.remarks">-</span>
+                            </template>
+                        </p-column> 
+                        <p-column  [style]="{'width':'160px'}" header="Action" styleClass="col-button" >
+                            <template let-vehicles="rowData" pTemplate="body">
+                                    <a type="button"  style="cursor:pointer; margin-right: 15px;" class="btn-underline" (click)="openVehicleDetail(vehicles) || vehicleDetail.open()">View details</a>
+                                    <button class="btn btn-trash" type="button" (click)="deleteVehicleConfirmation(vehicles)"><i class="fa fa-trash-o" aria-hidden="true"></i></button>
+                            </template>
+                        </p-column>
+                    </p-dataTable>
+                </div><br>
+
+        <div class="row">
+            <modal #firstModal>
+                <modal-header>
+                    <h5>Adding a Resident</h5>
+                </modal-header>
+                <modal-content>
+                    <form name="form" [formGroup]="myForm" #f="ngForm" novalidate>
+                        <div class="form-group">
+                            <div class="row no-margin">
+                                <label  class="control-label col-sm-4" for="type">Type :</label>
+                                <div class="col-sm-8">
+                                    <select class="form-control" name="type"  (change)="residentTypeChange($event)" [(ngModel)]="model.type" [ngModelOptions]="{standalone: true}">
+                                        <option [selected]="hasLandlord" value="tenant">Tenant</option>
+                                        <option [selected]="!hasLandlord" value="landlord">Owner</option>
+                                    </select>
+                                    <span *ngIf="!valid" style="color: red">{{errorMessage}}</span>
+                                </div>
+                            </div>
+                        </div>  
+                        <!-- <div class="form-group">      
+                            <div class="row no-margin">
+                                <label  class="control-label col-sm-4" for="type">User Option :</label>
+                                <div class="col-sm-8">
+                                    <select class="form-control" name="option" [(ngModel)]="model.option">
+                                        <option value="new">Create New user</option>
+                                        <option value="exist">Select existing user</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div *ngIf="model.option == 'exist'" class="row no-margin">
+                                <label  class="control-label col-sm-4" for="type">Choose User for {{model.type}}:</label>
+                                <div class="col-sm-8">
+                                    <select class="form-control" name="user" [(ngModel)]="model.user">
+                                        <option *ngFor="let u of users" [ngValue]="u._id">{{u.username}}</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div> -->
+                        <div class="form-group">
+                            <div class="row no-margin">
+                                <label class="control-label col-sm-4" for="username">Username :</label>
+                                <div class="col-sm-8">
+                                    <!-- <input type="text" class="form-control" name="username" formControlName="username" required placeholder="Input username here" /> -->
+                                    <p-autoComplete [(ngModel)]="username" [suggestions]="filteredBrands" (completeMethod)="filterBrands($event)" (onSelect)="onAutoCompleteChange($event)" field="username" [size]="30" placeholder="Username" [minLength]="1" [ngModelOptions]="{standalone: true}"></p-autoComplete>
+                                    <span style="cursor:pointer; color: blue;" (click)="resetForm()">Reset</span><br>
+                                    <small *ngIf="addSubmitted && username=='' && !useAutocomplete" class="text-danger">
+                                    Name is required
+                                    </small>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group" formGroupName="details">
+                            <div class="row no-margin">
+                                <label class="control-label col-sm-4" for="username">Full name :</label>
+                                <div class="col-sm-8">
+                                    <input type="text" [attr.disabled]="useAutocomplete?true:null" class="form-control" name="first_name" formControlName="first_name" required placeholder="Input first name here" />
+                                    <small *ngIf="addSubmitted && !myForm.controls.details.controls.first_name.valid && !useAutocomplete" class="text-danger">
+                                    First name is required
+                                    </small>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group" formGroupName="details">
+                            <div class="row no-margin">
+                                <label class="control-label col-sm-4" for="username">Last name :</label>
+                                <div class="col-sm-8">
+                                    <input type="text"  [attr.disabled]="useAutocomplete?true:null" class="form-control" name="last_name" formControlName="last_name" required placeholder="Input last name here" />
+                                    <small *ngIf="addSubmitted && !myForm.controls.details.controls.last_name.valid && !useAutocomplete" class="text-danger">
+                                    Last name is required
+                                    </small>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group" formGroupName="details">
+                            <div class="row no-margin">
+                                <label class="control-label col-sm-4" for="identification_no">ID number :</label>
+                                <div class="col-sm-8">
+                                    <input type="text" [attr.disabled]="useAutocomplete?true:null"  class="form-control" name="identification_no" formControlName="identification_no" required placeholder="Input ID number here" />
+                                    <small *ngIf="addSubmitted && !myForm.controls.details.controls.identification_no.valid && !useAutocomplete" class="text-danger">
+                                    ID number is required
+                                    </small>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="row no-margin">
+                                <label class="control-label col-sm-4" for="email">Email :</label>
+                                <div class="col-sm-8">
+                                    <input type="email" [attr.disabled]="useAutocomplete?true:null" class="form-control" name="email" formControlName="email" placeholder="Input email here"/>
+                                    <small *ngIf="addSubmitted && !myForm.controls.email.valid && !useAutocomplete" class="text-danger">
+                                    Email is required
+                                    </small>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="row no-margin">
+                                <label class="control-label col-sm-4" for="phone">Phone :</label>
+                                <div class="col-sm-8">
+                                    <input [attr.disabled]="useAutocomplete?true:null" type="text" class="form-control" name="phone" formControlName="phone" required placeholder="Input phone number here"/>
+                                    <small *ngIf="addSubmitted && !myForm.controls.phone.valid && !useAutocomplete" class="text-danger">
+                                        Phone is required
+                                    </small>                    
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="row no-margin">
+                                <label class="control-label col-sm-4" for="phone">Remarks :</label>
+                                <div class="col-sm-8">
+                                    <input type="text" class="form-control" name="remarks" [(ngModel)]="model.remarks" required [ngModelOptions]="{standalone: true}" placeholder="Input remarks here"/>                
+                                </div>
+                            </div>
+                        </div>
+                        <div *ngIf="useAutocomplete" class="form-group">
+                            <div class="row no-margin">
+                                <label class="control-label col-sm-4">Set as default property :</label>
+                                <div class="col-sm-8">
+                                    <div class="col-sm-3">
+                                        <label>
+                                            <input type="radio" name="make-as-default" [(ngModel)]="makeAsDefaultProperty" value='yes' [ngModelOptions]="{standalone: true}">Yes
+                                        </label>
+                                    </div>
+                                    <div class="col-sm-3">
+                                        <label>
+                                            <input type="radio" name="make-as-default" [(ngModel)]="makeAsDefaultProperty" value='no' [checked]='true' [ngModelOptions]="{standalone: true}">No
+                                        </label>
+                                    </div>                
+                                </div>
+                            </div>
+                        </div>
+                         <div class="row no-margin pull-bottom-right">
+                            <button [disabled]="loading" *ngIf="!useAutocomplete" class="btn btn-primary btn-brown" (click)="addResident(myForm.value)">Submit<span>
+                                    <img *ngIf="loading" src="data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA==" />
+                                </span></button>
+                            <button [disabled]="loading" *ngIf="useAutocomplete" class="btn btn-primary btn-brown" (click)="addExistResident()">Submit<span>
+                                    <img *ngIf="loading" src="data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA==" />
+                                </span></button>
+                            <button class="btn btn-white" (click)="useAutocomplete=false;addSubmitted=false;firstModal.close()">Cancel</button>
+                        </div>
+                    </form> 
+                </modal-content>
+            </modal>
+        </div>  
+
+        <div class="row">
+            <modal #secondModal>
+                <modal-header>
+                    <h5>Register a Vehicle</h5>
+                </modal-header>
+                <modal-content>
+                    <form name="form" [formGroup]="myForm2" novalidate>
+                        <div class="form-group" [ngClass]="{ 'has-error': vehicleSubmitted && !myForm2.controls.license_plate.valid }">
+                            <div class="row no-margin">
+                                <label  class="control-label col-sm-4" for="license_plate">License Plate :</label>
+                                <div class="col-sm-8">
+                                    <input license_plate="text" class="form-control" name="license_plate" formControlName="license_plate">
+                                    <small style="color: red" [hidden]="myForm2.controls.license_plate.valid || (myForm2.controls.license_plate.pristine && !vehicleSubmitted)">License Plate is required</small>
+                                </div>
+                            </div>
+                        </div>
+                         <div class="form-group" [ngClass]="{ 'has-error': vehicleSubmitted && !myForm2.controls.owner.valid }">
+                            <div class="row no-margin">
+                                <label class="control-label col-sm-4" for="unit_no">Owner :</label>
+                                <div class="col-sm-8">
+                                    <select class="form-control" formControlName="owner" name="owner">
+                                        <option *ngFor="let u of unit.tenant.data" [ngValue]="u.resident._id">{{u.resident.username}}</option>
+                                    </select>
+                                   <small style="color: red" [hidden]="myForm2.controls.owner.valid || (myForm2.controls.owner.pristine && !vehicleSubmitted)">Owner is required</small>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="row no-margin">
+                                <label  class="control-label col-sm-4" for="transponder">Transponder :</label>
+                                <div class="col-sm-8">
+                                    <input  type="text" class="form-control" name="transponder" formControlName="transponder" placeholder="">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group" >
+                            <div class="row no-margin">
+                                <label class="control-label col-sm-4" for="document">Document :</label>
+                                <div class="col-sm-8">
+                                    <input type="file" multiple class="upload" name="document" (change)="onChange($event)" />
+                                    <p style="word-break:break-all;" *ngFor="let item of model.document; let i=index ">
+                                        <img src="assets/image/icon_media_image.png" width="14px" height="12px">&nbsp;
+                                        <span style="text-decoration: underline;">{{ item.name }}_{{item.size/1024 | number:'1.0-0' }}kb</span> &nbsp;   
+                                        <span style="cursor:pointer" (click)="remove(i)"><img src="assets/image/icon_close_black.png" width="14px" height="12px"></span>
+                                    </p>
+                                    <small style="color: red" [hidden]="model.document.length > 0 || (model.document.length == 0 && !vehicleSubmitted)">Document is required</small>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="row no-margin">
+                                <label  class="control-label col-sm-4" for="remarks">Remarks :</label>
+                                <div class="col-sm-8">
+                                    <textarea  type="text" class="form-control" name="remarks" formControlName="remarks" placeholder="Remarks here if any"></textarea>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row no-margin pull-bottom-right">
+                            <button  class="btn btn-primary btn-brown" [disabled]="loading" (click)="addVehicle(myForm2.value, myForm2.valid)">Add
+                                <span>
+                                    <img *ngIf="loading" src="data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA==" />
+                                </span>
+                            </button>
+                            <button class="btn btn-white" (click)="secondModal.close()">Cancel</button>
+                        </div>
+                    </form>   
+                </modal-content>
+            </modal>
+        </div>  
+
+        <div class="row">
+            <modal #residentDetail>
+                <modal-header *ngIf="resident">
+                    <h5>Resident/Tenant {{ resident.resident.username }}</h5>
+                </modal-header>
+                <modal-content *ngIf="resident">
+                    <div class="row">
+                        <div class="col-md-4 col-padding"><b>Resident</b></div>
+                        <div class="col-md-8 col-padding">: {{ resident.resident.username | capitalize }}</div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-4 col-padding"><b>Type</b></div>
+                        <div class="col-md-8 col-padding">: {{ resident.type | capitalize}}</div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-4 col-padding"><b>Added on </b></div>
+                        <div class="col-md-8 col-padding">: {{ resident.created_at | date:'fullDate' }}</div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-4 col-padding"><b>Contact No </b></div>
+                        <div class="col-md-8 col-padding">: {{resident.resident.phone}}, {{resident.resident.email}}</div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-4 col-padding"><b>Social Page </b></div>
+                        <div class="col-md-8 col-padding">
+                            <span *ngIf="resident.resident.social_profile">: Yes</span>
+                            <span *ngIf="!resident.resident.social_profile">: -</span>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-4 col-padding"><b>Remarks </b></div>
+                        <div class="col-md-8 col-padding">
+                            <span *ngIf="resident.remarks">: {{ resident.remarks | capitalize}}</span>
+                            <span *ngIf="!resident.remarks">: -</span>
+                        </div>
+                    </div>
+                </modal-content>
+                <modal-footer>
+                      <button class="btn btn-default btn-gray" (click)="residentDetail.close()">Close</button>
+                </modal-footer>
+            </modal>
+        </div>  
+
+        <div class="row">
+            <modal #vehicleDetail>
+                <modal-header *ngIf="vehicle">
+                    <h5>Registered Vehicle {{ vehicle.license_plate }}</h5>
+                </modal-header>
+                <modal-content *ngIf="vehicle">
+                    <div class="row">
+                        <div class="col-md-4 col-padding"><b>License Plate</b></div>
+                        <div class="col-md-8 col-padding">: {{ vehicle.license_plate }}</div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-4 col-padding"><b>Owner</b></div>
+                        <div class="col-md-8 col-padding">: {{ vehicle.user | capitalize}}</div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-4 col-padding"><b>Transponder</b></div>
+                        <div class="col-md-8 col-padding">
+                            <span *ngIf="vehicle.transponder">: {{ vehicle.transponder }}</span>
+                            <span *ngIf="!vehicle.transponder">: -</span>
+                        </div>
+                    </div>
+                   <div class="row">
+                        <div class="col-md-4 col-padding"><b>Document</b></div>
+                        <div class="col-md-8 col-padding">
+                        <!-- <span *ngIf="vehicle.doc">: <a style="cursor: pointer; word-break:break-all;" (click)="openDoc(vehicle.doc)"> {{vehicle.doc.name}} </a></span> -->
+                        <span *ngIf="vehicle.doc">: <a style="cursor: pointer; word-break:break-all;" [attr.href]="vehicle.doc.url" download> {{vehicle.doc.name}} </a></span>
+                        </div>
+                    </div>
+                     <div class="row">
+                        <div class="col-md-4 col-padding"><b>Registered on </b></div>
+                        <div class="col-md-8 col-padding">: {{ vehicle.registered_on | date:'fullDate'}}
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-4 col-padding"><b>Remarks </b></div>
+                        <div class="col-md-8 col-padding">
+                            <span *ngIf="vehicle.remarks">: {{ vehicle.remarks | capitalize}}</span>
+                            <span *ngIf="!vehicle.remarks">: -</span>
+                        </div>
+
+                    </div>
+                </modal-content>
+                <modal-footer>
+                      <button class="btn btn-default btn-gray" (click)="vehicleDetail.close()">Close</button>
+                </modal-footer>
+            </modal>
+        </div>  
+
+        <div class="row">
+            <modal #codeModal>
+                <modal-header>
+                    <h5>Generate code for resident</h5>
+                </modal-header>
+                <modal-content>
+                    Choose which type of resident do you want to generate the code for ? Existing code will be replace with new code :
+                    <div class="form-group">
+                                <div class="col-sm-12">
+                                    <div class="col-sm-3">
+                                        <label>
+                                            <input type="radio" name="code" [checked]=true [(ngModel)]="codeType" value='landlord'>Owner
+                                        </label>
+                                    </div>
+                                    <div class="col-sm-3">
+                                        <label>
+                                            <input type="radio" name="code" [(ngModel)]="codeType" value='tenant'>Tenant
+                                        </label>
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <label>
+                                            <input type="radio" name="code" [(ngModel)]="codeType" value='all'>Owner and Tenant
+                                        </label>
+                                    </div>                                    
+                                </div>
+                    </div>
+                </modal-content>
+                <modal-footer>
+                      <button class="btn btn-default btn-brown" (click)="generateCode()">Generate
+                            <span>
+                                <img *ngIf="loading" src="data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA==" />
+                            </span>
+                      </button>
+                      <button class="btn btn-default btn-gray" (click)="codeModal.close()">Close</button>
+                </modal-footer>
+            </modal>
+        </div>  
+                 
+
+              
+        </div>
+    </div>
+</div>

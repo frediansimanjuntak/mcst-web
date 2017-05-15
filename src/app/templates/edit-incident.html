@@ -1,0 +1,98 @@
+<loading *ngIf="loading"></loading> 
+<div class="container">
+    <div class="main">
+        <!-- <div *ngIf="incident">
+            <div class="title">
+                Update Report
+            </div>
+            <p>Home > Incident Reports > Update Report</p>
+            <form class="form-horizontal col-md-6" name="form" (ngSubmit)="f.form.valid && uploader.uploadAll() || updateIncident()" #f="ngForm" novalidate enctype="multipart/form-data">
+                <div class="form-group">
+                  <label class="control-label col-sm-4" for="type">Type of Report :</label>
+                  <div class="col-sm-8">
+                        <select name="selectedType" [(ngModel)]="incident.incident_type">
+                          <option *ngFor="let type of types" [ngValue]="type.value">{{type.name}}</option>
+                        </select>
+                  </div>
+                </div>
+                <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !title.valid }">
+                    <label class="control-label col-sm-4" for="title">Title :</label>
+                    <div class="col-sm-8">
+                        <input type="text" class="form-control" name="title" [(ngModel)]="incident.title" #title="ngModel" required placeholder="Input title here" />
+                        <span *ngIf="f.submitted && !title.valid" class="help-block">Title is required</span>
+                    </div>
+                </div>
+                <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !remark.valid }">
+                    <label class="control-label col-sm-4" for="remark">Message :</label>
+                    <div class="col-sm-8">
+                        <textarea class="form-control" name="remark" [(ngModel)]="incident.remark" #remark="ngModel" required placeholder="Input remark here"></textarea>
+                        <span *ngIf="f.submitted && !remark.valid" class="help-block">Remark is required</span>
+                    </div>
+                </div>
+                <div class="form-group" >
+                    <label class="control-label col-sm-4" for="attachment">Attachment :</label>
+                    <div class="col-sm-8">
+                        <input type="file" name="single" ng2FileSelect [uploader]="uploader" multiple />
+                    </div>
+                </div>
+                <div class="form-group pull-right">
+                    <button [disabled]="loading" class="btn btn-primary">Save</button>
+                    <img *ngIf="loading" src="data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA==" />
+                    <a [routerLink]="['/incident']" class="btn btn-info">Cancel</a>
+                </div>
+            </form>
+        </div> -->
+
+        <div *ngIf="!incident">
+            <div class="title">
+            Create Report
+            </div>
+            <p class="id-location">Home > Incident Reports > Create Report</p>
+            <form class="form-horizontal col-md-6" name="form" (ngSubmit)="f.form.valid && createIncident()" #f="ngForm" novalidate>
+                <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !incident_type.valid }">
+                  <label class="control-label col-sm-4" for="type">Type of Report :</label>
+                  <div class="col-sm-8">
+                        <select class="form-control" required name="incident_type" [(ngModel)]="model.incident_type" #incident_type="ngModel">
+                          <option *ngFor="let type of types" [ngValue]="type.value">{{type.name}}</option>
+                        </select>
+                        <small *ngIf="f.submitted && !incident_type.valid" class="help-block">Title is required</small>
+                  </div>
+                </div>
+                <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !title.valid }">
+                    <label class="control-label col-sm-4" for="title">Title :</label>
+                    <div class="col-sm-8">
+                        <input type="text" class="form-control" name="title" [(ngModel)]="model.title" #title="ngModel" required placeholder="Input title here" />
+                        <small *ngIf="f.submitted && !title.valid" class="help-block">Title is required</small>
+                    </div>
+                </div>
+                <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !remark.valid }">
+                    <label class="control-label col-sm-4" for="remark">Message :</label>
+                    <div class="col-sm-8">
+                        <textarea class="form-control" name="remark" [(ngModel)]="model.remark" #remark="ngModel" required placeholder="Input remark here"></textarea>
+                        <small *ngIf="f.submitted && !remark.valid" class="help-block">Remark is required</small>
+                    </div>
+                </div>
+                <div class="form-group" [ngClass]="{ 'has-error': model.attachment.length == 0 && f.submitted }">
+                    <label class="control-label col-sm-4" for="attachment">Attachment :</label>
+                    <div class="col-sm-8">
+                        <input required type="file" multiple class="upload inputfile" name="attachment" id="file" (change)="onChange($event)" />
+                        <label class="btn btn-upload" for="file">Add Media</label>
+                        <p *ngFor="let item of model.attachment; let i=index ">
+                            <img src="assets/image/icon_media_image.png" width="14px" height="12px">&nbsp;
+                            <span style="text-decoration: underline;">{{ item.name }}_{{item.size/1024 | number:'1.0-0' }}kb</span> &nbsp;
+                            <span style="cursor:pointer" (click)="remove(i)"><img src="assets/image/icon_close_black.png" width="14px" height="12px"></span>
+                        </p>
+                        <small class="help-block" *ngIf="f.submitted && model.attachment.length == 0">Attachment is required</small>
+                    </div>
+                </div>
+                <div class="form-group pull-right">
+                    <button [disabled]="loading" class="btn btn-brown btn-primary">Save</button>
+                    <img *ngIf="loading" src="data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA==" />
+                    <button (click)="cancel()" class="btn btn-white">Cancel</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<

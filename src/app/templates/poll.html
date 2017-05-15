@@ -1,0 +1,256 @@
+<loading *ngIf="loading"></loading> 
+<div class="container">
+	<div class="main">
+		<div *ngIf="poll">
+			<div class="title">
+				Poll {{poll.title}}
+			</div>
+			<p>Home > Manage Poll > {{poll.title}}</p>
+			<a style="cursor:pointer" (click)="goBack()">Back to last page</a>
+			<div class="content">
+				<div class="row">
+					<div class="col-md-4 col-padding"><b>Title</b></div>
+					<div class="col-md-8 col-padding">: {{poll.title}}</div>
+				</div>
+				<div class="row">
+					<div class="col-md-4 col-padding"><b>Description</b></div>
+					<div class="col-md-8 col-padding">: {{poll.description}}</div>
+				</div>
+				<div class="row">
+					<div class="col-md-4 col-padding"><b>Type</b></div>
+					<div class="col-md-8 col-padding">:
+							<span *ngIf="poll.poll_type == 'yes_or_no'">Yes / No</span>
+							<span *ngIf="poll.poll_type == 'multiple'">Multiple</span>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-md-4 col-padding"><b>Voted Total</b></div>
+					<div class="col-md-8 col-padding">: {{poll.votes.length}}</div>
+				</div>
+				<div class="row" *ngIf="poll.votes.length > 0 ">
+					<div *ngIf="!poll.outcome" class="col-md-4 col-padding"><b>Answers Progress </b></div>
+					<div *ngIf="poll.outcome" class="col-md-4 col-padding"><b>Answer Results </b></div>
+					<div class="col-md-8 col-padding">
+						<div *ngFor="let a of poll.answers">
+							<progressbar [max]="max" [value]="a.progress">
+								{{a.choice}}&nbsp;: <span style="color:white; white-space:nowrap;">{{a.progress}} / {{max}}</span>
+							</progressbar>
+						</div>
+					</div>
+				</div>
+				<div class="row" *ngIf="poll.outcome">
+					<div class="col-md-4 col-padding"><b>Outcome</b></div>
+					<div class="col-md-8 col-padding"><span style="color: red">: <b>{{poll.outcome}}</b></span></div>
+				</div>
+				<div *ngIf="poll.status=='end poll'" class="row">
+					<div class="col-md-4 col-padding"><b>Commence Date</b></div>
+					<div class="col-md-8 col-padding">: {{poll.start_time | date: 'd/M/y'}}</div>
+				</div>
+				<div class="row">
+					<div class="col-md-4 col-padding"><b>Result Date</b></div>
+					<div class="col-md-8 col-padding">: {{poll.end_time | date: 'd/M/y'}}</div>
+				</div>
+				<div class="row">
+					<div class="col-md-4 col-padding"><b>Status</b></div>
+					<div class="col-md-8 col-padding">
+						<span *ngIf="poll.status=='draft'">: Draft</span>
+						<span *ngIf="poll.status=='active'">: Active</span>
+						<span *ngIf="poll.status=='end poll'">: End</span>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-md-4 col-padding"><b>Created By</b></div>
+					<div class="col-md-8 col-padding">: {{poll.created_by.username}}</div>
+				</div>
+				<div class="row">
+					<div class="col-md-4 col-padding"><b>Created at</b></div>
+					<div class="col-md-8 col-padding">: {{poll.created_at | date: 'd/M/y'}}</div>
+				</div>
+			</div>
+		</div>
+
+		<div *ngIf="!poll">
+			<div class="title">
+				E-Voting
+			</div>
+			<p class="id-location">Home > E-Voting</p>
+			<div class="row">
+				<div class="col-md-4 pull-right">
+					<a class="btn btn-default btn-gray pull-right" style="margin-right:0;" *ngIf="polls" (click)="add()">
+						<i class="fa fa-plus" aria-hidden="true"></i>&nbsp;Create Poll</a>
+
+				</div>
+			</div>
+			<div (click)="$event.preventDefault()">
+				<tabset>
+					<tab heading="Draft Poll">
+						<p-dataTable [value]="pollsDraft" [rows]="10" [paginator]="true">
+							<p-column field="title" header="Poll Title" sortable="true" [filter]="true" filterPlaceholder="Search Title"></p-column>
+							<p-column field="description" header="Poll" sortable="true" [filter]="true" filterPlaceholder="Search Poll"></p-column>
+							<p-column field="poll_type" header="Poll Type" sortable="true" [filter]="true" filterPlaceholder="Search Type">
+								<template let-pollsDraft="rowData" pTemplate="body">
+									<span *ngIf="pollsDraft.poll_type == 'yes_or_no'">Yes / No</span>
+									<span *ngIf="pollsDraft.poll_type == 'multiple'">Multiple</span>
+								</template>
+							</p-column>
+
+						    <p-column field="open_to" header="Open to" sortable="true" >
+						    		<template let-pollsDraft="rowData" pTemplate="body">
+										<span *ngIf="pollsDraft.open_to">{{ pollsDraft.open_to }}</span>
+										<span *ngIf="!pollsDraft.open_to">-</span>
+									</template>
+						    </p-column>
+							<p-column field="start_time" [style]="{'width':'150px'}" header="Commence date" sortable="true">
+								<template let-pollsDraft="rowData" pTemplate="body">
+										<span *ngIf="pollsDraft.start_time">{{ pollsDraft.start_time | date:'d/M/y' }}</span>
+										<span *ngIf="!pollsDraft.start_time">-</span>
+								</template>
+							</p-column>
+							<p-column field="end_time" header="Result date" sortable="true">
+								<template let-pollsDraft="rowData" pTemplate="body">
+										<span *ngIf="pollsDraft.end_time">{{ pollsDraft.end_time | date:'d/M/y'}}</span>
+										<span *ngIf="!pollsDraft.end_time">-</span>
+								</template>
+							</p-column>
+							<p-column [style]="{'width':'300px'}" header="Action" styleClass="col-button">
+						    	<template class="pull-right" let-pollsDraft="rowData" pTemplate="body">
+							    	<a type="button" style="cursor:pointer; margin-right: 15px;" (click)="editPoll(pollsDraft)"><i class="fa fa-edit" aria-hidden="true"></i>&nbsp;<u>Edit</u></a>
+							    	<button class="btn btn-publish btn-brown" style="cursor:pointer; margin-right:5px" (click)="openModal(pollsDraft) || firstModal.open()">Start Poll</button>
+							        <button  type="button" class="btn btn-trash" (click)="deleteConfirmation(pollsDraft)"><i class="fa fa-trash-o" aria-hidden="true"></i></button>
+						    	</template>
+						    </p-column>
+					</p-dataTable>
+			    </tab>
+			    <tab heading="Active Poll">
+			    	<p-dataTable [value]="pollsActive" [rows]="10" [paginator]="true">
+					    <p-column field="title" header="Poll Title" sortable="true" [filter]="true" filterPlaceholder="Search Title"></p-column>
+					    <p-column field="description" header="Poll" sortable="true" [filter]="true" filterPlaceholder="Search Poll"></p-column>
+					    <p-column header="no. of Poll" sortable="true">
+						    	<template let-pollsActive="rowData" pTemplate="body">
+						            <span>{{pollsActive.votes.length}}</span>
+						        </template>
+						</p-column>
+						<p-column field="end_time" header="Result date" sortable="true">
+								<template let-pollsActive="rowData" pTemplate="body">
+						            <span *ngIf="pollsActive.end_time">{{pollsActive.end_time | date:'d/M/y'}}</span>
+						            <span *ngIf="!pollsActive.end_time">-</span>
+						        </template>
+						</p-column>
+						<p-column header="Days Remaining" field="remaining" sortable="true">
+						</p-column>
+						<p-column [style]="{'width':'300px'}" header="Action" styleClass="col-button">
+					    	<template class="pull-right" let-pollsActive="rowData" pTemplate="body">
+					    	<a type="button" style="cursor:pointer" (click)="viewPoll(pollsActive)"><u>View Progress</u></a>
+					    	</template>
+					    </p-column>
+					</p-dataTable>
+			    </tab>
+			    <tab heading="Poll Results">
+			    	<p-dataTable [value]="pollsResult" [rows]="10" [paginator]="true">
+					    <p-column field="title" header="Poll Title" sortable="true" [filter]="true" filterPlaceholder="Search Title"></p-column>
+					    <p-column field="description" header="Poll" sortable="true" [filter]="true" filterPlaceholder="Search Poll"></p-column>
+					    <p-column field="poll_type" header="Poll Type" sortable="true" [filter]="true" filterPlaceholder="Search Type">
+					    	<template let-pollsResult="rowData" pTemplate="body">
+									<span *ngIf="pollsResult.poll_type == 'yes_or_no'">Yes / No</span>
+									<span *ngIf="pollsResult.poll_type == 'multiple'">Multiple</span>
+							</template>
+					    </p-column>
+					    <p-column field="open_to" header="Open to" sortable="true" [filter]="true" filterPlaceholder="Search Type">
+					    		<template let-pollsResult="rowData" pTemplate="body">
+						            <span *ngIf="pollsResult.open_to">{{pollsResult.open_to}}</span>
+						            <span *ngIf="!pollsResult.open_to">-</span>
+						        </template>
+					    </p-column>
+					    <p-column header="no. of Poll" sortable="true">
+						    	<template let-pollsResult="rowData" pTemplate="body">
+						            <span>{{pollsResult.votes.length}}</span>
+						        </template>
+						</p-column>
+						<p-column field="outcome" header="Outcome" sortable="true"></p-column>
+						<p-column field="start_time" header="Commence date" sortable="true">
+								<template let-pollsResult="rowData" pTemplate="body">
+						            <span *ngIf="pollsResult.start_time">{{pollsResult.start_time | date:'d/M/y'}}</span>
+						            <span *ngIf="!pollsResult.start_time">-</span>
+						        </template>
+						</p-column>
+						<p-column field="end_time" header="Result date" sortable="true">
+								<template let-pollsResult="rowData" pTemplate="body">
+						            <span *ngIf="pollsResult.end_time">{{pollsResult.end_time | date:'d/M/y'}}</span>
+						            <span *ngIf="!pollsResult.end_time">-</span>
+						        </template>
+						</p-column>
+					    <p-column [style]="{'width':'300px'}" header="Action" styleClass="col-button">
+					    	<template class="pull-right" let-pollsResult="rowData" pTemplate="body">
+					    	<a type="button" style="cursor:pointer" (click)="viewPoll(pollsResult)"><u>View Result</u></a>
+					    	</template>
+					    </p-column>
+					</p-dataTable>
+			    </tab>
+			    <tab heading="Past Polls">
+			    		<p-dataTable [value]="pollsPast" [rows]="10" [paginator]="true">
+					    <p-column field="title" header="Poll Title" sortable="true" [filter]="true" filterPlaceholder="Search Title"></p-column>
+					    <p-column field="description" header="Poll" sortable="true" [filter]="true" filterPlaceholder="Search Poll"></p-column>
+					    <p-column field="poll_type" header="Poll Type" sortable="true" [filter]="true" filterPlaceholder="Search Type">
+					    	<template let-pollsPast="rowData" pTemplate="body">
+									<span *ngIf="pollsPast.poll_type == 'yes_or_no'">Yes / No</span>
+									<span *ngIf="pollsPast.poll_type == 'multiple'">Multiple</span>
+							</template>
+					    </p-column>
+					    <p-column field="open_to" header="Open to" sortable="true" [filter]="true" filterPlaceholder="Search Type">
+					    		<template let-pollsPast="rowData" pTemplate="body">
+						            <span *ngIf="pollsPast.open_to">{{pollsPast.open_to}}</span>
+						            <span *ngIf="!pollsPast.open_to">-</span>
+						        </template>
+					    </p-column>
+					    <p-column header="no. of Poll" sortable="true">
+						    	<template let-pollsPast="rowData" pTemplate="body">
+						            <span>{{pollsPast.votes.length}}</span>
+						        </template>
+						</p-column>
+						<p-column field="outcome" header="Outcome" sortable="true"></p-column>
+						<p-column field="start_time" header="Commence date" sortable="true">
+								<template let-pollsPast="rowData" pTemplate="body">
+						            <span *ngIf="pollsPast.start_time">{{pollsPast.start_time | date:'d/M/y'}}</span>
+						            <span *ngIf="!pollsPast.start_time">-</span>
+						        </template>
+						</p-column>
+						<p-column field="end_time" header="Result date" sortable="true">
+								<template let-pollsPast="rowData" pTemplate="body">
+						            <span *ngIf="pollsPast.end_time">{{pollsPast.end_time | date:'d/M/y'}}</span>
+						            <span *ngIf="!pollsPast.end_time">-</span>
+						        </template>
+						</p-column>
+					    
+						<p-column [style]="{'width':'300px'}" header="Action" styleClass="col-button">
+					    	<template class="pull-right" let-pollsPast="rowData" pTemplate="body">
+					    	<a type="button" style="cursor:pointer" (click)="viewPoll(pollsPast)"><u>View Result</u></a>
+					    	</template>
+					    </p-column>
+					</p-dataTable>
+			    </tab>
+			   
+			  </tabset>
+			</div>	
+			<div class="row">
+				<modal #firstModal>
+					<modal-header>
+						<h5>Start Poll ?</h5>
+					</modal-header>
+					<modal-content>
+						<br>
+				           <div *ngIf="pollStart">
+				              
+				           		Start this poll ?	
+				              
+				                <div class="pull-right">
+				                    <button  type="button" class="btn btn-primary btn-brown" (click)="startPoll()">Yes</button>
+				                    <button class="btn btn-white" (click)="firstModal.close()">Cancel</button>
+				                </div>
+				             
+				           </div>
+				    </modal-content>
+			    </modal>
+			</div>
+		</div>
+	</div>
+</div>

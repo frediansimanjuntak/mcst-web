@@ -1,0 +1,158 @@
+<loading *ngIf="loading"></loading> 
+<section id="resident-database">
+	<div class="container">
+		<div class="main">
+			<div class="title">
+				Resident's Database
+			</div>
+			<p class="id-location">Home > Resident's Database</p>
+			<div class="row top-block">
+				<div class="col-md-9">
+					<div class="row top-block">
+						<div class="col-md-9 no-padding">
+							<div class="col-md-7">
+								<div class="input-group filter-search">
+									<input type="text" class="form-control input-search" (keyup.enter)="filter()" [(ngModel)]="unitFilter" placeholder="Search for unit.no" name="filter">
+									<span (click)="filter()" class="input-group-btn">
+										<button class="btn btn-secondary btn-search" type="button"><i class="fa fa-search fa-inverse" aria-hidden="true"></i></button>
+									</span>
+								</div>
+							</div>
+							<div class="col-md-5 no-padding">
+							    <div class="input-group pull-right">
+							          <select class="form-control" name="selectedType" (change)="filterType($event)" [(ngModel)]="typeFilter">
+							          	<option value="">Status (default/all)</option>
+							            <option value="own stay">Owned</option>
+							            <option value="tenanted">Tenanted</option>
+							          </select>
+							    </div>
+						    </div>
+						</div>
+						<div class="col-md-3  pull-right">
+							<button class="btn btn-default btn-add pull-right" (click)="add()"><img class="img-btn" src="../../assets/image/icon_addresident.png" />&nbsp;Add Unit</button>
+
+						</div>
+					</div>
+				</div>
+				<div class="col-md-3">
+
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-md-12">
+					<span *ngIf="dataUnit"><b>{{dataUnit.length}}</b>&nbsp;Results found</span>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-md-9">
+					<p-dataTable [value]="dataUnit" [rows]="10" [paginator]="true">
+						<p-column field="address.unit_no" filterPlaceholder="Search Unit No" header="Unit no" sortable="true">
+							<template let-dataUnit="rowData" pTemplate="body">
+								<span>#{{dataUnit.address.unit_no}}-{{dataUnit.address.unit_no_2}}</span>
+							</template>
+						</p-column>
+						<p-column header="Owner" field="landlord.data.resident.username" [filter]="true" filterPlaceholder="Search Owner">
+							<template let-dataUnit="rowData" pTemplate="body">
+								<span *ngIf="dataUnit.landlord.data">
+									<span *ngIf="dataUnit.landlord.data.resident">
+										{{dataUnit.landlord.data.resident.username | capitalize}}
+									</span>
+								</span>
+								<span *ngIf="!dataUnit.landlord.data">-</span>
+							</template>
+						</p-column>
+						<p-column field="status" header="Status" sortable="true">
+							<template let-dataUnit="rowData" pTemplate="body">
+								<span *ngIf="dataUnit.status == 'own stay'">Owned</span>
+								<span *ngIf="dataUnit.status == 'tenanted'">Tenanted</span>
+								<span style="color: red" *ngIf="dataUnit.status == 'empty'">Empty</span>
+							</template>
+						</p-column>
+						<p-column sortable="true" field="tenant.data.length" header="No. of Tenant">
+							<template let-dataUnit="rowData" pTemplate="body">
+								<span *ngIf="dataUnit.tenant.data">{{dataUnit.tenant.data.length}}</span>
+							</template>
+						</p-column>
+						<p-column [style]="{'width':'300px'}" styleClass="col-button" header="Action">
+							<template class="pull-right" let-dataUnit="rowData" pTemplate="body">
+								<a type="button" class="btn-underline" (click)="view(dataUnit)">View unit details</a>
+
+							</template>
+						</p-column>
+
+					</p-dataTable>
+				</div>
+				<div class="col-md-3">
+					<div class="row">
+						<p class="field-box no-margin" style="padding: 15px 10px;">Related Functions</p>
+					</div>
+					<!-- <div class="row border-box">
+						<div class="col-md-10 no-padding">
+							<div class="left-box">
+								<img src="../../assets/image/icon_accesscontrol.png" style="height:17px; width:17px; margin-right:5px;" class="img-responsive pull-left" alt="" />	
+								<a class="link-box">Resident Access control</a>	
+							</div>
+						</div>
+						<div class="col-md-2 no-padding">
+							<div class="right-box">
+								<img src="../../assets/image/icon_arrowright_black.png" style="width:10px" class="img-responsive arrow-box" alt="" />
+							</div>
+						</div>
+					</div> -->
+					<div class="row border-box">
+						<div class="col-md-10 no-padding">
+							<div class="left-box">
+								<img src="../../assets/image/menu_guestvisitor.png" style="height:17px; width:17px; margin-right:5px;" class="img-responsive pull-left" alt="" />
+								<a class="link-box">Guest & Visitors</a>
+							</div>
+						</div>
+						<div class="col-md-2 no-padding" style="cursor: pointer;" (click)="start('/visit')">
+							<div class="right-box">
+								<img src="../../assets/image/icon_arrowright_black.png" style="width:10px" class="img-responsive arrow-box" alt="" />
+							</div>
+						</div>
+					</div>
+					<div class="row border-box">
+						<div class="col-md-10 no-padding">
+							<div class="left-box">
+								<img src="../../assets/image/menu_request.png" style="height:17px; width:17px; margin-right:5px;" class="img-responsive pull-left" alt="" />
+								<a class="link-box">Manage Request</a>
+							</div>
+						</div>
+						<div class="col-md-2 no-padding" style="cursor: pointer;" (click)="start('/petition')">
+							<div class="right-box">
+								<img src="../../assets/image/icon_arrowright_black.png" style="width:10px" class="img-responsive arrow-box" alt="" />
+							</div>
+						</div>
+					</div>
+					<div class="row border-box">
+						<div class="col-md-10 no-padding">
+							<div class="left-box">
+								<img src="../../assets/image/menu_incidentreport.png" style="height:17px; width:17px; margin-right:5px;" class="img-responsive pull-left" alt="" />
+								<a class="link-box">Incident Reports</a>
+							</div>
+						</div>
+						<div class="col-md-2 no-padding" style="cursor: pointer;" (click)="start('/incident')">
+							<div class="right-box">
+								<img src="../../assets/image/icon_arrowright_black.png" style="width:10px" class="img-responsive arrow-box" alt="" />
+							</div>
+						</div>
+					</div>
+					<div class="row border-box">
+						<div class="col-md-10 no-padding">
+							<div class="left-box">
+								<img src="../../assets/image/icon_feedbacks.png" style="height:17px; width:17px; margin-right:5px;" class="img-responsive pull-left" alt="" />
+								<a class="link-box">Manage Feedback</a>
+							</div>
+						</div>
+						<div class="col-md-2 no-padding" style="cursor: pointer;" (click)="start('/feedback')">
+							<div class="right-box">
+								<img src="../../assets/image/icon_arrowright_black.png" style="width:10px" class="img-responsive arrow-box" alt="" />
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</section>

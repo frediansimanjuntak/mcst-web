@@ -1,0 +1,61 @@
+<loading *ngIf="loading"></loading> 
+<div class="container">
+	<div class="main">
+		<div *ngIf="user">
+			<div class="title">
+				Edit User
+			</div>
+			<p class="id-location">Home > User > Edit > {{user.username}}</p>
+			<form class="form-horizontal col-md-10" name="form" (ngSubmit)="f.form.valid && updateSetting()" #f="ngForm" novalidate>
+				<div class="form-group" [ngClass]="{ 'has-error': f.submitted && !username.valid }">
+					<label class="control-label col-sm-4" for="username">Username :</label>
+					<div class="col-sm-10">
+						<input type="text" class="form-control" name="username" [(ngModel)]="user.username" #username="ngModel" required placeholder="Input username here" />
+						<span *ngIf="f.submitted && !username.valid" class="help-block">Username is required</span>
+					</div>
+				</div>
+				<div class="form-group" [ngClass]="{ 'has-error': f.submitted && emailError }">
+					<label class="control-label col-sm-4" for="email">Email :</label>
+					<div class="col-sm-10">
+						<input type="email" class="form-control" name="email" (change)="validate($event, 'email')" [(ngModel)]="user.email" #email="ngModel" required placeholder="Input email here" />
+						<span *ngIf="f.submitted && emailError" class="help-block">{{emailErrorMessage}}</span>
+					</div>
+				</div>
+				<div class="form-group" [ngClass]="{ 'has-error': f.submitted && oldPasswordError }">
+					<label class="control-label col-sm-4" for="password">Old password :</label>
+					<div class="col-sm-10">
+						<input type="password" (change)="validate($event, 'oldPassword')" class="form-control" name="oldPassword" [(ngModel)]="user.oldPassword" #oldPassword="ngModel" placeholder="Input old password here" />
+						<span *ngIf="f.submitted && oldPasswordError" class="help-block">{{oldPasswordErrorMessage}}</span>
+					</div>
+				</div>
+				<div class="form-group" [ngClass]="{ 'has-error': f.submitted && passwordError }">
+					<label class="control-label col-sm-4" for="password">New password :</label>
+					<div class="col-sm-10">
+						<input type="password" (change)="validate($event, 'newPassword')" class="form-control" name="password" [(ngModel)]="user.newPassword" #newPassword="ngModel" validateEqual="confirmPassword" reverse="true" placeholder="Input new password here" />
+						<span *ngIf="f.submitted && passwordError" class="help-block">{{passwordErrorMessage}}</span>
+					</div>
+				</div>
+				<div class="form-group" [ngClass]="{ 'has-error': f.submitted && passwordConfirmationError }">
+					<label class="control-label col-sm-4" for="repassword">Repeat password :</label>
+					<div class="col-sm-10">
+						<input type="password" (change)="validate($event, 'confirmPassword')" validateEqual="password" class="form-control" name="repassword" [(ngModel)]="model.repassword" #repassword="ngModel" placeholder="Input confirm password here" />
+						<span *ngIf="f.submitted && passwordConfirmationError" class="help-block">{{passwordConfirmationErrorMessage}}</span>
+					</div>
+				</div>
+				<div class="form-group" [ngClass]="{ 'has-error': f.submitted && !phone.valid }">
+					<label class="control-label col-sm-4" for="phone">Phone :</label>
+					<div class="col-sm-10">
+						<input (keypress)="number($event)" type="text" class="form-control" name="phone" [(ngModel)]="user.phone" #phone="ngModel" required placeholder="Input phone here" />
+						<span *ngIf="f.submitted && !phone.valid" class="help-block">Phone is required</span>
+					</div>
+				</div>
+				<div class="form-group pull-right">
+					<button [disabled]="loading" class="btn btn-brown">Save</button>
+					<img *ngIf="loading" src="data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA=="
+					/>
+					<a (click)="cancel()" class="btn btn-white">Cancel</a>
+				</div>
+			</form>
+		</div>
+	</div>
+</div>

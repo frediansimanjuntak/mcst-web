@@ -1,0 +1,271 @@
+<loading *ngIf="loading"></loading> 
+<section id="booking-system">
+    <div class="container">
+        <div class="main">
+            <div *ngIf="booking">
+                <div class="title">
+
+                </div>
+                <p class="id-location">Home > booking > </p>
+                <div class="row">
+                    <div class="col-lg-6">
+                        <p-galleria [images]="images" panelWidth="500" panelHeight="313"></p-galleria>
+                    </div>
+                    <div class="col-lg-6">
+                        <div class="row">
+                            <div class="col-md-4">Reported by </div>
+                            <div class="col-md-8"><p>: </p></div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-4">Type of Report </div>
+                            <div class="col-md-8"><p>: </p></div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-4">Report time </div>
+                            <div class="col-md-8"><p>: </p></div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-4">Status </div>
+                            <div class="col-md-8"><p>: </p></div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-4">Order </div>
+                            <div class="col-md-8">:<!-- <p>{{ incident.orde }}</p> --></div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-4">Message </div>
+                            <div class="col-md-8"><p>: </p></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div *ngIf="!booking">
+                <div class="title">
+                    ADD BOOKING
+                </div>
+                <p class="id-location">Home > Booking System > Add Booking</p>
+                <div *ngIf="step == 1">
+                    <div class="abc">
+                        <ul class="steps steps-5">
+                            <li>
+                                <p class="row-li-1">1. Select Date and Facility Type</p>
+                            </li>
+                        </ul>
+                        <ul class="no-bullet">
+                            <li>
+                                <p class="row-li-2">2. Select Time Slots</p>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-4">
+                            <div style="width:335px; margin-top:15px;"  *ngIf="customClass.length > 0">
+                                <datepicker (click)="selectedDate(dt)" (activeDateChange)="selectedDate(dt)" [style]="{'width':'300px'}" [(ngModel)]="dt" [minDate]="minDate" [customClass]="customClass" [showWeeks]="false"></datepicker>
+                            </div>
+                            <div *ngIf="selectedFacility.length < 1">
+                                <form name="form" (ngSubmit)="f.form.valid && filter()" #f="ngForm" novalidate>
+                                    <div class="row">
+                                        <div class="col-md-3"><p class="pull-down">Facility :</p></div>
+                                        <div class="col-md-9"><p>
+                                            <select disabled name="name" class="form-control" (change)="time()" [(ngModel)]="model.facility" #facility="ngModel" style="width: 237px">
+                                                <option *ngFor="let facility of selectedFacility"  [ngValue]="facility._id">{{facility.name}}</option>
+                                            </select>
+                                        </p></div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-3"><p class="pull-down">Period :</p></div>
+                                        <div class="col-md-9"><p>
+                                            <select disabled name="start" class="form-control" (change)="startTime(model.start)" [(ngModel)]="model.start" #start="ngModel" style="width: 116px;float: left; margin-right: 5px;">
+                                                <option *ngFor="let start of times_start" [ngValue]="start"><span *ngIf="start < 10">0</span>{{start}}{{min}}</option>
+                                            </select>
+                                            <select disabled name="end" class="form-control" [(ngModel)]="model.end" #end="ngModel" style="width: 116px">
+                                                <option *ngFor="let end of times_end" [ngValue]="end"><span *ngIf="end < 10">0</span>{{end}}{{min}}</option>
+                                            </select>
+                                        </p></div>
+                                    </div>
+                                    <div class="form-group">
+                                        <button style="width: 327px" class="btn btn-filter">Filter</button>
+                                    </div>
+                                </form>
+                            </div>
+                            <div *ngIf="selectedFacility.length > 0">
+                                <form name="form" (ngSubmit)="f.form.valid && filter()" #f="ngForm" novalidate>
+                                    <div class="row">
+                                        <div class="col-md-3"><p class="pull-down">Facility :</p></div>
+                                        <div class="col-md-9"><p>
+                                            <select name="name" class="form-control" (change)="time()" [(ngModel)]="model.facility" #facility="ngModel" style="width: 237px">
+                                                <option *ngFor="let facility of selectedFacility"  [ngValue]="facility._id">{{facility.name}}</option>
+                                            </select>
+                                        </p></div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-3"><p class="pull-down">Period :</p></div>
+                                        <div class="col-md-9"><p>
+                                            <select name="start" class="form-control" (change)="startTime(model.start)" [(ngModel)]="model.start" #start="ngModel" style="width: 116px;float: left; margin-right: 5px;">
+                                                <option *ngFor="let start of times_start" [ngValue]="start"><span *ngIf="start < 10">0</span>{{start}}{{min}}</option>
+                                            </select>
+                                            <select name="end" class="form-control" [(ngModel)]="model.end" #end="ngModel" style="width: 116px">
+                                                <option *ngFor="let end of times_end" [ngValue]="end"><span *ngIf="end < 10">0</span>{{end}}{{min}}</option>
+                                            </select>
+                                        </p></div>
+                                    </div>
+                                    <div class="form-group">
+                                        <button style="width: 327px" class="btn btn-filter">Filter</button>
+                                    </div>
+                                </form>
+                            </div>
+                                
+                        </div>
+                        <div class="col-lg-8">
+                            <div class="table-tags">
+                                <p>Showing slots for <b>{{ date | date:'longDate' }}</b></p>
+                                <p *ngIf="filtered != null"><span *ngIf="facility_name">Facility <b>{{ facility_name }}</b></span></p>
+                                <p *ngIf="filtered != null"><span *ngIf="total"><b>{{ available }} of {{ total }}</b> Slot available</span></p>
+                            </div>
+                            <div *ngIf="filtered != null">
+                                <table class="tableSection table-striped time-slots-table">
+                                    <tbody>
+                                        <tr *ngFor="let a of timeStart; let i=index ; let b of timeEnd; let c of booking_status">
+                                            <td class="space-left">{{timeStart[i]}}{{min}} - {{timeEnd[i]}}{{min}}</td>
+                                            <td>{{facility_name}}</td>
+                                            <td>
+                                                <i *ngIf="booking_status[i] == 'Available'" class="fa fa-circle circle-green" aria-hidden="true"></i>
+                                                <i *ngIf="booking_status[i] == 'Not Available'" class="fa fa-circle circle-red" aria-hidden="true"></i>
+                                                {{booking_status[i]}}
+                                            </td>
+                                            <p-checkbox *ngIf="booking_status[i] == 'Not Available'" disabled="true" name="archive" (click)="getSelected(timeStart[i],timeEnd[i],min,facility_name,facility_type)" [(ngModel)]="selectedValues"></p-checkbox>
+                                            <p-checkbox *ngIf="booking_status[i] == 'Available'" name="archive" (click)="getSelected(timeStart[i],timeEnd[i],min,facility_name,facility_type)" [(ngModel)]="selectedValues"></p-checkbox>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <a class="btn btn-default btn-brown pull-right" (click)="next()">Next</a>
+                                        <a (click)="cancel()" class="btn btn-info btn-gray pull-right">Cancel</a>
+                                    </div>
+                                </div>
+                            </div>
+                            <div *ngIf="filtered == null">
+                                <span *ngIf="selectedFacility.length < 1">No facility available today. Please check out other available dates.</span>
+                                <span *ngIf="selectedFacility.length > 0">Please choose facility first</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div *ngIf="step == 2">
+                    <div class="abc">
+                        <ul class="steps steps-5">
+                            <li><p class="row-li-1">3. Booking Information</p></li>
+                        </ul>
+                        <ul class="no-bullet">
+                            <li><p class="row-li-2">4. User & Payment Information</p></li>
+                        </ul>
+                    </div>
+                    <div><br/></div>
+                    <div class="row">
+                        <div class="col-lg-5">
+                            <div class="bookinginformation">
+                                <div class="block-booking-information">
+                                    <div class="row">`
+                                        <div class="col-md-6"><label>Date :</label></div>
+                                        <div class="col-md-5 pull-right text-right text-content">{{model.date}}</div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-6"><label>Facility :</label></div>
+                                        <div class="col-md-6 pull-right text-right text-content">{{model.name}}</div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-6"><label>Time Slot :</label></div>
+                                        <div class="col-md-6 pull-right text-right text-content">{{model.start_time}} - {{model.end_time}}</div>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <br/><button (click)="change()" class="btn btn-white" style="width:324px">Change Booking</button><br/><hr>
+                                </div>
+                                <div class="block-booking-information">
+                                    <div class="row">
+                                        <div class="col-md-6"><label>Deposit Fee* :</label></div>
+                                        <div class="col-md-5 pull-right text-right text-content">{{model.fees[0].deposit_fee}}.00 SGD</div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-6"><label>Booking Fee :</label></div>
+                                        <div class="col-md-5 pull-right text-right text-content">{{model.fees[0].booking_fee}}.00 SGD</div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-6"><label>Admin Fee :</label></div>
+                                        <div class="col-md-5 pull-right text-right text-content">{{model.fees[0].admin_fee}}.00 SGD</div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-5"><label><h4>TOTAL :</h4></label></div>
+                                        <div class="col-md-6 pull-right text-right text-content"><h4>{{model.total_amount}}.00 SGD</h4></div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-12 deposit">
+                                            <p>*Deposit Fee will only be incurred in the case of user infringed the <a>terms of usage</a> and <a>houserule</a></p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-7">
+                            <form class="form-horizontal" name="form" (ngSubmit)="f.form.valid && createBooking()" #f="ngForm" novalidate>
+                                <div class="form-group">
+                                    <label class="control-label col-sm-4" for="serial_no">Booking Ref.no :</label>
+                                    <div class="col-sm-8">
+                                        <input disabled type="text" class="form-control" name="serial_no" [(ngModel)]="model.serial_no" #serial_no="ngModel" />
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="control-label col-sm-4" for="property">Unit no :</label>
+                                    <div class="col-sm-8">
+                                        <div *ngIf="units">
+                                            <select class="form-control" (change)="getLandlord($event)" name="property" [(ngModel)]="model.property" #property="ngModel" required placeholder="Choose property">
+                                                <option *ngFor="let unit of units" [ngValue]="unit._id">
+                                                    #{{unit.address.unit_no}}-{{unit.address.unit_no_2}}
+                                                </option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="control-label col-sm-4" for="sender">Resident :</label>
+                                    <div class="col-sm-8">
+                                        <input disabled type="text" class="form-control" name="sender" [(ngModel)]="model.sender_name" #sender="ngModel" />
+                                     </div>
+                                </div>
+                                <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !payment_method.valid }">
+                                    <label class="control-label col-sm-4" for="payment_method">Mode of payment :</label>
+                                    <div class="col-sm-8">
+                                        <select class="form-control" name="payment_method" [(ngModel)]="model.payment_method" #payment_method="ngModel" required placeholder="Input payment mode here">
+                                            <option value="cash">Cash At Management Office</option>
+                                            <option value="transfer">Bank Transfer</option>
+                                        </select>
+                                        <span *ngIf="f.submitted && !payment_method.valid" class="help-block">Payment mode is required</span>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="control-label col-sm-4" for="payment_proof">Payment Reference :</label>
+                                    <div class="col-sm-8">
+                                        <input type="file" multiple class="upload inputfile" name="payment_proof" id="file" (change)="onChange($event)" />
+                                        <label class="btn btn-upload" for="file">Add Media</label>
+                                        <p *ngFor="let item of model.payment_proof; let i=index ">
+                                            <img src="assets/image/icon_media_image.png" width="14px" height="12px">&nbsp;
+                                            {{ item.name }}_{{item.size/1024 | number:'1.0-0' }}kb &nbsp;
+                                            <span class="glyphicon glyphicon-remove" style="cursor:pointer" (click)="remove(i)"></span>
+                                        </p>
+                                    </div>
+                                </div>
+                                <div class="form-group pull-right" style="margin:0; margin-top:40px">
+                                    <button [disabled]="loading" class="btn btn-default btn-brown pull-right">Confirm</button>
+                                        <img *ngIf="loading" src="data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA==" />
+                                    <button (click)="cancel()" class="btn btn-info btn-gray pull-right">Cancel</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
