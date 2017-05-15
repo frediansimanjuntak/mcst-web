@@ -274,6 +274,7 @@ export class PetitionComponent implements OnInit {
         this.selectedValues = [];
         this.checkSelected();
     }
+
     preview(file:any){
         if(file.type=="application/pdf"){
             this.attachmentService.downloadPDF(file.url).subscribe(
@@ -290,5 +291,10 @@ export class PetitionComponent implements OnInit {
             return myWindow;
         }
     }
+
+    viewContract(id: string){
+        this.router.navigate([this.name.default_development.name_url + '/contract/view', id]);
+    }
+
 }
     
