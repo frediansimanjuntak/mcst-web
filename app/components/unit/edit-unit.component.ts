@@ -78,6 +78,7 @@ export class EditUnitComponent implements OnInit {
             });
             setTimeout(() => this.appComponent.loading = false, 1000);
         })
+        setTimeout(() => this.appComponent.loading = false, 1000);
         this.submitted = false;
 
         this.route.params.subscribe(params => {
@@ -97,31 +98,30 @@ export class EditUnitComponent implements OnInit {
         this.submitted = true;
         if(isValid){
             if(model.max_tenant <= 20){
-                if(model.address.unit_no.length == 1){
-                   model.address.unit_no = '0'+model.address.unit_no.toString();
-                }
-                if(model.address.unit_no_2.length == 1){
-                          model.address.unit_no_2 = '0'+model.address.unit_no_2.toString();
-                   }
-                this.appComponent.loading = true
-                this.unitservice.create(model, this.name.default_development.name_url)
-                .then(
-                    data => {
-                        this._notificationsService.success(
-                                'Success',
-                                'Create Unit successful',
+                if(model.address.unit_no < 100 && model.address.unit_no_2 < 1000){
+                    model.address.unit_no = model.address.unit_no.toString().length == 1 ? '0'+model.address.unit_no.toString() : model.address.unit_no.toString();
+                    model.address.unit_no_2 = model.address.unit_no_2.toString().length == 1 ? '0'+model.address.unit_no_2.toString() : model.address.unit_no_2.toString();
+                
+                    this.appComponent.loading = true
+                    this.unitservice.create(model, this.name.default_development.name_url)
+                    .then(
+                        data => {
+                            this._notificationsService.success(
+                                    'Success',
+                                    'Create Unit successful',
+                                )
+                            this.router.navigate([this.name.default_development.name_url + '/unit']);
+                        },
+                        error => {
+                            console.log(error);
+                            this._notificationsService.error(
+                                    'Error',
+                                    'The Unit could not be save, server Error.',
                             )
-                        this.router.navigate([this.name.default_development.name_url + '/unit']);
-                    },
-                    error => {
-                        console.log(error);
-                        this._notificationsService.error(
-                                'Error',
-                                'The Unit could not be save, server Error.',
-                        )
-                        this.appComponent.loading = false;
-                    }
-                );  
+                            this.appComponent.loading = false;
+                        }
+                    );  
+                }
             }            
         }
     }
@@ -155,4 +155,5 @@ export class EditUnitComponent implements OnInit {
     goToUnit(){
         this.router.navigate([this.name.default_development.name_url + '/unit']);  
     }
+
 }
