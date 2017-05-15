@@ -41,7 +41,6 @@ export class EditPaymentReminderComponent implements OnInit{
     ngOnInit():void{ 
     	this.myForm = this.formbuilder.group({
             title : ['', Validators.required],
-            reference_no : [{value: '', disabled: true}],
             auto_issue_on : ['', Validators.required],
             due_on : ['', Validators.required],
             message_to_receiver : ['', Validators.required],
@@ -56,24 +55,8 @@ export class EditPaymentReminderComponent implements OnInit{
         });
         this.paymentreminderService.getAll().subscribe(paymentreminder => {
             this.paymentreminders = paymentreminder ;
-            if(this.paymentreminders.length > 0) { 
-                var a = this.paymentreminders.length - 1;
-                this.no = +this.paymentreminders[a].reference_no + 1
-                if(this.no > 1 && this.no < 10) {
-                    this.model.reference_no = '000' + this.no.toString();
-                }if(this.no > 9 && this.no < 100) {
-                    this.model.reference_no = '00' + this.no.toString();
-                }if(this.no > 99 && this.no < 1000) { 
-                    this.model.reference_no = '0' + this.no.toString();
-                }if(this.no > 999) {
-                    this.model.reference_no = this.no.toString();
-                }
-            }else {
-                this.model.reference_no = '0001'
-            }  
             this.myForm = this.formbuilder.group({
                 title : ['', Validators.required],
-                reference_no : [{value: this.model.reference_no, disabled: true}],
                 auto_issue_on : ['', Validators.required],
                 due_on : ['', Validators.required],
                 message_to_receiver : ['', Validators.required],
@@ -143,25 +126,17 @@ export class EditPaymentReminderComponent implements OnInit{
     }
 
     createPaymentReminder(model:PaymentReminder) {
-    	model.reference_no = this.model.reference_no;
         this.appComponent.loading = true
-        console.log(model)
         this.paymentreminderService.create(model)
         .then(
             data => {
-                this._notificationsService.success(
-                                'Success',
-                                'Create payment successful',
-                        )
+                this._notificationsService.success('Success','Create payment successful')
                 this.router.navigate([this.name.default_development.name_url + '/payment_reminder']);
             },
             error => {
                 console.log(error);
-                this._notificationsService.error(
-                                'Error',
-                                'The payment could not be save, server Error',
-                )
-                        setTimeout(() => this.appComponent.loading = false, 1000);
+                this._notificationsService.error('Error','The payment could not be save, server Error')
+                setTimeout(() => this.appComponent.loading = false, 1000);
             }
         );
     }
@@ -171,17 +146,11 @@ export class EditPaymentReminderComponent implements OnInit{
         this.paymentreminderService.update(paymentreminder)
         .then(
             response => {
-                this._notificationsService.success(
-                                'Success',
-                                'Update payment reminder successful',
-                        )
+                this._notificationsService.success('Success','Update payment reminder successful')
                 this.router.navigate([this.name.default_development.name_url + '/payment_reminder']);
             },
             error => {
-                this._notificationsService.error(
-                                'Error',
-                                'The payment could not be update, server Error',
-                        )
+                this._notificationsService.error('Error','The payment could not be update, server Error')
                 setTimeout(() => this.appComponent.loading = false, 1000);
             }
         );
