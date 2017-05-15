@@ -21,7 +21,6 @@ export class EditIncidentComponent implements OnInit {
     model: any = {};
     id: string;
     name: any;
-    refno: any[] = [];
     no:any
     myForm: FormGroup;
     types = [
@@ -39,7 +38,6 @@ export class EditIncidentComponent implements OnInit {
         private appComponent: AppComponent,
         private _notificationsService: NotificationsService,
         private userService: UserService) {
-        // this.user = JSON.parse(localStorage.getItem('user'));
     }
 
     ngOnInit(): void {
@@ -57,21 +55,6 @@ export class EditIncidentComponent implements OnInit {
         this.model.attachment = [];
         this.incidentService.getAll().subscribe(incidents => {
             this.incidents = incidents ;
-            if(incidents.length > 0) { 
-                var a = this.incidents.length - 1;
-                this.no = +this.incidents[a].reference_no + 1
-                if(this.no > 1 && this.no < 10) {
-                    this.model.reference_no = '000' + this.no.toString();
-                }if(this.no > 9 && this.no < 100) {
-                    this.model.reference_no = '00' + this.no.toString();
-                }if(this.no > 99 && this.no < 1000) { 
-                    this.model.reference_no = '0' + this.no.toString();
-                }if(this.no > 999) {
-                    this.model.reference_no = this.no.toString();
-                }
-            }else {
-                this.model.reference_no = '0001'
-            }  
         });
         this.userService.getByToken()
         .subscribe(name => {
@@ -90,7 +73,6 @@ export class EditIncidentComponent implements OnInit {
             for (var i = 0; i < this.model.attachment.length; i++) {
                 formData.append("attachment", this.model.attachment[i]);
             }
-            formData.append("reference_no", this.model.reference_no);
             // formData.append("status", this.model.status);
             formData.append("incident_type", this.model.incident_type);
             formData.append("title", this.model.title);
