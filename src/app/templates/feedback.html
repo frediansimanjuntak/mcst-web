@@ -1,0 +1,178 @@
+<loading *ngIf="loading"></loading> 
+<section id="feedback">
+    <div class="container">
+        <div class="main">
+            <div *ngIf="!archived">
+                <div class="title">
+                    MANAGE FEEDBACK
+                </div>
+                <p class="id-location">Home > Manage Feedback</p>
+                <div class="row top-block">
+                    <div class="col-md-8 no-padding">
+                        <div class="col-md-6">
+                            <div class="input-group filter-search" style="width:100%">
+                                <input type="text" class="form-control input-search" (keyup.enter)="filter()" [(ngModel)]="dataFilter" placeholder="Search name or topic" name="filter">
+                                <span (click)="filter()" class="input-group-btn">
+                                    <button class="btn btn-secondary btn-search" type="button"><i class="fa fa-search fa-inverse" aria-hidden="true"></i></button>
+                                </span>
+                            </div>
+                        </div>
+                        <div class="col-md-6 no-padding">
+                            <div class="input-group">
+                                <label class="control-label col-sm-4" for="type">Status :</label>
+                                <div class="col-sm-8 no-padding">
+                                  <select class="form-control" style="width:120px" name="selectedType" (change)="filterStatus($event)" [(ngModel)]="statusFilter">
+                                    <option value="" selected="selected">All</option>
+                                    <option value="publish">Publish</option>
+                                    <option value="unpublish">Unpublish</option>
+                                  </select>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4 pull-right">
+                        <a class="btn btn-default pull-right btn-gray" style="margin-right:0;" (click)="viewArchived()">View Archived</a>
+                    </div>
+                </div>
+                <p-dataTable [value]="feedbacks" [rows]="10" [paginator]="true">
+                    <p-column filterMatchMode="contains" [style]="{'width': '100px'}" field="created_by.username" header="Made by" sortable="true" [filter]="true" filterPlaceholder="Search Made by"></p-column>
+                    <p-column [style]="{'width': '70px'}" filterMatchMode="contains" field="property" header="Unit.no" sortable="true" [filter]="true" filterPlaceholder="Search Unit.no"></p-column>
+                    <p-column filterMatchMode="contains" [style]="{'width': '120px'}" field="title" header="Topic / Title" sortable="true" [filter]="true" filterPlaceholder="Search Topic / Title"></p-column>
+                    <p-column  filterMatchMode="contains" [style]="{'width': '80px' , 'text-transform': 'capitalize'}" field="type" header="Type" sortable="true" [filter]="true" filterPlaceholder="Search Type"></p-column>>
+                    <p-column filterMatchMode="contains" [style]="{'width': '100px' , 'text-transform': 'capitalize'}" field="privacy" header="Privacy" sortable="true" [filter]="true" filterPlaceholder="Search Privacy"></p-column>
+                    <p-column [style]="{'width': '95px'}" field="content" header="Feedback" sortable="true">
+                        <template let-feedback="rowData" pTemplate="body">
+                            <a type="button" style="cursor:pointer;" (click)="showModal('content', feedback) || viewModal.open()"><span style="text-decoration: underline;">View</span></a>
+                        </template>
+                    </p-column>
+                    <p-column [style]="{'width': '95px'}" field="reply" header="Reply" sortable="true">
+                        <template let-feedback="rowData" pTemplate="body">
+                            <span *ngIf="feedback.reply">
+                                <a type="button" style="cursor:pointer;" (click)="showModal('reply', feedback) || viewModal.open()"><span style="text-decoration: underline;">View</span></a>
+                            </span>
+                            <span *ngIf="!feedback.reply">
+                                -
+                            </span>
+                        </template>
+                    </p-column>
+                    <p-column [style]="{'width': '120px'}" filterMatchMode="contains" field="" header="Commented on" sortable="true" [filter]="true" filterPlaceholder="Search Commented on">
+                        <template let-feedback="rowData" pTemplate="body">
+                            <p>{{feedback.created_at}}</p>
+                            <span *ngIf="feedback.reply_at != null">replied at {{feedback.reply_at}}</span>
+                        </template>
+                    </p-column>
+                    <p-column [style]="{'width':'185px'}" styleClass="col-button" header="Action">
+                        <template let-feedback="rowData" pTemplate="body">
+                            <a type="button" style="cursor:pointer; margin-right: 5px;" (click)="showModal('replyFeedback', feedback)"><img src="../../assets/image/icon_reply.png" class="pull-left" width="10px" height="10x" style="margin:9px 0;">&nbsp;<span style="text-decoration: underline;">Reply</span></a>
+                            <button *ngIf="feedback.status == 'unpublish'" class="btn btn-brown btn-publish" style="cursor:pointer" (click)="publishConfirmation(feedback)">Publish</button>
+                            <img *ngIf="feedback.archieve === false" title="archived" src="../../assets/image/icon_archived.png" style="margin:10px" (click)="archiveConfirmation(feedback)" />
+                            <img *ngIf="feedback.archieve === true" title="unarchived" src="../../assets/image/icon_archived.png" style="margin:10px" (click)="unarchived(feedback)" />
+                        </template>
+                    </p-column>
+                </p-dataTable>
+                <!--MODAL-->
+                <div class="row">
+                    <modal #firstModal [closeOnOutsideClick]="false">
+                        <modal-header>
+                            <h5>Reply Feedback</h5>
+                        </modal-header>
+                        <modal-content>
+                            <div *ngIf="feedback">
+                                <br>
+                                    <form class="" name="form" (ngSubmit)="f.form.valid && replyFeedback()" #f="ngForm" novalidate>
+                                        <div class="row no-margin" [ngClass]="{ 'has-error': f.submitted && !reply.valid }">
+                                            <label class="control-label" for="reply">Reply :</label>
+                                            <textarea style="width: 550px" type="text" name="reply" [(ngModel)]="feedback.reply" #reply="ngModel" required placeholder="Input feedback reply here"></textarea>
+                                            <span *ngIf="f.submitted && !reply.valid" class="help-block">Feedback reply is required</span>
+                                        </div>
+                                        <div class="pull-right">
+                                            <button [disabled]="loading" class="btn btn-brown">Save</button>
+                                            <img *ngIf="loading" src="data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA=="
+                                            />
+                                            <a class="btn btn-white" style="margin-right:9px;" (click)="hideModal(f)">Cancel</a>
+                                        </div>
+                                    </form>
+                            </div>
+                        </modal-content>
+                    </modal>
+                </div>
+                <div class="row">
+                    <modal #viewModal>
+                        <modal-header>
+                            <h5>View {{type}}</h5>
+                        </modal-header>
+                        <modal-content>
+                            <div class="row" *ngIf="type == 'content'">
+                                <div class="col-md-6 col-padding"><strong>Content :</strong></div>
+                                <div class="col-md-6 col-padding">{{ feedback.content }}</div>
+                            </div>
+                            <div class="row" *ngIf="type == 'reply'">
+                                <div class="col-md-6 col-padding"><strong>Reply :</strong></div>
+                                <div class="col-md-6 col-padding">{{ feedback.reply }}</div>
+                            </div>
+                            <div class="row no-margin pull-bottom-right">
+                                <button class="btn btn-default btn-gray" (click)="viewModal.close()">Close</button>
+                            </div>
+                        </modal-content>
+                    </modal>
+                </div>
+            </div>
+            <div *ngIf="archived">
+                <div class="title">
+                    ARCHIVED FEEDBACK
+                </div>
+                <p class="id-location">Home > Manage Feedback > Archived Feedback</p>
+                <div class="row top-block">
+                    <div class="col-md-8 no-padding">
+                        <div class="col-md-6">
+                            <div class="input-group filter-search" style="width:100%">
+                                <input type="text" class="form-control input-search" (keyup.enter)="filterArchieved()" [(ngModel)]="dataFilter" placeholder="Search name or topic" name="filter">
+                                <span (click)="filterArchieved()" class="input-group-btn">
+                                    <button class="btn btn-secondary btn-search" type="button"><i class="fa fa-search fa-inverse" aria-hidden="true"></i></button>
+                                </span>
+                            </div>
+                        </div>
+                        <div class="col-md-6 no-padding">
+                            <div class="input-group">
+                                <label class="control-label col-sm-4" for="type">Status :</label>
+                                <div class="col-sm-8 no-padding">
+                                  <select class="form-control" style="width:120px" name="selectedType" (change)="filterStatusArchieved($event)" [(ngModel)]="statusFilter">
+                                    <option value="" selected="selected">All</option>
+                                    <option value="publish">Publish</option>
+                                    <option value="unpublish">Unpublish</option>
+                                  </select>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4 pull-right">
+                        <a class="btn btn-default pull-right btn-gray" (click)="viewUnarchived()">View Unarchived</a>
+                    </div>
+                </div>
+                <p-dataTable [value]="archived" [rows]="10" [paginator]="true">
+                    <p-column filterMatchMode="contains" field="created_by.username" header="Made by" sortable="true" [filter]="true" filterPlaceholder="Search Made by"></p-column>
+                    <p-column filterMatchMode="contains" field="property" header="Unit.no" sortable="true" [filter]="true" filterPlaceholder="Search Unit.no"></p-column>
+                    <p-column filterMatchMode="contains" field="title" header="Topic / Title" sortable="true" [filter]="true" filterPlaceholder="Search Topic / Title"></p-column>
+                    <p-column filterMatchMode="contains" field="type" header="Type" sortable="true" [filter]="true" filterPlaceholder="Search Type"></p-column>>
+                    <p-column filterMatchMode="contains" field="privacy" header="Privacy" sortable="true" [filter]="true" filterPlaceholder="Search Privacy"></p-column>
+                    <p-column filterMatchMode="contains" field="content" header="Feedback" sortable="true" [filter]="true" filterPlaceholder="Search Feedback"></p-column>
+                    <p-column filterMatchMode="contains" field="reply" header="Reply" sortable="true" [filter]="true" filterPlaceholder="Search Reply"></p-column>
+                    <p-column filterMatchMode="contains" field="" header="Commented on" sortable="true" [filter]="true" filterPlaceholder="Search Commented on">
+                        <template let-feedback="rowData" pTemplate="body">
+                            <p>{{feedback.created_at}}</p>
+                            <span *ngIf="feedback.reply_at != null">replied at {{feedback.reply_at}}</span>
+                        </template>
+                    </p-column>
+                    <!-- <p-column [style]="{'width':'150px'}" styleClass="col-button" header="action">
+                            <template let-feedback="rowData" pTemplate="body">
+                                <a type="button" style="cursor:pointer" (click)="openModal(feedback) || firstModal.open()"><img src="../../assets/image/icon_reply.png">&nbsp;Reply</a>
+                                <button disabled="feedback.status == unpublished" style="text-decoration: underline;cursor:pointer" (click)="publish(feedback)">Publish</button>
+                            <img *ngIf="feedback.archive == false" title="archived" src="../../assets/image/icon_archived.png" (click)="archived(feedback)" />
+                            <img *ngIf="feedback.archive == true" title="unarchived" src="../../assets/image/icon_archived.png" (click)="unarchived(feedback)" />
+                            </template>
+                        </p-column> -->
+                </p-dataTable>
+            </div>
+        </div>
+    </div>
+</section>

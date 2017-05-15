@@ -1,0 +1,34 @@
+<loading *ngIf="loading"></loading> 
+<div class="container">
+	<div class="main">
+		<div class="title">
+			User
+		</div>
+		<p class="id-location">Home > User</p>
+		<div class="row top-block">
+			<div class="col-md-4 pull-right">
+				<button class="btn btn-default pull-right btn-gray" style="margin-right:0;" (click)="add()"> <img class="img-btn" src="../../assets/image/icon_add.png" />&nbsp;Add User</button>
+			</div>
+		</div>
+		<p-dataTable [value]="users" [rows]="10" [paginator]="true" [responsive]="true">
+			<p-column filterMatchMode="contains" field="username" header="Username" sortable="true" [filter]="true" filterPlaceholder="Search username">
+				<template let-users="rowData" pTemplate="body">
+					<span>{{users.username | capitalize }}</span>
+				</template>
+			</p-column>
+			<p-column filterMatchMode="contains" field="email" header="Email" sortable="true" [filter]="true" filterPlaceholder="Search email"></p-column>
+			<p-column filterMatchMode="contains" field="phone" header="Phone" sortable="true" [filter]="true" filterPlaceholder="Search phone"></p-column>
+			<p-column filterMatchMode="contains" field="role" header="Role" sortable="true" [filter]="true" filterPlaceholder="Search role">>
+				<template let-users="rowData" pTemplate="body">
+					<span>{{users.role | capitalize }}</span>
+				</template>
+			</p-column>
+			<p-column [style]="{'width':'120px'}" styleClass="col-button" header="Action">
+				<template let-data="rowData" pTemplate="body">
+					<a type="button" style="cursor:pointer; margin-right:10px; margin-left:7px;" (click)="edit(data)"><i class="fa fa-edit" aria-hidden="true"></i>&nbsp;Edit</a>
+					<button type="button"  class="btn btn-trash" style="margin-right:0;" (click)="deleteConfirmation(data)"><i class="fa fa-trash-o" aria-hidden="true"></i></button>
+				</template>
+			</p-column>
+		</p-dataTable>
+	</div>
+</div>
