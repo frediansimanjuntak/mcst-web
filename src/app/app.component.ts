@@ -26,13 +26,11 @@ import {
     selector: 'app',
     encapsulation: ViewEncapsulation.None,
     template: `
-      <div *ngIf="name">
-        <headers></headers>
-        <navbar></navbar>
-      </div>
+      <router-outlet name="header"></router-outlet>
+      <router-outlet name="navbar"></router-outlet>
       <ng2-slim-loading-bar></ng2-slim-loading-bar>
-       <router-outlet></router-outlet>
-      <footers *ngIf="name"></footers>
+      <router-outlet></router-outlet>
+      <router-outlet name="footer"></router-outlet>
       <simple-notifications style="position: absolute;
         z-index: 99999;" [options]="options"></simple-notifications>
     <p-confirmDialog width="425"></p-confirmDialog>
@@ -76,15 +74,16 @@ export class AppComponent implements OnInit {
         clickToClose: true,
         animate: "fromLeft"
     }
+    public user : any = {};
     public angularclassLogo = 'assets/img/angularclass-avatar.png';
-    public name = 'Angular 2 Webpack Starter';
+    public name = 'MCST';
     public url = 'https://twitter.com/AngularClass';
     constructor(
         private slimLoadingBarService: SlimLoadingBarService,
         private router: Router, 
         private userService:UserService,
         private _notificationsService: NotificationsService,
-        public appState: AppState
+        public appState: AppState,
     ) {
         router.events.subscribe((event: RouterEvent) => {
             this.navigationInterceptor(event);
@@ -112,25 +111,16 @@ export class AppComponent implements OnInit {
         if (event instanceof NavigationStart) {
             this.loading = true;
         }
-        // if (event instanceof NavigationEnd) {
-        //    setTimeout(() => this.loading = false, 3000);
-        // }
-
-        // Set loading state to false in both of the below events to hide the spinner in case a request fails
-        // if (event instanceof NavigationCancel) {
-        //     this.loading = false;
-        // }
-        // if (event instanceof NavigationError) {
-        //     this.loading = false;
-        // }
     }    
 
     getToken(){
-        // this.authToken = JSON.parse(localStorage.getItem('authToken' || null));
         this.userService.getByToken()
         .subscribe(
             name => {
-                  this.name = name.user;
+                  this.user = name.user;
+                  if (this.router.url == '/') {
+                    this.router.navigate([this.user.default_development.name_url, 'dashboard']);
+                  }
             },
             error => {
                 this.name = '';
