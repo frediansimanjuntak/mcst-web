@@ -1,0 +1,146 @@
+<loading *ngIf="loading"></loading> 
+<div class="container" *ngIf="payment">
+	<div class="main">
+		<div class="title">
+			Edit payment system
+		</div>
+		<p class="id-location">Home > Payment system > Edit </p>
+		<form class="form-horizontal col-md-6" name="form" (ngSubmit)="f.form.valid && updatePayment()" #f="ngForm" novalidate>
+			<div class="form-group">
+				<label class="control-label col-sm-4" for="serial_no">Serial no :</label>
+				<div class="col-sm-8">
+					<input disabled type="text" class="form-control" name="serial_no" [(ngModel)]="payment.serial_no" #serial_no="ngModel" />
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="control-label col-sm-4" for="property">Unit no :</label>
+				<div class="col-sm-8">
+					<input disabled type="text" class="form-control" name="property" [(ngModel)]="payment.property" #property="ngModel" required placeholder="Input property here" />
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="control-label col-sm-4" for="sender">Resident :</label>
+				<div class="col-sm-8">
+					<input disabled type="text" class="form-control" name="sender" [(ngModel)]="payment.sender.username" #sender="ngModel" />
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="control-label col-sm-4" for="remark">Remark :</label>
+				<div class="col-sm-8">
+					<textarea type="text" class="form-control" name="remark" [(ngModel)]="payment.remark" #remark="ngModel"></textarea>
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="control-label col-sm-4" for="payment_type">Payment type:</label>
+				<div class="col-sm-8">
+					<input disabled required placeholder="Input payment type here" type="text" class="form-control" name="payment_type" [(ngModel)]="payment.payment_type" #payment_type="ngModel" />
+				</div>
+			</div>
+			<div class="form-group" [ngClass]="{ 'has-error': f.submitted && !payment_method.valid }">
+				<label class="control-label col-sm-4" for="payment_method">Mode of payment :</label>
+				<div class="col-sm-8">
+					<select class="form-control" name="payment_method" [(ngModel)]="payment.payment_method" #payment_method="ngModel" required placeholder="Input payment mode here">
+						<option value="cash">Cash At Management Office</option>
+						<option value="transfer">Bank Transfer</option>
+					</select>
+					<span *ngIf="f.submitted && !payment_method.valid" class="help-block">Payment mode is required</span>
+				</div>
+			</div>
+			<div class="form-group" [ngClass]="{ 'has-error': payment.payment_proof.length == 0 && f.submitted }">
+                <label class="control-label col-sm-4" for="attachment">Attachment :</label>
+                <div class="col-sm-8">
+                    <input required type="file" multiple class="upload inputfile" name="attachment" id="file" (change)="updateOnChange($event)" />
+                    <label class="btn btn-upload" for="file">Add Media</label>
+                    <p *ngFor="let item of payment.payment_proof; let i=index ">
+                        <img src="assets/image/icon_media_image.png" width="14px" height="12px">&nbsp;
+                        <span style="text-decoration: underline;">{{ item.name }}_{{item.size/1024 | number:'1.0-0' }}kb</span> &nbsp;
+                        <span style="cursor:pointer" (click)="remove(i)"><img src="assets/image/icon_close_black.png" width="14px" height="12px"></span>
+                    </p>
+                    <small class="help-block" *ngIf="f.submitted && payment.payment_proof.length == 0">Attachment is required</small>
+                </div>
+            </div>
+			<div class="form-group pull-right">
+				<button [disabled]="loading" class="btn btn-brown btn-primary">Save</button>
+				<img *ngIf="loading" src="data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA=="
+				/>
+				<a (click)="cancel()" class="btn btn-white">Cancel</a>
+			</div>
+		</form>
+	</div>
+</div>
+<div class="container" *ngIf="!payment">
+	<div class="main">
+		<div class="title">
+			Add Payment
+		</div>
+		<p class="id-location">Home > Payment > Add </p>
+		<form class="form-horizontal col-md-6" name="form" (ngSubmit)="f.form.valid && createPayment()" #f="ngForm" novalidate>
+			<div class="form-group">
+				<label class="control-label col-sm-4" for="serial_no">Serial no :</label>
+				<div class="col-sm-8">
+					<input disabled type="text" class="form-control" name="serial_no" [(ngModel)]="model.serial_no" #serial_no="ngModel" />
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="control-label col-sm-4" for="property">Unit no :</label>
+				<div class="col-sm-8">
+					<div *ngIf="units">
+                        <select class="form-control" (change)="getLandlord($event)" [(ngModel)]="model.property" #property="ngModel" name="property" placeholder="Choose property" required>
+                            <option *ngFor="let unit of units" [ngValue]="unit._id">
+                                #{{unit.address.unit_no}}-{{unit.address.unit_no_2}}
+                            </option>
+                        </select>
+                    </div>
+					<!-- <span *ngIf="f.submitted && !property.valid" class="help-block">Property is required</span> -->
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="control-label col-sm-4" for="sender">Resident :</label>
+				<div class="col-sm-8">
+					<input disabled type="text" class="form-control" name="sender" [(ngModel)]="model.sender_name" #sender_name="ngModel" />
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="control-label col-sm-4" for="remark">Remark :</label>
+				<div class="col-sm-8">
+					<textarea placeholder="Input remark here" type="text" class="form-control" name="remark" [(ngModel)]="model.remark" #remark="ngModel"></textarea>
+				</div>
+			</div>
+			<div class="form-group" [ngClass]="{ 'has-error': f.submitted && !payment_type.valid }">
+				<label class="control-label col-sm-4" for="payment_type">Payment type:</label>
+				<div class="col-sm-8">
+					<input required placeholder="Input payment type here" type="text" class="form-control" name="payment_type" [(ngModel)]="model.payment_type" #payment_type="ngModel" />
+					<span *ngIf="f.submitted && !payment_type.valid" class="help-block">Payment type is required</span>
+				</div>
+			</div>
+			<div class="form-group" [ngClass]="{ 'has-error': f.submitted && !payment_method.valid }">
+				<label class="control-label col-sm-4" for="payment_method">Mode of payment :</label>
+				<div class="col-sm-8">
+					<select class="form-control" name="payment_method" [(ngModel)]="model.payment_method" #payment_method="ngModel" required placeholder="Input payment mode here">
+						<option value="cash">Cash At Management Office</option>
+						<option value="transfer">Bank Transfer</option>
+					</select>
+					<span *ngIf="f.submitted && !payment_method.valid" class="help-block">Payment mode is required</span>
+				</div>
+			</div>
+			<div class="form-group">
+                <label class="control-label col-sm-4" for="attachment">Attachment :</label>
+                <div class="col-sm-8">
+                    <input required type="file" multiple class="upload inputfile" name="attachment" id="file" (change)="onChange($event)" />
+                    <label class="btn btn-upload" for="file">Add Media</label>
+                    <p *ngFor="let item of model.payment_proof; let i=index ">
+                        <img src="assets/image/icon_media_image.png" width="14px" height="12px">&nbsp;
+                        <span style="text-decoration: underline;">{{ item.name }}_{{item.size/1024 | number:'1.0-0' }}kb</span> &nbsp;
+                        <span style="cursor:pointer" (click)="remove(i)"><img src="assets/image/icon_close_black.png" width="14px" height="12px"></span>
+                    </p>
+                </div>
+            </div>
+			<div class="form-group pull-right">
+				<button [disabled]="loading" class="btn btn-brown btn-primary">Save</button>
+				<img *ngIf="loading" src="data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA=="
+					/>
+				<a (click)="cancel()" class="btn btn-white">Cancel</a>
+			</div>
+		</form>
+	</div>
+</div>

@@ -1,0 +1,227 @@
+<loading *ngIf="loading"></loading> 
+<div class="container">
+  	<div class="main">
+    	<div *ngIf="booking">
+      		<div class="title">
+        		<b>Ref No.</b>{{booking.reference_no}}
+      		</div>
+      		<p class="id-location">Home > Facilities System > {{booking.reference_no}}</p>
+      		<p><a style="cursor:pointer" (click)="goBack()">Back to last page</a></p>
+      		<div class="content">
+				<div class="row">
+					<div class="col-md-4 col-padding"><b>Reference Number</b></div>
+					<div class="col-md-8 col-padding">: #{{booking.reference_no}}</div>
+				</div>
+				<div class="row">
+					<div class="col-md-4 col-padding"><b>Facility</b></div>
+					<div class="col-md-8 col-padding">: {{booking.facility.name}}</div>
+				</div>
+				<div class="row">
+					<div class="col-md-4 col-padding"><b>Booking date</b></div>
+					<div class="col-md-8 col-padding">: {{booking.booking_date | date:'shortDate'}}</div>
+				</div>
+				<div class="row">
+					<div class="col-md-4 col-padding"><b>Booking time</b></div>
+					<div class="col-md-8 col-padding">: {{booking.start_time}} - {{booking.end_time}}</div>
+				</div>
+				<div class="row">
+					<div class="col-md-4 col-padding"><b>Status</b></div>
+					<div class="col-md-8 col-padding">: {{booking.status}}</div>
+				</div>
+				<div class="row">
+					<div class="col-md-4 col-padding"><b>Booked by</b></div>
+					<div class="col-md-8 col-padding">: {{user?.username}}</div>
+				</div>
+				<div class="row">
+					<div class="col-md-4 col-padding"><b>Payment link</b></div>
+					<div class="col-md-8 col-padding">:<a style="cursor:pointer" (click)="viewPayment(booking.payment)"> See payment</a></div>
+				</div>
+			</div>
+    	</div>
+
+    	<div *ngIf="!booking">
+      		<div class="title">
+        		FACILITIES BOOKING
+      		</div>
+      		<p class="id-location">Home > Facilities System</p>
+      		<div class="row top-block" style="line-height:23px;">
+      			<div class="col-md-4">
+      				<div class="input-group filter-search" style="width:335px">
+		                <input type="text" class="form-control input-search" [(ngModel)]="dataFilter" (keyup.enter)="filterRefno()" placeholder="Search Ref.no" name="filter">
+		                <span (click)="filterRefno()" class="input-group-btn">
+		                <button class="btn btn-secondary btn-search" type="button"><i class="fa fa-search fa-inverse" aria-hidden="true"></i></button>
+		                </span>
+		            </div>
+      			</div>
+	            <div class="col-md-8 no-padding">
+	            	<div class="col-md-8">
+	        			Results generated for
+	        			<br>
+	        			<b>{{ day | date:'longDate' }} <span *ngIf="facility">{{ facility }},</span> <span *ngIf="status">{{ status }} Status,</span> <span *ngIf="period1 && period2">Period {{ period1 }} to {{ period2 }}</span></b>
+	        		</div>
+					<div class="col-md-4 pull-right">
+						<button class="btn btn-default btn-add pull-right" (click)="add()">
+						<img src="../../assets/image/icon_addbooking.png" width="15px" height="15px" />&nbsp;Add Booking</button>
+					</div>
+	            </div>
+      		</div>
+      		<div class="row">
+        		<div class="col-lg-4">
+            		<div style="width:335px;">
+              			<datepicker (click)="test()" [style]="{'width':'300px'}" [(ngModel)]="dt" [minDate]="minDate" [showWeeks]="false"></datepicker>
+            		</div>
+	        		<form [formGroup]="myForm" name="form" (ngSubmit)="f.form.valid && filter(myForm.value)" #f="ngForm" novalidate>
+			        	<div class="row">
+			        		<div class="col-md-3"><p class="pull-down">Facility :</p></div>
+			       			<div class="col-md-9">
+			       				<p>
+			       					<select name="name" class="form-control" formControlName="name" style="width: 237px">
+				                    	<option [style]="{'text-transform': 'capitalize'}" [selected]="facility.name == 'BBQ'" *ngFor="let facility of facilities" (change)="onChange(facility)" [ngValue]="facility.name">{{facility.name}}</option>
+				                    </select>
+			        			</p>
+			        		</div>
+			        	</div>
+			        	<div class="row">
+			        		<div class="col-md-3"><p class="pull-down">Status :</p></div>
+			        		<div class="col-md-9">
+			       				<p>
+			       					<select name="status" class="form-control" formControlName="status" style="width: 237px">
+					                   	<option value="all">All</option>
+					                   	<option value="paid">Paid</option>
+					                   	<option value="unpaid">Unpaid</option>
+				                    </select>	
+			       				</p>
+			       			</div>
+			       		</div>
+			       		<div class="row">
+			       			<div class="col-md-3"><p class="pull-down">Period :</p></div>
+			       			<div class="col-md-9">
+			       				<p>
+			       					<select name="start" class="form-control" formControlName="start" style="width: 116px; float: left; margin-right: 5px">
+				                    	<option *ngFor="let start of period" [ngValue]="start"><span *ngIf="start < 10">0</span>{{start}}{{min}}</option>
+				                    </select>
+				                    <select name="end" class="form-control" formControlName="end" style="width: 116px">
+				                    	<option *ngFor="let end of period" [ngValue]="end"><span *ngIf="end < 10">0</span>{{end}}{{min}}</option>
+				                    </select>
+		        				</p>
+		        			</div>
+		        		</div>
+		                <div class="form-group">
+		                    <button style="width: 327px" class="btn btn-filter">Filter</button>
+		                </div>
+	        		</form>
+	        	</div>
+	        	<div class="col-lg-8">
+	        		<div *ngIf="!selectedDay && !filtered && bookings">
+		        		<p-dataTable [value]="bookings" [rows]="10" [paginator]="true">
+						    <p-column field="start_time" [style]="{'width': '70px'}" header="Time" sortable="true" [filter]="true" filterPlaceholder="Search time"></p-column>
+						    <p-column field="reference_no" [style]="{'width': '70px'}" header="Ref." sortable="true" [filter]="true" filterPlaceholder="Search ref."></p-column>
+						    <p-column field="" header="Facility" [style]="{'width': '80px'}" sortable="true" [filter]="true" filterPlaceholder="Search facility">
+						    	<template let-booking="rowData" pTemplate="body">
+						    		{{booking.facility.name}}
+						    	</template>
+						    </p-column>
+						    <p-column field="unit" header="Booked by" [style]="{'width': '95px'}" sortable="true" [filter]="true" filterPlaceholder="Search booked by"></p-column>
+						    <p-column field="booking_date" header="On" [style]="{'width': '80px'}" sortable="true" [filter]="true" filterPlaceholder="Search date">
+						    	<template let-booking="rowData" pTemplate="body">
+						    		{{booking.booking_date | date:'shortDate'}}
+						    	</template>
+						    </p-column>
+						    <p-column field="status" header="Status" [style]="{'width': '80px'}" sortable="true" [filter]="true" filterPlaceholder="Search status">
+						    	<template let-booking="rowData" pTemplate="body">
+						    		<span *ngIf="booking.status == 'paid'" class="label label-success">{{booking.status | capitalize}}</span>
+						    		<span *ngIf="booking.status == 'unpaid'" class="label label-danger">{{booking.status | capitalize}}</span>
+						    	</template>
+						    </p-column>
+						    <p-column field="remark" header="Remark" [style]="{'width': '90px'}" sortable="true" [filter]="true" filterPlaceholder="Search remark">
+						        <template let-booking="rowData" pTemplate="body">
+						    		<span *ngIf="booking.remark">{{booking.remark}}</span>
+						    		<span *ngIf="!booking.remark">-</span>
+						    	</template>
+						    </p-column>
+						    <!-- </p-column> -->
+						    <p-column header="Action" styleClass="col-button">
+						    	<template let-booking="rowData" pTemplate="body">
+						        	<a type="button" style="cursor:pointer; text-decoration: underline; margin-right: 10px;" (click)="view(booking)">View</a>
+						        	<button type="button" class="btn btn-trash" (click)="deleteConfirmation(booking)"><i class="fa fa-trash-o" aria-hidden="true"></i></button>
+						    	</template>
+						    </p-column>
+						</p-dataTable>
+					</div>
+					<div *ngIf="selectedDay && !filtered">
+		        		<p-dataTable [value]="selectedDay" [rows]="10" [paginator]="true">
+						    <p-column field="start_time" [style]="{'width': '70px'}" header="Time" sortable="true" [filter]="true" filterPlaceholder="Search time"></p-column>
+						    <p-column field="reference_no" [style]="{'width': '70px'}" header="Ref." sortable="true" [filter]="true" filterPlaceholder="Search ref."></p-column>
+						    <p-column field="" header="Facility" [style]="{'width': '80px'}" sortable="true" [filter]="true" filterPlaceholder="Search facility">
+						    	<template let-booking="rowData" pTemplate="body">
+						    		{{booking.facility.name}}
+						    	</template>
+						    </p-column>
+						    <p-column field="unit" header="Booked by" [style]="{'width': '95px'}" sortable="true" [filter]="true" filterPlaceholder="Search booked by"></p-column>
+						    <p-column field="booking_date" header="On" [style]="{'width': '80px'}" sortable="true" [filter]="true" filterPlaceholder="Search date">
+						    	<template let-booking="rowData" pTemplate="body">
+						    		{{booking.booking_date | date:'shortDate'}}
+						    	</template>
+						    </p-column>
+						    <p-column field="status" header="Status" [style]="{'width': '80px'}" sortable="true" [filter]="true" filterPlaceholder="Search status">
+						    	<template let-booking="rowData" pTemplate="body">
+						    		<span *ngIf="booking.status == 'paid'" class="label label-success">{{booking.status | capitalize}}</span>
+						    		<span *ngIf="booking.status == 'unpaid'" class="label label-danger">{{booking.status | capitalize}}</span>
+						    	</template>
+						    </p-column>
+						    <p-column field="remark" header="Remark" [style]="{'width': '90px'}" sortable="true" [filter]="true" filterPlaceholder="Search remark">
+						        <template let-booking="rowData" pTemplate="body">
+						    		<span *ngIf="booking.remark">{{booking.remark}}</span>
+						    		<span *ngIf="!booking.remark">-</span>
+						    	</template>
+						    </p-column>
+						    <!-- </p-column> -->
+						    <p-column header="Action" styleClass="col-button">
+						    	<template let-booking="rowData" pTemplate="body">
+						        	<a type="button" style="cursor:pointer; text-decoration: underline; margin-right: 10px;" (click)="view(booking)">View</a>
+						        	<button type="button" class="btn btn-trash" (click)="deleteConfirmation(booking)"><i class="fa fa-trash-o" aria-hidden="true"></i></button>
+						    	</template>
+						    </p-column>
+						</p-dataTable>
+					</div>
+					<div *ngIf="selectedDay && filtered">
+		        		<p-dataTable [value]="filtered" [rows]="10" [paginator]="true">
+						    <p-column field="start_time" [style]="{'width': '70px'}" header="Time" sortable="true" [filter]="true" filterPlaceholder="Search time"></p-column>
+						    <p-column field="reference_no" [style]="{'width': '70px'}" header="Ref." sortable="true" [filter]="true" filterPlaceholder="Search ref."></p-column>
+						    <p-column field="" header="Facility" [style]="{'width': '80px'}" sortable="true" [filter]="true" filterPlaceholder="Search facility">
+						    	<template let-booking="rowData" pTemplate="body">
+						    		{{booking.facility.name}}
+						    	</template>
+						    </p-column>
+						    <p-column field="unit" header="Booked by" [style]="{'width': '95px'}" sortable="true" [filter]="true" filterPlaceholder="Search booked by"></p-column>
+						    <p-column field="booking_date" header="On" [style]="{'width': '80px'}" sortable="true" [filter]="true" filterPlaceholder="Search date">
+						    	<template let-booking="rowData" pTemplate="body">
+						    		{{booking.booking_date | date:'shortDate'}}
+						    	</template>
+						    </p-column>
+						    <p-column field="unit" header="Status" [style]="{'width': '80px'}" sortable="true" [filter]="true" filterPlaceholder="Search status">
+						    	<template let-booking="rowData" pTemplate="body">
+						    		<span *ngIf="booking.status == 'paid'" class="label label-success">{{booking.status | capitalize}}</span>
+						    		<span *ngIf="booking.status == 'unpaid'" class="label label-danger">{{booking.status | capitalize}}</span>
+						    	</template>
+						    </p-column>
+						    <p-column field="remark" header="Remark" [style]="{'width': '90px'}" sortable="true" [filter]="true" filterPlaceholder="Search remark">
+						       <template let-booking="rowData" pTemplate="body">
+						    		<span *ngIf="booking.remark">{{booking.remark}}</span>
+						    		<span *ngIf="!booking.remark">-</span>
+						    	</template>
+						    </p-column>
+						    <!-- </p-column> -->
+						    <p-column header="Action" styleClass="col-button">
+						    	<template let-booking="rowData" pTemplate="body">
+						        	<a type="button" style="cursor:pointer; text-decoration: underline; margin-right: 10px;" (click)="view(booking)">View</a>
+						        	<button type="button" class="btn btn-trash" (click)="deleteConfirmation(booking)"><i class="fa fa-trash-o" aria-hidden="true"></i></button>
+						    	</template>
+						    </p-column>
+						</p-dataTable>
+					</div>
+	        	</div>
+	        </div>
+        </div>
+  	</div>
+</div>
