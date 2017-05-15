@@ -819,6 +819,7 @@ p.pull-down {
 }
 .bg-dark .mydp {
   border: 0;
+  width: 30px;
 }
 
 /*costumize popover*/
@@ -876,6 +877,12 @@ p.pull-down {
 }
 .mydp .icon {
   color: #fff;
+}
+.mydp .selectiongroup{
+  background-color: transparent !important;
+}
+.mydp .btnpicker{
+  color: #fff !important;
 }
 button.btn.btn-default.btn-sm.pull-left {
     border: 0;
