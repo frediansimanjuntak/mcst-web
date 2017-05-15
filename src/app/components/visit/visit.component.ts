@@ -65,7 +65,6 @@ export class VisitComponent implements OnInit {
 
     ngOnInit(): void {
         this.unit = {};
-        this.loading = false;
     	this.addSubmitted = false;
     	this.checkInSsubmitted = false;
         this.checkOutSsubmitted = false;
