@@ -5,7 +5,7 @@
             <div class="title">
                 Edit Usergroup
             </div>
-            <p class="id-location">Home > Usergroup > Edit</p>
+            <p class="id-location">Home > Usergroup > Edit Usergroup</p>
             <form class="form-horizontal col-md-6" name="form" #f="ngForm" novalidate>
                 <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !description.valid }">
                     <label class="control-label col-sm-4" for="description">Description :</label>
@@ -56,7 +56,7 @@
             <div class="title">
                 Add User Group
             </div>
-            <p class="id-location">Home > User Group > Add </p>
+            <p class="id-location">Home > User Group > Add Usergroup</p>
             <form class="form-horizontal col-md-6" name="form" (ngSubmit)="f.form.valid && createUserGroup()" #f="ngForm" novalidate>
                 <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !description.valid }">
                     <label class="control-label col-md-4" for="description">Description :</label>
