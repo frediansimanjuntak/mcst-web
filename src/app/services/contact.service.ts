@@ -30,8 +30,8 @@ export class ContactService {
             .catch(this.handleError);
     }
 
-    update(body:any): Promise<any> {
-        return this.http.post(url + 'contact_directory/' + body._id,body, this.jwt())
+    update(body:any, id: string): Promise<any> {
+        return this.http.post(url + 'contact_directory/update/' + body._id,body, this.jwt())
             .toPromise()
             .then(res => res.json().data)
             .catch(this.handleError);

@@ -69,8 +69,8 @@
 									</strong>
 								</div>
 								<div class="col-md-7">
-									 <span *ngIf="visitActive.property_detail.landlord">{{ visitActive.property_detail.landlord.data.resident.username}}</span> 
-									<span *ngIf="!visitActive.property_detail.landlord">-</span>
+									 <span *ngIf="visitActive.property_detail.landlord.data">{{ visitActive.property_detail.landlord.data.resident.username}}</span> 
+									<span *ngIf="!visitActive.property_detail.landlord.data">-</span>
 								</div>
 							</div>
 							<div class="row add-bottom-10px" *ngIf="visitActive.property">
@@ -104,8 +104,8 @@
 									</strong>
 								</div>
 								<div class="col-md-7">
-									 <span *ngIf="visitActive.property_detail.landlord">{{ visitActive.property_detail.landlord.data.resident.phone}}</span> 
-									<span *ngIf="!visitActive.property_detail.landlord">-</span>
+									 <span *ngIf="visitActive.property_detail.landlord.data">{{ visitActive.property_detail.landlord.data.resident.phone}}</span> 
+									<span *ngIf="!visitActive.property_detail.landlord.data">-</span>
 								</div>
 							</div>
 							<div class="row add-bottom-10px" *ngIf="visitActive.property">
@@ -115,8 +115,8 @@
 									</strong>
 								</div>
 								<div class="col-md-7">
-									<span *ngIf="visitActive.property_detail.landlord">{{ visitActive.property_detail.landlord.data.resident.phone}}</span>
-									<span *ngIf="!visitActive.property_detail.landlord">-</span>
+									<span *ngIf="visitActive.property_detail.landlord.data">{{ visitActive.property_detail.landlord.data.resident.phone}}</span>
+									<span *ngIf="!visitActive.property_detail.landlord.data">-</span>
 								</div>
 							</div>
 							<br>
