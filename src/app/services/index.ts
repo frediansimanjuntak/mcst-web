@@ -5,6 +5,7 @@ export * from './attachment.service';
 export * from './authentication.service';
 export * from './booking.service';
 export * from './company.service';
+export * from './contact.service';
 export * from './contract.service';
 export * from './contract-note.service';
 export * from './contract-notice.service';
