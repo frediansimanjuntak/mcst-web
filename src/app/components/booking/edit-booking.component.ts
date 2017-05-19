@@ -49,6 +49,13 @@ import  * as _  from "underscore";
 	table.tableSection td {
 		height: 50px
 	}
+	#booking-system p.row-li-2 {
+	    float: none !important;
+	}
+	#booking-system .abc {
+	    width: 100% !important;
+	}
+
   `]
 })
 

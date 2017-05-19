@@ -2,44 +2,6 @@
 <section id="booking-system">
     <div class="container">
         <div class="main">
-            <div *ngIf="booking">
-                <div class="title">
-
-                </div>
-                <p class="id-location">Home > booking > </p>
-                <div class="row">
-                    <div class="col-lg-6">
-                        <p-galleria [images]="images" panelWidth="500" panelHeight="313"></p-galleria>
-                    </div>
-                    <div class="col-lg-6">
-                        <div class="row">
-                            <div class="col-md-4">Reported by </div>
-                            <div class="col-md-8"><p>: </p></div>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-4">Type of Report </div>
-                            <div class="col-md-8"><p>: </p></div>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-4">Report time </div>
-                            <div class="col-md-8"><p>: </p></div>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-4">Status </div>
-                            <div class="col-md-8"><p>: </p></div>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-4">Order </div>
-                            <div class="col-md-8">:<!-- <p>{{ incident.orde }}</p> --></div>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-4">Message </div>
-                            <div class="col-md-8"><p>: </p></div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
             <div *ngIf="!booking">
                 <div class="title">
                     ADD BOOKING
@@ -59,8 +21,8 @@
                         </ul>
                     </div>
                     <div class="row">
-                        <div class="col-lg-4">
-                            <div style="width:335px; margin-top:15px;"  *ngIf="customClass.length > 0">
+                        <div class="col-md-4">
+                            <div *ngIf="customClass.length > 0">
                                 <datepicker (click)="selectedDate(dt)" (activeDateChange)="selectedDate(dt)" [style]="{'width':'300px'}" [(ngModel)]="dt" [minDate]="minDate" [customClass]="customClass" [showWeeks]="false"></datepicker>
                             </div>
                             <div *ngIf="selectedFacility.length < 1">
@@ -115,9 +77,8 @@
                                     </div>
                                 </form>
                             </div>
-                                
                         </div>
-                        <div class="col-lg-8">
+                        <div class="col-md-8">
                             <div class="table-tags">
                                 <p>Showing slots for <b>{{ date | date:'longDate' }}</b></p>
                                 <p *ngIf="filtered != null"><span *ngIf="facility_name">Facility <b>{{ facility_name }}</b></span></p>
@@ -134,8 +95,8 @@
                                                 <i *ngIf="booking_status[i] == 'Not Available'" class="fa fa-circle circle-red" aria-hidden="true"></i>
                                                 {{booking_status[i]}}
                                             </td>
-                                            <p-checkbox *ngIf="booking_status[i] == 'Not Available'" disabled="true" name="archive" (click)="getSelected(timeStart[i],timeEnd[i],min,facility_name,facility_type)" [(ngModel)]="selectedValues"></p-checkbox>
-                                            <p-checkbox *ngIf="booking_status[i] == 'Available'" name="archive" (click)="getSelected(timeStart[i],timeEnd[i],min,facility_name,facility_type)" [(ngModel)]="selectedValues"></p-checkbox>
+                                            <p-checkbox *ngIf="booking_status[i] == 'Not Available'" value="{{i}}" disabled="true" name="archive" (click)="getSelected(timeStart[i],timeEnd[i],min,facility_name,facility_type)" [(ngModel)]="selectedValues[i]"></p-checkbox>
+                                            <p-checkbox *ngIf="booking_status[i] == 'Available'" name="archive" (click)="getSelected(timeStart[i],timeEnd[i],min,facility_name,facility_type)" value="{{i}}" [(ngModel)]="selectedValues"></p-checkbox>
                                         </tr>
                                     </tbody>
                                 </table>
