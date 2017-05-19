@@ -5,7 +5,7 @@
             <div class="title">
                 Edit Unit
             </div>
-            <p class="id-location">Home > Manage Unit > Edit</p>
+            <p class="id-location">Home > Manage Unit > Edit Unit</p>
             <form class="form-horizontal col-md-6" (ngSubmit)="f.form.valid && updateUnit()" name="form" #f="ngForm" novalidate>
                 <div class="form-group" [ngClass]="{ 'has-error': !unit_no.valid }">
                     <label class="control-label col-sm-4" for="unit_no">Level :</label>
@@ -80,7 +80,7 @@
             <div class="title">
                 Add Unit
             </div>
-            <p class="id-location">Home > Unit > Create</p>
+            <p class="id-location">Home > Unit > Add Unit</p>
             <form class="form-horizontal col-md-8" [formGroup]="myForm" novalidate (ngSubmit)="createUnit(myForm.value, myForm.valid)">
                 <div class="form-group" [ngClass]="{ 'has-error': submitted && !myForm.controls.address.controls.unit_no.valid }" formGroupName="address">
                     <label class="control-label col-sm-4" for="unit_no">Level :</label>

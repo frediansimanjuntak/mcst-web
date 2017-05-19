@@ -5,7 +5,7 @@
 			<div class="title">
 				Request #{{petition.reference_no}}
 			</div>
-			<p class="id-location">Home > Manage Request > #{{petition.reference_no}}</p>
+			<p class="id-location">Home > Manage Request > Request #{{petition.reference_no}}</p>
 			<a style="cursor:pointer" (click)="goBack()">Back to last page</a>
 			<div class="content">
 				<div class="row">
@@ -38,6 +38,7 @@
 					<div *ngIf="petition.petition_type == 'renovation'" class="col-md-8 col-padding">: Renovation</div>
 					<div *ngIf="petition.petition_type == 'add_tenant/family'" class="col-md-8 col-padding">: Add Tenant/family</div>
 					<div *ngIf="petition.petition_type == 'new tenant'" class="col-md-8 col-padding">: Add Tenant/family</div> 
+					<div *ngIf="petition.petition_type == 'additional alteration works'" class="col-md-8 col-padding">: Additional alteration works</div> 
 				</div>
 				<div class="row">
 					<div class="col-md-4 col-padding"><b>Remark </b></div>

@@ -3,7 +3,7 @@
     <div class="main">
         <div *ngIf="paymentreminder">
             <div class="title">EDIT PAYMENT REMINDER</div>
-            <p class="id-location">Home > Payment reminder > Edit > {{paymentreminder.title}} </p>
+            <p class="id-location">Home > Payment reminder > Edit Payment Reminder</p>
             <form [formGroup]="myForm" class="form-horizontal" name="form" (ngSubmit)="myForm.valid && updatePaymentReminder(myForm.value)" #f="ngForm" novalidate>
                 <div class="col-md-6">
                     <div class="form-group">
@@ -118,7 +118,7 @@
 
         <div *ngIf="!paymentreminder">
             <div class="title">ADD PAYMENT REMINDER</div>
-            <p class="id-location">Home > Payment reminder > Add </p>
+            <p class="id-location">Home > Payment reminder > Add Payment Reminder</p>
             <form [formGroup]="myForm" class="form-horizontal" name="form" (ngSubmit)="myForm.valid && createPaymentReminder(myForm.value)" #f="ngForm" novalidate>
                 <div class="col-md-6">
                     <div class="form-group">
