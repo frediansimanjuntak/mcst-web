@@ -3,9 +3,9 @@
     <div class="main">
         <div *ngIf="poll">
             <div class="title">
-                Edit A Poll
+                Edit Poll
             </div>
-            <p class="id-location">Home > Manage Poll > Edit</p>
+            <p class="id-location">Home > Manage Poll > Edit Poll</p>
             <form class="form-horizontal col-md-6" (ngSubmit)="f.form.valid && updatePoll()" name="form" #f="ngForm" novalidate>
                 <div class="form-group" [ngClass]="{ 'has-error': !title.valid }">
                     <label class="control-label col-sm-4" for="title">Title :</label>
