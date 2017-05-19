@@ -130,7 +130,8 @@ import {
   VisitService,
   LostFoundService,
   TestService,
-  AttachmentService
+  AttachmentService,
+  ContactService
 } from './services/index';
 
 import {
@@ -314,7 +315,8 @@ type StoreType = {
     EditContractComponent,
     AppComponent,
     DatePipe,
-    AttachmentService
+    AttachmentService,
+    ContactService
   ]
 })
 export class AppModule {

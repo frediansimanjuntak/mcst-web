@@ -29,7 +29,7 @@
 				</div>
 				<div class="row" *ngIf="petition.contract">
 					<div class="col-md-4 col-padding"><b>Contract </b></div>
-					 <div class="col-md-8 col-padding">: <a (click)="viewContract(petition.contract._id)"
+					<div class="col-md-8 col-padding">: <a (click)="viewContract(petition.contract._id)" style="text-decoration: underline;cursor:pointer">{{petition.contract.title}}</a></div> 
 				</div>
 				<div class="row">
 					<div class="col-md-4 col-padding"><b>Type </b></div>
@@ -122,7 +122,7 @@
 								<span *ngIf="petitions.petition_type == 'moving_in'">Moving-in</span>
 								<span *ngIf="petitions.petition_type == 'renovation'">Renovation</span>
 								<span *ngIf="petitions.petition_type == 'add_tenant/family'"> Add Tenant/family</span>
-								<span *ngIf="petitions.petition_type == 'new tenant'">New Tenant</span> 
+								 <span *ngIf="petitions.petition_type == 'new tenant'">New Tenant</span> 
 							</template>
 						</p-column>
 						<p-column header="Requested by">
