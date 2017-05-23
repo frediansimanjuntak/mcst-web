@@ -178,9 +178,12 @@ export class PetitionComponent implements OnInit {
                                 }else{
                                     this.petitionService.getById(this.id)
                                         .subscribe(petition => {
-                                            this.petition = petition;
-                                            let property = this.dataUnit.find(data => data._id ==  this.petition.property);
-                                            this.petition.unit_no = '#' + property.address.unit_no + '-' + property.address.unit_no_2;
+                                            console.log(petition)
+                                            this.petition = petition.petitions;
+                                            if(this.petition.property){
+                                                let property = this.dataUnit.find(data => data._id ==  this.petition.property);
+                                                this.petition.unit_no = '#' + property.address.unit_no + '-' + property.address.unit_no_2;
+                                            }
                                             setTimeout(() => this.loading = false, 1000);
                                             this.pdfSrc =  'https://vadimdez.github.io/ng2-pdf-viewer/pdf-test.pdf';
                                             this.page = 1;
