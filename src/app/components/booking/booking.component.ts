@@ -101,11 +101,6 @@ export class BookingComponent implements OnInit {
 		   this.bookingService.getById(this.id)
 			.subscribe(booking => {
 				this.booking = booking;
-				this.paymentService.getById(this.booking.payment)
-				.subscribe(payment => {
-					this.user = payment.sender;
-					setTimeout(() => this.loading = false, 1000);
-				})
 			});
 		}
 	}
