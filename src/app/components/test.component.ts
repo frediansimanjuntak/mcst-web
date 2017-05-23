@@ -87,265 +87,266 @@ export class TestComponent implements OnInit{
 
 
 
-    selected(imageResult: ImageResult) {
-        this.src = imageResult.resized
-            && imageResult.resized.dataURL
-            || imageResult.dataURL;
-    }
+    // selected(imageResult: ImageResult) {
+    //     this.src = imageResult.resized
+    //         && imageResult.resized.dataURL
+    //         || imageResult.dataURL;
+    // }
 
 
 
 	ngOnInit() {
-        this.loadAllUsers()
-        this.events = [
-            {
-                "title": "All Day Event",
-                "start": "2016-01-01"
-            },
-            {
-                "title": "Long Event",
-                "start": "2016-01-07",
-                "end": "2016-01-10"
-            },
-            {
-                "title": "Repeating Event",
-                "start": "2016-01-09T16:00:00"
-            },
-            {
-                "title": "Repeating Event",
-                "start": "2016-01-16T16:00:00"
-            },
-            {
-                "title": "Conference",
-                "start": "2016-01-11",
-                "end": "2016-01-13"
-            }
-        ];
+        // this.loadAllUsers()
+        // this.events = [
+        //     {
+        //         "title": "All Day Event",
+        //         "start": "2016-01-01"
+        //     },
+        //     {
+        //         "title": "Long Event",
+        //         "start": "2016-01-07",
+        //         "end": "2016-01-10"
+        //     },
+        //     {
+        //         "title": "Repeating Event",
+        //         "start": "2016-01-09T16:00:00"
+        //     },
+        //     {
+        //         "title": "Repeating Event",
+        //         "start": "2016-01-16T16:00:00"
+        //     },
+        //     {
+        //         "title": "Conference",
+        //         "start": "2016-01-11",
+        //         "end": "2016-01-13"
+        //     }
+        // ];
 
 
 
 
 
-         this.myOptions = [
-            {value: 'a', label: 'Alpha'},
-            {value: 'b', label: 'Beta'},
-            {value: 'c', label: 'Gamma'},
-        ];
-        this.mySelectValue = ['b', 'c'];
+        //  this.myOptions = [
+        //     {value: 'a', label: 'Alpha'},
+        //     {value: 'b', label: 'Beta'},
+        //     {value: 'c', label: 'Gamma'},
+        // ];
+        // this.mySelectValue = ['b', 'c'];
     }
+}
 
-    @ViewChild(SignaturePad) signaturePad: SignaturePad;
+//     @ViewChild(SignaturePad) signaturePad: SignaturePad;
 
-    private signaturePadOptions: Object = { // passed through to szimek/signature_pad constructor
-        'minWidth': 5,
-        'canvasWidth': 500,
-        'canvasHeight': 300,
-    };
-
-
-    ngAfterViewInit() {
-        // this.signaturePad is now available
-        this.signaturePad.set('minWidth', 5); // set szimek/signature_pad options at runtime
-        this.signaturePad.clear(); // invoke functions from szimek/signature_pad API
-    }
-
-    drawComplete() {
-        // will be notified of szimek/signature_pad's onEnd event
-        console.log(this.signaturePad.toDataURL('image/png'));
-        var data = this.signaturePad.toDataURL('image/png');
-        window.open(data);
-    }
-
-    drawClear(){
-        this.signaturePad.clear();
-    }
-
-    drawStart() {
-        // will be notified of szimek/signature_pad's onBegin event
-        console.log('begin drawing');
-    }
+//     private signaturePadOptions: Object = { // passed through to szimek/signature_pad constructor
+//         'minWidth': 5,
+//         'canvasWidth': 500,
+//         'canvasHeight': 300,
+//     };
 
 
+//     ngAfterViewInit() {
+//         // this.signaturePad is now available
+//         this.signaturePad.set('minWidth', 5); // set szimek/signature_pad options at runtime
+//         this.signaturePad.clear(); // invoke functions from szimek/signature_pad API
+//     }
 
-    private loadAllUsers() {
-        this.testService.getAll().subscribe(models => { this.models = models; console.log(models) });
-    }
+//     drawComplete() {
+//         // will be notified of szimek/signature_pad's onEnd event
+//         console.log(this.signaturePad.toDataURL('image/png'));
+//         var data = this.signaturePad.toDataURL('image/png');
+//         window.open(data);
+//     }
 
-    handleDayClick(event) {
-        this.event = new MyEvent();
-        this.event.start = event.date.format();
-        this.dialogVisible = true;
+//     drawClear(){
+//         this.signaturePad.clear();
+//     }
 
-        //trigger detection manually as somehow only moving the mouse quickly after click triggers the automatic detection
-        this.cd.detectChanges();
-    }
-
-    handleEventClick(e) {
-        this.event = new MyEvent();
-        this.event.title = e.calEvent.title;
-
-        let start = e.calEvent.start;
-        let end = e.calEvent.end;
-        if(e.view.name === 'month') {
-            start.stripTime();
-        }
-
-        if(end) {
-            end.stripTime();
-            this.event.end = end.format();
-        }
-
-        this.event.id = e.calEvent.id;
-        this.event.start = start.format();
-        this.event.allDay = e.calEvent.allDay;
-        this.dialogVisible = true;
-    }
-
-    saveEvent() {
-        //update
-        if(this.event.id) {
-            let index: number = this.findEventIndexById(this.event.id);
-            if(index >= 0) {
-                this.events[index] = this.event;
-            }
-        }
-        //new
-        else {
-            this.event.id = this.idGen;
-            this.events.push(this.event);
-            this.event = null;
-        }
-
-        this.dialogVisible = false;
-    }
-
-    deleteEvent() {
-        let index: number = this.findEventIndexById(this.event.id);
-        if(index >= 0) {
-            this.events.splice(index, 1);
-        }
-        this.dialogVisible = false;
-    }
-
-    findEventIndexById(id: number) {
-        let index = -1;
-        for(let i = 0; i < this.events.length; i++) {
-            if(id == this.events[i].id) {
-                index = i;
-                break;
-            }
-        }
-
-        return index;
-    }
-
-	Save() {
-		// let a = this.filesToUpload.length;
-		// for (let i = 0; i < a; i++) {
-  //           this.model.attachment = this.filesToUpload[i]
-		// }
-        this.model.attachment = this.filesToUpload;
-        console.log(this.makeFileRequest);
-        console.log(this.filesToUpload);
-        console.log(this.model);
-
-    }
-
-    onChange(event: any, input: any, a:any) {
-        this.model.attachment = this.src;
-        console.log(this.model);
-    }
-
-    upload() {
-        console.log(this.filesToUpload);
-        this.makeFileRequest(url + 'api/attachments', this.model.attachment).then((result) => {
-            console.log(result);
-        }, (error) => {
-            console.error(error);
-        });
-    }
-
-    fileChangeEvent(fileInput: any){
-        this.filesToUpload = <Array<File>> fileInput.target.files;
-        this.model.attachment = this.filesToUpload;
-    }
+//     drawStart() {
+//         // will be notified of szimek/signature_pad's onBegin event
+//         console.log('begin drawing');
+//     }
 
 
-fileChange(event) {
-    let fileList: FileList = event.target.files;
-    let fileListLength = fileList.length;
-    console.log(fileList);
-    if(fileListLength > 0) {
-        let formData:FormData = new FormData();
-        for (var i = 0; i < fileListLength; i++) {
-            formData.append("attachment", fileList[i]);
-        }
+
+//     private loadAllUsers() {
+//         this.testService.getAll().subscribe(models => { this.models = models; console.log(models) });
+//     }
+
+//     handleDayClick(event) {
+//         this.event = new MyEvent();
+//         this.event.start = event.date.format();
+//         this.dialogVisible = true;
+
+//         //trigger detection manually as somehow only moving the mouse quickly after click triggers the automatic detection
+//         this.cd.detectChanges();
+//     }
+
+//     handleEventClick(e) {
+//         this.event = new MyEvent();
+//         this.event.title = e.calEvent.title;
+
+//         let start = e.calEvent.start;
+//         let end = e.calEvent.end;
+//         if(e.view.name === 'month') {
+//             start.stripTime();
+//         }
+
+//         if(end) {
+//             end.stripTime();
+//             this.event.end = end.format();
+//         }
+
+//         this.event.id = e.calEvent.id;
+//         this.event.start = start.format();
+//         this.event.allDay = e.calEvent.allDay;
+//         this.dialogVisible = true;
+//     }
+
+//     saveEvent() {
+//         //update
+//         if(this.event.id) {
+//             let index: number = this.findEventIndexById(this.event.id);
+//             if(index >= 0) {
+//                 this.events[index] = this.event;
+//             }
+//         }
+//         //new
+//         else {
+//             this.event.id = this.idGen;
+//             this.events.push(this.event);
+//             this.event = null;
+//         }
+
+//         this.dialogVisible = false;
+//     }
+
+//     deleteEvent() {
+//         let index: number = this.findEventIndexById(this.event.id);
+//         if(index >= 0) {
+//             this.events.splice(index, 1);
+//         }
+//         this.dialogVisible = false;
+//     }
+
+//     findEventIndexById(id: number) {
+//         let index = -1;
+//         for(let i = 0; i < this.events.length; i++) {
+//             if(id == this.events[i].id) {
+//                 index = i;
+//                 break;
+//             }
+//         }
+
+//         return index;
+//     }
+
+// 	Save() {
+// 		// let a = this.filesToUpload.length;
+// 		// for (let i = 0; i < a; i++) {
+//   //           this.model.attachment = this.filesToUpload[i]
+// 		// }
+//         this.model.attachment = this.filesToUpload;
+//         console.log(this.makeFileRequest);
+//         console.log(this.filesToUpload);
+//         console.log(this.model);
+
+//     }
+
+//     onChange(event: any, input: any, a:any) {
+//         this.model.attachment = this.src;
+//         console.log(this.model);
+//     }
+
+//     upload() {
+//         console.log(this.filesToUpload);
+//         this.makeFileRequest(url + 'api/attachments', this.model.attachment).then((result) => {
+//             console.log(result);
+//         }, (error) => {
+//             console.error(error);
+//         });
+//     }
+
+//     fileChangeEvent(fileInput: any){
+//         this.filesToUpload = <Array<File>> fileInput.target.files;
+//         this.model.attachment = this.filesToUpload;
+//     }
+
+
+// fileChange(event) {
+//     let fileList: FileList = event.target.files;
+//     let fileListLength = fileList.length;
+//     console.log(fileList);
+//     if(fileListLength > 0) {
+//         let formData:FormData = new FormData();
+//         for (var i = 0; i < fileListLength; i++) {
+//             formData.append("attachment", fileList[i]);
+//         }
        
-        let headers = new Headers();
-        // headers.append('Content-Type', 'multipart/form-data');
-        headers.append('Accept', 'application/json');
-        console.log(headers);
-        console.log(formData);
-        this.http.post(`${url + 'api/attachments'}`, formData, this.pilihan)
-            .map(res => res.json())
-            .catch(error => Observable.throw(error))
-            .subscribe(
-                data => console.log('success'),
-                error => console.log(error)
-            )
-    }
-}
+//         let headers = new Headers();
+//         // headers.append('Content-Type', 'multipart/form-data');
+//         headers.append('Accept', 'application/json');
+//         console.log(headers);
+//         console.log(formData);
+//         this.http.post(`${url + 'api/attachments'}`, formData, this.pilihan)
+//             .map(res => res.json())
+//             .catch(error => Observable.throw(error))
+//             .subscribe(
+//                 data => console.log('success'),
+//                 error => console.log(error)
+//             )
+//     }
+// }
 
-    makeFileRequest(url: string, files: Array<File>) {
-        return new Promise((resolve, reject) => {
+//     makeFileRequest(url: string, files: Array<File>) {
+//         return new Promise((resolve, reject) => {
             
-            var formData: any = new FormData();
-            var xhr = new XMLHttpRequest();
-            for(var i = 0; i < files.length; i++) {
-                formData.append("attachments[]", files[i], files[i].name);
-            }
-            xhr.onreadystatechange = function () {
-                if (xhr.readyState == 4) {
-                    if (xhr.status == 200) {
-                        resolve(JSON.parse(xhr.response));
-                    } else {
-                        reject(xhr.response);
-                    }
-                }
-            }
-            xhr.open("POST", url, true);
-            console.log(formData);
-            xhr.send(formData);
-        });
-    }
+//             var formData: any = new FormData();
+//             var xhr = new XMLHttpRequest();
+//             for(var i = 0; i < files.length; i++) {
+//                 formData.append("attachments[]", files[i], files[i].name);
+//             }
+//             xhr.onreadystatechange = function () {
+//                 if (xhr.readyState == 4) {
+//                     if (xhr.status == 200) {
+//                         resolve(JSON.parse(xhr.response));
+//                     } else {
+//                         reject(xhr.response);
+//                     }
+//                 }
+//             }
+//             xhr.open("POST", url, true);
+//             console.log(formData);
+//             xhr.send(formData);
+//         });
+//     }
 
-    remove(i: any){
-        this.model.attachment.splice(i, 1)
-    }
+//     remove(i: any){
+//         this.model.attachment.splice(i, 1)
+//     }
 
-    clicknotiv(){
-        this._notificationsService.success(
-            'Some Title',
-            'Some Content',
-            {
-                timeOut: 5000,
-                showProgressBar: true,
-                pauseOnHover: false,
-                clickToClose: false,
-                maxLength: 10
-            }
-        )
-    }
+//     clicknotiv(){
+//         this._notificationsService.success(
+//             'Some Title',
+//             'Some Content',
+//             {
+//                 timeOut: 5000,
+//                 showProgressBar: true,
+//                 pauseOnHover: false,
+//                 clickToClose: false,
+//                 maxLength: 10
+//             }
+//         )
+//     }
 
-    created(event: any){
-        console.log(event);
-    }
-}
+//     created(event: any){
+//         console.log(event);
+//     }
+// }
 
-export class MyEvent {
-    id: number;
-    title: string;
-    start: string;
-    end: string;
-    allDay: boolean = true;
-}
+// export class MyEvent {
+//     id: number;
+//     title: string;
+//     start: string;
+//     end: string;
+//     allDay: boolean = true;
+// }
