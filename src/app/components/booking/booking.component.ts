@@ -101,11 +101,7 @@ export class BookingComponent implements OnInit {
 		   this.bookingService.getById(this.id)
 			.subscribe(booking => {
 				this.booking = booking;
-				this.paymentService.getById(this.booking.payment)
-				.subscribe(payment => {
-					this.user = payment.sender;
-					setTimeout(() => this.loading = false, 1000);
-				})
+				setTimeout(() => this.loading = false, 1000);
 			});
 		}
 	}
@@ -113,23 +109,23 @@ export class BookingComponent implements OnInit {
 	deleteBooking(booking: Booking) {
 		this.loading = true
 		this.bookingService.delete(booking._id)
-			.then(
-					data => {
-						this._notificationsService.success(
-								'Success',
-								'Delete booking successful',
-						)
-						this.ngOnInit();
-					},
-					error => {
-						console.log(error);
-						this._notificationsService.error(
-								'Error',
-								'The Booking could not be deleted, server Error',
-						)
-						setTimeout(() => this.loading = false, 1000);
-					}
-			);
+		.then(
+			data => {
+				this._notificationsService.success(
+						'Success',
+						'Delete booking successful',
+				)
+				this.ngOnInit();
+			},
+			error => {
+				console.log(error);
+				this._notificationsService.error(
+						'Error',
+						'The Booking could not be deleted, server Error',
+				)
+				setTimeout(() => this.loading = false, 1000);
+			}
+		);
 	}
 
 	deleteConfirmation(booking) {
@@ -238,6 +234,6 @@ export class BookingComponent implements OnInit {
 	}
 
 	viewPayment(payment: any){
-        this.router.navigate([this.name.default_development.name_url + '/payment_system/view', payment]);
+        this.router.navigate([this.name.default_development.name_url + '/payment_system/view', payment._id]);
     }
 }

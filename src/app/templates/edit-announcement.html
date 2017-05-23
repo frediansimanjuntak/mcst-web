@@ -4,9 +4,9 @@
     <!-- Edit Announcment -->
     <div *ngIf="announcement">
       <div class="title">
-        Edit An Announcement
+        Edit Announcement
       </div>
-      <p class="id-location">Home > Manage Announcement > Edit</p>
+      <p class="id-location">Home > Manage Announcement > Edit Announcement</p>
       <form class="form-horizontal col-md-6" (ngSubmit)="f.form.valid && updateAnnouncement()" name="form" #f="ngForm" novalidate>
         <div class="form-group" [ngClass]="{ 'has-error':   !title.valid }">
           <label class="control-label col-sm-4" for="title">Title :</label>
