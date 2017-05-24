@@ -649,11 +649,19 @@ export class ViewUnitComponent implements OnInit {
                         this.ngOnInit();
                     },
                     error => {
+                        var errorBody = JSON.parse(error._body)
+                        var message = 'Data could not be save, server Error.';
+                        if(errorBody.code == 11000){
+                            message = 'Username Already exist';
+                        }else if(errorBody.errors.email){
+                            message = errorBody.errors.email.message;
+                        }else if(errorBody.message){
+                            message = errorBody.message;
+                        }
                         this._notificationsService.error(
                                     'Error',
-                                    'Data could not be save, server Error.',
+                                    message,
                             )
-                        this.loading = false;
                         this.loading = false;
                     }
                 );   
