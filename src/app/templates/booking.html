@@ -30,7 +30,7 @@
 				</div>
 				<div class="row">
 					<div class="col-md-4 col-padding"><b>Booked by</b></div>
-					<div class="col-md-8 col-padding">: {{user?.username}}</div>
+					<div class="col-md-8 col-padding">: {{booking?.payment?.sender?.username}}</div>
 				</div>
 				<div class="row">
 					<div class="col-md-4 col-padding"><b>Payment link</b></div>
@@ -114,26 +114,26 @@
 	        	<div class="col-lg-8">
 	        		<div *ngIf="!selectedDay && !filtered && bookings">
 		        		<p-dataTable [value]="bookings" [rows]="10" [paginator]="true">
-						    <p-column field="start_time" [style]="{'width': '70px'}" header="Time" sortable="true" [filter]="true" filterPlaceholder="Search time"></p-column>
-						    <p-column field="reference_no" [style]="{'width': '70px'}" header="Ref." sortable="true" [filter]="true" filterPlaceholder="Search ref."></p-column>
-						    <p-column field="" header="Facility" [style]="{'width': '80px'}" sortable="true" [filter]="true" filterPlaceholder="Search facility">
+						    <p-column field="start_time" [style]="{'width': '71px'}" header="Time" sortable="true" [filter]="true" filterPlaceholder="Search time"></p-column>
+						    <p-column field="reference_no" [style]="{'width': '83px'}" header="Ref." sortable="true" [filter]="true" filterPlaceholder="Search ref."></p-column>
+						    <p-column field="" header="Facility" [style]="{'width': '83px'}" sortable="true" [filter]="true" filterPlaceholder="Search facility">
 						    	<template let-booking="rowData" pTemplate="body">
 						    		{{booking.facility.name}}
 						    	</template>
 						    </p-column>
-						    <p-column field="unit" header="Booked by" [style]="{'width': '95px'}" sortable="true" [filter]="true" filterPlaceholder="Search booked by"></p-column>
-						    <p-column field="booking_date" header="On" [style]="{'width': '80px'}" sortable="true" [filter]="true" filterPlaceholder="Search date">
+						    <p-column field="unit" header="Booked by" [style]="{'width': '106px'}" sortable="true" [filter]="true" filterPlaceholder="Search booked by"></p-column>
+						    <p-column field="booking_date" header="On" [style]="{'width': '70px'}" sortable="true" [filter]="true" filterPlaceholder="Search date">
 						    	<template let-booking="rowData" pTemplate="body">
 						    		{{booking.booking_date | date:'shortDate'}}
 						    	</template>
 						    </p-column>
-						    <p-column field="status" header="Status" [style]="{'width': '80px'}" sortable="true" [filter]="true" filterPlaceholder="Search status">
+						    <p-column field="status" header="Status" [style]="{'width': '79px'}" sortable="true" [filter]="true" filterPlaceholder="Search status">
 						    	<template let-booking="rowData" pTemplate="body">
 						    		<span *ngIf="booking.status == 'paid'" class="label label-success">{{booking.status | capitalize}}</span>
 						    		<span *ngIf="booking.status == 'unpaid'" class="label label-danger">{{booking.status | capitalize}}</span>
 						    	</template>
 						    </p-column>
-						    <p-column field="remark" header="Remark" [style]="{'width': '90px'}" sortable="true" [filter]="true" filterPlaceholder="Search remark">
+						    <p-column field="remark" header="Remark" [style]="{'width': '89px'}" sortable="true" [filter]="true" filterPlaceholder="Search remark">
 						        <template let-booking="rowData" pTemplate="body">
 						    		<span *ngIf="booking.remark">{{booking.remark}}</span>
 						    		<span *ngIf="!booking.remark">-</span>
@@ -150,26 +150,26 @@
 					</div>
 					<div *ngIf="selectedDay && !filtered">
 		        		<p-dataTable [value]="selectedDay" [rows]="10" [paginator]="true">
-						    <p-column field="start_time" [style]="{'width': '70px'}" header="Time" sortable="true" [filter]="true" filterPlaceholder="Search time"></p-column>
-						    <p-column field="reference_no" [style]="{'width': '70px'}" header="Ref." sortable="true" [filter]="true" filterPlaceholder="Search ref."></p-column>
-						    <p-column field="" header="Facility" [style]="{'width': '80px'}" sortable="true" [filter]="true" filterPlaceholder="Search facility">
+						    <p-column field="start_time" [style]="{'width': '71px'}" header="Time" sortable="true" [filter]="true" filterPlaceholder="Search time"></p-column>
+						    <p-column field="reference_no" [style]="{'width': '83px'}" header="Ref." sortable="true" [filter]="true" filterPlaceholder="Search ref."></p-column>
+						    <p-column field="" header="Facility" [style]="{'width': '83px'}" sortable="true" [filter]="true" filterPlaceholder="Search facility">
 						    	<template let-booking="rowData" pTemplate="body">
 						    		{{booking.facility.name}}
 						    	</template>
 						    </p-column>
-						    <p-column field="unit" header="Booked by" [style]="{'width': '95px'}" sortable="true" [filter]="true" filterPlaceholder="Search booked by"></p-column>
-						    <p-column field="booking_date" header="On" [style]="{'width': '80px'}" sortable="true" [filter]="true" filterPlaceholder="Search date">
+						    <p-column field="unit" header="Booked by" [style]="{'width': '106px'}" sortable="true" [filter]="true" filterPlaceholder="Search booked by"></p-column>
+						    <p-column field="booking_date" header="On" [style]="{'width': '70px'}" sortable="true" [filter]="true" filterPlaceholder="Search date">
 						    	<template let-booking="rowData" pTemplate="body">
 						    		{{booking.booking_date | date:'shortDate'}}
 						    	</template>
 						    </p-column>
-						    <p-column field="status" header="Status" [style]="{'width': '80px'}" sortable="true" [filter]="true" filterPlaceholder="Search status">
+						    <p-column field="status" header="Status" [style]="{'width': '79px'}" sortable="true" [filter]="true" filterPlaceholder="Search status">
 						    	<template let-booking="rowData" pTemplate="body">
 						    		<span *ngIf="booking.status == 'paid'" class="label label-success">{{booking.status | capitalize}}</span>
 						    		<span *ngIf="booking.status == 'unpaid'" class="label label-danger">{{booking.status | capitalize}}</span>
 						    	</template>
 						    </p-column>
-						    <p-column field="remark" header="Remark" [style]="{'width': '90px'}" sortable="true" [filter]="true" filterPlaceholder="Search remark">
+						    <p-column field="remark" header="Remark" [style]="{'width': '89px'}" sortable="true" [filter]="true" filterPlaceholder="Search remark">
 						        <template let-booking="rowData" pTemplate="body">
 						    		<span *ngIf="booking.remark">{{booking.remark}}</span>
 						    		<span *ngIf="!booking.remark">-</span>
@@ -186,27 +186,27 @@
 					</div>
 					<div *ngIf="selectedDay && filtered">
 		        		<p-dataTable [value]="filtered" [rows]="10" [paginator]="true">
-						    <p-column field="start_time" [style]="{'width': '70px'}" header="Time" sortable="true" [filter]="true" filterPlaceholder="Search time"></p-column>
-						    <p-column field="reference_no" [style]="{'width': '70px'}" header="Ref." sortable="true" [filter]="true" filterPlaceholder="Search ref."></p-column>
-						    <p-column field="" header="Facility" [style]="{'width': '80px'}" sortable="true" [filter]="true" filterPlaceholder="Search facility">
+						    <p-column field="start_time" [style]="{'width': '71px'}" header="Time" sortable="true" [filter]="true" filterPlaceholder="Search time"></p-column>
+						    <p-column field="reference_no" [style]="{'width': '83px'}" header="Ref." sortable="true" [filter]="true" filterPlaceholder="Search ref."></p-column>
+						    <p-column field="" header="Facility" [style]="{'width': '83px'}" sortable="true" [filter]="true" filterPlaceholder="Search facility">
 						    	<template let-booking="rowData" pTemplate="body">
 						    		{{booking.facility.name}}
 						    	</template>
 						    </p-column>
-						    <p-column field="unit" header="Booked by" [style]="{'width': '95px'}" sortable="true" [filter]="true" filterPlaceholder="Search booked by"></p-column>
-						    <p-column field="booking_date" header="On" [style]="{'width': '80px'}" sortable="true" [filter]="true" filterPlaceholder="Search date">
+						    <p-column field="unit" header="Booked by" [style]="{'width': '106px'}" sortable="true" [filter]="true" filterPlaceholder="Search booked by"></p-column>
+						    <p-column field="booking_date" header="On" [style]="{'width': '70px'}" sortable="true" [filter]="true" filterPlaceholder="Search date">
 						    	<template let-booking="rowData" pTemplate="body">
 						    		{{booking.booking_date | date:'shortDate'}}
 						    	</template>
 						    </p-column>
-						    <p-column field="unit" header="Status" [style]="{'width': '80px'}" sortable="true" [filter]="true" filterPlaceholder="Search status">
+						    <p-column field="status" header="Status" [style]="{'width': '79px'}" sortable="true" [filter]="true" filterPlaceholder="Search status">
 						    	<template let-booking="rowData" pTemplate="body">
 						    		<span *ngIf="booking.status == 'paid'" class="label label-success">{{booking.status | capitalize}}</span>
 						    		<span *ngIf="booking.status == 'unpaid'" class="label label-danger">{{booking.status | capitalize}}</span>
 						    	</template>
 						    </p-column>
-						    <p-column field="remark" header="Remark" [style]="{'width': '90px'}" sortable="true" [filter]="true" filterPlaceholder="Search remark">
-						       <template let-booking="rowData" pTemplate="body">
+						    <p-column field="remark" header="Remark" [style]="{'width': '89px'}" sortable="true" [filter]="true" filterPlaceholder="Search remark">
+						        <template let-booking="rowData" pTemplate="body">
 						    		<span *ngIf="booking.remark">{{booking.remark}}</span>
 						    		<span *ngIf="!booking.remark">-</span>
 						    	</template>
