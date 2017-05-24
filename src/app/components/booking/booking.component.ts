@@ -159,6 +159,11 @@ export class BookingComponent implements OnInit {
 				this.bookingService.getAll()
 				.subscribe(bookings => {
 					for (var i = 0; i < bookings.length; ++i) {
+						if (bookings[i].start_time.length < 5 ) {
+							bookings[i].start_time = moment(bookings[i].start_time, 'H:mm').format('HH:mm')
+						}else{
+							bookings[i].start_time = moment(bookings[i].start_time, 'HH:mm').format('HH:mm')
+						}
 						let a = this.units.find(data => data._id == bookings[i].property);
 						if (a && a != undefined && a != null) {
 							bookings[i].unit = '#'+a.address.unit_no +'-'+ a.address.unit_no_2;

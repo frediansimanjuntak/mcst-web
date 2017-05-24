@@ -112,10 +112,10 @@ export class EditUnitComponent implements OnInit {
                                 this.router.navigate([this.name.default_development.name_url + '/unit']); 
                             }, 
                             error => { 
-                                console.log(error); 
+                                var message = JSON.parse(error._body)
                                 this._notificationsService.error( 
                                         'Error', 
-                                        'The Unit could not be save, server Error.', 
+                                        message.message, 
                                 ) 
                                 this.loading = false;
                             }

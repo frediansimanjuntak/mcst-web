@@ -374,7 +374,7 @@ export class EditBookingComponent implements OnInit  {
 		.subscribe(bookings => {
 			for (let b = 0; b < this.timeStart.length; ++b) {
 				this.bookings = bookings.filter(data => 
-					data.booking_date.slice(0,10) == booking_date &&
+					moment(data.booking_date).format('YYYY-MM-DD') == booking_date &&
 					data.facility._id == this.model.facility &&
 					data.start_time == this.timeStart[b]+this.min &&
 					data.end_time == this.timeEnd[b]+this.min )

@@ -5,7 +5,7 @@
             <div class="title">
                 Unit #{{unit.address.unit_no}}-{{unit.address.unit_no_2}}
             </div>
-            <p class="id-location">Home > Residents' Database > Unit #{{unit.address.unit_no}}-{{unit.address.unit_no_2}}</p>
+            <p class="id-location">Home > Resident's Database > Unit #{{unit.address.unit_no}}-{{unit.address.unit_no_2}}</p>
             <div class="row top-block no-margin">
                 <a class="btn-underline" (click)="goToUnit()">Back to last page</a>
             </div>
@@ -152,9 +152,9 @@
                                 <span *ngIf="vehicles.doc.name">{{vehicles.doc.name}}</span>
                             </template>
                         </p-column>
-                         <p-column header="Registered on" field="registered_on" sortable="true">
+                         <p-column header="Registered on" field="created_at" sortable="true">
                             <template let-vehicles="rowData" pTemplate="body">
-                                <span>{{vehicles.registered_on | date:'d/M/y'}}</span>
+                                <span>{{vehicles.created_at | date:'d/M/y'}}</span>
                             </template>
                         </p-column> 
                         <p-column header="Remarks">
@@ -260,6 +260,28 @@
                         </div>
                         <div class="form-group">
                             <div class="row no-margin">
+                                <label class="control-label col-sm-4" for="gender">Gender :</label>
+                                <div class="col-sm-8">
+                                    <select class="form-control" [attr.disabled]="useAutocomplete?true:null" formControlName="gender" name="gender">
+                                        <option [selected]="true" value="Male">Male</option>
+                                        <option value="Female">Female</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                          <div class="form-group">
+                            <div class="row no-margin">
+                                <label class="control-label col-sm-4" for="salulation">Salutation :</label>
+                                <div class="col-sm-8">
+                                   <input type="text"  [attr.disabled]="useAutocomplete?true:null" class="form-control" name="salulation" formControlName="salulation" placeholder="Input salutation here"/>
+                                    <small *ngIf="addSubmitted && !myForm.controls.salulation.valid && !useAutocomplete" class="text-danger">
+                                    Salutation is required
+                                    </small>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="row no-margin">
                                 <label class="control-label col-sm-4" for="email">Email :</label>
                                 <div class="col-sm-8">
                                     <input type="email" [attr.disabled]="useAutocomplete?true:null" class="form-control" name="email" formControlName="email" placeholder="Input email here"/>
@@ -312,7 +334,7 @@
                             <button [disabled]="loading" *ngIf="useAutocomplete" class="btn btn-primary btn-brown" (click)="addExistResident()">Submit<span>
                                     <img *ngIf="loading" src="data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA==" />
                                 </span></button>
-                            <button class="btn btn-white" (click)="useAutocomplete=false;addSubmitted=false;firstModal.close()">Cancel</button>
+                            <button class="btn btn-white" (click)="useAutocomplete=false;addSubmitted=false;firstModal.close();resetForm()">Cancel</button>
                         </div>
                     </form> 
                 </modal-content>
@@ -462,7 +484,7 @@
                     </div>
                      <div class="row">
                         <div class="col-md-4 col-padding"><b>Registered on </b></div>
-                        <div class="col-md-8 col-padding">: {{ vehicle.registered_on | date:'fullDate'}}
+                        <div class="col-md-8 col-padding">: {{ vehicle.created_at | date:'fullDate'}}
                         </div>
                     </div>
                     <div class="row">

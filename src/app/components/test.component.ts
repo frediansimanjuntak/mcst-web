@@ -28,36 +28,36 @@ export class Model {
 
 export class TestComponent implements OnInit{
     
-    public headers: Headers;
-    public token: string;
-    public pilihan: RequestOptions;
+ //    public headers: Headers;
+ //    public token: string;
+ //    public pilihan: RequestOptions;
 
-	model: any = {};
-    models: Model[];
-	events: any[];
-	event: MyEvent;
-	dialogVisible: boolean = false;
-	idGen: number = 100;
-    filesToUpload: Array<File>;
-    files: any[] = [];
-    src: string = "";
-    resizeOptions: ResizeOptions = {
-        resizeMaxHeight: 250,
-        resizeMaxWidth: 250
-    };
-    public options = {
-        position: ["bottom", "left"],
-        timeOut: 5000,
-        lastOnBottom: true
-    }
-	public uploader:FileUploader = new FileUploader({url:'http://localhost:3001/upload'});
+	// model: any = {};
+ //    models: Model[];
+	// events: any[];
+	// // event: MyEvent;
+	// dialogVisible: boolean = false;
+	// idGen: number = 100;
+ //    filesToUpload: Array<File>;
+ //    files: any[] = [];
+ //    src: string = "";
+ //    resizeOptions: ResizeOptions = {
+ //        resizeMaxHeight: 250,
+ //        resizeMaxWidth: 250
+ //    };
+ //    public options = {
+ //        position: ["bottom", "left"],
+ //        timeOut: 5000,
+ //        lastOnBottom: true
+ //    }
+	// public uploader:FileUploader = new FileUploader({url:'http://localhost:3001/upload'});
 
 
-    // multiple1: boolean = true;
-    myOptions: Array<any>;
-    options1: Array<any> = [];
-    mySelectValue: Array<string>;
-     selection: Array<string>;
+ //    // multiple1: boolean = true;
+ //    myOptions: Array<any>;
+ //    options1: Array<any> = [];
+ //    mySelectValue: Array<string>;
+ //     selection: Array<string>;
      // Array of strings for multi select, string for single select.
 
 
@@ -67,22 +67,22 @@ export class TestComponent implements OnInit{
                 private _notificationsService: NotificationsService,
                 private authenticationService: AuthenticationService) {
         var authToken = JSON.parse(localStorage.getItem('authToken'));
-        this.token = authToken && authToken.token;
-        this.headers = new Headers({ 'Accept': 'application/json', 'Authorization': 'Bearer ' + this.token });
-        this.pilihan = new RequestOptions({ headers: this.headers });
+        // this.token = authToken && authToken.token;
+        // this.headers = new Headers({ 'Accept': 'application/json', 'Authorization': 'Bearer ' + this.token });
+        // this.pilihan = new RequestOptions({ headers: this.headers });
 
-        let numOptions = 100;
-        let opts = new Array(numOptions);
+        // let numOptions = 100;
+        // let opts = new Array(numOptions);
 
-        for (let i = 0; i < numOptions; i++) {
-            opts[i] = {
-                value: i.toString(),
-                label: i.toString()
-            };
-        }
+        // for (let i = 0; i < numOptions; i++) {
+        //     opts[i] = {
+        //         value: i.toString(),
+        //         label: i.toString()
+        //     };
+        // }
 
-        this.options1 = opts.slice(0);
-         this.filesToUpload = [];
+        // this.options1 = opts.slice(0);
+        //  this.filesToUpload = [];
     }
 
 

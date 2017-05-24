@@ -178,7 +178,6 @@ export class PetitionComponent implements OnInit {
                                 }else{
                                     this.petitionService.getById(this.id)
                                         .subscribe(petition => {
-                                            console.log(petition)
                                             this.petition = petition.petitions;
                                             if(this.petition.property){
                                                 let property = this.dataUnit.find(data => data._id ==  this.petition.property);

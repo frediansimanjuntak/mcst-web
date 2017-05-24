@@ -125,6 +125,8 @@ export class ViewUnitComponent implements OnInit {
                                                 property: [this.id]
                                             })
                     ]),
+                    gender: ['Male', Validators.required],
+                    salulation: ['', Validators.required]
                 }); 
     }
 
@@ -144,8 +146,7 @@ export class ViewUnitComponent implements OnInit {
                                     this.unit = unit.properties[0];
                                     this.residents = this.unit.tenant.data;
                                     this.tenantTotal = this.unit.tenant.data.length;
-                                    this.vehicles = this.unit.registered_vehicle;
-                                    
+                                    this.vehicles = this.unit.vehicles;
                                     if(this.residents){
                                         this.hasTenants = true;
                                     }else{
@@ -184,6 +185,8 @@ export class ViewUnitComponent implements OnInit {
                                             }),
                                             authorized_property: this.formbuilder.array([this.initAuthorized()]),
                                             remarks: [''],
+                                            gender: ['Male', Validators.required],
+                                            salulation: ['', Validators.required]
                                             });    
                                     }else{
                                         this.hasLandlord = false;
@@ -205,6 +208,8 @@ export class ViewUnitComponent implements OnInit {
                                             owned_property: this.formbuilder.array([this.initOwned()]),
                                             authorized_property: this.formbuilder.array([this.initAuthorized()]),
                                             remarks: [''],
+                                            gender: ['Male', Validators.required],
+                                            salulation: ['', Validators.required]
                                             });  
                                     }
 
@@ -379,7 +384,7 @@ export class ViewUnitComponent implements OnInit {
 
     deleteVehicle(vehicle: any){
         this.loading = true
-        this.unitservice.deleteRegVehicle(vehicle._id, this.unit._id, this.name.default_development.name_url)
+        this.unitservice.deleteRegVehicle(vehicle._id)
             .then(
                  data => {
                     this._notificationsService.success(
@@ -479,7 +484,7 @@ export class ViewUnitComponent implements OnInit {
         window.history.back();
     }
 
-    addResident(model:any){
+    addResident(model: any){
         this.addSubmitted = true;
          if(this.model.type == "tenant" && !this.hasLandlord){
             this.errorMessage = "This unit did not has owner yet, please add owner first"
@@ -553,9 +558,9 @@ export class ViewUnitComponent implements OnInit {
          }
     }
 
-    onChange(fileInput: any){
-        this.filesToUpload = <Array<File>> fileInput.target.files;
-        this.model.document = this.filesToUpload;
+    onChange(event: any) {
+       let files = [].slice.call(event.target.files);
+       this.model.document = files;
     }
 
     remove(i: any){
@@ -578,8 +583,8 @@ export class ViewUnitComponent implements OnInit {
             formData.append("owner", model.owner);
             formData.append("transponder", model.transponder);
             formData.append("remarks", model.remarks);
-
-            this.unitservice.createRegVehicle(formData, this.name.default_development.name_url, this.unit._id)
+            formData.append("property", this.unit._id);
+            this.unitservice.createRegVehicle(formData)
             .then(
                 data => {
                     this._notificationsService.success(
@@ -598,7 +603,6 @@ export class ViewUnitComponent implements OnInit {
                     )
                     this.secondModal.close();
                     this.loading = false;
-                    this.loading = false
                 }
             );
         }
@@ -627,7 +631,7 @@ export class ViewUnitComponent implements OnInit {
             }
         }
         if(model.username && model.email && 
-            model.phone && model.details.first_name && model.details.last_name && model.details.identification_no)
+            model.phone && model.details.first_name && model.details.last_name && model.details.identification_no && model.salulation && model.gender)
             {
                 this.loading = true;
                 this.userService.createResident(model)
@@ -694,6 +698,8 @@ export class ViewUnitComponent implements OnInit {
                                                 property: [this.id]
                                             })
                     ]),
+                    gender: ['Male', Validators.required],
+                    salulation: ['', Validators.required]
                 });    
         }
     }
@@ -712,6 +718,8 @@ export class ViewUnitComponent implements OnInit {
                         last_name:  [{value: event.details.last_name, disabled: true}],
                         identification_no:  [{value: event.details.identification_no, disabled: true}],
                     }),
+                    gender:  [{value: event.gender, disabled: true}],
+                    salulation: [{value: event.salulation, disabled: true}]
                 }); 
     }
 
@@ -744,6 +752,8 @@ export class ViewUnitComponent implements OnInit {
                                                 property: [this.id]
                                             })
                     ]),
+                    gender: ['Male', Validators.required],
+                    salulation: ['', Validators.required]
                 });  
     }
 
@@ -769,6 +779,8 @@ export class ViewUnitComponent implements OnInit {
                     }),
                 authorized_property: this.formbuilder.array([this.initAuthorized()]),
                 remarks: [''],
+                gender: ['Male', Validators.required],
+                salulation: ['', Validators.required]
                 });    
         }else{
             this.myForm = this.formbuilder.group({
@@ -788,6 +800,8 @@ export class ViewUnitComponent implements OnInit {
                 owned_property: this.formbuilder.array([this.initOwned()]),
                 authorized_property: this.formbuilder.array([this.initAuthorized()]),
                 remarks: [''],
+                gender: ['Male', Validators.required],
+                salulation: ['', Validators.required]
                 });  
         }
         this.useAutocomplete = false;
