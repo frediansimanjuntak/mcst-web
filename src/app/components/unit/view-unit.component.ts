@@ -221,14 +221,21 @@ export class ViewUnitComponent implements OnInit {
                                                  this.residents[i].i = i + 1;
                                         }
                                     }
-
-                                    if(this.vehicles){
+                                    
+                                    if(this.vehicles.length){
                                         for (var i = 0; i < this.vehicles.length; i++) {
                                             this.vehicles[i].i = i + 1;
                                             this.vehicles[i].user = this.allUsers.find(data => data._id == this.vehicles[i].owner).username;
-                                            this.vehicles[i].doc = this.attachments.find(data => data._id == this.vehicles[i].document);
+                                            if(this.vehicles[i].document.length > 0 ){
+                                                this.vehicles[i].doc = [];
+                                                for (var j = 0; j < this.vehicles[i].document.length; j++) {
+                                                    this.vehicles[i].doc[j] = this.attachments.find(data => data._id == this.vehicles[i].document[j]);    
+                                                }
+                                            }
+                                            
                                         }
                                     }
+                                    console.log(this.vehicles)
                                     setTimeout(() => this.loading = false, 1000);
                                 });
                 }

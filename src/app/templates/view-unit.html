@@ -130,7 +130,7 @@
                         <button [disabled]="!hasTenants" class="btn btn-gray btn-tab-dark pull-right" (click)="secondModal.open()"><img class="img-btn" src="../../assets/image/icon_addresident.png" />&nbsp;Register Vehicle</button>
                     </div>
                 </div>
-                <div class="row no-margin">
+                <div class="row no-margin" *ngIf="vehicles">
                    <p-dataTable [value]="vehicles">
                         <p-column header="No." [style]="{'width':'42px'}" field="i">
                         </p-column>
@@ -148,8 +148,17 @@
                             </template>
                         </p-column> 
                         <p-column header="Document" field="doc">
-                             <template let-vehicles="rowData" pTemplate="body">
-                                <span *ngIf="vehicles.doc.name">{{vehicles.doc.name}}</span>
+                            <template let-vehicles="rowData" pTemplate="body">
+                                    <div *ngIf="!vehicles.doc">
+                                        <span >
+                                        -
+                                    </span>
+                                    </div>
+                                    <div *ngIf="vehicles.doc">
+                                        <span *ngFor="let a of vehicles.doc">
+                                        {{ a.name }},
+                                    </span>
+                                    </div>
                             </template>
                         </p-column>
                          <p-column header="Registered on" field="created_at" sortable="true">
@@ -479,7 +488,15 @@
                         <div class="col-md-4 col-padding"><b>Document</b></div>
                         <div class="col-md-8 col-padding">
                         <!-- <span *ngIf="vehicle.doc">: <a style="cursor: pointer; word-break:break-all;" (click)="openDoc(vehicle.doc)"> {{vehicle.doc.name}} </a></span> -->
-                        <span *ngIf="vehicle.doc">: <a style="cursor: pointer; word-break:break-all;" [attr.href]="vehicle.doc.url" download> {{vehicle.doc.name}} </a></span>
+                        <!-- <span *ngIf="vehicle.doc">: <a style="cursor: pointer; word-break:break-all;" [attr.href]="vehicle.doc.url" download> {{vehicle.doc.name}} </a></span> -->
+                            <div *ngIf="!vehicle.doc">
+                                <span>: -</span>
+                            </div>
+                            <div *ngIf="vehicle.doc">:
+                                <span *ngFor="let a of vehicle.doc">
+                                    <a style="cursor: pointer; word-break:break-all;" [attr.href]="a.url" download> {{a.name}}, </a>
+                                </span>
+                            </div>
                         </div>
                     </div>
                      <div class="row">
