@@ -235,7 +235,6 @@ export class ViewUnitComponent implements OnInit {
                                             
                                         }
                                     }
-                                    console.log(this.vehicles)
                                     setTimeout(() => this.loading = false, 1000);
                                 });
                 }
