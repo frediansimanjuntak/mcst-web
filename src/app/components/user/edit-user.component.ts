@@ -18,7 +18,7 @@ import 'rxjs/add/operator/switchMap';
 
 export class EditUserComponent implements OnInit {
      @Input('group')
-    user: User;
+    user: any;
     users: User[] = [];
     model: any = {};
     id: string;
@@ -44,6 +44,7 @@ export class EditUserComponent implements OnInit {
 
 
     ngOnInit(): void {
+        this.model.details = {};
         this.route.params.subscribe(params => {
             this.id = params['id'];
             this.type = params['type'];
@@ -67,6 +68,13 @@ export class EditUserComponent implements OnInit {
                 confirmpassword : ['', Validators.required],
                 phone : ['', Validators.required],
                 role : ['', Validators.required],
+                details:  this.formbuilder.group({
+                        first_name: [''],
+                        last_name: [''],
+                        identification_no: [''],
+                    }),
+                gender: ['Male'],
+                salulation: ['']
                 // default_property: this.formbuilder.group({
                 //     property: [''],
                 //     role : ['']
@@ -88,18 +96,37 @@ export class EditUserComponent implements OnInit {
                     password : ['', Validators.required],
                     confirmpassword : ['', Validators.required],
                     role : ['', Validators.required],
-
+                    details:  this.formbuilder.group({
+                        first_name: [''],
+                        last_name: [''],
+                        identification_no: [''],
+                    }),
+                    gender: ['Male', Validators.required],
+                    salulation: ['', Validators.required]
                 });
             this.userService.getById(this.id)
             .subscribe(user => {
                 this.user = user;
-                this.myForm = this.formbuilder.group({
-                    _id : [this.user._id],
-                    username : [this.user.username, Validators.required],
+                if(this.user.role == 'user' && this.user.gender && this.user.salulation){
+                    this.myForm = this.formbuilder.group({
+                        _id : [this.user._id],
+                        username : [this.user.username, Validators.required],
 
-                    email : [this.user.email, Validators.required],
-                    phone : [this.user.phone, Validators.required],
-                });
+                        email : [this.user.email, Validators.required],
+                        phone : [this.user.phone, Validators.required],
+                        gender: [this.user.gender, Validators.required],
+                        salulation: [this.user.salulation,Validators.required]
+                    });
+                }else{
+                    this.myForm = this.formbuilder.group({
+                        _id : [this.user._id],
+                        username : [this.user.username, Validators.required],
+
+                        email : [this.user.email, Validators.required],
+                        phone : [this.user.phone, Validators.required],
+                    });
+                }
+                
                 // this.myForm.patchValue(this.user);
             });
         }else if( this.id != null &&  this.type != null){
@@ -195,64 +222,66 @@ export class EditUserComponent implements OnInit {
     }
 
     createUser(model:any , isValid: boolean) {
-        if(this.type){
-            if(this.type=='tenant'){
-               model.rented_property.development = this.name.default_development._id;
-               
-            }
-
-            if(this.type=='landlord'){
-                for (let i = 0; i < model.owned_property.length; i++) {
-                     model.owned_property[i].development = this.name.default_development._id;
+        if(isValid){
+            if(this.type){
+                if(this.type=='tenant'){
+                   model.rented_property.development = this.name.default_development._id;
+                   
                 }
-            }
-            if(model.username && model.email && model.password && model.confirmpassword && 
-               model.phone && model.role)
-               {
-                this.loading = true;
-                this.userService.createResident(model)
-                .then(
-                    data => {
-                        this._notificationsService.success(
-                                    'Success',
-                                    'Create ' + this.type + ' successful',
-                                )
-                        this.router.navigate([this.name.default_development.name_url + '/unit/view', this.id]);
-                    },
-                    error => {
-                        this._notificationsService.error(
-                                    'Error',
-                                    'Data could not be save, server Error.',
-                            )
-                        this.loading = false;
-                    }
-                );   
-            }
-        }else{
-            if(model.username && model.email && model.password && model.confirmpassword && 
-               model.phone && model.role)
-               {
-                model.default_development = this.name.default_development._id;
-                this.loading = true;
-                this.userService.createStaff(model)
-                .then(
-                    data => {
-                        this._notificationsService.success(
-                                    'Success',
-                                    'Create ' + model.role + ' successful',
-                                )
-                        this.router.navigate([this.name.default_development.name_url + '/user']);
-                    },
-                    error => {
-                        this._notificationsService.error(
-                                    'Error',
-                                    'Data could not be save, server Error.',
-                            )
-                        this.loading = false;
-                    }
-                );   
-            }
 
+                if(this.type=='landlord'){
+                    for (let i = 0; i < model.owned_property.length; i++) {
+                         model.owned_property[i].development = this.name.default_development._id;
+                    }
+                }
+                if(model.username && model.email && model.password && model.confirmpassword && 
+                   model.phone && model.role)
+                   {
+                    this.loading = true;
+                    this.userService.createResident(model)
+                    .then(
+                        data => {
+                            this._notificationsService.success(
+                                        'Success',
+                                        'Create ' + this.type + ' successful',
+                                    )
+                            this.router.navigate([this.name.default_development.name_url + '/unit/view', this.id]);
+                        },
+                        error => {
+                            this._notificationsService.error(
+                                        'Error',
+                                        'Data could not be save, server Error.',
+                                )
+                            this.loading = false;
+                        }
+                    );   
+                }
+            }else{
+                if(model.username && model.email && model.password && model.confirmpassword && 
+                   model.phone && model.role)
+                   {
+                    model.default_development = this.name.default_development._id;
+                    this.loading = true;
+                    this.userService.createUser(model)
+                    .then(
+                        data => {
+                            this._notificationsService.success(
+                                        'Success',
+                                        'Create ' + model.role + ' successful',
+                                    )
+                            this.router.navigate([this.name.default_development.name_url + '/user']);
+                        },
+                        error => {
+                            this._notificationsService.error(
+                                        'Error',
+                                        'Data could not be save, server Error.',
+                                )
+                            this.loading = false;
+                        }
+                    );   
+                }
+
+            }
         }
     }
 

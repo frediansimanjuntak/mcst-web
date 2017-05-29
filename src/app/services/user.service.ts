@@ -38,7 +38,7 @@ export class UserService {
     }
 
     createResident(body:any): Promise<User> {
-        return this.http.post(url +  'users', body, this.jwt())
+        return this.http.post(url +  'sign_up', body, this.jwt())
             .toPromise()
             .then(res => res.json().data)
             .catch(this.handleError);
@@ -46,6 +46,13 @@ export class UserService {
 
     createStaff(body:any): Promise<User> {
         return this.http.post(url +  'users/super_admin' , body, this.jwt())
+            .toPromise()
+            .then(res => res.json().data)
+            .catch(this.handleError);
+    }
+
+    createUser(body:any): Promise<User> {
+        return this.http.post(url +  'users' , body, this.jwt())
             .toPromise()
             .then(res => res.json().data)
             .catch(this.handleError);
