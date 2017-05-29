@@ -55,18 +55,12 @@ export class FeedbackComponent implements OnInit {
         this.feedbackService.delete(feedback._id)
             .then(
                 data => {
-                    this._notificationsService.success(
-                            'Success',
-                            'Delete feedback successful',
-                    )
+                    this._notificationsService.success('Success', 'Delete feedback successful')
                     this.ngOnInit();
                 },
                 error => {
                     console.log(error);
-                    this._notificationsService.error(
-                            'Error',
-                            'The feedback could not be deleted, server Error',
-                    )
+                    this._notificationsService.error('Error', error.json().message)
                     setTimeout(() => this.loading = false, 1000);
                 }
             );
@@ -180,17 +174,11 @@ export class FeedbackComponent implements OnInit {
         .then(
             response => {
                 this.firstModal.close()
-                this._notificationsService.success(
-                            'Success',
-                            'Reply feedback successful',
-                    )
+                this._notificationsService.success('Success', 'Reply feedback successful')
                 this.ngOnInit()
             },
             error=> {
-                this._notificationsService.error(
-                            'Error',
-                            'Reply feedback failed, server Error',
-                )
+                this._notificationsService.error('Error', error.json().message)
                 setTimeout(() => this.loading = false, 1000);
             }
         );
@@ -277,18 +265,12 @@ export class FeedbackComponent implements OnInit {
         this.feedbackService.archieve(feedback._id)
             .then(
                 data => {
-                    this._notificationsService.success(
-                            'Success',
-                            'Archieve feedback successful',
-                    )
+                    this._notificationsService.success('Success', 'Archieve feedback successful')
                     this.ngOnInit();
                 },
                 error => {
                     console.log(error);
-                    this._notificationsService.error(
-                            'Error',
-                            'The feedback could not be archieve, server Error',
-                    )
+                    this._notificationsService.error('Error', error.json().message)
                     setTimeout(() => this.loading = false, 1000);
                 }
         );
@@ -309,18 +291,12 @@ export class FeedbackComponent implements OnInit {
         this.feedbackService.publish(feedback._id)
             .then(
                 data => {
-                    this._notificationsService.success(
-                            'Success',
-                            'Publish feedback successful',
-                    )
+                    this._notificationsService.success('Success', 'Publish feedback successful')
                     this.ngOnInit();
                 },
                 error => {
                     console.log(error);
-                    this._notificationsService.error(
-                            'Error',
-                            'The feedback could not be publish, server Error',
-                    )
+                    this._notificationsService.error('Error', error.json().message)
                     setTimeout(() => this.loading = false, 1000);
                 }
             );
@@ -341,18 +317,12 @@ export class FeedbackComponent implements OnInit {
         this.feedbackService.unarchieve(feedback._id)
             .then(
                 data => {
-                    this._notificationsService.success(
-                            'Success',
-                            'Unarchieve feedback successful',
-                    )
+                    this._notificationsService.success('Success', 'Unarchieve feedback successful',)
                     this.ngOnInit();
                 },
                 error => {
                     console.log(error);
-                    this._notificationsService.error(
-                            'Error',
-                            'The feedback could not be unarchieve, server Error',
-                    )
+                    this._notificationsService.error('Error', error.json().message)
                     setTimeout(() => this.loading = false, 1000);
                 }
             );

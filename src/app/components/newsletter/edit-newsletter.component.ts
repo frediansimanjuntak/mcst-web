@@ -83,18 +83,12 @@ export class EditNewsletterComponent  {
             this.newsletterService.create(formData, this.name.default_development.name_url)
             .then(
                 data => {
-                    this._notificationsService.success(
-                            'Success',
-                            'Create Newsletter successful',
-                    )
+                    this._notificationsService.success('Success', 'Create Newsletter successful')
                     this.router.navigate([this.name.default_development.name_url + '/newsletter']);
                 },
                 error => {
                     console.log(error);
-                    this._notificationsService.error(
-                            'Error',
-                            'The Newsletter could not be save, server Error',
-                    )
+                    this._notificationsService.error('Error', error.json().message)
                 }
             );
         }

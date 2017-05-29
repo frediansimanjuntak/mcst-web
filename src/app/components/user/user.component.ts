@@ -45,17 +45,11 @@ export class UserComponent implements OnInit {
         }
         this.userService.delete(user._id, this.model)
         .then(response => {
-                    this._notificationsService.success(
-                                'Success',
-                                'Delete user successful',
-                        )
+                    this._notificationsService.success('Success', 'Delete user successful')
 	                this.loadAllUsers()
               },
               error => {
-                      this._notificationsService.error(
-                                'Error',
-                                'The user could not be delete, server Error',
-                        )
+                      this._notificationsService.error('Error', error.json().message)
                     setTimeout(() => this.loading = false, 1000);
               }
         );
@@ -75,15 +69,15 @@ export class UserComponent implements OnInit {
 
     private loadAllUsers() {
         this.userService.getAll().subscribe(users => { 
-                                            if(this.name.role == 'admin'){
-                                                this.users = users.filter(data=> data.role == 'user')
-                                            }else if(this.name.role == 'super admin'){
-                                                this.users = users.filter(data=> data.role == 'user' || data.role == 'admin')
-                                            }else{
-                                                this.users = users;  
-                                            }
-                                            setTimeout(() => this.loading = false, 1000);
-                                        });
+            if(this.name.role == 'admin'){
+                this.users = users.filter(data=> data.role == 'user')
+            }else if(this.name.role == 'super admin'){
+                this.users = users.filter(data=> data.role == 'user' || data.role == 'admin')
+            }else{
+                this.users = users;  
+            }
+            setTimeout(() => this.loading = false, 1000);
+        });
     }
 
     add(){

@@ -149,19 +149,13 @@ export class EditPaymentReminderComponent implements OnInit{
         this.paymentreminderService.create(model)
         .then(
             data => {
-                this._notificationsService.success(
-                                'Success',
-                                'Create payment successful',
-                        )
+                this._notificationsService.success('Success', 'Create payment successful')
                 this.router.navigate([this.name.default_development.name_url + '/payment_reminder']);
             },
             error => {
                 console.log(error);
-                this._notificationsService.error(
-                                'Error',
-                                'The payment could not be save, server Error',
-                )
-                        setTimeout(() => this.loading = false, 1000);
+                this._notificationsService.error('Error', error.json().message)
+                setTimeout(() => this.loading = false, 1000);
             }
         );
     }
@@ -171,17 +165,11 @@ export class EditPaymentReminderComponent implements OnInit{
         this.paymentreminderService.update(paymentreminder)
         .then(
             response => {
-                this._notificationsService.success(
-                                'Success',
-                                'Update payment reminder successful',
-                        )
+                this._notificationsService.success('Success', 'Update payment reminder successful')
                 this.router.navigate([this.name.default_development.name_url + '/payment_reminder']);
             },
             error => {
-                this._notificationsService.error(
-                                'Error',
-                                'The payment could not be update, server Error',
-                        )
+                this._notificationsService.error('Error', error.json().message)
                 setTimeout(() => this.loading = false, 1000);
             }
         );

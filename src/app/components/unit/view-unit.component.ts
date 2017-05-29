@@ -288,25 +288,16 @@ export class ViewUnitComponent implements OnInit {
                 response => {
                   if(response) {
                     console.log(response);
-                    this._notificationsService.error(
-                            'Error',
-                            'Owner could not to delete, server error',
-                    )
+                    this._notificationsService.error('Error', 'Owner could not to delete, server error')
                     setTimeout(() => this.loading = false, 1000);
                   } else {
-                    this._notificationsService.success(
-                            'Success',
-                            'Delete owner successful',
-                    )
+                    this._notificationsService.success('Success', 'Delete owner successful')
                     this.ngOnInit()
                   }
                 },
                 error=> {
                   console.log(error);
-                    this._notificationsService.error(
-                            'Error',
-                            'Owner could not to delete, server error',
-                    )
+                    this._notificationsService.error('Error', error.json().message)
                     setTimeout(() => this.loading = false, 1000);
                 }
             ); 
@@ -315,26 +306,16 @@ export class ViewUnitComponent implements OnInit {
             .then(
                 response => {
                   if(response) {
-                    console.log(response);
-                    this._notificationsService.error(
-                            'Error',
-                            'Resident could not to delete, server error',
-                    )
+                    this._notificationsService.error('Error', 'Resident could not to delete, server error')
                     setTimeout(() => this.loading = false, 1000);
                   } else {
-                    this._notificationsService.success(
-                            'Success',
-                            'Delete resident successful',
-                    )
+                    this._notificationsService.success('Success', 'Delete resident successful')
                     this.ngOnInit()
                   }
                 },
                 error=> {
                   console.log(error);
-                    this._notificationsService.error(
-                            'Error',
-                            'Resident could not to delete, server error',
-                    )
+                    this._notificationsService.error('Error', error.json().message)
                     setTimeout(() => this.loading = false, 1000);
                 }
             ); 
@@ -393,18 +374,12 @@ export class ViewUnitComponent implements OnInit {
         this.unitservice.deleteRegVehicle(vehicle._id)
             .then(
                  data => {
-                    this._notificationsService.success(
-                            'Success',
-                            'Delete Vehicle successful',
-                    )
+                    this._notificationsService.success('Success', 'Delete Vehicle successful')
                     this.ngOnInit();
                 },
                 error => {
                     console.log(error);
-                    this._notificationsService.error(
-                            'Error',
-                            'Data failed to delete, server error',
-                    )
+                    this._notificationsService.error('Error', error.json().message)
                     setTimeout(() => this.loading = false, 1000);
                 }
             );
@@ -417,10 +392,7 @@ export class ViewUnitComponent implements OnInit {
         this.unitservice.generateCode(this.unit._id, this.name.default_development.name_url, this.modelForCode)
             .then(
                  data => {
-                    this._notificationsService.success(
-                            'Success',
-                            'Generate unit code successful',
-                    )
+                    this._notificationsService.success('Success', 'Generate unit code successful')
                     this.loading = false;
                     this.codeModal.close();
                     this.modelForCode = {}
@@ -428,10 +400,7 @@ export class ViewUnitComponent implements OnInit {
                 },
                 error => {
                     console.log(error);
-                    this._notificationsService.error(
-                            'Error',
-                            'Failed to generate code, server error',
-                    )
+                    this._notificationsService.error('Error', error.json().message)
                     this.codeModal.close();
                     this.loading = false;
                     this.loading = false
@@ -446,20 +415,14 @@ export class ViewUnitComponent implements OnInit {
         this.unitservice.deleteCode(this.unit._id, this.name.default_development.name_url, this.modelForCode)
             .then(
                  data => {
-                    this._notificationsService.success(
-                            'Success',
-                            'Delete unit code successful',
-                    )
+                    this._notificationsService.success('Success', 'Delete unit code successful')
                     this.codeModal.close();
                     this.modelForCode = {}
                     this.ngOnInit();
                 },
                 error => {
                     console.log(error);
-                    this._notificationsService.error(
-                            'Error',
-                            'Failed to delete code, server error',
-                    )
+                    this._notificationsService.error('Error', error.json().message)
                     this.codeModal.close();
                     this.loading = false
                     this.modelForCode = {}
@@ -540,10 +503,7 @@ export class ViewUnitComponent implements OnInit {
              this.unitservice.createResident(this.data)
                 .then(
                     data => {
-                        this._notificationsService.success(
-                                'Success',
-                                'Add Resident successful',
-                        )
+                        this._notificationsService.success('Success', 'Add Resident successful')
                         this.firstModal.close();
                         this.addSubmitted = false;
                         this.loading = false;
@@ -552,10 +512,7 @@ export class ViewUnitComponent implements OnInit {
                     },
                     error => {
                         console.log(error);
-                        this._notificationsService.error(
-                                'Error',
-                                'Data failed to save, server error',
-                        )
+                        this._notificationsService.error('Error', error.json().message)
                         this.firstModal.close();
                         this.loading = false;
                         this.loading = false
@@ -593,20 +550,14 @@ export class ViewUnitComponent implements OnInit {
             this.unitservice.createRegVehicle(formData)
             .then(
                 data => {
-                    this._notificationsService.success(
-                            'Success',
-                            'Add Vehicle successful',
-                    )
+                    this._notificationsService.success('Success', 'Add Vehicle successful')
                     this.secondModal.close();
                     this.loading = false;
                     this.ngOnInit();
                 },
                 error => {
                     console.log(error);
-                    this._notificationsService.error(
-                            'Error',
-                            'Data failed to save, server error',
-                    )
+                    this._notificationsService.error('Error', error.json().message)
                     this.secondModal.close();
                     this.loading = false;
                 }
@@ -643,10 +594,7 @@ export class ViewUnitComponent implements OnInit {
                 this.userService.createResident(model)
                 .then(
                     data => {
-                        this._notificationsService.success(
-                                    'Success',
-                                    'Create ' + this.model.type + ' successful',
-                                )
+                        this._notificationsService.success('Success', 'Create ' + this.model.type + ' successful')
                         this.firstModal.close();
                         this.addSubmitted = false;
                         this.loading = false;
@@ -664,10 +612,7 @@ export class ViewUnitComponent implements OnInit {
                         }else if(errorBody.message){
                             message = errorBody.message;
                         }
-                        this._notificationsService.error(
-                                    'Error',
-                                    message,
-                            )
+                        this._notificationsService.error('Error',  message)
                         this.loading = false;
                     }
                 );   

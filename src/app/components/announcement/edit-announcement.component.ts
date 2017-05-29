@@ -124,7 +124,7 @@ export class EditAnnouncementComponent  {
                 },
                 error => {
                     console.log(error);
-                    this._notificationsService.error('Error','The announcement could not be save, server error')
+                    this._notificationsService.error('Error', error.json().message)
                     this.loading = false
                 }
             );
@@ -145,8 +145,8 @@ export class EditAnnouncementComponent  {
                     this.router.navigate([this.name.default_development.name_url + '/announcement']);
                 }
             },
-            error=> {
-                this._notificationsService.error('Error','Update announcement failed, server error')
+            error => {
+                this._notificationsService.error('Error', error.json().message)
                 this.loading = false
             }
         );
