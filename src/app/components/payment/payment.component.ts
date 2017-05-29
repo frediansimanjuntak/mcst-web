@@ -63,22 +63,16 @@ export class PaymentComponent implements OnInit {
     deletePayment(payment: Payment) {
         this.loading = true
         this.paymentService.delete(payment._id)
-          .then(
-              data => {
-                        this._notificationsService.success(
-                                'Success',
-                                'Delete Payment successful',
-                        )
-                        this.ngOnInit();
-                    },
-                    error => {
-                        console.log(error);
-                        this._notificationsService.error(
-                                'Error',
-                                'The Payment could not be deleted, server Error',
-                        )
-                        setTimeout(() => this.loading = false, 1000);
-                    }
+        .then(
+            data => {
+                this._notificationsService.success('Success','Delete Payment successful')
+                this.ngOnInit();
+            },
+            error => {
+                console.log(error);
+                this._notificationsService.error('Error', error.json().message)
+                setTimeout(() => this.loading = false, 1000);
+            }
         );
     }
 

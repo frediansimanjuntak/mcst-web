@@ -99,18 +99,12 @@ export class EditIncidentComponent implements OnInit {
             this.incidentService.create(formData)
             .then(
                 data => {
-                    this._notificationsService.success(
-                            'Success',
-                            'Create incident report successful',
-                    )
+                    this._notificationsService.success('Success', 'Create incident report successful')
                     this.router.navigate([this.name.default_development.name_url + '/incident']);
                 },
                 error => {
                     console.log(error);
-                    this._notificationsService.error(
-                            'Error',
-                            'The incident report could not be save, server Error',
-                    )
+                    this._notificationsService.error('Error', error.json().message )
                     setTimeout(() => this.loading = false, 1000);
                 }
             );
@@ -122,17 +116,11 @@ export class EditIncidentComponent implements OnInit {
 		this.incidentService.update(this.incident)
 		.then(
 			response => {
-                this._notificationsService.success(
-                            'Success',
-                            'Update incident successful',
-                )
+                this._notificationsService.success('Success', 'Update incident successful')
                 this.router.navigate([this.name.default_development.name_url + '/incident']);
             },
             error => {
-                this._notificationsService.error(
-                            'Error',
-                            'The incident report could not be update, server Error',
-                )
+                this._notificationsService.error('Error', error.json().message)
                 setTimeout(() => this.loading = false, 1000);
             }
         );

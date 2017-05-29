@@ -257,10 +257,7 @@ export class EditBookingComponent implements OnInit  {
 			},
 			error => {
 				console.log(error);
-				this._notificationsService.error(
-					'Failed',
-					'Booking could not be save, server Error',
-				)
+				this._notificationsService.error('Failed', error.json().message)
 				this.loading = false
 			}
 		);

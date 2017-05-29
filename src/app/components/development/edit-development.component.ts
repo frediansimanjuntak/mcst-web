@@ -45,11 +45,11 @@ export class EditDevelopmentComponent implements OnInit {
         this.developmentService.create(this.model)
         .then(
             response => {
-                this._notificationsService.success('Success','Create development successful')
+                this._notificationsService.success('Success', 'Create development successful')
                 this.router.navigate([ this.name.default_development.name_url + '/development']);
             },
             error => {
-                this._notificationsService.error('Error','Create data failed, server Error')
+                this._notificationsService.error('Error', error.json().message)
                 setTimeout(() => this.loading = false, 1000);
             }
         );
@@ -60,11 +60,11 @@ export class EditDevelopmentComponent implements OnInit {
 		this.developmentService.update(this.development)
 		.then(
 			response => {
-                this._notificationsService.success('Success','Update development successful')
+                this._notificationsService.success('Success', 'Update development successful')
                 this.router.navigate([this.name.default_development.name_url + '/development']);
             },
             error => {
-            	this._notificationsService.error('Error','Update data failed, server Error')
+            	this._notificationsService.error('Error', error.json().message)
                 setTimeout(() => this.loading = false, 1000);
             }
         );

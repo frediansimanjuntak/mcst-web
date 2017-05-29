@@ -241,17 +241,11 @@ export class EditUserComponent implements OnInit {
                     this.userService.createResident(model)
                     .then(
                         data => {
-                            this._notificationsService.success(
-                                        'Success',
-                                        'Create ' + this.type + ' successful',
-                                    )
+                            this._notificationsService.success('Success', 'Create ' + this.type + ' successful')
                             this.router.navigate([this.name.default_development.name_url + '/unit/view', this.id]);
                         },
                         error => {
-                            this._notificationsService.error(
-                                        'Error',
-                                        'Data could not be save, server Error.',
-                                )
+                            this._notificationsService.error('Error', error.json().message)
                             this.loading = false;
                         }
                     );   
@@ -265,17 +259,11 @@ export class EditUserComponent implements OnInit {
                     this.userService.createUser(model)
                     .then(
                         data => {
-                            this._notificationsService.success(
-                                        'Success',
-                                        'Create ' + model.role + ' successful',
-                                    )
+                            this._notificationsService.success('Success', 'Create ' + model.role + ' successful')
                             this.router.navigate([this.name.default_development.name_url + '/user']);
                         },
                         error => {
-                            this._notificationsService.error(
-                                        'Error',
-                                        'Data could not be save, server Error.',
-                                )
+                            this._notificationsService.error('Error', error.json().message)
                             this.loading = false;
                         }
                     );   
@@ -290,17 +278,11 @@ export class EditUserComponent implements OnInit {
         this.userService.update(user)
         .then(
             response => {
-                 this._notificationsService.success(
-                                'Success',
-                                'Update User successful',
-                            )
+                 this._notificationsService.success('Success', 'Update User successful')
                 this.router.navigate([this.name.default_development.name_url + '/user']);
             },
             error=> {
-                this._notificationsService.error(
-                                'Error',
-                                'Update failed, server Error.',
-                        )
+                this._notificationsService.error('Error', error.json().message)
             }
         );
     }

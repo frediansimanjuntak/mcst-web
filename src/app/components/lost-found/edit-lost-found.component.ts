@@ -86,18 +86,12 @@ export class EditLostFoundComponent  {
             
             this.lostFoundService.create(formData)
             .then(data => {
-                    this._notificationsService.success(
-                            'Success',
-                            'Create Report successful',
-                    )
+                    this._notificationsService.success('Success', 'Create Report successful')
                     this.router.navigate([this.name.default_development.name_url + '/lost_found']);
                 },
                 error => {
                     console.log(error);
-                    this._notificationsService.error(
-                            'Error',
-                            'The Report could not be save, server Error',
-                    )
+                    this._notificationsService.error('Error', error.json().message)
                     this.loading = true
                 }
             );

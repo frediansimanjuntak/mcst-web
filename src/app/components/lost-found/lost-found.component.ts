@@ -91,12 +91,12 @@ export class LostFoundComponent implements OnInit {
         this.lostFoundService.archieve(lostfound._id)
         .then(
             data => {
-                 this._notificationsService.success('Success','Archive data successful')
+                this._notificationsService.success('Success', 'Archive data successful')
                 this.ngOnInit();
             },
             error => {
                 console.log(error);
-                this._notificationsService.error('Error','Failed to archive, server error')
+                this._notificationsService.error('Error', error.json().message)
                 this.loading = false
             }
         );
