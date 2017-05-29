@@ -59,17 +59,11 @@ export class ContractorComponent implements OnInit {
         this.contractorService.delete(contractor._id)
           .then(
               data => {
-                    this._notificationsService.success(
-                            'Success',
-                            'Delete contractor successful',
-                    )
+                    this._notificationsService.success('Success', 'Delete contractor successful')
                     this.ngOnInit()
                 },
                 error => {
-                    this._notificationsService.error(
-                            'Error',
-                            'The Contractor could not be deleted, server Error',
-                    )
+                    this._notificationsService.error('Error', error.json().message)
                     this.loading = false;
               }
         );
@@ -84,19 +78,13 @@ export class ContractorComponent implements OnInit {
         this.contractorService.activation(this.contractor._id)
           .then(
              data => {
-                    this._notificationsService.success(
-                            'Success',
-                            'Activate Contractor successful',
-                    )
+                    this._notificationsService.success('Success', 'Activate Contractor successful')
                     this.activeModal.close();
                     this.ngOnInit()
                 },
                 error => {
-                      this.activeModal.close();
-                    this._notificationsService.error(
-                            'Error',
-                            'The Contractor could not be Activated, server Error',
-                    )
+                    this.activeModal.close();
+                    this._notificationsService.error('Error', error.json().message)
                     this.loading = false;
               }
         );

@@ -226,7 +226,7 @@
                                 <label class="control-label col-sm-4" for="username">Username :</label>
                                 <div class="col-sm-8">
                                     <!-- <input type="text" class="form-control" name="username" formControlName="username" required placeholder="Input username here" /> -->
-                                    <p-autoComplete [(ngModel)]="username" [suggestions]="filteredBrands" (completeMethod)="filterBrands($event)" (onSelect)="onAutoCompleteChange($event)" field="username" [size]="30" placeholder="Username" [minLength]="1" [ngModelOptions]="{standalone: true}"></p-autoComplete>
+                                    <p-autoComplete [(ngModel)]="username" [suggestions]="filteredBrands" (completeMethod)="filterBrands($event)" (onRemove)="clearUsername($event)" (onSelect)="onAutoCompleteChange($event)" field="username" [size]="30" placeholder="Username" [minLength]="1" [ngModelOptions]="{standalone: true}"></p-autoComplete>
                                     <span style="cursor:pointer; color: blue;" (click)="resetForm()">Reset</span><br>
                                     <small *ngIf="addSubmitted && username=='' && !useAutocomplete" class="text-danger">
                                     Name is required
@@ -271,9 +271,9 @@
                             <div class="row no-margin">
                                 <label class="control-label col-sm-4" for="gender">Gender :</label>
                                 <div class="col-sm-8">
-                                    <select class="form-control" [attr.disabled]="useAutocomplete?true:null" formControlName="gender" name="gender">
-                                        <option [selected]="true" value="Male">Male</option>
-                                        <option value="Female">Female</option>
+                                    <select class="form-control" [attr.disabled]="useAutocomplete?true:null"  formControlName="gender" name="gender">
+                                        <option [selected]="myForm.controls.gender.value == 'Female' || myForm.controls.gender.value == 'female'" value="female">Female</option>
+                                        <option [selected]="myForm.controls.gender.value == 'Male' || myForm.controls.gender.value == 'male'" value="male">Male</option>
                                     </select>
                                 </div>
                             </div>
@@ -282,7 +282,11 @@
                             <div class="row no-margin">
                                 <label class="control-label col-sm-4" for="salulation">Salutation :</label>
                                 <div class="col-sm-8">
-                                   <input type="text"  [attr.disabled]="useAutocomplete?true:null" class="form-control" name="salulation" formControlName="salulation" placeholder="Input salutation here"/>
+                                    <select class="form-control" [attr.disabled]="useAutocomplete?true:null" formControlName="salulation" name="salulation">
+                                        <option *ngIf="myForm.controls.gender.value == 'male' || myForm.controls.gender.value == 'Male'" [selected]="myForm.controls.salulation.value == 'mr' || myForm.controls.salulation.value == 'Mr'" value="mr">Mr</option>
+                                        <option *ngIf="myForm.controls.gender.value == 'female' || myForm.controls.gender.value == 'Female'" [selected]="myForm.controls.salulation.value == 'mrs' || myForm.controls.salulation.value == 'Mrs'" value="mrs">Mrs</option>
+                                        <option *ngIf="myForm.controls.gender.value == 'female' || myForm.controls.gender.value == 'Fale'" [selected]="myForm.controls.salulation.value == 'ms' || myForm.controls.salulation.value == 'Ms'" value="ms">Ms</option>
+                                    </select>
                                     <small *ngIf="addSubmitted && !myForm.controls.salulation.valid && !useAutocomplete" class="text-danger">
                                     Salutation is required
                                     </small>

@@ -191,17 +191,11 @@ export class EditUserGroupComponent implements OnInit {
             this.userGroupService.create(this.model)
             .then(
                 data => {
-                    this._notificationsService.success(
-                            'Success',
-                            'Create usergroup successful',
-                    )
+                    this._notificationsService.success('Success', 'Create usergroup successful')
                     this.router.navigate([this.name.default_development.name_url + '/user_group']);
                 },
                 error => {
-                    this._notificationsService.error(
-                            'Error',
-                            'Failed to create usergroup, server Error',
-                    )
+                    this._notificationsService.error('Error', error.json().message)
                     this.loading = false;
                 }
             );    
@@ -223,17 +217,11 @@ export class EditUserGroupComponent implements OnInit {
             this.userGroupService.update(this.usergroup)
                 .then(
                     data => {
-                        this._notificationsService.success(
-                                'Success',
-                                'Update usergroup successful',
-                        )
+                        this._notificationsService.success('Success', 'Update usergroup successful')
                         this.router.navigate([this.name.default_development.name_url + '/user_group']);
                     },
                     error => {
-                        this._notificationsService.error(
-                                'Error',
-                                'Failed to update usergroup, server Error',
-                        )
+                        this._notificationsService.error('Error', error.json().message)
                         this.loading = false;
                     }
                 );

@@ -99,17 +99,11 @@ export class AnnouncementComponent implements OnInit {
           .then(
              data => {
                     this.ngOnInit()
-                    this._notificationsService.success(
-                            'Success',
-                            'Delete announcement successful',
-                    )
+                    this._notificationsService.success('Success', 'Delete announcement successful')
                 },
                 error => {
                     console.log(error);
-                    this._notificationsService.error(
-                            'Error',
-                            'Failed to delete, server error',
-                    )
+                    this._notificationsService.error('Error', error.json().message)
                     setTimeout(() => this.loading = false, 1000);
                 }
         );
@@ -159,19 +153,13 @@ export class AnnouncementComponent implements OnInit {
         this.announcementService.publish(this.announcement._id , this.publishData)
           .then(
             data => {
-                    this._notificationsService.success(
-                            'Success',
-                            'Publish announcement successful',
-                    )
+                    this._notificationsService.success('Success', 'Publish announcement successful')
                     this.firstModal.close();
                     this.ngOnInit();
                 },
                 error => {
                     console.log(error);
-                    this._notificationsService.error(
-                            'Error',
-                            'Failed to publish, server error',
-                    )
+                    this._notificationsService.error('Error', error.json().message)
                     setTimeout(() => this.loading = false, 1000);
                 }
         );

@@ -115,12 +115,12 @@ export class IncidentComponent implements OnInit {
         this.incidentService.delete(incident._id)
         .then(
             data => {
-                this._notificationsService.success('Success','Delete incident successful')
+                this._notificationsService.success('Success', 'Delete incident successful')
                 this.ngOnInit();
             },
             error => {
                 console.log(error);
-                this._notificationsService.error('Error','The incident could not be deleted, server Error')
+                this._notificationsService.error('Error', error.json().message)
                 setTimeout(() => this.loading = false, 1000);
             }
         );
@@ -215,12 +215,12 @@ export class IncidentComponent implements OnInit {
         this.incidentService.archieve(incident._id)
         .then(
             data => {
-                this._notificationsService.success('Success','Archieve incident successful')
+                this._notificationsService.success('Success', 'Archieve incident successful')
                 this.ngOnInit();
             },
             error => {
                 console.log(error);
-                this._notificationsService.error('Error','The incident could not be archieve, server Error')
+                this._notificationsService.error('Error', error.json().message)
                 setTimeout(() => this.loading = false, 1000);
             }
         );
@@ -241,20 +241,14 @@ export class IncidentComponent implements OnInit {
         this.incidentService.unarchieve(incident._id)
             .then(
                 data => {
-                            this._notificationsService.success(
-                                    'Success',
-                                    'Unarchieve incident successfu',
-                            )
-                            this.ngOnInit();
-                        },
-                        error => {
-                            console.log(error);
-                            this._notificationsService.error(
-                                    'Error',
-                                    'The incident could not be unarchieve, server Error',
-                            )
-                            setTimeout(() => this.loading = false, 1000);
-                        }
+                    this._notificationsService.success('Success', 'Unarchieve incident successful')
+                    this.ngOnInit();
+                },
+                error => {
+                    console.log(error);
+                    this._notificationsService.error('Error', error.json().message)
+                    setTimeout(() => this.loading = false, 1000);
+                }
             );
     }
 
@@ -263,12 +257,12 @@ export class IncidentComponent implements OnInit {
         this.incidentService.starred(incident._id)
         .then(
             data => {
-                this._notificationsService.success('Success','Starred successful')
+                this._notificationsService.success('Success', 'Starred successful')
                 this.ngOnInit();
             },
             error => {
                 console.log(error);
-                this._notificationsService.error('Error','Failed, server Error')
+                this._notificationsService.error('Error', error.json().message)
                 setTimeout(() => this.loading = false, 1000);
             }
         );
@@ -289,12 +283,12 @@ export class IncidentComponent implements OnInit {
         this.incidentService.unstarred(incident._id)
             .then(
                 data => {
-                    this._notificationsService.success('Success','Unstarred incident successful')
+                    this._notificationsService.success('Success', 'Unstarred incident successful')
                     this.ngOnInit();
                 },
                 error => {
                     console.log(error);
-                    this._notificationsService.error('Error', 'Failed, server Error')
+                    this._notificationsService.error('Error', error.json().message)
                     setTimeout(() => this.loading = false, 1000);
                 }
             );

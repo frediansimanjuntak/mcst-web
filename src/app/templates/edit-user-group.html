@@ -11,7 +11,7 @@
                 <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !description.valid }">
                     <label class="control-label col-sm-4" for="description">Description :</label>
                     <div class="col-sm-8">
-                        <input type="text" class="form-control" name="description" [(ngModel)]="usergroup.description" #description="ngModel" required placeholder="Input description here" />
+                        <input type="text" class="form-control" name="description" [(ngModel)]="usergroup.description" #description="ngModel" required placeholder=" Input description here" />
                         <span *ngIf="f.submitted && !description.valid" class="help-block">Description is required</span>
                     </div>
                 </div>
@@ -19,7 +19,8 @@
                     <label class="control-label col-sm-4" for="chief">Chief :</label>
                     <div class="col-sm-8">
                           <div style="margin-bottom: 20px;">
-                            <select class="form-control" name="chief" [(ngModel)]="model.chief">
+                            <select [ngClass]="{ 'form-control-blur': model.chief =='' }"  class="form-control" name="chief" [(ngModel)]="model.chief">
+                                <option value="" disabled selected>Select chief</option>
                                 <option *ngFor="let u of users" [ngValue]="u._id">{{u.username}}</option>
                             </select>
                             <span *ngIf="f.submitted && !model.chief" class="help-block">Chef No is required</span>
@@ -29,7 +30,7 @@
                 <div class="form-group" >
                     <label class="control-label col-sm-4" for="chief">Users :</label>
                     <div class="col-sm-8">
-                        <div style="margin-bottom: 20px;">
+                        <div style="margin-bottom: 20px;" class="usergroup">
                             <ng-select 
                                       
                                       [multiple]="true"
@@ -39,7 +40,7 @@
                                       (selected)="selected($event)"
                                       (removed)="removed($event)"
                                       [active] = "user"
-                                      placeholder="Select user">
+                                      placeholder="   Select users">
                             </ng-select>
                         </div>
                     </div>
@@ -62,7 +63,7 @@
                 <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !description.valid }">
                     <label class="control-label col-md-4" for="description">Description :</label>
                     <div class="col-md-8">
-                        <input type="text" class="form-control" name="description" [(ngModel)]="model.description" #description="ngModel" required placeholder="Input description here" />
+                        <input type="text" class="form-control" name="description" [(ngModel)]="model.description" #description="ngModel" required placeholder=" Input description here" />
                         <span *ngIf="f.submitted && !description.valid" class="help-block">Description is required</span>
                     </div>
                 </div>
@@ -70,8 +71,8 @@
                     <label class="control-label col-md-4" for="chief">Chief :</label>
                     <div class="col-md-8">
                         <div>
-                            <select class="form-control" name="chief" [(ngModel)]="model.chief">
-                                <option value="" disabled selected>Select chief</option>
+                            <select [ngClass]="{ 'form-control-blur': model.chief =='' }"  class="form-control select-pc" name="chief" [(ngModel)]="model.chief">
+                                <option style="color:gray !important" value="" disabled selected>Select chief</option>
                                 <option *ngFor="let u of users" [ngValue]="u._id">{{u.username}}</option>
                             </select>
                             <span *ngIf="f.submitted && !model.chief" class="help-block">Chief is required</span>
@@ -81,7 +82,7 @@
                 <div class="form-group">
                     <label class="control-label col-md-4" for="chief">Users :</label>
                     <div class="col-md-8">
-                        <div class="styled-select">
+                        <div class="styled-select usergroup">
                             <ng-select 
                                           [multiple]="true"
                                           [items]="items2"
@@ -89,7 +90,7 @@
                                           (data)="refreshValueUser($event)"
                                           (selected)="selected($event)"
                                           (removed)="removed($event)"
-                                          placeholder="Select user">
+                                          placeholder="   Select users">
                             </ng-select>
                         </div>
                     </div>

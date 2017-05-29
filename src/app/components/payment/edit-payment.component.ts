@@ -73,18 +73,12 @@ export class EditPaymentComponent implements OnInit{
 		this.paymentService.create(formData)
 		.then(
 			data => {
-				this._notificationsService.success(
-					'Success',
-					'Create payment successful',
-				)
+				this._notificationsService.success('Success', 'Create payment successful')
 				this.router.navigate([this.name.default_development.name_url + '/payment_system']);
 			},
 			error => {
 				console.log(error);
-				this._notificationsService.error(
-					'Error',
-					'The payment could not be save, server Error',
-				)
+				this._notificationsService.error('Error', error.json().message)
 				this.loading = false;
 			}
 		);
@@ -102,18 +96,12 @@ export class EditPaymentComponent implements OnInit{
 			this.paymentService.update(formData , this.payment._id)
 			.then(
 				data => {
-					this._notificationsService.success(
-									'Success',
-									'Update payment successful',
-					)
+					this._notificationsService.success('Success', 'Update payment successful')
 					this.router.navigate([this.name.default_development.name_url + '/payment_system']);
 				},
 				error => {
 					console.log(error);
-					this._notificationsService.error(
-									'Error',
-									'The payment could not be update, server Error',
-							)
+					this._notificationsService.error('Error', error.json().message)
 					this.loading = false;
 				}
 			);

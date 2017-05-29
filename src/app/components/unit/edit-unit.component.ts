@@ -105,18 +105,12 @@ export class EditUnitComponent implements OnInit {
                     this.loading = true 
                     this.unitservice.create(model, this.name.default_development.name_url).then( 
                             data => { 
-                                this._notificationsService.success( 
-                                        'Success', 
-                                        'Create Unit successful', 
-                                    ) 
+                                this._notificationsService.success('Success', 'Create Unit successful') 
                                 this.router.navigate([this.name.default_development.name_url + '/unit']); 
                             }, 
                             error => { 
                                 var message = JSON.parse(error._body)
-                                this._notificationsService.error( 
-                                        'Error', 
-                                        message.message, 
-                                ) 
+                                this._notificationsService.error( 'Error', error.json().message) 
                                 this.loading = false;
                             }
                     );  

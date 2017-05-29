@@ -1175,5 +1175,8 @@ p.field-box.no-margin {
 .ui-datatable-scrollable-header-box{
   margin-right: 0px !important;
 }
+.usergroup input.ui-select-search{
+    font-weight: 100 !important;
+}
 
 

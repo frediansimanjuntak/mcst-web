@@ -95,7 +95,6 @@ export class PetitionComponent implements OnInit {
           .then(
             response => {
               if(response) {
-                console.log(response);
                 alert(`The Petition could not be deleted, server Error.`);
               } else {
                 this.alertService.success('Delete Petition successful', true);
@@ -243,17 +242,11 @@ export class PetitionComponent implements OnInit {
         this.petitionService.archive(this.model) .then(
                     data => {
                         this.ngOnInit();
-                        this._notificationsService.success(
-                            'Success',
-                            'Archive requests successful',
-                        )
+                        this._notificationsService.success('Success', 'Archive requests successful')
                     },
                     error => {
                         console.log(error);
-                        this._notificationsService.error(
-                            'Error',
-                            'Archive failed, server Error',
-                        )
+                        this._notificationsService.error('Error', error.json().message)
                         this.loading = false;
                     }
                 );
