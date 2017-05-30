@@ -306,7 +306,7 @@ export class EditBookingComponent implements OnInit  {
 			}
 			this.model.start = start
 			this.loading = false
-		}, error => );
+		}, error => this.userService.checkError(error.json().code));
 	}
 
 	filter(){
