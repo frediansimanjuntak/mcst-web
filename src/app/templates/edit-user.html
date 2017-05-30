@@ -39,7 +39,7 @@
                                 <label class="control-label col-sm-4" for="gender">Gender :</label>
                                 <div class="col-sm-8">
                                     <select class="form-control"  formControlName="gender" name="gender" [ngClass]="{ 'form-control-blur': myForm.controls.gender.value =='' }" >
-                                        <option value="" style="color:gray" disabled selected>Select gender</option>
+                                        <option value=""  class="blur-font" disabled selected>Select gender</option>
                                         <option [selected]="myForm.controls.gender.value == 'Female' || myForm.controls.gender.value == 'female'" value="female">Female</option>
                                         <option [selected]="myForm.controls.gender.value == 'Male' || myForm.controls.gender.value == 'male'" value="male">Male</option>
                                     </select>
@@ -51,7 +51,7 @@
                                 <label class="control-label col-sm-4" for="salulation">Salutation :</label>
                                 <div class="col-sm-8">
                                     <select class="form-control" formControlName="salulation" name="salulation" [ngClass]="{ 'form-control-blur': myForm.controls.salulation.value =='' }" >
-                                        <option value="" style="color:gray" disabled selected>Select salutation</option>
+                                        <option value=""  class="blur-font" disabled selected>Select salutation</option>
                                         <option *ngIf="myForm.controls.gender.value == 'male' || myForm.controls.gender.value == 'Male'" [selected]="myForm.controls.salulation.value == 'mr' || myForm.controls.salulation.value == 'Mr'" value="mr">Mr</option>
                                         <option *ngIf="myForm.controls.gender.value == 'female' || myForm.controls.gender.value == 'Female'" [selected]="myForm.controls.salulation.value == 'mrs' || myForm.controls.salulation.value == 'Mrs'" value="mrs">Mrs</option>
                                         <option *ngIf="myForm.controls.gender.value == 'female' || myForm.controls.gender.value == 'Fale'" [selected]="myForm.controls.salulation.value == 'ms' || myForm.controls.salulation.value == 'Ms'" value="ms">Ms</option>
@@ -306,7 +306,7 @@
                                 <label class="control-label col-sm-4" for="gender">Gender :</label>
                                 <div class="col-sm-8">
                                     <select class="form-control"  formControlName="gender" name="gender" [ngClass]="{ 'form-control-blur': myForm.controls.gender.value =='' }" >
-                                        <option value="" style="color:gray" disabled selected>Select gender</option>
+                                        <option value=""  class="blur-font" disabled selected>Select gender</option>
                                         <option [selected]="myForm.controls.gender.value == 'Female' || myForm.controls.gender.value == 'female'" value="female">Female</option>
                                         <option [selected]="myForm.controls.gender.value == 'Male' || myForm.controls.gender.value == 'male'" value="male">Male</option>
                                     </select>
@@ -321,7 +321,7 @@
                                 <label class="control-label col-sm-4" for="salulation">Salutation :</label>
                                 <div class="col-sm-8">
                                     <select class="form-control" formControlName="salulation" name="salulation" [ngClass]="{ 'form-control-blur': myForm.controls.salulation.value =='' }" >
-                                        <option value="" style="color:gray" disabled selected>Select salutation</option>
+                                        <option value=""  class="blur-font" disabled selected>Select salutation</option>
                                         <option *ngIf="myForm.controls.gender.value == 'male' || myForm.controls.gender.value == 'Male'" [selected]="myForm.controls.salulation.value == 'mr' || myForm.controls.salulation.value == 'Mr'" value="mr">Mr</option>
                                         <option *ngIf="myForm.controls.gender.value == 'female' || myForm.controls.gender.value == 'Female'" [selected]="myForm.controls.salulation.value == 'mrs' || myForm.controls.salulation.value == 'Mrs'" value="mrs">Mrs</option>
                                         <option *ngIf="myForm.controls.gender.value == 'female' || myForm.controls.gender.value == 'Fale'" [selected]="myForm.controls.salulation.value == 'ms' || myForm.controls.salulation.value == 'Ms'" value="ms">Ms</option>

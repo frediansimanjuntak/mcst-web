@@ -885,7 +885,7 @@ p.pull-down {
 .mydp .btnpicker{ 
   color: #fff !important; 
 } 
-.mydp{
+.form-group .mydp{
   padding-left: 6px;
   width: 100% !important;
 }
@@ -1184,6 +1184,9 @@ p.field-box.no-margin {
 }
 .usergroup input.ui-select-search{
     font-weight: 100 !important;
+}
+.blur-font{
+    color:gray;
 }
 
 

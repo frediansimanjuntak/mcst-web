@@ -82,9 +82,19 @@ export class ContactComponent  implements OnInit{
         });
     }
 
-    save(valid: boolean){
+    saveEmergency(valid: boolean){
         if(valid){
-            if(this.editEmergency || this.editOthers){
+            if(this.editEmergency){
+                this.updateContact();
+            }else{
+                this.createContact();
+            }
+        }
+    }
+
+    saveOthers(valid: boolean){
+        if(valid){
+            if(this.editOthers){
                 this.updateContact();
             }else{
                 this.createContact();

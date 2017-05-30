@@ -86,7 +86,7 @@
 				<div class="col-sm-8">
 					<div *ngIf="units">
                         <select class="form-control" (change)="getLandlord($event)" [(ngModel)]="model.property" #property="ngModel" name="property" placeholder="Choose property" required [ngClass]="{ 'form-control-blur': model.property == undefined}">
-                           	<option disabled hidden value="undefined">Select unit no.</option>
+                           	<option disabled hidden value="undefined">Search Unit.no here</option>
                             <option *ngFor="let unit of units" [ngValue]="unit._id">
                                 #{{unit.address.unit_no}}-{{unit.address.unit_no_2}}
                             </option>

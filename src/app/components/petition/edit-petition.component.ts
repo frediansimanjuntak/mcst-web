@@ -28,13 +28,6 @@ export class EditPetitionComponent implements OnInit {
     no: number;
     public developmentId;
     public uploader:FileUploader = new FileUploader({url:'http://localhost:3001/upload'});
-    types = [
-        { value: 'Maintenance', name: 'Maintenance' },
-        { value: 'Moving In', name: 'Moving In' },
-        { value: 'Renovation', name: 'Renovation' },
-        { value: 'Add Tenant/Family', name: 'Add Tenant/Family' },
-
-    ];
     loading: boolean = true;
     selectedType = '';
     public submitted: boolean; // keep track on whether form is submitted
