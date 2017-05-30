@@ -13,7 +13,7 @@
 		<p-dataTable [value]="users" [rows]="10" [paginator]="true" [responsive]="true">
 			<p-column filterMatchMode="contains" field="username" header="Username" sortable="true" [filter]="true" filterPlaceholder="Search username">
 				<template let-users="rowData" pTemplate="body">
-					<span>{{users.username | capitalize }}</span>
+					<span>{{users.username }}</span>
 				</template>
 			</p-column>
 			<p-column filterMatchMode="contains" field="email" header="Email" sortable="true" [filter]="true" filterPlaceholder="Search email"></p-column>

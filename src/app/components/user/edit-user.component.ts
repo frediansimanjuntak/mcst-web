@@ -73,7 +73,7 @@ export class EditUserComponent implements OnInit {
                         last_name: [''],
                         identification_no: [''],
                     }),
-                gender: ['Male'],
+                gender: ['male'],
                 salulation: ['']
                 // default_property: this.formbuilder.group({
                 //     property: [''],
@@ -101,7 +101,7 @@ export class EditUserComponent implements OnInit {
                         last_name: [''],
                         identification_no: [''],
                     }),
-                    gender: ['Male', Validators.required],
+                    gender: ['male', Validators.required],
                     salulation: ['', Validators.required]
                 });
             this.userService.getById(this.id)
