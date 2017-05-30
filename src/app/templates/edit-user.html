@@ -38,19 +38,25 @@
                             <div class="row no-margin">
                                 <label class="control-label col-sm-4" for="gender">Gender :</label>
                                 <div class="col-sm-8">
-                                    <select class="form-control" formControlName="gender" name="gender">
-                                        <option [selected]="user.gender == 'Male' || user.gender == 'male'" value="Male">Male</option>
-                                        <option [selected]="user.gender == 'Female' || user.gender == 'female'" value="Female">Female</option>
+                                    <select class="form-control"  formControlName="gender" name="gender" [ngClass]="{ 'form-control-blur': myForm.controls.gender.value =='' }" >
+                                        <option value="" style="color:gray" disabled selected>Select gender</option>
+                                        <option [selected]="myForm.controls.gender.value == 'Female' || myForm.controls.gender.value == 'female'" value="female">Female</option>
+                                        <option [selected]="myForm.controls.gender.value == 'Male' || myForm.controls.gender.value == 'male'" value="male">Male</option>
                                     </select>
                                 </div>
-                </div>
+                            </div>
                         </div>
                           <div class="form-group" *ngIf="user.role == 'user'">
-                            <div class="row no-margin">
+                             <div class="row no-margin">
                                 <label class="control-label col-sm-4" for="salulation">Salutation :</label>
                                 <div class="col-sm-8">
-                                   <input type="text"  class="form-control" name="salulation" formControlName="salulation" placeholder="Input salutation here"/>
-                                    <small *ngIf="addSubmitted && !myForm.controls.salulation.valid " class="text-danger">
+                                    <select class="form-control" formControlName="salulation" name="salulation" [ngClass]="{ 'form-control-blur': myForm.controls.salulation.value =='' }" >
+                                        <option value="" style="color:gray" disabled selected>Select salutation</option>
+                                        <option *ngIf="myForm.controls.gender.value == 'male' || myForm.controls.gender.value == 'Male'" [selected]="myForm.controls.salulation.value == 'mr' || myForm.controls.salulation.value == 'Mr'" value="mr">Mr</option>
+                                        <option *ngIf="myForm.controls.gender.value == 'female' || myForm.controls.gender.value == 'Female'" [selected]="myForm.controls.salulation.value == 'mrs' || myForm.controls.salulation.value == 'Mrs'" value="mrs">Mrs</option>
+                                        <option *ngIf="myForm.controls.gender.value == 'female' || myForm.controls.gender.value == 'Fale'" [selected]="myForm.controls.salulation.value == 'ms' || myForm.controls.salulation.value == 'Ms'" value="ms">Ms</option>
+                                    </select>
+                                    <small *ngIf="f.submitted && !myForm.controls.salulation.value =='' " class="text-danger">
                                     Salutation is required
                                     </small>
                                 </div>
@@ -266,7 +272,7 @@
                                 <label class="control-label col-sm-4" for="username">First name :</label>
                                 <div class="col-sm-8">
                                     <input type="text" class="form-control" name="first_name" formControlName="first_name" required placeholder="Input first name here" />
-                                    <small *ngIf="addSubmitted && !myForm.controls.details.controls.first_name.valid " class="text-danger">
+                                    <small *ngIf="f.submitted && myForm.controls.details.controls.first_name.value=='' " class="text-danger">
                                     First name is required
                                     </small>
                                 </div>
@@ -277,7 +283,7 @@
                                 <label class="control-label col-sm-4" for="username">Last name :</label>
                                 <div class="col-sm-8">
                                     <input type="text"  class="form-control" name="last_name" formControlName="last_name" required placeholder="Input last name here" />
-                                    <small *ngIf="addSubmitted && !myForm.controls.details.controls.last_name.valid " class="text-danger">
+                                    <small *ngIf="f.submitted && myForm.controls.details.controls.last_name.value=='' " class="text-danger">
                                     Last name is required
                                     </small>
                                 </div>
@@ -288,29 +294,39 @@
                                 <label class="control-label col-sm-4" for="identification_no">ID number :</label>
                                 <div class="col-sm-8">
                                     <input type="text"  class="form-control" name="identification_no" formControlName="identification_no" required placeholder="Input ID number here" />
-                                    <small *ngIf="addSubmitted && !myForm.controls.details.controls.identification_no.valid " class="text-danger">
+                                    <small *ngIf="f.submitted && myForm.controls.details.controls.identification_no.value=='' " class="text-danger">
                                     ID number is required
                                     </small>
                                 </div>
                             </div>
                         </div>
+
                         <div class="form-group" *ngIf="myForm.controls.role.value == 'user'">
                             <div class="row no-margin">
                                 <label class="control-label col-sm-4" for="gender">Gender :</label>
                                 <div class="col-sm-8">
-                                    <select class="form-control" formControlName="gender" name="gender">
-                                        <option [selected]="true" value="male">Male</option>
-                                        <option value="female">Female</option>
+                                    <select class="form-control"  formControlName="gender" name="gender" [ngClass]="{ 'form-control-blur': myForm.controls.gender.value =='' }" >
+                                        <option value="" style="color:gray" disabled selected>Select gender</option>
+                                        <option [selected]="myForm.controls.gender.value == 'Female' || myForm.controls.gender.value == 'female'" value="female">Female</option>
+                                        <option [selected]="myForm.controls.gender.value == 'Male' || myForm.controls.gender.value == 'male'" value="male">Male</option>
                                     </select>
+                                    <small *ngIf="f.submitted && myForm.controls.gender.value==''" class="text-danger">
+                                    Gender is required
+                                    </small>
                                 </div>
                             </div>
                         </div>
                           <div class="form-group" *ngIf="myForm.controls.role.value == 'user'">
-                            <div class="row no-margin">
+                             <div class="row no-margin">
                                 <label class="control-label col-sm-4" for="salulation">Salutation :</label>
                                 <div class="col-sm-8">
-                                   <input type="text"  class="form-control" name="salulation" formControlName="salulation" placeholder="Input salutation here"/>
-                                    <small *ngIf="addSubmitted && !myForm.controls.salulation.valid " class="text-danger">
+                                    <select class="form-control" formControlName="salulation" name="salulation" [ngClass]="{ 'form-control-blur': myForm.controls.salulation.value =='' }" >
+                                        <option value="" style="color:gray" disabled selected>Select salutation</option>
+                                        <option *ngIf="myForm.controls.gender.value == 'male' || myForm.controls.gender.value == 'Male'" [selected]="myForm.controls.salulation.value == 'mr' || myForm.controls.salulation.value == 'Mr'" value="mr">Mr</option>
+                                        <option *ngIf="myForm.controls.gender.value == 'female' || myForm.controls.gender.value == 'Female'" [selected]="myForm.controls.salulation.value == 'mrs' || myForm.controls.salulation.value == 'Mrs'" value="mrs">Mrs</option>
+                                        <option *ngIf="myForm.controls.gender.value == 'female' || myForm.controls.gender.value == 'Fale'" [selected]="myForm.controls.salulation.value == 'ms' || myForm.controls.salulation.value == 'Ms'" value="ms">Ms</option>
+                                    </select>
+                                    <small *ngIf="f.submitted && myForm.controls.salulation.value==''" class="text-danger">
                                     Salutation is required
                                     </small>
                                 </div>

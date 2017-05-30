@@ -125,7 +125,7 @@ export class ViewUnitComponent implements OnInit {
                                                 property: [this.id]
                                             })
                     ]),
-                    gender: ['male', Validators.required],
+                    gender: ['', Validators.required],
                     salulation: ['', Validators.required]
                 }); 
     }
@@ -185,7 +185,7 @@ export class ViewUnitComponent implements OnInit {
                                             }),
                                             authorized_property: this.formbuilder.array([this.initAuthorized()]),
                                             remarks: [''],
-                                            gender: ['male', Validators.required],
+                                            gender: ['', Validators.required],
                                             salulation: ['', Validators.required]
                                             });    
                                     }else{
@@ -208,7 +208,7 @@ export class ViewUnitComponent implements OnInit {
                                             owned_property: this.formbuilder.array([this.initOwned()]),
                                             authorized_property: this.formbuilder.array([this.initAuthorized()]),
                                             remarks: [''],
-                                            gender: ['male', Validators.required],
+                                            gender: ['', Validators.required],
                                             salulation: ['', Validators.required]
                                             });  
                                     }
@@ -657,7 +657,7 @@ export class ViewUnitComponent implements OnInit {
                                                 property: [this.id]
                                             })
                     ]),
-                    gender: ['male', Validators.required],
+                    gender: ['', Validators.required],
                     salulation: ['', Validators.required]
                 });    
         }
@@ -712,7 +712,7 @@ export class ViewUnitComponent implements OnInit {
                                                 property: [this.id]
                                             })
                     ]),
-                    gender: ['male', Validators.required],
+                    gender: ['', Validators.required],
                     salulation: ['', Validators.required]
                 });  
     }
@@ -739,7 +739,7 @@ export class ViewUnitComponent implements OnInit {
                     }),
                 authorized_property: this.formbuilder.array([this.initAuthorized()]),
                 remarks: [''],
-                gender: ['male', Validators.required],
+                gender: ['', Validators.required],
                 salulation: ['', Validators.required]
                 });    
         }else{
@@ -760,7 +760,7 @@ export class ViewUnitComponent implements OnInit {
                 owned_property: this.formbuilder.array([this.initOwned()]),
                 authorized_property: this.formbuilder.array([this.initAuthorized()]),
                 remarks: [''],
-                gender: ['male', Validators.required],
+                gender: ['', Validators.required],
                 salulation: ['', Validators.required]
                 });  
         }

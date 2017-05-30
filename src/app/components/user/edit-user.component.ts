@@ -73,7 +73,7 @@ export class EditUserComponent implements OnInit {
                         last_name: [''],
                         identification_no: [''],
                     }),
-                gender: ['male'],
+                gender: [''],
                 salulation: ['']
                 // default_property: this.formbuilder.group({
                 //     property: [''],
@@ -101,7 +101,7 @@ export class EditUserComponent implements OnInit {
                         last_name: [''],
                         identification_no: [''],
                     }),
-                    gender: ['male', Validators.required],
+                    gender: ['', Validators.required],
                     salulation: ['', Validators.required]
                 });
             this.userService.getById(this.id)
@@ -254,19 +254,38 @@ export class EditUserComponent implements OnInit {
                 if(model.username && model.email && model.password && model.confirmpassword && 
                    model.phone && model.role)
                    {
-                    model.default_development = this.name.default_development._id;
-                    this.loading = true;
-                    this.userService.createUser(model)
-                    .then(
-                        data => {
-                            this._notificationsService.success('Success', 'Create ' + model.role + ' successful')
-                            this.router.navigate([this.name.default_development.name_url + '/user']);
-                        },
-                        error => {
-                            this._notificationsService.error('Error', error.json().message)
-                            this.loading = false;
+                    if(model.role == 'user'){
+                        if(model.details.first_name && model.details.last_name && model.details.identification_no && 
+                            model.gender && model.salulation){
+                            model.default_development = this.name.default_development._id;
+                            this.loading = true;
+                            this.userService.createUser(model)
+                            .then(
+                                data => {
+                                    this._notificationsService.success('Success', 'Create ' + model.role + ' successful')
+                                    this.router.navigate([this.name.default_development.name_url + '/user']);
+                                },
+                                error => {
+                                    this._notificationsService.error('Error', error.json().message)
+                                    this.loading = false;
+                                }
+                            );   
                         }
-                    );   
+                    }else{
+                        model.default_development = this.name.default_development._id;
+                        this.loading = true;
+                        this.userService.createUser(model)
+                        .then(
+                            data => {
+                                this._notificationsService.success('Success', 'Create ' + model.role + ' successful')
+                                this.router.navigate([this.name.default_development.name_url + '/user']);
+                            },
+                            error => {
+                                this._notificationsService.error('Error', error.json().message)
+                                this.loading = false;
+                            }
+                        );   
+                    }
                 }
 
             }

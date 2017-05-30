@@ -85,7 +85,8 @@
 				<label class="control-label col-sm-4" for="property">Unit no :</label>
 				<div class="col-sm-8">
 					<div *ngIf="units">
-                        <select class="form-control" (change)="getLandlord($event)" [(ngModel)]="model.property" #property="ngModel" name="property" placeholder="Choose property" required>
+                        <select class="form-control" (change)="getLandlord($event)" [(ngModel)]="model.property" #property="ngModel" name="property" placeholder="Choose property" required [ngClass]="{ 'form-control-blur': model.property == undefined}">
+                           	<option disabled hidden value="undefined">Select unit no.</option>
                             <option *ngFor="let unit of units" [ngValue]="unit._id">
                                 #{{unit.address.unit_no}}-{{unit.address.unit_no_2}}
                             </option>
@@ -116,7 +117,8 @@
 			<div class="form-group" [ngClass]="{ 'has-error': f.submitted && !payment_method.valid }">
 				<label class="control-label col-sm-4" for="payment_method">Mode of payment :</label>
 				<div class="col-sm-8">
-					<select class="form-control" name="payment_method" [(ngModel)]="model.payment_method" #payment_method="ngModel" required placeholder="Input payment mode here">
+					<select class="form-control" name="payment_method" [(ngModel)]="model.payment_method" #payment_method="ngModel" required placeholder="Input payment mode here" [ngClass]="{ 'form-control-blur': model.payment_method == undefined}">
+						<option disabled hidden value="undefined">Select mode of payment</option>
 						<option value="cash">Cash At Management Office</option>
 						<option value="transfer">Bank Transfer</option>
 					</select>

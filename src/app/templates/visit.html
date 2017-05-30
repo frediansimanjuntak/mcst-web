@@ -228,13 +228,15 @@
 					<form name="form" [formGroup]="myForm" novalidate><br><br>
 						<div class="form-group" [ngClass]="{ 'has-error': addSubmitted && !myForm.controls.visitor.controls.prefix.valid }" formGroupName="visitor">
 							<div class="row no-margin">
-								<label class="control-label col-sm-4" for="prefix">Title :</label>
+								<label class="control-label col-sm-4" for="prefix">Salutation :</label>
 								<div class="col-sm-8">
-									<select class="form-control" formControlName="prefix" name="prefix">
-										<option [selected]="true" value="Mr">Mr</option>
+									<select class="form-control" formControlName="prefix" name="prefix" [ngClass]="{ 'form-control-blur': myForm.controls.visitor.controls.prefix.value =='' }" >
+										<option value="" style="color:gray" disabled selected>Select salutation</option>
+										<option value="Mr">Mr</option>
 										<option value="Mrs">Mrs</option>
 										<option value="Ms">Ms</option>
 									</select>
+									<small style="color: red" [hidden]="myForm.controls.visitor.controls.prefix.valid || (myForm.controls.visitor.controls.prefix.pristine && !addSubmitted)">Salutation is required</small>
 								</div>
 							</div>
 						</div>
@@ -268,21 +270,23 @@
 								<label class="control-label col-sm-4" for="unit_no">Visiting :</label>
 								<div class="col-sm-8">
 									<select  [ngClass]="{ 'form-control-blur': myForm.controls.property.value =='' }" class="form-control" formControlName="property" name="property">
-										<option disabled="" selected="" value="">Search Unit.no here</option>
+										<option disabled="" style="color:gray" selected="" value="">Search Unit.no here</option>
 										<option *ngFor="let u of dataUnit" [ngValue]="u._id">#{{u.address.unit_no}}-{{u.address.unit_no_2}}</option>
 									</select>
 									<small style="color: red" [hidden]="myForm.controls.property.valid || (myForm.controls.property.pristine && !addSubmitted)">Unit no is required</small>
 								</div>
 							</div>
 						</div>
-						<div class="form-group">
+						<div class="form-group"  [ngClass]="{ 'has-error': addSubmitted && !myForm.controls.purpose.valid }">
 							<div class="row no-margin">
 								<label class="control-label col-sm-4" for="purpose">Purpose of visit :</label>
 								<div class="col-sm-8">
-									<select class="form-control" formControlName="purpose" name="purpose">
+									<select class="form-control" formControlName="purpose" name="purpose" [ngClass]="{ 'form-control-blur': myForm.controls.purpose.value =='' }">
+										<option disabled="" style="color:gray" selected="" value="">Select purpose of visit</option>
 										<option selected="" value="house_visit">House Visit</option>
 										<option value="maintenance_work">Maintenance Work</option>
 									</select>
+									<small style="color: red" [hidden]="myForm.controls.purpose.valid || (myForm.controls.purpose.pristine && !addSubmitted)">Purpose of visit is required</small>
 								</div>
 							</div>
 						</div>

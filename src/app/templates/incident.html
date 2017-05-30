@@ -121,10 +121,10 @@
                                         <span>{{data.remark | capitalize}}</span>
                                     </template>
                                 </p-column>
-                                <p-column [style]="{'width':'75px'}" header="Photo">
+                                <p-column [style]="{'width':'85px'}" header="Photo">
                                     <template let-data="rowData" pTemplate="body">
-                                        <a *ngIf="data.attachment != null" style="text-decoration: underline;cursor:pointer" (click)="view(data)">View</a>
-                                        <a *ngIf="data.attachment == null">-</a>
+                                        <a *ngIf="data.attachment != null && data.attachment" style="text-decoration: underline;cursor:pointer" (click)="viewPhoto(data); photoModal.open()">View Photo</a>
+                                        <a *ngIf="data.attachment == null && !data.attachment">-</a>
                                     </template>
                                 </p-column>
                                 <p-column [filter]="true" [style]="{'text-transform': 'capitalize'}" filterPlaceholder="Search status" filterMatchMode="contains" field="status" header="Status" sortable="true"></p-column>
@@ -164,9 +164,9 @@
                                         <span>{{data.remark | capitalize}}</span>
                                     </template>
                                 </p-column>
-                                <p-column [style]="{'width':'75px'}" header="Photo">
+                                <p-column [style]="{'width':'85px'}" header="Photo">
                                     <template let-data="rowData" pTemplate="body">
-                                        <a *ngIf="data.attachment != null" style="text-decoration: underline;cursor:pointer" (click)="view(data)">View</a>
+                                        <a *ngIf="data.attachment != null" style="text-decoration: underline;cursor:pointer" (click)="viewPhoto(data)">View Photo</a>
                                         <a *ngIf="data.attachment == null">-</a>
                                     </template>
                                 </p-column>
@@ -207,9 +207,9 @@
                                         <span>{{data.remark | capitalize}}</span>
                                     </template>
                                 </p-column>
-                                <p-column [style]="{'width':'75px'}" header="Photo">
+                                <p-column [style]="{'width':'85px'}" header="Photo">
                                     <template let-data="rowData" pTemplate="body">
-                                        <a *ngIf="data.attachment != null" style="text-decoration: underline;cursor:pointer" (click)="view(data)">View</a>
+                                        <a *ngIf="data.attachment != null" style="text-decoration: underline;cursor:pointer" (click)="viewPhoto(data)">View Photo</a>
                                         <a *ngIf="data.attachment == null">-</a>
                                     </template>
                                 </p-column>
@@ -249,9 +249,9 @@
                                         <span>{{data.remark | capitalize}}</span>
                                     </template>
                                 </p-column>
-                                <p-column [style]="{'width':'75px'}" header="Photo">
+                                <p-column [style]="{'width':'85px'}" header="Photo">
                                     <template let-data="rowData" pTemplate="body">
-                                        <a *ngIf="data.attachment != null" style="text-decoration: underline;cursor:pointer" (click)="view(data)">View</a>
+                                        <a *ngIf="data.attachment != null" style="text-decoration: underline;cursor:pointer" (click)="viewPhoto(data)">View Photo</a>
                                         <a *ngIf="data.attachment == null">-</a>
                                     </template>
                                 </p-column>
@@ -291,9 +291,9 @@
                                         <span>{{data.remark | capitalize}}</span>
                                     </template>
                                 </p-column>
-                                <p-column [style]="{'width':'75px'}" header="Photo">
+                                <p-column [style]="{'width':'85px'}" header="Photo">
                                     <template let-data="rowData" pTemplate="body">
-                                        <a *ngIf="data.attachment != null" style="text-decoration: underline;cursor:pointer" (click)="view(data)">View</a>
+                                        <a *ngIf="data.attachment != null" style="text-decoration: underline;cursor:pointer" (click)="viewPhoto(data)">View Photo</a>
                                         <a *ngIf="data.attachment == null">-</a>
                                     </template>
                                 </p-column>
@@ -310,6 +310,13 @@
                         </tab>
                     </tabset>
                 </div>
+                <modal #photoModal>
+                    <modal-content>
+                        <div *ngIf="images">
+                            <p-galleria [images]="images" panelWidth="555" panelHeight="372"></p-galleria>
+                        </div>
+                    </modal-content>
+                </modal>
                 <div class="row">
                     <modal #firstModal>
                         <modal-header>

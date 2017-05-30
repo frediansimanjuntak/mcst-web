@@ -20,7 +20,7 @@
                     <div class="col-sm-8">
                           <div style="margin-bottom: 20px;">
                             <select [ngClass]="{ 'form-control-blur': model.chief =='' }"  class="form-control" name="chief" [(ngModel)]="model.chief">
-                                <option value="" disabled selected>Select chief</option>
+                                <option value="" style="color:gray" disabled selected>Select chief</option>
                                 <option *ngFor="let u of users" [ngValue]="u._id">{{u.username}}</option>
                             </select>
                             <span *ngIf="f.submitted && !model.chief" class="help-block">Chef No is required</span>
@@ -40,7 +40,7 @@
                                       (selected)="selected($event)"
                                       (removed)="removed($event)"
                                       [active] = "user"
-                                      placeholder="   Select users">
+                                      placeholder="   Select user">
                             </ng-select>
                         </div>
                     </div>
@@ -72,7 +72,7 @@
                     <div class="col-md-8">
                         <div>
                             <select [ngClass]="{ 'form-control-blur': model.chief =='' }"  class="form-control select-pc" name="chief" [(ngModel)]="model.chief">
-                                <option style="color:gray !important" value="" disabled selected>Select chief</option>
+                                <option style="color:gray" value="" disabled selected>Select chief</option>
                                 <option *ngFor="let u of users" [ngValue]="u._id">{{u.username}}</option>
                             </select>
                             <span *ngIf="f.submitted && !model.chief" class="help-block">Chief is required</span>
@@ -90,7 +90,7 @@
                                           (data)="refreshValueUser($event)"
                                           (selected)="selected($event)"
                                           (removed)="removed($event)"
-                                          placeholder="   Select users">
+                                          placeholder="   Select user">
                             </ng-select>
                         </div>
                     </div>

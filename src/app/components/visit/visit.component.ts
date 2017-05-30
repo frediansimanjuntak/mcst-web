@@ -88,9 +88,9 @@ export class VisitComponent implements OnInit {
                     full_name : ['',  <any>Validators.required],
                     vehicle : [''],
                     pass : [''],
-                    prefix: ['Mr']
+                    prefix: ['', Validators.required]
                 }),
-                purpose: ['house_visit'],
+                purpose: ['', Validators.required],
                 remarks : [''],
                 check_in: [false,<any>Validators.required],
                 check_out: [''],
