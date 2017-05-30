@@ -53,7 +53,15 @@ export class EditPaymentComponent implements OnInit{
 		this.userService.getByToken()
 		.subscribe(name => {
 			this.name = name.user;
-			this.unitService.getAll(this.name.default_development.name_url).subscribe(units => {this.units = units.properties})
+			this.unitService.getAll(this.name.default_development.name_url)
+			.subscribe(units => {
+				this.units = units.properties;
+				this.units = this.units.filter(data => data.landlord.data && 
+					data.landlord.data.resident ? data.landlord.data.resident : false &&  
+					data.landlord.data.resident != null && 
+					data.tenant.data && 
+					data.tenant.data.length > 0 )
+			})
 			setTimeout(() => this.loading = false, 1000);
 		})
 	}
