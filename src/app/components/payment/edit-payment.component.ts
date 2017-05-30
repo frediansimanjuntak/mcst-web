@@ -85,7 +85,7 @@ export class EditPaymentComponent implements OnInit{
 				this.router.navigate([this.name.default_development.name_url + '/payment_system']);
 			},
 			error => {
-				console.log(error);
+				this.userService.checkError(error.json().code)
 				this._notificationsService.error('Error', error.json().message)
 				this.loading = false;
 			}
@@ -108,7 +108,7 @@ export class EditPaymentComponent implements OnInit{
 					this.router.navigate([this.name.default_development.name_url + '/payment_system']);
 				},
 				error => {
-					console.log(error);
+					this.userService.checkError(error.json().code)
 					this._notificationsService.error('Error', error.json().message)
 					this.loading = false;
 				}

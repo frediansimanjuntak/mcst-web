@@ -103,7 +103,7 @@ export class PetitionComponent implements OnInit {
               }
             },
             error=> {
-              console.log(error);
+              this.userService.checkError(error.json().code)
                 alert(`The Petition could not be deleted, server Error.`);
             }
         );
@@ -245,7 +245,7 @@ export class PetitionComponent implements OnInit {
                         this._notificationsService.success('Success', 'Archive requests successful')
                     },
                     error => {
-                        console.log(error);
+                        this.userService.checkError(error.json().code)
                         this._notificationsService.error('Error', error.json().message)
                         this.loading = false;
                     }

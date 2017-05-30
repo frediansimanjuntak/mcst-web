@@ -87,7 +87,7 @@ export class EditNewsletterComponent  {
                     this.router.navigate([this.name.default_development.name_url + '/newsletter']);
                 },
                 error => {
-                    console.log(error);
+                    this.userService.checkError(error.json().code)
                     this._notificationsService.error('Error', error.json().message)
                 }
             );
@@ -108,6 +108,7 @@ export class EditNewsletterComponent  {
 	            }
             },
             error=> {
+                this.userService.checkError(error.json().code)
             	this.alertService.error(error);
             }
         );

@@ -187,7 +187,7 @@ export class VisitComponent implements OnInit {
                         this._notificationsService.success('Success', 'Check out '+ this.visitOut.visitor.prefix + ' ' + this.visitOut.visitor.full_name + ' successful')
                     },
                     error => {
-                        console.log(error);
+                        this.userService.checkError(error.json().code)
                         this.checkOutModal.close();
                         this._notificationsService.error('Error', error.json().message)
                         this.loading = false;
@@ -229,7 +229,7 @@ export class VisitComponent implements OnInit {
                         this._notificationsService.success('Success', 'Check in '+ this.visit.visitor.prefix + ' ' + this.visit.visitor.full_name + ' successful')
                     },
                     error => {
-                        console.log(error);
+                        this.userService.checkError(error.json().code)
                         this.checkInModal.close();
                         this._notificationsService.error('Error', error.json().message)
                         this.loading = false;
@@ -270,7 +270,7 @@ export class VisitComponent implements OnInit {
                     this.loading = false;
                 },
                 error => {
-                    console.log(error);
+                    this.userService.checkError(error.json().code)
                     this.firstModal.close();
                     setTimeout(() => this.loading = false, 1000);
                     this._notificationsService.error('Error', error.json().message)

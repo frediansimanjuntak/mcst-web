@@ -60,19 +60,13 @@ export class ContactComponent  implements OnInit{
     deleteContact(id: string){
     	this.contactService.delete(id).then(
     		data => {
-                    this.ngOnInit()
-                    this._notificationsService.success(
-                            'Success',
-                            'Delete contact successful',
-                    )
-                },
-                error => {
-                    console.log(error);
-                    this._notificationsService.error(
-                            'Error',
-                            'Failed to delete, server error',
-                    )
-                    setTimeout(() => this.loading = false, 1000);
+                this.ngOnInit()
+                this._notificationsService.success('Success', 'Delete contact successful')
+            },
+            error => {
+                this.userService.checkError(error.json().code)
+                this._notificationsService.error('Error', error.json().message)
+                setTimeout(() => this.loading = false, 1000);
             }
     	)
     }
@@ -102,22 +96,17 @@ export class ContactComponent  implements OnInit{
         this.loading = true;
         this.contactService.create(this.model)
             .then(
-                data =>{
-                    this._notificationsService.success(
-                        "Success",
-                        "Contact saved"
-                    )    
+                data => {
+                    this._notificationsService.success("Success", "Contact saved")    
                     this.loading = false;
                     this.submitted =false;
                     this.modalOthersForm.close()
                     this.modalEmergencyForm.close()
                     this.ngOnInit()
                 },
-                error =>{
-                    this._notificationsService.error(
-                        "Error",
-                        "Server error"
-                    )    
+                error => {
+                    this.userService.checkError(error.json().code)
+                    this._notificationsService.error("Error", error.json().message)    
                     this.loading = false;
                 }
             )
@@ -127,22 +116,17 @@ export class ContactComponent  implements OnInit{
         this.loading = true;
         this.contactService.update(this.model, this.model._id)
             .then(
-                data =>{
-                    this._notificationsService.success(
-                        "Success",
-                        "Contact saved"
-                    )    
+                data => {
+                    this._notificationsService.success( "Success" ,"Contact saved")    
                     this.submitted =false;
                     this.loading = false;
                     this.modalOthersForm.close()
                     this.modalEmergencyForm.close()
                     this.ngOnInit()
                 },
-                error =>{
-                    this._notificationsService.error(
-                        "Error",
-                        "Server error"
-                    )    
+                error => {
+                    this.userService.checkError(error.json().code)
+                    this._notificationsService.error("Error", error.json().message)    
                     this.loading = false;
                 }
             )

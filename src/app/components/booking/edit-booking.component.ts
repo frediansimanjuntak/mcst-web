@@ -241,7 +241,7 @@ export class EditBookingComponent implements OnInit  {
 				this.router.navigate([this.name.default_development.name_url + '/booking']);
 			},
 			error => {
-				console.log(error);
+				this.userService.checkError(error.json().code)
 				this._notificationsService.error('Failed', error.json().message)
 				this.loading = false
 			}
@@ -287,7 +287,7 @@ export class EditBookingComponent implements OnInit  {
 				   this.times_end.push(start)
 			}
 			this.loading = false
-		});
+		}, error => this.userService.checkError(error.json().code));
 	}
 
 	startTime(start){
@@ -306,7 +306,7 @@ export class EditBookingComponent implements OnInit  {
 			}
 			this.model.start = start
 			this.loading = false
-		});
+		}, error => );
 	}
 
 	filter(){
@@ -505,7 +505,7 @@ export class EditBookingComponent implements OnInit  {
 				this.model.sender_name = this.unit.tenant.data[0].resident.username;
 			}
 			setTimeout(() => this.loading = false, 1000);
-		});
+		},error => this.userService.checkError(error.json().code));
 	}
 	
 }

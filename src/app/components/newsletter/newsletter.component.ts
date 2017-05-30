@@ -77,7 +77,7 @@ export class NewsletterComponent implements OnInit {
                     this.ngOnInit();
                 },
                 error => {
-                    console.log(error);
+                    this.userService.checkError(error.json().code)
                     this._notificationsService.error('Error', error.json().message)
                     this.loading = false
                 }
@@ -106,7 +106,7 @@ export class NewsletterComponent implements OnInit {
                     this.ngOnInit();
                 },
                 error => {
-                    console.log(error);
+                    this.userService.checkError(error.json().code)
                     this.firstModal.close();
                     this._notificationsService.error('Error', error.json().message)
                     this.loading = false
