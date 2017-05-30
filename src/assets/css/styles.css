@@ -1185,5 +1185,8 @@ p.field-box.no-margin {
 .usergroup input.ui-select-search{
     font-weight: 100 !important;
 }
+.blur-font{
+    color:gray;
+}
 
 

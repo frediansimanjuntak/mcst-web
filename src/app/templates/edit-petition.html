@@ -10,7 +10,7 @@
                         <label class="control-label col-sm-4" for="petition_type">Request Type :</label>
                         <div class="col-sm-8">
                             <select [ngClass]="{ 'form-control-blur': myForm.controls.petition_type.value =='' }" class="form-control select-pc" name="petition_type" id="petition_type" formControlName="petition_type" placeholder="Choose Petition Type">
-                                <option disabled style="color:gray" value="" [selected]=true>Select request type</option>
+                                <option disabled  class="blur-font" value="" [selected]=true>Select request type</option>
                                 <option value="moving in" >Moving In</option>
                                 <option value="moving out" >Moving Out</option>
                                 <option value="renovation">Renovation</option>
