@@ -14,11 +14,11 @@
 				</div>
 				<div class="row">
 					<div class="col-md-4 col-padding"><b>Development </b></div>
-					<div class="col-md-8 col-padding">: {{ petition.development.name }}</div>
+					<div class="col-md-8 col-padding">: {{petition.development.name}}</div>
 				</div>
 				<div class="row">
 					<div class="col-md-4 col-padding"><b>Unit No </b></div>
-					<div class="col-md-8 col-padding" *ngIf="petition.unit_no">: {{ petition.unit_no }}</div>
+					<div class="col-md-8 col-padding" *ngIf="petition.unit_no">: {{petition.unit_no}}</div>
 					<div class="col-md-8 col-padding" *ngIf="!petition.unit_no">: -</div>
 				</div>
 				<div class="row">
@@ -35,28 +35,28 @@
 				</div>
 				<div class="row">
 					<div class="col-md-4 col-padding"><b>Type </b></div>
-					<div class="col-md-8 col-padding">: {{ petition.petition_type | capitalize}}</div>
+					<div class="col-md-8 col-padding">: {{petition.petition_type | capitalize}}</div>
 				</div>
 				<div class="row">
 					<div class="col-md-4 col-padding"><b>Remark </b></div>
-					<div class="col-md-8 col-padding" *ngIf="petition.remark">: {{ petition.remark }}</div>
+					<div class="col-md-8 col-padding" *ngIf="petition.remark">: {{petition.remark}}</div>
 					<div class="col-md-8 col-padding" *ngIf="!petition.remark">: -</div>
 				</div>
 				<div class="row">
 					<div class="col-md-4 col-padding"><b>Status </b></div>
-					<div class="col-md-8 col-padding">: {{ petition.status | capitalize}}</div>
+					<div class="col-md-8 col-padding">: {{petition.status | capitalize}}</div>
 				</div>
 				<div class="row">
 					<div class="col-md-4 col-padding"><b>Requested By </b></div>
-					<div class="col-md-8 col-padding"><span *ngIf="petition.created_by">: {{ petition.created_by.username | capitalize}}</span></div>
+					<div class="col-md-8 col-padding"><span *ngIf="petition.created_by">: {{petition.created_by.username | capitalize}}</span></div>
 				</div>
 				<div class="row">
 					<div class="col-md-4 col-padding"><b>Since </b></div>
-					<div class="col-md-8 col-padding">: {{ petition.created_at | date:'longDate' }}</div>
+					<div class="col-md-8 col-padding">: {{petition.created_at | date:'longDate'}}</div>
 				</div>
 				<div class="row">
 					<div class="col-md-4 col-padding"><b>Last Updated on </b></div>
-					<div class="col-md-8 col-padding" *ngIf="petition.updated_at">: {{ petition.updated_at | date:'longDate'}}</div>
+					<div class="col-md-8 col-padding" *ngIf="petition.updated_at">: {{petition.updated_at | date:'longDate'}}</div>
 					<div class="col-md-8 col-padding" *ngIf="!petition.updated_at">: -</div>
 				</div>
 			</div>
@@ -88,12 +88,11 @@
 					    <div class="input-group">
 					        <label class="control-label col-sm-4" for="type">Type :</label>
 					        <div class="col-sm-8 no-padding">
-					          <select class="form-control" name="selectedType" (change)="filterType($event)" [(ngModel)]="typeFilter">
+					          <select class="form-control" style="width: 140px;" name="selectedType" (change)="filterType($event)" [(ngModel)]="typeFilter">
 					            <option value="" selected="selected">All</option>
-					            <option value="moving_in">Moving in</option>
+					            <option value="moving">Moving In/Out</option>
 					            <option value="renovation">Renovation</option>
-					            <option value="add_tenant">Add Tenant/family</option>
-					            <option value="maintenance">Maintenance</option>
+					            <option value="tenant">New Tenant</option>
 					          </select>
 					        </div>
 					    </div>
@@ -146,7 +145,7 @@
 							<template class="pull-right" let-petitions="rowData" pTemplate="body">
 								<a type="button" style="cursor:pointer; margin: 0 25px 0 5px;" class="btn-underline" (click)="viewPetition(petitions)">View</a>
 								<!-- <a (click)="viewPdf(petitions)" style="cursor:pointer; margin: 0 25px 0 5px;" class="btn-underline"><img src="../../assets/image/icon_pdf.png" class="img-btn" />Pdf</a> -->
-								<a style="cursor:pointer; margin: 0 25px 0 5px;" class="btn-underline"><img src="../../assets/image/icon_pdf.png" class="img-btn" />Pdf</a>
+								<a style="cursor:pointer; margin: 0 25px 0 5px;" class="btn-underline" [attr.href]="pdfUrl" download><img src="../../assets/image/icon_pdf.png" class="img-btn" />Pdf</a>
 								<p-checkbox name="archive" (click)="checkSelected()" value="{{petitions._id}}" [(ngModel)]="selectedValues"></p-checkbox>
 							</template>
 						</p-column>

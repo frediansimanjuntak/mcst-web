@@ -59,7 +59,7 @@ export class PetitionComponent implements OnInit {
     }
     name: any;
     loading: boolean = true;
-
+    pdfUrl = 'https://mcst-app.s3-ap-southeast-1.amazonaws.com/attachment/letter_of_authorization_and_indemnity.pdf';
     constructor(
                 private router: Router,
                 private petitionService: PetitionService,

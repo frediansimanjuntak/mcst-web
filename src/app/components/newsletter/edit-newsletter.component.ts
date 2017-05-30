@@ -39,7 +39,7 @@ export class EditNewsletterComponent  {
             setTimeout(() => this.loading = false, 1000);
         })
         this.model.released = false;
-        this.model.type = 'agm';
+        // this.model.type = 'agm';
         this.model.attachment = [];
         this.myForm = this.formbuilder.group({
             newsletter: this.formbuilder.group({
@@ -91,6 +91,8 @@ export class EditNewsletterComponent  {
                     this._notificationsService.error('Error', error.json().message)
                 }
             );
+        }else{
+            this.loading = false
         }
     }
 
