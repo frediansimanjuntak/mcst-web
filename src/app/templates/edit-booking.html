@@ -87,16 +87,16 @@
                             <div *ngIf="filtered != null">
                                 <table class="tableSection table-striped time-slots-table">
                                     <tbody>
-                                        <tr *ngFor="let a of timeStart; let i=index ; let b of timeEnd; let c of booking_status">
-                                            <td class="space-left">{{timeStart[i]}}{{min}} - {{timeEnd[i]}}{{min}}</td>
+                                        <tr *ngFor="let timing of timings; let i=index ">
+                                            <td class="space-left">{{timing.time}} - {{timing.time2}}</td>
                                             <td>{{facility_name}}</td>
                                             <td>
-                                                <i *ngIf="booking_status[i] == 'Available'" class="fa fa-circle circle-green" aria-hidden="true"></i>
-                                                <i *ngIf="booking_status[i] == 'Not Available'" class="fa fa-circle circle-red" aria-hidden="true"></i>
-                                                {{booking_status[i]}}
+                                                <i *ngIf="timing.status == 'Available'" class="fa fa-circle circle-green" aria-hidden="true"></i>
+                                                <i *ngIf="timing.status == 'Not Available'" class="fa fa-circle circle-red" aria-hidden="true"></i>
+                                                {{timing.status}}
                                             </td>
-                                            <p-checkbox *ngIf="booking_status[i] == 'Not Available'" value="{{i}}" disabled="true" name="archive" (click)="getSelected(timeStart[i],timeEnd[i],min,facility_name,facility_type)" [(ngModel)]="selectedValues[i]"></p-checkbox>
-                                            <p-checkbox *ngIf="booking_status[i] == 'Available'" name="archive" (click)="getSelected(timeStart[i],timeEnd[i],min,facility_name,facility_type)" value="{{i}}" [(ngModel)]="selectedValues"></p-checkbox>
+                                            <p-checkbox *ngIf="timing.status == 'Not Available'" value="{{i}}" disabled="true" name="archive" (click)="getSelected(timeStart[i],timeEnd[i],min,facility_name,facility_type)" [(ngModel)]="selectedValues[i]"></p-checkbox>
+                                            <p-checkbox *ngIf="timing.status == 'Available'" (onChange)="getSelected(timing,facility_name)" value="{{i}}" [(ngModel)]="selectedValues"></p-checkbox>
                                         </tr>
                                     </tbody>
                                 </table>
