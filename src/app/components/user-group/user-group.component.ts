@@ -68,7 +68,7 @@ export class UserGroupComponent implements OnInit {
                     this.loadAllUserGroup()
                 },
                 error => {
-                    console.log(error);
+                    this.userService.checkError(error.json().code)
                     this._notificationsService.error('Error', error.json().message)
                     this.loading = false;
             }

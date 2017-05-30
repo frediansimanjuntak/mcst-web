@@ -83,7 +83,7 @@ export class EditContractComponent  implements OnInit {
                     this.router.navigate([this.name.default_development.name_url + '/contract' ]);
                 },
                 error => {
-                    console.log(error);
+                    this.userService.checkError(error.json().code)
                     this._notificationsService.error('Error', error.json().message)
                     setTimeout(() => this.loading = false, 1000);
                 }
@@ -130,6 +130,7 @@ export class EditContractComponent  implements OnInit {
                     this.router.navigate([this.name.default_development.name_url + '/contract/view', this.contract._id ]);
                 },
                 error => {
+                    this.userService.checkError(error.json().code)
                     this._notificationsService.error('Error', error.json().message)
                     this.loading = false
                 }

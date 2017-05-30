@@ -56,6 +56,7 @@ export class FacilityComponent implements OnInit {
                 this.loadAllFacilities()
             },
             error => {
+                this.userService.checkError(error.json().code)
                 this._notificationsService.error('Error', 'The facility could not be deleted, server Error')
                 setTimeout(() => this.loading = false, 1000);
             }

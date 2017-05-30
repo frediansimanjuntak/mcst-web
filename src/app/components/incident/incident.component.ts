@@ -106,6 +106,7 @@ export class IncidentComponent implements OnInit {
                 this.ngOnInit()
             },
             error => {
+                this.userService.checkError(error.json().code)
                 this._notificationsService.error('Error','The incident report could not be update, server Error')
                 setTimeout(() => this.loading = false, 1000);
             }
@@ -121,7 +122,7 @@ export class IncidentComponent implements OnInit {
                 this.ngOnInit();
             },
             error => {
-                console.log(error);
+                this.userService.checkError(error.json().code)
                 this._notificationsService.error('Error', error.json().message)
                 setTimeout(() => this.loading = false, 1000);
             }
@@ -235,7 +236,7 @@ export class IncidentComponent implements OnInit {
                 this.ngOnInit();
             },
             error => {
-                console.log(error);
+                this.userService.checkError(error.json().code)
                 this._notificationsService.error('Error', error.json().message)
                 setTimeout(() => this.loading = false, 1000);
             }
@@ -261,7 +262,7 @@ export class IncidentComponent implements OnInit {
                     this.ngOnInit();
                 },
                 error => {
-                    console.log(error);
+                    this.userService.checkError(error.json().code)
                     this._notificationsService.error('Error', error.json().message)
                     setTimeout(() => this.loading = false, 1000);
                 }
@@ -277,7 +278,7 @@ export class IncidentComponent implements OnInit {
                 this.ngOnInit();
             },
             error => {
-                console.log(error);
+                this.userService.checkError(error.json().code)
                 this._notificationsService.error('Error', error.json().message)
                 setTimeout(() => this.loading = false, 1000);
             }
@@ -303,7 +304,7 @@ export class IncidentComponent implements OnInit {
                 this.ngOnInit();
             },
             error => {
-                console.log(error);
+                this.userService.checkError(error.json().code)
                 this._notificationsService.error('Error', error.json().message)
                 setTimeout(() => this.loading = false, 1000);
             }
