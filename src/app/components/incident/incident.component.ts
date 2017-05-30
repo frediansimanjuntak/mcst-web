@@ -3,7 +3,7 @@ import { Router, Params, ActivatedRoute } from '@angular/router';
 import { Incident } from '../../models/index';
 import { EditContractComponent } from '../index';
 import { IncidentService, AlertService, UserService, UnitService } from '../../services/index';
-
+import { ModalDirective } from 'ng2-bootstrap';
 import { NotificationsService } from 'angular2-notifications';
 import { Observable } from 'rxjs/Observable';
 import { FileUploader } from 'ng2-file-upload';
@@ -20,13 +20,15 @@ import { ConfirmationService } from 'primeng/primeng';
 
 export class IncidentComponent implements OnInit {
     @ViewChild('firstModal') firstModal;
+     @ViewChild('photoModal') photoModal: ModalDirective;
     reference_type: any; 
     reference_id: any; 
     users: any[]
 	incident: Incident;
     incidents: Incident[] = [];
+    datas: any
     model: any = {};
-    images: any[];
+    images: any[] = [];
     id: string;
     _id: string;
     name: any;
@@ -129,11 +131,17 @@ export class IncidentComponent implements OnInit {
 	private loadAllIncident() {
 		this.incidentService.getAll().subscribe(incidents => {
             this.all = incidents
-	        this.incidents = incidents.filter(incidents => incidents.archieve === false); ;
+            for (let z = 0; z < incidents.length; ++z) {
+                if (incidents[z].attachment.length < 1) {
+                    incidents[z].attachment = null
+                }
+            }
+	        this.incidents = incidents.filter(incidents => incidents.archieve === false);
             this.dataNew = this.incidents.filter(incidents => incidents.status === 'new');
             this.dataInProgress = this.incidents.filter(incidents => incidents.status === 'in progress');
             this.dataResolved   = this.incidents.filter(incidents => incidents.status === 'resolve');
             this.dataArchieved   = this.all.filter(incidents => incidents.archieve === true );
+            console.log(incidents)
             setTimeout(() => this.loading = false, 1000);
 		});
     }
@@ -141,10 +149,10 @@ export class IncidentComponent implements OnInit {
     filter(){
         this.loading=true;
         if(this.typeFilter != ''){
-            this.incidents  = this.all.filter(data => 
-                data.reference_no.toLowerCase().indexOf(this.dataFilter.toLowerCase()) !==  -1 &&
-                data.incident_type.toLowerCase().indexOf(this.typeFilter.toLowerCase()) !==  -1 &&
-                data.archieve === false
+            this.incidents  = this.all.filter(data =>  data.reference_no ? data.reference_no.toLowerCase().indexOf(this.dataFilter.toLowerCase()) !==  -1 : false  &&
+                data.incident_type ? data.incident_type.toLowerCase().indexOf(this.typeFilter.toLowerCase()) !==  -1 : false &&
+                data.archieve ? data.archieve === false : false
+                
             );
             this.dataNew = this.incidents.filter(incidents => incidents.status === 'new' && incidents.archieve === false);
             this.dataInProgress = this.incidents.filter(incidents => incidents.status === 'in progress' && incidents.archieve === false);
@@ -188,7 +196,15 @@ export class IncidentComponent implements OnInit {
     }
 
     viewPhoto(incident: Incident){
-        this.router.navigate([this.name.default_development.name_url + '/incident/view/photo', incident._id]);
+        this.loading = true
+        this.images = []
+        this.datas = incident
+        console.log(this.datas)
+        for (var i = 0; i < this.datas.attachment.length; ++i) {
+            this.images.push({source:this.datas.attachment[i].url});
+        };
+        console.log(this.images)
+        setTimeout(() => { this.loading = false }, 1000);
     }
 
     viewContract(id: any){
@@ -281,16 +297,16 @@ export class IncidentComponent implements OnInit {
     unstarred(incident:Incident) {
         this.loading = true
         this.incidentService.unstarred(incident._id)
-            .then(
-                data => {
-                    this._notificationsService.success('Success', 'Unstarred incident successful')
-                    this.ngOnInit();
-                },
-                error => {
-                    console.log(error);
-                    this._notificationsService.error('Error', error.json().message)
-                    setTimeout(() => this.loading = false, 1000);
-                }
-            );
+        .then(
+            data => {
+                this._notificationsService.success('Success', 'Unstarred incident successful')
+                this.ngOnInit();
+            },
+            error => {
+                console.log(error);
+                this._notificationsService.error('Error', error.json().message)
+                setTimeout(() => this.loading = false, 1000);
+            }
+        );
     }
 }
