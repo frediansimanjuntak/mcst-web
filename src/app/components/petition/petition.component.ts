@@ -59,7 +59,7 @@ export class PetitionComponent implements OnInit {
     }
     name: any;
     loading: boolean = true;
-
+    pdfUrl = 'https://mcst-app.s3-ap-southeast-1.amazonaws.com/attachment/letter_of_authorization_and_indemnity.pdf';
     constructor(
                 private router: Router,
                 private petitionService: PetitionService,
@@ -103,7 +103,7 @@ export class PetitionComponent implements OnInit {
               }
             },
             error=> {
-              console.log(error);
+              this.userService.checkError(error.json().code)
                 alert(`The Petition could not be deleted, server Error.`);
             }
         );
@@ -245,7 +245,7 @@ export class PetitionComponent implements OnInit {
                         this._notificationsService.success('Success', 'Archive requests successful')
                     },
                     error => {
-                        console.log(error);
+                        this.userService.checkError(error.json().code)
                         this._notificationsService.error('Error', error.json().message)
                         this.loading = false;
                     }

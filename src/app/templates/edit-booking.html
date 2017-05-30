@@ -30,7 +30,8 @@
                                     <div class="row">
                                         <div class="col-md-3"><p class="pull-down">Facility :</p></div>
                                         <div class="col-md-9"><p>
-                                            <select disabled name="name" class="form-control" (change)="time()" [(ngModel)]="model.facility" #facility="ngModel" style="width: 237px">
+                                            <select disabled name="name" class="form-control" (change)="time()" [(ngModel)]="model.facility" #facility="ngModel" style="width: 237px" [ngClass]="{ 'form-control-blur': model.facility == undefined}">
+                                                <option disabled hidden value="undefined">Select facility</option>
                                                 <option *ngFor="let facility of selectedFacility"  [ngValue]="facility._id">{{facility.name}}</option>
                                             </select>
                                         </p></div>
@@ -56,7 +57,8 @@
                                     <div class="row">
                                         <div class="col-md-3"><p class="pull-down">Facility :</p></div>
                                         <div class="col-md-9"><p>
-                                            <select name="name" class="form-control" (change)="time()" [(ngModel)]="model.facility" #facility="ngModel" style="width: 237px">
+                                            <select name="name" class="form-control" (change)="time()" [(ngModel)]="model.facility" #facility="ngModel" style="width: 237px" [ngClass]="{ 'form-control-blur': model.facility == undefined}">
+                                                <option disabled hidden value="undefined">Select facility</option>
                                                 <option *ngFor="let facility of selectedFacility"  [ngValue]="facility._id">{{facility.name}}</option>
                                             </select>
                                         </p></div>
@@ -64,10 +66,12 @@
                                     <div class="row">
                                         <div class="col-md-3"><p class="pull-down">Period :</p></div>
                                         <div class="col-md-9"><p>
-                                            <select name="start" class="form-control" (change)="startTime(model.start)" [(ngModel)]="model.start" #start="ngModel" style="width: 116px;float: left; margin-right: 5px;">
+                                            <select name="start" class="form-control" (change)="startTime(model.start)" [(ngModel)]="model.start" #start="ngModel" style="width: 116px;float: left; margin-right: 5px;" [ngClass]="{ 'form-control-blur': model.start == undefined}">
+                                                <option disabled hidden value="undefined">From</option>
                                                 <option *ngFor="let start of times_start" [ngValue]="start"><span *ngIf="start < 10">0</span>{{start}}{{min}}</option>
                                             </select>
-                                            <select name="end" class="form-control" [(ngModel)]="model.end" #end="ngModel" style="width: 116px">
+                                            <select name="end" class="form-control" [(ngModel)]="model.end" #end="ngModel" style="width: 116px" [ngClass]="{ 'form-control-blur': model.end == undefined}">
+                                                <option disabled hidden value="undefined">To</option>
                                                 <option *ngFor="let end of times_end" [ngValue]="end"><span *ngIf="end < 10">0</span>{{end}}{{min}}</option>
                                             </select>
                                         </p></div>

@@ -39,7 +39,7 @@ export class EditNewsletterComponent  {
             setTimeout(() => this.loading = false, 1000);
         })
         this.model.released = false;
-        this.model.type = 'agm';
+        // this.model.type = 'agm';
         this.model.attachment = [];
         this.myForm = this.formbuilder.group({
             newsletter: this.formbuilder.group({
@@ -87,10 +87,12 @@ export class EditNewsletterComponent  {
                     this.router.navigate([this.name.default_development.name_url + '/newsletter']);
                 },
                 error => {
-                    console.log(error);
+                    this.userService.checkError(error.json().code)
                     this._notificationsService.error('Error', error.json().message)
                 }
             );
+        }else{
+            this.loading = false
         }
     }
 
@@ -108,6 +110,7 @@ export class EditNewsletterComponent  {
 	            }
             },
             error=> {
+                this.userService.checkError(error.json().code)
             	this.alertService.error(error);
             }
         );

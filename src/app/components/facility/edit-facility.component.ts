@@ -202,6 +202,7 @@ export class EditFacilityComponent  {
 					this.router.navigate([this.name.default_development.name_url + '/facility']);
 				},
 				error => {
+                	this.userService.checkError(error.json().code)
 					this._notificationsService.error('Error', error.json().message)
 					setTimeout(() => this.loading = false, 1000);
 				}
@@ -241,6 +242,7 @@ export class EditFacilityComponent  {
 					this.router.navigate([this.name.default_development.name_url + '/facility']);
 				},
 				error => {
+                	this.userService.checkError(error.json().code)
 					this._notificationsService.error('Error', error.json().message)
 					setTimeout(() => this.loading = false, 1000);
 				}

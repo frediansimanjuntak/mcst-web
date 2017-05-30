@@ -90,7 +90,7 @@ export class EditLostFoundComponent  {
                     this.router.navigate([this.name.default_development.name_url + '/lost_found']);
                 },
                 error => {
-                    console.log(error);
+                    this.userService.checkError(error.json().code)
                     this._notificationsService.error('Error', error.json().message)
                     this.loading = true
                 }

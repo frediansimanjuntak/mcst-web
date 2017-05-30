@@ -40,7 +40,7 @@
 				</div>
 				<div class="row" *ngIf="poll.outcome">
 					<div class="col-md-4 col-padding"><b>Outcome</b></div>
-					<div class="col-md-8 col-padding"><span style="color: red">: <b>{{poll.outcome}}</b></span></div>
+					<div class="col-md-8 col-padding">:<span style="color: red"><b> {{poll.outcome}}</b></span></div>
 				</div>
 				<div *ngIf="poll.status=='end poll'" class="row">
 					<div class="col-md-4 col-padding"><b>Commence Date</b></div>
@@ -96,19 +96,19 @@
 
 						    <p-column field="open_to" header="Open to" sortable="true" >
 						    		<template let-pollsDraft="rowData" pTemplate="body">
-										<span *ngIf="pollsDraft.open_to">{{ pollsDraft.open_to }}</span>
+										<span *ngIf="pollsDraft.open_to">{{pollsDraft.open_to}}</span>
 										<span *ngIf="!pollsDraft.open_to">-</span>
 									</template>
 						    </p-column>
 							<p-column field="start_time" [style]="{'width':'150px'}" header="Commence date" sortable="true">
 								<template let-pollsDraft="rowData" pTemplate="body">
-										<span *ngIf="pollsDraft.start_time">{{ pollsDraft.start_time | date:'d/M/y' }}</span>
+										<span *ngIf="pollsDraft.start_time">{{pollsDraft.start_time | date:'d/M/y'}}</span>
 										<span *ngIf="!pollsDraft.start_time">-</span>
 								</template>
 							</p-column>
 							<p-column field="end_time" header="Result date" sortable="true">
 								<template let-pollsDraft="rowData" pTemplate="body">
-										<span *ngIf="pollsDraft.end_time">{{ pollsDraft.end_time | date:'d/M/y'}}</span>
+										<span *ngIf="pollsDraft.end_time">{{pollsDraft.end_time | date:'d/M/y'}}</span>
 										<span *ngIf="!pollsDraft.end_time">-</span>
 								</template>
 							</p-column>

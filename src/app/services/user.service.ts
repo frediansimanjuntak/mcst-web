@@ -4,11 +4,12 @@ import { Observable } from 'rxjs/Rx';
 import { User, Users } from '../models/index';
 import { AuthenticationService } from '../services/index';
 import { url } from '../global';
+import { Router } from '@angular/router';
 import 'rxjs/add/operator/toPromise';
  
 @Injectable()
 export class UserService {
-    constructor(private http: Http, private authenticationService: AuthenticationService) {}
+    constructor(private http: Http, private authenticationService: AuthenticationService, private router: Router) {}
 
     getUsers(): Promise<User[]> {
         return Promise.resolve(Users);
@@ -70,6 +71,16 @@ export class UserService {
           .toPromise()
           .then(() => null)
           .catch(this.handleError);
+    }
+
+    checkError(code: number){
+        if (code == 412) {
+            this.router.navigate(['/login']);
+        } else if (code == 411) {
+           this.router.navigate(['/login']);
+        } else {
+            // nothing happen
+        }
     }
 
     private handleError(error: any): Promise<any> {

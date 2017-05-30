@@ -115,7 +115,7 @@
 
                             <br><br><br>
                             <div class="row no-margin pull-bottom-right">
-                                <button class="btn btn-primary btn-brown" (click)="submitted = true;save(model.contact&&model.name)">Save</button>
+                                <button class="btn btn-primary btn-brown" (click)="submitted = true;saveEmergency(model.contact&&model.name)">Save</button>
                                 <button class="btn btn-primary btn-gray" (click)="modalEmergencyForm.close() || clearModel() ">Cancel</button>
                             </div>
                         </form>
@@ -141,7 +141,7 @@
                             </div>
                             <div class="form-group" [ngClass]="{ 'has-error': submitted && !model.contact }">
                                 <div class="row no-margin">
-                                    <label class="control-label col-sm-4" for="contact">input contact no. here:</label>
+                                    <label class="control-label col-sm-4" for="contact">Input contact no. here:</label>
                                     <div class="col-sm-8">
                                         <input type="text" class="form-control" placeholder="Input contact no. here" name="contact"  [(ngModel)]="model.contact" #contact="ngModel" required>
                                         <span *ngIf="submitted && !model.contact" class="help-block">Contact No. is required</span>
@@ -186,7 +186,7 @@
 
                             <br><br><br>
                             <div class="row no-margin pull-bottom-right">
-                                <button class="btn btn-primary btn-brown" (click)="submitted = true; save(model.name&&model.contact&&model.address&&model.register_number&&model.service)">Save</button>
+                                <button class="btn btn-primary btn-brown" (click)="submitted = true; saveOthers(model.name&&model.contact&&model.address&&model.register_number&&model.service)">Save</button>
                                 <button class="btn btn-primary btn-gray" (click)="modalOthersForm.close() || clearModel() || g.submitted = false">Cancel</button>
                             </div>
                         </form>

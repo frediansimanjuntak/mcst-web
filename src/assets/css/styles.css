@@ -885,7 +885,7 @@ p.pull-down {
 .mydp .btnpicker{ 
   color: #fff !important; 
 } 
-.mydp{
+.form-group .mydp{
   padding-left: 6px;
   width: 100% !important;
 }

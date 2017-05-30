@@ -95,7 +95,7 @@ export class LostFoundComponent implements OnInit {
                 this.ngOnInit();
             },
             error => {
-                console.log(error);
+                this.userService.checkError(error.json().code)
                 this._notificationsService.error('Error', error.json().message)
                 this.loading = false
             }
@@ -133,6 +133,8 @@ export class LostFoundComponent implements OnInit {
                     if(this.lostFounds[i].property){
                         let unit = this.dataUnit.find(data => data._id ==  this.lostFounds[i].property);
                         this.lostFounds[i].unit_no = '#' + unit.address.unit_no + '-' + unit.address.unit_no_2;
+                    }else{
+                        this.lostFounds[i].unit_no = '';
                     }
                 }
                 this.allArchived     = this.lostFounds.filter(data => data.archieve === true );

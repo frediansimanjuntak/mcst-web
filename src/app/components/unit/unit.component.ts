@@ -60,7 +60,7 @@ export class UnitComponent implements OnInit {
               }
             },
             error=> {
-              console.log(error);
+              this.userService.checkError(error.json().code)
                 alert(`The Unit could not be deleted, server Error.`);
             }
         );

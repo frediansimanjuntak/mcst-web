@@ -204,7 +204,7 @@ export class EditPollComponent  {
                 this.router.navigate([this.name.default_development.name_url + '/poll']);
             },
             error => {
-                console.log(error);
+                this.userService.checkError(error.json().code)
                 this._notificationsService.error('Error', error.json().message)
                 this.loading = false
             }
@@ -230,7 +230,7 @@ export class EditPollComponent  {
                 this.router.navigate([this.name.default_development.name_url + '/poll']);
             },
             error => {
-                console.log(error);
+                this.userService.checkError(error.json().code)
                 this._notificationsService.error('Error', error.json().message)
                 this.loading = false
             }

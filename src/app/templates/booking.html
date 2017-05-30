@@ -75,7 +75,8 @@
 			        		<div class="col-md-3"><p class="pull-down">Facility :</p></div>
 			       			<div class="col-md-9">
 			       				<p>
-			       					<select name="name" class="form-control" formControlName="name" style="width: 237px">
+			       					<select name="name" class="form-control" formControlName="name" style="width: 237px" [ngClass]="{ 'form-control-blur': myForm.controls.name.value =='' }">
+                                        <option value="" style="color:gray" disabled selected>Select facility</option>
 				                    	<option [style]="{'text-transform': 'capitalize'}" [selected]="facility.name == 'BBQ'" *ngFor="let facility of facilities" (change)="onChange(facility)" [ngValue]="facility.name">{{facility.name}}</option>
 				                    </select>
 			        			</p>
