@@ -114,24 +114,21 @@ export class FeedbackComponent implements OnInit {
 
     filter(){
         this.loading=true;
-        if(this.statusFilter != ''){
-            this.feedbacks  = this.all.filter(data => 
-                data.title.toLowerCase().indexOf(this.dataFilter.toLowerCase()) !==  -1 &&
-                data.status.toLowerCase().indexOf(this.statusFilter.toLowerCase()) !==  -1
-            );
+        if(this.statusFilter){
+            if(this.statusFilter == 'publish') {
+                this.feedbacks = this.published.filter(data => data.status.toLowerCase().indexOf(this.statusFilter.toLowerCase()) !==  -1 &&
+                    data.title.toLowerCase().indexOf(this.dataFilter.toLowerCase()) !==  -1 );
+            }else{
+               this.feedbacks  = this.all.filter(data =>  data.status.toLowerCase().indexOf(this.statusFilter.toLowerCase()) !==  -1 &&
+                    data.title.toLowerCase().indexOf(this.dataFilter.toLowerCase()) !==  -1
+                ); 
+            }
             setTimeout(() => this.loading = false, 500);
         }else{
-            this.feedbacks  = this.all.filter(data => 
-                data.title.toLowerCase().indexOf(this.dataFilter.toLowerCase()) !==  -1
-            );
+            this.feedbacks  = this.all.filter(data => data.title.toLowerCase().indexOf(this.dataFilter.toLowerCase()) !==  -1);
             setTimeout(() => this.loading = false, 500);
         }
-        if(this.statusFilter == 'publish') {
-        	this.feedbacks = this.all.filter(data => 
-                data.title.toLowerCase().indexOf(this.dataFilter.toLowerCase()) !==  -1
-            );
-            setTimeout(() => this.loading = false, 500);
-        }
+
     }
 
     filterStatus(event:any){
