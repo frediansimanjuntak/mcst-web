@@ -268,7 +268,7 @@
 								<label class="control-label col-sm-4" for="unit_no">Visiting :</label>
 								<div class="col-sm-8">
 									<select  [ngClass]="{ 'form-control-blur': myForm.controls.property.value =='' }" class="form-control" formControlName="property" name="property">
-										<option disabled="" selected="" value="">Search Unit.no here</option>
+										<option disabled="" style="color:gray" selected="" value="">Search Unit.no here</option>
 										<option *ngFor="let u of dataUnit" [ngValue]="u._id">#{{u.address.unit_no}}-{{u.address.unit_no_2}}</option>
 									</select>
 									<small style="color: red" [hidden]="myForm.controls.property.valid || (myForm.controls.property.pristine && !addSubmitted)">Unit no is required</small>

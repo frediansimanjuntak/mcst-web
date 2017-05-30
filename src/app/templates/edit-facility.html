@@ -28,7 +28,8 @@
                 <div class="form-group">
                     <label class="control-label col-sm-4" for="payment_type">Payment type :</label>
                     <div class="col-sm-8">
-                        <select class="form-control" name="payment_type" id="payment_type" formControlName="payment_type" placeholder="Choose payment type">
+                        <select class="form-control" name="payment_type" id="payment_type" formControlName="payment_type" placeholder="Choose payment type" [ngClass]="{ 'form-control-blur': myForm.controls.payment_type.value =='' }" >
+                            <option  value="" style="color:gray" disabled selected value="">Select payment type</option>
                             <option value="cash">Cash</option>
                             <option value="transfer" selected>Transfer</option>
                         </select>
@@ -40,7 +41,8 @@
                 <div class="form-group">
                     <label class="control-label col-sm-4" for="booking_type">Booking type :</label>
                     <div class="col-sm-8">
-                        <select class="form-control" name="booking_type" id="booking_type" formControlName="booking_type" placeholder="Choose booking type">
+                        <select class="form-control" name="booking_type" id="booking_type" formControlName="booking_type" placeholder="Choose booking type" [ngClass]="{ 'form-control-blur': myForm.controls.booking_type.value =='' }" >
+                            <option  value="" style="color:gray" disabled selected value="">Select booking type</option>
                             <option value="hourly">Hourly</option>
                             <option value="daily" selected>Daily</option>
                         </select>
@@ -95,7 +97,8 @@
                 <div class="form-group">
                     <label class="control-label col-sm-4" for="status">Status :</label>
                     <div class="col-sm-8">
-                        <select required class="form-control" formControlName="status" name="status" id="status" placeholder="Choose status">
+                        <select required class="form-control" formControlName="status" name="status" id="status" placeholder="Choose status" [ngClass]="{ 'form-control-blur': myForm.controls.status.value =='' }" >
+                            <option  value="" style="color:gray" disabled selected value="">Select status</option>
                             <option value="available" selected>Available</option>
                             <option value="unavailable">Not Available</option>
                         </select>
@@ -116,7 +119,8 @@
                                 <div class="form-group col-xs-12">
                                     <label>Day :</label>
                                     <div>
-                                        <select class="form-control" name="day" (change)="getDay(myForm.value.schedule[i].day , i)" formControlName="day" placeholder="Choose day">
+                                        <select class="form-control" name="day" (change)="getDay(myForm.value.schedule[i].day , i)" formControlName="day" placeholder="Choose day" [ngClass]="{ 'form-control-blur': myForm.controls.schedule.controls[i].controls.day.value =='' }" >
+                                            <option  value="" style="color:gray" disabled selected value="">Select day</option>
                                             <option *ngFor="let day of days[i].day" [ngValue]="day">{{day}}</option>
                                         </select>
                                         <small *ngIf="f.submitted && !myForm.controls.schedule.controls[i].controls.day.valid" class="text-danger">
@@ -126,7 +130,8 @@
                                 </div>
                                 <div class="form-group col-sm-6" style="margin-right: 15px">
                                     <label>Start Time :</label>
-                                    <select name="start" class="form-control" formControlName="start_time">
+                                    <select name="start" class="form-control" formControlName="start_time" [ngClass]="{ 'form-control-blur': myForm.controls.schedule.controls[i].controls.start_time.value =='' }" >
+                                        <option value="" style="color:gray" disabled selected value="">Select start time</option>
                                         <option *ngFor="let start of time" [ngValue]="start"><span *ngIf="start < 10">0</span>{{start}}</option>
                                     </select>
                                     <small *ngIf="f.submitted && !myForm.controls.schedule.controls[i].controls.start_time.valid" class="text-danger">
@@ -138,7 +143,8 @@
                                 </div>
                                 <div class="form-group col-sm-6">
                                     <label>End Time :</label>
-                                    <select name="start" class="form-control" formControlName="end_time">
+                                    <select name="start" class="form-control" formControlName="end_time" [ngClass]="{ 'form-control-blur': myForm.controls.schedule.controls[i].controls.end_time.value =='' }" >
+                                        <option  value="" style="color:gray" disabled selected value="">Select end time</option>
                                         <option *ngFor="let start of time" [ngValue]="start"><span *ngIf="start < 10">0</span>{{start}}</option>
                                     </select>
                                     <small *ngIf="f.submitted && !myForm.controls.schedule.controls[i].controls.end_time.valid" class="text-danger">
@@ -194,7 +200,8 @@
                 <div class="form-group">
                     <label class="control-label col-sm-4" for="payment_type">Payment type :</label>
                     <div class="col-sm-8">
-                        <select class="form-control" name="payment_type" id="payment_type" formControlName="payment_type" placeholder="Choose payment type">
+                        <select class="form-control" name="payment_type" id="payment_type" formControlName="payment_type" placeholder="Choose payment type"  [ngClass]="{ 'form-control-blur': myForm.controls.payment_type.value =='' }">
+                            <option  value="" style="color:gray" disabled selected value="">Select payment type</option>
                             <option value="cash">Cash</option>
                             <option value="transfer" selected>Transfer</option>
                         </select>
@@ -206,7 +213,8 @@
                 <div class="form-group">
                     <label class="control-label col-sm-4" for="booking_type">Booking type :</label>
                     <div class="col-sm-8">
-                        <select class="form-control" name="booking_type" id="booking_type" formControlName="booking_type" placeholder="Choose booking type">
+                        <select class="form-control" name="booking_type" id="booking_type" formControlName="booking_type" placeholder="Choose booking type"  [ngClass]="{ 'form-control-blur': myForm.controls.booking_type.value =='' }">
+                            <option value="" style="color:gray" disabled selected value="">Select booking type</option>
                             <option value="hourly">Hourly</option>
                             <option value="daily" selected>Daily</option>
                         </select>
@@ -247,7 +255,8 @@
                 <div class="form-group">
                     <label class="control-label col-sm-4" for="status">Status :</label>
                     <div class="col-sm-8">
-                        <select required class="form-control" formControlName="status" name="status" id="status" placeholder="Choose status">
+                        <select required class="form-control" formControlName="status" name="status" id="status" placeholder="Choose status" [ngClass]="{ 'form-control-blur': myForm.controls.booking_type.value =='' }">
+                             <option value="" style="color:gray" disabled selected value="">Select status</option>
                             <option value="available" selected>Available</option>
                             <option value="unavailable">Not Available</option>
                         </select>
@@ -268,7 +277,8 @@
                                 <div class="form-group col-xs-12">
                                     <label>Day :</label>
                                     <div>
-                                        <select class="form-control" name="day" (change)="getDay(myForm.value.schedule[i].day , i)" formControlName="day" placeholder="Choose day">
+                                        <select class="form-control" name="day" (change)="getDay(myForm.value.schedule[i].day , i)" formControlName="day" placeholder="Choose day" [ngClass]="{ 'form-control-blur': myForm.controls.schedule.controls[i].controls.day.value =='' }" >
+                                            <option  value="" style="color:gray" disabled selected value="">Select day</option>
                                             <option *ngFor="let day of days[i].day" [ngValue]="day">{{day}}</option>
                                         </select>
                                         <small *ngIf="f.submitted && !myForm.controls.schedule.controls[i].controls.day.valid" class="text-danger">
@@ -278,7 +288,8 @@
                                 </div>
                                 <div class="form-group col-sm-6" style="margin-right: 15px">
                                     <label>Start Time :</label>
-                                    <select name="start" class="form-control" formControlName="start_time">
+                                    <select name="start" class="form-control" formControlName="start_time" [ngClass]="{ 'form-control-blur': myForm.controls.schedule.controls[i].controls.start_time.value =='' }" >
+                                         <option  value="" style="color:gray" disabled selected value="">Select start time</option>
                                         <option *ngFor="let start of time" [ngValue]="start"><span *ngIf="start < 10">0</span>{{start}}</option>
                                     </select>
                                     <small *ngIf="f.submitted && !myForm.controls.schedule.controls[i].controls.start_time.valid" class="text-danger">
@@ -290,7 +301,8 @@
                                 </div>
                                 <div class="form-group col-sm-6">
                                     <label>End Time :</label>
-                                    <select name="start" class="form-control" formControlName="end_time">
+                                    <select name="start" class="form-control" formControlName="end_time" [ngClass]="{ 'form-control-blur': myForm.controls.schedule.controls[i].controls.end_time.value =='' }" >
+                                         <option  value="" style="color:gray" disabled selected value="">Select end time</option>
                                         <option *ngFor="let start of time" [ngValue]="start"><span *ngIf="start < 10">0</span>{{start}}</option>
                                     </select>
                                     <small *ngIf="f.submitted && !myForm.controls.schedule.controls[i].controls.end_time.valid" class="text-danger">
