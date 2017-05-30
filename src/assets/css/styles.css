@@ -885,6 +885,13 @@ p.pull-down {
 .mydp .btnpicker{ 
   color: #fff !important; 
 } 
+.mydp{
+  padding-left: 6px;
+  width: 100% !important;
+}
+.mydp .selectiongroup input {
+  font-size: 14px !important; 
+}
 button.btn.btn-default.btn-sm.pull-left {
     border: 0;
 }

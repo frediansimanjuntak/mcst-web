@@ -10,8 +10,8 @@
             <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !model.property }">
                 <label class="control-label col-sm-4" for="unit_no">Unit No :</label>
                 <div class="col-sm-8">
-                    <select class="form-control" name="property" [(ngModel)]="model.property" [ngClass]="{ 'form-control-blur': model.property =='' }" >
-                        <option disabled="" style="color:gray" selected="selected" >Search Unit.no here</option>
+                    <select class="form-control" name="property" [(ngModel)]="model.property" [ngClass]="{ 'form-control-blur': model.property ==undefined }" >
+                        <option disabled hidden value="undefined">Search Unit.no here</option>
                         <option *ngFor="let u of dataUnit" [ngValue]="u._id">#{{u.address.unit_no}}-{{u.address.unit_no_2}}</option>
                     </select>
                     <span *ngIf="f.submitted && !model.property" class="help-block">Unit No is required</span>
@@ -20,8 +20,8 @@
             <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !model.type }">
                 <label class="control-label col-sm-4" for="type">Type :</label>
                 <div class="col-sm-8">
-                    <select class="form-control" name="type" [(ngModel)]="model.type" [ngClass]="{ 'form-control-blur': model.type =='' }" >
-                        <option disabled="" style="color:gray" selected="selected" >Select type</option>
+                    <select class="form-control" name="type" [(ngModel)]="model.type" [ngClass]="{ 'form-control-blur': model.type ==undefined }" >
+                        <option disabled hidden value="undefined">Search type</option>
                         <option value="lost">Lost</option>
                         <option value="found">Found</option>
                     </select>
@@ -51,8 +51,8 @@
             <div class="form-group">
                 <label class="control-label col-sm-4" for="contact_method">Preffered Method of Contact :</label>
                 <div class="col-sm-8">
-                    <select class="form-control" name="contact_method" [(ngModel)]="model.preferred_method_of_contact" [ngClass]="{ 'form-control-blur': model.preferred_method_of_contact =='' }" >
-                        <option disabled="" style="color:gray" selected="selected">Select method</option>
+                    <select class="form-control" name="contact_method" [(ngModel)]="model.preferred_method_of_contact" [ngClass]="{ 'form-control-blur': model.preferred_method_of_contact ==undefined }" >
+                        <option disabled hidden value="undefined">Search method</option>
                         <option value="sms">SMS</option>
                         <option value="email">Email</option>
                     </select>
