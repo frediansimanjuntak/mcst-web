@@ -28,13 +28,6 @@ export class EditPetitionComponent implements OnInit {
     no: number;
     public developmentId;
     public uploader:FileUploader = new FileUploader({url:'http://localhost:3001/upload'});
-    types = [
-        { value: 'Maintenance', name: 'Maintenance' },
-        { value: 'Moving In', name: 'Moving In' },
-        { value: 'Renovation', name: 'Renovation' },
-        { value: 'Add Tenant/Family', name: 'Add Tenant/Family' },
-
-    ];
     loading: boolean = true;
     selectedType = '';
     public submitted: boolean; // keep track on whether form is submitted
@@ -130,17 +123,11 @@ export class EditPetitionComponent implements OnInit {
             this.petitionService.create(formData)
             .then(
                 data => {
-                    this._notificationsService.success(
-                            'Success',
-                            'Add request Successful',
-                        )
+                    this._notificationsService.success('Success', 'Add request Successful')
                     this.router.navigate([this.name.default_development.name_url + '/petition']);
                 },
                 error => {
-                    this._notificationsService.error(
-                            'Error',
-                            'Add request failed, server Error',
-                    )
+                    this._notificationsService.error('Error', error.json().message)
                     this.loading = false;
                 }
             );

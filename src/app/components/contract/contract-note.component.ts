@@ -99,18 +99,12 @@ export class ContractNoteComponent implements OnInit  {
             this.contractnoteService.create(formData, this.id)
             .then(
                 data => {
-                    this._notificationsService.success(
-                            'Success',
-                            'Create contract note successful',
-                    )
+                    this._notificationsService.success('Success', 'Create contract note successful')
                     this.router.navigate([this.name.default_development.name_url + '/contract/view', id ]);
                 },
                 error => {
-                    console.log(error);
-                    this._notificationsService.error(
-                            'Error',
-                            'Failed create data, server Error',
-                    )
+                    this.userService.checkError(error.json().code)
+                    this._notificationsService.error('Error', error.json().message)
                     setTimeout(() => this.loading = false, 1000);
                 }
             );
@@ -126,18 +120,12 @@ export class ContractNoteComponent implements OnInit  {
         this.contractnoteService.delete(contract._id,this.id)
           .then(
                 data => {
-                    this._notificationsService.success(
-                            'Success',
-                            'Delete contract note successful',
-                    )
+                    this._notificationsService.success('Success', 'Delete contract note successful')
                     this.ngOnInit()
                 },
                 error => {
-                    console.log(error);
-                    this._notificationsService.error(
-                            'Error',
-                            'failed delete data, server Error',
-                    )
+                    this.userService.checkError(error.json().code)
+                    this._notificationsService.error('Error', error.json().message)
                     setTimeout(() => this.loading = false, 1000);
                  }
         );

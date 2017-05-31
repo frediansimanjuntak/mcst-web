@@ -87,21 +87,15 @@ export class ContractComponent implements OnInit  {
         this.loading = true
         this.contractService.delete(contract._id)
         .then(
-                data => {
-                    this._notificationsService.success(
-                            'Success',
-                            'Delete Contract successful',
-                    )
-                    this.ngOnInit();
-                },
-                error => {
-                    console.log(error);
-                    this._notificationsService.error(
-                            'Error',
-                            'The Contract could not be deleted, server Error',
-                    )
-                    setTimeout(() => this.loading = false, 1000);
-                }
+            data => {
+                this._notificationsService.success('Success', 'Delete Contract successful')
+                this.ngOnInit();
+            },
+            error => {
+                this.userService.checkError(error.json().code)
+                this._notificationsService.error('Error', error.json().message)
+                setTimeout(() => this.loading = false, 1000);
+            }
         );
     }
 
@@ -121,42 +115,13 @@ export class ContractComponent implements OnInit  {
         this.contractnoteService.delete(id,contractnoteid)
         .then(
             data => {
-                    this._notificationsService.success(
-                            'Success',
-                            'Delete Contract successful',
-                    )
-                    this.ngOnInit();
-                },
-                error => {
-                    console.log(error);
-                    this._notificationsService.error(
-                            'Error',
-                            'The Contract could not be deleted, server Error',
-                    )
-                    setTimeout(() => this.loading = false, 1000);
-            //     }
-            // response => {
-            //     if(response) {
-            //         console.log(response);
-            //         this._notificationsService.error(
-            //                 'Error',
-            //                 'The Contract could not be deleted, server Error',
-            //         )
-            //         this.appComponent.loading = false;
-            //     } else {
-            //         this._notificationsService.success(
-            //                 'Success',
-            //                 'Delete Contarct successful',
-            //         )
-            //         this.ngOnInit();
-            //     }
-            // },
-            // error=> {
-            //     console.log(error);
-            //     this._notificationsService.error(
-            //                 'Success',
-            //                 'The Contract could not be deleted, server Error',
-            //     )
+                this._notificationsService.success('Success', 'Delete Contract successful')
+                this.ngOnInit();
+            },
+            error => {
+                this.userService.checkError(error.json().code)
+                this._notificationsService.error('Error', error.json().message)
+                setTimeout(() => this.loading = false, 1000);
             }
         );
     }
@@ -183,9 +148,7 @@ export class ContractComponent implements OnInit  {
 
     filter(){
         this.loading = true;
-        this.contracts  = this.all.filter(data => 
-                data.title.toLowerCase().indexOf(this.dataFilter.toLowerCase()) !==  -1
-            );
+        this.contracts  = this.all.filter(data => data.title.toLowerCase().indexOf(this.dataFilter.toLowerCase()) !==  -1);
         this.open       = this.contracts.filter(data => data.status === 'open');
         this.close      = this.contracts.filter(data => data.status === 'closed');
         setTimeout(() => this.loading = false, 500);
@@ -235,21 +198,15 @@ export class ContractComponent implements OnInit  {
         });
         this.contractnoticeService.publish(this.id,contract._id)
         .then(
-                data => {
-                    this._notificationsService.success(
-                            'Success',
-                            'Publish notice successful',
-                    )
-                    this.ngOnInit()
-                },
-                error => {
-                    console.log(error);
-                    this._notificationsService.error(
-                            'Error',
-                            'Publish failed, server Error',
-                    )
-                    setTimeout(() => this.loading = false, 1000);
-                }
-            );
+            data => {
+                this._notificationsService.success('Success', 'Publish notice successful')
+                this.ngOnInit()
+            },
+            error => {
+                this.userService.checkError(error.json().code)
+                this._notificationsService.error('Error', error.json().message)
+                setTimeout(() => this.loading = false, 1000);
+            }
+        );
     }
 }

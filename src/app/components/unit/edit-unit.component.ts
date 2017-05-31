@@ -60,7 +60,7 @@ export class EditUnitComponent implements OnInit {
                     full_address : ['', <any>Validators.required]
                 }),
                 status: ['own stay'],
-                max_tenant: [],
+                max_tenant: [''],
         });
         this.userService.getByToken()
         .subscribe(name => {
@@ -75,7 +75,7 @@ export class EditUnitComponent implements OnInit {
                     country : this.name.default_development.address.country,
                     full_address : this.name.default_development.address.full_address
                 },
-                max_tenant: [],
+                max_tenant: '',
             });
             setTimeout(() => this.loading = false, 1000);
         })
@@ -98,6 +98,9 @@ export class EditUnitComponent implements OnInit {
         this.submitted = true;
         if(isValid){
             if(model.max_tenant <= 20){
+                if(model.max_tenant == '' || model.max_tenant == null){
+                    model.max_tenant = 0;
+                }
                 if(model.address.unit_no < 100 && model.address.unit_no_2 < 1000){ 
                     model.address.unit_no = model.address.unit_no.toString().length == 1 ? '0'+model.address.unit_no.toString() : model.address.unit_no.toString(); 
                     model.address.unit_no_2 = model.address.unit_no_2.toString().length == 1 ? '0'+model.address.unit_no_2.toString() : model.address.unit_no_2.toString(); 
@@ -105,18 +108,12 @@ export class EditUnitComponent implements OnInit {
                     this.loading = true 
                     this.unitservice.create(model, this.name.default_development.name_url).then( 
                             data => { 
-                                this._notificationsService.success( 
-                                        'Success', 
-                                        'Create Unit successful', 
-                                    ) 
+                                this._notificationsService.success('Success', 'Create Unit successful') 
                                 this.router.navigate([this.name.default_development.name_url + '/unit']); 
                             }, 
                             error => { 
-                                console.log(error); 
-                                this._notificationsService.error( 
-                                        'Error', 
-                                        'The Unit could not be save, server Error.', 
-                                ) 
+                                var message = JSON.parse(error._body)
+                                this._notificationsService.error( 'Error', error.json().message) 
                                 this.loading = false;
                             }
                     );  

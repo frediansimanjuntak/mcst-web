@@ -69,7 +69,7 @@ export class CompanyComponent implements OnInit {
               }
             },
             error=> {
-              console.log(error);
+                      // this.userService.checkError(error.json().code)
                 alert(`The Company could not be deleted, server Error.`);
             }
         );
@@ -93,7 +93,7 @@ export class CompanyComponent implements OnInit {
               }
             },
             error=> {
-              console.log(error);
+              // this.userService.checkError(error.json().code)
               this.activeModal.close();
                 alert(`The Company could not be Activated, server Error.`);
             }

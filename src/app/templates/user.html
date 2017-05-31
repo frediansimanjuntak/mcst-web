@@ -5,15 +5,15 @@
 			User
 		</div>
 		<p class="id-location">Home > User</p>
-		<div class="row top-block">
-			<div class="col-md-4 pull-right">
+		<div class="row top-block" *ngIf="name">
+			<div class="col-md-4 pull-right" *ngIf="name.role != 'admin' || name.role != 'user'">
 				<button class="btn btn-default pull-right btn-gray" style="margin-right:0;" (click)="add()"> <img class="img-btn" src="../../assets/image/icon_add.png" />&nbsp;Add User</button>
 			</div>
 		</div>
 		<p-dataTable [value]="users" [rows]="10" [paginator]="true" [responsive]="true">
 			<p-column filterMatchMode="contains" field="username" header="Username" sortable="true" [filter]="true" filterPlaceholder="Search username">
 				<template let-users="rowData" pTemplate="body">
-					<span>{{users.username | capitalize }}</span>
+					<span>{{users.username }}</span>
 				</template>
 			</p-column>
 			<p-column filterMatchMode="contains" field="email" header="Email" sortable="true" [filter]="true" filterPlaceholder="Search email"></p-column>

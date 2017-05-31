@@ -37,12 +37,12 @@ export class DevelopmentComponent implements OnInit {
         this.developmentService.delete(development._id)
         .then(
             data => {
-                this._notificationsService.success('Success','Delete development successful')
+                this._notificationsService.success('Success', 'Delete development successful')
                 this.loadAllDevelopments()
             },
             error => {
-                console.log(error);
-                this._notificationsService.error('Error','The Development could not be deleted, server Error')
+                this.userService.checkError(error.json().code)
+                this._notificationsService.error('Error', error.json().message)
                 setTimeout(() => this.loading = false, 1000);
             }
         );

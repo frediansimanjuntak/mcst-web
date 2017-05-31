@@ -79,18 +79,12 @@ export class EditContractComponent  implements OnInit {
             this.contractService.create(formData)
             .then(
                 data => {
-                    this._notificationsService.success(
-                            'Success',
-                            'Create contract successful',
-                    )
+                    this._notificationsService.success('Success', 'Create contract successful')
                     this.router.navigate([this.name.default_development.name_url + '/contract' ]);
                 },
                 error => {
-                    console.log(error);
-                    this._notificationsService.error(
-                            'Error',
-                            'Create data failed, server Error',
-                    )
+                    this.userService.checkError(error.json().code)
+                    this._notificationsService.error('Error', error.json().message)
                     setTimeout(() => this.loading = false, 1000);
                 }
             );
@@ -132,17 +126,12 @@ export class EditContractComponent  implements OnInit {
             this.contractService.update(formData, this.contract._id)
             .then(
                 response => {
-                     this._notificationsService.success(
-                                'Success',
-                                'Update contract successful',
-                        )
+                    this._notificationsService.success('Success', 'Update contract successful')
                     this.router.navigate([this.name.default_development.name_url + '/contract/view', this.contract._id ]);
                 },
                 error => {
-                    this._notificationsService.error(
-                                'Error',
-                                'Update contract failed',
-                        )
+                    this.userService.checkError(error.json().code)
+                    this._notificationsService.error('Error', error.json().message)
                     this.loading = false
                 }
             );

@@ -1,4 +1,4 @@
-<loading *ngIf="loading"></loading> 
+<loading *ngIf="loading"></loading>
 <div class="container">
 	<div class="main">
 		<div *ngIf="lostFound && !buttonViewArchive">
@@ -15,23 +15,23 @@
 					<div class="content">
 						<div class="row">
 							<div class="col-md-6 col-padding"><b>Reported by :</b></div>
-							<div class="col-md-6 col-padding"> {{ lostFound.created_by.username | capitalize}}</div>
+							<div class="col-md-6 col-padding"> {{lostFound.created_by.username}}</div>
 						</div>
 						<div class="row">
 							<div class="col-md-6 col-padding"><b>Type :</b></div>
-							<div class="col-md-6 col-padding">{{ lostFound.type | capitalize}}</div>
+							<div class="col-md-6 col-padding">{{lostFound.type | capitalize}}</div>
 						</div>
 						<div class="row">
 							<div class="col-md-6 col-padding"><b>Report time :</b></div>
-							<div class="col-md-6 col-padding">{{ lostFound.created_at | date:'fullDate'}}</div>
+							<div class="col-md-6 col-padding">{{lostFound.created_at | date: 'fullDate'}}</div>
 						</div>
 						<div class="row">
 							<div class="col-md-6 col-padding"><b>Description :</b></div>
-							<div class="col-md-6 col-padding">{{ lostFound.description | capitalize}}</div>
+							<div class="col-md-6 col-padding">{{lostFound.description | capitalize}}</div>
 						</div>
 						<div class="row">
 							<div class="col-md-6 col-padding"><b>Preferred method of contact :</b></div>
-							<div class="col-md-6 col-padding">{{ lostFound.preferred_method_of_contact | capitalize}}</div>
+							<div class="col-md-6 col-padding">{{lostFound.preferred_method_of_contact | capitalize}}</div>
 						</div>
 						<div class="row" *ngIf="lostFound.archieve">
 							<div class="col-md-6 col-padding"><b>Status :</b></div>
@@ -61,7 +61,7 @@
 				<div class="col-md-4 no-padding">
 					<div class="col-md-12">
 						<div class="input-group filter-search">
-							<input type="text" class="form-control input-search" (keyup.enter)="filter()" [(ngModel)]="filterField" placeholder="Search" name="filter">
+							<input type="text" class="form-control input-search" (keyup.enter)="filter()" [(ngModel)]="filterField" placeholder="Search serial no., made by, unit no., description" name="filter">
 							<span (click)="filter()" class="input-group-btn">
 								<button class="btn btn-secondary btn-search" type="button"><i class="fa fa-search fa-inverse" aria-hidden="true"></i></button>
 							</span>
@@ -88,10 +88,15 @@
 								</p-column>
 								<p-column header="Made by">
 									<template let-all="rowData" pTemplate="body">
-										<span>{{all.created_by.username | capitalize}}</span>
+										<span>{{all.created_by.username}}</span>
 									</template>
 								</p-column>
-								<p-column field="unit_no" header="Unit.no"></p-column>
+								<p-column field="unit_no" header="Unit.no">
+									<template let-all="rowData" pTemplate="body">
+										<span *ngIf="all.unit_no">{{all.unit_no}}</span>
+										<span *ngIf="!all.unit_no">-</span>
+									</template>
+								</p-column>
 								<p-column header="Type" field="type" sortable="true">
 									<template let-all="rowData" pTemplate="body">
 										<span>{{all.type | capitalize}}</span>
@@ -117,7 +122,7 @@
 								<p-column header="Actions" styleClass="col-button">
 									<template let-all="rowData" class="pull-right" pTemplate="body">
 										<a type="button" class="btn-underline" (click)="viewLostFound(all)">View</a>
-										<img title="archived" style="cursor:pointer" src="../../assets/image/icon_archived.png"  (click)="archieveConfirmation(all)"/>
+										<img title="Archive" style="cursor:pointer" src="../../assets/image/icon_archived.png"  (click)="archieveConfirmation(all)"/>
 									</template>
 								</p-column>
 							</p-dataTable>
@@ -131,10 +136,15 @@
 								</p-column>
 								<p-column header="Made by">
 									<template let-losts="rowData" pTemplate="body">
-										<span>{{losts.created_by.username | capitalize}}</span>
+										<span>{{losts.created_by.username}}</span>
 									</template>
 								</p-column>
-								<p-column field="unit_no" header="Unit.no"></p-column>
+								<p-column field="unit_no" header="Unit.no">
+									<template let-losts="rowData" pTemplate="body">
+										<span *ngIf="losts.unit_no">{{losts.unit_no}}</span>
+										<span *ngIf="!losts.unit_no">-</span>
+									</template>
+								</p-column>
 								<p-column header="Type" field="type" sortable="true">
 									<template let-losts="rowData" pTemplate="body">
 										<span style="text-transform: initial">{{losts.type | capitalize}}</span>
@@ -174,10 +184,15 @@
 								</p-column>
 								<p-column header="Made by">
 									<template let-founds="rowData" pTemplate="body">
-										<span>{{founds.created_by.username | capitalize}}</span>
+										<span>{{founds.created_by.username}}</span>
 									</template>
 								</p-column>
-								<p-column field="unit_no" header="Unit.no"></p-column>
+								<p-column field="unit_no" header="Unit.no">
+									<template let-founds="rowData" pTemplate="body">
+										<span *ngIf="founds.unit_no">{{founds.unit_no}}</span>
+										<span *ngIf="!founds.unit_no">-</span>
+									</template>
+								</p-column>
 								<p-column header="Type" field="type" sortable="true">
 									<template let-founds="rowData" pTemplate="body">
 										<span>{{founds.type | capitalize}}</span>
@@ -222,7 +237,7 @@
 				<div class="col-md-4 no-padding">
 					<div class="col-md-12">
 						<div class="input-group filter-search">
-							<input type="text" class="form-control input-search" (keyup.enter)="filterArchieved()" [(ngModel)]="filterField" placeholder="Search" name="filter">
+							<input type="text" class="form-control input-search" (keyup.enter)="filterArchieved()" [(ngModel)]="filterField" placeholder="Search serial no., made by, unit no., description" name="filter">
 							<span (click)="filterArchieved()" class="input-group-btn">
 								<button class="btn btn-secondary btn-search" type="button"><i class="fa fa-search fa-inverse" aria-hidden="true"></i></button>
 							</span>
@@ -249,10 +264,15 @@
 								</p-column>
 								<p-column header="Made by">
 									<template let-archieveds="rowData" pTemplate="body">
-										<span>{{archieveds.created_by.username | capitalize}}</span>
+										<span>{{archieveds.created_by.username}}</span>
 									</template>
 								</p-column>
-								<p-column field="unit_no" header="Unit.no"></p-column>
+								<p-column field="unit_no" header="Unit.no">
+									<template let-archieveds="rowData" pTemplate="body">
+										<span *ngIf="archieveds.unit_no">{{archieveds.unit_no}}</span>
+										<span *ngIf="!archieveds.unit_no">-</span>
+									</template>
+								</p-column>
 								<p-column header="Type" field="type" sortable="true">
 									<template let-archieveds="rowData" pTemplate="body">
 										<span>{{archieveds.type | capitalize}}</span>
@@ -291,10 +311,15 @@
 								</p-column>
 								<p-column header="Made by">
 									<template let-archievedLosts="rowData" pTemplate="body">
-										<span>{{archievedLosts.created_by.username | capitalize}}</span>
+										<span>{{archievedLosts.created_by.username}}</span>
 									</template>
 								</p-column>
-								<p-column field="unit_no" header="Unit.no"></p-column>
+								<p-column field="unit_no" header="Unit.no">
+									<template let-archievedLosts="rowData" pTemplate="body">
+										<span *ngIf="archievedLosts.unit_no">{{archievedLosts.unit_no}}</span>
+										<span *ngIf="!archievedLosts.unit_no">-</span>
+									</template>
+								</p-column>
 								<p-column header="Type" field="type" sortable="true">
 									<template let-archievedLosts="rowData" pTemplate="body">
 										<span>{{archievedLosts.type | capitalize}}</span>
@@ -333,10 +358,15 @@
 								</p-column>
 								<p-column header="Made by">
 									<template let-archievedFounds="rowData" pTemplate="body">
-										<span>{{archievedFounds.created_by.username | capitalize}}</span>
+										<span>{{archievedFounds.created_by.username}}</span>
 									</template>
 								</p-column>
-								<p-column field="unit_no" header="Unit.no"></p-column>
+								<p-column field="unit_no" header="Unit.no">
+									<template let-archievedFounds="rowData" pTemplate="body">
+										<span *ngIf="archievedFounds.unit_no">{{archievedFounds.unit_no}}</span>
+										<span *ngIf="!archievedFounds.unit_no">-</span>
+									</template>
+								</p-column>
 								<p-column header="Type" field="type" sortable="true">
 									<template let-archievedFounds="rowData" pTemplate="body">
 										<span>{{archievedFounds.type | capitalize}}</span>

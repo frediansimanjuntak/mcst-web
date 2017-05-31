@@ -885,6 +885,13 @@ p.pull-down {
 .mydp .btnpicker{ 
   color: #fff !important; 
 } 
+.form-group .mydp{
+  padding-left: 6px;
+  width: 100% !important;
+}
+.mydp .selectiongroup input {
+  font-size: 14px !important; 
+}
 button.btn.btn-default.btn-sm.pull-left {
     border: 0;
 }
@@ -1174,6 +1181,12 @@ p.field-box.no-margin {
 
 .ui-datatable-scrollable-header-box{
   margin-right: 0px !important;
+}
+.usergroup input.ui-select-search{
+    font-weight: 100 !important;
+}
+.blur-font{
+    color:gray;
 }
 
 

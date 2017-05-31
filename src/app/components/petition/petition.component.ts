@@ -59,7 +59,7 @@ export class PetitionComponent implements OnInit {
     }
     name: any;
     loading: boolean = true;
-
+    pdfUrl = 'https://mcst-app.s3-ap-southeast-1.amazonaws.com/attachment/letter_of_authorization_and_indemnity.pdf';
     constructor(
                 private router: Router,
                 private petitionService: PetitionService,
@@ -95,7 +95,6 @@ export class PetitionComponent implements OnInit {
           .then(
             response => {
               if(response) {
-                console.log(response);
                 alert(`The Petition could not be deleted, server Error.`);
               } else {
                 this.alertService.success('Delete Petition successful', true);
@@ -104,7 +103,7 @@ export class PetitionComponent implements OnInit {
               }
             },
             error=> {
-              console.log(error);
+              this.userService.checkError(error.json().code)
                 alert(`The Petition could not be deleted, server Error.`);
             }
         );
@@ -178,7 +177,6 @@ export class PetitionComponent implements OnInit {
                                 }else{
                                     this.petitionService.getById(this.id)
                                         .subscribe(petition => {
-                                            console.log(petition)
                                             this.petition = petition.petitions;
                                             if(this.petition.property){
                                                 let property = this.dataUnit.find(data => data._id ==  this.petition.property);
@@ -244,17 +242,11 @@ export class PetitionComponent implements OnInit {
         this.petitionService.archive(this.model) .then(
                     data => {
                         this.ngOnInit();
-                        this._notificationsService.success(
-                            'Success',
-                            'Archive requests successful',
-                        )
+                        this._notificationsService.success('Success', 'Archive requests successful')
                     },
                     error => {
-                        console.log(error);
-                        this._notificationsService.error(
-                            'Error',
-                            'Archive failed, server Error',
-                        )
+                        this.userService.checkError(error.json().code)
+                        this._notificationsService.error('Error', error.json().message)
                         this.loading = false;
                     }
                 );

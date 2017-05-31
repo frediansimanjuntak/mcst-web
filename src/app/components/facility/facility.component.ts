@@ -51,20 +51,15 @@ export class FacilityComponent implements OnInit {
         this.loading = true
         this.facilityService.delete(facility._id)
         .then(
-                data => {
-                    this._notificationsService.success(
-                            'Success',
-                            'Delete facility successful',
-                    )
-                    this.loadAllFacilities()
-                },
-                error => {
-                    this._notificationsService.error(
-                            'Error',
-                            'The facility could not be deleted, server Error',
-                    )
-                    setTimeout(() => this.loading = false, 1000);
-                }
+            data => {
+                this._notificationsService.success('Success', 'Delete facility successful')
+                this.loadAllFacilities()
+            },
+            error => {
+                this.userService.checkError(error.json().code)
+                this._notificationsService.error('Error', 'The facility could not be deleted, server Error')
+                setTimeout(() => this.loading = false, 1000);
+            }
         );
     }
 

@@ -106,18 +106,12 @@ export class ContractNoticeComponent implements OnInit  {
             this.contractnoticeService.create(formData, this.id)
             .then(
                 data => {
-                    this._notificationsService.success(
-                            'Success',
-                            'Create contract notice successful',
-                    )
+                    this._notificationsService.success('Success', 'Create contract notice successful')
                     this.router.navigate([this.name.default_development.name_url + '/contract/view', id ]);
                 },
                 error => {
-                    console.log(error);
-                    this._notificationsService.error(
-                            'Error',
-                            'Failed create data, server Error',
-                    )
+                    this.userService.checkError(error.json().code)
+                    this._notificationsService.error( 'Error', error.json().message)
                     setTimeout(() => this.loading = false, 1000);
                 }
             );
@@ -145,18 +139,12 @@ export class ContractNoticeComponent implements OnInit  {
             this.contractnoticeService.create(formData, this.id)
             .then(
                 data => {
-                    this._notificationsService.success(
-                            'Success',
-                            'Create & publish notice successful',
-                    )
+                    this._notificationsService.success('Success', 'Create & publish notice successful')
                     this.router.navigate([this.name.default_development.name_url + '/contract/view', id ]);
                 },
                 error => {
-                    console.log(error);
-                    this._notificationsService.error(
-                            'Error',
-                            'Failed create data, server Error',
-                    )
+                    this.userService.checkError(error.json().code)
+                    this._notificationsService.error('Error', error.json().message)
                     setTimeout(() => this.loading = false, 1000);
                 }
             );
@@ -171,22 +159,15 @@ export class ContractNoticeComponent implements OnInit  {
         });
         this.contractnoticeService.publish(this.id,contract._id)
         .then(
-                data => {
-                    this._notificationsService.success(
-                            'Success',
-                            'Publish notice successful',
-                    )
-                    this.ngOnInit()
-                },
-                error => {
-                    console.log(error);
-                    this._notificationsService.error(
-                            'Error',
-                            'Publish failed, server Error',
-                    )
-                    setTimeout(() => this.loading = false, 1000);
-                }
-            );
+            data => {
+                this._notificationsService.success('Success', 'Publish notice successful')
+                this.ngOnInit()
+            },
+            error => {
+                this.userService.checkError(error.json().code)
+                this._notificationsService.error('Error', error.json().message)
+                setTimeout(() => this.loading = false, 1000);
+            });
         }
 
     onChange(event: any) {

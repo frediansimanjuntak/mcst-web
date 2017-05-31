@@ -5,7 +5,7 @@ export class Booking {
   reference_no : string; 
   development : Development;
   property : string;
-  facility : string;
+  facility : Facility;
   booking_type :string;
   booking_date : string;
   start_time : string;

@@ -64,18 +64,12 @@ export class UserGroupComponent implements OnInit {
         this.userGroupService.delete(usergroup._id)
         .then(
             data => {
-                    this._notificationsService.success(
-                            'Success',
-                            'Delete usergroup successful',
-                    )
+                    this._notificationsService.success('Success', 'Delete usergroup successful')
                     this.loadAllUserGroup()
                 },
                 error => {
-                    console.log(error);
-                    this._notificationsService.error(
-                            'Error',
-                            'The Usergroup could not be deleted, server Error',
-                    )
+                    this.userService.checkError(error.json().code)
+                    this._notificationsService.error('Error', error.json().message)
                     this.loading = false;
             }
         );

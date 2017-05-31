@@ -51,22 +51,16 @@ export class EditContactComponent {
     updateSetting(){
         this.loading = true
 		this.userService.update(this.contact)
-		    .then(
-                    data => {
-                        this._notificationsService.success(
-                                'Success',
-                                'Update contact successful',
-                        )
-                        this.router.navigate([this.name.default_development.name_url + '/contact']);
-                    },
-                    error => {
-                        console.log(error);
-                        this._notificationsService.error(
-                                'Error',
-                                'Update contact failed, server Error',
-                        )
-                        setTimeout(() => this.loading = false, 1000);
-                    }
+	    .then(
+            data => {
+                this._notificationsService.success('Success', 'Update contact successful')
+                this.router.navigate([this.name.default_development.name_url + '/contact']);
+            },
+            error => {
+                this.userService.checkError(error.json().code)
+                this._notificationsService.error('Error', 'Update contact failed, server Error')
+                setTimeout(() => this.loading = false, 1000);
+            }
         );
 	}
 

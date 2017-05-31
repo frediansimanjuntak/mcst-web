@@ -57,8 +57,8 @@ export class UnitService {
             .catch(this.handleError);
     }
 
-    createRegVehicle(body:any, name:string, id:string): Promise<any> {
-        return this.http.post(url +  'properties/' + name + '/register_vehicle/' + id, body, this.jwt2())
+    createRegVehicle(body:any): Promise<any> {
+        return this.http.post(url +  'vehicles' , body, this.jwt2())
             .toPromise()
             .then(res => res.json().data)
             .catch(this.handleError);
@@ -107,8 +107,8 @@ export class UnitService {
           .catch(this.handleError);
     }
 
-    deleteRegVehicle(idRegVehicle:string, idUnit: string, name: string): Promise<void> {
-        return this.http.delete( url + 'properties/' + name + '/' + idUnit + '/register_vehicle/' + idRegVehicle, this.jwt())
+    deleteRegVehicle(idRegVehicle: string): Promise<void> {
+        return this.http.delete( url + 'vehicles/' + idRegVehicle, this.jwt())
           .toPromise()
           .then(() => null)
           .catch(this.handleError);

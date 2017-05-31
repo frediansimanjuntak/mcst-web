@@ -88,9 +88,9 @@ export class VisitComponent implements OnInit {
                     full_name : ['',  <any>Validators.required],
                     vehicle : [''],
                     pass : [''],
-                    prefix: ['Mr']
+                    prefix: ['', Validators.required]
                 }),
-                purpose: ['house_visit'],
+                purpose: ['', Validators.required],
                 remarks : [''],
                 check_in: [false,<any>Validators.required],
                 check_out: [''],
@@ -184,18 +184,12 @@ export class VisitComponent implements OnInit {
                         this.checkOutModal.close();
                         this.ngOnInit();
                         this.loading = false;
-                        this._notificationsService.success(
-                            'Success',
-                            'Check out '+ this.visitOut.visitor.prefix + ' ' + this.visitOut.visitor.full_name + ' successful',
-                        )
+                        this._notificationsService.success('Success', 'Check out '+ this.visitOut.visitor.prefix + ' ' + this.visitOut.visitor.full_name + ' successful')
                     },
                     error => {
-                        console.log(error);
+                        this.userService.checkError(error.json().code)
                         this.checkOutModal.close();
-                        this._notificationsService.error(
-                            'Error',
-                            'Check out failed, server Error',
-                        )
+                        this._notificationsService.error('Error', error.json().message)
                         this.loading = false;
                     }
                 );
@@ -232,18 +226,12 @@ export class VisitComponent implements OnInit {
                         this.checkInModal.close();
                         this.ngOnInit();
                         this.loading = false;
-                        this._notificationsService.success(
-                            'Success',
-                            'Check in '+ this.visit.visitor.prefix + ' ' + this.visit.visitor.full_name + ' successful',
-                        )
+                        this._notificationsService.success('Success', 'Check in '+ this.visit.visitor.prefix + ' ' + this.visit.visitor.full_name + ' successful')
                     },
                     error => {
-                        console.log(error);
+                        this.userService.checkError(error.json().code)
                         this.checkInModal.close();
-                        this._notificationsService.error(
-                            'Error',
-                            'Check in failed, server Error',
-                        )
+                        this._notificationsService.error('Error', error.json().message)
                         this.loading = false;
                     }
                 );
@@ -278,20 +266,14 @@ export class VisitComponent implements OnInit {
                     this.loading = true
                     this.firstModal.close();
                     this.ngOnInit();
-                    this._notificationsService.success(
-                            'Success',
-                            'Add guest successful',
-                        )
+                    this._notificationsService.success('Success', 'Add guest successful')
                     this.loading = false;
                 },
                 error => {
-                    console.log(error);
+                    this.userService.checkError(error.json().code)
                     this.firstModal.close();
                     setTimeout(() => this.loading = false, 1000);
-                    this._notificationsService.error(
-                            'Error',
-                            'Add guest failed, server Error',
-                        )
+                    this._notificationsService.error('Error', error.json().message)
                     this.loading = false;
                 }
             );
@@ -311,6 +293,11 @@ export class VisitComponent implements OnInit {
                             let visiting = this.dataUnit.find(data => data._id ==  this.visits[i].property);
                                 this.visits[i].property_detail = visiting;
                                 this.visits[i].visiting = '#' + visiting.address.unit_no + '-' + visiting.address.unit_no_2;
+                        }else{
+                                this.visits[i].visiting = '';
+                        }
+                        if(!this.visits[i].visitor.vehicle){
+                            this.visits[i].visitor.vehicle = '';
                         }
                     }
 

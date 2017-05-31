@@ -73,18 +73,12 @@ export class NewsletterComponent implements OnInit {
         this.newsletterservice.delete(newsletter._id, this.name.default_development.name_url)
           .then(
              data => {
-                    this._notificationsService.success(
-                            'Success',
-                            'Delete Newsletter successful',
-                    )
+                    this._notificationsService.success('Success', 'Delete Newsletter successful')
                     this.ngOnInit();
                 },
                 error => {
-                    console.log(error);
-                    this._notificationsService.error(
-                            'Error',
-                            'The Newsletter could not be deleted, server Error',
-                    )
+                    this.userService.checkError(error.json().code)
+                    this._notificationsService.error('Error', error.json().message)
                     this.loading = false
                 }
         );
@@ -107,20 +101,14 @@ export class NewsletterComponent implements OnInit {
       this.newsletterservice.release(this.newsletter._id, this.name.default_development.name_url)
           .then(
             data => {
-                     this._notificationsService.success(
-                            'Success',
-                            'Release Newsletter successful',
-                    )
-                      this.firstModal.close();
+                    this._notificationsService.success('Success', 'Release Newsletter successful')
+                    this.firstModal.close();
                     this.ngOnInit();
                 },
                 error => {
-                    console.log(error);
+                    this.userService.checkError(error.json().code)
                     this.firstModal.close();
-                    this._notificationsService.error(
-                            'Error',
-                            'The Newsletter could not be release, server Error',
-                    )
+                    this._notificationsService.error('Error', error.json().message)
                     this.loading = false
             }
         );
@@ -128,18 +116,18 @@ export class NewsletterComponent implements OnInit {
 
     private loadAllNewsletters() {
         this.newsletterservice.getAll(this.name.default_development.name_url)
-            .subscribe((data)=> {
-                setTimeout(()=> {
-                  this.data = data;
-                  this.allAgm       = this.data.filter(data => data.type === 'agm' );
-                  this.allEgm       = this.data.filter(data => data.type === 'egm' );
-                  this.allCircular  = this.data.filter(data => data.type === 'circular' );
-                  this.dataAgm       = this.data.filter(data => data.type === 'agm' );
-                  this.dataEgm       = this.data.filter(data => data.type === 'egm' );
-                  this.dataCircular  = this.data.filter(data => data.type === 'circular' );
-                  setTimeout(() => this.loading = false, 1000);
-                }, 1000);
-            });
+        .subscribe((data)=> {
+            setTimeout(()=> {
+              this.data = data;
+              this.allAgm       = this.data.filter(data => data.type === 'agm' );
+              this.allEgm       = this.data.filter(data => data.type === 'egm' );
+              this.allCircular  = this.data.filter(data => data.type === 'circular' );
+              this.dataAgm       = this.data.filter(data => data.type === 'agm' );
+              this.dataEgm       = this.data.filter(data => data.type === 'egm' );
+              this.dataCircular  = this.data.filter(data => data.type === 'circular' );
+              setTimeout(() => this.loading = false, 1000);
+            }, 1000);
+        });
     }
 
     filter(){

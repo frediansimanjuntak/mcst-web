@@ -169,18 +169,12 @@ export class PollComponent implements OnInit {
         this.pollService.delete(poll._id)
           .then(
              data => {
-                this._notificationsService.success(
-                            'Success',
-                            'Delete poll successful',
-                )
+                this._notificationsService.success('Success', 'Delete poll successful')
                 this.ngOnInit();
             },
             error => {
-                console.log(error);
-                this._notificationsService.error(
-                            'Error',
-                            'Failed delete poll, server error',
-                    )
+                this.userService.checkError(error.json().code)
+                this._notificationsService.error('Error', error.json().message)
                 this.loading = false
             }
           );
@@ -206,19 +200,13 @@ export class PollComponent implements OnInit {
         this.pollService.start(this.pollStart._id)
           .then(
              data => {
-                this._notificationsService.success(
-                            'Success',
-                            'Start poll successful',
-                )
+                this._notificationsService.success('Success', 'Start poll successful')
                 this.firstModal.close();
                 this.ngOnInit()
             },
             error => {
-                console.log(error);
-                this._notificationsService.error(
-                            'Error',
-                            '`The Poll could not be start, server Error',
-                    )
+                this.userService.checkError(error.json().code)
+                this._notificationsService.error('Error', error.json().message)
                 this.loading = false
             }
         );

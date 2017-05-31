@@ -254,7 +254,7 @@ export class EditCompanyComponent implements OnInit {
             //         this.router.navigate(['/company']);
             //     },
             //     error => {
-            //         console.log(error);
+            //         this.userService.checkError(error.json().code)
             //         alert(`The COmpany could not be save, server Error.`);
             //     }
             // );
@@ -278,7 +278,7 @@ export class EditCompanyComponent implements OnInit {
                     this.router.navigate(['/company']);
                 },
                 error => {
-                    console.log(error);
+                    // this.userService.checkError(error.json().code)
                     alert(`The company could not be update, server Error.`);
                 }
             );

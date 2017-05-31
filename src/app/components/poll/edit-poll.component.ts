@@ -200,18 +200,12 @@ export class EditPollComponent  {
         this.pollService.create(this.model)
         .then(
             data => {
-                 this._notificationsService.success(
-                            'Success',
-                            'Create Poll successful',
-                )
+                this._notificationsService.success('Success', 'Create Poll successful')
                 this.router.navigate([this.name.default_development.name_url + '/poll']);
             },
             error => {
-                console.log(error);
-                this._notificationsService.error(
-                            'Error',
-                            'The Poll could not be save, server Error',
-                    )
+                this.userService.checkError(error.json().code)
+                this._notificationsService.error('Error', error.json().message)
                 this.loading = false
             }
         );
@@ -232,18 +226,12 @@ export class EditPollComponent  {
         this.pollService.update(this.poll)
 		.then(
             data => {
-                 this._notificationsService.success(
-                            'Success',
-                            'Update Poll successful',
-                )
+                this._notificationsService.success('Success', 'Update Poll successful')
                 this.router.navigate([this.name.default_development.name_url + '/poll']);
             },
             error => {
-                console.log(error);
-                this._notificationsService.error(
-                            'Error',
-                            'Failed Update . server error',
-                    )
+                this.userService.checkError(error.json().code)
+                this._notificationsService.error('Error', error.json().message)
                 this.loading = false
             }
         );

@@ -31,7 +31,7 @@
 
 				<span style="font-size: 16px; font-weight: 500px; position: relative;
                         bottom: 10px;">
-                        {{ activeDate | date:'fullDate'}}
+                        {{activeDate | date:'fullDate'}}
     				</span>
 			</div>
 			<div class="col-md-2 btn-underline " (click)="nextDay()">
@@ -68,7 +68,7 @@
 									</strong>
 								</div>
 								<div class="col-md-7">
-									 <span *ngIf="visitActive.property_detail.landlord.data">{{ visitActive.property_detail.landlord.data.resident.username}}</span> 
+									 <span *ngIf="visitActive.property_detail.landlord.data">{{visitActive.property_detail.landlord.data.resident.username}}</span> 
 									<span *ngIf="!visitActive.property_detail.landlord.data">-</span>
 								</div>
 							</div>
@@ -92,7 +92,7 @@
 									</strong>
 								</div>
 								<div class="col-md-7">
-									<span *ngIf="visitActive.property">{{ visitActive.visiting}}</span>
+									<span *ngIf="visitActive.property">{{visitActive.visiting}}</span>
 									<span *ngIf="!visitActive.property">-</span>
 								</div>
 							</div>
@@ -103,7 +103,7 @@
 									</strong>
 								</div>
 								<div class="col-md-7">
-									 <span *ngIf="visitActive.property_detail.landlord.data">{{ visitActive.property_detail.landlord.data.resident.phone}}</span> 
+									 <span *ngIf="visitActive.property_detail.landlord.data">{{visitActive.property_detail.landlord.data.resident.phone}}</span> 
 									<span *ngIf="!visitActive.property_detail.landlord.data">-</span>
 								</div>
 							</div>
@@ -114,14 +114,15 @@
 									</strong>
 								</div>
 								<div class="col-md-7">
-									<span *ngIf="visitActive.property_detail.landlord.data">{{ visitActive.property_detail.landlord.data.resident.phone}}</span>
+									<span *ngIf="visitActive.property_detail.landlord.data">{{visitActive.property_detail.landlord.data.resident.phone}}</span>
 									<span *ngIf="!visitActive.property_detail.landlord.data">-</span>
 								</div>
 							</div>
 							<br>
 							<a *ngIf="name" class="btn-underline pull-right" style="color: black" [routerLink]="'/' + name.default_development.name_url + '/unit/view/' + visitActive.property_detail._id">View resident details</a>
 						</template>
-						<a #pop="bs-popover" [hidden]="!visitActive.property" type="button" style="cursor: pointer; color: blue;" class="btn-underline" [popover]="popTemplate">{{visitActive.visiting}}</a>
+						<a #pop="bs-popover" *ngIf="visitActive.property" [hidden]="!visitActive.property" type="button" style="cursor: pointer; color: blue;" class="btn-underline" [popover]="popTemplate">{{visitActive.visiting}}</a>
+						<span *ngIf="!visitActive.property">-</span>
 					</template>
 				</p-column>
 				<p-column header="Purpose of visit" field="purpose" [style]="{'width':'140px'}">
@@ -138,7 +139,7 @@
 									</strong>
 								</div>
 								<div class="col-md-7">
-									<span *ngIf="visitActive.contract">{{ visitActive.contract.title}}</span>
+									<span *ngIf="visitActive.contract">{{visitActive.contract.title}}</span>
 									<span *ngIf="!visitActive.contract">-</span>
 								</div>
 							</div>
@@ -159,7 +160,7 @@
 									</strong>
 								</div>
 								<div class="col-md-7">
-									<span *ngIf="visitActive.contract.contractor">{{ visitActive.contract.contractor.username}}</span>
+									<span *ngIf="visitActive.contract.contractor">{{visitActive.contract.contractor.username}}</span>
 									<span *ngIf="!visitActive.contract.contractor">-</span>
 								</div>
 							</div>
@@ -170,7 +171,7 @@
 									</strong>
 								</div>
 								<div class="col-md-7">
-									<span *ngIf="visitActive.contract.contractor">{{ visitActive.contract.contractor.company.name}}</span>
+									<span *ngIf="visitActive.contract.contractor">{{visitActive.contract.contractor.company.name}}</span>
 									<span *ngIf="!visitActive.contract.contractor">-</span>
 								</div>
 							</div>
@@ -208,9 +209,9 @@
 								<button *ngIf="visitActive.check_in && !visitActive.check_out" type="button" class="btn btn-primary btn-out" (click)="preCheckOut(visitActive) || checkOutModal.open()">OUT</button>
 							</div>
 							<div class="col-md-8">
-								<small *ngIf="visitActive.check_in">in {{ visitActive.check_in | date:'mediumTime' }}&nbsp;{{ visitActive.check_in | date:'shortDate' }}</small>
+								<small *ngIf="visitActive.check_in">in {{visitActive.check_in | date:'mediumTime'}}&nbsp;{{visitActive.check_in | date:'shortDate'}}</small>
 								<br>
-								<small *ngIf="visitActive.check_out">out {{ visitActive.check_out | date:'mediumTime' }}&nbsp;{{ visitActive.check_out | date:'shortDate' }}</small>
+								<small *ngIf="visitActive.check_out">out {{visitActive.check_out | date:'mediumTime'}}&nbsp;{{visitActive.check_out | date:'shortDate'}}</small>
 							</div>
 						</div>
 
@@ -228,13 +229,15 @@
 					<form name="form" [formGroup]="myForm" novalidate><br><br>
 						<div class="form-group" [ngClass]="{ 'has-error': addSubmitted && !myForm.controls.visitor.controls.prefix.valid }" formGroupName="visitor">
 							<div class="row no-margin">
-								<label class="control-label col-sm-4" for="prefix">Title :</label>
+								<label class="control-label col-sm-4" for="prefix">Salutation :</label>
 								<div class="col-sm-8">
-									<select class="form-control" placeholder="If any" formControlName="prefix" name="prefix">
-										<option [selected]="true" value="Mr">Mr</option>
+									<select class="form-control" formControlName="prefix" name="prefix" [ngClass]="{ 'form-control-blur': myForm.controls.visitor.controls.prefix.value =='' }" >
+										<option value=""  class="blur-font" disabled selected>Select salutation</option>
+										<option value="Mr">Mr</option>
 										<option value="Mrs">Mrs</option>
 										<option value="Ms">Ms</option>
 									</select>
+									<small style="color: red" [hidden]="myForm.controls.visitor.controls.prefix.valid || (myForm.controls.visitor.controls.prefix.pristine && !addSubmitted)">Salutation is required</small>
 								</div>
 							</div>
 						</div>
@@ -268,21 +271,23 @@
 								<label class="control-label col-sm-4" for="unit_no">Visiting :</label>
 								<div class="col-sm-8">
 									<select  [ngClass]="{ 'form-control-blur': myForm.controls.property.value =='' }" class="form-control" formControlName="property" name="property">
-										<option disabled="" selected="" value="">Search Unit.no here</option>
+										<option disabled=""  class="blur-font" selected="" value="">Search Unit.no here</option>
 										<option *ngFor="let u of dataUnit" [ngValue]="u._id">#{{u.address.unit_no}}-{{u.address.unit_no_2}}</option>
 									</select>
 									<small style="color: red" [hidden]="myForm.controls.property.valid || (myForm.controls.property.pristine && !addSubmitted)">Unit no is required</small>
 								</div>
 							</div>
 						</div>
-						<div class="form-group">
+						<div class="form-group"  [ngClass]="{ 'has-error': addSubmitted && !myForm.controls.purpose.valid }">
 							<div class="row no-margin">
 								<label class="control-label col-sm-4" for="purpose">Purpose of visit :</label>
 								<div class="col-sm-8">
-									<select class="form-control" formControlName="purpose" name="purpose">
+									<select class="form-control" formControlName="purpose" name="purpose" [ngClass]="{ 'form-control-blur': myForm.controls.purpose.value =='' }">
+										<option disabled=""  class="blur-font" selected="" value="">Select purpose of visit</option>
 										<option selected="" value="house_visit">House Visit</option>
 										<option value="maintenance_work">Maintenance Work</option>
 									</select>
+									<small style="color: red" [hidden]="myForm.controls.purpose.valid || (myForm.controls.purpose.pristine && !addSubmitted)">Purpose of visit is required</small>
 								</div>
 							</div>
 						</div>
@@ -308,7 +313,7 @@
 						</div>
 						<div class="form-group">
 							<div class="row no-margin">
-								<label class="control-label col-sm-4" for="full_name">Check-in: :</label>
+								<label class="control-label col-sm-4" for="full_name">Check-in :</label>
 								<div class="col-sm-8">
 									<label>
 										<input type="radio" formControlName="check_in" name="check_in" [value]=true>Yes</label>
@@ -341,7 +346,7 @@
 		<div class="row">
 			<modal #checkInModal>
 				<modal-header *ngIf="visit">
-					<h5>Check-in {{ visit.visitor.prefix }}&nbsp;{{ visit.visitor.full_name }}</h5>
+					<h5>Check-in {{visit.visitor.prefix}}&nbsp;{{visit.visitor.full_name}}</h5>
 				</modal-header>
 				<modal-content *ngIf="visit">
 				<br>
@@ -415,7 +420,7 @@
 		<div class="row">
 			<modal #checkOutModal>
 				<modal-header *ngIf="visitOut">
-					<h5>Check-out {{ visitOut.visitor.prefix }}&nbsp;{{ visitOut.visitor.full_name }}</h5>
+					<h5>Check-out {{visitOut.visitor.prefix}}&nbsp;{{visitOut.visitor.full_name}}</h5>
 				</modal-header>
 				<modal-content *ngIf="visitOut">
 					<form name="form" [formGroup]="checkOutForm" (ngSubmit)="checkOut(checkOutForm.value, checkOutForm.valid)" novalidate>

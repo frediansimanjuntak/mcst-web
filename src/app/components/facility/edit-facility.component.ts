@@ -198,17 +198,12 @@ export class EditFacilityComponent  {
 			this.facilityService.create(model)
 			.then(
 				response => {
-					this._notificationsService.success(
-						'Success',
-						'Create facility successful',
-					)
+					this._notificationsService.success('Success', 'Create facility successful')
 					this.router.navigate([this.name.default_development.name_url + '/facility']);
 				},
 				error => {
-					this._notificationsService.error(
-						'Error',
-						'Create facility failed, server Error',
-					)
+                	this.userService.checkError(error.json().code)
+					this._notificationsService.error('Error', error.json().message)
 					setTimeout(() => this.loading = false, 1000);
 				}
 			);
@@ -243,17 +238,12 @@ export class EditFacilityComponent  {
 			this.facilityService.update(facility)
 			.then(
 				response => {
-					this._notificationsService.success(
-								'Success',
-								'Update facility successful',
-						)
+					this._notificationsService.success('Success', 'Update facility successful')
 					this.router.navigate([this.name.default_development.name_url + '/facility']);
 				},
 				error => {
-					this._notificationsService.error(
-								'Error',
-								'Update facility failed, server Error',
-						)
+                	this.userService.checkError(error.json().code)
+					this._notificationsService.error('Error', error.json().message)
 					setTimeout(() => this.loading = false, 1000);
 				}
 			);

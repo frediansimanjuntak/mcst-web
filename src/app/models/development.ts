@@ -6,6 +6,7 @@ export class Development {
   owner : User;
   staff : User[];
   description : string;
+  name_url : string;
   properties : [
     {
       _id : string,

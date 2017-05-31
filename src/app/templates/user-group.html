@@ -15,12 +15,12 @@
 			<p-dataTable [value]="usergroups" [rows]="10" [paginator]="true">
 				<p-column field="description" header="Description" sortable="true" [filter]="true" filterPlaceholder="Search description">
 					<template let-usergroups="rowData" pTemplate="body">
-						<span>{{usergroups.description | capitalize }},</span>
+						<span>{{usergroups.description | capitalize}}</span>
 					</template>
 				</p-column>
 				<p-column field="chief.username" header="Chief" sortable="true" [filter]="true" filterPlaceholder="Search Chief">
 					<template let-usergroups="rowData" pTemplate="body">
-						<span>{{usergroups.chief.username | capitalize }}</span>
+						<span>{{usergroups.chief.username | capitalize}}</span>
 					</template>
 				</p-column>
 				<p-column field="users" header="Users" sortable="true">
