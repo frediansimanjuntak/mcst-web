@@ -63,7 +63,7 @@ export class ContractorComponent implements OnInit {
                     this.ngOnInit()
                 },
                 error => {
-                    this._notificationsService.error('Error', error.json().message)
+                    
                     this.loading = false;
               }
         );
@@ -84,7 +84,7 @@ export class ContractorComponent implements OnInit {
                 },
                 error => {
                     this.activeModal.close();
-                    this._notificationsService.error('Error', error.json().message)
+                    
                     this.loading = false;
               }
         );

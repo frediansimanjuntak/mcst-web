@@ -1,7 +1,7 @@
 import { Component, OnInit, ViewContainerRef, ViewEncapsulation, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { Company, Companies } from '../../models/index';
-import { CompanyService, AlertService} from '../../services/index';
+import { CompanyService, AlertService, UserService} from '../../services/index';
 
 import { Observable} from 'rxjs/Observable';
 
@@ -38,7 +38,7 @@ export class CompanyComponent implements OnInit {
                 private router: Router,
                 private companyService: CompanyService,
                 private alertService: AlertService,
-                
+                private userService: UserService
                 ) {
 
     }
@@ -69,8 +69,11 @@ export class CompanyComponent implements OnInit {
               }
             },
             error=> {
-                      // this.userService.checkError(error.json().code)
-                alert(`The Company could not be deleted, server Error.`);
+                      if (error.json().code) {
+                        this.userService.checkError(error.json().code, error.json().message)
+                    }else{
+                        this.userService.checkError(error.status, '')
+                    };
             }
         );
     }
@@ -93,9 +96,12 @@ export class CompanyComponent implements OnInit {
               }
             },
             error=> {
-              // this.userService.checkError(error.json().code)
+              if (error.json().code) {
+                        this.userService.checkError(error.json().code, error.json().message)
+                    }else{
+                        this.userService.checkError(error.status, '')
+                    }
               this.activeModal.close();
-                alert(`The Company could not be Activated, server Error.`);
             }
         );
     }

@@ -68,8 +68,12 @@ export class UserGroupComponent implements OnInit {
                     this.loadAllUserGroup()
                 },
                 error => {
-                    this.userService.checkError(error.json().code)
-                    this._notificationsService.error('Error', error.json().message)
+                    if (error.json().code) {
+                        this.userService.checkError(error.json().code, error.json().message)
+                    }else{
+                        this.userService.checkError(error.status, '')
+                    }
+                    
                     this.loading = false;
             }
         );

@@ -102,8 +102,11 @@ export class AnnouncementComponent implements OnInit {
                     this._notificationsService.success('Success', 'Delete announcement successful')
                 },
                 error => {
-                    this.userService.checkError(error.json().code)
-                    this._notificationsService.error('Error', error.json().message)
+                    if (error.json().code) {
+                        this.userService.checkError(error.json().code, error.json().message)
+                    }else{
+                        this.userService.checkError(error.status, '')
+                    }
                     setTimeout(() => this.loading = false, 1000);
                 }
         );
@@ -158,8 +161,12 @@ export class AnnouncementComponent implements OnInit {
                     this.ngOnInit();
                 },
                 error => {
-                    this.userService.checkError(error.json().code)
-                    this._notificationsService.error('Error', error.json().message)
+                    if (error.json().code) {
+                        this.userService.checkError(error.json().code, error.json().message)
+                    }else{
+                        this.userService.checkError(error.status, '')
+                    }
+                    
                     setTimeout(() => this.loading = false, 1000);
                 }
         );
