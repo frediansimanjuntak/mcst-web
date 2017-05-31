@@ -1,7 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { Router, Params, ActivatedRoute } from '@angular/router';
 import { Petition, Petitions } from '../../models/index';
-import { UnitService, PetitionService, AlertService, UserService } from '../../services/index';
+import { UnitService, PetitionService, AlertService, UserService, CompanyService } from '../../services/index';
 import { NotificationsService } from 'angular2-notifications';
 import { FormBuilder, FormControl, FormGroup, FormArray, Validators } from '@angular/forms';
 import { FileUploader } from 'ng2-file-upload';
@@ -33,7 +33,13 @@ export class EditPetitionComponent implements OnInit {
     public submitted: boolean; // keep track on whether form is submitted
     public events: any[] = []; // use later to display form changes
     name: any;
-
+    companies: any[] = [];
+    dateOptions: any = {};
+    company: any = {
+        address: {
+            full_address : ''
+        }
+    };
     constructor(private router: Router,
     	private petitionService: PetitionService,
         private unitService: UnitService,
@@ -41,7 +47,7 @@ export class EditPetitionComponent implements OnInit {
         private route: ActivatedRoute,
         private formbuilder: FormBuilder,
         private userService: UserService,
-        
+        private companyService:CompanyService,
         private _notificationsService: NotificationsService,) {
         // this.user = JSON.parse(localStorage.getItem('user'));
     }
@@ -61,7 +67,11 @@ export class EditPetitionComponent implements OnInit {
         })
         this.selectedType = 'Maintenance';
         this.model.attachment = [];
-        this.model.tenant = {};
+        this.model.tenant = {
+            name: '',
+            salulation: undefined,
+            phone: ''
+        };
         this.model.start_time = '';
         this.model.end_time = '';
         this.model.company = '';
@@ -79,30 +89,23 @@ export class EditPetitionComponent implements OnInit {
             archieved : [''],
             created_at : ['']
         });
-    }
 
-    // getLastRefNo(){
-    //     this.petitionService.getAll().subscribe(petitions => {
-    //         this.petitions = petitions ;
-    //         if(petitions.length > 0) { 
-    //             var a = this.petitions.length - 1;
-    //             this.no = +this.petitions[a].reference_no + 1
-    //             if(this.no > 1 && this.no < 10) {
-    //                 this.model.reference_no = '000' + this.no.toString();
-    //             }if(this.no > 9 && this.no < 100) {
-    //                 this.model.reference_no = '00' + this.no.toString();
-    //             }if(this.no > 99 && this.no < 1000) { 
-    //                 this.model.reference_no = '0' + this.no.toString();
-    //             }if(this.no > 999) {
-    //                 this.model.reference_no = this.no.toString();
-    //             }
-    //         } else {
-    //             this.model.reference_no = '0001'
-    //         }
-        
-    //     this.appComponent.loading = false;
-    //     });
-    // }
+        this.dateOptions = {
+            todayBtnTxt: 'Today',
+            dateFormat: 'yyyy-mm-dd',
+            firstDayOfWeek: 'mo',
+            sunHighlight: true,
+            editableDateField: false,
+            height: '34px',
+            width: '260px',
+            inline: false,
+            showClearDateBtn: false,
+            // disableUntil: {year: 2017, month: 1, day: 10},
+            customPlaceholderTxt: 'Today (default)',
+            // disableUntil: {year: 2016, month: 8, day: 10},
+            selectionTxtFontSize: '16px'
+        };
+    }
 
     createPetition(model: any, isValid: boolean) {
         this.submitted = true;
@@ -124,25 +127,47 @@ export class EditPetitionComponent implements OnInit {
             formData.append("status", 'pending');
             formData.append("updated_at", model.updated_at);
             if(model.petition_type == 'new tenant'){
-                formData.append("tenant", this.model.tenant);
-            }else{
-                formData.append("start_time", this.model.start_time);
-                formData.append("end_time", this.model.end_time);
-                formData.append("company", this.model.company);
-            }
-
-            this.petitionService.create(formData)
-            .then(
-                data => {
-                    this._notificationsService.success('Success', 'Add request Successful')
-                    this.router.navigate([this.name.default_development.name_url + '/petition']);
-                },
-                error => {
-                    
-                    this.loading = false;
+                if(this.model.tenant.name && this.model.tenant.salulation && this.model.tenant.phone){
+                    formData.append("tenant.name", this.model.tenant.name);
+                    formData.append("tenant.salulation", this.model.tenant.salulation);
+                    formData.append("tenant.phone", this.model.tenant.phone);
+                    this.savePetition(formData);
                 }
-            );
+            }else{
+                if(this.model.start_time && this.model.end_time){
+                    formData.append("start_time", this.model.start_time);
+                    formData.append("end_time", this.model.end_time);
+                    if(this.model.company != 'others' && this.model.company != ''){
+                        formData.append("company", this.model.company);
+                        this.savePetition(formData);
+                    }else{
+                        if(this.company.name && this.company.business_registration 
+                            && this.company.address.full_address && this.company.phone && this.company.email){
+                            formData.append("new_company.name", this.company.name);
+                            formData.append("new_company.business_registration", this.company.business_registration);
+                            formData.append("new_company.address.full_address", this.company.address.full_address);
+                            formData.append("new_company.phone", this.company.phone);
+                            formData.append("new_company.email", this.company.email);
+                            this.savePetition(formData);
+                        }
+                    }   
+                }                
+            }
         }
+    }
+
+    savePetition(formdata:any){
+        this.petitionService.create(formdata)
+                    .then(
+                        data => {
+                            this._notificationsService.success('Success', 'Add request Successful')
+                            this.router.navigate([this.name.default_development.name_url + '/petition']);
+                        },
+                        error => {
+                            
+                            this.loading = false;
+                        }
+                 ); 
     }
 
     private loadAllUnits(): void {
@@ -162,8 +187,7 @@ export class EditPetitionComponent implements OnInit {
                     }
                     this.myOptions = opts.slice(0);
                     this.items = this.myOptions;
-                    this.loading = false;
-                    // this.getLastRefNo();
+                    this.getCompanies();
                 }, 1000);
             });
     }
@@ -172,6 +196,13 @@ export class EditPetitionComponent implements OnInit {
     //     this.unit = value;
     // }
 
+    getCompanies(){
+        this.companyService.getAll()
+            .subscribe((data) => {
+                this.companies = data;
+                this.loading = false;
+            })
+    }
 
     public selected(value:any):void {
     }
@@ -206,4 +237,23 @@ export class EditPetitionComponent implements OnInit {
       this.router.navigate([this.name.default_development.name_url + '/petition']);  
     }
 
+    dateCommenceChanged(event: any, type: string){
+        if(type == 'start'){
+            this.model.start_time = event.jsdate;
+        }else{
+            this.model.end_time = event.jsdate;
+        }
+    }
+
+    companyChange(event: any){
+        if(this.model.company != 'others'){
+            this.company = this.companies.find((data) => data._id == this.model.company);
+        }else{
+            this.company = {
+                address: {
+                    full_address : ''
+                }
+            };
+        }        
+    }
 }

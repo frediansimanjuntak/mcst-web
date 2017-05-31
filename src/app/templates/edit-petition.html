@@ -9,7 +9,7 @@
                     <div class="form-group" [ngClass]="{ 'has-error': submitted && !myForm.controls.petition_type.valid }">
                         <label class="control-label col-sm-4" for="petition_type">Request Type :</label>
                         <div class="col-sm-8">
-                            <select [ngClass]="{ 'form-control-blur': myForm.controls.petition_type.value =='' }" class="form-control select-pc" name="petition_type" id="petition_type" formControlName="petition_type" placeholder="Choose Petition Type">
+                            <select [ngClass]="{ 'form-control-blur': myForm.controls.petition_type.value =='' }" class="form-control select-pc" required name="petition_type" id="petition_type" formControlName="petition_type" placeholder="Choose Petition Type">
                                 <option disabled  class="blur-font" value="" [selected]=true>Select request type</option>
                                 <option value="moving in" >Moving In</option>
                                 <option value="moving out" >Moving Out</option>
@@ -32,34 +32,113 @@
                         </div>
                     </div>
 
-                     <div class="form-group"  *ngIf="myForm.controls.petition_type.value=='new tenant'">
+                     <div class="form-group"  *ngIf="myForm.controls.petition_type.value=='new tenant'"  [ngClass]="{ 'has-error': submitted && !model.tenant.name }">
                             <div class="row no-margin">
                                 <label class="control-label col-sm-4" for="phone">Tenant's Name :</label>
                                 <div class="col-sm-8">
                                     <input type="text" class="form-control" name="name" [(ngModel)]="model.tenant.name" required [ngModelOptions]="{standalone: true}" placeholder="Input tenant's name here"/>
+                                    <small style="color: red" *ngIf="!model.tenant.name && submitted">Tenant's name required</small>
                                 </div>
                             </div>
                         </div>
 
-                    <div class="form-group" *ngIf="myForm.controls.petition_type.value=='new tenant'">
+                    <div class="form-group" *ngIf="myForm.controls.petition_type.value=='new tenant'"  [ngClass]="{ 'has-error': submitted && !model.tenant.salulation }">
                             <div class="row no-margin">
-                                <label  class="control-label col-sm-4" for="type">Salulation :</label>
+                                <label  class="control-label col-sm-4" for="type">Salutation :</label>
                                 <div class="col-sm-8">
-                                    <select class="form-control" name="salulation"  (change)="residentTypeChange($event)" [(ngModel)]="model.tenant.salulation" [ngModelOptions]="{standalone: true}" [ngClass]="{ 'form-control-blur': model.tenant.salulation ==undefined }" >
-                                        <option disabled hidden value="undefined">Select salulation</option>
+                                    <select class="form-control" name="salulation" [(ngModel)]="model.tenant.salulation" [ngModelOptions]="{standalone: true}" [ngClass]="{ 'form-control-blur': model.tenant.salulation ==undefined }" >
+                                        <option disabled hidden value="undefined">Select salutation</option>
                                         <option value="Mr">Mr</option>
                                         <option value="Mrs">Mrs</option>
                                         <option value="Ms">Ms</option>
                                     </select>
-                                    <span *ngIf="!valid" style="color: red">{{errorMessage}}</span>
+                                     <small style="color: red" *ngIf="!model.tenant.salulation && submitted">Salutation is required</small>
                                 </div>
                             </div>
                         </div>  
-                        <div class="form-group"  *ngIf="myForm.controls.petition_type.value=='new tenant'">
+                        <div class="form-group"  *ngIf="myForm.controls.petition_type.value=='new tenant'" [ngClass]="{ 'has-error': submitted && !model.tenant.phone }">
                             <div class="row no-margin">
                                 <label class="control-label col-sm-4" for="phone">Tenant's Phone :</label>
                                 <div class="col-sm-8">
                                     <input type="text" class="form-control" name="phone" [(ngModel)]="model.tenant.phone" required [ngModelOptions]="{standalone: true}" placeholder="Input tenant's phone here"/>
+                                    <small style="color: red" *ngIf="!model.tenant.phone && submitted">Salulation is required</small>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group" *ngIf="myForm.controls.petition_type.value!='new tenant' && myForm.controls.petition_type.value!=''" >
+                            <div class="row no-margin">
+                                <label  class="control-label col-sm-4" for="type">Select Company :</label>
+                                <div class="col-sm-8">
+                                    <select class="form-control" (change)="companyChange($event)" name="company" [(ngModel)]="model.company" [ngModelOptions]="{standalone: true}" [ngClass]="{ 'form-control-blur': model.company == '' }" >
+                                        <option  class="blur-font" disabled selected hidden value="">Select company</option>
+                                        <option *ngFor="let u of companies" [ngValue]="u._id">{{u.name}}</option>
+                                        <option value="others">Others</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>  
+                         <div class="form-group" *ngIf="myForm.controls.petition_type.value!='new tenant' && myForm.controls.petition_type.value!=''" [ngClass]="{ 'has-error': submitted && !company.name }">
+                            <div class="row no-margin">
+                                <label class="control-label col-sm-4" for="phone">Contractor name :</label>
+                                <div class="col-sm-8">
+                                    <input type="text" [attr.disabled]="model.company!='others' && model.company!=''?true:null" class="form-control" name="company_name" [(ngModel)]="company.name" placeholder="Input contractor name here" required [ngModelOptions]="{standalone: true}"/>
+                                     <small style="color: red" *ngIf="!company.name && submitted">Contractor name is required</small>
+                                </div>
+                            </div>
+                        </div>
+                         <div class="form-group" *ngIf="myForm.controls.petition_type.value!='new tenant' && myForm.controls.petition_type.value!=''" [ngClass]="{ 'has-error': submitted && !company.business_registration }">
+                            <div class="row no-margin">
+                                <label class="control-label col-sm-4" for="phone">Contractor Reg no :</label>
+                                <div class="col-sm-8">
+                                    <input type="text" [attr.disabled]="model.company!='others' && model.company!=''?true:null" class="form-control" name="company_name" [(ngModel)]="company.business_registration" placeholder="Input contractor reg no. here" required [ngModelOptions]="{standalone: true}"/>
+                                    <small style="color: red" *ngIf="!company.business_registration && submitted">Contractor reg no. is required</small>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group" *ngIf="myForm.controls.petition_type.value!='new tenant' && myForm.controls.petition_type.value!=''" [ngClass]="{ 'has-error': submitted && !company.address.full_address }">
+                            <div class="row no-margin">
+                                <label class="control-label col-sm-4" for="phone">Contractor Address :</label>
+                                <div class="col-sm-8">
+                                    <input type="text" [attr.disabled]="model.company!='others' && model.company!=''?true:null" class="form-control" name="company_name" [(ngModel)]="company.address.full_address" placeholder="Input contractor address here" required [ngModelOptions]="{standalone: true}"/>
+                                    <small style="color: red" *ngIf="!company.address.full_address && submitted">Contractor address is required</small>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group" *ngIf="myForm.controls.petition_type.value!='new tenant' && myForm.controls.petition_type.value!=''" [ngClass]="{ 'has-error': submitted && !company.phone }">
+                            <div class="row no-margin">
+                                <label class="control-label col-sm-4" for="phone">Contractor Contact no :</label>
+                                <div class="col-sm-8">
+                                    <input type="text" [attr.disabled]="model.company!='others' && model.company!=''?true:null" class="form-control" name="company_name" [(ngModel)]="company.phone" placeholder="Input contractor contact no. here" required [ngModelOptions]="{standalone: true}"/>
+                                    <small style="color: red" *ngIf="!company.phone && submitted">Contractor contact no. is required</small>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group" *ngIf="myForm.controls.petition_type.value!='new tenant' && myForm.controls.petition_type.value!=''" [ngClass]="{ 'has-error': submitted && !company.email }">
+                            <div class="row no-margin">
+                                <label class="control-label col-sm-4" for="phone">Contractor Email :</label>
+                                <div class="col-sm-8">
+                                    <input type="text" [attr.disabled]="model.company!='others' && model.company!=''?true:null" class="form-control" placeholder="Input contractor email here" name="company_name" [(ngModel)]="company.email" required [ngModelOptions]="{standalone: true}"/>
+                                    <small style="color: red" *ngIf="!company.email && submitted">Contrator email is required</small>
+                                </div>
+                            </div>
+                        </div>
+
+
+                        <div class="form-group" *ngIf="myForm.controls.petition_type.value!='new tenant' && myForm.controls.petition_type.value!=''" [ngClass]="{ 'has-error': submitted && !model.start_time }">
+                            <div class="row no-margin">
+                                <label class="control-label col-sm-4" for="vehicle">Commence date :</label>
+                                <div class="col-sm-8">
+                                    <my-date-picker [placeholder]="'Select commence date'" class="bg-white" [options]="dateOptions" (dateChanged)="dateCommenceChanged($event,'start')"></my-date-picker>
+                                     <small style="color: red" *ngIf="!model.start_time && submitted">Commence date is required</small>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group" *ngIf="myForm.controls.petition_type.value!='new tenant' && myForm.controls.petition_type.value!=''" [ngClass]="{ 'has-error': submitted && !model.end_time }">
+                            <div class="row no-margin">
+                                <label class="control-label col-sm-4" for="vehicle">Estimate date of completion :</label>
+                                <div class="col-sm-8">
+                                    <my-date-picker [placeholder]="'Select estimate date of completion'" class="bg-white" [options]="dateOptions" (dateChanged)="dateCommenceChanged($event,'end')"></my-date-picker>
+                                     <small style="color: red" *ngIf="!model.end_time && submitted">Estimate date of completion is required</small>
                                 </div>
                             </div>
                         </div>
