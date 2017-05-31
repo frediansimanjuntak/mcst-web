@@ -150,7 +150,6 @@ export class IncidentComponent implements OnInit {
             this.dataInProgress = this.incidents.filter(incidents => incidents.status === 'in progress');
             this.dataResolved   = this.incidents.filter(incidents => incidents.status === 'resolve');
             this.dataArchieved   = this.all.filter(incidents => incidents.archieve === true );
-            console.log(incidents)
             setTimeout(() => this.loading = false, 1000);
 		});
     }
@@ -158,7 +157,6 @@ export class IncidentComponent implements OnInit {
     filter(){
         this.loading=true;
         if(this.typeFilter != ''){
-            console.log(this.typeFilter)
             this.incidents  = this.all.filter(data =>  data.reference_no.toLowerCase().indexOf(this.dataFilter.toLowerCase()) !==  -1  &&
                 data.incident_type.toLowerCase().indexOf(this.typeFilter.toLowerCase()) !==  -1 &&
                 data.archieve === false
@@ -225,11 +223,9 @@ export class IncidentComponent implements OnInit {
         this.loading = true
         this.images = []
         this.datas = incident
-        console.log(this.datas)
         for (var i = 0; i < this.datas.attachment.length; ++i) {
             this.images.push({source:this.datas.attachment[i].url});
         };
-        console.log(this.images)
         setTimeout(() => { this.loading = false }, 1000);
     }
 

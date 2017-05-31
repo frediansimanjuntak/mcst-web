@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router, Params, ActivatedRoute } from '@angular/router';
 import { Contract } from '../../models/index';
 import { ContractService, AlertService, UserService, ContractNoticeService } from '../../services/index';
-
+import * as moment from 'moment'
 import 'rxjs/add/operator/switchMap';
 import { NotificationsService } from 'angular2-notifications';
 import { Observable} from 'rxjs/Observable';
@@ -20,6 +20,7 @@ export class ContractNoticeComponent implements OnInit  {
     contractnotice:any;
     model: any = {};
     images: any[];
+    today: Date;
     id: string;
     _id: string;
     public open;
@@ -37,6 +38,8 @@ export class ContractNoticeComponent implements OnInit  {
         private userService: UserService) {}
 
     ngOnInit(): void {
+        this.today = new Date();
+        this.model.start_time = this.today
         this.model.attachment = [];
         this.userService.getByToken().subscribe(name => {this.name = name.user;})
         this.route.params.subscribe(params => {

@@ -66,14 +66,14 @@ export class ContractComponent implements OnInit  {
             });
             this.contractnoteService.getAll(this.id)
             .subscribe(contractnotes => {
-                if(contractnotes.length > 0) { 
-                    this.contractnotes = contractnotes;
+                if(contractnotes.contract_note.length > 0) { 
+                    this.contractnotes = contractnotes.contract_note;
                 }
             })
             this.contractnoticeService.getAll(this.id)
             .subscribe(contractnotices => {
-                if(contractnotices.length > 0) {
-                    this.contractnotices = contractnotices;
+                if(contractnotices.contract_notice.length > 0) {
+                    this.contractnotices = contractnotices.contract_notice;
                 }
                 setTimeout(() => this.loading = false, 1000);
             })

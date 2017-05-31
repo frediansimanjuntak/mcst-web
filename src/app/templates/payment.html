@@ -24,7 +24,7 @@
                     </div>
                     <div class="row">
                         <div class="col-md-2 col-padding"><strong>For :</strong></div>
-                        <div class="col-md-10 col-padding">{{ payment.sender.username }}</div>
+                        <div *ngIf="payment.sender" class="col-md-10 col-padding">{{ payment.sender.username }}</div>
                     </div>
                     <div class="row">
                         <div class="col-md-2 col-padding"><strong>Total Amount :</strong></div>
