@@ -667,7 +667,6 @@ export class ViewUnitComponent implements OnInit {
         this.addSubmitted= false;
         this.useAutocomplete = true;
         this.user = event;
-        console.log(this.user)
         this.myForm = this.formbuilder.group({
                     username :[{value: event.username, disabled: true}],
                     email : [{value: event.email, disabled: true}],
@@ -765,10 +764,5 @@ export class ViewUnitComponent implements OnInit {
                 });  
         }
         this.useAutocomplete = false;
-    }
-    
-    clearUsername($event){
-        console.log('konyoha')
-        this.username="";
     }
 }
