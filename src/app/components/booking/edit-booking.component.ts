@@ -500,7 +500,14 @@ export class EditBookingComponent implements OnInit  {
 
 	onChange(event: any) {
 	   let files = [].slice.call(event.target.files);
-	   this.model.payment_proof = files;
+	   for (let z = 0; z < files.length; ++z) {
+		   	if (!files[z].type.includes("image")) {
+			  	this.model.payment_proof = [];
+			  	break;
+		   	}else{
+				this.model.payment_proof = files;
+		   	}
+	   	}
 	}
 	
 	remove(i: any){ 
