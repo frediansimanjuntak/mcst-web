@@ -217,7 +217,7 @@ export class EditUserGroupComponent implements OnInit {
             this.userGroupService.update(this.usergroup)
                 .then(
                     data => {
-                        this._notificationsService.success('Success', 'Update usergroup successful')
+                        this._notificationsService.success('Success', 'Update user group successful')
                         this.router.navigate([this.name.default_development.name_url + '/user_group']);
                     },
                     error => {
