@@ -141,7 +141,14 @@ export class ContractNoteComponent implements OnInit  {
 
     onChange(event: any) {
        let files = [].slice.call(event.target.files);
-       this.model.attachment = files;
+       for (let z = 0; z < files.length; ++z) {
+		   	if (!files[z].type.includes("image")) {
+			  	this.model.attachment = [];
+			  	break;
+		   	}else{
+				this.model.attachment = files;
+		   	}
+	   	}
     }
 
     remove(i: any){
