@@ -131,17 +131,17 @@ export class EditPetitionComponent implements OnInit {
                 formData.append("company", this.model.company);
             }
 
-            // this.petitionService.create(formData)
-            // .then(
-            //     data => {
-            //         this._notificationsService.success('Success', 'Add request Successful')
-            //         this.router.navigate([this.name.default_development.name_url + '/petition']);
-            //     },
-            //     error => {
-            //         this._notificationsService.error('Error', error.json().message)
-            //         this.loading = false;
-            //     }
-            // );
+            this.petitionService.create(formData)
+            .then(
+                data => {
+                    this._notificationsService.success('Success', 'Add request Successful')
+                    this.router.navigate([this.name.default_development.name_url + '/petition']);
+                },
+                error => {
+                    
+                    this.loading = false;
+                }
+            );
         }
     }
 

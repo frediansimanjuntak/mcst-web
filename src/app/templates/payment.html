@@ -28,7 +28,7 @@
                     </div>
                     <div class="row">
                         <div class="col-md-2 col-padding"><strong>Total Amount :</strong></div>
-                        <div class="col-md-10 col-padding">{{ payment.total_amount }}</div>
+                        <div class="col-md-10 col-padding">{{ payment.total_amount | currency:undefined:'1.2-2' }}</div>
                     </div>
                     <div class="row">
                         <div class="col-md-2 col-padding"><strong>Status :</strong></div>
@@ -69,7 +69,11 @@
 				                </template>
 							</p-column>
 							<p-column filterMatchMode="contains" field="sender.username" header="Sender" sortable="true" [filter]="true" filterPlaceholder="Search sender"></p-column>
-							<p-column filterMatchMode="contains" field="total_amount" header="Total Amount" sortable="true" [filter]="true" filterPlaceholder="Search total amount"></p-column>
+							<p-column filterMatchMode="contains" field="total_amount" header="Total Amount" sortable="true" [filter]="true" filterPlaceholder="Search total amount">
+                                <template let-data="rowData" pTemplate="body">
+                                    {{data.total_amount | currency:undefined:'1.2-2'}}
+                                </template>                  
+                            </p-column>
 							<p-column filterMatchMode="contains" field="remark" header="Remark" sortable="true" [filter]="true" filterPlaceholder="Search remark"></p-column>
 							<p-column filterMatchMode="contains" field="status" header="Status" sortable="true" [filter]="true" filterPlaceholder="Search Status"></p-column>
 							<p-column [style]="{'width': '168px'}" header="Action" styleClass="col-button">
@@ -93,7 +97,11 @@
 				                </template>
 							</p-column>
 							<p-column filterMatchMode="contains" field="sender.username" header="Sender" sortable="true" [filter]="true" filterPlaceholder="Search sender"></p-column>
-							<p-column filterMatchMode="contains" field="total_amount" header="Total Amount" sortable="true" [filter]="true" filterPlaceholder="Search total amount"></p-column>
+							<p-column filterMatchMode="contains" field="total_amount" header="Total Amount" sortable="true" [filter]="true" filterPlaceholder="Search total amount">
+                                <template let-data="rowData" pTemplate="body">
+                                    {{data.total_amount | currency:undefined:'1.2-2'}}
+                                </template>                     
+                            </p-column>
 							<p-column filterMatchMode="contains" field="remark" header="Remark" sortable="true" [filter]="true" filterPlaceholder="Search remark"></p-column>
 							<p-column filterMatchMode="contains" field="status" header="Status" sortable="true" [filter]="true" filterPlaceholder="Search Status"></p-column>
 							<p-column [style]="{'width': '168px'}" header="Action" styleClass="col-button">

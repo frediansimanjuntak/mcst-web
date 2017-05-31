@@ -42,6 +42,7 @@ export class EditCompanyComponent implements OnInit {
     	private alertService: AlertService,
     	private formbuilder: FormBuilder,
         private route: ActivatedRoute,
+        private userService: UserService
         ) {
     }
 
@@ -254,7 +255,11 @@ export class EditCompanyComponent implements OnInit {
             //         this.router.navigate(['/company']);
             //     },
             //     error => {
-            //         this.userService.checkError(error.json().code)
+            //         if (error.json().code) {
+                    //     this.userService.checkError(error.json().code, error.json().message)
+                    // }else{
+                    //     this.userService.checkError(error.status, '')
+                    // }
             //         alert(`The COmpany could not be save, server Error.`);
             //     }
             // );
@@ -278,8 +283,11 @@ export class EditCompanyComponent implements OnInit {
                     this.router.navigate(['/company']);
                 },
                 error => {
-                    // this.userService.checkError(error.json().code)
-                    alert(`The company could not be update, server Error.`);
+                    if (error.json().code) {
+                        this.userService.checkError(error.json().code, error.json().message)
+                    }else{
+                        this.userService.checkError(error.status, '')
+                    };
                 }
             );
 

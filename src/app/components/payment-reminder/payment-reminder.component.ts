@@ -6,7 +6,7 @@ import { PaymentReminderService, AlertService, UserService } from '../../service
 import { NotificationsService } from 'angular2-notifications';
 import { Observable } from 'rxjs/Observable';
 import { FileUploader } from 'ng2-file-upload';
-
+import * as moment from 'moment';
 import { ConfirmationService } from 'primeng/primeng';
 
 @Component({
@@ -52,16 +52,15 @@ export class PaymentReminderComponent implements OnInit {
 			this.paymentreminderService.getById(this.id)
 			.subscribe(paymentreminder => {
 				this.paymentreminder = paymentreminder;
-				let y = this.paymentreminder.auto_issue_on.toString().slice(0,4);
-				let m = (this.paymentreminder.auto_issue_on+100).toString().slice(4,6);
-				let d = this.paymentreminder.auto_issue_on.toString().slice(6,8);
-				this.paymentreminder.auto_issue_on = d + '/' + m + '/' + y ;
-				this.paymentreminder.due_on = this.convertDate(this.paymentreminder.due_on);
-				this.paymentreminder.created_at = this.convertDate(this.paymentreminder.created_at);
-				this.notification_list = paymentreminder.notification_list;
-				for (let a = 0; a < this.notification_list.length; ++a) {
-					let total_amount = parseInt(this.notification_list[a].amount)
-					this.total = this.total + total_amount;
+				if (this.paymentreminder) {
+					this.paymentreminder.auto_issue_on = moment(this.paymentreminder.auto_issue_on).format('DD/MM/YYYY')
+					this.paymentreminder.due_on = this.convertDate(this.paymentreminder.due_on);
+					this.paymentreminder.created_at = this.convertDate(this.paymentreminder.created_at);
+					this.notification_list = paymentreminder.notification_list;
+					for (let a = 0; a < this.notification_list.length; ++a) {
+						let total_amount = parseInt(this.notification_list[a].amount)
+						this.total = this.total + total_amount;
+					}
 				}
 				setTimeout(() => this.loading = false, 1000);
 			});
@@ -77,8 +76,12 @@ export class PaymentReminderComponent implements OnInit {
 					this.ngOnInit();
 				},
 				error => {
-					this.userService.checkError(error.json().code)
-					this._notificationsService.error('Error', error.json().message)
+					if (error.json().code) {
+                        this.userService.checkError(error.json().code, error.json().message)
+                    }else{
+                        this.userService.checkError(error.status, '')
+                    }
+					
 					setTimeout(() => this.loading = false, 1000);
 				}
 			);
@@ -110,10 +113,7 @@ export class PaymentReminderComponent implements OnInit {
 			this.draft   = paymentreminders.filter(data => data.publish === false );
 			for (var i = 0; i < this.published.length; ++i) {
 				this.published[i].notif_list = 'All'
-				let y = this.published[i].auto_issue_on.toString().slice(0,4);
-				let m = (this.published[i].auto_issue_on+100).toString().slice(4,6);
-				let d = this.published[i].auto_issue_on.toString().slice(6,8);
-				this.published[i].auto_issue_on = d + '/' + m + '/' + y ;
+				this.published[i].auto_issue_on = moment(this.published[i].auto_issue_on).format('DD/MM/YYYY');
 				this.published[i].due_on = this.convertDate(this.published[i].due_on);
 				this.published[i].created_at = this.convertDate(this.published[i].created_at);
 				this.publishList = '';
@@ -129,10 +129,7 @@ export class PaymentReminderComponent implements OnInit {
 			}
 			for (var i = 0; i < this.draft.length; ++i) {
 				this.draft[i].notif_list = 'All'
-				let y = this.draft[i].auto_issue_on.toString().slice(0,4);
-				let m = (this.draft[i].auto_issue_on+100).toString().slice(4,6);
-				let d = this.draft[i].auto_issue_on.toString().slice(6,8);
-				this.draft[i].auto_issue_on = d + '/' + m + '/' + y ;
+				this.draft[i].auto_issue_on = moment(this.draft[i].auto_issue_on).format('DD/MM/YYYY');
 				this.draft[i].due_on = this.convertDate(this.draft[i].due_on);
 				this.draft[i].created_at = this.convertDate(this.draft[i].created_at);
 				this.draftList = '';
@@ -229,8 +226,12 @@ export class PaymentReminderComponent implements OnInit {
 					this.ngOnInit();
 				},
 				error => {
-					this.userService.checkError(error.json().code)
-					this._notificationsService.error('Error', error.json().message)
+					if (error.json().code) {
+                        this.userService.checkError(error.json().code, error.json().message)
+                    }else{
+                        this.userService.checkError(error.status, '')
+                    }
+					
 					setTimeout(() => this.loading = false, 1000);
 				}
 			);

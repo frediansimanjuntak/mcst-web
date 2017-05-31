@@ -195,7 +195,7 @@ export class EditUserGroupComponent implements OnInit {
                     this.router.navigate([this.name.default_development.name_url + '/user_group']);
                 },
                 error => {
-                    this._notificationsService.error('Error', error.json().message)
+                    
                     this.loading = false;
                 }
             );    
@@ -221,7 +221,7 @@ export class EditUserGroupComponent implements OnInit {
                         this.router.navigate([this.name.default_development.name_url + '/user_group']);
                     },
                     error => {
-                        this._notificationsService.error('Error', error.json().message)
+                        
                         this.loading = false;
                     }
                 );

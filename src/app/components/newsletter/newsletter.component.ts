@@ -77,8 +77,12 @@ export class NewsletterComponent implements OnInit {
                     this.ngOnInit();
                 },
                 error => {
-                    this.userService.checkError(error.json().code)
-                    this._notificationsService.error('Error', error.json().message)
+                    if (error.json().code) {
+                        this.userService.checkError(error.json().code, error.json().message)
+                    }else{
+                        this.userService.checkError(error.status, '')
+                    }
+                    
                     this.loading = false
                 }
         );
@@ -106,9 +110,13 @@ export class NewsletterComponent implements OnInit {
                     this.ngOnInit();
                 },
                 error => {
-                    this.userService.checkError(error.json().code)
+                    if (error.json().code) {
+                        this.userService.checkError(error.json().code, error.json().message)
+                    }else{
+                        this.userService.checkError(error.status, '')
+                    }
                     this.firstModal.close();
-                    this._notificationsService.error('Error', error.json().message)
+                    
                     this.loading = false
             }
         );

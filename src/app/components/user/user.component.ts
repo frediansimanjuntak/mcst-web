@@ -49,7 +49,7 @@ export class UserComponent implements OnInit {
 	                this.loadAllUsers()
               },
               error => {
-                      this._notificationsService.error('Error', error.json().message)
+                      
                     setTimeout(() => this.loading = false, 1000);
               }
         );

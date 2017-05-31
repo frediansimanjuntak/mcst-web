@@ -56,43 +56,20 @@ export class EditIncidentComponent implements OnInit {
         }
         this.model.incident_type = 'general';
         this.model.attachment = [];
-        this.incidentService.getAll().subscribe(incidents => {
-            this.incidents = incidents ;
-            if(incidents.length > 0) { 
-                var a = this.incidents.length - 1;
-                this.no = +this.incidents[a].reference_no + 1
-                if(this.no > 1 && this.no < 10) {
-                    this.model.reference_no = '000' + this.no.toString();
-                }if(this.no > 9 && this.no < 100) {
-                    this.model.reference_no = '00' + this.no.toString();
-                }if(this.no > 99 && this.no < 1000) { 
-                    this.model.reference_no = '0' + this.no.toString();
-                }if(this.no > 999) {
-                    this.model.reference_no = this.no.toString();
-                }
-            }else {
-                this.model.reference_no = '0001'
-            }  
-        });
         this.userService.getByToken()
         .subscribe(name => {
             this.name = name.user;
             setTimeout(() => this.loading = false, 1000);
         })
-    	this.selectedType = 'general';
-        
-        
     }
 
     createIncident(event: any) {
         if(this.model.attachment.length > 0) {
             this.loading = true
-           let formData:FormData = new FormData();
+            let formData:FormData = new FormData();
             for (var i = 0; i < this.model.attachment.length; i++) {
                 formData.append("attachment", this.model.attachment[i]);
             }
-            formData.append("reference_no", this.model.reference_no);
-            // formData.append("status", this.model.status);
             formData.append("incident_type", this.model.incident_type);
             formData.append("title", this.model.title);
             formData.append("remark", this.model.remark);
@@ -103,8 +80,11 @@ export class EditIncidentComponent implements OnInit {
                     this.router.navigate([this.name.default_development.name_url + '/incident']);
                 },
                 error => {
-                    this.userService.checkError(error.json().code)
-                    this._notificationsService.error('Error', error.json().message )
+                    if (error.json().code) {
+                        this.userService.checkError(error.json().code, error.json().message)
+                    }else{
+                        this.userService.checkError(error.status, '')
+                    }
                     setTimeout(() => this.loading = false, 1000);
                 }
             );
@@ -120,8 +100,11 @@ export class EditIncidentComponent implements OnInit {
                 this.router.navigate([this.name.default_development.name_url + '/incident']);
             },
             error => {
-                this.userService.checkError(error.json().code)
-                this._notificationsService.error('Error', error.json().message)
+                if (error.json().code) {
+                        this.userService.checkError(error.json().code, error.json().message)
+                    }else{
+                        this.userService.checkError(error.status, '')
+                    }
                 setTimeout(() => this.loading = false, 1000);
             }
         );
