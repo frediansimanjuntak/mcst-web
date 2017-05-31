@@ -25,6 +25,7 @@ export class EditPaymentComponent implements OnInit{
 	id: any;
 	units: any;
 	unit: any;
+	unit_no: string;
     loading: boolean = true;
 
 	constructor(private router: Router,
@@ -47,6 +48,10 @@ export class EditPaymentComponent implements OnInit{
 			this.paymentService.getById(this.id)
 			.subscribe(payment => {
 				this.payment = payment;
+				this.unitService.getById(this.payment.property, this.payment.development.name_url)
+				.subscribe(units => {
+					this.model.unit_no = '#' + units.properties[0].address.unit_no + '-' + units.properties[0].address.unit_no_2;
+				})
 				setTimeout(() => this.loading = false, 1000);
 			});
 		}
