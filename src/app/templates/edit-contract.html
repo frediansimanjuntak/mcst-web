@@ -31,14 +31,14 @@
                 <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !start_time.valid }">
                     <label class="control-label col-sm-4" for="start_time">Commence date :</label>
                     <div class="col-sm-8">
-                        <p-calendar name="start_time" [(ngModel)]="contract.start_time" #start_time="ngModel" required dateFormat="dd/mm/yy" [showIcon]="true" placeholder="dd/mm/yy"></p-calendar>
+                        <p-calendar name="start_time" [minDate]="today" [(ngModel)]="contract.start_time" #start_time="ngModel" required dateFormat="dd/mm/yy" [showIcon]="true" placeholder="dd/mm/yy"></p-calendar>
                         <span *ngIf="f.submitted && !start_time.valid" class="help-block">Commence date is required</span>
                     </div>
                 </div>
                 <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !end_time.valid }">
                     <label class="control-label col-sm-4" for="end_time">Estimate date of completion :</label>
                     <div class="col-sm-8">
-                        <p-calendar name="end_time" [(ngModel)]="contract.end_time" #end_time="ngModel" required dateFormat="dd/mm/yy" [showIcon]="true" placeholder="dd/mm/yy"></p-calendar>
+                        <p-calendar name="end_time" [minDate]="today" [(ngModel)]="contract.end_time" #end_time="ngModel" required dateFormat="dd/mm/yy" [showIcon]="true" placeholder="dd/mm/yy"></p-calendar>
                         <span *ngIf="f.submitted && !end_time.valid" class="help-block">Estimate date of completion is required</span>
                     </div>
                 </div>
