@@ -2,10 +2,8 @@ import { Component, OnInit, Input } from '@angular/core';
 import { Router, Params, ActivatedRoute } from '@angular/router';
 import { Contract } from '../../models/index';
 import { ContractService, AlertService, UserService, IncidentService } from '../../services/index';
-
 import { NotificationsService } from 'angular2-notifications';
 import 'rxjs/add/operator/switchMap';
-
 import * as moment from 'moment'
 import { Pipe, PipeTransform } from '@angular/core'
 
@@ -24,6 +22,7 @@ export class EditContractComponent  implements OnInit {
     id: string;
     refno: string;
     name: any;
+    today: Date;
     loading: boolean = true;
 
     constructor(private router: Router,
@@ -35,6 +34,8 @@ export class EditContractComponent  implements OnInit {
         private _notificationsService: NotificationsService,) {}
 
     ngOnInit(): void {
+        this.today = new Date();
+        this.model.start_time = this.today
         this.model.file = "null"
         this.route.params.subscribe(params => {
             this.id = params['id'];
@@ -47,6 +48,17 @@ export class EditContractComponent  implements OnInit {
             this.contractService.getById(this.id)
             .subscribe(contract => {
                 this.contract = contract;
+                if (this.contract.start_time) {
+                    this.contract.start_time = moment(this.contract.start_time).format('DD/MM/YYYY');
+                } else {
+                    this.contract.start_time = null
+                }
+                if (this.contract.end_time) {
+                    this.contract.end_time = moment(this.contract.end_time).format('DD/MM/YYYY')
+                }else{
+                    this.contract.end_time = null
+                }
+                
                 setTimeout(() => this.loading = false, 1000);
             });
         }
@@ -74,22 +86,23 @@ export class EditContractComponent  implements OnInit {
             formData.append("contract_type", this.model.contract_type);
             formData.append("title", this.model.title);
             formData.append("remark", this.model.remark);
-            this.contractService.create(formData)
-            .then(
-                data => {
-                    this._notificationsService.success('Success', 'Create contract successful')
-                    this.router.navigate([this.name.default_development.name_url + '/contract' ]);
-                },
-                error => {
-                    if (error.json().code) {
-                        this.userService.checkError(error.json().code, error.json().message)
-                    }else{
-                        this.userService.checkError(error.status, '')
-                    }
+            console.log(this.model)
+            // this.contractService.create(formData)
+            // .then(
+            //     data => {
+            //         this._notificationsService.success('Success', 'Create contract successful')
+            //         this.router.navigate([this.name.default_development.name_url + '/contract' ]);
+            //     },
+            //     error => {
+            //         if (error.json().code) {
+            //             this.userService.checkError(error.json().code, error.json().message)
+            //         }else{
+            //             this.userService.checkError(error.status, '')
+            //         }
                     
-                    setTimeout(() => this.loading = false, 1000);
-                }
-            );
+            //         setTimeout(() => this.loading = false, 1000);
+            //     }
+            // );
         }
     }
 
