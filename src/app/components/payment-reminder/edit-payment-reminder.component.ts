@@ -4,9 +4,7 @@ import { FormBuilder, FormControl, FormGroup, FormArray, Validators, ReactiveFor
 import { PaymentReminder, User, Development } from '../../models/index';
 import { PaymentReminderService, DevelopmentService, UserService, AlertService } from '../../services/index';
 import { NotificationsService } from 'angular2-notifications';
-
-
-
+import * as moment from 'moment'
 
 @Component({
   // moduleId: module.id,
@@ -23,6 +21,7 @@ export class EditPaymentReminderComponent implements OnInit{
     development : Development;
     name: any;
     id: any;
+    today: Date;
     no: any;
     amount:number[] = [];
     totalAmount:number = 0;
@@ -39,54 +38,29 @@ export class EditPaymentReminderComponent implements OnInit{
         private formbuilder: FormBuilder ) {}
 
     ngOnInit():void{ 
+        this.today = new Date();
+        console.log(this.today)
     	this.myForm = this.formbuilder.group({
             title : ['', Validators.required],
-            reference_no : [{value: '', disabled: true}],
-            auto_issue_on : ['', Validators.required],
-            due_on : ['', Validators.required],
+            auto_issue_on : [this.today, Validators.required],
+            due_on : [null, Validators.required],
             message_to_receiver : ['', Validators.required],
             notification_list: this.formbuilder.array([this.initNotification_list()]),
         });
         this.userService.getByToken()
         .subscribe(name => {
             this.name = name.user;
+            setTimeout(() => this.loading = false, 1000);
         })
         this.route.params.subscribe(params => {
             this.id = params['id'];
-        });
-        this.paymentreminderService.getAll().subscribe(paymentreminder => {
-            this.paymentreminders = paymentreminder ;
-            if(this.paymentreminders.length > 0) { 
-                var a = this.paymentreminders.length - 1;
-                this.no = +this.paymentreminders[a].reference_no + 1
-                if(this.no > 1 && this.no < 10) {
-                    this.model.reference_no = '000' + this.no.toString();
-                }if(this.no > 9 && this.no < 100) {
-                    this.model.reference_no = '00' + this.no.toString();
-                }if(this.no > 99 && this.no < 1000) { 
-                    this.model.reference_no = '0' + this.no.toString();
-                }if(this.no > 999) {
-                    this.model.reference_no = this.no.toString();
-                }
-            }else {
-                this.model.reference_no = '0001'
-            }  
-            this.myForm = this.formbuilder.group({
-                title : ['', Validators.required],
-                reference_no : [{value: this.model.reference_no, disabled: true}],
-                auto_issue_on : ['', Validators.required],
-                due_on : ['', Validators.required],
-                message_to_receiver : ['', Validators.required],
-                notification_list: this.formbuilder.array([this.initNotification_list()]),
-            });
-            setTimeout(() => this.loading = false, 1000);
         });
         if( this.id != null) {
             this.myForm = this.formbuilder.group({
                 _id : [''],
                 development : [''],
                 title : ['', Validators.required],
-                reference_no : [''],
+                reference_no : [{value: '', disabled: true}], 
                 auto_issue_on : ['', Validators.required],
                 due_on : ['', Validators.required],
                 message_to_receiver : ['', Validators.required],
@@ -97,17 +71,14 @@ export class EditPaymentReminderComponent implements OnInit{
             });
             this.paymentreminderService.getById(this.id)
             .subscribe(paymentreminder => {
-                this.paymentreminder = paymentreminder; 
-                this.paymentreminder.due_on = this.paymentreminder.due_on.slice(0,10);
+                this.paymentreminder = paymentreminder;
+                this.paymentreminder.due_on = moment(this.paymentreminder.due_on).format('DD/MM/YYYY');
                 for (let i = 0; i < this.paymentreminder.notification_list.length; i++) {
                     this.totalAmount = this.totalAmount + parseInt(this.paymentreminder.notification_list[i].amount)
                     const control = <FormArray>this.myForm.controls['notification_list'];
                     control.push(this.initNotification_list());
                 }
-                let y = this.paymentreminder.auto_issue_on.toString().slice(0,4);
-                let m = (this.paymentreminder.auto_issue_on+100).toString().slice(4,6);
-                let d = this.paymentreminder.auto_issue_on.toString().slice(6,8);
-                this.paymentreminder.auto_issue_on = y + '-' + m + '-' + d ;
+                this.paymentreminder.auto_issue_on = moment(this.paymentreminder.auto_issue_on).format('DD/MM/YYYY');
                 this.myForm.patchValue(this.paymentreminder);
                 setTimeout(() => this.loading = false, 1000);
             });
@@ -127,6 +98,10 @@ export class EditPaymentReminderComponent implements OnInit{
         const control = <FormArray>this.myForm.controls['notification_list'];
         const notification_listCtrl = this.initNotification_list();
         control.push(notification_listCtrl);
+    }
+
+    getValue(value:any){
+        console.log(value)
     }
 
     removeNotification_list(i: number) {

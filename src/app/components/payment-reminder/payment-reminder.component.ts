@@ -54,8 +54,8 @@ export class PaymentReminderComponent implements OnInit {
 				this.paymentreminder = paymentreminder;
 				if (this.paymentreminder) {
 					this.paymentreminder.auto_issue_on = moment(this.paymentreminder.auto_issue_on).format('DD/MM/YYYY')
-					this.paymentreminder.due_on = this.convertDate(this.paymentreminder.due_on);
-					this.paymentreminder.created_at = this.convertDate(this.paymentreminder.created_at);
+					this.paymentreminder.due_on = moment(this.paymentreminder.due_on).format('DD/MM/YYYY')
+					this.paymentreminder.created_at = moment(this.paymentreminder.created_at).format('DD/MM/YYYY')
 					this.notification_list = paymentreminder.notification_list;
 					for (let a = 0; a < this.notification_list.length; ++a) {
 						let total_amount = parseInt(this.notification_list[a].amount)
@@ -98,13 +98,6 @@ export class PaymentReminderComponent implements OnInit {
 		});
 	}
 
-	convertDate(date) {
-		var yyyy = date.slice(0,4).toString();
-		var mm = date.slice(5,7).toString();
-		var dd  = date.slice(8,10).toString();
-		return dd + '/' + mm + '/' + yyyy;
-	}
-
 	private loadAllPaymentReminder() {
 		this.paymentreminderService.getAll()
 		.subscribe(paymentreminders => {
@@ -114,8 +107,8 @@ export class PaymentReminderComponent implements OnInit {
 			for (var i = 0; i < this.published.length; ++i) {
 				this.published[i].notif_list = 'All'
 				this.published[i].auto_issue_on = moment(this.published[i].auto_issue_on).format('DD/MM/YYYY');
-				this.published[i].due_on = this.convertDate(this.published[i].due_on);
-				this.published[i].created_at = this.convertDate(this.published[i].created_at);
+				this.published[i].due_on = moment(this.published[i].due_on).format('DD/MM/YYYY');
+				this.published[i].created_at = moment(this.published[i].created_at).format('DD/MM/YYYY');
 				this.publishList = '';
 				for (let a = 0; a < this.published[i].notification_list.length; ++a) {
 					this.publishList = this.publishList + ' ' + this.published[i].notification_list[a].applies_to
@@ -130,8 +123,8 @@ export class PaymentReminderComponent implements OnInit {
 			for (var i = 0; i < this.draft.length; ++i) {
 				this.draft[i].notif_list = 'All'
 				this.draft[i].auto_issue_on = moment(this.draft[i].auto_issue_on).format('DD/MM/YYYY');
-				this.draft[i].due_on = this.convertDate(this.draft[i].due_on);
-				this.draft[i].created_at = this.convertDate(this.draft[i].created_at);
+				this.draft[i].due_on = moment(this.draft[i].due_on).format('DD/MM/YYYY');
+				this.draft[i].created_at = moment(this.draft[i].created_at).format('DD/MM/YYYY');
 				this.draftList = '';
 				for (let a = 0; a < this.draft[i].notification_list.length; ++a) {
 					this.draftList = this.draftList + ' ' + this.draft[i].notification_list[a].applies_to
@@ -156,12 +149,9 @@ export class PaymentReminderComponent implements OnInit {
 		this.published         = this.paymentreminders.filter(data => data.publish === true);
 		for (var i = 0; i < this.published.length; ++i) {
 			this.published[i].notif_list = 'All'
-			let y = this.published[i].auto_issue_on.toString().slice(0,4);
-			let m = (this.published[i].auto_issue_on+100).toString().slice(4,6);
-			let d = this.published[i].auto_issue_on.toString().slice(6,8);
-			this.published[i].auto_issue_on = d + '/' + m + '/' + y ;
-			this.published[i].due_on = this.convertDate(this.published[i].due_on);
-			this.published[i].created_at = this.convertDate(this.published[i].created_at);
+			this.published[i].auto_issue_on = moment(this.published[i].auto_issue_on).format('DD/MM/YYYY');
+			this.published[i].due_on = moment(this.published[i].due_on).format('DD/MM/YYYY');
+			this.published[i].created_at = moment(this.published[i].created_at).format('DD/MM/YYYY');
 			if(this.published[i].notification_list.length < 2) {
 				this.published[i].notif_list = this.published[i].notification_list[0].applies_to;
 			}
@@ -175,12 +165,9 @@ export class PaymentReminderComponent implements OnInit {
 		}
 		for (var i = 0; i < this.draft.length; ++i) {
 			this.draft[i].notif_list = 'All'
-			let y = this.draft[i].auto_issue_on.toString().slice(0,4);
-			let m = (this.draft[i].auto_issue_on+100).toString().slice(4,6);
-			let d = this.draft[i].auto_issue_on.toString().slice(6,8);
-			this.draft[i].auto_issue_on = d + '/' + m + '/' + y ;
-			this.draft[i].due_on = this.convertDate(this.draft[i].due_on);
-			this.draft[i].created_at = this.convertDate(this.draft[i].created_at);
+			this.draft[i].auto_issue_on = moment(this.draft[i].auto_issue_on).format('DD/MM/YYYY');
+			this.draft[i].due_on = moment(this.draft[i].due_on).format('DD/MM/YYYY');
+			this.draft[i].created_at = moment(this.draft[i].created_at).format('DD/MM/YYYY');
 			if(this.draft[i].notification_list.length < 1) {
 				this.draft[i].notif_list = this.draft[i].notification_list[0].applies_to;
 			}

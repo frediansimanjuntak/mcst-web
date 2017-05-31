@@ -1188,5 +1188,17 @@ p.field-box.no-margin {
 .blur-font{
     color:gray;
 }
+edit-contract .ui-inputtext {
+  padding: 10px !important;
+  width: 404px !important;
+}
 
+contract-notice .ui-inputtext {
+  padding: 10px !important;
+  width: 404px !important;
+}
+edit-payment-reminder .ui-inputtext {
+  padding: 10px !important;
+  width: 288px !important;
+}
 
