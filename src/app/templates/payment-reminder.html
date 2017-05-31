@@ -35,13 +35,17 @@
                                 <span>{{notification_list.applies_to | capitalize}}</span>
                             </template>
                         </p-column>
-                        <p-column field="amount" header="Amount"></p-column>
+                        <p-column field="amount" header="Amount">
+                            <template let-notification_list="rowData" pTemplate="body">
+                                <span>{{notification_list.amount | currency:undefined:'1.2-2'}}</span>
+                            </template>
+                        </p-column>
                         <p-footerColumnGroup>
                             <p-row>
                                 <p-column footer="Total Amount:" colspan="3"></p-column>
                                 <p-column footer="">
                                     <template let-notification_list="rowData" pTemplate="footer">
-                                        <p>${{ total }}</p>
+                                        <p>{{total | currency:undefined:'1.2-2'}}</p>
                                     </template>
                                 </p-column>
                             </p-row>
@@ -57,7 +61,7 @@
             <div class="row top-block">
                 <div class="col-md-8">
                     <div class="input-group filter-search">
-                        <input type="text" class="form-control input-search" (keyup.enter)="filter()" [(ngModel)]="dataFilter" placeholder="Search..." name="filter">
+                        <input type="text" class="form-control input-search" (keyup.enter)="filter()" [(ngModel)]="dataFilter" placeholder="Search payment title..." name="filter">
                         <span (click)="filter()" class="input-group-btn">
                             <button class="btn btn-secondary btn-search" type="button"><i class="fa fa-search fa-inverse" aria-hidden="true"></i></button>
                         </span>
