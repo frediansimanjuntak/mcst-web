@@ -9,32 +9,32 @@
       		<p><a style="cursor:pointer" (click)="goBack()">Back to last page</a></p>
       		<div class="content">
 				<div class="row">
-					<div class="col-md-4 col-padding"><b>Reference Number</b></div>
-					<div class="col-md-8 col-padding">: #{{booking.reference_no}}</div>
+					<div class="col-md-4 col-padding"><b>Reference Number :</b></div>
+					<div class="col-md-8 col-padding">#{{booking.reference_no}}</div>
 				</div>
 				<div class="row">
-					<div class="col-md-4 col-padding"><b>Facility</b></div>
-					<div class="col-md-8 col-padding">: {{booking.facility.name}}</div>
+					<div class="col-md-4 col-padding"><b>Facility :</b></div>
+					<div class="col-md-8 col-padding">{{booking.facility.name}}</div>
 				</div>
 				<div class="row">
-					<div class="col-md-4 col-padding"><b>Booking date</b></div>
-					<div class="col-md-8 col-padding">: {{booking.booking_date | date:'shortDate'}}</div>
+					<div class="col-md-4 col-padding"><b>Booking date :</b></div>
+					<div class="col-md-8 col-padding">{{booking.booking_date | date:'shortDate'}}</div>
 				</div>
 				<div class="row">
-					<div class="col-md-4 col-padding"><b>Booking time</b></div>
-					<div class="col-md-8 col-padding">: {{booking.start_time}} - {{booking.end_time}}</div>
+					<div class="col-md-4 col-padding"><b>Booking time :</b></div>
+					<div class="col-md-8 col-padding">{{booking.start_time}} - {{booking.end_time}}</div>
 				</div>
 				<div class="row">
-					<div class="col-md-4 col-padding"><b>Status</b></div>
-					<div class="col-md-8 col-padding">: {{booking.status}}</div>
+					<div class="col-md-4 col-padding"><b>Status :</b></div>
+					<div class="col-md-8 col-padding">{{booking.status}}</div>
 				</div>
 				<div class="row">
-					<div class="col-md-4 col-padding"><b>Booked by</b></div>
-					<div class="col-md-8 col-padding">: {{booking?.payment?.sender?.username}}</div>
+					<div class="col-md-4 col-padding"><b>Booked by :</b></div>
+					<div class="col-md-8 col-padding">{{booking?.payment?.sender?.username}}</div>
 				</div>
 				<div class="row">
-					<div class="col-md-4 col-padding"><b>Payment link</b></div>
-					<div class="col-md-8 col-padding">:<a style="cursor:pointer" (click)="viewPayment(booking.payment)"> See payment</a></div>
+					<div class="col-md-4 col-padding"><b>Payment link :</b></div>
+					<div class="col-md-8 col-padding"><a style="cursor:pointer" (click)="viewPayment(booking.payment)"> See payment</a></div>
 				</div>
 			</div>
     	</div>
