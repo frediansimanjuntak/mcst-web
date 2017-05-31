@@ -75,13 +75,7 @@
 		</div>
 		<p class="id-location">Home > Payment System > Add Payment</p>
 		<form class="form-horizontal col-md-6" name="form" (ngSubmit)="f.form.valid && createPayment()" #f="ngForm" novalidate>
-			<div class="form-group">
-				<label class="control-label col-sm-4" for="serial_no">Serial no :</label>
-				<div class="col-sm-8">
-					<input disabled type="text" class="form-control" name="serial_no" [(ngModel)]="model.serial_no" #serial_no="ngModel" />
-				</div>
-			</div>
-			<div class="form-group">
+			<div class="form-group" [ngClass]="{ 'has-error': f.submitted && model.property == undefined }">
 				<label class="control-label col-sm-4" for="property">Unit no :</label>
 				<div class="col-sm-8">
 					<div *ngIf="units">
@@ -92,7 +86,7 @@
                             </option>
                         </select>
                     </div>
-					<!-- <span *ngIf="f.submitted && !property.valid" class="help-block">Property is required</span> -->
+					<span *ngIf="f.submitted && model.property == undefined" class="help-block">Property is required</span>
 				</div>
 			</div>
 			<div class="form-group">
