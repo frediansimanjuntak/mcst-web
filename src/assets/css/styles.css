@@ -1197,5 +1197,8 @@ contract-notice .ui-inputtext {
   padding: 10px !important;
   width: 404px !important;
 }
-
+edit-payment-reminder .ui-inputtext {
+  padding: 10px !important;
+  width: 288px !important;
+}
 
