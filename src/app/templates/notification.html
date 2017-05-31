@@ -1,26 +1,26 @@
 <div class="container">
     <div class="main">
-        <div *ngIf="!booking">
             <div class="title">
                 Notification
             </div>
-            <p>Home > Notification</p>
+            <p class="id-location">Home > Notification</p>
 	        <div class="row">
-				<p-dataTable [value]="dataToShow" [lazy]="true" [rows]="10" [paginator]="true" 
-			            [totalRecords]="allNotificationTotal" (onLazyLoad)="loadLazy($event)">
-			    <header>All Notifications</header>
-			    <p-column header="Message">
-			    	<template let-dataToShow="rowData" pTemplate="body">
-						<a type="button" class="btn-underline" (click)="goToPage(dataToShow)">{{dataToShow.message}}</a>    
-			        </template>
-			    </p-column>
-			    <p-column header="Date Time">
-					<template let-dataToShow="rowData" pTemplate="body">
-						{{dataToShow.created_at | date:'fullDate'}} - {{dataToShow.created_at | date:'shortTime'}}      
-			        </template>
-				</p-column>
-			</p-dataTable>  		
+		        <div class="col-md-12">
+					<p-dataTable [value]="dataToShow" [lazy]="true" [rows]="10" [paginator]="true" 
+				            [totalRecords]="allNotificationTotal" (onLazyLoad)="loadLazy($event)">
+					    <header>All Notifications</header>
+					    <p-column header="Message">
+					    	<template let-dataToShow="rowData" pTemplate="body">
+								<a type="button" class="btn-underline" (click)="goToPage(dataToShow)">{{dataToShow.message}}</a>    
+					        </template>
+					    </p-column>
+					    <p-column header="Date Time">
+							<template let-dataToShow="rowData" pTemplate="body">
+								{{dataToShow.created_at | date:'fullDate'}} - {{dataToShow.created_at | date:'shortTime'}}      
+					        </template>
+						</p-column>
+					</p-dataTable>  		
+				</div>
 			</div> 
-      	</div>
     </div>
 </div>
