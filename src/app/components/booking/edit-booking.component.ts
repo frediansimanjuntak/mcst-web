@@ -500,8 +500,9 @@ export class EditBookingComponent implements OnInit  {
 
 	onChange(event: any) {
 	   let files = [].slice.call(event.target.files);
-	   for (let z = 0; z < files.length; ++z) {
+	    for (let z = 0; z < files.length; ++z) {
 		   	if (!files[z].type.includes("image")) {
+		   		this._notificationsService.error('Error', 'Please upload image only!.')
 			  	this.model.payment_proof = [];
 			  	break;
 		   	}else{

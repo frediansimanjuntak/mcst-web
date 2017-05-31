@@ -133,6 +133,7 @@ export class EditPaymentComponent implements OnInit{
 	   let files = [].slice.call(event.target.files);
 	   for (let z = 0; z < files.length; ++z) {
 		   	if (!files[z].type.includes("image")) {
+		   		this._notificationsService.error('Error', 'Please upload image only!.')
 			  	this.model.payment_proof = [];
 			  	break;
 		   	}else{
@@ -145,6 +146,7 @@ export class EditPaymentComponent implements OnInit{
        let files = [].slice.call(event.target.files);
        for (let z = 0; z < files.length; ++z) {
 		   	if (!files[z].type.includes("image")) {
+		   		this._notificationsService.error('Error', 'Please upload image only!.')
 			  	this.payment.payment_proof = [];
 			  	break;
 		   	}else{
