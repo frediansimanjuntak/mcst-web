@@ -52,7 +52,7 @@
                 <label class="control-label col-sm-4" for="contact_method">Preffered Method of Contact :</label>
                 <div class="col-sm-8">
                     <select class="form-control" name="contact_method" [(ngModel)]="model.preferred_method_of_contact" [ngClass]="{ 'form-control-blur': model.preferred_method_of_contact ==undefined }" >
-                        <option disabled hidden value="undefined">Search method</option>
+                        <option disabled hidden value="undefined">Select method</option>
                         <option value="sms">SMS</option>
                         <option value="email">Email</option>
                     </select>

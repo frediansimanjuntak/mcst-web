@@ -63,11 +63,11 @@ export class DashboardComponent implements OnInit{
 
   start(link:any) {
         let ids:any ={};
-        if( link == '/petition'){
+        if(link.indexOf('petition') > -1){
           ids = this.petitionNotificationsIds; 
-        }else if( link == '/incident' ){
+        }else if(link.indexOf('incident') > -1){
           ids = this.incidentNotificationsIds; 
-        }else if(link == '/booking'){
+        }else if(link.indexOf('booking') > -1){
           ids = this.bookingNotificationsIds; 
         }else{
           ids = 0;
@@ -75,14 +75,14 @@ export class DashboardComponent implements OnInit{
 
         this.slimLoadingBarService.start(() => {});
         if( ids != 0){
-          this.notificationService.read(ids, this.name._id)  
+          this.notificationService.read(ids)  
         }
         
         this.router.navigate([this.name.default_development.name_url + link]);  
   }
 
   private loadUnread() {        
-        this.notificationService.getUnread(this.name._id)
+        this.notificationService.getUnread()
             .subscribe((data)=> {
                 setTimeout(()=> {
                     this.unreadPetitionNotifications = data.filter(data => data.ref == 'petition');

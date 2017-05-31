@@ -40,7 +40,7 @@ export class NotificationComponent implements OnInit {
 	}
 
 	private loadNotifications() {
-        this.notificationService.getAll(this.userId)
+        this.notificationService.getOwn()
             .subscribe((data)=> {
                 setTimeout(()=> {
                     this.allNotifications = data;
@@ -62,35 +62,7 @@ export class NotificationComponent implements OnInit {
     }
 
     goToPage(notification: Notification){
-        switch (notification.ref)
-        {
-            case 'petition' :
-                this.router.navigate([this.name.default_development.name_url + '/petition/view', notification.ref_id]);
-            break;
-            case 'incident' :
-                this.router.navigate([this.name.default_development.name_url + '/incident/view', notification.ref_id]);
-            break;
-            case 'payment' :
-                this.router.navigate([this.name.default_development.name_url + '/payment/view', notification.ref_id]);
-            break;
-            case 'contract' :
-                this.router.navigate([this.name.default_development.name_url + '/contract/view', notification.ref_id]);
-            break;
-            case 'facility' :
-                this.router.navigate([this.name.default_development.name_url + '/facility/view', notification.ref_id]);
-            break;
-            case 'booking' :
-                this.router.navigate([this.name.default_development.name_url + '/booking/view', notification.ref_id]);
-            break;
-            case 'unit' :
-                this.router.navigate([this.name.default_development.name_url + '/unit/view', notification.ref_id]);
-            break;
-            case 'lost_found' :
-                this.router.navigate([this.name.default_development.name_url + '/lost_found/view', notification.ref_id]);
-            break;
-            case 'poll' :
-                this.router.navigate([this.name.default_development.name_url + '/poll/view', notification.ref_id]);
-            break;     
-        }
+        var link = this.notificationService.generateLink(notification.ref_id);
+        this.router.navigate([this.name.default_development.name_url + link]);
     }
 }

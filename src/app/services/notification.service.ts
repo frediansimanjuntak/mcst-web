@@ -19,23 +19,65 @@ export class NotificationService {
             .then(notification => notification.find(notification => notification._id === id));
     }
 
-    getAll(id:string){
-        return this.http.get(url + 'notifications/user/' + id, this.jwt())
+    getOwn(){
+        return this.http.get(url + 'notifications/user', this.jwt())
             .map((res:Response) => res.json())
             .catch((error:any) => Observable.throw(error.json().error || 'Server error'));
     }
 
-    getUnread(id:string){
-        return this.http.get(url + 'notifications/user/' + id + '/unread', this.jwt())
+    getUnread(){
+        return this.http.get(url + 'notifications/user/unread', this.jwt())
             .map((res:Response) => res.json())
             .catch((error:any) => Observable.throw(error.json().error || 'Server error'));
     }
 
-    read(body:any, id:string): Promise<any>{
-        return this.http.post(url + 'notifications/user/' + id, JSON.stringify(body), this.jwt())
+    read(body:any): Promise<any>{
+        return this.http.post(url + 'notifications/user', JSON.stringify(body), this.jwt())
             .toPromise()
             .then(res => res.json().data)
             .catch(this.handleError);
+    }
+
+    markAsRead(id:string): Promise<any>{
+        return this.http.post(url + 'notifications/mark_read/' + id, '', this.jwt())
+            .toPromise()
+            .then(res => res.json().data)
+            .catch(this.handleError);
+    }
+
+    generateLink(notification: any){
+        var link:string = '';
+        switch (notification.ref)
+            {
+                case 'petition' :
+                    link = '/petition/view/' + notification.ref_id;
+                break;
+                case 'incident' :
+                    link = '/incident/view/' + notification.ref_id;
+                break;
+                case 'payment' :
+                    link = '/payment/view/' + notification.ref_id;
+                break;
+                case 'contract' :
+                    link = '/contract/view/' + notification.ref_id;
+                break;
+                case 'facility' :
+                    link = '/facility/view/' + notification.ref_id;
+                break;
+                case 'booking' :
+                    link = '/booking/view/' + notification.ref_id;
+                break;
+                case 'unit' :
+                    link = '/unit/view/' + notification.ref_id;
+                break;
+                case 'lost_found' :
+                    link = '/lost_found/view/' + notification.ref_id;
+                break;
+                case 'poll' :
+                    link = '/poll/view/' + notification.ref_id;
+                break;     
+            }
+        return link;
     }
 
     private handleError(error: any): Promise<any> {

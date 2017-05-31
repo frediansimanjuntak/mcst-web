@@ -21,7 +21,6 @@ export class HeaderComponent implements OnInit{
     unreadNotificationsToShow: Notification[] = [];
     notificationsIds: any ={};
 	unreadNotificationTotal: number;
-	userId: string;
     user: string;
     NotificationClicked: boolean;
     name: any;
@@ -36,7 +35,6 @@ export class HeaderComponent implements OnInit{
                 
                 private router: Router,
                 ) {
-		this.userId = "1"
     }
 
     ngOnInit(){
@@ -49,7 +47,7 @@ export class HeaderComponent implements OnInit{
                     this.lostFounds      = data.filter(data => data.development._id == this.name.default_development._id);
                 })
             })
-            if(this.authToken){
+            if(this.name){
                 this.loadUnread();
             }
         })
@@ -58,9 +56,10 @@ export class HeaderComponent implements OnInit{
 	}
 
 	private loadUnread() {        
-        this.notificationService.getUnread(this.name._id)
+        this.notificationService.getUnread()
             .subscribe((data)=> {
                 setTimeout(()=> {
+                    console.log(data)
                     this.unreadNotifications = data;
                     this.unreadNotificationsToShow  = data.slice(0, 10);
                     this.unreadNotificationTotal = this.unreadNotifications.length;
@@ -75,45 +74,16 @@ export class HeaderComponent implements OnInit{
 
     onNotificationClick(){
     	this.unreadNotificationTotal = 0;
-        
-        if(this.NotificationClicked === false){
-            this.notificationService.read(this.notificationsIds, this.name._id)
+        if(this.NotificationClicked === false && this.notificationsIds._ids.length > 0){
+            this.notificationService.read(this.notificationsIds)
         }
         
         this.NotificationClicked = true;
     }
 
     goToPage(notification: Notification){
-        switch (notification.ref)
-        {
-            case 'petition' :
-                this.router.navigate([this.name.default_development.name_url + '/petition/view', notification.ref_id]);
-            break;
-            case 'incident' :
-                this.router.navigate([this.name.default_development.name_url + '/incident/view', notification.ref_id]);
-            break;
-            case 'payment' :
-                this.router.navigate([this.name.default_development.name_url + '/payment/view', notification.ref_id]);
-            break;
-            case 'contract' :
-                this.router.navigate([this.name.default_development.name_url + '/contract/view', notification.ref_id]);
-            break;
-            case 'facility' :
-                this.router.navigate([this.name.default_development.name_url + '/facility/view', notification.ref_id]);
-            break;
-            case 'booking' :
-                this.router.navigate([this.name.default_development.name_url + '/booking/view', notification.ref_id]);
-            break;
-            case 'unit' :
-                this.router.navigate([this.name.default_development.name_url + '/unit/view', notification.ref_id]);
-            break;
-            case 'lost_found' :
-                this.router.navigate([this.name.default_development.name_url + '/lost_found/view', notification.ref_id]);
-            break;
-            case 'poll' :
-                this.router.navigate([this.name.default_development.name_url + '/poll/view', notification.ref_id]);
-            break;     
-        }
+        var link = this.notificationService.generateLink(notification);
+        this.router.navigate([this.name.default_development.name_url + link]);
     }
 
     logout(){
