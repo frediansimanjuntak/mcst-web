@@ -61,6 +61,10 @@ export class EditPetitionComponent implements OnInit {
         })
         this.selectedType = 'Maintenance';
         this.model.attachment = [];
+        this.model.tenant = {};
+        this.model.start_time = '';
+        this.model.end_time = '';
+        this.model.company = '';
         this.myForm = this.formbuilder.group({
             reference_no : [''],
             development : [''],
@@ -119,18 +123,25 @@ export class EditPetitionComponent implements OnInit {
             formData.append("remark", model.remark);
             formData.append("status", 'pending');
             formData.append("updated_at", model.updated_at);
+            if(model.petition_type == 'new tenant'){
+                formData.append("tenant", this.model.tenant);
+            }else{
+                formData.append("start_time", this.model.start_time);
+                formData.append("end_time", this.model.end_time);
+                formData.append("company", this.model.company);
+            }
 
-            this.petitionService.create(formData)
-            .then(
-                data => {
-                    this._notificationsService.success('Success', 'Add request Successful')
-                    this.router.navigate([this.name.default_development.name_url + '/petition']);
-                },
-                error => {
-                    this._notificationsService.error('Error', error.json().message)
-                    this.loading = false;
-                }
-            );
+            // this.petitionService.create(formData)
+            // .then(
+            //     data => {
+            //         this._notificationsService.success('Success', 'Add request Successful')
+            //         this.router.navigate([this.name.default_development.name_url + '/petition']);
+            //     },
+            //     error => {
+            //         this._notificationsService.error('Error', error.json().message)
+            //         this.loading = false;
+            //     }
+            // );
         }
     }
 

@@ -31,6 +31,38 @@
                             </div>
                         </div>
                     </div>
+
+                     <div class="form-group"  *ngIf="myForm.controls.petition_type.value=='new tenant'">
+                            <div class="row no-margin">
+                                <label class="control-label col-sm-4" for="phone">Tenant's Name :</label>
+                                <div class="col-sm-8">
+                                    <input type="text" class="form-control" name="name" [(ngModel)]="model.tenant.name" required [ngModelOptions]="{standalone: true}" placeholder="Input tenant's name here"/>
+                                </div>
+                            </div>
+                        </div>
+
+                    <div class="form-group" *ngIf="myForm.controls.petition_type.value=='new tenant'">
+                            <div class="row no-margin">
+                                <label  class="control-label col-sm-4" for="type">Salulation :</label>
+                                <div class="col-sm-8">
+                                    <select class="form-control" name="salulation"  (change)="residentTypeChange($event)" [(ngModel)]="model.tenant.salulation" [ngModelOptions]="{standalone: true}" [ngClass]="{ 'form-control-blur': model.tenant.salulation ==undefined }" >
+                                        <option disabled hidden value="undefined">Select salulation</option>
+                                        <option value="Mr">Mr</option>
+                                        <option value="Mrs">Mrs</option>
+                                        <option value="Ms">Ms</option>
+                                    </select>
+                                    <span *ngIf="!valid" style="color: red">{{errorMessage}}</span>
+                                </div>
+                            </div>
+                        </div>  
+                        <div class="form-group"  *ngIf="myForm.controls.petition_type.value=='new tenant'">
+                            <div class="row no-margin">
+                                <label class="control-label col-sm-4" for="phone">Tenant's Phone :</label>
+                                <div class="col-sm-8">
+                                    <input type="text" class="form-control" name="phone" [(ngModel)]="model.tenant.phone" required [ngModelOptions]="{standalone: true}" placeholder="Input tenant's phone here"/>
+                                </div>
+                            </div>
+                        </div>
                     <div class="form-group" [ngClass]="{ 'has-error': submitted && model.attachment.length == 0 }">
                         <label class="control-label col-sm-4" for="attachment">Attachment :</label>
                         <div class="col-sm-8">

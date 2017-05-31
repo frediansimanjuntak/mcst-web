@@ -13,6 +13,10 @@
 					<div class="col-md-8 col-padding">: #{{petition.reference_no}}</div>
 				</div>
 				<div class="row">
+					<div class="col-md-4 col-padding"><b>Type </b></div>
+					<div class="col-md-8 col-padding">: {{petition.petition_type | capitalize}}</div>
+				</div>
+				<div class="row">
 					<div class="col-md-4 col-padding"><b>Development </b></div>
 					<div class="col-md-8 col-padding">: {{petition.development.name}}</div>
 				</div>
@@ -20,6 +24,14 @@
 					<div class="col-md-4 col-padding"><b>Unit No </b></div>
 					<div class="col-md-8 col-padding" *ngIf="petition.unit_no">: {{petition.unit_no}}</div>
 					<div class="col-md-8 col-padding" *ngIf="!petition.unit_no">: -</div>
+				</div>
+				<div class="row" *ngIf="petition.extra?.name && petition.extra?.salulation">
+					<div class="col-md-4 col-padding"><b>Tenant's name </b></div>
+					<div class="col-md-8 col-padding">: {{petition.extra?.salulation}}. {{petition.extra?.name}}</div> 
+				</div>
+				<div class="row" *ngIf="petition.extra?.phone">
+					<div class="col-md-4 col-padding"><b>Tenant's phone </b></div>
+					<div class="col-md-8 col-padding">: {{petition.extra?.phone}}</div> 
 				</div>
 				<div class="row">
 					<div class="col-md-4 col-padding"><b>Attachment </b></div>
@@ -32,10 +44,6 @@
 				<div class="row" *ngIf="petition.contract">
 					<div class="col-md-4 col-padding"><b>Contract </b></div>
 					<div class="col-md-8 col-padding">: <a (click)="viewContract(petition.contract._id)" style="text-decoration: underline;cursor:pointer">{{petition.contract.title}}</a></div> 
-				</div>
-				<div class="row">
-					<div class="col-md-4 col-padding"><b>Type </b></div>
-					<div class="col-md-8 col-padding">: {{petition.petition_type | capitalize}}</div>
 				</div>
 				<div class="row">
 					<div class="col-md-4 col-padding"><b>Remark </b></div>
