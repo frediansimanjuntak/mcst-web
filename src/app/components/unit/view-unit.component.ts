@@ -296,8 +296,12 @@ export class ViewUnitComponent implements OnInit {
                   }
                 },
                 error=> {
-                  this.userService.checkError(error.json().code)
-                    this._notificationsService.error('Error', error.json().message)
+                  if (error.json().code) {
+                        this.userService.checkError(error.json().code, error.json().message)
+                    }else{
+                        this.userService.checkError(error.status, '')
+                    }
+                    
                     setTimeout(() => this.loading = false, 1000);
                 }
             ); 
@@ -314,8 +318,12 @@ export class ViewUnitComponent implements OnInit {
                   }
                 },
                 error=> {
-                  this.userService.checkError(error.json().code)
-                    this._notificationsService.error('Error', error.json().message)
+                  if (error.json().code) {
+                        this.userService.checkError(error.json().code, error.json().message)
+                    }else{
+                        this.userService.checkError(error.status, '')
+                    }
+                    
                     setTimeout(() => this.loading = false, 1000);
                 }
             ); 
@@ -378,8 +386,12 @@ export class ViewUnitComponent implements OnInit {
                     this.ngOnInit();
                 },
                 error => {
-                    this.userService.checkError(error.json().code)
-                    this._notificationsService.error('Error', error.json().message)
+                    if (error.json().code) {
+                        this.userService.checkError(error.json().code, error.json().message)
+                    }else{
+                        this.userService.checkError(error.status, '')
+                    }
+                    
                     setTimeout(() => this.loading = false, 1000);
                 }
             );
@@ -399,8 +411,12 @@ export class ViewUnitComponent implements OnInit {
                     this.ngOnInit();
                 },
                 error => {
-                    this.userService.checkError(error.json().code)
-                    this._notificationsService.error('Error', error.json().message)
+                    if (error.json().code) {
+                        this.userService.checkError(error.json().code, error.json().message)
+                    }else{
+                        this.userService.checkError(error.status, '')
+                    }
+                    
                     this.codeModal.close();
                     this.loading = false;
                     this.loading = false
@@ -421,8 +437,12 @@ export class ViewUnitComponent implements OnInit {
                     this.ngOnInit();
                 },
                 error => {
-                    this.userService.checkError(error.json().code)
-                    this._notificationsService.error('Error', error.json().message)
+                    if (error.json().code) {
+                        this.userService.checkError(error.json().code, error.json().message)
+                    }else{
+                        this.userService.checkError(error.status, '')
+                    }
+                    
                     this.codeModal.close();
                     this.loading = false
                     this.modelForCode = {}
@@ -511,8 +531,12 @@ export class ViewUnitComponent implements OnInit {
                         this.ngOnInit();
                     },
                     error => {
-                        this.userService.checkError(error.json().code)
-                        this._notificationsService.error('Error', error.json().message)
+                        if (error.json().code) {
+                        this.userService.checkError(error.json().code, error.json().message)
+                    }else{
+                        this.userService.checkError(error.status, '')
+                    }
+                        
                         this.firstModal.close();
                         this.loading = false;
                         this.loading = false
@@ -556,8 +580,12 @@ export class ViewUnitComponent implements OnInit {
                     this.ngOnInit();
                 },
                 error => {
-                    this.userService.checkError(error.json().code)
-                    this._notificationsService.error('Error', error.json().message)
+                    if (error.json().code) {
+                        this.userService.checkError(error.json().code, error.json().message)
+                    }else{
+                        this.userService.checkError(error.status, '')
+                    }
+                    
                     this.secondModal.close();
                     this.loading = false;
                 }

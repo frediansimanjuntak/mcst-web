@@ -245,7 +245,7 @@ export class EditUserComponent implements OnInit {
                             this.router.navigate([this.name.default_development.name_url + '/unit/view', this.id]);
                         },
                         error => {
-                            this._notificationsService.error('Error', error.json().message)
+                            
                             this.loading = false;
                         }
                     );   
@@ -266,7 +266,7 @@ export class EditUserComponent implements OnInit {
                                     this.router.navigate([this.name.default_development.name_url + '/user']);
                                 },
                                 error => {
-                                    this._notificationsService.error('Error', error.json().message)
+                                    
                                     this.loading = false;
                                 }
                             );   
@@ -281,7 +281,7 @@ export class EditUserComponent implements OnInit {
                                 this.router.navigate([this.name.default_development.name_url + '/user']);
                             },
                             error => {
-                                this._notificationsService.error('Error', error.json().message)
+                                
                                 this.loading = false;
                             }
                         );   
@@ -301,7 +301,7 @@ export class EditUserComponent implements OnInit {
                 this.router.navigate([this.name.default_development.name_url + '/user']);
             },
             error=> {
-                this._notificationsService.error('Error', error.json().message)
+                
             }
         );
     }

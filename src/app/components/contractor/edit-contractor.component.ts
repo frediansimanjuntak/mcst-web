@@ -234,7 +234,11 @@ export class EditContractorComponent implements OnInit {
                     this.router.navigate(['/contractor']);
                 },
                 error => {
-                    this.userService.checkError(error.json().code)
+                    if (error.json().code) {
+                        this.userService.checkError(error.json().code, error.json().message)
+                    }else{
+                        this.userService.checkError(error.status, '')
+                    }
                     alert(`The contractor could not be save, server Error.`);
                 }
             );
@@ -256,7 +260,11 @@ export class EditContractorComponent implements OnInit {
             //         this.router.navigate(['/contractor']);
             //     },
             //     error => {
-            //         this.userService.checkError(error.json().code)
+            //         if (error.json().code) {
+                    //     this.userService.checkError(error.json().code, error.json().message)
+                    // }else{
+                    //     this.userService.checkError(error.status, '')
+                    // }
             //         alert(`The contractor could not be Update, server Error.`);
             //     }
             // );

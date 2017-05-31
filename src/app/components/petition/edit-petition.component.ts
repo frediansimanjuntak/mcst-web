@@ -127,7 +127,7 @@ export class EditPetitionComponent implements OnInit {
                     this.router.navigate([this.name.default_development.name_url + '/petition']);
                 },
                 error => {
-                    this._notificationsService.error('Error', error.json().message)
+                    
                     this.loading = false;
                 }
             );

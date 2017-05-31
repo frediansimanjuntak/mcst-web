@@ -241,8 +241,11 @@ export class EditBookingComponent implements OnInit  {
 				this.router.navigate([this.name.default_development.name_url + '/booking']);
 			},
 			error => {
-				this.userService.checkError(error.json().code)
-				this._notificationsService.error('Failed', error.json().message)
+				if (error.json().code) {
+                    this.userService.checkError(error.json().code, error.json().message)
+                }else{
+                    this.userService.checkError(error.status, '')
+                }
 				this.loading = false
 			}
 		);
@@ -287,7 +290,14 @@ export class EditBookingComponent implements OnInit  {
 				   this.times_end.push(start)
 			}
 			this.loading = false
-		}, error => this.userService.checkError(error.json().code));
+		}, error => {
+			if (error.json().code) {
+                this.userService.checkError(error.json().code, error.json().message)
+            }else{
+                this.userService.checkError(error.status, '')
+            }
+            this.loading = false
+        });
 	}
 
 	startTime(start){
@@ -306,7 +316,14 @@ export class EditBookingComponent implements OnInit  {
 			}
 			this.model.start = start
 			this.loading = false
-		}, error => this.userService.checkError(error.json().code));
+		}, error => {
+			if (error.json().code) {
+                this.userService.checkError(error.json().code, error.json().message)
+            }else{
+                this.userService.checkError(error.status, '')
+            }
+            this.loading = false
+        });
 	}
 
 	filter(){
@@ -505,7 +522,14 @@ export class EditBookingComponent implements OnInit  {
 				this.model.sender_name = this.unit.tenant.data[0].resident.username;
 			}
 			setTimeout(() => this.loading = false, 1000);
-		},error => this.userService.checkError(error.json().code));
+		},error => {
+			if (error.json().code) {
+                this.userService.checkError(error.json().code, error.json().message)
+            }else{
+                this.userService.checkError(error.status, '')
+            }
+            this.loading = false
+        });
 	}
 	
 }

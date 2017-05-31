@@ -110,7 +110,11 @@ export class ContractNoticeComponent implements OnInit  {
                     this.router.navigate([this.name.default_development.name_url + '/contract/view', id ]);
                 },
                 error => {
-                    this.userService.checkError(error.json().code)
+                    if (error.json().code) {
+                        this.userService.checkError(error.json().code, error.json().message)
+                    }else{
+                        this.userService.checkError(error.status, '')
+                    }
                     this._notificationsService.error( 'Error', error.json().message)
                     setTimeout(() => this.loading = false, 1000);
                 }
@@ -143,8 +147,12 @@ export class ContractNoticeComponent implements OnInit  {
                     this.router.navigate([this.name.default_development.name_url + '/contract/view', id ]);
                 },
                 error => {
-                    this.userService.checkError(error.json().code)
-                    this._notificationsService.error('Error', error.json().message)
+                    if (error.json().code) {
+                        this.userService.checkError(error.json().code, error.json().message)
+                    }else{
+                        this.userService.checkError(error.status, '')
+                    }
+                    
                     setTimeout(() => this.loading = false, 1000);
                 }
             );
@@ -164,8 +172,12 @@ export class ContractNoticeComponent implements OnInit  {
                 this.ngOnInit()
             },
             error => {
-                this.userService.checkError(error.json().code)
-                this._notificationsService.error('Error', error.json().message)
+                if (error.json().code) {
+                        this.userService.checkError(error.json().code, error.json().message)
+                    }else{
+                        this.userService.checkError(error.status, '')
+                    }
+                
                 setTimeout(() => this.loading = false, 1000);
             });
         }
