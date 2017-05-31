@@ -49,8 +49,10 @@ import  * as _  from "underscore";
 	table.tableSection td {
 		height: 50px
 	}
-	#booking-system p.row-li-2 {
-	    float: none !important;
+	#booking-system ul.steps.steps-5 {
+	    width: 40%;
+	    float: left;
+	    margin: 0;
 	}
 	#booking-system .abc {
 	    width: 100% !important;
@@ -498,7 +500,15 @@ export class EditBookingComponent implements OnInit  {
 
 	onChange(event: any) {
 	   let files = [].slice.call(event.target.files);
-	   this.model.payment_proof = files;
+	    for (let z = 0; z < files.length; ++z) {
+		   	if (!files[z].type.includes("image")) {
+		   		this._notificationsService.error('Error', 'Please upload image only!.')
+			  	this.model.payment_proof = [];
+			  	break;
+		   	}else{
+				this.model.payment_proof = files;
+		   	}
+	   	}
 	}
 	
 	remove(i: any){ 
