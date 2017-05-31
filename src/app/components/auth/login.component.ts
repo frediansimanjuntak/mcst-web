@@ -100,7 +100,6 @@ export class LoginComponent implements OnInit {
     constructor(
         private router: Router,
         private AuthService: AuthenticationService,
-        
         private _notificationsService: NotificationsService,
         private userService: UserService   ) { }
 
@@ -127,13 +126,10 @@ export class LoginComponent implements OnInit {
                     this.error = 'Username or password is incorrect';
                     let internetError = 'Connection error, please try again later'
                     if(error.status === 0) {
-                        this._notificationsService.error(
-                            'Login Failed',
-                            internetError,
-                        )
+                        this._notificationsService.error('Error', internetError)
                     }else{
                         this._notificationsService.error(
-                            'Login Failed',
+                            'Error',
                             this.error,
                         )
                     }

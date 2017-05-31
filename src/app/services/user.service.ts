@@ -35,7 +35,7 @@ export class UserService {
     getByToken(){    
         return this.http.get(url + 'me', this.jwt())
             .map((res:Response) => res.json())
-            .catch((error:any) => Observable.throw(error.json().error || 'Server error'));
+            .catch((error:any) => Observable.throw(error || 'Server error'));
     }
 
     createResident(body:any): Promise<User> {
