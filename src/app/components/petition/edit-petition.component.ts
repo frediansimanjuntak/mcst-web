@@ -132,6 +132,8 @@ export class EditPetitionComponent implements OnInit {
                     formData.append("tenant.salulation", this.model.tenant.salulation);
                     formData.append("tenant.phone", this.model.tenant.phone);
                     this.savePetition(formData);
+                }else{
+                    this.loading = false;
                 }
             }else{
                 if(this.model.start_time && this.model.end_time){
@@ -149,8 +151,12 @@ export class EditPetitionComponent implements OnInit {
                             formData.append("new_company.phone", this.company.phone);
                             formData.append("new_company.email", this.company.email);
                             this.savePetition(formData);
+                        }else{
+                            this.loading = false;
                         }
                     }   
+                }else{
+                    this.loading = false;
                 }                
             }
         }
