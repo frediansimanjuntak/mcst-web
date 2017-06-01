@@ -31,8 +31,8 @@
             <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !description.valid }">
                 <label class="control-label col-sm-4" for="description">Description :</label>
                 <div class="col-sm-8">
-                    <textarea type="text" class="form-control" name="description" [(ngModel)]="model.description" #description="ngModel" required placeholder="Input Description here"></textarea>
-                    <span *ngIf="f.submitted && !description.valid" class="help-block">Description is required</span>
+                    <textarea type="text" class="form-control" name="description" minlength="3" [(ngModel)]="model.description" #description="ngModel" required placeholder="Input Description here"></textarea>
+                    <span *ngIf="f.submitted && !description.valid" class="help-block">Description is required and at least 3 character</span>
                 </div>
             </div>
             <div class="form-group" [ngClass]="{ 'has-error': f.submitted && model.photo.length == 0 }">

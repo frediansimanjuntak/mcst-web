@@ -47,8 +47,8 @@
                 <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !note_remark.valid }">
                     <label class="control-label col-sm-4" for="note_remark">Remark :</label>
                     <div class="col-sm-8">
-                        <textarea class="form-control" name="note_remark" [(ngModel)]="model.note_remark" #note_remark="ngModel" required placeholder="Input remark here"></textarea>
-                        <span *ngIf="f.submitted && !note_remark.valid" class="help-block">Remark is required</span>
+                        <textarea class="form-control" name="note_remark" [(ngModel)]="model.note_remark" minlength="3" #note_remark="ngModel" required placeholder="Input remark here"></textarea>
+                        <span *ngIf="f.submitted && !note_remark.valid" class="help-block">Remark is required and at least 3 character</span>
                     </div>
                 </div>
                 <div class="form-group" [ngClass]="{ 'has-error': model.attachment.length == 0 && f.submitted }">

@@ -61,15 +61,15 @@
                 <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !title.valid }">
                     <label class="control-label col-sm-4" for="title">Title :</label>
                     <div class="col-sm-8">
-                        <input type="text" class="form-control" name="title" [(ngModel)]="model.title" #title="ngModel" required placeholder="Input title here" />
-                        <small *ngIf="f.submitted && !title.valid" class="help-block">Title is required</small>
+                        <input type="text" class="form-control" name="title" minlength="3" [(ngModel)]="model.title" #title="ngModel" required placeholder="Input title here" />
+                        <small *ngIf="f.submitted && !title.valid" class="help-block">Title is required and at least 3 character</small>
                     </div>
                 </div>
                 <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !remark.valid }">
                     <label class="control-label col-sm-4" for="remark">Message :</label>
                     <div class="col-sm-8">
-                        <textarea class="form-control" name="remark" [(ngModel)]="model.remark" #remark="ngModel" required placeholder="Input remark here"></textarea>
-                        <small *ngIf="f.submitted && !remark.valid" class="help-block">Remark is required</small>
+                        <textarea class="form-control" name="remark" minlength="3" [(ngModel)]="model.remark" #remark="ngModel" required placeholder="Input remark here"></textarea>
+                        <small *ngIf="f.submitted && !remark.valid" class="help-block">Remark is required and at least 3 character</small>
                     </div>
                 </div>
                 <div class="form-group" [ngClass]="{ 'has-error': model.attachment.length == 0 && f.submitted }">
