@@ -72,7 +72,7 @@ export class EditSettingComponent {
                     this.router.navigate([this.name.default_development.name_url + '/user']);
                 },
                 error => {
-                    
+                    this._notificationsService.error('Error', error.json().message)
                     setTimeout(() => this.loading = false, 1000);
                 }
             );
