@@ -212,11 +212,16 @@ export class EditFacilityComponent  {
 					this.router.navigate([this.name.default_development.name_url + '/facility']);
 				},
 				error => {
-                	if (error.json().code) {
-                        this.userService.checkError(error.json().code, error.json().message)
+                	if (error.json().message) {
+                        if (error.json().code) {
+                            this.userService.checkError(error.json().code, error.json().message)
+                        }else{
+                            this._notificationsService.error("Error", error.json().message)    
+                        }
+                        
                     }else{
                         this.userService.checkError(error.status, '')
-                    }
+                    } 
 					
 					setTimeout(() => this.loading = false, 1000);
 				}
@@ -256,11 +261,16 @@ export class EditFacilityComponent  {
 					this.router.navigate([this.name.default_development.name_url + '/facility']);
 				},
 				error => {
-                	if (error.json().code) {
-                        this.userService.checkError(error.json().code, error.json().message)
+                	if (error.json().message) {
+                        if (error.json().code) {
+                            this.userService.checkError(error.json().code, error.json().message)
+                        }else{
+                            this._notificationsService.error("Error", error.json().message)    
+                        }
+                        
                     }else{
                         this.userService.checkError(error.status, '')
-                    }
+                    } 
 					
 					setTimeout(() => this.loading = false, 1000);
 				}

@@ -283,11 +283,16 @@ export class EditCompanyComponent implements OnInit {
                     this.router.navigate(['/company']);
                 },
                 error => {
-                    if (error.json().code) {
-                        this.userService.checkError(error.json().code, error.json().message)
+                    if (error.json().message) {
+                        if (error.json().code) {
+                            this.userService.checkError(error.json().code, error.json().message)
+                        }else{
+                            this._notificationsService.error("Error", error.json().message)    
+                        }
+                        
                     }else{
                         this.userService.checkError(error.status, '')
-                    };
+                    } ;
                 }
             );
 

@@ -187,11 +187,16 @@ export class VisitComponent implements OnInit {
                         this._notificationsService.success('Success', 'Check out '+ this.visitOut.visitor.prefix + ' ' + this.visitOut.visitor.full_name + ' successful')
                     },
                     error => {
+                        if (error.json().message) {
                         if (error.json().code) {
-                        this.userService.checkError(error.json().code, error.json().message)
+                            this.userService.checkError(error.json().code, error.json().message)
+                        }else{
+                            this._notificationsService.error("Error", error.json().message)    
+                        }
+                        
                     }else{
                         this.userService.checkError(error.status, '')
-                    }
+                    } 
                         this.checkOutModal.close();
                         
                         this.loading = false;
@@ -233,11 +238,16 @@ export class VisitComponent implements OnInit {
                         this._notificationsService.success('Success', 'Check in '+ this.visit.visitor.prefix + ' ' + this.visit.visitor.full_name + ' successful')
                     },
                     error => {
+                        if (error.json().message) {
                         if (error.json().code) {
-                        this.userService.checkError(error.json().code, error.json().message)
+                            this.userService.checkError(error.json().code, error.json().message)
+                        }else{
+                            this._notificationsService.error("Error", error.json().message)    
+                        }
+                        
                     }else{
                         this.userService.checkError(error.status, '')
-                    }
+                    } 
                         this.checkInModal.close();
                         
                         this.loading = false;
@@ -278,11 +288,16 @@ export class VisitComponent implements OnInit {
                     this.loading = false;
                 },
                 error => {
-                    if (error.json().code) {
-                        this.userService.checkError(error.json().code, error.json().message)
+                    if (error.json().message) {
+                        if (error.json().code) {
+                            this.userService.checkError(error.json().code, error.json().message)
+                        }else{
+                            this._notificationsService.error("Error", error.json().message)    
+                        }
+                        
                     }else{
                         this.userService.checkError(error.status, '')
-                    }
+                    } 
                     this.firstModal.close();
                     setTimeout(() => this.loading = false, 1000);
                     
