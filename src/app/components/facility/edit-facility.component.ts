@@ -4,7 +4,7 @@ import { FormBuilder, FormControl, FormGroup, FormArray, Validators, ReactiveFor
 import { Facility,Facilities } from '../../models/index';
 import { FacilityService, AlertService, UserService } from '../../services/index';
 import { NotificationsService } from 'angular2-notifications';
-
+import * as moment from 'moment'
 import 'rxjs/add/operator/switchMap';
 import { TimepickerConfig } from 'ng2-bootstrap';
 
@@ -36,9 +36,12 @@ export class EditFacilityComponent  {
 	name: any;
 	time: any[] = [];
 	choosedDay: any[] = [];
+	start: Date;
+	end: Date;
 	schedule: any[] = [];
 	valid:any[];
     loading: boolean = true;
+    today: Date;
 	days = [
 		{ day:['monday','tuesday','wednesday','thursday','friday','saturday','sunday']},
 		{ day:['monday','tuesday','wednesday','thursday','friday','saturday','sunday']},
@@ -67,6 +70,7 @@ export class EditFacilityComponent  {
 		private userService: UserService) {}
 
 	ngOnInit(): void {
+		this.today = new Date();
 		this.schedule.length = 1;
 		this.route.params.subscribe(params => {
 			this.id = params['id'];
@@ -91,14 +95,16 @@ export class EditFacilityComponent  {
 					schedule: this.formbuilder.array([]),
 					status: ['', Validators.required],
 					maintenance: this.formbuilder.group({
-						start_date: [''],
-						end_date: ['']
+						start_date: [],
+						end_date: []
 					}),
 					created_by : [''],
 					created_at : [''],
 					__v : [''],
 				});
 				if(this.facility.maintenance.length) {
+					this.start = new Date(moment(this.facility.maintenance[0].start_date).format('MMM D YYYY, HH:mm:ss')) 
+					this.end = new Date(moment(this.facility.maintenance[0].end_date).format('MMM D YYYY, HH:mm:ss')) 
 					this.myForm = this.formbuilder.group({
 						_id: [''],
 						name : ['', Validators.required],
@@ -114,8 +120,8 @@ export class EditFacilityComponent  {
 						schedule: this.formbuilder.array([]),
 						status: ['', Validators.required],
 						maintenance: this.formbuilder.group({
-							start_date: [''],
-							end_date: ['']
+							start_date: [this.start],
+							end_date: [this.end]
 						}),
 						created_by : [''],
 						created_at : [''],
@@ -169,6 +175,10 @@ export class EditFacilityComponent  {
 			start_time : ['', Validators.required],
 			end_time : ['', Validators.required]
 		});
+	}
+
+	check(event: any){
+		console.log(event)
 	}
 
 	addSchedule() {
