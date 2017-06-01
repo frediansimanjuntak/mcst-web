@@ -32,28 +32,28 @@
                     <label class="control-label col-sm-4" for="street_name">Street name :</label>
                     <div class="col-sm-8">
                         <input type="text" class="form-control" name="street_name" [(ngModel)]="unit.address.street_name" #street_name="ngModel" required placeholder="Input street_name here" />
-                        <span *ngIf=" !street_name.valid" class="help-block">Street Name is required</span>
+                        <span *ngIf=" !street_name.valid" class="help-block">Street Name is required and at least 3 character</span>
                     </div>
                 </div>
                 <div class="form-group" [ngClass]="{ 'has-error': !postal_code.valid }">
                     <label class="control-label col-sm-4" for="postal_code">Postal code :</label>
                     <div class="col-sm-8">
                         <input type="text" class="form-control" name="postal_code" [(ngModel)]="unit.address.postal_code" #postal_code="ngModel" required placeholder="Input postal_code here" />
-                        <span *ngIf=" !postal_code.valid" class="help-block">Postal code is required</span>
+                        <span *ngIf=" !postal_code.valid" class="help-block">Postal code is required and at least 3 character</span>
                     </div>
                 </div>
                 <div class="form-group" [ngClass]="{ 'has-error': !country.valid }">
                     <label class="control-label col-sm-4" for="country">Country :</label>
                     <div class="col-sm-8">
                         <input type="text" name=""> type="text" class="form-control" name="country" [(ngModel)]="unit.address.country" #country="ngModel" required placeholder="Input country here"/>
-                        <span *ngIf=" !country.valid" class="help-block">Country is required</span>
+                        <span *ngIf=" !country.valid" class="help-block">Country is required and at least 3 character</span>
                     </div>
                 </div>
                 <div class="form-group" [ngClass]="{ 'has-error': !full_address.valid }">
                     <label class="control-label col-sm-4" for="full_address">Full address :</label>
                     <div class="col-sm-8">
                         <textarea type="text" class="form-control" name="full_address" [(ngModel)]="unit.address.full_address" #full_address="ngModel" required placeholder="Input full address here"></textarea>
-                        <span *ngIf=" !full_address.valid" class="help-block">Full address is required</span>
+                        <span *ngIf=" !full_address.valid" class="help-block">Full address is required and at least 3 character</span>
                     </div>
                 </div>
 

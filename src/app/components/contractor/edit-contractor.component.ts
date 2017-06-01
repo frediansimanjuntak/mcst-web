@@ -53,23 +53,23 @@ export class EditContractorComponent implements OnInit {
           })
       
         this.myForm = this.formbuilder.group({
-        	username : ['', Validators.required],
-        	password : ['', Validators.required],
-        	phone : ['', Validators.required],
-        	email : ['', Validators.required],
+        	username : ['', Validators.compose([Validators.required, Validators.minLength(3)])],
+        	password : ['', Validators.compose([Validators.required, Validators.minLength(3)])],
+        	phone : ['', Validators.compose([Validators.required, Validators.minLength(3)])],
+        	email : ['', Validators.compose([Validators.required, Validators.minLength(3)])],
         	address: this.formbuilder.group({
-                    street_name : ['',  <any>Validators.required],
-                    block_no : ['', <any>Validators.required],
-                    postal_code : ['', <any>Validators.required],
-                    country : ['', <any>Validators.required],
-                    full_address : ['', <any>Validators.required]
+                    street_name : ['',  <any>Validators.compose([Validators.required, Validators.minLength(3)])],
+                    block_no : ['', <any>Validators.compose([Validators.required, Validators.minLength(3)])],
+                    postal_code : ['', <any>Validators.compose([Validators.required, Validators.minLength(3)])],
+                    country : ['', <any>Validators.compose([Validators.required, Validators.minLength(3)])],
+                    full_address : ['', <any>Validators.compose([Validators.required, Validators.minLength(3)])]
              }),
         	profile_picture: [''],
-            description : ['', Validators.required],
+            description : ['', Validators.compose([Validators.required, Validators.minLength(3)])],
             company : [''],
             position : [''],
             role : [''],
-            active : ['', Validators.required],
+            active : ['', Validators.compose([Validators.required, Validators.minLength(3)])],
         });
         this.model.active = false;
         this.route.params.subscribe(params => {

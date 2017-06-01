@@ -49,24 +49,24 @@ export class EditCompanyComponent implements OnInit {
     ngOnInit(): void {
         this.getContractors();
         this.myForm = this.formbuilder.group({
-        	name : ['', Validators.required],
-        	category : ['', Validators.required],
-        	phone : ['', Validators.required],
-        	email : ['', Validators.required],
+        	name : ['', Validators.compose([Validators.required, Validators.minLength(3)])],
+        	category : ['', Validators.compose([Validators.required, Validators.minLength(3)])],
+        	phone : ['', Validators.compose([Validators.required, Validators.minLength(3)])],
+        	email : ['', Validators.compose([Validators.required, Validators.minLength(3)])],
         	address: this.formbuilder.group({
-                    street_name : ['',  <any>Validators.required],
-                    block_no : ['', <any>Validators.required],
-                    postal_code : ['', <any>Validators.required],
-                    country : ['', <any>Validators.required],
+                    street_name : ['',  <any>Validators.compose([Validators.required, Validators.minLength(3)])],
+                    block_no : ['', <any>Validators.compose([Validators.required, Validators.minLength(3)])],
+                    postal_code : ['', <any>Validators.compose([Validators.required, Validators.minLength(3)])],
+                    country : ['', <any>Validators.compose([Validators.required, Validators.minLength(3)])],
                     coordinates : this.formbuilder.array([]),
-                    type : ['', <any>Validators.required],
-                    full_address : ['', <any>Validators.required]
+                    type : ['', <any>Validators.compose([Validators.required, Validators.minLength(3)])],
+                    full_address : ['', <any>Validators.compose([Validators.required, Validators.minLength(3)])]
              }),
-            description : ['', Validators.required],
+            description : ['', Validators.compose([Validators.required, Validators.minLength(3)])],
             company_logo: this.formbuilder.array([]),
             chief : [''],
             employee: this.formbuilder.array([]),
-            active : ['', Validators.required],
+            active : ['', Validators.compose([Validators.required, Validators.minLength(3)])],
         });
         this.model.active = true;
         this.route.params.subscribe(params => {

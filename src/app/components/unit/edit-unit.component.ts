@@ -51,13 +51,13 @@ export class EditUnitComponent implements OnInit {
     ngOnInit() {
         this.myForm = this.formbuilder.group({
                 address: this.formbuilder.group({
-                    unit_no : ['',  <any>Validators.required],
-                    unit_no_2 : ['', <any>Validators.required],
-                    block_no : ['', <any>Validators.required],
-                    street_name : ['', <any>Validators.required],
-                    postal_code : ['', <any>Validators.required],
-                    country : ['', <any>Validators.required],
-                    full_address : ['', <any>Validators.required]
+                    unit_no : ['',  <any>Validators.compose([Validators.required])],
+                    unit_no_2 : ['', <any>Validators.compose([Validators.required])],
+                    block_no : ['', <any>Validators.compose([Validators.required])],
+                    street_name : ['', <any>Validators.compose([Validators.required, Validators.minLength(3)])],
+                    postal_code : ['', <any>Validators.compose([Validators.required, Validators.minLength(3)])],
+                    country : ['', <any>Validators.compose([Validators.required, Validators.minLength(3)])],
+                    full_address : ['', <any>Validators.compose([Validators.required, Validators.minLength(3)])]
                 }),
                 status: ['own stay'],
                 max_tenant: [''],

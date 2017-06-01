@@ -11,7 +11,7 @@
                         <div class="col-sm-8">
                             <input type="text" class="form-control" name="title" formControlName="title" required placeholder="Input title here" />
                             <small *ngIf="f.submitted && !myForm.controls.title.valid" class="text-danger">
-                                Title is required
+                                Title is required and at least 3 character
                             </small>
                         </div>
                     </div>
@@ -44,7 +44,7 @@
                         <div class="col-sm-8">
                             <textarea class="form-control" name="message_to_receiver" formControlName="message_to_receiver" placeholder="Input message to receiver here"></textarea>
                             <small *ngIf="f.submitted && !myForm.controls.message_to_receiver.valid" class="text-danger">
-                                Message is required
+                                Message is required and at least 3 character
                             </small>
                         </div>
                     </div>
@@ -65,13 +65,13 @@
                                     	<div style="width: 150px; float: left; margin-right: 10px;font-weight: bold">
                                     		<input class="form-control" type="text" formControlName="charge" required/>
                                     		<small *ngIf="f.submitted && !myForm.controls.notification_list.controls[i].controls.charge.valid" class="text-danger">
-		                                        Charge/Bill is required
+		                                        Charge/Bill is required and at least 3 character
 		                                    </small>
                                     	</div>
                                         <div style="width: 300px; float: left; margin-right: 10px" >
                                         	<input class="form-control" type="text" formControlName="remarks" required/>
                                         	<small *ngIf="f.submitted && !myForm.controls.notification_list.controls[i].controls.remarks.valid" class="text-danger">
-		                                        Remark is required
+		                                        Remark is required and at least 3 character
 		                                    </small>
                                         </div>
                                         <div style="width: 160px; float: left; margin-right: 10px">
@@ -126,7 +126,7 @@
                         <div class="col-sm-8">
                             <input type="text" class="form-control" name="title" formControlName="title" required placeholder="Input title here" />
                             <small *ngIf="f.submitted && !myForm.controls.title.valid" class="text-danger">
-                                Title is required
+                                Title is required and at least 3 character
                             </small>
                         </div>
                     </div>
@@ -153,7 +153,7 @@
                         <div class="col-sm-8">
                             <textarea class="form-control" name="message_to_receiver" formControlName="message_to_receiver" placeholder="Input message to receiver here"></textarea>
                             <small *ngIf="f.submitted && !myForm.controls.message_to_receiver.valid" class="text-danger">
-                                Message is required
+                                Message is required and at least 3 character
                             </small>
                         </div>
                     </div>
@@ -173,13 +173,13 @@
                                        <div style="width: 150px; float: left; margin-right: 10px;font-weight: bold">
                                     		<input class="form-control" type="text" formControlName="charge" required/>
                                     		<small *ngIf="f.submitted && !myForm.controls.notification_list.controls[i].controls.charge.valid" class="text-danger">
-		                                        Charge/Bill is required
+		                                        Charge/Bill is required and at least 3 character
 		                                    </small>
                                     	</div>
                                         <div style="width: 300px; float: left; margin-right: 10px" >
                                         	<input class="form-control" type="text" formControlName="remarks" required/>
                                         	<small *ngIf="f.submitted && !myForm.controls.notification_list.controls[i].controls.remarks.valid" class="text-danger">
-		                                        Remark is required
+		                                        Remark is required and at least 3 character
 		                                    </small>
                                         </div>
                                         <div style="width: 160px; float: left; margin-right: 10px">

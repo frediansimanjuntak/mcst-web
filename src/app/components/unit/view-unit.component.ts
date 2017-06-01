@@ -89,22 +89,22 @@ export class ViewUnitComponent implements OnInit {
         this.useAutocomplete= false;
         // this.myForm = this.formbuilder.group({
         //         resident: [''],
-        //         type: ['', <any>Validators.required],
+        //         type: ['', <any>Validators.compose([Validators.required, Validators.minLength(3)])],
         //         added_on: [''],
         //         remarks: [''],
         // });
         this.myForm2 = this.formbuilder.group({
-                license_plate: ['', <any>Validators.required],
-                owner: ['', <any>Validators.required],
+                license_plate: ['', <any>Validators.compose([Validators.required])],
+                owner: ['', <any>Validators.compose([Validators.required])],
                 transponder: [''],
                 document: [''],
                 registered_on: [''],
                 remarks: [''],
         });
         this.myForm = this.formbuilder.group({
-                    username : ['', Validators.required],
-                    email : ['', Validators.required],
-                    phone : ['', Validators.required],
+                    username : ['', Validators.compose([Validators.required, Validators.minLength(3)])],
+                    email : ['', Validators.compose([Validators.required])],
+                    phone : ['', Validators.compose([Validators.required])],
                     role : ['user'],
                     default_property: this.formbuilder.group({
                         property: [''],
@@ -125,8 +125,8 @@ export class ViewUnitComponent implements OnInit {
                                                 property: [this.id]
                                             })
                     ]),
-                    gender: ['', Validators.required],
-                    salulation: ['', Validators.required]
+                    gender: ['', Validators.compose([Validators.required])],
+                    salulation: ['', Validators.compose([Validators.required])]
                 }); 
     }
 
@@ -166,9 +166,9 @@ export class ViewUnitComponent implements OnInit {
                                         this.hasLandlord = true;
                                         this.model.type  = 'tenant';
                                         this.myForm = this.formbuilder.group({
-                                            username : ['', Validators.required],
-                                            email : ['', Validators.required],
-                                            phone : ['', Validators.required],
+                                            username : ['', Validators.compose([Validators.required, Validators.minLength(3)])],
+                                            email : ['', Validators.compose([Validators.required])],
+                                            phone : ['', Validators.compose([Validators.required])],
                                             role : ['user'],
                                             default_property: this.formbuilder.group({
                                                 property: [''],
@@ -185,16 +185,16 @@ export class ViewUnitComponent implements OnInit {
                                             }),
                                             authorized_property: this.formbuilder.array([this.initAuthorized()]),
                                             remarks: [''],
-                                            gender: ['', Validators.required],
-                                            salulation: ['', Validators.required]
+                                            gender: ['', Validators.compose([Validators.required])],
+                                            salulation: ['', Validators.compose([Validators.required])]
                                             });    
                                     }else{
                                         this.hasLandlord = false;
                                         this.model.type  = 'landlord'
                                         this.myForm = this.formbuilder.group({
-                                            username : ['', Validators.required],
-                                            email : ['', Validators.required],
-                                            phone : ['', Validators.required],
+                                            username : ['', Validators.compose([Validators.required, Validators.minLength(3)])],
+                                            email : ['', Validators.compose([Validators.required])],
+                                            phone : ['', Validators.compose([Validators.required])],
                                             role : ['user'],
                                             default_property: this.formbuilder.group({
                                                 property: [''],
@@ -208,8 +208,8 @@ export class ViewUnitComponent implements OnInit {
                                             owned_property: this.formbuilder.array([this.initOwned()]),
                                             authorized_property: this.formbuilder.array([this.initAuthorized()]),
                                             remarks: [''],
-                                            gender: ['', Validators.required],
-                                            salulation: ['', Validators.required]
+                                            gender: ['', Validators.compose([Validators.required])],
+                                            salulation: ['', Validators.compose([Validators.required])]
                                             });  
                                     }
 
@@ -662,9 +662,9 @@ export class ViewUnitComponent implements OnInit {
         if(this.filteredBrands.length==0){
             this.useAutocomplete = false;
              this.myForm = this.formbuilder.group({
-                    username : ['', Validators.required],
-                    email : ['', Validators.required],
-                    phone : ['', Validators.required],
+                    username : ['', Validators.compose([Validators.required, Validators.minLength(3)])],
+                    email : ['', Validators.compose([Validators.required])],
+                    phone : ['', Validators.compose([Validators.required])],
                     role : ['user'],
                     default_property: this.formbuilder.group({
                         property: [''],
@@ -685,8 +685,8 @@ export class ViewUnitComponent implements OnInit {
                                                 property: [this.id]
                                             })
                     ]),
-                    gender: ['', Validators.required],
-                    salulation: ['', Validators.required]
+                    gender: ['', Validators.compose([Validators.required])],
+                    salulation: ['', Validators.compose([Validators.required])]
                 });    
         }
     }
@@ -716,9 +716,9 @@ export class ViewUnitComponent implements OnInit {
          this.addSubmitted= false;
          this.useAutocomplete = false;
          this.myForm = this.formbuilder.group({
-                    username : ['', Validators.required],
-                    email : ['', Validators.required],
-                    phone : ['', Validators.required],
+                    username : ['', Validators.compose([Validators.required, Validators.minLength(3)])],
+                    email : ['', Validators.compose([Validators.required])],
+                    phone : ['', Validators.compose([Validators.required])],
                     role : ['user'],
                     default_property: this.formbuilder.group({
                         property: [''],
@@ -739,17 +739,17 @@ export class ViewUnitComponent implements OnInit {
                                                 property: [this.id]
                                             })
                     ]),
-                    gender: ['', Validators.required],
-                    salulation: ['', Validators.required]
+                    gender: ['', Validators.compose([Validators.required])],
+                    salulation: ['', Validators.compose([Validators.required])]
                 });  
     }
 
     residentTypeChange(event){
         if(this.model.type=='tenant'){
             this.myForm = this.formbuilder.group({
-                username : ['', Validators.required],
-                email : ['', Validators.required],
-                phone : ['', Validators.required],
+                username : ['', Validators.compose([Validators.required, Validators.minLength(3)])],
+                email : ['', Validators.compose([Validators.required])],
+                phone : ['', Validators.compose([Validators.required])],
                 role : ['user'],
                 default_property: this.formbuilder.group({
                     property: [''],
@@ -766,14 +766,14 @@ export class ViewUnitComponent implements OnInit {
                     }),
                 authorized_property: this.formbuilder.array([this.initAuthorized()]),
                 remarks: [''],
-                gender: ['', Validators.required],
-                salulation: ['', Validators.required]
+                gender: ['', Validators.compose([Validators.required])],
+                salulation: ['', Validators.compose([Validators.required])]
                 });    
         }else{
             this.myForm = this.formbuilder.group({
-                username : ['', Validators.required],
-                email : ['', Validators.required],
-                phone : ['', Validators.required],
+                username : ['', Validators.compose([Validators.required, Validators.minLength(3)])],
+                email : ['', Validators.compose([Validators.required])],
+                phone : ['', Validators.compose([Validators.required])],
                 role : ['user'],
                 default_property: this.formbuilder.group({
                     property: [''],
@@ -787,8 +787,8 @@ export class ViewUnitComponent implements OnInit {
                 owned_property: this.formbuilder.array([this.initOwned()]),
                 authorized_property: this.formbuilder.array([this.initAuthorized()]),
                 remarks: [''],
-                gender: ['', Validators.required],
-                salulation: ['', Validators.required]
+                gender: ['', Validators.compose([Validators.required])],
+                salulation: ['', Validators.compose([Validators.required])]
                 });  
         }
         this.useAutocomplete = false;

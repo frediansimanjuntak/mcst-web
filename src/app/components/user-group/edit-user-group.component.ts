@@ -58,7 +58,7 @@ export class EditUserGroupComponent implements OnInit {
                         })
         
         this.myForm = this.formbuilder.group({
-            description : ['', Validators.required],
+            description : ['', Validators.compose([Validators.required, Validators.minLength(3)])],
             chief : [''],
             users: this.formbuilder.array([]),
         });
@@ -191,11 +191,20 @@ export class EditUserGroupComponent implements OnInit {
             this.userGroupService.create(this.model)
             .then(
                 data => {
+                    console.log(data)
                     this._notificationsService.success('Success', 'Create user group successful')
                     this.router.navigate([this.name.default_development.name_url + '/user_group']);
                 },
                 error => {
-                    
+                    if (error.json().message) {
+                        if (error.json().code) {
+                            this.userService.checkError(error.json().code, error.json().message)
+                        }else{
+                            this._notificationsService.error('Error', error.json().message)
+                        }
+                    }else{
+                        this.userService.checkError(error.status, '')
+                    }
                     this.loading = false;
                 }
             );    

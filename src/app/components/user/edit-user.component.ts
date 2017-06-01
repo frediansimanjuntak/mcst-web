@@ -62,12 +62,12 @@ export class EditUserComponent implements OnInit {
         
         if(this.id == null){
             this.myForm = this.formbuilder.group({
-                username : ['', Validators.required],
-                email : ['', Validators.required],
-                password : ['', Validators.required],
-                confirmpassword : ['', Validators.required],
-                phone : ['', Validators.required],
-                role : ['', Validators.required],
+                username : ['', Validators.compose([Validators.required, Validators.minLength(3)])],
+                email : ['', Validators.compose([Validators.required])],
+                password : ['', Validators.compose([Validators.required, Validators.minLength(6)])],
+                confirmpassword : ['', Validators.compose([Validators.required])],
+                phone : ['', Validators.compose([Validators.required])],
+                role : ['', Validators.compose([Validators.required])],
                 details:  this.formbuilder.group({
                         first_name: [''],
                         last_name: [''],
@@ -84,25 +84,25 @@ export class EditUserComponent implements OnInit {
                 // }),
                 // owned_property: this.formbuilder.array([this.initOwned()]),
                 // authorized_property: this.formbuilder.array([this.initAuthorized()]),
-                // active: ['', Validators.required],
+                // active: ['', Validators.compose([Validators.required, Validators.minLength(3)])],
 
             });
         }else if( this.id != null &&  this.type == null) {
             this.myForm = this.formbuilder.group({
                     _id : [''],
-                    username : ['', Validators.required],
-                    email : ['', Validators.required],
-                    phone : ['', Validators.required],
-                    password : ['', Validators.required],
-                    confirmpassword : ['', Validators.required],
-                    role : ['', Validators.required],
+                    username : ['', Validators.compose([Validators.required, Validators.minLength(3)])],
+                    email : ['', Validators.compose([Validators.required])],
+                    phone : ['', Validators.compose([Validators.required])],
+                    password : ['', Validators.compose([Validators.required, Validators.minLength(6)])],
+                    confirmpassword : ['', Validators.compose([Validators.required])],
+                    role : ['', Validators.compose([Validators.required])],
                     details:  this.formbuilder.group({
                         first_name: [''],
                         last_name: [''],
                         identification_no: [''],
                     }),
-                    gender: ['', Validators.required],
-                    salulation: ['', Validators.required]
+                    gender: ['', Validators.compose([Validators.required])],
+                    salulation: ['', Validators.compose([Validators.required])]
                 });
             this.userService.getById(this.id)
             .subscribe(user => {
@@ -110,20 +110,20 @@ export class EditUserComponent implements OnInit {
                 if(this.user.role == 'user' && this.user.gender && this.user.salulation){
                     this.myForm = this.formbuilder.group({
                         _id : [this.user._id],
-                        username : [this.user.username, Validators.required],
+                        username : [this.user.username, Validators.compose([Validators.required, Validators.minLength(3)])],
 
-                        email : [this.user.email, Validators.required],
-                        phone : [this.user.phone, Validators.required],
-                        gender: [this.user.gender, Validators.required],
-                        salulation: [this.user.salulation,Validators.required]
+                        email : [this.user.email, Validators.compose([Validators.required])],
+                        phone : [this.user.phone, Validators.compose([Validators.required])],
+                        gender: [this.user.gender, Validators.compose([Validators.required])],
+                        salulation: [this.user.salulation,Validators.compose([Validators.required])]
                     });
                 }else{
                     this.myForm = this.formbuilder.group({
                         _id : [this.user._id],
-                        username : [this.user.username, Validators.required],
+                        username : [this.user.username, Validators.compose([Validators.required, Validators.minLength(3)])],
 
-                        email : [this.user.email, Validators.required],
-                        phone : [this.user.phone, Validators.required],
+                        email : [this.user.email, Validators.compose([Validators.required])],
+                        phone : [this.user.phone, Validators.compose([Validators.required])],
                     });
                 }
                 
@@ -132,11 +132,11 @@ export class EditUserComponent implements OnInit {
         }else if( this.id != null &&  this.type != null){
             if(this.type == 'tenant'){
                 this.myForm = this.formbuilder.group({
-                    username : ['', Validators.required],
-                    email : ['', Validators.required],
-                    password : ['', Validators.required],
-                    confirmpassword : ['', Validators.required],
-                    phone : ['', Validators.required],
+                    username : ['', Validators.compose([Validators.required, Validators.minLength(3)])],
+                    email : ['', Validators.compose([Validators.required])],
+                    password : ['', Validators.compose([Validators.required, Validators.minLength(6)])],
+                    confirmpassword : ['', Validators.compose([Validators.required])],
+                    phone : ['', Validators.compose([Validators.required])],
                     role : ['user'],
                     default_property: this.formbuilder.group({
                         property: [''],
@@ -152,11 +152,11 @@ export class EditUserComponent implements OnInit {
                     });    
             }else if(this.type == 'landlord'){
                      this.myForm = this.formbuilder.group({
-                    username : ['', Validators.required],
-                    email : ['', Validators.required],
-                    password : ['', Validators.required],
-                    confirmpassword : ['', Validators.required],
-                    phone : ['', Validators.required],
+                    username : ['', Validators.compose([Validators.required, Validators.minLength(3)])],
+                    email : ['', Validators.compose([Validators.required])],
+                    password : ['', Validators.compose([Validators.required, Validators.minLength(6)])],
+                    confirmpassword : ['', Validators.compose([Validators.required])],
+                    phone : ['', Validators.compose([Validators.required])],
                     role : ['user'],
                     default_property: this.formbuilder.group({
                         property: [''],

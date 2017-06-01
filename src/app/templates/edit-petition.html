@@ -168,7 +168,7 @@
                 <label class="control-label col-sm-4" for="remark">Remark :</label>
                 <div class="col-sm-8">
                     <textarea type="text" class="form-control" placeholder="Input remark here" name="remark" formControlName="remark"></textarea>
-                    <small style="color: red" [hidden]="myForm.controls.remark.valid || (myForm.controls.remark.pristine && !submitted)">Remark is required</small>
+                    <small style="color: red" [hidden]="myForm.controls.remark.valid || (myForm.controls.remark.pristine && !submitted)">Remark is required and at least 3 character</small>
                 </div>
             </div>
 

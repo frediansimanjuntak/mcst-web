@@ -229,7 +229,7 @@
                                     <p-autoComplete [(ngModel)]="username" [suggestions]="filteredBrands" (completeMethod)="filterBrands($event)" (onSelect)="onAutoCompleteChange($event)" field="username" [size]="30" placeholder="  Username" [minLength]="1" [ngModelOptions]="{standalone: true}"></p-autoComplete>
                                     <span style="cursor:pointer; color: blue;" (click)="resetForm()">Reset</span><br>
                                     <small *ngIf="addSubmitted && username=='' && !useAutocomplete" class="text-danger">
-                                    Name is required
+                                    Name is required and at least 3 character
                                     </small>
                                 </div>
                             </div>

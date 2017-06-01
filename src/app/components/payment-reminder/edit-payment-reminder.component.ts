@@ -41,10 +41,10 @@ export class EditPaymentReminderComponent implements OnInit{
         this.today = new Date();
         console.log(this.today)
     	this.myForm = this.formbuilder.group({
-            title : ['', Validators.required],
-            auto_issue_on : [this.today, Validators.required],
-            due_on : [null, Validators.required],
-            message_to_receiver : ['', Validators.required],
+            title : ['', Validators.compose([Validators.required, Validators.minLength(3)])],
+            auto_issue_on : [this.today, Validators.compose([Validators.required])],
+            due_on : [null, Validators.compose([Validators.required])],
+            message_to_receiver : ['', Validators.compose([Validators.required, Validators.minLength(3)])],
             notification_list: this.formbuilder.array([this.initNotification_list()]),
         });
         this.userService.getByToken()
@@ -59,11 +59,11 @@ export class EditPaymentReminderComponent implements OnInit{
             this.myForm = this.formbuilder.group({
                 _id : [''],
                 development : [''],
-                title : ['', Validators.required],
+                title : ['', Validators.compose([Validators.required, Validators.minLength(3)])],
                 reference_no : [{value: '', disabled: true}], 
-                auto_issue_on : ['', Validators.required],
-                due_on : ['', Validators.required],
-                message_to_receiver : ['', Validators.required],
+                auto_issue_on : ['', Validators.compose([Validators.required])],
+                due_on : ['', Validators.compose([Validators.required])],
+                message_to_receiver : ['', Validators.compose([Validators.required, Validators.minLength(3)])],
                 notification_list: this.formbuilder.array([]),
                 publish : [''],
                 created_by : [''],
@@ -87,10 +87,10 @@ export class EditPaymentReminderComponent implements OnInit{
 
     initNotification_list() {
         return this.formbuilder.group({
-            charge : ['', Validators.required],
-            remarks : ['', Validators.required],
-            applies_to : ['', Validators.required],
-            amount : ['', Validators.required]
+            charge : ['', Validators.compose([Validators.required, Validators.minLength(3)])],
+            remarks : ['', Validators.compose([Validators.required, Validators.minLength(3)])],
+            applies_to : ['', Validators.compose([Validators.required])],
+            amount : ['', Validators.compose([Validators.required])]
         });
     }
 
