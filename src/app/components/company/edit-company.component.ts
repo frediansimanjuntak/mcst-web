@@ -3,6 +3,7 @@ import { Router, Params, ActivatedRoute } from '@angular/router';
 import { FormBuilder, FormControl, FormGroup, FormArray, Validators } from '@angular/forms';
 import { Company, Companies, Contractor, Contractors } from '../../models/index';
 import { CompanyService, UserService, ContractorService, AlertService } from '../../services/index';
+import { NotificationsService } from 'angular2-notifications';
 import { Observable} from 'rxjs/Observable';
 
 
@@ -40,6 +41,7 @@ export class EditCompanyComponent implements OnInit {
     	private companyService: CompanyService,
     	private contractorService: ContractorService,
     	private alertService: AlertService,
+        private _notificationsService: NotificationsService,
     	private formbuilder: FormBuilder,
         private route: ActivatedRoute,
         private userService: UserService

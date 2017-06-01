@@ -2,7 +2,7 @@ import { Component, OnInit, ViewContainerRef, ViewEncapsulation, ViewChild } fro
 import { Router } from '@angular/router';
 import { Company, Companies } from '../../models/index';
 import { CompanyService, AlertService, UserService} from '../../services/index';
-
+import { NotificationsService } from 'angular2-notifications';
 import { Observable} from 'rxjs/Observable';
 
 import * as $ from "jquery";
@@ -36,6 +36,7 @@ export class CompanyComponent implements OnInit {
     stickyStatus: string;
     constructor(
                 private router: Router,
+                private _notificationsService: NotificationsService,
                 private companyService: CompanyService,
                 private alertService: AlertService,
                 private userService: UserService

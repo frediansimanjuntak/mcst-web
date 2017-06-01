@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import { Development } from '../../models/index';
 import { UnitService, AlertService, UserService} from '../../services/index';
 import {SlimLoadingBarService, SlimLoadingBarComponent} from 'ng2-slim-progress-bar';
+import { NotificationsService } from 'angular2-notifications';
 
 
 import { Observable} from 'rxjs/Observable';
@@ -32,6 +33,7 @@ export class UnitComponent implements OnInit {
                 private unitservice: UnitService, 
                 private alertService: AlertService,
                 private userService: UserService,
+        private _notificationsService: NotificationsService,
                 private slimLoadingBarService: SlimLoadingBarService, 
                 ) {
 
