@@ -82,8 +82,8 @@
                                     <form class="" name="form" (ngSubmit)="f.form.valid && replyFeedback()" #f="ngForm" novalidate>
                                         <div class="row no-margin" [ngClass]="{ 'has-error': f.submitted && !reply.valid }">
                                             <label class="control-label" for="reply">Reply :</label>
-                                            <textarea style="width: 550px" type="text" name="reply" [(ngModel)]="feedback.reply" #reply="ngModel" required placeholder="Input feedback reply here"></textarea>
-                                            <span *ngIf="f.submitted && !reply.valid" class="help-block">Feedback reply is required</span>
+                                            <textarea style="width: 550px" type="text" name="reply" minlength="3" [(ngModel)]="feedback.reply" #reply="ngModel" required placeholder="Input feedback reply here"></textarea>
+                                            <span *ngIf="f.submitted && !reply.valid" class="help-block">Feedback reply is required and at least 3 character</span>
                                         </div>
                                         <div class="pull-right">
                                             <button [disabled]="loading" class="btn btn-brown">Save</button>

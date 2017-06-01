@@ -51,11 +51,11 @@ export class EditCompanyComponent implements OnInit {
         this.myForm = this.formbuilder.group({
         	name : ['', Validators.compose([Validators.required, Validators.minLength(3)])],
         	category : ['', Validators.compose([Validators.required, Validators.minLength(3)])],
-        	phone : ['', Validators.compose([Validators.required, Validators.minLength(3)])],
-        	email : ['', Validators.compose([Validators.required, Validators.minLength(3)])],
+        	phone : ['', Validators.compose([Validators.required])],
+        	email : ['', Validators.compose([Validators.required])],
         	address: this.formbuilder.group({
                     street_name : ['',  <any>Validators.compose([Validators.required, Validators.minLength(3)])],
-                    block_no : ['', <any>Validators.compose([Validators.required, Validators.minLength(3)])],
+                    block_no : ['', <any>Validators.compose([Validators.required])],
                     postal_code : ['', <any>Validators.compose([Validators.required, Validators.minLength(3)])],
                     country : ['', <any>Validators.compose([Validators.required, Validators.minLength(3)])],
                     coordinates : this.formbuilder.array([]),
@@ -66,7 +66,7 @@ export class EditCompanyComponent implements OnInit {
             company_logo: this.formbuilder.array([]),
             chief : [''],
             employee: this.formbuilder.array([]),
-            active : ['', Validators.compose([Validators.required, Validators.minLength(3)])],
+            active : ['', Validators.compose([Validators.required])],
         });
         this.model.active = true;
         this.route.params.subscribe(params => {

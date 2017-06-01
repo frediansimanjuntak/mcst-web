@@ -11,14 +11,14 @@
                     <label class="control-label col-sm-4" for="username">Username :</label>
                     <div class="col-sm-8">
                         <input type="text" class="form-control" name="username" [(ngModel)]="contractor.username" #username="ngModel" required />
-                        <span *ngIf="!username.valid" class="help-block">Username is required</span>
+                        <span *ngIf="!username.valid" class="help-block">Username is required and at least 3 character</span>
                     </div>
                 </div>
                 <div class="form-group" [ngClass]="{ 'has-error': !password.valid }">
                     <label class="control-label col-sm-4" for="password">Password :</label>
                     <div class="col-sm-8">
                         <input type="text" class="form-control" name="password" [(ngModel)]="contractor.password" #password="ngModel" required />
-                        <span *ngIf="!password.valid" class="help-block">Password is required</span>
+                        <span *ngIf="!password.valid" class="help-block">Password is required and at least 6 character</span>
                     </div>
                 </div>
                 <div class="form-group" [ngClass]="{ 'has-error': !phone.valid }">
@@ -39,7 +39,7 @@
                     <label class="control-label col-sm-4" for="street_name">Street Name :</label>
                     <div class="col-sm-8">
                         <input type="text" class="form-control" name="street_name" [(ngModel)]="contractor.address.street_name" #street_name="ngModel" required />
-                        <span *ngIf="!street_name.valid" class="help-block">Street name required</span>
+                        <span *ngIf="!street_name.valid" class="help-block">Street name required and at least 3 character</span>
                     </div>
                 </div>
                 <div class="form-group" [ngClass]="{ 'has-error': !block_no.valid }">
@@ -53,21 +53,21 @@
                     <label class="control-label col-sm-4" for="postal_code">Postal code :</label>
                     <div class="col-sm-8">
                         <input type="text" class="form-control" name="postal_code" [(ngModel)]="contractor.address.postal_code" #postal_code="ngModel" required />
-                        <span *ngIf="!postal_code.valid" class="help-block">Postal code required</span>
+                        <span *ngIf="!postal_code.valid" class="help-block">Postal code required and at least 3 character</span>
                     </div>
                 </div>
                 <div class="form-group" [ngClass]="{ 'has-error': !country.valid }">
                     <label class="control-label col-sm-4" for="country">Country :</label>
                     <div class="col-sm-8">
                         <input type="text" class="form-control" name="country" [(ngModel)]="contractor.address.country" #country="ngModel" required />
-                        <span *ngIf="!country.valid" class="help-block">Country required</span>
+                        <span *ngIf="!country.valid" class="help-block">Country required and at least 3 character</span>
                     </div>
                 </div>
                 <div class="form-group" [ngClass]="{ 'has-error': !full_address.valid }">
                     <label class="control-label col-sm-4" for="full_address">Full address :</label>
                     <div class="col-sm-8">
                         <textarea type="text" class="form-control" name="full_address" [(ngModel)]="contractor.address.full_address" #full_address="ngModel" required ></textarea>
-                        <span *ngIf="!full_address.valid" class="help-block">Full Address is required</span>
+                        <span *ngIf="!full_address.valid" class="help-block">Full Address is required and at least 3 character</span>
                     </div>
                 </div>
                 <div class="form-group" >
@@ -82,7 +82,7 @@
                     <label class="control-label col-sm-4" for="description">Description :</label>
                     <div class="col-sm-8">
                         <textarea type="text" class="form-control" name="description" [(ngModel)]="contractor.description" #description="ngModel" ></textarea>
-                        <span *ngIf="!description.valid" class="help-block">Description is required</span>
+                        <span *ngIf="!description.valid" class="help-block">Description is required and at least 3 character</span>
                     </div>
                 </div>
                 <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !companyField }">
@@ -140,14 +140,14 @@
                     <label class="control-label col-sm-4" for="username">Username</label>
                     <div class="col-sm-8">
                         <input type="text"  class="form-control" name="username" formControlName="username">
-                        <small style="color: red" [hidden]="myForm.controls.username.valid || (myForm.controls.username.pristine && !submitted)">Username is required</small>
+                        <small style="color: red" [hidden]="myForm.controls.username.valid || (myForm.controls.username.pristine && !submitted)">Username is required and at least 3 character</small>
                     </div>
                 </div>
                 <div class="form-group" [ngClass]="{'has-error': submitted && !myForm.controls.password.valid}">
                     <label class="control-label col-sm-4" for="password">Password</label>
                     <div class="col-sm-8">
                         <input type="password" class="form-control" name="password" formControlName="password">
-                        <small style="color: red" [hidden]="myForm.controls.password.valid || (myForm.controls.password.pristine && !submitted)">Password is required</small>
+                        <small style="color: red" [hidden]="myForm.controls.password.valid || (myForm.controls.password.pristine && !submitted)">Password is required and at least 6 character</small>
                     </div>
                 </div>
                 <div class="form-group" [ngClass]="{'has-error': submitted && !myForm.controls.phone.valid}">
@@ -168,7 +168,7 @@
                     <label class="control-label col-sm-4" for="street_name">Street Name</label>
                     <div class="col-sm-8">
                         <input type="text"  class="form-control" name="street_name" formControlName="street_name">
-                                <small style="color: red" [hidden]="myForm.controls.address.controls.street_name.valid || (myForm.controls.address.controls.street_name.pristine && !submitted)">Street name is required</small>
+                                <small style="color: red" [hidden]="myForm.controls.address.controls.street_name.valid || (myForm.controls.address.controls.street_name.pristine && !submitted)">Street name is required and at least 3 character</small>
                     </div>
                 </div>
                 <div class="form-group" formGroupName="address" [ngClass]="{ 'has-error': submitted && !myForm.controls.address.controls.block_no.valid }">
@@ -182,21 +182,21 @@
                     <label class="control-label col-sm-4" for="postal_code">Postal Code</label>
                     <div class="col-sm-8">
                         <input type="text" class="form-control" name="postal_code" formControlName="postal_code">
-                            <small style="color: red" [hidden]="myForm.controls.address.controls.postal_code.valid || (myForm.controls.address.controls.postal_code.pristine && !submitted)">Postal code is required</small>
+                            <small style="color: red" [hidden]="myForm.controls.address.controls.postal_code.valid || (myForm.controls.address.controls.postal_code.pristine && !submitted)">Postal code is required and at least 3 character</small>
                     </div>
                 </div>
                 <div class="form-group" formGroupName="address" [ngClass]="{ 'has-error': submitted && !myForm.controls.address.controls.country.valid }">
                     <label class="control-label col-sm-4" for="country">Country</label>
                         <div class="col-sm-8">
                             <input type="text" class="form-control" formControlName="country" name="country">
-                                <small style="color: red" [hidden]="myForm.controls.address.controls.country.valid || (myForm.controls.address.controls.country.pristine && !submitted)">Country is required</small>
+                                <small style="color: red" [hidden]="myForm.controls.address.controls.country.valid || (myForm.controls.address.controls.country.pristine && !submitted)">Country is required and at least 3 character</small>
                         </div>
                 </div>
                 <div class="form-group" formGroupName="address" [ngClass]="{ 'has-error': submitted && !myForm.controls.address.controls.full_address.valid }">
                     <label class="control-label col-sm-4" for="full_address">Full Address</label>
                     <div class="col-sm-8">
                         <textarea  type="text" class="form-control" name="full_address" formControlName="full_address"></textarea>
-                            <small style="color: red" [hidden]="myForm.controls.address.controls.full_address.valid || (myForm.controls.address.controls.full_address.pristine && !submitted)">Full address No is required</small>
+                            <small style="color: red" [hidden]="myForm.controls.address.controls.full_address.valid || (myForm.controls.address.controls.full_address.pristine && !submitted)">Full address No is required and at least 3 character</small>
                     </div>
                 </div> 
                 <div class="form-group" >

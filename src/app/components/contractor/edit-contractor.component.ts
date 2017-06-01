@@ -54,12 +54,12 @@ export class EditContractorComponent implements OnInit {
       
         this.myForm = this.formbuilder.group({
         	username : ['', Validators.compose([Validators.required, Validators.minLength(3)])],
-        	password : ['', Validators.compose([Validators.required, Validators.minLength(3)])],
-        	phone : ['', Validators.compose([Validators.required, Validators.minLength(3)])],
-        	email : ['', Validators.compose([Validators.required, Validators.minLength(3)])],
+        	password : ['', Validators.compose([Validators.required, Validators.minLength(6)])],
+        	phone : ['', Validators.compose([Validators.required])],
+        	email : ['', Validators.compose([Validators.required])],
         	address: this.formbuilder.group({
                     street_name : ['',  <any>Validators.compose([Validators.required, Validators.minLength(3)])],
-                    block_no : ['', <any>Validators.compose([Validators.required, Validators.minLength(3)])],
+                    block_no : ['', <any>Validators.compose([Validators.required])],
                     postal_code : ['', <any>Validators.compose([Validators.required, Validators.minLength(3)])],
                     country : ['', <any>Validators.compose([Validators.required, Validators.minLength(3)])],
                     full_address : ['', <any>Validators.compose([Validators.required, Validators.minLength(3)])]
@@ -69,7 +69,7 @@ export class EditContractorComponent implements OnInit {
             company : [''],
             position : [''],
             role : [''],
-            active : ['', Validators.compose([Validators.required, Validators.minLength(3)])],
+            active : ['', Validators.compose([Validators.required])],
         });
         this.model.active = false;
         this.route.params.subscribe(params => {
