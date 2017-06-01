@@ -82,18 +82,18 @@ export class EditFacilityComponent  {
 				this.schedule.length = this.facility.schedule.length;
 				this.myForm = this.formbuilder.group({
 					_id: [''],
-					name : ['', Validators.required],
+					name : ['', Validators.compose([Validators.required, Validators.minLength(3)])],
 					development : [''],
-					description : ['', Validators.required],
-					payment_type : ['', Validators.required],
-					booking_type : ['', Validators.required],
+					description : ['', Validators.compose([Validators.required, Validators.minLength(3)])],
+					payment_type : ['', Validators.compose([Validators.required, Validators.minLength(3)])],
+					booking_type : ['', Validators.compose([Validators.required, Validators.minLength(3)])],
 					fee: this.formbuilder.group({
-		                deposit : ['', Validators.required],
-						booking : ['', Validators.required],
-						admin : ['', Validators.required],
+		                deposit : ['', Validators.compose([Validators.required])],
+						booking : ['', Validators.compose([Validators.required])],
+						admin : ['', Validators.compose([Validators.required])],
 		            }),
 					schedule: this.formbuilder.array([]),
-					status: ['', Validators.required],
+					status: ['', Validators.compose([Validators.required, Validators.minLength(3)])],
 					maintenance: this.formbuilder.group({
 						start_date: [],
 						end_date: []
@@ -107,18 +107,18 @@ export class EditFacilityComponent  {
 					this.end = new Date(moment(this.facility.maintenance[0].end_date).format('MMM D YYYY, HH:mm:ss')) 
 					this.myForm = this.formbuilder.group({
 						_id: [''],
-						name : ['', Validators.required],
+						name : ['', Validators.compose([Validators.required, Validators.minLength(3)])],
 						development : [''],
-						description : ['', Validators.required],
-						payment_type : ['', Validators.required],
-						booking_type : ['', Validators.required],
+						description : ['', Validators.compose([Validators.required, Validators.minLength(3)])],
+						payment_type : ['', Validators.compose([Validators.required, Validators.minLength(3)])],
+						booking_type : ['', Validators.compose([Validators.required, Validators.minLength(3)])],
 						fee: this.formbuilder.group({
-			                deposit : ['', Validators.required],
-							booking : ['', Validators.required],
-							admin : ['', Validators.required],
+			                deposit : ['', Validators.compose([Validators.required])],
+							booking : ['', Validators.compose([Validators.required])],
+							admin : ['', Validators.compose([Validators.required])],
 			            }),
 						schedule: this.formbuilder.array([]),
-						status: ['', Validators.required],
+						status: ['', Validators.compose([Validators.required])],
 						maintenance: this.formbuilder.group({
 							start_date: [this.start],
 							end_date: [this.end]
@@ -152,17 +152,17 @@ export class EditFacilityComponent  {
 			this.time.push(time+':00')
 		}
 		this.myForm = this.formbuilder.group({
-			name : ['', Validators.required],
-			description : ['', Validators.required],
-			payment_type : ['', Validators.required],
-			booking_type : ['', Validators.required],
+			name : ['', Validators.compose([Validators.required, Validators.minLength(3)])],
+			description : ['', Validators.compose([Validators.required, Validators.minLength(3)])],
+			payment_type : ['', Validators.compose([Validators.required, Validators.minLength(3)])],
+			booking_type : ['', Validators.compose([Validators.required, Validators.minLength(3)])],
 			fee: this.formbuilder.group({
-                deposit : ['', Validators.required],
-				booking : ['', Validators.required],
-				admin : ['', Validators.required],
+                deposit : ['', Validators.compose([Validators.required])],
+				booking : ['', Validators.compose([Validators.required])],
+				admin : ['', Validators.compose([Validators.required])],
             }),
 			schedule: this.formbuilder.array([this.initSchedule()]),
-			status: ['', Validators.required],
+			status: ['', Validators.compose([Validators.required, Validators.minLength(3)])],
 			created_by : [''],
 			created_at : ['']
 		});
@@ -171,9 +171,9 @@ export class EditFacilityComponent  {
 	initSchedule() {
 		return this.formbuilder.group({
 			_id : [],
-			day : ['', Validators.required],
-			start_time : ['', Validators.required],
-			end_time : ['', Validators.required]
+			day : ['', Validators.compose([Validators.required])],
+			start_time : ['', Validators.compose([Validators.required])],
+			end_time : ['', Validators.compose([Validators.required])]
 		});
 	}
 

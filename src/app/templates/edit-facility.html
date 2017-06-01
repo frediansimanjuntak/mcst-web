@@ -12,7 +12,7 @@
                     <div class="col-sm-8">
                         <input type="text" class="form-control" name="name" formControlName="name" required placeholder="Input name here" />
                         <small *ngIf="f.submitted && !myForm.controls.name.valid" class="text-danger">
-                            Name is required
+                            Name is required and at least 3 character 
                         </small>
                     </div>
                 </div>
@@ -21,7 +21,7 @@
                     <div class="col-sm-8">
                         <textarea class="form-control" name="description" formControlName="description" placeholder="Input description here"></textarea>
                         <small *ngIf="f.submitted && !myForm.controls.description.valid" class="text-danger">
-                            Description is required
+                            Description is required and at least 3 character 
                         </small>
                     </div>
                 </div>
@@ -34,7 +34,7 @@
                             <option value="transfer" selected>Transfer</option>
                         </select>
                         <small *ngIf="f.submitted && !myForm.controls.payment_type.valid" class="text-danger">
-                            Payment type is required
+                            Payment type is required and at least 3 character 
                         </small>
                     </div>
                 </div>
@@ -47,7 +47,7 @@
                             <option value="daily" selected>Daily</option>
                         </select>
                         <small *ngIf="f.submitted && !myForm.controls.booking_type.valid" class="text-danger">
-                            Booking type is required
+                            Booking type is required and at least 3 character 
                         </small> 
                     </div>  
                 </div>
@@ -57,7 +57,7 @@
                         <div class="col-sm-8">
                             <input type="text" (keypress)="number($event)" class="form-control" name="deposit" formControlName="deposit" required placeholder="Input deposit fee here" />
                             <small *ngIf="f.submitted && !myForm.controls.fee.controls.deposit.valid" class="text-danger">
-                            Name is required
+                                Deposit fee is required and at least 3 character 
                             </small>
                         </div>
                     </div>
@@ -66,7 +66,7 @@
                         <div class="col-sm-8">
                             <input type="text" (keypress)="number($event)" class="form-control" name="booking" formControlName="booking" required placeholder="Input booking fee here" />
                             <small *ngIf="f.submitted && !myForm.controls.fee.controls.booking.valid" class="text-danger">
-                            Name is required
+                                Booking fee is required and at least 3 character 
                             </small>
                         </div>
                     </div>
@@ -75,7 +75,7 @@
                         <div class="col-sm-8">
                             <input type="text" (keypress)="number($event)" class="form-control" name="admin" formControlName="admin" required placeholder="Input admin fee here" />
                             <small *ngIf="f.submitted && !myForm.controls.fee.controls.admin.valid" class="text-danger">
-                            Name is required
+                                Admin is required and at least 3 character 
                             </small>
                         </div>
                     </div>

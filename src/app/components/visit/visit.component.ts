@@ -83,16 +83,16 @@ export class VisitComponent implements OnInit {
 		}
 
        	this.myForm = this.formbuilder.group({
-			 	property: ['', <any>Validators.required],
+			 	property: ['', <any>Validators.compose([Validators.required])],
                 visitor: this.formbuilder.group({
-                    full_name : ['',  <any>Validators.required],
+                    full_name : ['',  <any>Validators.compose([Validators.required, Validators.minLength(3)])],
                     vehicle : [''],
                     pass : [''],
-                    prefix: ['', Validators.required]
+                    prefix: ['', Validators.compose([Validators.required])]
                 }),
-                purpose: ['', Validators.required],
+                purpose: ['', Validators.compose([Validators.required, Validators.minLength(3)])],
                 remarks : [''],
-                check_in: [false,<any>Validators.required],
+                check_in: [false,<any>Validators.compose([Validators.required])],
                 check_out: [''],
                 contract: ['']
         });
@@ -148,7 +148,7 @@ export class VisitComponent implements OnInit {
                 visitor: this.formbuilder.group({
                     full_name : [{value: visit.visitor.full_name, disabled: true}],
                     vehicle : [{ value: visit.visitor.vehicle, disabled: true}],
-                    pass : [visit.visitor.pass, <any>Validators.required],
+                    pass : [visit.visitor.pass, <any>Validators.compose([Validators.required, Validators.minLength(3)])],
                 }),
                 purpose: [{ value: visit.purpose, disabled: true}],
                 remarks : [{ value: visit.remarks, disabled: true}],
@@ -163,7 +163,7 @@ export class VisitComponent implements OnInit {
                 visitor: this.formbuilder.group({
                     full_name : [{value: visit.visitor.full_name, disabled: true}],
                     vehicle : [{ value: visit.visitor.vehicle, disabled: true}],
-                    pass : [visit.visitor.pass, <any>Validators.required],
+                    pass : [visit.visitor.pass, <any>Validators.compose([Validators.required, Validators.minLength(3)])],
                 }),
                 purpose: [{ value: visit.purpose, disabled: true}],
                 remarks : [{ value: visit.remarks, disabled: true}],

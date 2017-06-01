@@ -207,7 +207,7 @@
                     <div class="col-sm-8">
                         <input type="text" class="form-control" name="username" formControlName="username" required placeholder="Input username here" />
                         <small *ngIf="f.submitted && !myForm.controls.username.valid" class="text-danger">
-                        Name is required
+                        Name is required and at least 3 character
                         </small>
                     </div>
                 </div>
@@ -225,7 +225,7 @@
                     <div class="col-sm-8">
                         <input type="password" class="form-control" name="password" formControlName="password" required validateEqual="confirmpassword" reverse="true" placeholder="Input password here"/>
                         <small *ngIf="f.submitted && !myForm.controls.password.valid" class="text-danger">
-                        Password is required
+                        Password is required and at least 6 character
                         </small>
                     </div>
                 </div>
@@ -233,9 +233,12 @@
                     <label class="control-label col-sm-4" for="confirmpassword">Retype password :</label>
                     <div class="col-sm-8">
                         <input type="password" class="form-control" name="confirmpassword" formControlName="confirmpassword" required validateEqual="password" reverse="false" placeholder="Re-input password here">
-                        <!-- <span [hidden]="!confirmpassword.valid || (confirmpassword.pristine && !f.submitted)" class="text-danger">
-                            Password mismatch
-                        </span> -->
+                        <small *ngIf="f.submitted && !myForm.controls.confirmpassword.valid" class="text-danger">
+                            confirm Password is required and at least 6 character
+                        </small>
+                        <small *ngIf="f.submitted && myForm.value.confirmpassword != myForm.value.password" class="text-danger">
+                            password mismatch
+                        </small>
                     </div>                
                 </div>
                 <div class="form-group">

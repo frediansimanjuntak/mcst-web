@@ -246,7 +246,7 @@
 								<label class="control-label col-sm-4" for="full_name">Name of Guest/visitor :</label>
 								<div class="col-sm-8">
 									<input type="text" placeholder="Type here" class="form-control" name="full_name" formControlName="full_name">
-									<small style="color: red" [hidden]="myForm.controls.visitor.controls.full_name.valid || (myForm.controls.visitor.controls.full_name.pristine && !addSubmitted)">Name is required</small>
+									<small style="color: red" [hidden]="myForm.controls.visitor.controls.full_name.valid || (myForm.controls.visitor.controls.full_name.pristine && !addSubmitted)">Name is required and at least 3 character</small>
 								</div>
 							</div>
 						</div>
@@ -287,7 +287,7 @@
 										<option selected="" value="house_visit">House Visit</option>
 										<option value="maintenance_work">Maintenance Work</option>
 									</select>
-									<small style="color: red" [hidden]="myForm.controls.purpose.valid || (myForm.controls.purpose.pristine && !addSubmitted)">Purpose of visit is required</small>
+									<small style="color: red" [hidden]="myForm.controls.purpose.valid || (myForm.controls.purpose.pristine && !addSubmitted)">Purpose of visit is required and at least 3 character</small>
 								</div>
 							</div>
 						</div>
