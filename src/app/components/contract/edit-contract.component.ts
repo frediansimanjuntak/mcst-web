@@ -86,23 +86,22 @@ export class EditContractComponent  implements OnInit {
             formData.append("contract_type", this.model.contract_type);
             formData.append("title", this.model.title);
             formData.append("remark", this.model.remark);
-            console.log(this.model)
-            // this.contractService.create(formData)
-            // .then(
-            //     data => {
-            //         this._notificationsService.success('Success', 'Create contract successful')
-            //         this.router.navigate([this.name.default_development.name_url + '/contract' ]);
-            //     },
-            //     error => {
-            //         if (error.json().code) {
-            //             this.userService.checkError(error.json().code, error.json().message)
-            //         }else{
-            //             this.userService.checkError(error.status, '')
-            //         }
+            this.contractService.create(formData)
+            .then(
+                data => {
+                    this._notificationsService.success('Success', 'Create contract successful')
+                    this.router.navigate([this.name.default_development.name_url + '/contract' ]);
+                },
+                error => {
+                    if (error.json().code) {
+                        this.userService.checkError(error.json().code, error.json().message)
+                    }else{
+                        this.userService.checkError(error.status, '')
+                    }
                     
-            //         setTimeout(() => this.loading = false, 1000);
-            //     }
-            // );
+                    setTimeout(() => this.loading = false, 1000);
+                }
+            );
         }
     }
 

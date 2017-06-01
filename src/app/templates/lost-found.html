@@ -145,7 +145,7 @@
 										<span *ngIf="!losts.unit_no">-</span>
 									</template>
 								</p-column>
-								<p-column header="Type" field="type" sortable="true">
+								<p-column header="Type" field="type" [filter]="true" filterPlaceholder="Search type" sortable="true">
 									<template let-losts="rowData" pTemplate="body">
 										<span style="text-transform: initial">{{losts.type | capitalize}}</span>
 									</template>
@@ -157,12 +157,12 @@
 										<span *ngIf="!losts.photo">No</span>
 									</template>
 								</p-column>
-								<p-column header="Preferred method of contact" field="preferred_method_of_contact" sortable="true">
+								<p-column header="Preferred method of contact" [filter]="true" filterPlaceholder="Search contact method" field="preferred_method_of_contact" sortable="true">
 									<template let-losts="rowData" pTemplate="body">
 										<span>{{losts.preferred_method_of_contact | capitalize}}</span>
 									</template>
 								</p-column>
-								<p-column header="Reported on" field="created_at" sortable="true">
+								<p-column header="Reported on" field="created_at" [filter]="true" filterPlaceholder="Search reported on" sortable="true">
 									<template let-losts="rowData" pTemplate="body">
 										<span>{{losts.created_at | date:'d/M/y'}}</span>
 									</template>

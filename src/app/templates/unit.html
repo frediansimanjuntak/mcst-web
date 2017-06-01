@@ -68,7 +68,7 @@
 								<span style="color: red" *ngIf="dataUnit.status == 'empty'">Empty</span>
 							</template>
 						</p-column>
-						<p-column sortable="true" field="tenant.data.length" header="No. of Tenant">
+						<p-column sortable="true" field="tenant.data.length" header="No. of Tenant" [filter]="true" filterPlaceholder="Search no of tenant">
 							<template let-dataUnit="rowData" pTemplate="body">
 								<span *ngIf="dataUnit.tenant.data">{{dataUnit.tenant.data.length}}</span>
 							</template>
