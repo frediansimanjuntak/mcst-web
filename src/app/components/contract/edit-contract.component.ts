@@ -49,12 +49,12 @@ export class EditContractComponent  implements OnInit {
             .subscribe(contract => {
                 this.contract = contract;
                 if (this.contract.start_time) {
-                    this.contract.start_time = moment(this.contract.start_time).format('DD/MM/YYYY');
+                    this.contract.start_time = new Date(this.contract.start_time);
                 } else {
                     this.contract.start_time = null
                 }
                 if (this.contract.end_time) {
-                    this.contract.end_time = moment(this.contract.end_time).format('DD/MM/YYYY')
+                    this.contract.end_time = new Date(this.contract.end_time);
                 }else{
                     this.contract.end_time = null
                 }

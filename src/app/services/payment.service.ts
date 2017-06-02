@@ -32,7 +32,7 @@ export class PaymentService {
     }
 
     create(body:any): Promise<Payment> {
-        return this.http.post(url +  'payment', JSON.stringify(body), this.jwt())
+        return this.http.post(url +  'payment', body, this.jwt())
             .toPromise()
             .then(res => res.json().data)
             .catch(this.handleError);
