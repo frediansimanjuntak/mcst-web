@@ -99,12 +99,16 @@ export class EditLostFoundComponent  {
 					this.router.navigate([this.name.default_development.name_url + '/lost_found']);
 				},
 				error => {
-					if (error.json().code) {
-						this.userService.checkError(error.json().code, error.json().message)
-					}else{
-						this.userService.checkError(error.status, '')
-					}
-					
+					if (error.json().message) {
+	                    if (error.json().code) {
+	                        this.userService.checkError(error.json().code, error.json().message)
+	                    }else{
+	                        this._notificationsService.error("Error", error.json().message)    
+	                    }
+	                    
+	                }else{
+	                    this.userService.checkError(error.status, '')
+	                } 
 					this.loading = true
 				}
 			);
