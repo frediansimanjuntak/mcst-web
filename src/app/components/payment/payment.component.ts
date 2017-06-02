@@ -24,6 +24,8 @@ export class PaymentComponent implements OnInit {
     paid: any;
     unpaid: any;
     all: any;
+    images: any[] = [] 
+    data: Payment;
     dataFilter: string = '';
     loading: boolean = true;
 
@@ -109,6 +111,16 @@ export class PaymentComponent implements OnInit {
 
     view(payment: Payment){
         this.router.navigate([this.name.default_development.name_url + '/payment_system/view', payment._id]);
+    }
+
+    viewPhoto(payment: Payment){
+        this.loading = true
+        this.images = []
+        this.data = payment
+        for (var i = 0; i < this.data.payment_proof.length; ++i) {
+            this.images.push({source:this.data.payment_proof[i].url});
+        };
+        setTimeout(() => { this.loading = false }, 1000);
     }
 
     viewReference(id:string , type:string){

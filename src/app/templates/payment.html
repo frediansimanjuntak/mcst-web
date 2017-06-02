@@ -64,7 +64,7 @@
 							<p-column filterMatchMode="contains" field="payment_type" header="Payment type" sortable="true" [filter]="true" filterPlaceholder="Search payment type"></p-column>
 							<p-column filterMatchMode="contains" field="payment_proof" header="Payment proof">
 								<template let-data="rowData" pTemplate="body">
-				                    <a *ngIf="data.payment_proof.length > 0" style="text-decoration: underline;cursor:pointer" (click)="view(data)">View</a>
+				                    <a *ngIf="data.payment_proof.length > 0" style="text-decoration: underline;cursor:pointer" (click)="viewPhoto(data); photoModal.open()">View attachment</a>
 				                    <a *ngIf="data.payment_proof < 1">-</a>
 				                </template>
 							</p-column>
@@ -92,7 +92,7 @@
 							<p-column filterMatchMode="contains" field="payment_type" header="Payment type" sortable="true" [filter]="true" filterPlaceholder="Search payment type"></p-column>
 							<p-column filterMatchMode="contains" field="payment_proof" header="Payment proof">
 								<template let-data="rowData" pTemplate="body">
-				                    <a *ngIf="data.payment_proof.length > 0" style="text-decoration: underline;cursor:pointer" (click)="view(data)">View</a>
+				                    <a *ngIf="data.payment_proof.length > 0" style="text-decoration: underline;cursor:pointer" (click)="viewPhoto(data); photoModal.open()">View attachment</a>
 				                    <a *ngIf="data.payment_proof < 1">-</a>
 				                </template>
 							</p-column>
@@ -115,6 +115,13 @@
                     </tab>
                 </tabset>
             </div>
+            <modal #photoModal>
+                <modal-content>
+                    <div *ngIf="images">
+                        <p-galleria [images]="images" panelWidth="555" panelHeight="372"></p-galleria>
+                    </div>
+                </modal-content>
+            </modal>
         </div>
     </div>
 </div>

@@ -1076,6 +1076,9 @@ img.ui-galleria-frame-image {
 #incident .modal-body {
     margin-left: 0;
 }
+payment .modal-body {
+    margin-left: 0;
+}
 #feedback .modal-body {
     margin-left: 9px;
 }
