@@ -193,16 +193,43 @@ export class EditUserComponent implements OnInit {
     }
 
     checkValid(event: any, field: any){
+        if (field == 'email') {
+            if (event.target.value.match(/[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?/)) {
+                this.emailError = false;
+            } else {
+                this.emailError = true;
+                this.emailErrorMessage = 'invalid email address';
+            }
+        }
         this.userService.getValid(event.target.value).subscribe((data:any) => {
-            console.log(data)
             if (data.message == true) {
                 if (field == 'username') {
-                    this.usernameError = true;
-                    this.usernameErrorMessage = 'The specified username is already in use.';
+                    console.log('test')
+                    if (this.user) {
+                        console.log(this.user.username , event.target.value)
+                        if (event.target.value == this.user.username) {
+                            this.usernameError = false;
+                        }else{
+                            this.usernameError = true;
+                            this.usernameErrorMessage = 'The specified username is already in use.';
+                        }
+                    } else{
+                        this.usernameError = true;
+                        this.usernameErrorMessage = 'The specified username is already in use.';
+                    }      
                 }
                 if (field == 'email') {
-                    this.emailError = true;
-                    this.emailErrorMessage = 'The specified email address is already in use.';
+                    if (this.user) {
+                        if (event.target.value == this.user.email) {
+                            this.emailError = false;
+                        }else{
+                            this.emailError = true;
+                            this.emailErrorMessage = 'The specified email address is already in use.';
+                        }
+                    } else{
+                        this.emailError = true;
+                        this.emailErrorMessage = 'The specified email address is already in use.';
+                    }    
                 }
             }
             else {
@@ -221,14 +248,6 @@ export class EditUserComponent implements OnInit {
             development: [''],
             property: ['']
         });
-    }
-
-    validate(event: any) {
-        if (event.target.value.match(/[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?/)) {
-            this.emailError = false;
-        } else {
-            this.emailError = true;
-        }
     }
 
     addOwned() {

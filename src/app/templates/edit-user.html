@@ -9,22 +9,25 @@
             <form [formGroup]="myForm" class="form-horizontal col-md-6" name="form" (ngSubmit)="f.form.valid && updateUser(myForm.value)" #f="ngForm" novalidate>
                 <div class="form-group">
                     <label class="control-label col-sm-4" for="username">Username :</label>
-                    <div class="col-sm-8">
-                        <input type="text" class="form-control" name="username" formControlName="username" required placeholder="Input username here" />
+                     <div class="col-sm-8">
+                        <input type="text" class="form-control" name="username" (change)="checkValid($event, 'username')" formControlName="username" required placeholder="Input username here" />
                         <small *ngIf="f.submitted && !myForm.controls.username.valid" class="text-danger">
-                        Name is required
+                            Name is required and at least 3 character
+                        </small>
+                        <small *ngIf="usernameError" class="text-danger">
+                            {{usernameErrorMessage}}
                         </small>
                     </div>
                 </div>
                 <div class="form-group">
                     <label class="control-label col-sm-4" for="email">Email :</label>
                     <div class="col-sm-8">
-                        <input type="email" (change)="validate($event)" class="form-control" name="email" formControlName="email" placeholder="Input email here"/>
+                        <input type="email" class="form-control" name="email" (change)="checkValid($event, 'email')" formControlName="email" placeholder="Input email here"/>
                         <small *ngIf="f.submitted && !myForm.controls.email.valid" class="text-danger">
                             Email is required
                         </small>
-                        <small *ngIf="f.submitted && emailError" class="text-danger">
-                            Invalid email address
+                        <small *ngIf="emailError" class="text-danger">
+                            {{emailErrorMessage}}
                         </small>
                     </div>
                 </div>
