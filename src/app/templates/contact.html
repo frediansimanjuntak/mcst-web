@@ -41,32 +41,34 @@
                 </div>
             </div>
             <div class="row no-margin" style="border: 1px solid grey; padding: 5px; border-bottom:0;">
-              
-                    <div class="col-md-2 content-column" *ngFor="let others of contactOthers">
-                        <span class="title-content">
-                            <b>{{ others.name | capitalizeFirst }}</b>
-                            <br>{{ others.service }}
-                        </span>
-                        <strong>
-                            <p>
-                            	<p-rating readonly="true" [ngModel]="others.ratings" stars="4" [cancel]="false"></p-rating>
-                                <br> Tel: +{{ others.contact }}
-                                <br><span style="word-break:break-all">{{ others.address}}</span>
-                            </p>
-                        </strong>
-                        <div *ngIf="editOthers == true">
-                            <a type="button" style="cursor:pointer; margin-right: 15px; " (click)="preUpdate(others) || modalOthersForm.open()"><i class="fa fa-edit" aria-hidden="true"></i>&nbsp;<u>Edit</u></a>
-                            <button type="button" class="btn btn-trash" (click)="deleteConfirmation(others._id)"><i class="fa fa-trash-o" aria-hidden="true"></i></button>
-                        </div>
+                <div class="col-md-2 content-column" *ngFor="let others of contactOthers">
+                    <span class="title-content">
+                        <b *ngIf="others.name" style="word-break: break-all;">{{ others.name | capitalizeFirst }}</b>
+                        <b *ngIf="!others.name">-</b>
+                        <br><span *ngIf="others.service">{{ others.service }}</span>
+                        <span *ngIf="!others.service">-</span>
+                    </span>
+                    <strong>
+                        <p>
+                        	<p-rating readonly="true" [ngModel]="others.ratings" stars="4" [cancel]="false"></p-rating>
+                            <br><span *ngIf="others.contact">Tel: +{{ others.contact }}</span> 
+                            <span *ngIf="!others.contact">Tel: -</span> 
+                            <br><span *ngIf="others.address" style="word-break:break-all">{{ others.address}}</span>
+                            <span *ngIf="!others.address" style="word-break:break-all">-</span>
+                        </p>
+                    </strong>
+                    <div *ngIf="editOthers == true">
+                        <a type="button" style="cursor:pointer; margin-right: 15px; " (click)="preUpdate(others) || modalOthersForm.open()"><i class="fa fa-edit" aria-hidden="true"></i>&nbsp;<u>Edit</u></a>
+                        <button type="button" class="btn btn-trash" (click)="deleteConfirmation(others._id)"><i class="fa fa-trash-o" aria-hidden="true"></i></button>
                     </div>
-
+                </div>
             </div>
             <div class="row no-margin" style="border: 1px solid grey; padding: 5px;">
                 <div class="row no-margin">
                     <div class="col-md-2 content-column pull-right">
                         <a class="btn-underline link-box" *ngIf="editOthers == false" (click)="editOthers = !editOthers">Edit List</a>
                         <a class="btn-underline link-box" *ngIf="editOthers == true" (click)="editOthers = !editOthers">Cancel Edit</a>
-                        <a *ngIf="editOthers == false" (click)="model = {} ; model.type_contact = 'Others';  submitted =false ; modalOthersForm.open()" class="btn-underline link-box">Add List</a>
+                        <a *ngIf="editOthers == false" (click)="model = {} ; model.type_contact = 'other';  submitted =false ; modalOthersForm.open()" class="btn-underline link-box">Add List</a>
                     </div>
                 </div>
             </div>
