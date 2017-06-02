@@ -29,6 +29,7 @@ export class EditUserComponent implements OnInit {
     public submitted: boolean;
     name: any;
     loading: boolean = true;
+    emailError: boolean;
     // developmentID: string;
 
     constructor(private router: Router,
@@ -74,7 +75,7 @@ export class EditUserComponent implements OnInit {
                         identification_no: [''],
                     }),
                 gender: [''],
-                salulation: ['']
+                salulation: ['', Validators.compose([Validators.required])]
                 // default_property: this.formbuilder.group({
                 //     property: [''],
                 //     role : ['']
@@ -195,6 +196,14 @@ export class EditUserComponent implements OnInit {
         });
     }
 
+    validate(event: any) {
+        if (event.target.value.match(/[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?/)) {
+            this.emailError = false;
+        } else {
+            this.emailError = true;
+        }
+    }
+
     addOwned() {
         const control = <FormArray>this.myForm.controls['owned_property'];
         const ownedCtrl = this.initOwned();
@@ -224,19 +233,15 @@ export class EditUserComponent implements OnInit {
     createUser(model:any , isValid: boolean) {
         if(isValid){
             if(this.type){
-                if(this.type=='tenant'){
+                if (this.type=='tenant') {
                    model.rented_property.development = this.name.default_development._id;
-                   
                 }
-
-                if(this.type=='landlord'){
+                if (this.type=='landlord') {
                     for (let i = 0; i < model.owned_property.length; i++) {
                          model.owned_property[i].development = this.name.default_development._id;
                     }
                 }
-                if(model.username && model.email && model.password && model.confirmpassword && 
-                   model.phone && model.role)
-                   {
+                if (model.username && model.email && model.password && model.confirmpassword && model.phone && model.role) {
                     this.loading = true;
                     this.userService.createResident(model)
                     .then(
@@ -245,17 +250,24 @@ export class EditUserComponent implements OnInit {
                             this.router.navigate([this.name.default_development.name_url + '/unit/view', this.id]);
                         },
                         error => {
-                            
+                            if (error.json().message) {
+                                if (error.json().code) {
+                                    this.userService.checkError(error.json().code, error.json().message)
+                                }else{
+                                    this._notificationsService.error("Error", error.json().message)    
+                                }
+                                
+                            }else{
+                                this.userService.checkError(error.status, '')
+                            } 
                             this.loading = false;
                         }
                     );   
                 }
             }else{
-                if(model.username && model.email && model.password && model.confirmpassword && 
-                   model.phone && model.role)
-                   {
-                    if(model.role == 'user'){
-                        if(model.details.first_name && model.details.last_name && model.details.identification_no && 
+                if (model.username && model.email && model.password && model.confirmpassword && model.phone && model.role) {
+                    if (model.role == 'user') {
+                        if (model.details.first_name && model.details.last_name && model.details.identification_no && 
                             model.gender && model.salulation){
                             model.default_development = this.name.default_development._id;
                             this.loading = true;
@@ -266,7 +278,16 @@ export class EditUserComponent implements OnInit {
                                     this.router.navigate([this.name.default_development.name_url + '/user']);
                                 },
                                 error => {
-                                    
+                                    if (error.json().message) {
+                                        if (error.json().code) {
+                                            this.userService.checkError(error.json().code, error.json().message)
+                                        }else{
+                                            this._notificationsService.error("Error", error.json().message)    
+                                        }
+                                        
+                                    }else{
+                                        this.userService.checkError(error.status, '')
+                                    } 
                                     this.loading = false;
                                 }
                             );   
@@ -281,7 +302,16 @@ export class EditUserComponent implements OnInit {
                                 this.router.navigate([this.name.default_development.name_url + '/user']);
                             },
                             error => {
-                                
+                                if (error.json().message) {
+                                    if (error.json().code) {
+                                        this.userService.checkError(error.json().code, error.json().message)
+                                    }else{
+                                        this._notificationsService.error("Error", error.json().message)    
+                                    }
+                                    
+                                }else{
+                                    this.userService.checkError(error.status, '')
+                                } 
                                 this.loading = false;
                             }
                         );   
@@ -294,16 +324,35 @@ export class EditUserComponent implements OnInit {
 
 
     updateUser(user:any){
-        this.userService.update(user)
-        .then(
-            response => {
-                 this._notificationsService.success('Success', 'Update User successful')
-                this.router.navigate([this.name.default_development.name_url + '/user']);
-            },
-            error=> {
-                
-            }
-        );
+        this.loading = false;
+        if (user.email.match(/[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?/)) {
+            this.emailError = false
+        }else{
+            this.emailError = true
+        }
+        if (!this.emailError) {
+            this.userService.update(user)
+            .then(
+                response => {
+                    this._notificationsService.success('Success', 'Update User successful')
+                    this.router.navigate([this.name.default_development.name_url + '/user']);
+                },
+                error=> {
+                    if (error.json().message) {
+                        if (error.json().code) {
+                            this.userService.checkError(error.json().code, error.json().message)
+                        }else{
+                            this._notificationsService.error("Error", error.json().message)    
+                        }
+                        
+                    }else{
+                        this.userService.checkError(error.status, '')
+                    } 
+                }
+            );
+        } else {
+            this.loading = false;
+        }
     }
 
     number(event: any) {
