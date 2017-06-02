@@ -101,7 +101,6 @@ export class FeedbackComponent implements OnInit {
             .subscribe(units => {
                 this.units = units.properties;
                 this.feedbackService.getAll().subscribe(feedbacks => {
-                    console.log(feedbacks)
                     this.all           =  feedbacks.filter(feedbacks => feedbacks.archieve === false );
                     this.feedbacks     = feedbacks.filter(feedbacks => feedbacks.archieve === false );
                     this.published     = feedbacks.filter(feedbacks => feedbacks.status === 'publish' && feedbacks.archieve === false );
