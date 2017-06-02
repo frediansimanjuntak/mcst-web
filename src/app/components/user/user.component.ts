@@ -49,7 +49,16 @@ export class UserComponent implements OnInit {
 	                this.loadAllUsers()
               },
               error => {
-                      
+                    if (error.json().message) {
+                        if (error.json().code) {
+                            this.userService.checkError(error.json().code, error.json().message)
+                        }else{
+                            this._notificationsService.error("Error", error.json().message)    
+                        }
+                        
+                    }else{
+                        this.userService.checkError(error.status, '')
+                    }  
                     setTimeout(() => this.loading = false, 1000);
               }
         );
