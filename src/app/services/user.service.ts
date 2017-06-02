@@ -39,6 +39,12 @@ export class UserService {
             .catch((error:any) => Observable.throw(error || 'Server error'));
     }
 
+    getValid(name:any) {
+        return this.http.get(url + 'users/check/'+ name)
+            .map((res: Response) => res.json())
+            .catch((error: any) => Observable.throw(error.json().message || 'Server error'));
+    }
+
     createResident(body:any): Promise<User> {
         return this.http.post(url +  'sign_up', body, this.jwt())
             .toPromise()

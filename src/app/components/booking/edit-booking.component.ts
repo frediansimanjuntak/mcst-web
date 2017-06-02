@@ -243,11 +243,16 @@ export class EditBookingComponent implements OnInit  {
 				this.router.navigate([this.name.default_development.name_url + '/booking']);
 			},
 			error => {
-				if (error.json().code) {
-                    this.userService.checkError(error.json().code, error.json().message)
+				if (error.json().message) {
+                    if (error.json().code) {
+                        this.userService.checkError(error.json().code, error.json().message)
+                    }else{
+                        this._notificationsService.error("Error", error.json().message)    
+                    }
+                    
                 }else{
                     this.userService.checkError(error.status, '')
-                }
+                } 
 				this.loading = false
 			}
 		);
@@ -293,11 +298,16 @@ export class EditBookingComponent implements OnInit  {
 			}
 			this.loading = false
 		}, error => {
-			if (error.json().code) {
-                this.userService.checkError(error.json().code, error.json().message)
+			if (error.json().message) {
+                if (error.json().code) {
+                    this.userService.checkError(error.json().code, error.json().message)
+                }else{
+                    this._notificationsService.error("Error", error.json().message)    
+                }
+                
             }else{
                 this.userService.checkError(error.status, '')
-            }
+            } 
             this.loading = false
         });
 	}
@@ -319,11 +329,16 @@ export class EditBookingComponent implements OnInit  {
 			this.model.start = start
 			this.loading = false
 		}, error => {
-			if (error.json().code) {
-                this.userService.checkError(error.json().code, error.json().message)
+			if (error.json().message) {
+                if (error.json().code) {
+                    this.userService.checkError(error.json().code, error.json().message)
+                }else{
+                    this._notificationsService.error("Error", error.json().message)    
+                }
+                
             }else{
                 this.userService.checkError(error.status, '')
-            }
+            } 
             this.loading = false
         });
 	}
@@ -533,11 +548,16 @@ export class EditBookingComponent implements OnInit  {
 			}
 			setTimeout(() => this.loading = false, 1000);
 		},error => {
-			if (error.json().code) {
-                this.userService.checkError(error.json().code, error.json().message)
+			if (error.json().message) {
+                if (error.json().code) {
+                    this.userService.checkError(error.json().code, error.json().message)
+                }else{
+                    this._notificationsService.error("Error", error.json().message)    
+                }
+                
             }else{
                 this.userService.checkError(error.status, '')
-            }
+            } 
             this.loading = false
         });
 	}

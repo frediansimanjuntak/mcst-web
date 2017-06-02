@@ -164,16 +164,25 @@ export class EditPetitionComponent implements OnInit {
 
     savePetition(formdata:any){
         this.petitionService.create(formdata)
-                    .then(
-                        data => {
-                            this._notificationsService.success('Success', 'Add request Successful')
-                            this.router.navigate([this.name.default_development.name_url + '/petition']);
-                        },
-                        error => {
-                            
-                            this.loading = false;
+            .then(
+                data => {
+                    this._notificationsService.success('Success', 'Add request Successful')
+                    this.router.navigate([this.name.default_development.name_url + '/petition']);
+                },
+                error => {
+                    if (error.json().message) {
+                        if (error.json().code) {
+                            this.userService.checkError(error.json().code, error.json().message)
+                        }else{
+                            this._notificationsService.error("Error", error.json().message)    
                         }
-                 ); 
+                        
+                    }else{
+                        this.userService.checkError(error.status, '')
+                    } 
+                    this.loading = false;
+                }
+         ); 
     }
 
     private loadAllUnits(): void {
@@ -221,11 +230,20 @@ export class EditPetitionComponent implements OnInit {
 		this.petitionService.update(this.petition)
 		.then(
 			response => {
-                this.alertService.success('Update incident successful', true);
+                this._notificationsService.success("Success", 'Update petition successful');
                 this.router.navigate(['/incident']);
             },
             error => {
-            	this.alertService.error(error);
+            	if (error.json().message) {
+                    if (error.json().code) {
+                        this.userService.checkError(error.json().code, error.json().message)
+                    }else{
+                        this._notificationsService.error("Error", error.json().message)    
+                    }
+                    
+                }else{
+                    this.userService.checkError(error.status, '')
+                } 
             }
         );
 	}
