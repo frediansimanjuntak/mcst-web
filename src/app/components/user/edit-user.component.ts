@@ -29,6 +29,10 @@ export class EditUserComponent implements OnInit {
     public submitted: boolean;
     name: any;
     loading: boolean = true;
+    usernameError: boolean
+    usernameErrorMessage: string;
+    emailError: boolean
+    emailErrorMessage: string;
     // developmentID: string;
 
     constructor(private router: Router,
@@ -188,6 +192,30 @@ export class EditUserComponent implements OnInit {
         
     }
 
+    checkValid(event: any, field: any){
+        this.userService.getValid(event.target.value).subscribe((data:any) => {
+            console.log(data)
+            if (data.message == true) {
+                if (field == 'username') {
+                    this.usernameError = true;
+                    this.usernameErrorMessage = 'The specified username is already in use.';
+                }
+                if (field == 'email') {
+                    this.emailError = true;
+                    this.emailErrorMessage = 'The specified email address is already in use.';
+                }
+            }
+            else {
+                if (field == 'username') {
+                    this.usernameError = false;
+                }
+                if (field == 'email') {
+                    this.emailError = false;
+                }
+            }
+        });
+    }
+
     initAuthorized() {
         return this.formbuilder.group({
             development: [''],
@@ -249,7 +277,7 @@ export class EditUserComponent implements OnInit {
                                 if (error.json().code) {
                                     this.userService.checkError(error.json().code, error.json().message)
                                 }else{
-                                    this._notificationsService.error("Error", error.json().message)    
+                                    this._notificationsService.error("Error", error.json().message)
                                 }
                                 
                             }else{
