@@ -166,7 +166,7 @@
                                 </p-column>
                                 <p-column [style]="{'width':'85px'}" header="Photo">
                                     <template let-data="rowData" pTemplate="body">
-                                        <a *ngIf="data.attachment != null" style="text-decoration: underline;cursor:pointer" (click)="viewPhoto(data)">View Photo</a>
+                                        <a *ngIf="data.attachment != null" style="text-decoration: underline;cursor:pointer" (click)="viewPhoto(data); photoModal.open()">View Photo</a>
                                         <a *ngIf="data.attachment == null">-</a>
                                     </template>
                                 </p-column>
@@ -209,7 +209,7 @@
                                 </p-column>
                                 <p-column [style]="{'width':'85px'}" header="Photo">
                                     <template let-data="rowData" pTemplate="body">
-                                        <a *ngIf="data.attachment != null" style="text-decoration: underline;cursor:pointer" (click)="viewPhoto(data)">View Photo</a>
+                                        <a *ngIf="data.attachment != null" style="text-decoration: underline;cursor:pointer" (click)="viewPhoto(data); photoModal.open()">View Photo</a>
                                         <a *ngIf="data.attachment == null">-</a>
                                     </template>
                                 </p-column>
@@ -251,7 +251,7 @@
                                 </p-column>
                                 <p-column [style]="{'width':'85px'}" header="Photo">
                                     <template let-data="rowData" pTemplate="body">
-                                        <a *ngIf="data.attachment != null" style="text-decoration: underline;cursor:pointer" (click)="viewPhoto(data)">View Photo</a>
+                                        <a *ngIf="data.attachment != null" style="text-decoration: underline;cursor:pointer" (click)="viewPhoto(data); photoModal.open()">View Photo</a>
                                         <a *ngIf="data.attachment == null">-</a>
                                     </template>
                                 </p-column>
@@ -293,7 +293,7 @@
                                 </p-column>
                                 <p-column [style]="{'width':'85px'}" header="Photo">
                                     <template let-data="rowData" pTemplate="body">
-                                        <a *ngIf="data.attachment != null" style="text-decoration: underline;cursor:pointer" (click)="viewPhoto(data)">View Photo</a>
+                                        <a *ngIf="data.attachment != null" style="text-decoration: underline;cursor:pointer" (click)="viewPhoto(data); photoModal.open()">View Photo</a>
                                         <a *ngIf="data.attachment == null">-</a>
                                     </template>
                                 </p-column>

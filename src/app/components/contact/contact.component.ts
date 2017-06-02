@@ -53,6 +53,7 @@ export class ContactComponent  implements OnInit{
 					data.type_contact.indexOf("emergency") ==  -1 &&
                      data.type_contact.indexOf("management") ==  -1
 				)
+                console.log(this.contactOthers)
 				setTimeout(() => this.loading = false, 1000);   
 			})
     }
@@ -64,11 +65,16 @@ export class ContactComponent  implements OnInit{
                 this._notificationsService.success('Success', 'Delete contact successful')
             },
             error => {
-                if (error.json().code) {
-                        this.userService.checkError(error.json().code, error.json().message)
+                if (error.json().message) {
+                        if (error.json().code) {
+                            this.userService.checkError(error.json().code, error.json().message)
+                        }else{
+                            this._notificationsService.error("Error", error.json().message)    
+                        }
+                        
                     }else{
                         this.userService.checkError(error.status, '')
-                    }
+                    } 
                 
                 setTimeout(() => this.loading = false, 1000);
             }
@@ -119,12 +125,16 @@ export class ContactComponent  implements OnInit{
                     this.ngOnInit()
                 },
                 error => {
-                    if (error.json().code) {
-                        this.userService.checkError(error.json().code, error.json().message)
+                    if (error.json().message) {
+                        if (error.json().code) {
+                            this.userService.checkError(error.json().code, error.json().message)
+                        }else{
+                            this._notificationsService.error("Error", error.json().message)    
+                        }
+                        
                     }else{
                         this.userService.checkError(error.status, '')
-                    }
-                    this._notificationsService.error("Error", error.json().message)    
+                    } 
                     this.loading = false;
                 }
             )
@@ -143,11 +153,16 @@ export class ContactComponent  implements OnInit{
                     this.ngOnInit()
                 },
                 error => {
-                    if (error.json().code) {
-                        this.userService.checkError(error.json().code, error.json().message)
+                    if (error.json().message) {
+                        if (error.json().code) {
+                            this.userService.checkError(error.json().code, error.json().message)
+                        }else{
+                            this._notificationsService.error("Error", error.json().message)    
+                        }
+                        
                     }else{
                         this.userService.checkError(error.status, '')
-                    }
+                    } 
                     this._notificationsService.error("Error", error.json().message)    
                     this.loading = false;
                 }
