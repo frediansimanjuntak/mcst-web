@@ -73,9 +73,9 @@ export class EditUserComponent implements OnInit {
                 phone : ['', Validators.compose([Validators.required])],
                 role : ['', Validators.compose([Validators.required])],
                 details:  this.formbuilder.group({
-                        first_name: [''],
-                        last_name: [''],
-                        identification_no: [''],
+                        first_name: ['', Validators.compose([Validators.required, Validators.minLength(3)])],
+                        last_name: ['', Validators.compose([Validators.required, Validators.minLength(3)])],
+                        identification_no: ['', Validators.compose([Validators.required, Validators.minLength(3)])],
                     }),
                 gender: [''],
                 salulation: ['', Validators.compose([Validators.required])]
@@ -101,9 +101,9 @@ export class EditUserComponent implements OnInit {
                     confirmpassword : ['', Validators.compose([Validators.required])],
                     role : ['', Validators.compose([Validators.required])],
                     details:  this.formbuilder.group({
-                        first_name: [''],
-                        last_name: [''],
-                        identification_no: [''],
+                        first_name: ['', Validators.compose([Validators.required, Validators.minLength(3)])],
+                        last_name: ['', Validators.compose([Validators.required, Validators.minLength(3)])],
+                        identification_no: ['', Validators.compose([Validators.required, Validators.minLength(3)])],
                     }),
                     gender: ['', Validators.compose([Validators.required])],
                     salulation: ['', Validators.compose([Validators.required])]
@@ -193,14 +193,6 @@ export class EditUserComponent implements OnInit {
     }
 
     checkValid(event: any, field: any){
-        if (field == 'email') {
-            if (event.target.value.match(/[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?/)) {
-                this.emailError = false;
-            } else {
-                this.emailError = true;
-                this.emailErrorMessage = 'invalid email address';
-            }
-        }
         this.userService.getValid(event.target.value).subscribe((data:any) => {
             if (data.message == true) {
                 if (field == 'username') {
@@ -219,17 +211,22 @@ export class EditUserComponent implements OnInit {
                     }      
                 }
                 if (field == 'email') {
-                    if (this.user) {
-                        if (event.target.value == this.user.email) {
-                            this.emailError = false;
-                        }else{
+                    if (event.target.value.match(/[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?/)) {
+                        if (this.user) {
+                            if (event.target.value == this.user.email) {
+                                this.emailError = false;
+                            }else{
+                                this.emailError = true;
+                                this.emailErrorMessage = 'The specified email address is already in use.';
+                            }
+                        } else{
                             this.emailError = true;
                             this.emailErrorMessage = 'The specified email address is already in use.';
-                        }
-                    } else{
+                        }    
+                    } else {
                         this.emailError = true;
-                        this.emailErrorMessage = 'The specified email address is already in use.';
-                    }    
+                        this.emailErrorMessage = 'invalid email address';
+                    }
                 }
             }
             else {
@@ -237,7 +234,13 @@ export class EditUserComponent implements OnInit {
                     this.usernameError = false;
                 }
                 if (field == 'email') {
-                    this.emailError = false;
+                    if (event.target.value.match(/[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?/)) {
+                        this.emailError = false;
+                    } else {
+                        this.emailError = true;
+                        this.emailErrorMessage = 'invalid email address';
+                    }
+                    
                 }
             }
         });
