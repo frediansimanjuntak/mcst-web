@@ -690,9 +690,12 @@ export class ViewUnitComponent implements OnInit {
         this.filteredBrands = [];
         for(let i = 0; i < this.users.length; i++) {
             let user = this.users[i];
-            if(user.username.toLowerCase().indexOf(event.query.toLowerCase()) == 0) {
-                this.filteredBrands.push(user);
+            if (user.username) {
+                if(user.username.toLowerCase().indexOf(event.query.toLowerCase()) == 0) {
+                    this.filteredBrands.push(user);
+                }
             }
+                
         }
         if(this.filteredBrands.length==0){
             this.useAutocomplete = false;
@@ -743,6 +746,7 @@ export class ViewUnitComponent implements OnInit {
                     gender:  [{value: event.gender, disabled: true}],
                     salulation: [{value: event.salulation, disabled: true}]
                 }); 
+        this.filteredBrands = [];
     }
 
     resetForm(){
