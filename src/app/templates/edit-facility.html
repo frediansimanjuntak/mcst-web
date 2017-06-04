@@ -7,7 +7,7 @@
             </div>
             <p class="id-location">Home > Facility > Edit Facility</p>
             <form [formGroup]="myForm" class="form-horizontal col-md-6" name="form" (ngSubmit)="f.form.valid && updateFacility(myForm.value)" #f="ngForm" novalidate>
-                <div class="form-group">
+                <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !myForm.controls.name.valid }">
                     <label class="control-label col-sm-4" for="username">Name :</label>
                     <div class="col-sm-8">
                         <input type="text" class="form-control" name="name" formControlName="name" required placeholder="Input name here" />
@@ -16,7 +16,7 @@
                         </small>
                     </div>
                 </div>
-                <div class="form-group">
+                <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !myForm.controls.description.valid }">
                     <label class="control-label col-sm-4" for="description">Description :</label>
                     <div class="col-sm-8">
                         <textarea class="form-control" name="description" formControlName="description" placeholder="Input description here"></textarea>
@@ -25,7 +25,7 @@
                         </small>
                     </div>
                 </div>
-                <div class="form-group">
+                <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !myForm.controls.payment_type.valid }">
                     <label class="control-label col-sm-4" for="payment_type">Payment type :</label>
                     <div class="col-sm-8">
                         <select class="form-control" name="payment_type" id="payment_type" formControlName="payment_type" placeholder="Choose payment type" [ngClass]="{ 'form-control-blur': myForm.controls.payment_type.value =='' }" >
@@ -34,11 +34,11 @@
                             <option value="transfer" selected>Transfer</option>
                         </select>
                         <small *ngIf="f.submitted && !myForm.controls.payment_type.valid" class="text-danger">
-                            Payment type is required and at least 3 character 
+                            Payment type is required
                         </small>
                     </div>
                 </div>
-                <div class="form-group">
+                <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !myForm.controls.booking_type.valid }">
                     <label class="control-label col-sm-4" for="booking_type">Booking type :</label>
                     <div class="col-sm-8">
                         <select class="form-control" name="booking_type" id="booking_type" formControlName="booking_type" placeholder="Choose booking type" [ngClass]="{ 'form-control-blur': myForm.controls.booking_type.value =='' }" >
@@ -47,35 +47,35 @@
                             <option value="daily" selected>Daily</option>
                         </select>
                         <small *ngIf="f.submitted && !myForm.controls.booking_type.valid" class="text-danger">
-                            Booking type is required and at least 3 character 
+                            Booking type is required
                         </small> 
                     </div>  
                 </div>
                 <div formGroupName="fee">
-                    <div class="form-group">
+                    <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !myForm.controls.fee.controls.deposit.valid }">
                         <label class="control-label col-sm-4" for="deposit_fee">Deposit Fee :</label>
                         <div class="col-sm-8">
                             <input type="text" (keypress)="number($event)" class="form-control" name="deposit" formControlName="deposit" required placeholder="Input deposit fee here" />
                             <small *ngIf="f.submitted && !myForm.controls.fee.controls.deposit.valid" class="text-danger">
-                                Deposit fee is required and at least 3 character 
+                                Deposit fee is required
                             </small>
                         </div>
                     </div>
-                    <div class="form-group">
+                    <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !myForm.controls.fee.controls.booking.valid }">
                         <label class="control-label col-sm-4" for="booking_fee">Booking Fee :</label>
                         <div class="col-sm-8">
                             <input type="text" (keypress)="number($event)" class="form-control" name="booking" formControlName="booking" required placeholder="Input booking fee here" />
                             <small *ngIf="f.submitted && !myForm.controls.fee.controls.booking.valid" class="text-danger">
-                                Booking fee is required and at least 3 character 
+                                Booking fee is required
                             </small>
                         </div>
                     </div>
-                    <div class="form-group">
+                    <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !myForm.controls.fee.controls.admin.valid }">
                         <label class="control-label col-sm-4" for="admin_fee">Admin Fee :</label>
                         <div class="col-sm-8">
                             <input type="text" (keypress)="number($event)" class="form-control" name="admin" formControlName="admin" required placeholder="Input admin fee here" />
                             <small *ngIf="f.submitted && !myForm.controls.fee.controls.admin.valid" class="text-danger">
-                                Admin is required and at least 3 character 
+                                Admin is required
                             </small>
                         </div>
                     </div>
@@ -94,7 +94,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="form-group">
+                <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !myForm.controls.status.valid }">
                     <label class="control-label col-sm-4" for="status">Status :</label>
                     <div class="col-sm-8">
                         <select required class="form-control" formControlName="status" name="status" id="status" placeholder="Choose status" [ngClass]="{ 'form-control-blur': myForm.controls.status.value =='' }" >
@@ -116,7 +116,7 @@
                                 <span class="glyphicon glyphicon-remove pull-right" *ngIf="myForm.controls.schedule.controls.length > 1" (click)="removeSchedule(i)"></span>
                             </div>
                             <div class="panel-body" [formGroupName]="i">
-                                <div class="form-group col-xs-12">
+                                <div class="form-group col-xs-12" [ngClass]="{ 'has-error': f.submitted && !myForm.controls.schedule.controls[i].controls.day.valid }">
                                     <label>Day :</label>
                                     <div>
                                         <select class="form-control" name="day" (change)="getDay(myForm.value.schedule[i].day , i)" formControlName="day" placeholder="Choose day" [ngClass]="{ 'form-control-blur': myForm.controls.schedule.controls[i].controls.day.value =='' }" >
@@ -128,7 +128,7 @@
                                         </small>
                                     </div>  
                                 </div>
-                                <div class="form-group col-sm-6" style="margin-right: 15px">
+                                <div class="form-group col-sm-6" style="margin-right: 15px" [ngClass]="{ 'has-error': f.submitted && (!myForm.controls.schedule.controls[i].controls.start_time.valid || myForm.value.schedule[i].start_time > myForm.value.schedule[i].end_time || myForm.value.schedule[i].end_time == myForm.value.schedule[i].start_time) }">
                                     <label>Start Time :</label>
                                     <select name="start" class="form-control" formControlName="start_time" (change)="check(myForm.value.schedule[i].start_time)" [ngClass]="{ 'form-control-blur': myForm.controls.schedule.controls[i].controls.start_time.value =='' }" >
                                         <option value=""  class="blur-font" disabled selected value="">Select start time</option>
@@ -144,7 +144,7 @@
                                         Start time must not same with end time
                                     </small>
                                 </div>
-                                <div class="form-group col-sm-6">
+                                <div class="form-group col-sm-6" [ngClass]="{ 'has-error': f.submitted && (!myForm.controls.schedule.controls[i].controls.end_time.valid || myForm.value.schedule[i].end_time < myForm.value.schedule[i].start_time || myForm.value.schedule[i].end_time == myForm.value.schedule[i].start_time) }">
                                     <label>End Time :</label>
                                     <select name="start" class="form-control" formControlName="end_time" [ngClass]="{ 'form-control-blur': myForm.controls.schedule.controls[i].controls.end_time.value =='' }" >
                                         <option  value=""  class="blur-font" disabled selected value="">Select end time</option>
@@ -185,25 +185,25 @@
             </div>
             <p class="id-location">Home > Facility > Add Facility</p>
             <form [formGroup]="myForm" class="form-horizontal col-md-6" name="form" (ngSubmit)="f.form.valid && createFacility(myForm.value)" #f="ngForm" novalidate>
-                <div class="form-group">
+                <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !myForm.controls.name.valid }">
                     <label class="control-label col-sm-4" for="username">Name :</label>
                     <div class="col-sm-8">
                         <input type="text" class="form-control" name="name" formControlName="name" required placeholder="Input name here" />
                         <small *ngIf="f.submitted && !myForm.controls.name.valid" class="text-danger">
-                            Name is required
+                            Name is required and at least 3 character
                         </small>
                     </div>
                 </div>
-                <div class="form-group">
+                <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !myForm.controls.description.valid }">
                     <label class="control-label col-sm-4" for="description">Description :</label>
                     <div class="col-sm-8">
                         <textarea class="form-control" name="description" formControlName="description" placeholder="Input description here"></textarea>
                         <small *ngIf="f.submitted && !myForm.controls.description.valid" class="text-danger">
-                            Description is required
+                            Description is required and at least 3 character
                         </small>
                     </div>
                 </div>
-                <div class="form-group">
+                <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !myForm.controls.payment_type.valid }">
                     <label class="control-label col-sm-4" for="payment_type">Payment type :</label>
                     <div class="col-sm-8">
                         <select class="form-control" name="payment_type" id="payment_type" formControlName="payment_type" placeholder="Choose payment type"  [ngClass]="{ 'form-control-blur': myForm.controls.payment_type.value =='' }">
@@ -216,7 +216,7 @@
                         </small>
                     </div>
                 </div>
-                <div class="form-group">
+                <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !myForm.controls.booking_type.valid }">
                     <label class="control-label col-sm-4" for="booking_type">Booking type :</label>
                     <div class="col-sm-8">
                         <select class="form-control" name="booking_type" id="booking_type" formControlName="booking_type" placeholder="Choose booking type"  [ngClass]="{ 'form-control-blur': myForm.controls.booking_type.value =='' }">
@@ -230,25 +230,25 @@
                     </div>  
                 </div>
                 <div formGroupName="fee"> 
-                    <div class="form-group">
+                    <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !myForm.controls.fee.controls.deposit.valid }">
                         <label class="control-label col-sm-4" for="deposit">Deposit Fee :</label>
                         <div class="col-sm-8">
                             <input type="text" (keypress)="number($event)" class="form-control" name="deposit" formControlName="deposit" required placeholder="Input deposit fee here" />
                             <small *ngIf="f.submitted && !myForm.controls.fee.controls.deposit.valid" class="text-danger">
-                            Name is required
+                                Deposit fee is required
                             </small>
                         </div>
                     </div>
-                    <div class="form-group">
+                    <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !myForm.controls.fee.controls.booking.valid }">
                         <label class="control-label col-sm-4" for="booking">Booking Fee :</label>
                         <div class="col-sm-8">
                             <input type="text" (keypress)="number($event)" class="form-control" name="booking" formControlName="booking" required placeholder="Input booking fee here" />
                             <small *ngIf="f.submitted && !myForm.controls.fee.controls.booking.valid" class="text-danger">
-                            Name is required
+                                Booking fee is required
                             </small>
                         </div>
                     </div>
-                    <div class="form-group">
+                    <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !myForm.controls.fee.controls.admin.valid }">
                         <label class="control-label col-sm-4" for="admin">Admin Fee :</label>
                         <div class="col-sm-8">
                             <input type="text" (keypress)="number($event)" class="form-control" name="admin" formControlName="admin" required placeholder="Input admin fee here" />
@@ -258,7 +258,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="form-group">
+                <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !myForm.controls.status.valid }">
                     <label class="control-label col-sm-4" for="status">Status :</label>
                     <div class="col-sm-8">
                         <select required class="form-control" formControlName="status" name="status" id="status" placeholder="Choose status" [ngClass]="{ 'form-control-blur': myForm.controls.booking_type.value =='' }">
@@ -267,7 +267,7 @@
                             <option value="unavailable">Not Available</option>
                         </select>
                         <small *ngIf="f.submitted && !myForm.controls.status.valid" class="text-danger">
-                            Status is required
+                            Status is required and at least 3 character
                         </small>
                     </div>
                 </div>
@@ -280,7 +280,7 @@
                                 <span class="glyphicon glyphicon-remove pull-right" *ngIf="myForm.controls.schedule.controls.length > 1" (click)="removeSchedule(i)"></span>
                             </div>
                             <div class="panel-body" [formGroupName]="i">
-                                <div class="form-group col-xs-12">
+                                <div class="form-group col-xs-12" [ngClass]="{ 'has-error': f.submitted && !myForm.controls.schedule.controls[i].controls.day.valid }">
                                     <label>Day :</label>
                                     <div>
                                         <select class="form-control" name="day" (change)="getDay(myForm.value.schedule[i].day , i)" formControlName="day" placeholder="Choose day" [ngClass]="{ 'form-control-blur': myForm.controls.schedule.controls[i].controls.day.value =='' }" >
@@ -292,7 +292,7 @@
                                         </small>
                                     </div>  
                                 </div>
-                                <div class="form-group col-sm-6" style="margin-right: 15px">
+                                <div class="form-group col-sm-6" style="margin-right: 15px" [ngClass]="{ 'has-error': f.submitted && (!myForm.controls.schedule.controls[i].controls.start_time.valid || myForm.value.schedule[i].start_time > myForm.value.schedule[i].end_time || myForm.value.schedule[i].end_time == myForm.value.schedule[i].start_time) }">
                                     <label>Start Time :</label>
                                     <select name="start" class="form-control" formControlName="start_time" [ngClass]="{ 'form-control-blur': myForm.controls.schedule.controls[i].controls.start_time.value =='' }" >
                                          <option  value=""  class="blur-font" disabled selected value="">Select start time</option>
@@ -308,7 +308,7 @@
                                         Start time must not same with end time
                                     </small>
                                 </div>
-                                <div class="form-group col-sm-6">
+                                <div class="form-group col-sm-6" [ngClass]="{ 'has-error': f.submitted && (!myForm.controls.schedule.controls[i].controls.end_time.valid || myForm.value.schedule[i].end_time < myForm.value.schedule[i].start_time || myForm.value.schedule[i].end_time == myForm.value.schedule[i].start_time) }">
                                     <label>End Time :</label>
                                     <select name="start" class="form-control" formControlName="end_time" [ngClass]="{ 'form-control-blur': myForm.controls.schedule.controls[i].controls.end_time.value =='' }" >
                                          <option  value=""  class="blur-font" disabled selected value="">Select end time</option>
