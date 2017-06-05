@@ -20,18 +20,18 @@
                 <div class="row no-margin" style="border: 1px solid grey">
                     <div class="row content">
                         <div class="col-md-4">
-                                <b>Unit No. :&nbsp;</b>#{{unit.address.unit_no}}-{{unit.address.unit_no_2}}<br>
-                                <b>Block :&nbsp;</b>{{unit.address.block_no}}
+                                <b>Unit No. :&nbsp;</b>#{{unit?.address?.unit_no}}-{{unit?.address?.unit_no_2}}<br>
+                                <b>Block :&nbsp;</b>{{unit?.address?.block_no}}
                             </div>
                             <div class="col-md-4">
-                                <span *ngIf="hasLandlord"><b>Owner :&nbsp;</b>{{unit.landlord.data.resident.username | capitalize}}<br></span>
+                                <span *ngIf="hasLandlord"><b>Owner :&nbsp;</b>{{unit?.landlord?.data?.resident?.username | capitalize}}<br></span>
                                 <b>Status :</b>
                                 <span *ngIf="unit.status == 'own stay'">Owned</span>
                                 <span *ngIf="unit.status == 'tenanted'">Tenanted</span>
                                 <span style="color: red" *ngIf="unit.status == 'empty'">Empty</span>
                             </div>
                             <div class="col-md-4">
-                                <span *ngIf="unit.tenant.data"><b>No. of Tenant :&nbsp;</b>{{ tenantTotal }}<br></span>
+                                <span *ngIf="unit?.tenant?.data"><b>No. of Tenant :&nbsp;</b>{{ tenantTotal }}<br></span>
                                 <span  *ngIf="vehicles"><b>Vehicle :&nbsp;</b>{{vehicles.length}}</span>
                                 
                             </div>
@@ -72,7 +72,7 @@
                         <h5>Resident/Tenant</h5>
                     </div>
                     <div class="col-md-6">
-                        <a class="btn btn-gray btn-tab-dark pull-right" (click)="firstModal.open()"><img class="img-btn" src="../../assets/image/icon_addresident.png"   />&nbsp;Add Resident</a>
+                        <a class="btn btn-gray btn-tab-dark pull-right" (click)="firstModal.open(); resetForm()"><img class="img-btn" src="../../assets/image/icon_addresident.png"   />&nbsp;Add Resident</a>
                     </div>
                 </div>
                 <div class="row no-margin">
@@ -81,7 +81,7 @@
                         </p-column>
                         <p-column header="Resident" >
                             <template let-residents="rowData" pTemplate="body">
-                                <span *ngIf="residents.resident.username">{{residents.resident.username | capitalize}}</span>
+                                <span *ngIf="residents?.resident?.username">{{residents?.resident?.username | capitalize}}</span>
                             </template>
                         </p-column>
                         <p-column header="Type" sortable="true" field="type">
@@ -96,14 +96,14 @@
                         </p-column> 
                         <p-column header="Social Page" field="residents.resident.social_profile" sortable="true">
                             <template let-residents="rowData" pTemplate="body">
-                                <span *ngIf="residents.resident.social_profile">Yes</span>
-                                <span *ngIf="!residents.resident.social_profile">-</span>
+                                <span *ngIf="residents?.resident?.social_profile">Yes</span>
+                                <span *ngIf="!residents?.resident?.social_profile">-</span>
                             </template>
                         </p-column> 
                         <p-column header="Contact No." >
                             <template let-residents="rowData" pTemplate="body">
-                                <span *ngIf="residents.resident.phone">{{residents.resident.phone}}<br></span>
-                                <span *ngIf="residents.resident.email">{{residents.resident.email}}<br></span>
+                                <span *ngIf="residents?.resident?.phone">{{residents.resident.phone}}<br></span>
+                                <span *ngIf="residents?.resident?.email">{{residents.resident.email}}<br></span>
                             </template>
                         </p-column>
                         <p-column header="Remarks">
@@ -226,7 +226,7 @@
                                 <label class="control-label col-sm-4" for="username">Username :</label>
                                 <div class="col-sm-8">
                                     <!-- <input type="text" class="form-control" name="username" formControlName="username" required placeholder="Input username here" /> -->
-                                    <p-autoComplete [(ngModel)]="username" [suggestions]="filteredBrands" (completeMethod)="filterBrands($event)" (onSelect)="onAutoCompleteChange($event)" field="username" [size]="30" placeholder="  Username" [minLength]="1" [ngModelOptions]="{standalone: true}"></p-autoComplete>
+                                    <p-autoComplete [(ngModel)]="username" [suggestions]="filteredBrands" (completeMethod)="filterBrands($event)" (onSelect)="onAutoCompleteChange($event)" (onDropdownClick)="onAutoCompleteChange($event)" field="username" [size]="30" placeholder="  Username" [minLength]="1" [ngModelOptions]="{standalone: true}"></p-autoComplete>
                                     <span style="cursor:pointer; color: blue;" (click)="resetForm()">Reset</span><br>
                                     <small *ngIf="addSubmitted && username=='' && !useAutocomplete" class="text-danger">
                                     Name is required and at least 3 character
@@ -381,7 +381,7 @@
                                 <div class="col-sm-8">
                                     <select class="form-control" formControlName="owner" name="owner"  [ngClass]="{ 'form-control-blur': myForm2.controls.owner.value =='' }">
                                         <option value=""  class="blur-font" disabled selected>Select owner</option>
-                                        <option *ngFor="let u of unit.tenant.data" [ngValue]="u.resident._id">{{u.resident.username}}</option>
+                                        <option *ngFor="let u of unit?.tenant?.data" [ngValue]="u?.resident?._id">{{u?.resident?.username}}</option>
                                     </select>
                                    <small style="color: red" [hidden]="myForm2.controls.owner.valid || (myForm2.controls.owner.pristine && !vehicleSubmitted)">Owner is required</small>
                                 </div>

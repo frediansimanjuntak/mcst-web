@@ -690,9 +690,12 @@ export class ViewUnitComponent implements OnInit {
         this.filteredBrands = [];
         for(let i = 0; i < this.users.length; i++) {
             let user = this.users[i];
-            if(user.username.toLowerCase().indexOf(event.query.toLowerCase()) == 0) {
-                this.filteredBrands.push(user);
+            if (user.username) {
+                if(user.username.toLowerCase().indexOf(event.query.toLowerCase()) == 0) {
+                    this.filteredBrands.push(user);
+                }
             }
+                
         }
         if(this.filteredBrands.length==0){
             this.useAutocomplete = false;
@@ -743,40 +746,41 @@ export class ViewUnitComponent implements OnInit {
                     gender:  [{value: event.gender, disabled: true}],
                     salulation: [{value: event.salulation, disabled: true}]
                 }); 
+        this.filteredBrands = [];
     }
 
     resetForm(){
-         this.username= '';
+         this.username = '';
          this.model.remarks= '';
          this.addSubmitted= false;
          this.useAutocomplete = false;
          this.myForm = this.formbuilder.group({
-                    username : ['', Validators.compose([Validators.required, Validators.minLength(3)])],
-                    email : ['', Validators.compose([Validators.required])],
-                    phone : ['', Validators.compose([Validators.required])],
-                    role : ['user'],
-                    default_property: this.formbuilder.group({
-                        property: [''],
-                        role : ['']
-                    }),
-                    rented_property: this.formbuilder.group({
-                        development: [''],
-                        property: [this.id]
-                    }),
-                    remarks: [''],
-                    details:  this.formbuilder.group({
-                        first_name: [''],
-                        last_name: [''],
-                        identification_no: [''],
-                    }),
-                    owned_property: this.formbuilder.array([this.formbuilder.group({
-                                                development: [''],
-                                                property: [this.id]
-                                            })
-                    ]),
-                    gender: ['', Validators.compose([Validators.required])],
-                    salulation: ['', Validators.compose([Validators.required])]
-                });  
+            username : ['', Validators.compose([Validators.required, Validators.minLength(3)])],
+            email : ['', Validators.compose([Validators.required])],
+            phone : ['', Validators.compose([Validators.required])],
+            role : ['user'],
+            default_property: this.formbuilder.group({
+                property: [''],
+                role : ['']
+            }),
+            rented_property: this.formbuilder.group({
+                development: [''],
+                property: [this.id]
+            }),
+            remarks: [''],
+            details:  this.formbuilder.group({
+                first_name: [''],
+                last_name: [''],
+                identification_no: [''],
+            }),
+            owned_property: this.formbuilder.array([this.formbuilder.group({
+                    development: [''],
+                    property: [this.id]
+                })
+            ]),
+            gender: ['', Validators.compose([Validators.required])],
+            salulation: ['', Validators.compose([Validators.required])]
+        });
     }
 
     residentTypeChange(event){

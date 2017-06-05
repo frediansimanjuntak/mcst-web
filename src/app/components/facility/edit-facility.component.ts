@@ -85,15 +85,15 @@ export class EditFacilityComponent  {
 					name : ['', Validators.compose([Validators.required, Validators.minLength(3)])],
 					development : [''],
 					description : ['', Validators.compose([Validators.required, Validators.minLength(3)])],
-					payment_type : ['', Validators.compose([Validators.required, Validators.minLength(3)])],
-					booking_type : ['', Validators.compose([Validators.required, Validators.minLength(3)])],
+					payment_type : ['', Validators.compose([Validators.required])],
+					booking_type : ['', Validators.compose([Validators.required])],
 					fee: this.formbuilder.group({
 		                deposit : ['', Validators.compose([Validators.required])],
 						booking : ['', Validators.compose([Validators.required])],
 						admin : ['', Validators.compose([Validators.required])],
 		            }),
 					schedule: this.formbuilder.array([]),
-					status: ['', Validators.compose([Validators.required, Validators.minLength(3)])],
+					status: ['', Validators.compose([Validators.required])],
 					maintenance: this.formbuilder.group({
 						start_date: [],
 						end_date: []
@@ -110,8 +110,8 @@ export class EditFacilityComponent  {
 						name : ['', Validators.compose([Validators.required, Validators.minLength(3)])],
 						development : [''],
 						description : ['', Validators.compose([Validators.required, Validators.minLength(3)])],
-						payment_type : ['', Validators.compose([Validators.required, Validators.minLength(3)])],
-						booking_type : ['', Validators.compose([Validators.required, Validators.minLength(3)])],
+						payment_type : ['', Validators.compose([Validators.required])],
+						booking_type : ['', Validators.compose([Validators.required])],
 						fee: this.formbuilder.group({
 			                deposit : ['', Validators.compose([Validators.required])],
 							booking : ['', Validators.compose([Validators.required])],

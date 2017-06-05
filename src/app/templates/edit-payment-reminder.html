@@ -6,7 +6,7 @@
             <p class="id-location">Home > Payment reminder > Edit Payment Reminder</p>
             <form [formGroup]="myForm" class="form-horizontal" name="form" (ngSubmit)="myForm.valid && updatePaymentReminder(myForm.value)" #f="ngForm" novalidate>
                 <div class="col-md-6">
-                    <div class="form-group">
+                    <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !myForm.controls.title.valid }">
                         <label class="control-label col-sm-4" for="title">Title :</label>
                         <div class="col-sm-8">
                             <input type="text" class="form-control" name="title" formControlName="title" required placeholder="Input title here" />
@@ -21,7 +21,7 @@
                             <input type="text" class="form-control" name="reference_no" formControlName="reference_no" required placeholder="Input auto issue date here" />
                         </div>
                     </div>
-                    <div class="form-group">
+                    <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !myForm.controls.auto_issue_on.valid }">
                         <label class="control-label col-sm-4" for="auto_issue_on">Auto issue on :</label>
                         <div class="col-sm-8">
                             <p-calendar name="auto_issue_on" [minDate]="today" formControlName="auto_issue_on" required dateFormat="dd/mm/yy" [showIcon]="true" placeholder="dd/mm/yy"></p-calendar>
@@ -30,7 +30,7 @@
                             </small>
                         </div>
                     </div>
-                    <div class="form-group">
+                    <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !myForm.controls.due_on.valid }">
                         <label class="control-label col-sm-4" for="due_on">Due on :</label>
                         <div class="col-sm-8">
                             <p-calendar name="due_on" formControlName="due_on" [minDate]="today" required dateFormat="dd/mm/yy" [showIcon]="true" placeholder="dd/mm/yy"></p-calendar>
@@ -39,7 +39,7 @@
                             </small>
                         </div>
                     </div>
-                    <div class="form-group">
+                    <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !myForm.controls.message_to_receiver.valid }">
                         <label class="control-label col-sm-4" for="message_to_receiver">Message to receiver :</label>
                         <div class="col-sm-8">
                             <textarea class="form-control" name="message_to_receiver" formControlName="message_to_receiver" placeholder="Input message to receiver here"></textarea>
@@ -62,19 +62,19 @@
                             <div *ngFor="let owned of myForm.controls.notification_list.controls; let i=index" class="form-group">
                                 <div class="panel-body" [formGroupName]="i">
                                     <div class="col-md-12">
-                                    	<div style="width: 150px; float: left; margin-right: 10px;font-weight: bold">
+                                    	<div style="width: 150px; float: left; margin-right: 10px;font-weight: bold" [ngClass]="{ 'has-error': f.submitted && !myForm.controls.notification_list.controls[i].controls.charge.valid }">
                                     		<input class="form-control" type="text" formControlName="charge" required/>
                                     		<small *ngIf="f.submitted && !myForm.controls.notification_list.controls[i].controls.charge.valid" class="text-danger">
 		                                        Charge/Bill is required and at least 3 character
 		                                    </small>
                                     	</div>
-                                        <div style="width: 300px; float: left; margin-right: 10px" >
+                                        <div style="width: 300px; float: left; margin-right: 10px" [ngClass]="{ 'has-error': f.submitted && !myForm.controls.notification_list.controls[i].controls.remarks.valid }">
                                         	<input class="form-control" type="text" formControlName="remarks" required/>
                                         	<small *ngIf="f.submitted && !myForm.controls.notification_list.controls[i].controls.remarks.valid" class="text-danger">
 		                                        Remark is required and at least 3 character
 		                                    </small>
                                         </div>
-                                        <div style="width: 160px; float: left; margin-right: 10px">
+                                        <div style="width: 160px; float: left; margin-right: 10px" [ngClass]="{ 'has-error': f.submitted && !myForm.controls.notification_list.controls[i].controls.applies_to.valid }">
                                         	<select class="form-control" formControlName="applies_to">
 	                                            <option value="all">All</option>
 	                                            <option value="resident with vehicle">Resident with vehicle</option>
@@ -83,7 +83,7 @@
 		                                        Applies to is required
 		                                    </small>
                                         </div>
-                                        <div style="width: 100px; float: left; margin-right: 5px">
+                                        <div style="width: 100px; float: left; margin-right: 5px" [ngClass]="{ 'has-error': f.submitted && !myForm.controls.notification_list.controls[i].controls.amount.valid }">
                                         	<input (keypress)="number($event)" class="form-control" (change)="total(myForm.value.notification_list[i].amount)" type="text" formControlName="amount" />
                                         	<small *ngIf="f.submitted && !myForm.controls.notification_list.controls[i].controls.amount.valid" class="text-danger">
 		                                        Amount is required
@@ -121,7 +121,7 @@
             <p class="id-location">Home > Payment reminder > Add Payment Reminder</p>
             <form [formGroup]="myForm" class="form-horizontal" name="form" (ngSubmit)="myForm.valid && createPaymentReminder(myForm.value)" #f="ngForm" novalidate>
                 <div class="col-md-6">
-                    <div class="form-group">
+                    <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !myForm.controls.title.valid }">
                         <label class="control-label col-sm-4" for="title">Title :</label>
                         <div class="col-sm-8">
                             <input type="text" class="form-control" name="title" formControlName="title" required placeholder="Input title here" />
@@ -130,7 +130,7 @@
                             </small>
                         </div>
                     </div>
-                    <div class="form-group">
+                    <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !myForm.controls.auto_issue_on.valid }">
                         <label class="control-label col-sm-4" for="auto_issue_on">Auto issue on :</label>
                         <div class="col-sm-8">
                             <p-calendar name="auto_issue_on" [minDate]="today" [maxDate]="myForm.controls.due_on.value" formControlName="auto_issue_on" required dateFormat="dd/mm/yy" [showIcon]="true" placeholder="dd/mm/yy"></p-calendar>
@@ -139,7 +139,7 @@
                             </small>
                         </div>
                     </div>
-                    <div class="form-group">
+                    <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !myForm.controls.due_on.valid }">
                         <label class="control-label col-sm-4" for="due_on">Due on :</label>
                         <div class="col-sm-8">
                             <p-calendar name="due_on" [minDate]="myForm.controls.auto_issue_on.value" formControlName="due_on" required dateFormat="dd/mm/yy" [showIcon]="true" placeholder="dd/mm/yy"></p-calendar>
@@ -148,7 +148,7 @@
                             </small>
                         </div>
                     </div>
-                    <div class="form-group">
+                    <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !myForm.controls.message_to_receiver.valid }">
                         <label class="control-label col-sm-4" for="message_to_receiver">Message to receiver :</label>
                         <div class="col-sm-8">
                             <textarea class="form-control" name="message_to_receiver" formControlName="message_to_receiver" placeholder="Input message to receiver here"></textarea>
@@ -170,19 +170,19 @@
                             <div *ngFor="let owned of myForm.controls.notification_list.controls; let i=index" class="form-group">
                                 <div class="panel-body" [formGroupName]="i">
                                     <div class="col-md-12">
-                                       <div style="width: 150px; float: left; margin-right: 10px;font-weight: bold">
+                                       <div style="width: 150px; float: left; margin-right: 10px;font-weight: bold" [ngClass]="{ 'has-error': f.submitted && !myForm.controls.notification_list.controls[i].controls.charge.valid }">
                                     		<input class="form-control" type="text" formControlName="charge" required/>
                                     		<small *ngIf="f.submitted && !myForm.controls.notification_list.controls[i].controls.charge.valid" class="text-danger">
 		                                        Charge/Bill is required and at least 3 character
 		                                    </small>
                                     	</div>
-                                        <div style="width: 300px; float: left; margin-right: 10px" >
+                                        <div style="width: 300px; float: left; margin-right: 10px" [ngClass]="{ 'has-error': f.submitted && !myForm.controls.notification_list.controls[i].controls.remarks.valid }">
                                         	<input class="form-control" type="text" formControlName="remarks" required/>
                                         	<small *ngIf="f.submitted && !myForm.controls.notification_list.controls[i].controls.remarks.valid" class="text-danger">
 		                                        Remark is required and at least 3 character
 		                                    </small>
                                         </div>
-                                        <div style="width: 160px; float: left; margin-right: 10px">
+                                        <div style="width: 160px; float: left; margin-right: 10px" [ngClass]="{ 'has-error': f.submitted && !myForm.controls.notification_list.controls[i].controls.applies_to.valid }">
                                         	<select class="form-control" formControlName="applies_to">
 	                                            <option value="all">All</option>
 	                                            <option value="resident with vehicle">Resident with vehicle</option>
@@ -191,7 +191,7 @@
 		                                        Applies to is required
 		                                    </small>
                                         </div>
-                                        <div style="width: 100px; float: left; margin-right: 5px">
+                                        <div style="width: 100px; float: left; margin-right: 5px" [ngClass]="{ 'has-error': f.submitted && !myForm.controls.notification_list.controls[i].controls.amount.valid }">
                                         	<input (keypress)="number($event)" class="form-control" (change)="total(myForm.value.notification_list[i].amount)" type="text" formControlName="amount" />
                                         	<small *ngIf="f.submitted && !myForm.controls.notification_list.controls[i].controls.amount.valid" class="text-danger">
 		                                        Amount is required

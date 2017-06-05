@@ -64,13 +64,12 @@ export class EditLostFoundComponent  {
 	   for (let z = 0; z < files.length; ++z) {
 			if (!files[z].type.includes("image")) {
 				this._notificationsService.error('Error', 'Please upload image only!.')
-			  	this.model.attachment = [];
+			  	this.model.photo = [];
 			  	break;
 		    }else{
-				this.model.attachment = files;
+				this.model.photo = files;
 		    }
 	    }
-	   this.model.photo = files;
 	}
 
 	fileChange(event) {

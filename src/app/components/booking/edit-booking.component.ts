@@ -110,6 +110,7 @@ export class EditBookingComponent implements OnInit  {
 	customClass: any[] = [];
 	unavailableDay: any[] = [];
 	availableDay: any[] = [];
+	valid: boolean;
 
 
 	constructor(
@@ -451,18 +452,23 @@ export class EditBookingComponent implements OnInit  {
 		if(this.tstart.length < 1) {
 			this.tstart.push(start)
 			this.tend.push(end)
+			this.valid = true
 		}else{
 			var i = this.tstart.indexOf(start);
 			if(i != -1) {
 				this.tstart.splice(i, 1);
+				this.valid = false
 			}else{
 				this.tstart.push(start)
+				this.valid = true
 			}
 			var i = this.tend.indexOf(end);
 			if(i != -1) {
 				this.tend.splice(i, 1);
+				this.valid = false
 			}else{
 				this.tend.push(end)
+				this.valid = true
 			}
 		}
 		var time_start = Math.min.apply(Math,this.tstart);
@@ -481,6 +487,7 @@ export class EditBookingComponent implements OnInit  {
 		this.model.start_time = moment(time_start, 'h').format('HH:mm');
 		this.model.end_time = moment(time_end, 'h').format('HH:mm');
 		this.model.name = name;
+		console.log(this.model)
 	}
 
 	public selectedDate(date:any) {  
@@ -493,11 +500,16 @@ export class EditBookingComponent implements OnInit  {
 	next(){ 
 		this.loading = true
 		if (this.model.total_amount && this.model.start_time && this.model.end_time) {
-			this.step = 2;
-		}else{
+			if (this.valid) {
+				this.step = 2;
+			} else {
+				this._notificationsService.error('Failed','Please choose booking time before go to next step.')
+			}	
+		} else {
 			this._notificationsService.error('Failed','Please choose booking time before go to next step.')
 		}
 		setTimeout(() => this.loading = false, 1000);
+			
 	}
 
 	change(){

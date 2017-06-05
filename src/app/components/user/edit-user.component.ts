@@ -68,14 +68,12 @@ export class EditUserComponent implements OnInit {
             this.myForm = this.formbuilder.group({
                 username : ['', Validators.compose([Validators.required, Validators.minLength(3)])],
                 email : ['', Validators.compose([Validators.required])],
-                password : ['', Validators.compose([Validators.required, Validators.minLength(6)])],
-                confirmpassword : ['', Validators.compose([Validators.required])],
                 phone : ['', Validators.compose([Validators.required])],
                 role : ['', Validators.compose([Validators.required])],
                 details:  this.formbuilder.group({
-                        first_name: [''],
-                        last_name: [''],
-                        identification_no: [''],
+                        first_name: ['', Validators.compose([Validators.required, Validators.minLength(3)])],
+                        last_name: ['', Validators.compose([Validators.required, Validators.minLength(3)])],
+                        identification_no: ['', Validators.compose([Validators.required, Validators.minLength(3)])],
                     }),
                 gender: [''],
                 salulation: ['', Validators.compose([Validators.required])]
@@ -97,13 +95,11 @@ export class EditUserComponent implements OnInit {
                     username : ['', Validators.compose([Validators.required, Validators.minLength(3)])],
                     email : ['', Validators.compose([Validators.required])],
                     phone : ['', Validators.compose([Validators.required])],
-                    password : ['', Validators.compose([Validators.required, Validators.minLength(6)])],
-                    confirmpassword : ['', Validators.compose([Validators.required])],
                     role : ['', Validators.compose([Validators.required])],
                     details:  this.formbuilder.group({
-                        first_name: [''],
-                        last_name: [''],
-                        identification_no: [''],
+                        first_name: ['', Validators.compose([Validators.required, Validators.minLength(3)])],
+                        last_name: ['', Validators.compose([Validators.required, Validators.minLength(3)])],
+                        identification_no: ['', Validators.compose([Validators.required, Validators.minLength(3)])],
                     }),
                     gender: ['', Validators.compose([Validators.required])],
                     salulation: ['', Validators.compose([Validators.required])]
@@ -115,7 +111,6 @@ export class EditUserComponent implements OnInit {
                     this.myForm = this.formbuilder.group({
                         _id : [this.user._id],
                         username : [this.user.username, Validators.compose([Validators.required, Validators.minLength(3)])],
-
                         email : [this.user.email, Validators.compose([Validators.required])],
                         phone : [this.user.phone, Validators.compose([Validators.required])],
                         gender: [this.user.gender, Validators.compose([Validators.required])],
@@ -125,7 +120,6 @@ export class EditUserComponent implements OnInit {
                     this.myForm = this.formbuilder.group({
                         _id : [this.user._id],
                         username : [this.user.username, Validators.compose([Validators.required, Validators.minLength(3)])],
-
                         email : [this.user.email, Validators.compose([Validators.required])],
                         phone : [this.user.phone, Validators.compose([Validators.required])],
                     });
@@ -138,8 +132,6 @@ export class EditUserComponent implements OnInit {
                 this.myForm = this.formbuilder.group({
                     username : ['', Validators.compose([Validators.required, Validators.minLength(3)])],
                     email : ['', Validators.compose([Validators.required])],
-                    password : ['', Validators.compose([Validators.required, Validators.minLength(6)])],
-                    confirmpassword : ['', Validators.compose([Validators.required])],
                     phone : ['', Validators.compose([Validators.required])],
                     role : ['user'],
                     default_property: this.formbuilder.group({
@@ -158,8 +150,6 @@ export class EditUserComponent implements OnInit {
                      this.myForm = this.formbuilder.group({
                     username : ['', Validators.compose([Validators.required, Validators.minLength(3)])],
                     email : ['', Validators.compose([Validators.required])],
-                    password : ['', Validators.compose([Validators.required, Validators.minLength(6)])],
-                    confirmpassword : ['', Validators.compose([Validators.required])],
                     phone : ['', Validators.compose([Validators.required])],
                     role : ['user'],
                     default_property: this.formbuilder.group({
@@ -193,20 +183,10 @@ export class EditUserComponent implements OnInit {
     }
 
     checkValid(event: any, field: any){
-        if (field == 'email') {
-            if (event.target.value.match(/[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?/)) {
-                this.emailError = false;
-            } else {
-                this.emailError = true;
-                this.emailErrorMessage = 'invalid email address';
-            }
-        }
         this.userService.getValid(event.target.value).subscribe((data:any) => {
             if (data.message == true) {
                 if (field == 'username') {
-                    console.log('test')
                     if (this.user) {
-                        console.log(this.user.username , event.target.value)
                         if (event.target.value == this.user.username) {
                             this.usernameError = false;
                         }else{
@@ -219,17 +199,22 @@ export class EditUserComponent implements OnInit {
                     }      
                 }
                 if (field == 'email') {
-                    if (this.user) {
-                        if (event.target.value == this.user.email) {
-                            this.emailError = false;
-                        }else{
+                    if (event.target.value.match(/[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?/)) {
+                        if (this.user) {
+                            if (event.target.value == this.user.email) {
+                                this.emailError = false;
+                            }else{
+                                this.emailError = true;
+                                this.emailErrorMessage = 'The specified email address is already in use.';
+                            }
+                        } else{
                             this.emailError = true;
                             this.emailErrorMessage = 'The specified email address is already in use.';
-                        }
-                    } else{
+                        }    
+                    } else {
                         this.emailError = true;
-                        this.emailErrorMessage = 'The specified email address is already in use.';
-                    }    
+                        this.emailErrorMessage = 'invalid email address';
+                    }
                 }
             }
             else {
@@ -237,7 +222,13 @@ export class EditUserComponent implements OnInit {
                     this.usernameError = false;
                 }
                 if (field == 'email') {
-                    this.emailError = false;
+                    if (event.target.value.match(/[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?/)) {
+                        this.emailError = false;
+                    } else {
+                        this.emailError = true;
+                        this.emailErrorMessage = 'invalid email address';
+                    }
+                    
                 }
             }
         });
@@ -277,7 +268,7 @@ export class EditUserComponent implements OnInit {
     }
 
     createUser(model:any , isValid: boolean) {
-        if(isValid){
+        if (isValid) {
             if(this.type){
                 if (this.type=='tenant') {
                    model.rented_property.development = this.name.default_development._id;
@@ -287,7 +278,7 @@ export class EditUserComponent implements OnInit {
                          model.owned_property[i].development = this.name.default_development._id;
                     }
                 }
-                if (model.username && model.email && model.password && model.confirmpassword && model.phone && model.role) {
+                if (model.username && model.email && model.phone && model.role) {
                     this.loading = true;
                     this.userService.createResident(model)
                     .then(
@@ -311,7 +302,7 @@ export class EditUserComponent implements OnInit {
                     );   
                 }
             }else{
-                if (model.username && model.email && model.password && model.confirmpassword && model.phone && model.role) {
+                if (model.username && model.email && model.phone && model.role) {
                     if (model.role == 'user') {
                         if (model.details.first_name && model.details.last_name && model.details.identification_no && 
                             model.gender && model.salulation){
@@ -364,6 +355,33 @@ export class EditUserComponent implements OnInit {
                     }
                 }
 
+            }
+        } else {
+            if (model.role == 'admin') {
+                if (model.username && model.email && model.phone && model.role) {
+                    model.default_development = this.name.default_development._id;
+                    this.loading = true;
+                    this.userService.createUser(model)
+                    .then(
+                        data => {
+                            this._notificationsService.success('Success', 'Create ' + model.role + ' successful')
+                            this.router.navigate([this.name.default_development.name_url + '/user']);
+                        },
+                        error => {
+                            if (error.json().message) {
+                                if (error.json().code) {
+                                    this.userService.checkError(error.json().code, error.json().message)
+                                }else{
+                                    this._notificationsService.error("Error", error.json().message)    
+                                }
+                                
+                            }else{
+                                this.userService.checkError(error.status, '')
+                            } 
+                            this.loading = false;
+                        }
+                    ); 
+                }
             }
         }
     }
