@@ -750,37 +750,37 @@ export class ViewUnitComponent implements OnInit {
     }
 
     resetForm(){
-         this.username= '';
+         this.username = '';
          this.model.remarks= '';
          this.addSubmitted= false;
          this.useAutocomplete = false;
          this.myForm = this.formbuilder.group({
-                    username : ['', Validators.compose([Validators.required, Validators.minLength(3)])],
-                    email : ['', Validators.compose([Validators.required])],
-                    phone : ['', Validators.compose([Validators.required])],
-                    role : ['user'],
-                    default_property: this.formbuilder.group({
-                        property: [''],
-                        role : ['']
-                    }),
-                    rented_property: this.formbuilder.group({
-                        development: [''],
-                        property: [this.id]
-                    }),
-                    remarks: [''],
-                    details:  this.formbuilder.group({
-                        first_name: [''],
-                        last_name: [''],
-                        identification_no: [''],
-                    }),
-                    owned_property: this.formbuilder.array([this.formbuilder.group({
-                                                development: [''],
-                                                property: [this.id]
-                                            })
-                    ]),
-                    gender: ['', Validators.compose([Validators.required])],
-                    salulation: ['', Validators.compose([Validators.required])]
-                });  
+            username : ['', Validators.compose([Validators.required, Validators.minLength(3)])],
+            email : ['', Validators.compose([Validators.required])],
+            phone : ['', Validators.compose([Validators.required])],
+            role : ['user'],
+            default_property: this.formbuilder.group({
+                property: [''],
+                role : ['']
+            }),
+            rented_property: this.formbuilder.group({
+                development: [''],
+                property: [this.id]
+            }),
+            remarks: [''],
+            details:  this.formbuilder.group({
+                first_name: [''],
+                last_name: [''],
+                identification_no: [''],
+            }),
+            owned_property: this.formbuilder.array([this.formbuilder.group({
+                    development: [''],
+                    property: [this.id]
+                })
+            ]),
+            gender: ['', Validators.compose([Validators.required])],
+            salulation: ['', Validators.compose([Validators.required])]
+        });
     }
 
     residentTypeChange(event){
