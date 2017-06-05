@@ -326,7 +326,7 @@
 							<div class="row no-margin">
 								<label class="control-label col-sm-4" for="pass">Visitor Pass :</label>
 								<div class="col-sm-8">
-									<input type="text" class="form-control" placeholder="Enter Pass serial" name="pass" formControlName="pass">
+									<input type="text" (keypress)="number($event)" class="form-control" placeholder="Enter Pass serial" name="pass" formControlName="pass">
 								</div>
 							</div>
 						</div>
@@ -399,7 +399,7 @@
 							<div class="row no-margin">
 								<label class="control-label col-sm-4" for="pass">Visitor Pass :</label>
 								<div class="col-sm-8">
-									<input type="text" class="form-control" placeholder="Enter Pass serial" name="pass" formControlName="pass">
+									<input type="text" (keypress)="number($event)" class="form-control" placeholder="Enter Pass serial" name="pass" formControlName="pass">
 									<small style="color: red" [hidden]="checkInForm.controls.visitor.controls.pass.valid || (checkInForm.controls.visitor.controls.pass.pristine && !checkInSsubmitted)">Pass number is required</small>
 								</div>
 							</div>
@@ -427,7 +427,7 @@
 						<div class="form-group" [ngClass]="{ 'has-error': checkOutSsubmitted && !checkOutForm.controls.visitor.controls.pass.valid }" formGroupName="visitor">
 							<label class="control-label col-sm-4" for="pass">Visitor Pass :</label>
 							<div class="col-sm-8">
-								<input type="text" class="form-control" placeholder="Enter Pass serial" name="pass" formControlName="pass">
+								<input type="text" (keypress)="number($event)" class="form-control" placeholder="Enter Pass serial" name="pass" formControlName="pass">
 								<small style="color: red" [hidden]="checkOutForm.controls.visitor.controls.pass.valid || (checkOutForm.controls.visitor.controls.pass.pristine && !checkInSsubmitted)">Pass number is required</small>
 							</div>
 						</div><br>
