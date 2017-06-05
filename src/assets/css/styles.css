@@ -812,11 +812,13 @@ p.pull-down {
   color: green;
   font-size: 13px;
   padding-right: 10px;
+  margin-left: 50px !important;
 }
 .circle-red {
   color: red;
   font-size: 13px;
   padding-right: 10px;
+  margin-left: 50px !important;
 }
 .bg-dark .mydp {
   border: 0;
