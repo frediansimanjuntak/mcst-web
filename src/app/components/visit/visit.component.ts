@@ -308,29 +308,42 @@ export class VisitComponent implements OnInit {
         }
     }
 
+    smart_substr(str:string, len:number) {
+        var temp = str.substr(0, len);
+        if(temp.lastIndexOf('<') > temp.lastIndexOf('>')) {
+            temp = str.substr(0, 1 + str.indexOf('>', temp.lastIndexOf('<')));
+        }
+        return temp;
+    }
+
 	private loadVisits() {
         this.visitService.getAll()
-            .subscribe((data)=> {
-                    this.visits            = data.filter(data => data.development._id == this.name.default_development._id);
-                    
-                    this.visits            = this.visits.filter(data => data.visit_date.slice(0, 10)  == this.activeDate );
-                    for (var i = 0; i < this.visits.length; i++) {
-                        this.visits[i].i = i+1;
-                        if(this.visits[i].property){
-                            let visiting = this.dataUnit.find(data => data._id ==  this.visits[i].property);
-                                this.visits[i].property_detail = visiting;
-                                this.visits[i].visiting = '#' + visiting.address.unit_no + '-' + visiting.address.unit_no_2;
-                        }else{
-                                this.visits[i].visiting = '';
-                        }
-                        if(!this.visits[i].visitor.vehicle){
-                            this.visits[i].visitor.vehicle = '';
-                        }
-                    }
+        .subscribe((data)=> {
+            for (var i = 0; i < data.length; ++i) {
+                if (data[i].remarks && data[i].remarks != '' && data[i].remarks.length > 100) {
+                    let content = data[i].remarks;
+                    data[i].remarks = this.smart_substr(content,100) + '...'
+                }
+            }
+            this.visits            = data.filter(data => data.development._id == this.name.default_development._id);
+            this.visits            = this.visits.filter(data => data.visit_date.slice(0, 10)  == this.activeDate );
+            for (var i = 0; i < this.visits.length; i++) {
+                this.visits[i].i = i+1;
+                if(this.visits[i].property){
+                    let visiting = this.dataUnit.find(data => data._id ==  this.visits[i].property);
+                        this.visits[i].property_detail = visiting;
+                        this.visits[i].visiting = '#' + visiting.address.unit_no + '-' + visiting.address.unit_no_2;
+                }else{
+                        this.visits[i].visiting = '';
+                }
+                if(!this.visits[i].visitor.vehicle){
+                    this.visits[i].visitor.vehicle = '';
+                }
+            }
 
-                    this.visitActive       = this.visits.filter(data => data.visit_date.slice(0, 10)  == this.activeDate );
-                    setTimeout(() => this.loading = false, 1000);
-            });
+            this.visitActive       = this.visits.filter(data => data.visit_date.slice(0, 10)  == this.activeDate );
+            setTimeout(() => this.loading = false, 1000);
+        });
     }
 
     filter(){
@@ -350,6 +363,7 @@ export class VisitComponent implements OnInit {
                     this.dataUnit       = data.properties;
                     this.contractService.getAll().subscribe(contracts => {
                         this.contracts = contracts ;
+                        console.log(this.contracts)
                         this.loadVisits();
                     });
             });

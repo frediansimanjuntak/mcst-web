@@ -24,7 +24,7 @@
                 <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !remark.valid }">
                     <label class="control-label col-sm-4" for="remark">Project Description :</label>
                     <div class="col-sm-8">
-                        <textarea class="form-control" name="remark" [(ngModel)]="contract.remark" #remark="ngModel" required placeholder="Input remark here"></textarea>
+                        <textarea class="form-control" name="remark" [(ngModel)]="contract.remark" #remark="ngModel" required placeholder="Input project description here"></textarea>
                         <span *ngIf="f.submitted && !remark.valid" class="help-block">Description is required</span>
                     </div>
                 </div>
@@ -97,7 +97,7 @@
                 <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !remark.valid }">
                     <label class="control-label col-sm-4" for="remark">Project Description :</label>
                     <div class="col-sm-8">
-                        <textarea class="form-control" name="remark" [(ngModel)]="model.remark" #remark="ngModel" required placeholder="Input remark here"></textarea>
+                        <textarea class="form-control" name="remark" [(ngModel)]="model.remark" #remark="ngModel" required placeholder="Input project description here"></textarea>
                         <span *ngIf="f.submitted && !remark.valid" class="help-block">Description is required</span>
                     </div>
                 </div>

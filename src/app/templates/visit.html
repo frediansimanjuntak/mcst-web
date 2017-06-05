@@ -45,13 +45,13 @@
 				</p-column>
 				<p-column header="Visitor/Guest" field="visitor.full_name">
 					<template let-visitActive="rowData" pTemplate="body">
-						<span>{{visitActive.visitor.prefix}} {{visitActive.visitor.full_name}}</span>
+						<span class="break">{{visitActive.visitor.prefix}} {{visitActive.visitor.full_name}}</span>
 					</template>
 				</p-column>
 				<p-column header="Vehicle" field="" filterPlaceholder="Search vehicle">
 					<template let-visitActive="rowData" pTemplate="body">
 						<span *ngIf="visitActive.visitor.vehicle==''">N/A</span>
-						<span>{{visitActive.visitor.vehicle}}</span>
+						<span class="break">{{visitActive.visitor.vehicle}}</span>
 					</template>
 				</p-column>
 				<p-column header="Visiting" field="" filterPlaceholder="Search unit no">
@@ -185,14 +185,14 @@
 				<p-column header="Remarks" field="">
 					<template let-visitActive="rowData" pTemplate="body">
 						<span *ngIf="visitActive.remarks==''">No remarks</span>
-						<span>{{visitActive.remarks | capitalize}}</span>
+						<span class="break">{{visitActive.remarks | capitalize}}</span>
 					</template>
 				</p-column>
 				<p-column header="Added by" field="created_at" sortable="true">visitActive
 					<template let-visitActive="rowData" pTemplate="body">
-						<span class="btn-underline">{{visitActive.created_by.username | capitalize}}</span>
+						<span class="btn-underline break">{{visitActive.created_by.username | capitalize}}</span>
 						<br>
-						<span>on {{visitActive.created_at | date:'d/M/y'}}</span>
+						<span class="break">on {{visitActive.created_at | date:'d/M/y'}}</span>
 					</template>
 				</p-column>
 				<p-column header="Card no" [style]="{'width':'80px'}" field="visitor.pass" sortable="true">

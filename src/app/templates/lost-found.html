@@ -102,7 +102,11 @@
 										<span>{{all.type | capitalize}}</span>
 									</template>
 								</p-column>
-								<p-column field="description" header="Description"></p-column>
+								<p-column field="description" header="Description">
+									<template let-all="rowData" pTemplate="body">
+										<span class="break">{{all.description | capitalize}}</span>
+									</template>
+								</p-column>
 								<p-column header="Photo">
 									<template let-all="rowData" pTemplate="body">
 										<span *ngIf="all.photo">Yes</span>
@@ -150,7 +154,11 @@
 										<span style="text-transform: initial">{{losts.type | capitalize}}</span>
 									</template>
 								</p-column>
-								<p-column field="description" header="Description"></p-column>
+								<p-column field="description" header="Description">
+									<template let-losts="rowData" pTemplate="body">
+										<span class="break">{{losts.description | capitalize}}</span>
+									</template>
+								</p-column>
 								<p-column header="Photo">
 									<template let-losts="rowData" pTemplate="body">
 										<span *ngIf="losts.photo">Yes</span>
@@ -198,7 +206,11 @@
 										<span>{{founds.type | capitalize}}</span>
 									</template>
 								</p-column>
-								<p-column field="description" header="Description"></p-column>
+								<p-column field="description" header="Description">
+									<template let-founds="rowData" pTemplate="body">
+										<span class="break">{{founds.description | capitalize}}</span>
+									</template>
+								</p-column>
 								<p-column header="Photo">
 									<template let-founds="rowData" pTemplate="body">
 										<span *ngIf="founds.photo">Yes</span>
@@ -278,7 +290,11 @@
 										<span>{{archieveds.type | capitalize}}</span>
 									</template>
 								</p-column>
-								<p-column field="description" header="Description"></p-column>
+								<p-column field="description" header="Description">
+									<template let-archieveds="rowData" pTemplate="body">
+										<span class="break">{{archieveds.description | capitalize}}</span>
+									</template>
+								</p-column>
 								<p-column header="Photo">
 									<template let-archieveds="rowData" pTemplate="body">
 										<span *ngIf="archieveds.photo">Yes</span>
@@ -325,7 +341,11 @@
 										<span>{{archievedLosts.type | capitalize}}</span>
 									</template>
 								</p-column>
-								<p-column field="description" header="Description"></p-column>
+								<p-column field="description" header="Description">
+									<template let-archievedLosts="rowData" pTemplate="body">
+										<span class="break">{{archievedLosts.description | capitalize}}</span>
+									</template>
+								</p-column>
 								<p-column header="Photo">
 									<template let-archievedLosts="rowData" pTemplate="body">
 										<span *ngIf="archievedLosts.photo">Yes</span>
@@ -372,7 +392,11 @@
 										<span>{{archievedFounds.type | capitalize}}</span>
 									</template>
 								</p-column>
-								<p-column field="description" header="Description"></p-column>
+								<p-column field="description" header="Description">
+									<template let-archievedFounds="rowData" pTemplate="body">
+										<span class="break">{{archievedFounds.description | capitalize}}</span>
+									</template>
+								</p-column>
 								<p-column header="Photo">
 									<template let-archievedFounds="rowData" pTemplate="body">
 										<span *ngIf="archievedFounds.photo">Yes</span>

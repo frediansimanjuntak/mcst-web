@@ -154,6 +154,10 @@ export class IncidentComponent implements OnInit {
                 if (incidents[z].attachment.length < 1) {
                     incidents[z].attachment = null
                 }
+                if (incidents[z].remark && incidents[z].remark != '' && incidents[z].remark.length > 100) {
+                    let content = incidents[z].remark;
+                    incidents[z].remark = this.smart_substr(content,100) + '...'
+                }
             }
 	        this.incidents = incidents.filter(incidents => incidents.archieve === false);
             this.dataNew = this.incidents.filter(incidents => incidents.status === 'new');
@@ -162,6 +166,14 @@ export class IncidentComponent implements OnInit {
             this.dataArchieved   = this.all.filter(incidents => incidents.archieve === true );
             setTimeout(() => this.loading = false, 1000);
 		});
+    }
+
+    smart_substr(str:string, len:number) {
+        var temp = str.substr(0, len);
+        if(temp.lastIndexOf('<') > temp.lastIndexOf('>')) {
+            temp = str.substr(0, 1 + str.indexOf('>', temp.lastIndexOf('<')));
+        }
+        return temp;
     }
 
     filter(){
@@ -287,6 +299,7 @@ export class IncidentComponent implements OnInit {
         this.confirmationService.confirm({
             message: 'Are you sure that you want to archieve this incident?',
             header: 'Archieve Confirmation',
+            icon: '',
             accept: () => {
                 this.archieve(incident)
             }
@@ -347,6 +360,7 @@ export class IncidentComponent implements OnInit {
         this.confirmationService.confirm({
             message: 'Are you sure that you want to star this incident?',
             header: 'Star Confirmation',
+            icon: '',
             accept: () => {
                 this.starred(incident)
             }

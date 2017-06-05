@@ -47,11 +47,12 @@
                                         <div class="col-md-6 col-padding"><strong>Last updated on :</strong></div>
                                         <div class="col-md-6 col-padding">{{ contract.updated_at | date:'d/M/y' }}</div>
                                     </div>
-                                    <div class="row">
-                                        <div class="col-md-6 col-padding"><strong>Linked incident report :</strong></div>
+                                    <div class="row" *ngIf="contract.reference_id != 'undefined' && contract.reference_type != 'undefined'">
+                                        <div class="col-md-6 col-padding"><strong>Linked {{contract.reference_type}} :</strong></div>
                                         <div class="col-md-6 col-padding">
-                                            <span *ngIf="contract.reference_no == 'undefined'">-</span>
-                                            <span *ngIf="contract.reference_no != 'undefined'"><a style="text-decoration: underline;cursor:pointer" (click)="viewIncident(contract.reference_id)">#{{ contract.reference_no }}</a></span>
+                                            <span *ngIf="contract.reference_no != 'undefined' && contract.reference_id != 'undefined'">
+                                                <a style="text-decoration: underline;cursor:pointer" (click)="viewIncident(contract.reference_id, contract.reference_type)">#{{ contract.reference_no }}</a>
+                                            </span>
                                         </div>
                                     </div>
                                     <div class="row">
@@ -62,7 +63,7 @@
                                         <div class="col-md-6 col-padding"><strong>Description of Project :</strong></div>
                                     </div>
                                     <div class="row">
-                                        <div class="col-md-12">{{ contract.remark }}</div>
+                                        <div class="col-md-12" style="word-break: break-all;">{{ contract.remark }}</div>
                                     </div>
                                 </div>
                             </div>
@@ -273,9 +274,9 @@
                                     </template>
                                 </p-column>
                                 <p-column filterMatchMode="contains" [style]="{'width': '155px'}" field="remark" header="Remarks" sortable="true" [filter]="true" filterPlaceholder="Search Remark">
-                                    <!-- <template let-contracts="rowData" pTemplate="body">
-                                        <span>{{contracts.remark | capitalize}}</span>
-                                    </template> -->
+                                    <template let-contracts="rowData" pTemplate="body">
+                                        <span class="break">{{contracts.remark}}</span>
+                                    </template>
                                 </p-column>
                                 <p-column filterMatchMode="contains" [style]="{'width': '112px'}" field="status" header="Status" sortable="true" [filter]="true" filterPlaceholder="Search Status">
                                     <template let-contracts="rowData" pTemplate="body">
@@ -315,9 +316,9 @@
                                     </template>
                                 </p-column>
                                 <p-column filterMatchMode="contains" [style]="{'width': '155px'}" field="remark" header="Remarks" sortable="true" [filter]="true" filterPlaceholder="Search Remark">
-                                    <!-- <template let-open="rowData" pTemplate="body">
-                                        <span>{{open.remark | capitalize}}</span>
-                                    </template> -->
+                                    <template let-open="rowData" pTemplate="body">
+                                        <span class="break">{{open.remark}}</span>
+                                    </template>
                                 </p-column>
                                 <p-column filterMatchMode="contains" [style]="{'width': '112px'}" field="status" header="Status" sortable="true" [filter]="true" filterPlaceholder="Search Status">
                                     <template let-open="rowData" pTemplate="body">
@@ -357,9 +358,9 @@
                                     </template>
                                 </p-column>
                                 <p-column filterMatchMode="contains" field="remark" [style]="{'width': '155px'}" header="Remarks" sortable="true" [filter]="true" filterPlaceholder="Search Remark">
-                                    <!-- <template let-close="rowData" pTemplate="body">
-                                        <span>{{close.remark | capitalize}}</span>
-                                    </template> -->
+                                    <template let-close="rowData" pTemplate="body">
+                                        <span class="break">{{close.remark}}</span>
+                                    </template>
                                 </p-column>
                                 <p-column filterMatchMode="contains" [style]="{'width': '112px'}" field="status" header="Status" sortable="true" [filter]="true" filterPlaceholder="Search Status">
                                     <template let-close="rowData" pTemplate="body">

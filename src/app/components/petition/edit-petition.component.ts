@@ -107,6 +107,14 @@ export class EditPetitionComponent implements OnInit {
         };
     }
 
+    number(event: any) {
+        const pattern = /[0-9\+\ ]/;
+        let inputChar = String.fromCharCode(event.charCode);
+        if (!pattern.test(inputChar)) {
+            event.preventDefault();
+        }
+    }
+
     createPetition(model: any, isValid: boolean) {
         this.submitted = true;
         if(isValid && this.model.attachment.length > 0){

@@ -32,7 +32,7 @@
 							</p-column>
 							<p-column [style]="{'width':'200px'}" field="message" header="Message" sortable="true">
 								<template let-announcementsDrafted="rowData" pTemplate="body">
-									<span>{{announcementsDrafted.message | capitalizeFirst}}</span>
+									<span class="break">{{announcementsDrafted.message | capitalizeFirst}}</span>
 								</template>
 							</p-column>
 							<p-column [style]="{'width':'70px'}" field="sticky" header="Sticky" sortable="true">
@@ -77,7 +77,7 @@
 							</p-column>
 							<p-column [style]="{'width':'250px'}" field="message" header="Message" sortable="true" >
 								<template let-announcementsPublished="rowData" pTemplate="body">
-									<span>{{announcementsPublished.message | capitalizeFirst}}</span>
+									<span class="break">{{announcementsPublished.message | capitalizeFirst}}</span>
 								</template>
 							</p-column>
 							<p-column [style]="{'width':'70px'}" field="sticky" header="Sticky" sortable="true">

@@ -24,7 +24,7 @@
                                 <b>Block :&nbsp;</b>{{unit?.address?.block_no}}
                             </div>
                             <div class="col-md-4">
-                                <span *ngIf="hasLandlord"><b>Owner :&nbsp;</b>{{unit?.landlord?.data?.resident?.username | capitalize}}<br></span>
+                                <span class="break" *ngIf="hasLandlord"><b>Owner :&nbsp;</b>{{unit?.landlord?.data?.resident?.username | capitalize}}<br></span>
                                 <b>Status :</b>
                                 <span *ngIf="unit.status == 'own stay'">Owned</span>
                                 <span *ngIf="unit.status == 'tenanted'">Tenanted</span>
@@ -127,7 +127,7 @@
                         <h5>Registered Vehicle</h5>
                     </div>
                     <div class="col-md-6">
-                        <button [disabled]="!hasTenants" class="btn btn-gray btn-tab-dark pull-right" (click)="secondModal.open()"><img class="img-btn" src="../../assets/image/icon_addresident.png" />&nbsp;Register Vehicle</button>
+                        <button [disabled]="!hasTenants" class="btn btn-gray btn-tab-dark pull-right" (click)="secondModal.open();resetForm2()"><img class="img-btn" src="../../assets/image/icon_addresident.png" />&nbsp;Register Vehicle</button>
                     </div>
                 </div>
                 <div class="row no-margin" *ngIf="vehicles">
@@ -221,12 +221,12 @@
                                 </div>
                             </div>
                         </div> -->
-                        <div class="form-group">
+                        <div class="form-group" [ngClass]="{ 'has-error': addSubmitted && username=='' && !useAutocomplete }">
                             <div class="row no-margin">
                                 <label class="control-label col-sm-4" for="username">Username :</label>
                                 <div class="col-sm-8">
                                     <!-- <input type="text" class="form-control" name="username" formControlName="username" required placeholder="Input username here" /> -->
-                                    <p-autoComplete [(ngModel)]="username" [suggestions]="filteredBrands" (completeMethod)="filterBrands($event)" (onSelect)="onAutoCompleteChange($event)" (onDropdownClick)="onAutoCompleteChange($event)" field="username" [size]="30" placeholder="  Username" [minLength]="1" [ngModelOptions]="{standalone: true}"></p-autoComplete>
+                                    <p-autoComplete  [(ngModel)]="username" [suggestions]="filteredBrands" (completeMethod)="filterBrands($event)" (onSelect)="onAutoCompleteChange($event)" (onDropdownClick)="onAutoCompleteChange($event)" field="username" [size]="30" placeholder="  Username" [minLength]="1" [ngModelOptions]="{standalone: true}"></p-autoComplete>
                                     <span style="cursor:pointer; color: blue;" (click)="resetForm()">Reset</span><br>
                                     <small *ngIf="addSubmitted && username=='' && !useAutocomplete" class="text-danger">
                                     Name is required and at least 3 character
@@ -234,7 +234,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="form-group" formGroupName="details">
+                        <div class="form-group" formGroupName="details" [ngClass]="{ 'has-error': addSubmitted && !myForm.controls.details.controls.first_name.valid && !useAutocomplete }">
                             <div class="row no-margin">
                                 <label class="control-label col-sm-4" for="username">First name :</label>
                                 <div class="col-sm-8">
@@ -245,7 +245,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="form-group" formGroupName="details">
+                        <div class="form-group" formGroupName="details" [ngClass]="{ 'has-error': addSubmitted && !myForm.controls.details.controls.last_name.valid && !useAutocomplete }">
                             <div class="row no-margin">
                                 <label class="control-label col-sm-4" for="username">Last name :</label>
                                 <div class="col-sm-8">
@@ -256,7 +256,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="form-group" formGroupName="details">
+                        <div class="form-group" formGroupName="details" [ngClass]="{ 'has-error': addSubmitted && !myForm.controls.details.controls.identification_no.valid && !useAutocomplete }">
                             <div class="row no-margin">
                                 <label class="control-label col-sm-4" for="identification_no">ID number :</label>
                                 <div class="col-sm-8">
@@ -267,7 +267,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="form-group">
+                        <div class="form-group" [ngClass]="{ 'has-error': addSubmitted && !myForm.controls.gender.valid && !useAutocomplete }">
                             <div class="row no-margin">
                                 <label class="control-label col-sm-4" for="gender">Gender :</label>
                                 <div class="col-sm-8">
@@ -282,7 +282,7 @@
                                 </div>
                             </div>
                         </div>
-                          <div class="form-group">
+                          <div class="form-group" [ngClass]="{ 'has-error': addSubmitted && !myForm.controls.salulation.valid && !useAutocomplete }">
                             <div class="row no-margin">
                                 <label class="control-label col-sm-4" for="salulation">Salutation :</label>
                                 <div class="col-sm-8">
@@ -298,22 +298,25 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="form-group">
+                        <div class="form-group" [ngClass]="{ 'has-error': ((addSubmitted && !myForm.controls.email.valid) || emailError) && !useAutocomplete }">
                             <div class="row no-margin">
                                 <label class="control-label col-sm-4" for="email">Email :</label>
                                 <div class="col-sm-8">
-                                    <input type="email" [attr.disabled]="useAutocomplete?true:null" class="form-control" name="email" formControlName="email" placeholder="Input email here"/>
+                                    <input type="email" [attr.disabled]="useAutocomplete?true:null" (change)="checkValid($event, 'email')" class="form-control" name="email" formControlName="email" placeholder="Input email here"/>
                                     <small *ngIf="addSubmitted && !myForm.controls.email.valid && !useAutocomplete" class="text-danger">
                                     Email is required
+                                    </small>
+                                    <small *ngIf="emailError" class="text-danger">
+                                        {{emailErrorMessage}}
                                     </small>
                                 </div>
                             </div>
                         </div>
-                        <div class="form-group">
+                        <div class="form-group" [ngClass]="{ 'has-error': addSubmitted && !myForm.controls.phone.valid && !useAutocomplete }">
                             <div class="row no-margin">
                                 <label class="control-label col-sm-4" for="phone">Phone :</label>
                                 <div class="col-sm-8">
-                                    <input [attr.disabled]="useAutocomplete?true:null" type="text" class="form-control" name="phone" formControlName="phone" required placeholder="Input phone number here"/>
+                                    <input [attr.disabled]="useAutocomplete?true:null" type="text" (keypress)="number($event)" class="form-control" name="phone" formControlName="phone" required placeholder="Input phone number here"/>
                                     <small *ngIf="addSubmitted && !myForm.controls.phone.valid && !useAutocomplete" class="text-danger">
                                         Phone is required
                                     </small>                    
@@ -371,7 +374,7 @@
                                 <label  class="control-label col-sm-4" for="license_plate">License Plate :</label>
                                 <div class="col-sm-8">
                                     <input license_plate="text" class="form-control" name="license_plate" formControlName="license_plate" placeholder="Input license plate here">
-                                    <small style="color: red" [hidden]="myForm2.controls.license_plate.valid || (myForm2.controls.license_plate.pristine && !vehicleSubmitted)">License Plate is required</small>
+                                    <small style="color: red" *ngIf="vehicleSubmitted && !myForm2.controls.license_plate.valid">License Plate is required</small>
                                 </div>
                             </div>
                         </div>
@@ -383,7 +386,7 @@
                                         <option value=""  class="blur-font" disabled selected>Select owner</option>
                                         <option *ngFor="let u of unit?.tenant?.data" [ngValue]="u?.resident?._id">{{u?.resident?.username}}</option>
                                     </select>
-                                   <small style="color: red" [hidden]="myForm2.controls.owner.valid || (myForm2.controls.owner.pristine && !vehicleSubmitted)">Owner is required</small>
+                                   <small style="color: red" *ngIf="vehicleSubmitted && !myForm2.controls.owner.valid">Owner is required</small>
                                 </div>
                             </div>
                         </div>
@@ -400,7 +403,7 @@
                                 <label class="control-label col-sm-4" for="document">Document :</label>
                                 <div class="col-sm-8">
                                     <input type="file" multiple class="upload" name="document" (change)="onChange($event)" />
-                                    <p style="word-break:break-all;" *ngFor="let item of model.document; let i=index ">
+                                    <p class="break" *ngFor="let item of model.document; let i=index ">
                                         <img src="assets/image/icon_media_image.png" width="14px" height="12px">&nbsp;
                                         <span style="text-decoration: underline;">{{ item.name }}_{{item.size/1024 | number:'1.0-0' }}kb</span> &nbsp;   
                                         <span style="cursor:pointer" (click)="remove(i)"><img src="assets/image/icon_close_black.png" width="14px" height="12px"></span>
@@ -433,24 +436,24 @@
         <div class="row">
             <modal #residentDetail>
                 <modal-header *ngIf="resident">
-                    <h5>Resident/Tenant {{ resident.resident.username }}</h5>
+                    <h5>Resident/Tenant <span class="break">{{ resident.resident.username }}</span></h5>
                 </modal-header>
                 <modal-content *ngIf="resident">
                     <div class="row">
                         <div class="col-md-4 col-padding"><b>Resident</b></div>
-                        <div class="col-md-8 col-padding">: {{ resident.resident.username | capitalize }}</div>
+                        <div class="col-md-8 col-padding break">: {{ resident.resident.username | capitalize }}</div>
                     </div>
                     <div class="row">
                         <div class="col-md-4 col-padding"><b>Type</b></div>
-                        <div class="col-md-8 col-padding">: {{ resident.type | capitalize}}</div>
+                        <div class="col-md-8 col-padding break">: {{ resident.type | capitalize}}</div>
                     </div>
                     <div class="row">
                         <div class="col-md-4 col-padding"><b>Added on </b></div>
-                        <div class="col-md-8 col-padding">: {{ resident.created_at | date:'fullDate' }}</div>
+                        <div class="col-md-8 col-padding break">: {{ resident.created_at | date:'fullDate' }}</div>
                     </div>
                     <div class="row">
                         <div class="col-md-4 col-padding"><b>Contact No </b></div>
-                        <div class="col-md-8 col-padding">: {{resident.resident.phone}}, {{resident.resident.email}}</div>
+                        <div class="col-md-8 col-padding break">: {{resident.resident.phone}}, {{resident.resident.email}}</div>
                     </div>
                     <div class="row">
                         <div class="col-md-4 col-padding"><b>Social Page </b></div>
@@ -461,7 +464,7 @@
                     </div>
                     <div class="row">
                         <div class="col-md-4 col-padding"><b>Remarks </b></div>
-                        <div class="col-md-8 col-padding">
+                        <div class="col-md-8 col-padding break">
                             <span *ngIf="resident.remarks">: {{ resident.remarks | capitalize}}</span>
                             <span *ngIf="!resident.remarks">: -</span>
                         </div>
@@ -481,15 +484,15 @@
                 <modal-content *ngIf="vehicle">
                     <div class="row">
                         <div class="col-md-4 col-padding"><b>License Plate</b></div>
-                        <div class="col-md-8 col-padding">: {{ vehicle.license_plate }}</div>
+                        <div class="col-md-8 col-padding break">: {{ vehicle.license_plate }}</div>
                     </div>
                     <div class="row">
                         <div class="col-md-4 col-padding"><b>Owner</b></div>
-                        <div class="col-md-8 col-padding">: {{ vehicle.user | capitalize}}</div>
+                        <div class="col-md-8 col-padding break">: {{ vehicle.user | capitalize}}</div>
                     </div>
                     <div class="row">
                         <div class="col-md-4 col-padding"><b>Transponder</b></div>
-                        <div class="col-md-8 col-padding">
+                        <div class="col-md-8 col-padding break">
                             <span *ngIf="vehicle.transponder">: {{ vehicle.transponder }}</span>
                             <span *ngIf="!vehicle.transponder">: -</span>
                         </div>
@@ -516,7 +519,7 @@
                     </div>
                     <div class="row">
                         <div class="col-md-4 col-padding"><b>Remarks </b></div>
-                        <div class="col-md-8 col-padding">
+                        <div class="col-md-8 col-padding break">
                             <span *ngIf="vehicle.remarks">: {{ vehicle.remarks | capitalize}}</span>
                             <span *ngIf="!vehicle.remarks">: -</span>
                         </div>
