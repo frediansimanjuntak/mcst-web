@@ -87,7 +87,7 @@ export class VisitComponent implements OnInit {
                 visitor: this.formbuilder.group({
                     full_name : ['',  <any>Validators.compose([Validators.required, Validators.minLength(3)])],
                     vehicle : [''],
-                    pass : [''],
+                    pass : ['', Validators.compose([Validators.required, Validators.minLength(3)])],
                     prefix: ['', Validators.compose([Validators.required])]
                 }),
                 purpose: ['', Validators.compose([Validators.required, Validators.minLength(3)])],
