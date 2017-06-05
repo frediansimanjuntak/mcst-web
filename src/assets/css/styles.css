@@ -1204,4 +1204,9 @@ edit-payment-reminder .ui-inputtext {
   padding: 10px !important;
   width: 288px !important;
 }
-
+.break{
+  word-break: break-all;
+}
+td{
+  word-break: break-all !important;
+}
