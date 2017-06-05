@@ -32,11 +32,7 @@
 									<span>{{dataAgm.title | capitalizeFirst}}</span>
 								</template>
 							</p-column>
-							<p-column header="Uploaded on" sortable="true">
-								<template let-dataAgm="rowData" pTemplate="body">
-									<span>{{dataAgm.created_at | date:'d/M/y'}}</span>
-								</template>
-							</p-column>
+							<p-column field="created_at" header="Uploaded on" sortable="true"></p-column>
 							<p-column field="created_by.username" header="Uploaded by" sortable="true" [filter]="true" filterPlaceholder="Search Uploaded by">
 								<template let-dataAgm="rowData" pTemplate="body">
 									<span>{{dataAgm.created_by.username | capitalize}}</span>
@@ -65,11 +61,7 @@
 									<span>{{dataEgm.title | capitalizeFirst}}</span>
 								</template>
 							</p-column>
-							<p-column header="Uploaded on" sortable="true">
-								<template let-dataEgm="rowData" pTemplate="body">
-									<span>{{dataEgm.created_at | date:'d/M/y'}}</span>
-								</template>
-							</p-column>
+							<p-column field="created_at" header="Uploaded on" sortable="true"></p-column>
 							<p-column field="created_by.username" header="Uploaded by" sortable="true" [filter]="true" filterPlaceholder="Search Uploaded by">
 								<template let-dataEgm="rowData" pTemplate="body">
 									<span>{{dataEgm.created_by.username | capitalize}}</span>
@@ -97,11 +89,7 @@
 									<span>{{dataCircular.title | capitalizeFirst}}</span>
 								</template>
 							</p-column>
-							<p-column header="Uploaded on" sortable="true">
-								<template let-dataCircular="rowData" pTemplate="body">
-									<span>{{dataCircular.created_at | date:'d/M/y'}}</span>
-								</template>
-							</p-column>
+							<p-column field="created_at" header="Uploaded on" sortable="true"></p-column>
 							<p-column field="created_by.username" header="Uploaded by" sortable="true" [filter]="true" filterPlaceholder="Search Uploaded by">
 								<template let-dataCircular="rowData" pTemplate="body">
 									<span>{{dataCircular.created_by.username | capitalize}}</span>

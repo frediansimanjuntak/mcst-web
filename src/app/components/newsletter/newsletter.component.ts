@@ -3,7 +3,7 @@ import { Router } from '@angular/router';
 import { Development } from '../../models/index';
 import { NewsletterService, AlertService, UserService, AttachmentService} from '../../services/index';
 import { NotificationsService } from 'angular2-notifications';
-
+import * as moment from 'moment';
 import { FileUploader } from 'ng2-file-upload';
 
 import { Observable} from 'rxjs/Observable';
@@ -136,6 +136,11 @@ export class NewsletterComponent implements OnInit {
         this.newsletterservice.getAll(this.name.default_development.name_url)
         .subscribe((data)=> {
             setTimeout(()=> {
+                for (var z = 0; z < data.length; ++z) {
+                    if (data[z].created_at) {
+                        data[z].created_at = moment(data[z].created_at).format('DD/MM/YYYY')
+                    }
+                }
               this.data = data;
               this.allAgm       = this.data.filter(data => data.type === 'agm' );
               this.allEgm       = this.data.filter(data => data.type === 'egm' );
