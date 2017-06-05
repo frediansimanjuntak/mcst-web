@@ -59,6 +59,7 @@ export class ContractComponent implements OnInit  {
             this.contractService.getById(this.id)
             .subscribe(contract => {
                 this.contract = contract;
+                console.log(this,contract)
                 this.images = [];
                 for (var i = 0; i < this.contract.attachment.length; ++i) {
                     this.images.push({source:this.contract.attachment[i].url});
@@ -153,10 +154,24 @@ export class ContractComponent implements OnInit  {
             }
         });
     }
+    
+    smart_substr(str:string, len:number) {
+        var temp = str.substr(0, len);
+        if(temp.lastIndexOf('<') > temp.lastIndexOf('>')) {
+            temp = str.substr(0, 1 + str.indexOf('>', temp.lastIndexOf('<')));
+        }
+        return temp;
+    }
 
 	private loadAllContract() {
 		this.contractService.getAll().subscribe(contracts => {
-			this.contracts = contracts ;
+            for (var i = 0; i < contracts.length; ++i) {
+                if (contracts[i].remark && contracts[i].remark != '' && contracts[i].remark.length > 100) {
+                    let content = contracts[i].remark;
+                    contracts[i].remark = this.smart_substr(content,100) + '...'
+                }
+            }
+			this.contracts = contracts;
             this.all       = contracts;
             this.open      = this.contracts.filter(contracts => contracts.status === 'open' );
             this.close     = this.contracts.filter(contracts => contracts.status === 'closed' );
@@ -184,8 +199,12 @@ export class ContractComponent implements OnInit  {
         this.router.navigate([this.name.default_development.name_url + '/contract/note/' + id + '/view' , contractnote._id]);
     }
 
-    viewIncident(id: any){
-        this.router.navigate([this.name.default_development.name_url + '/incident/view', id]);
+    viewIncident(id: any, type: string){
+        if (type && type != undefined && id && id != undefined) {
+            this.router.navigate([this.name.default_development.name_url + '/' + type + '/view', id]);
+        }else{
+            this._notificationsService.error('Error', 'This project has no reference incident or petition')
+        }
     }
 
     edit(id: any){
