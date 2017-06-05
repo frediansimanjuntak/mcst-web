@@ -238,6 +238,7 @@ export class BookingComponent implements OnInit {
 		this.loading = true
 		this.day     = new Date(this.dt.getTime());
 		this.day     = this.convertDate(this.day);
+		this.filtered = null;
 		this.ngOnInit();
 	}
 
