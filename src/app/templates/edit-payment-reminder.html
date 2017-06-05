@@ -84,7 +84,7 @@
 		                                    </small>
                                         </div>
                                         <div style="width: 100px; float: left; margin-right: 5px" [ngClass]="{ 'has-error': f.submitted && !myForm.controls.notification_list.controls[i].controls.amount.valid }">
-                                        	<input (keypress)="number($event)" class="form-control" (change)="total(myForm.value.notification_list[i].amount)" type="text" formControlName="amount" />
+                                        	<input (keypress)="number($event)" class="form-control" (change)="total(myForm.value.notification_list[i].amount, i)" type="text" formControlName="amount" />
                                         	<small *ngIf="f.submitted && !myForm.controls.notification_list.controls[i].controls.amount.valid" class="text-danger">
 		                                        Amount is required
 		                                    </small>
@@ -192,7 +192,7 @@
 		                                    </small>
                                         </div>
                                         <div style="width: 100px; float: left; margin-right: 5px" [ngClass]="{ 'has-error': f.submitted && !myForm.controls.notification_list.controls[i].controls.amount.valid }">
-                                        	<input (keypress)="number($event)" class="form-control" (change)="total(myForm.value.notification_list[i].amount)" type="text" formControlName="amount" />
+                                        	<input (keypress)="number($event)" class="form-control" (change)="total(myForm.value.notification_list[i].amount, i)" type="text" formControlName="amount" />
                                         	<small *ngIf="f.submitted && !myForm.controls.notification_list.controls[i].controls.amount.valid" class="text-danger">
 		                                        Amount is required
 		                                    </small>

@@ -57,7 +57,7 @@
 	            	<div class="col-md-8">
 	        			Results generated for
 	        			<br>
-	        			<b>{{ day | date:'longDate' }} <span *ngIf="facility">{{ facility }},</span> <span *ngIf="status">{{ status }} Status,</span> <span *ngIf="period1 && period2">Period {{ period1 }} to {{ period2 }}</span></b>
+	        			<b>{{ day | date:'longDate' }} <span *ngIf="facility && filtered">{{ facility }},</span> <span *ngIf="status && filtered">{{ status }} Status,</span> <span *ngIf="period1 && period2 && filtered">Period {{ period1 }} to {{ period2 }}</span></b>
 	        		</div>
 					<div class="col-md-4 pull-right">
 						<button class="btn btn-default btn-add pull-right" (click)="add()">

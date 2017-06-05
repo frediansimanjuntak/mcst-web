@@ -5,7 +5,7 @@
           Add Request
         </div>
         <p class="id-location">Home > Manage Request > Add Request</p>
-        <form class="form-horizontal col-md-6" name="form" [formGroup]="myForm" #f="ngForm" novalidate enctype="multipart/form-data">
+        <form class="form-horizontal col-md-8" name="form" [formGroup]="myForm" #f="ngForm" novalidate enctype="multipart/form-data">
                     <div class="form-group" [ngClass]="{ 'has-error': submitted && !myForm.controls.petition_type.valid }">
                         <label class="control-label col-sm-4" for="petition_type">Request Type :</label>
                         <div class="col-sm-8">
@@ -104,7 +104,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="form-group" *ngIf="myForm.controls.petition_type.value!='new tenant' && mteyForm.controls.petition_type.value!=''" [ngClass]="{ 'has-error': submitted && !company.phone }">
+                        <div class="form-group" *ngIf="myForm.controls.petition_type.value!='new tenant' && myForm.controls.petition_type.value!=''" [ngClass]="{ 'has-error': submitted && !company.phone }">
                             <div class="row no-margin">
                                 <label class="control-label col-sm-4" for="phone">Contractor Contact no :</label>
                                 <div class="col-sm-8">
@@ -122,13 +122,11 @@
                                 </div>
                             </div>
                         </div>
-
-
                         <div class="form-group" *ngIf="myForm.controls.petition_type.value!='new tenant' && myForm.controls.petition_type.value!=''" [ngClass]="{ 'has-error': submitted && !model.start_time }">
                             <div class="row no-margin">
                                 <label class="control-label col-sm-4" for="vehicle">Commence date :</label>
                                 <div class="col-sm-8">
-                                    <my-date-picker [placeholder]="'Select commence date'" class="bg-white" [options]="dateOptions" (dateChanged)="dateCommenceChanged($event,'start')"></my-date-picker>
+                                    <p-calendar name="start_time" [minDate]="today" [maxDate]="model.end_time" [(ngModel)]="model.start_time" [ngModelOptions]="{standalone: true}" required dateFormat="dd/mm/yy" [showIcon]="true" placeholder="dd/mm/yy"></p-calendar>
                                      <small style="color: red" *ngIf="!model.start_time && submitted">Commence date is required</small>
                                 </div>
                             </div>
@@ -137,7 +135,7 @@
                             <div class="row no-margin">
                                 <label class="control-label col-sm-4" for="vehicle">Estimate date of completion :</label>
                                 <div class="col-sm-8">
-                                    <my-date-picker [placeholder]="'Select estimate date of completion'" class="bg-white" [options]="dateOptions" (dateChanged)="dateCommenceChanged($event,'end')"></my-date-picker>
+                                     <p-calendar name="end_time" [minDate]="model.start_time" [(ngModel)]="model.end_time" [ngModelOptions]="{standalone: true}" required dateFormat="dd/mm/yy" [showIcon]="true" placeholder="dd/mm/yy"></p-calendar>
                                      <small style="color: red" *ngIf="!model.end_time && submitted">Estimate date of completion is required</small>
                                 </div>
                             </div>

@@ -390,7 +390,6 @@ export class EditBookingComponent implements OnInit  {
 				booking_date     = this.convertDate1(booking_date);
 				for (let z = 0; z < this.timeStart.length; ++z) {
 					let hours = this.durationMinutes(this.timeStart[z], this.timeEnd[z])
-					console.log(hours)
 					if(hours < 0) {
 			    		hours = Math.abs(hours);
 					}
@@ -473,7 +472,6 @@ export class EditBookingComponent implements OnInit  {
 		}
 		var time_start = Math.min.apply(Math,this.tstart);
 		var time_end = Math.max.apply(Math,this.tend);
-		console.log(time_start , time_end)
 		let booking_fee = this.model.booking_fee * (time_end - time_start);
 		this.model.fees = [{
 			deposit_fee : this.model.deposit_fee ,
@@ -487,7 +485,6 @@ export class EditBookingComponent implements OnInit  {
 		this.model.start_time = moment(time_start, 'h').format('HH:mm');
 		this.model.end_time = moment(time_end, 'h').format('HH:mm');
 		this.model.name = name;
-		console.log(this.model)
 	}
 
 	public selectedDate(date:any) {  

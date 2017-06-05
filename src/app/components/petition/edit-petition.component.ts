@@ -26,6 +26,7 @@ export class EditPetitionComponent implements OnInit {
     myForm: FormGroup;
     myOptions: Array<any>;
     no: number;
+    today: Date;
     public developmentId;
     public uploader:FileUploader = new FileUploader({url:'http://localhost:3001/upload'});
     loading: boolean = true;
@@ -72,8 +73,9 @@ export class EditPetitionComponent implements OnInit {
             salulation: undefined,
             phone: ''
         };
-        this.model.start_time = '';
-        this.model.end_time = '';
+        this.today = new Date();
+        this.model.start_time = this.today
+        this.model.end_time = null;
         this.model.company = '';
         this.myForm = this.formbuilder.group({
             reference_no : [''],
@@ -269,7 +271,8 @@ export class EditPetitionComponent implements OnInit {
       this.router.navigate([this.name.default_development.name_url + '/petition']);  
     }
 
-    dateCommenceChanged(event: any, type: string){
+    getDate(event: any, type: string){
+        console.log(event)
         if(type == 'start'){
             this.model.start_time = event.jsdate;
         }else{

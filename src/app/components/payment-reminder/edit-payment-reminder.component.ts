@@ -77,6 +77,7 @@ export class EditPaymentReminderComponent implements OnInit{
                     this.totalAmount = this.totalAmount + parseInt(this.paymentreminder.notification_list[i].amount)
                     const control = <FormArray>this.myForm.controls['notification_list'];
                     control.push(this.initNotification_list());
+                    this.amount.push(parseInt(this.paymentreminder.notification_list[i].amount))
                 }
                 this.paymentreminder.auto_issue_on = moment(this.paymentreminder.auto_issue_on).format('DD/MM/YYYY');
                 this.myForm.patchValue(this.paymentreminder);
@@ -98,6 +99,7 @@ export class EditPaymentReminderComponent implements OnInit{
         const control = <FormArray>this.myForm.controls['notification_list'];
         const notification_listCtrl = this.initNotification_list();
         control.push(notification_listCtrl);
+        this.amount.push(0)
     }
 
     getValue(value:any){
@@ -107,6 +109,7 @@ export class EditPaymentReminderComponent implements OnInit{
     removeNotification_list(i: number) {
         const control = <FormArray>this.myForm.controls['notification_list'];
         control.removeAt(i);
+        this.amount.splice(i, 1)
     }
 
     number(event: any) {
@@ -169,9 +172,9 @@ export class EditPaymentReminderComponent implements OnInit{
         );
     }
 
-    total(amount){
+    total(amount: number, index: number){
         this.totalAmount = 0
-        this.amount.push(amount)
+        this.amount[index] = amount
         for (let a = 0; a < this.amount.length; ++a) {
             this.totalAmount = this.totalAmount + +this.amount[a]
         }

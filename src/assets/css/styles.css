@@ -812,11 +812,13 @@ p.pull-down {
   color: green;
   font-size: 13px;
   padding-right: 10px;
+  margin-left: 50px !important;
 }
 .circle-red {
   color: red;
   font-size: 13px;
   padding-right: 10px;
+  margin-left: 50px !important;
 }
 .bg-dark .mydp {
   border: 0;
@@ -1195,7 +1197,6 @@ edit-contract .ui-inputtext {
   padding: 10px !important;
   width: 404px !important;
 }
-
 contract-notice .ui-inputtext {
   padding: 10px !important;
   width: 404px !important;
@@ -1204,9 +1205,20 @@ edit-payment-reminder .ui-inputtext {
   padding: 10px !important;
   width: 288px !important;
 }
+edit-facility .ui-inputtext {
+  padding: 10px !important;
+  width: 288px !important;
+}
+edit-petition .ui-inputtext {
+  padding: 10px !important;
+  width: 404px !important;
+}
 .break{
   word-break: break-all;
 }
 td{
   word-break: break-all !important;
+}
+form .has-error > .row > .col-sm-8 > p-autocomplete > .ui-widget > .ui-inputtext {
+  border-color: red
 }
