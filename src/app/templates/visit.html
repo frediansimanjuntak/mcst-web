@@ -322,11 +322,12 @@
 								</div>
 							</div>
 						</div>
-						<div class="form-group" formGroupName="visitor">
+						<div class="form-group" formGroupName="visitor" [ngClass]="{ 'has-error': addSubmitted && !myForm.controls.visitor.controls.pass.valid }">
 							<div class="row no-margin">
 								<label class="control-label col-sm-4" for="pass">Visitor Pass :</label>
 								<div class="col-sm-8">
 									<input type="text" (keypress)="number($event)" class="form-control" placeholder="Enter Pass serial" name="pass" formControlName="pass">
+									<span *ngIf="addSubmitted && !myForm.controls.visitor.controls.pass.valid" class="help-block">Visitor pass is required and at least 3 character</span>
 								</div>
 							</div>
 						</div>
@@ -400,7 +401,7 @@
 								<label class="control-label col-sm-4" for="pass">Visitor Pass :</label>
 								<div class="col-sm-8">
 									<input type="text" (keypress)="number($event)" class="form-control" placeholder="Enter Pass serial" name="pass" formControlName="pass">
-									<small style="color: red" [hidden]="checkInForm.controls.visitor.controls.pass.valid || (checkInForm.controls.visitor.controls.pass.pristine && !checkInSsubmitted)">Pass number is required</small>
+									<span *ngIf="checkInSsubmitted && !checkInForm.controls.visitor.controls.pass.valid" class="help-block">Visitor pass is required and at least 3 character</span>
 								</div>
 							</div>
 						</div><br>
@@ -428,7 +429,7 @@
 							<label class="control-label col-sm-4" for="pass">Visitor Pass :</label>
 							<div class="col-sm-8">
 								<input type="text" (keypress)="number($event)" class="form-control" placeholder="Enter Pass serial" name="pass" formControlName="pass">
-								<small style="color: red" [hidden]="checkOutForm.controls.visitor.controls.pass.valid || (checkOutForm.controls.visitor.controls.pass.pristine && !checkInSsubmitted)">Pass number is required</small>
+								<span *ngIf="checkOutSsubmitted && !checkOutForm.controls.visitor.controls.pass.valid" class="help-block">Visitor pass is required and at least 3 character</span>
 							</div>
 						</div><br>
 						<div class="row no-margin pull-bottom-right">

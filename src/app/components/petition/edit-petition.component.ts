@@ -41,6 +41,10 @@ export class EditPetitionComponent implements OnInit {
             full_address : ''
         }
     };
+    emailError: boolean
+    emailErrorMessage: string;
+
+
     constructor(private router: Router,
     	private petitionService: PetitionService,
         private unitService: UnitService,
@@ -116,6 +120,15 @@ export class EditPetitionComponent implements OnInit {
             event.preventDefault();
         }
     }
+
+    checkValid(event: any){
+        if (event.target.value.match(/[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?/)) {
+            this.emailError = false;
+        } else {
+            this.emailError = true;
+            this.emailErrorMessage = 'invalid email address';
+        }
+    }    
 
     createPetition(model: any, isValid: boolean) {
         this.submitted = true;

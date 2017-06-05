@@ -101,19 +101,20 @@ export class FeedbackComponent implements OnInit {
             .subscribe(units => {
                 this.units = units.properties;
                 this.feedbackService.getAll().subscribe(feedbacks => {
+                    for (var i = 0; i < feedbacks.length; ++i) {
+                        let create_at = new Date(feedbacks[i].created_at)
+                        feedbacks[i].created_at = moment(create_at).format('DD/MM/YYYY');
+                        if (feedbacks[i].reply_at) {
+                            let reply_at = new Date(feedbacks[i].reply_at)
+                            feedbacks[i].reply_at = moment(reply_at).format('DD/MM/YYYY');
+                        }
+                        let a = this.units.find(data => data._id == feedbacks[i].property);
+                        feedbacks[i].property = '#'+a.address.unit_no +'-'+ a.address.unit_no_2;
+                    }
                     this.all           =  feedbacks.filter(feedbacks => feedbacks.archieve === false );
                     this.feedbacks     = feedbacks.filter(feedbacks => feedbacks.archieve === false );
                     this.published     = feedbacks.filter(feedbacks => feedbacks.status === 'publish' && feedbacks.archieve === false );
-                    for (var i = 0; i < this.feedbacks.length; ++i) {
-                        let create_at = new Date(this.feedbacks[i].created_at)
-                    	this.feedbacks[i].created_at = moment(create_at).format('DD-MM-YYYY');
-                        if (this.feedbacks[i].reply_at) {
-                            let reply_at = new Date(this.feedbacks[i].reply_at)
-                            this.feedbacks[i].reply_at = moment(reply_at).format('DD-MM-YYYY');
-                        }
-                        let a = this.units.find(data => data._id == this.feedbacks[i].property);
-                        this.feedbacks[i].property = '#'+a.address.unit_no +'-'+ a.address.unit_no_2;
-                    }
+                    
                     setTimeout(() => this.loading = false, 1000);
                 });
             })
