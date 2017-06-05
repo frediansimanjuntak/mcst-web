@@ -43,7 +43,7 @@
             <div class="row no-margin" style="border: 1px solid grey; padding: 5px; border-bottom:0;">
                 <div class="col-md-2 content-column" *ngFor="let others of contactOthers">
                     <span class="title-content">
-                        <b *ngIf="others.name" style="word-break: break-all;">{{ others.name | capitalizeFirst }}</b>
+                        <b *ngIf="others.name" class="break">{{ others.name | capitalizeFirst }}</b>
                         <b *ngIf="!others.name">-</b>
                         <br><span *ngIf="others.service">{{ others.service }}</span>
                         <span *ngIf="!others.service">-</span>
@@ -53,8 +53,8 @@
                         	<p-rating readonly="true" [ngModel]="others.ratings" stars="4" [cancel]="false"></p-rating>
                             <br><span *ngIf="others.contact">Tel: +{{ others.contact }}</span> 
                             <span *ngIf="!others.contact">Tel: -</span> 
-                            <br><span *ngIf="others.address" style="word-break:break-all">{{ others.address}}</span>
-                            <span *ngIf="!others.address" style="word-break:break-all">-</span>
+                            <br><span *ngIf="others.address" class="break">{{ others.address}}</span>
+                            <span *ngIf="!others.address">-</span>
                         </p>
                     </strong>
                     <div *ngIf="editOthers == true">
@@ -109,7 +109,7 @@
                                 <div class="row no-margin">
                                     <label class="control-label col-sm-4" for="vehicle">Contact No. :</label>
                                     <div class="col-sm-8">
-                                        <input type="text" class="form-control" placeholder="Input contact no. here" name="contact"  [(ngModel)]="model.contact" #contact="ngModel" required>
+                                        <input type="text" (keypress)="number($event)" class="form-control" placeholder="Input contact no. here" name="contact"  [(ngModel)]="model.contact" #contact="ngModel" required>
                                         <span *ngIf="submitted && !model.contact" class="help-block">Contact No. is required</span>
                                     </div>
                                 </div>
@@ -145,7 +145,7 @@
                                 <div class="row no-margin">
                                     <label class="control-label col-sm-4" for="contact">Input contact no. here:</label>
                                     <div class="col-sm-8">
-                                        <input type="text" class="form-control" placeholder="Input contact no. here" name="contact"  [(ngModel)]="model.contact" #contact="ngModel" required>
+                                        <input type="text" (keypress)="number($event)" class="form-control" placeholder="Input contact no. here" name="contact"  [(ngModel)]="model.contact" #contact="ngModel" required>
                                         <span *ngIf="submitted && !model.contact" class="help-block">Contact No. is required</span>
                                     </div>
                                 </div>
