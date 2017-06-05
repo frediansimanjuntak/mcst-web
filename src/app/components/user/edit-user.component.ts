@@ -68,7 +68,7 @@ export class EditUserComponent implements OnInit {
             this.myForm = this.formbuilder.group({
                 username : ['', Validators.compose([Validators.required, Validators.minLength(3)])],
                 email : ['', Validators.compose([Validators.required])],
-                phone : ['', Validators.compose([Validators.required])],
+                phone : ['', Validators.compose([Validators.required, Validators.minLength(3)])],
                 role : ['', Validators.compose([Validators.required])],
                 details:  this.formbuilder.group({
                         first_name: ['', Validators.compose([Validators.required, Validators.minLength(3)])],
@@ -94,7 +94,7 @@ export class EditUserComponent implements OnInit {
                     _id : [''],
                     username : ['', Validators.compose([Validators.required, Validators.minLength(3)])],
                     email : ['', Validators.compose([Validators.required])],
-                    phone : ['', Validators.compose([Validators.required])],
+                    phone : ['', Validators.compose([Validators.required, Validators.minLength(3)])],
                     role : ['', Validators.compose([Validators.required])],
                     details:  this.formbuilder.group({
                         first_name: ['', Validators.compose([Validators.required, Validators.minLength(3)])],
@@ -112,7 +112,7 @@ export class EditUserComponent implements OnInit {
                         _id : [this.user._id],
                         username : [this.user.username, Validators.compose([Validators.required, Validators.minLength(3)])],
                         email : [this.user.email, Validators.compose([Validators.required])],
-                        phone : [this.user.phone, Validators.compose([Validators.required])],
+                        phone : [this.user.phone, Validators.compose([Validators.required, Validators.minLength(3)])],
                         gender: [this.user.gender, Validators.compose([Validators.required])],
                         salulation: [this.user.salulation,Validators.compose([Validators.required])]
                     });
@@ -121,7 +121,7 @@ export class EditUserComponent implements OnInit {
                         _id : [this.user._id],
                         username : [this.user.username, Validators.compose([Validators.required, Validators.minLength(3)])],
                         email : [this.user.email, Validators.compose([Validators.required])],
-                        phone : [this.user.phone, Validators.compose([Validators.required])],
+                        phone : [this.user.phone, Validators.compose([Validators.required, Validators.minLength(3)])],
                     });
                 }
                 
@@ -132,7 +132,7 @@ export class EditUserComponent implements OnInit {
                 this.myForm = this.formbuilder.group({
                     username : ['', Validators.compose([Validators.required, Validators.minLength(3)])],
                     email : ['', Validators.compose([Validators.required])],
-                    phone : ['', Validators.compose([Validators.required])],
+                    phone : ['', Validators.compose([Validators.required, Validators.minLength(3)])],
                     role : ['user'],
                     default_property: this.formbuilder.group({
                         property: [''],
@@ -150,7 +150,7 @@ export class EditUserComponent implements OnInit {
                      this.myForm = this.formbuilder.group({
                     username : ['', Validators.compose([Validators.required, Validators.minLength(3)])],
                     email : ['', Validators.compose([Validators.required])],
-                    phone : ['', Validators.compose([Validators.required])],
+                    phone : ['', Validators.compose([Validators.required, Validators.minLength(3)])],
                     role : ['user'],
                     default_property: this.formbuilder.group({
                         property: [''],
