@@ -88,8 +88,8 @@
                                 <div class="row no-margin">
                                     <label class="control-label col-sm-4" for="vehicle">Name :</label>
                                     <div class="col-sm-8">
-                                        <input type="text" class="form-control" placeholder="Input name here" name="name"  [(ngModel)]="model.name" #name="ngModel" required>
-                                        <span *ngIf="submitted && !model.name" class="help-block">Name is required</span>
+                                        <input type="text" class="form-control" minlength="3" placeholder="Input name here" name="name"  [(ngModel)]="model.name" #name="ngModel" required>
+                                        <span *ngIf="submitted && !model.name" class="help-block">Name is required and at least 3 character</span>
                                     </div>
                                 </div>
                             </div>
@@ -107,10 +107,10 @@
                             </div>
                             <div class="form-group" [ngClass]="{ 'has-error': submitted && !model.contact }">
                                 <div class="row no-margin">
-                                    <label class="control-label col-sm-4" for="vehicle">Contact No. :</label>
+                                    <label class="control-label col-sm-4" minlength="3" for="vehicle">Contact No. :</label>
                                     <div class="col-sm-8">
                                         <input type="text" (keypress)="number($event)" class="form-control" placeholder="Input contact no. here" name="contact"  [(ngModel)]="model.contact" #contact="ngModel" required>
-                                        <span *ngIf="submitted && !model.contact" class="help-block">Contact No. is required</span>
+                                        <span *ngIf="submitted && !model.contact" class="help-block">Contact No. is required and at least 3 character</span>
                                     </div>
                                 </div>
                             </div>
@@ -136,8 +136,8 @@
                                 <div class="row no-margin">
                                     <label class="control-label col-sm-4" for="name">Name :</label>
                                     <div class="col-sm-8">
-                                        <input type="text" class="form-control" placeholder="Input name here" name="name"  [(ngModel)]="model.name" #name="ngModel" required>
-                                        <span *ngIf="submitted && !model.name" class="help-block">Name is required</span>
+                                        <input type="text" class="form-control" placeholder="Input name here" name="name" minlength="3" [(ngModel)]="model.name" #name="ngModel" required>
+                                        <span *ngIf="submitted && !model.name" class="help-block">Name is required and at least 3 character</span>
                                     </div>
                                 </div>
                             </div>
@@ -145,8 +145,8 @@
                                 <div class="row no-margin">
                                     <label class="control-label col-sm-4" for="contact">Input contact no. here:</label>
                                     <div class="col-sm-8">
-                                        <input type="text" (keypress)="number($event)" class="form-control" placeholder="Input contact no. here" name="contact"  [(ngModel)]="model.contact" #contact="ngModel" required>
-                                        <span *ngIf="submitted && !model.contact" class="help-block">Contact No. is required</span>
+                                        <input type="text" (keypress)="number($event)" minlength="3" class="form-control" placeholder="Input contact no. here" name="contact"  [(ngModel)]="model.contact" #contact="ngModel" required>
+                                        <span *ngIf="submitted && !model.contact" class="help-block">Contact No. is required and at least 3 character</span>
                                     </div>
                                 </div>
                             </div>
@@ -154,8 +154,8 @@
                                 <div class="row no-margin">
                                     <label class="control-label col-sm-4" for="address">Address :</label>
                                     <div class="col-sm-8">
-                                        <textarea type="text" class="form-control" placeholder="Input address here" name="address"  [(ngModel)]="model.address" #address="ngModel" required></textarea>
-                                        <span *ngIf="submitted && !address.valid" class="help-block">Address is required</span>
+                                        <textarea type="text" class="form-control" minlength="3" placeholder="Input address here" name="address"  [(ngModel)]="model.address" #address="ngModel" required></textarea>
+                                        <span *ngIf="submitted && !address.valid" class="help-block">Address is required and at least 3 character</span>
                                     </div>
                                 </div>
                             </div>
@@ -163,8 +163,8 @@
                                 <div class="row no-margin">
                                     <label class="control-label col-sm-4" for="register_number">Register No. :</label>
                                     <div class="col-sm-8">
-                                        <textarea type="text" class="form-control" placeholder="Input register no. here" name="register_number"  [(ngModel)]="model.register_number" #register_number="ngModel" required></textarea>
-                                        <span *ngIf="submitted && !model.register_number" class="help-block">Register number is required</span>
+                                        <textarea type="text" class="form-control" minlength="3" placeholder="Input register no. here" name="register_number"  [(ngModel)]="model.register_number" #register_number="ngModel" required></textarea>
+                                        <span *ngIf="submitted && !model.register_number" class="help-block">Register number is required and at least 3 character</span>
                                     </div>
                                 </div>
                             </div>
@@ -172,8 +172,8 @@
                                 <div class="row no-margin">
                                     <label class="control-label col-sm-4" for="service">Service :</label>
                                     <div class="col-sm-8">
-                                        <textarea type="text" class="form-control" placeholder="Input service here" name="service"  [(ngModel)]="model.service" #service="ngModel" required></textarea>
-                                        <span *ngIf="submitted && !model.service" class="help-block">Service required</span>
+                                        <textarea type="text" class="form-control" minlength="3" placeholder="Input service here" name="service"  [(ngModel)]="model.service" #service="ngModel" required></textarea>
+                                        <span *ngIf="submitted && !model.service" class="help-block">Service required and at least 3 character</span>
                                     </div>
                                 </div>
                             </div>
