@@ -133,10 +133,24 @@ export class LostFoundComponent implements OnInit {
         setTimeout(() => this.loading = false, 500);
     }
 
+    smart_substr(str:string, len:number) {
+        var temp = str.substr(0, len);
+        if(temp.lastIndexOf('<') > temp.lastIndexOf('>')) {
+            temp = str.substr(0, 1 + str.indexOf('>', temp.lastIndexOf('<')));
+        }
+        return temp;
+    }
+
     private loadLostFounds() {
         this.lostFoundService.getAll()
         .subscribe((data)=> {
             setTimeout(()=> {
+                for (var i = 0; i < data.length; ++i) {
+                    if (data[i].description && data[i].description != '' && data[i].description.length > 100) {
+                        let content = data[i].description;
+                        data[i].description = this.smart_substr(content,100) + '...'
+                    }
+                }
                 this.lostFounds      = data.filter(data => data.development._id == this.name.default_development._id);
                 for (var i = 0; i < this.lostFounds.length; i++) {
                     if(this.lostFounds[i].property){
