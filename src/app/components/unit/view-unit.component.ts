@@ -57,6 +57,8 @@ export class ViewUnitComponent implements OnInit {
     filteredBrands: any[];
     username: string;
     makeAsDefaultProperty:string = 'no';
+    emailError: boolean
+    emailErrorMessage: string;
 
     constructor(
         private router: Router,
@@ -266,11 +268,55 @@ export class ViewUnitComponent implements OnInit {
     public selected(value:any):void {
     }
 
+    number(event: any) {
+        const pattern = /[0-9\+\ ]/;
+        let inputChar = String.fromCharCode(event.charCode);
+        if (!pattern.test(inputChar)) {
+            event.preventDefault();
+        }
+    }
+
     initOwned() {
         return this.formbuilder.group({
             development: [''],
             property: [this.id]
         }); 
+    }
+
+    checkValid(event: any, field: any){
+        this.userService.getValid(event.target.value).subscribe((data:any) => {
+            if (data.message == true) {
+                if (field == 'email') {
+                    if (event.target.value.match(/[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?/)) {
+                        if (this.user) {
+                            if (event.target.value == this.user.email) {
+                                this.emailError = false;
+                            }else{
+                                this.emailError = true;
+                                this.emailErrorMessage = 'The specified email address is already in use.';
+                            }
+                        } else{
+                            this.emailError = true;
+                            this.emailErrorMessage = 'The specified email address is already in use.';
+                        }    
+                    } else {
+                        this.emailError = true;
+                        this.emailErrorMessage = 'invalid email address';
+                    }
+                }
+            }
+            else {
+                if (field == 'email') {
+                    if (event.target.value.match(/[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?/)) {
+                        this.emailError = false;
+                    } else {
+                        this.emailError = true;
+                        this.emailErrorMessage = 'invalid email address';
+                    }
+                    
+                }
+            }
+        });
     }
 
     initAuthorized() {
@@ -607,6 +653,7 @@ export class ViewUnitComponent implements OnInit {
                     this._notificationsService.success('Success', 'Add Vehicle successful')
                     this.secondModal.close();
                     this.loading = false;
+                    this.vehicleSubmitted = false
                     this.ngOnInit();
                 },
                 error => {
@@ -780,6 +827,17 @@ export class ViewUnitComponent implements OnInit {
             ]),
             gender: ['', Validators.compose([Validators.required])],
             salulation: ['', Validators.compose([Validators.required])]
+        });
+    }
+
+    resetForm2(){
+        this.myForm2 = this.formbuilder.group({
+            license_plate: ['', <any>Validators.compose([Validators.required])],
+            owner: ['', <any>Validators.compose([Validators.required])],
+            transponder: [''],
+            document: [''],
+            registered_on: [''],
+            remarks: [''],
         });
     }
 
