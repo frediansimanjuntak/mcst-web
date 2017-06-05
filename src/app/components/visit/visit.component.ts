@@ -4,7 +4,7 @@ import { Router, Params, ActivatedRoute } from '@angular/router';
 import { Visit, Visits, Contract } from '../../models/index';
 import { VisitService, AlertService, UserService, UnitService, ContractService} from '../../services/index';
 import { NotificationsService } from 'angular2-notifications';
-
+import * as moment from "moment"
 import { Observable} from 'rxjs/Observable';
 import { Location }               from '@angular/common';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
@@ -379,16 +379,18 @@ export class VisitComponent implements OnInit {
     previousDay(){
         this.loading = true
         this.visitActive  = [];
-    	(this.activeDate = new Date()).setDate(this.activeDateFull.getDate() - 1);
-    	this.activeDateFull = this.activeDate;
+        this.activeDate = Date.parse(moment(this.activeDateFull).subtract(1, 'days').format('MMMM DD, YYYY'));
+        this.activeDateFull = new Date(this.activeDate);
+        this.activeDate = this.activeDateFull;
     	this.ngOnInit();
     }
 
     nextDay(){
         this.loading = true
         this.visitActive  = [];
-    	(this.activeDate = new Date()).setDate(this.activeDateFull.getDate() + 1);
-    	this.activeDateFull = this.activeDate;
+    	this.activeDate = Date.parse(moment(this.activeDateFull).add(1, 'days').format('MMMM DD, YYYY'));
+        this.activeDateFull = new Date(this.activeDate);
+        this.activeDate = this.activeDateFull;
     	this.ngOnInit();
     }
 
