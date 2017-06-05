@@ -28,12 +28,13 @@
                             </div>
                             <div class="row">
                                 <div class="col-md-5 col-padding"><strong>Status :</strong></div>
-                                <div class="col-md-7 col-padding">{{ incident.status }}</div>
+                                <div class="col-md-7 col-padding">{{ incident.status | capitalize }}</div>
                             </div>
                             <div class="row">
                                 <div class="col-md-5 col-padding"><strong>Order :</strong></div>
                                 <div class="col-md-7 col-padding">
-                                    <span *ngIf="!incident.contract"><img src="assets/image/menu_manageproject.png" width="14px" height="12px"> <a (click)="add_project(incident.reference_no,incident._id)" style="text-decoration: underline;cursor:pointer">Create Project</a></span>
+                                    <span *ngIf="!incident.contract && incident.status != 'resolve'"><img src="assets/image/menu_manageproject.png" width="14px" height="12px"> <a (click)="add_project(incident.reference_no,incident._id)" style="text-decoration: underline;cursor:pointer">Create Project</a></span>
+                                    <span *ngIf="!incident.contract && incident.status == 'resolve'">-</span>
                                     <span *ngIf="incident.contract"><b><a (click)="viewContract(incident.contract._id)" style="text-decoration: underline;cursor:pointer">#{{incident.contract._id}}</a></b></span>
                                 </div>
                             </div>
@@ -118,7 +119,7 @@
                                 </p-column>
                                 <p-column filterMatchMode="contains" field="remark" header="Message" sortable="true" [filter]="true" filterPlaceholder="Search Message">
                                     <template let-data="rowData" pTemplate="body">
-                                        <span>{{data.remark | capitalize}}</span>
+                                        <span class="break">{{data.remark | capitalize}}</span>
                                     </template>
                                 </p-column>
                                 <p-column [style]="{'width':'85px'}" header="Photo">
@@ -161,7 +162,7 @@
                                 </p-column>
                                 <p-column filterMatchMode="contains" field="remark" header="Message" sortable="true" [filter]="true" filterPlaceholder="Search Message">
                                     <template let-data="rowData" pTemplate="body">
-                                        <span>{{data.remark | capitalize}}</span>
+                                        <span class="break">{{data.remark | capitalize}}</span>
                                     </template>
                                 </p-column>
                                 <p-column [style]="{'width':'85px'}" header="Photo">
@@ -204,7 +205,7 @@
                                 </p-column>
                                 <p-column filterMatchMode="contains" field="remark" header="Message" sortable="true" [filter]="true" filterPlaceholder="Search Message">
                                     <template let-data="rowData" pTemplate="body">
-                                        <span>{{data.remark | capitalize}}</span>
+                                        <span class="break">{{data.remark | capitalize}}</span>
                                     </template>
                                 </p-column>
                                 <p-column [style]="{'width':'85px'}" header="Photo">
@@ -246,7 +247,7 @@
                                 </p-column>
                                 <p-column filterMatchMode="contains" field="remark" header="Message" sortable="true" [filter]="true" filterPlaceholder="Search Message">
                                     <template let-data="rowData" pTemplate="body">
-                                        <span>{{data.remark | capitalize}}</span>
+                                        <span class="break">{{data.remark | capitalize}}</span>
                                     </template>
                                 </p-column>
                                 <p-column [style]="{'width':'85px'}" header="Photo">
@@ -288,7 +289,7 @@
                                 </p-column>
                                 <p-column filterMatchMode="contains" field="remark" header="Message" sortable="true" [filter]="true" filterPlaceholder="Search Message">
                                     <template let-data="rowData" pTemplate="body">
-                                        <span>{{data.remark | capitalize}}</span>
+                                        <span class="break">{{data.remark | capitalize}}</span>
                                     </template>
                                 </p-column>
                                 <p-column [style]="{'width':'85px'}" header="Photo">
