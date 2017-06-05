@@ -6,7 +6,7 @@
         </div>
         <p class="id-location">Home > Manage Lost & Found > Add Report </p>
 
-        <form class="form-horizontal col-md-6" name="form" (ngSubmit)="f.form.valid && createReport()" #f="ngForm" novalidate>
+        <form class="form-horizontal col-md-8" name="form" (ngSubmit)="f.form.valid && createReport()" #f="ngForm" novalidate>
             <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !model.property }">
                 <label class="control-label col-sm-4" for="unit_no">Unit No :</label>
                 <div class="col-sm-8">
