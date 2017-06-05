@@ -2,11 +2,10 @@ import { Component, OnInit } from '@angular/core';
 import { Router, Params, ActivatedRoute } from '@angular/router';
 import { Contract } from '../../models/index';
 import { ContractService, AlertService, UserService, ContractNoteService, ContractNoticeService } from '../../services/index';
-
+import * as moment from 'moment';
 import { Observable} from 'rxjs/Observable';
 import { NotificationsService } from 'angular2-notifications';
 import { FileUploader } from 'ng2-file-upload';
-
 import { ConfirmationService } from 'primeng/primeng';
 
 
@@ -169,6 +168,12 @@ export class ContractComponent implements OnInit  {
                 if (contracts[i].remark && contracts[i].remark != '' && contracts[i].remark.length > 100) {
                     let content = contracts[i].remark;
                     contracts[i].remark = this.smart_substr(content,100) + '...'
+                }
+                if (contracts[i].start_time) {
+                    contracts[i].start_time = moment(contracts[i].start_time).format('DD/MM/YYYY')
+                }
+                if (contracts[i].end_time) {
+                    contracts[i].end_time = moment(contracts[i].end_time).format('DD/MM/YYYY')
                 }
             }
 			this.contracts = contracts;
