@@ -7,7 +7,7 @@ import { ModalDirective } from 'ng2-bootstrap';
 import { NotificationsService } from 'angular2-notifications';
 import { Observable } from 'rxjs/Observable';
 import { FileUploader } from 'ng2-file-upload';
-
+import * as moment from 'moment'
 import { ConfirmationService } from 'primeng/primeng';
 
 @Component({
@@ -149,8 +149,10 @@ export class IncidentComponent implements OnInit {
 
 	private loadAllIncident() {
 		this.incidentService.getAll().subscribe(incidents => {
-            this.all = incidents
             for (let z = 0; z < incidents.length; ++z) {
+                if (incidents[z].created_at) {
+                    incidents[z].created_at = moment(incidents[z].created_at).format('DD/MM/YYYY')
+                }
                 if (incidents[z].attachment.length < 1) {
                     incidents[z].attachment = null
                 }
@@ -159,6 +161,7 @@ export class IncidentComponent implements OnInit {
                     incidents[z].remark = this.smart_substr(content,100) + '...'
                 }
             }
+            this.all = incidents
 	        this.incidents = incidents.filter(incidents => incidents.archieve === false);
             this.dataNew = this.incidents.filter(incidents => incidents.status === 'new');
             this.dataInProgress = this.incidents.filter(incidents => incidents.status === 'in progress');
