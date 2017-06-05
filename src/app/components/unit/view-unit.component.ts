@@ -96,7 +96,7 @@ export class ViewUnitComponent implements OnInit {
         //         remarks: [''],
         // });
         this.myForm2 = this.formbuilder.group({
-                license_plate: ['', <any>Validators.compose([Validators.required])],
+                license_plate: ['', <any>Validators.compose([Validators.required, Validators.minLength(3)])],
                 owner: ['', <any>Validators.compose([Validators.required])],
                 transponder: [''],
                 document: [''],
@@ -106,7 +106,7 @@ export class ViewUnitComponent implements OnInit {
         this.myForm = this.formbuilder.group({
                     username : ['', Validators.compose([Validators.required, Validators.minLength(3)])],
                     email : ['', Validators.compose([Validators.required])],
-                    phone : ['', Validators.compose([Validators.required])],
+                    phone : ['', Validators.compose([Validators.required, Validators.minLength(3)])],
                     role : ['user'],
                     default_property: this.formbuilder.group({
                         property: [''],
@@ -118,9 +118,9 @@ export class ViewUnitComponent implements OnInit {
                     }),
                     remarks: [''],
                     details:  this.formbuilder.group({
-                        first_name: [''],
-                        last_name: [''],
-                        identification_no: [''],
+                        first_name: ['', Validators.compose([Validators.required, Validators.minLength(3)])],
+                        last_name: ['', Validators.compose([Validators.required, Validators.minLength(3)])],
+                        identification_no: ['', Validators.compose([Validators.required, Validators.minLength(3)])],
                     }),
                     owned_property: this.formbuilder.array([this.formbuilder.group({
                                                 development: [''],
@@ -170,7 +170,7 @@ export class ViewUnitComponent implements OnInit {
                                         this.myForm = this.formbuilder.group({
                                             username : ['', Validators.compose([Validators.required, Validators.minLength(3)])],
                                             email : ['', Validators.compose([Validators.required])],
-                                            phone : ['', Validators.compose([Validators.required])],
+                                            phone : ['', Validators.compose([Validators.required, Validators.minLength(3)])],
                                             role : ['user'],
                                             default_property: this.formbuilder.group({
                                                 property: [''],
@@ -181,9 +181,9 @@ export class ViewUnitComponent implements OnInit {
                                                 property: [this.id]
                                             }),
                                             details:  this.formbuilder.group({
-                                                first_name: [''],
-                                                last_name: [''],
-                                                identification_no: [''],
+                                                first_name: ['', Validators.compose([Validators.required, Validators.minLength(3)])],
+                                                last_name: ['', Validators.compose([Validators.required, Validators.minLength(3)])],
+                                                identification_no: ['', Validators.compose([Validators.required, Validators.minLength(3)])],
                                             }),
                                             authorized_property: this.formbuilder.array([this.initAuthorized()]),
                                             remarks: [''],
@@ -196,16 +196,16 @@ export class ViewUnitComponent implements OnInit {
                                         this.myForm = this.formbuilder.group({
                                             username : ['', Validators.compose([Validators.required, Validators.minLength(3)])],
                                             email : ['', Validators.compose([Validators.required])],
-                                            phone : ['', Validators.compose([Validators.required])],
+                                            phone : ['', Validators.compose([Validators.required, Validators.minLength(3)])],
                                             role : ['user'],
                                             default_property: this.formbuilder.group({
                                                 property: [''],
                                                 role : ['']
                                             }),
                                             details:  this.formbuilder.group({
-                                                first_name: [''],
-                                                last_name: [''],
-                                                identification_no: [''],
+                                                first_name: ['', Validators.compose([Validators.required, Validators.minLength(3)])],
+                                                last_name: ['', Validators.compose([Validators.required, Validators.minLength(3)])],
+                                                identification_no: ['', Validators.compose([Validators.required, Validators.minLength(3)])],
                                             }),
                                             owned_property: this.formbuilder.array([this.initOwned()]),
                                             authorized_property: this.formbuilder.array([this.initAuthorized()]),
@@ -333,7 +333,6 @@ export class ViewUnitComponent implements OnInit {
             .then(
                 response => {
                   if(response) {
-                    console.log(response);
                     this._notificationsService.error('Error', 'Owner could not to delete, server error')
                     setTimeout(() => this.loading = false, 1000);
                   } else {
@@ -749,7 +748,7 @@ export class ViewUnitComponent implements OnInit {
              this.myForm = this.formbuilder.group({
                     username : ['', Validators.compose([Validators.required, Validators.minLength(3)])],
                     email : ['', Validators.compose([Validators.required])],
-                    phone : ['', Validators.compose([Validators.required])],
+                    phone : ['', Validators.compose([Validators.required, Validators.minLength(3)])],
                     role : ['user'],
                     default_property: this.formbuilder.group({
                         property: [''],
@@ -761,9 +760,9 @@ export class ViewUnitComponent implements OnInit {
                     }),
                     remarks: [''],
                     details:  this.formbuilder.group({
-                        first_name: [''],
-                        last_name: [''],
-                        identification_no: [''],
+                        first_name: ['', Validators.compose([Validators.required, Validators.minLength(3)])],
+                        last_name: ['', Validators.compose([Validators.required, Validators.minLength(3)])],
+                        identification_no: ['', Validators.compose([Validators.required, Validators.minLength(3)])],
                     }),
                     owned_property: this.formbuilder.array([this.formbuilder.group({
                                                 development: [''],
@@ -804,7 +803,7 @@ export class ViewUnitComponent implements OnInit {
          this.myForm = this.formbuilder.group({
             username : ['', Validators.compose([Validators.required, Validators.minLength(3)])],
             email : ['', Validators.compose([Validators.required])],
-            phone : ['', Validators.compose([Validators.required])],
+            phone : ['', Validators.compose([Validators.required, Validators.minLength(3)])],
             role : ['user'],
             default_property: this.formbuilder.group({
                 property: [''],
@@ -816,9 +815,9 @@ export class ViewUnitComponent implements OnInit {
             }),
             remarks: [''],
             details:  this.formbuilder.group({
-                first_name: [''],
-                last_name: [''],
-                identification_no: [''],
+                first_name: ['', Validators.compose([Validators.required, Validators.minLength(3)])],
+                last_name: ['', Validators.compose([Validators.required, Validators.minLength(3)])],
+                identification_no: ['', Validators.compose([Validators.required, Validators.minLength(3)])],
             }),
             owned_property: this.formbuilder.array([this.formbuilder.group({
                     development: [''],
@@ -832,7 +831,7 @@ export class ViewUnitComponent implements OnInit {
 
     resetForm2(){
         this.myForm2 = this.formbuilder.group({
-            license_plate: ['', <any>Validators.compose([Validators.required])],
+            license_plate: ['', Validators.compose([Validators.required, Validators.minLength(3)])],
             owner: ['', <any>Validators.compose([Validators.required])],
             transponder: [''],
             document: [''],
@@ -846,7 +845,7 @@ export class ViewUnitComponent implements OnInit {
             this.myForm = this.formbuilder.group({
                 username : ['', Validators.compose([Validators.required, Validators.minLength(3)])],
                 email : ['', Validators.compose([Validators.required])],
-                phone : ['', Validators.compose([Validators.required])],
+                phone : ['', Validators.compose([Validators.required, Validators.minLength(3)])],
                 role : ['user'],
                 default_property: this.formbuilder.group({
                     property: [''],
@@ -857,9 +856,9 @@ export class ViewUnitComponent implements OnInit {
                 property: [this.id]
                 }),
                 details:  this.formbuilder.group({
-                        first_name: [''],
-                        last_name: [''],
-                        identification_no: [''],
+                        first_name: ['', Validators.compose([Validators.required, Validators.minLength(3)])],
+                        last_name: ['', Validators.compose([Validators.required, Validators.minLength(3)])],
+                        identification_no: ['', Validators.compose([Validators.required, Validators.minLength(3)])],
                     }),
                 authorized_property: this.formbuilder.array([this.initAuthorized()]),
                 remarks: [''],
@@ -870,16 +869,16 @@ export class ViewUnitComponent implements OnInit {
             this.myForm = this.formbuilder.group({
                 username : ['', Validators.compose([Validators.required, Validators.minLength(3)])],
                 email : ['', Validators.compose([Validators.required])],
-                phone : ['', Validators.compose([Validators.required])],
+                phone : ['', Validators.compose([Validators.required, Validators.minLength(3)])],
                 role : ['user'],
                 default_property: this.formbuilder.group({
                     property: [''],
                     role : ['']
                 }),
                 details:  this.formbuilder.group({
-                        first_name: [''],
-                        last_name: [''],
-                        identification_no: [''],
+                        first_name: ['', Validators.compose([Validators.required, Validators.minLength(3)])],
+                        last_name: ['', Validators.compose([Validators.required, Validators.minLength(3)])],
+                        identification_no: ['', Validators.compose([Validators.required, Validators.minLength(3)])],
                 }),
                 owned_property: this.formbuilder.array([this.initOwned()]),
                 authorized_property: this.formbuilder.array([this.initAuthorized()]),
