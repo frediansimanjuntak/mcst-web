@@ -10,8 +10,14 @@
 					<div class="row">
 						<div class="col-md-2 col-padding"><strong>Serial no :</strong></div>
 						<div class="col-md-10 col-padding">
-							<span *ngIf="payment.serial_no"><a style="text-decoration: underline;cursor:pointer" (click)="viewReference(payment.reference_id , payment.payment_type)">#{{ payment.serial_no }}</a></span>
+							<span *ngIf="payment.serial_no">#{{ payment.serial_no }}</span>
 							<span *ngIf="!payment.serial_no">-</span>
+						</div>
+					</div>
+					<div class="row" *ngIf="payment.reference_no">
+						<div class="col-md-2 col-padding"><strong>Reference no :</strong></div>
+						<div class="col-md-10 col-padding">
+							<span *ngIf="payment.reference_no"><a style="text-decoration: underline;cursor:pointer" (click)="viewReference(payment.reference_id , payment.payment_type)">#{{ payment.reference_no }}</a></span>
 						</div>
 					</div>
 					<div class="row">
