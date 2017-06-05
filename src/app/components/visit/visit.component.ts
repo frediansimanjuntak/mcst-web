@@ -234,6 +234,7 @@ export class VisitComponent implements OnInit {
                         this.loading =true;
                         this.checkInModal.close();
                         this.ngOnInit();
+                        this.loadVisits();
                         this.loading = false;
                         this._notificationsService.success('Success', 'Check in '+ this.visit.visitor.prefix + ' ' + this.visit.visitor.full_name + ' successful')
                     },
