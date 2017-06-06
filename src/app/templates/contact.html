@@ -13,7 +13,7 @@
                 </div>
             </div>
             <div class="row no-margin" style="border: 1px solid grey; padding: 5px; border-bottom:0;">
-                <div class="col-md-5ths content-column" *ngFor="let emergency of contactEmergency">
+                <div class="col-md-2 content-column" *ngFor="let emergency of contactEmergency">
                     <b>{{ emergency.name | capitalizeFirst }}</b>
                     <br>
                     <strong>+{{ emergency.contact}}</strong>
@@ -41,7 +41,7 @@
                 </div>
             </div>
             <div class="row no-margin" style="border: 1px solid grey; padding: 5px; border-bottom:0;">
-                <div class="col-md-2 content-column" *ngFor="let others of contactOthers">
+                <div class="col-md-2 content-column content-height" *ngFor="let others of contactOthers">
                     <span class="title-content">
                         <b *ngIf="others.name" class="break">{{ others.name | capitalizeFirst }}</b>
                         <b *ngIf="!others.name">-</b>
@@ -53,7 +53,7 @@
                         	<p-rating readonly="true" [ngModel]="others.ratings" stars="4" [cancel]="false"></p-rating>
                             <br><span *ngIf="others.contact">Tel: +{{ others.contact }}</span> 
                             <span *ngIf="!others.contact">Tel: -</span> 
-                            <br><span *ngIf="others.address" class="break">{{ others.address}}</span>
+                            <br><span *ngIf="others.address" class="break-word">{{ others.address}}</span>
                             <span *ngIf="!others.address">-</span>
                         </p>
                     </strong>
@@ -181,7 +181,7 @@
                                 <div class="row no-margin">
                                     <label class="control-label col-sm-4" for="website">Website :</label>
                                     <div class="col-sm-8">
-                                        <textarea type="text" class="form-control" placeholder="Input website here" name="service"  [(ngModel)]="model.website" #website="ngModel" required></textarea>
+                                        <textarea type="text" class="form-control" placeholder="Input website here" name="website"  [(ngModel)]="model.website" #website="ngModel" required></textarea>
                                     </div>
                                 </div>
                             </div>
