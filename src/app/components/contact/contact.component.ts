@@ -151,34 +151,35 @@ export class ContactComponent  implements OnInit{
     updateContact(){
         this.loading = true;
         this.contactService.update(this.model, this.model._id)
-            .then(
-                data => {
-                    this._notificationsService.success( "Success" ,"Contact saved")    
-                    this.submitted =false;
-                    this.loading = false;
-                    this.modalOthersForm.close()
-                    this.modalEmergencyForm.close()
-                    this.ngOnInit()
-                },
-                error => {
-                    if (error.json().message) {
-                        if (error.json().code) {
-                            this.userService.checkError(error.json().code, error.json().message)
-                        }else{
-                            this._notificationsService.error("Error", error.json().message)    
-                        }
-                        
+        .then(
+            data => {
+                this._notificationsService.success( "Success" ,"Contact saved")    
+                this.submitted =false;
+                this.loading = false;
+                this.modalOthersForm.close()
+                this.modalEmergencyForm.close()
+                this.ngOnInit()
+            },
+            error => {
+                if (error.json().message) {
+                    if (error.json().code) {
+                        this.userService.checkError(error.json().code, error.json().message)
                     }else{
-                        this.userService.checkError(error.status, '')
-                    } 
-                    this._notificationsService.error("Error", error.json().message)    
-                    this.loading = false;
-                }
-            )
+                        this._notificationsService.error("Error", error.json().message)    
+                    }
+                    
+                }else{
+                    this.userService.checkError(error.status, '')
+                } 
+                this._notificationsService.error("Error", error.json().message)    
+                this.loading = false;
+            }
+        )
     }
 
     preUpdate(contact){
         this.model = contact;
+        console.log(this.model)
     }
 
     clearModel(){
