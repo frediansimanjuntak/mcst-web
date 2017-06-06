@@ -237,17 +237,15 @@
 						<h5>Start Poll ?</h5>
 					</modal-header>
 					<modal-content>
-						<br>
-				           <div *ngIf="pollStart">
-				              
-				           		Start this poll ?	
-				              
-				                <div class="pull-right">
-				                    <button  type="button" class="btn btn-primary btn-brown" (click)="startPoll()">Yes</button>
-				                    <button class="btn btn-white" (click)="firstModal.close()">Cancel</button>
-				                </div>
-				             
-				           </div>
+			           	<div class="row" *ngIf="pollStart">
+			              	<div class="col-md-4 poll-margin">
+			              		Start this poll ?
+			              	</div>
+			                <div class="col-md-8 pull-right">
+			                    <button  type="button" class="btn btn-primary btn-brown" (click)="startPoll()">Yes</button>
+			                    <button class="btn btn-white" (click)="firstModal.close()">Cancel</button>
+			                </div>
+			           	</div>
 				    </modal-content>
 			    </modal>
 			</div>
