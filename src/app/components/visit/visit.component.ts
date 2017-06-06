@@ -371,8 +371,7 @@ export class VisitComponent implements OnInit {
             .subscribe((data)=> {
                     this.dataUnit       = data.properties;
                     this.contractService.getAll().subscribe(contracts => {
-                        this.contracts = contracts ;
-                        console.log(this.contracts)
+                        this.contracts = contracts;
                         this.loadVisits();
                     });
             });

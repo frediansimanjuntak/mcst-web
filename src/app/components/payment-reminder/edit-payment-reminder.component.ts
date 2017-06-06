@@ -39,7 +39,6 @@ export class EditPaymentReminderComponent implements OnInit{
 
     ngOnInit():void{ 
         this.today = new Date();
-        console.log(this.today)
     	this.myForm = this.formbuilder.group({
             title : ['', Validators.compose([Validators.required, Validators.minLength(3)])],
             auto_issue_on : [this.today, Validators.compose([Validators.required])],
@@ -123,7 +122,6 @@ export class EditPaymentReminderComponent implements OnInit{
     createPaymentReminder(model:PaymentReminder) {
     	model.reference_no = this.model.reference_no;
         this.loading = true
-        console.log(model)
         this.paymentreminderService.create(model)
         .then(
             data => {

@@ -53,7 +53,6 @@ export class UnitComponent implements OnInit {
           .then(
             response => {
               if(response) {
-                console.log(response);
                 alert(`The Unit could not be deleted, server Error.`);
               } else {
                 this.alertService.success('Delete Unit successful', true);

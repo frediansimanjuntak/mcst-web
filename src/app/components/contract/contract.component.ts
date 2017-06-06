@@ -58,7 +58,6 @@ export class ContractComponent implements OnInit  {
             this.contractService.getById(this.id)
             .subscribe(contract => {
                 this.contract = contract;
-                console.log(this,contract)
                 this.images = [];
                 for (var i = 0; i < this.contract.attachment.length; ++i) {
                     this.images.push({source:this.contract.attachment[i].url});

@@ -62,7 +62,6 @@ export class CompanyComponent implements OnInit {
           .then(
             response => {
               if(response) {
-                console.log(response);
                 alert(`The Company could not be deleted, server Error.`);
               } else {
                 this.alertService.success('Delete company successful', true);

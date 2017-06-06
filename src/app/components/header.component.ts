@@ -59,7 +59,6 @@ export class HeaderComponent implements OnInit{
         this.notificationService.getUnread()
             .subscribe((data)=> {
                 setTimeout(()=> {
-                    console.log(data)
                     this.unreadNotifications = data;
                     this.unreadNotificationsToShow  = data.slice(0, 10);
                     this.unreadNotificationTotal = this.unreadNotifications.length;
