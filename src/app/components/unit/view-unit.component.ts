@@ -557,6 +557,7 @@ export class ViewUnitComponent implements OnInit {
     }
 
     addExistResident(){
+        console.log(this.user)
         this.addSubmitted = true;
          if(this.model.type == "tenant" && !this.hasLandlord){
             this.errorMessage = "This unit did not has owner yet, please add owner first"
@@ -582,14 +583,16 @@ export class ViewUnitComponent implements OnInit {
                     role = "owner";
                 }
              }else{
-                defaultProperty = this.user.default_property.property
-                role = this.user.default_property.role
-             }
-
-             this.data.default_property = {
-                 property: defaultProperty,
-                 role: role
-             }
+                 console.log(this.user.default_property)
+                if (this.user.default_property) {
+                    defaultProperty = this.user.default_property.property
+                    role = this.user.default_property.role
+                    this.data.default_property = {
+                        property: defaultProperty,
+                        role: role
+                    }
+                }  
+             } 
              this.unitservice.createResident(this.data)
                 .then(
                     data => {
