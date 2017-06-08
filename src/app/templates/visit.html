@@ -297,7 +297,7 @@
 								<div class="col-sm-8">
 									<select  [ngClass]="{ 'form-control-blur': myForm.controls.contract.value =='' }" class="form-control" formControlName="contract" name="contract">
 										<option disabled="" selected="" value="">Search project here</option>
-										<option *ngFor="let u of contracts" [ngValue]="u._id">{{u.title}}</option>
+										<option *ngFor="let u of contracts" [ngValue]="u._id">{{u.title}} ({{u.reference_no}})</option>
 									</select>
 									<small style="color: red" [hidden]="!myForm.controls.contract.value =='' || (myForm.controls.contract.value =='' && !addSubmitted)">Project is required</small>
 								</div>
