@@ -285,7 +285,6 @@ export class EditPetitionComponent implements OnInit {
     }
 
     getDate(event: any, type: string){
-        console.log(event)
         if(type == 'start'){
             this.model.start_time = event.jsdate;
         }else{

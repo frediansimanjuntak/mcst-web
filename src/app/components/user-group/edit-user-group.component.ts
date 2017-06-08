@@ -191,7 +191,6 @@ export class EditUserGroupComponent implements OnInit {
             this.userGroupService.create(this.model)
             .then(
                 data => {
-                    console.log(data)
                     this._notificationsService.success('Success', 'Create user group successful')
                     this.router.navigate([this.name.default_development.name_url + '/user_group']);
                 },

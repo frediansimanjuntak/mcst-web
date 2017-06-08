@@ -53,7 +53,6 @@ export class ContactComponent  implements OnInit{
 					data.type_contact.indexOf("emergency") ==  -1 &&
                      data.type_contact.indexOf("management") ==  -1
 				)
-                console.log(this.contactOthers)
 				setTimeout(() => this.loading = false, 1000);   
 			})
     }
@@ -179,7 +178,6 @@ export class ContactComponent  implements OnInit{
 
     preUpdate(contact){
         this.model = contact;
-        console.log(this.model)
     }
 
     clearModel(){
