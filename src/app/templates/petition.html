@@ -149,11 +149,13 @@
 								<span *ngIf="petitions.attachment.length > 0">Yes</span>
 							</template>
 						</p-column>
-						<p-column [style]="{'width':'250px'}" styleClass="col-button" header="Action">
+						<p-column [style]="{'width':'300px'}" styleClass="col-button" header="Action">
 							<template class="pull-right" let-petitions="rowData" pTemplate="body">
-								<a type="button" style="cursor:pointer; margin: 0 25px 0 5px;" class="btn-underline" (click)="viewPetition(petitions)">View</a>
+								<a *ngIf="petitions.approval.status == 'pending'" type="button" style="cursor:pointer; margin: 0 5px 0 5px;" class="btn-underline" (click)="approvePetition(petitions)">Approve</a>
+								<a *ngIf="petitions.approval.status == 'pending'" type="button" style="cursor:pointer; margin: 0 5px 0 5px;" class="btn-underline" (click)="rejectPetition(petitions)">Reject</a>
+								<a type="button" style="cursor:pointer; margin: 0 5px 0 5px;" class="btn-underline" (click)="viewPetition(petitions)">View</a>
 								<!-- <a (click)="viewPdf(petitions)" style="cursor:pointer; margin: 0 25px 0 5px;" class="btn-underline"><img src="../../assets/image/icon_pdf.png" class="img-btn" />Pdf</a> -->
-								<a style="cursor:pointer; margin: 0 25px 0 5px;" class="btn-underline" [attr.href]="pdfUrl" download><img src="../../assets/image/icon_pdf.png" class="img-btn" />Pdf</a>
+								<a style="cursor:pointer; margin: 0 5px 0 5px;" class="btn-underline" [attr.href]="pdfUrl" download><img src="../../assets/image/icon_pdf.png" class="img-btn" />Pdf</a>
 								<p-checkbox name="archive" (click)="checkSelected()" value="{{petitions._id}}" [(ngModel)]="selectedValues"></p-checkbox>
 							</template>
 						</p-column>

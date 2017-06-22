@@ -67,6 +67,13 @@ export class PetitionService {
           .catch(this.handleError);    
     }  
 
+    approval(id: string, string: string): Promise<Petition> {
+        return this.http.post(url + 'petitions/' + status + '/' + id , '' , this.jwt())
+            .toPromise()
+            .then(res => res.json().data)
+            .catch(this.handleError);
+    }
+
     private handleError(error: any): Promise<any> {
         console.error('An error occurred', error); // for demo purposes only
         return Promise.reject(error.message || error);
