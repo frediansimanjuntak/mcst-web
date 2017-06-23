@@ -176,7 +176,8 @@
 								</div>
 							</div>
 							<br>
-							<a *ngIf="name && visitActive.contract" class="btn-underline pull-right" style="color: black" [routerLink]="'/' + name.default_development.name_url + '/contract/view/' + visitActive.contract._id">View project details</a>
+							<a *ngIf="name && visitActive?.contract" class="btn-underline pull-right" style="color: black" [routerLink]="'/' + name.default_development.name_url + '/contract/view/' + visitActive.contract._id">View project details</a>
+							<a *ngIf="name && visitActive?.contract && visitActive?.contract?.reference_type == 'petition'" class="btn-underline pull-right" style="color: black; margin-right: 5px" [routerLink]="'/' + name.default_development.name_url + '/petition/view/' + visitActive.contract.reference_id">View request details</a>
 						</template>
 						<a #pop="bs-popover" [hidden]="visitActive.purpose != 'maintenance_work' || !visitActive.contract" type="button" style="cursor: pointer; color: blue;" class="btn-underline" [popover]="popTemplate">Maintenance work</a>
 						<span *ngIf="!visitActive.purpose">-</span>
