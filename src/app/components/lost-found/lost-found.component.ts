@@ -9,6 +9,7 @@ import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms'
 import * as $ from "jquery";
 import { ConfirmationService } from 'primeng/primeng';
 import { DatePipe } from '@angular/common';
+import * as _ from 'lodash'
 // import { Overlay } from 'angular2-modal';
 // import { Modal } from 'angular2-modal/plugins/bootstrap';
 // import { PublishAnnouncementModalComponent, PublishAnnouncementModalData } from './publish-announcement-modal.component';
@@ -156,10 +157,15 @@ export class LostFoundComponent implements OnInit {
                     if(this.lostFounds[i].property){
                         let unit = this.dataUnit.find(data => data._id ==  this.lostFounds[i].property);
                         this.lostFounds[i].unit_no = '#' + unit.address.unit_no + '-' + unit.address.unit_no_2;
+                        this.lostFound[i].unit_no_1 =  unit.address.unit_no;
+                        this.lostFound[i].unit_no_2 = unit.address.unit_no_2;
                     }else{
                         this.lostFounds[i].unit_no = '';
+                        this.lostFound[i].unit_no_1 =  '';
+                        this.lostFound[i].unit_no_2 = '';
                     }
                 }
+                this.lostFound = _.orderBy(this.lostFound, ['unit_no_1', 'unit_no_2'], ['asc', 'asc']);
                 this.allArchived     = this.lostFounds.filter(data => data.archieve === true );
                 this.archieveds      = this.lostFounds.filter(data => data.archieve === true );
                 this.archievedLosts  = this.archieveds.filter(data => data.type == 'lost');

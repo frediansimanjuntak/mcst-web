@@ -4,11 +4,10 @@ import { DatePipe  } from '@angular/common';
 import { Router, Params, ActivatedRoute } from '@angular/router'; 
 import { Booking, Facility } from '../../models/index';
 import { BookingService, AlertService, FacilityService, UserService, UnitService, PaymentService } from '../../services/index';
-
+import * as _ from 'lodash'
 import { NotificationsService } from 'angular2-notifications';
 import { Observable} from 'rxjs/Observable';
 import * as moment from 'moment';
-
 import { ConfirmationService } from 'primeng/primeng';
 
 @Component({
@@ -170,8 +169,15 @@ export class BookingComponent implements OnInit {
 						let a = this.units.find(data => data._id == bookings[i].property);
 						if (a && a != undefined && a != null) {
 							bookings[i].unit = '#'+a.address.unit_no +'-'+ a.address.unit_no_2;
+							bookings[i].unit_1 = a.address.unit_no;
+							bookings[i].unit_2 = a.address.unit_no_2;
+						} else {
+							bookings[i].unit = '-';
+							bookings[i].unit_1 = '-';
+							bookings[i].unit_2 = '-';
 						}
 					}
+					bookings = _.orderBy(bookings, ['unit_1', 'unit_2'], ['asc', 'asc']);
 					this.all = bookings
 					this.bookings = bookings;
 					this.selectedDay = this.bookings.filter(data => data.booking_date.slice(0,10) == this.day);

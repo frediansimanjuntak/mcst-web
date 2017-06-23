@@ -166,7 +166,7 @@ export class ViewUnitComponent implements OnInit {
                                         
                                         this.residents.unshift(landlordForResidentTable);
                                         this.hasLandlord = true;
-                                        this.model.type  = 'tenant';
+                                        this.model.type  = 'occupier';
                                         this.myForm = this.formbuilder.group({
                                             username : ['', Validators.compose([Validators.required, Validators.minLength(3)])],
                                             email : ['', Validators.compose([Validators.required])],
@@ -355,7 +355,7 @@ export class ViewUnitComponent implements OnInit {
                     setTimeout(() => this.loading = false, 1000);
                 }
             ); 
-        }else if (resident.type == 'tenant'){
+        }else if (resident.type == 'tenant' || resident.type == 'occupier'){
            this.unitservice.deleteTenant(resident._id, this.unit._id, this.name.default_development.name_url, resident.resident)
             .then(
                 response => {
@@ -408,9 +408,9 @@ export class ViewUnitComponent implements OnInit {
                 });
             }
                 
-        }else if(resident.type == 'tenant'){
+        }else if(resident.type == 'tenant' || resident.type == 'occupier'){
             this.confirmationService.confirm({
-                message: 'Are you sure that you want to delete this tenant?',
+                message: 'Are you sure that you want to delete this occupier?',
                 header: 'Delete Confirmation',
                 icon: 'fa fa-warning',
                 accept: () => {
@@ -550,7 +550,7 @@ export class ViewUnitComponent implements OnInit {
          }else if(this.model.type == "landlord" && this.hasLandlord){
             this.errorMessage = "This unit already has a owner, please remove owner first"
          }else if(this.tenantTotal >= this.unit.max_tenant){
-            this.errorMessage = "This unit has reach max. number of tenant ( max :" + this.tenantTotal + ") , please remove a tenant first"
+            this.errorMessage = "This unit has reach max. number of occupier ( max :" + this.tenantTotal + ") , please remove a occupier first"
          }else if(this.tenantTotal < this.unit.max_tenant){
             this.createUser(model);
          }
@@ -564,7 +564,7 @@ export class ViewUnitComponent implements OnInit {
          }else if(this.model.type == "landlord" && this.hasLandlord){
             this.errorMessage = "This unit already has an owner, please remove owner first"
          }else if(this.model.type == "tenant" && this.tenantTotal >= this.unit.max_tenant){
-            this.errorMessage = "This unit has reach max. number of tenant ( max :" + this.tenantTotal + ") , please remove a tenant first"
+            this.errorMessage = "This unit has reach max. number of occupier ( max :" + this.tenantTotal + ") , please remove a occupier first"
          }else {
              this.loading = true;
              this.loading = true
@@ -577,8 +577,8 @@ export class ViewUnitComponent implements OnInit {
              var role: string;
              if(this.makeAsDefaultProperty == 'yes'){
                 defaultProperty = this.id
-                if(this.model.type == "tenant"){
-                    role = "tenant";
+                if(this.model.type == "occupier"){
+                    role = "occupier";
                 }else{
                     role = "owner";
                 }
@@ -684,7 +684,7 @@ export class ViewUnitComponent implements OnInit {
         model.default_property = {
              property: this.id
         }
-        if(this.model.type=='tenant'){
+        if(this.model.type=='occupier'){
                model.rented_property.development = this.name.default_development._id;
              if(model.owned_property){
                  delete model.owned_property;
@@ -844,7 +844,7 @@ export class ViewUnitComponent implements OnInit {
     }
 
     residentTypeChange(event){
-        if(this.model.type=='tenant'){
+        if(this.model.type=='occupier'){
             this.myForm = this.formbuilder.group({
                 username : ['', Validators.compose([Validators.required, Validators.minLength(3)])],
                 email : ['', Validators.compose([Validators.required])],

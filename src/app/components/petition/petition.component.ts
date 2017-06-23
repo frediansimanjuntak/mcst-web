@@ -233,6 +233,34 @@ export class PetitionComponent implements OnInit {
         this.router.navigate([this.name.default_development.name_url + '/petition/view', petition._id]);
     }
 
+    approvePetition(petition: Petition){
+        this.petitionService.approval(petition._id, 'accepted')
+        .then(data => {
+            this._notificationsService.success('Success', 'Approve request successful.');
+            this.ngOnInit();
+        }).catch(err => {
+            if (err.json().message) {
+                this._notificationsService.error('Error', err.json().message)
+            } else {
+                this._notificationsService.error('Error', 'Approve request failed, please try again later')
+            }
+        });
+    }
+
+    rejectPetition(petition: Petition){
+        this.petitionService.approval(petition._id, 'rejected')
+        .then(data => {
+            this._notificationsService.success('Success', 'Reject request successful.');
+            this.ngOnInit();
+        }).catch(err => {
+            if (err.json().message) {
+                this._notificationsService.error('Error', err.json().message)
+            } else {
+                this._notificationsService.error('Error', 'Reject request failed, please try again later')
+            }
+        });
+    }
+
     editPetition(petition: Petition){
         this.router.navigate([this.name.default_development.name_url + '/petition/edit', petition._id]);
     }

@@ -4,8 +4,7 @@ import { Development } from '../../models/index';
 import { UnitService, AlertService, UserService} from '../../services/index';
 import {SlimLoadingBarService, SlimLoadingBarComponent} from 'ng2-slim-progress-bar';
 import { NotificationsService } from 'angular2-notifications';
-
-
+import * as _ from 'lodash'
 import { Observable} from 'rxjs/Observable';
 
 @Component({
@@ -80,8 +79,10 @@ export class UnitComponent implements OnInit {
         this.unitservice.getAll(this.name.default_development.name_url)
             .subscribe((data)=> {
                 setTimeout(()=> {
-                    this.all = data.properties;
-                    this.dataUnit = data.properties;
+                    var properties = data.properties;
+                    properties = _.orderBy(properties, ['address.unit_no', 'address.unit_no_2'], ['asc', 'asc']);
+                    this.all = properties;
+                    this.dataUnit = properties;
                     this.loading = false;
                     setTimeout(() => this.loading = false, 1000);
                 }, 1000);
