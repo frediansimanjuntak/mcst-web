@@ -143,10 +143,11 @@
 								<br>
 							</template>
 						</p-column>
-						<p-column header="Attachment">
+						<p-column field="approval.status" header="Approval" sortable="true">
 							<template let-petitions="rowData" pTemplate="body">
-								<span *ngIf="petitions.attachment.length === 0">No Files</span>
-								<span *ngIf="petitions.attachment.length > 0">Yes</span>
+								<span *ngIf="petitions?.approval?.status == 'pending'" class="color-pending">Pending</span>
+								<span *ngIf="petitions?.approval?.status == 'rejected'" class="color-reject">Rejected</span>
+								<span *ngIf="petitions?.approval?.status == 'accepted'" class="color-accept">Accepted</span>
 							</template>
 						</p-column>
 						<p-column [style]="{'width':'300px'}" styleClass="col-button" header="Action">

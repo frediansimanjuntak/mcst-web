@@ -1232,3 +1232,12 @@ form .has-error > .row > .col-sm-8 > p-autocomplete > .ui-widget > .ui-inputtext
 .poll-margin{
   margin-top: 30px;
 }
+.color-pending {
+    color: #ddbc39;
+}
+.color-reject {
+    color: #dd4b39;
+}
+.color-accept {
+    color: #00a65a;
+}
