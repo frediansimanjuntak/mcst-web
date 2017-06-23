@@ -8,6 +8,7 @@ import { FileUploader } from 'ng2-file-upload';
 import { ConfirmationService } from 'primeng/primeng';
 import { ModalDirective } from 'ng2-bootstrap';
 import * as moment from 'moment'
+import * as _ from 'lodash'
 
 @Component({
     // moduleId: module.id,
@@ -109,11 +110,20 @@ export class FeedbackComponent implements OnInit {
                             feedbacks[i].reply_at = moment(reply_at).format('DD/MM/YYYY');
                         }
                         let a = this.units.find(data => data._id == feedbacks[i].property);
-                        feedbacks[i].property = '#'+a.address.unit_no +'-'+ a.address.unit_no_2;
+                        if (a && a != undefined && a != null) {
+                            feedbacks[i].property = '#'+a.address.unit_no +'-'+ a.address.unit_no_2;
+                            feedbacks[i].unit_1 = a.address.unit_no;
+                            feedbacks[i].unit_2 = a.address.unit_no_2;
+                        } else {
+                            feedbacks[i].property = '-';
+                            feedbacks[i].unit_1 = '-';
+                            feedbacks[i].unit_2 = '-';
+                        }
                     }
-                    this.all           =  feedbacks.filter(feedbacks => feedbacks.archieve === false );
-                    this.feedbacks     = feedbacks.filter(feedbacks => feedbacks.archieve === false );
-                    this.published     = feedbacks.filter(feedbacks => feedbacks.status === 'publish' && feedbacks.archieve === false );
+                    feedbacks        = _.orderBy(feedbacks, ['unit_1', 'unit_2'], ['asc', 'asc']);
+                    this.all         =  feedbacks.filter(feedbacks => feedbacks.archieve === false );
+                    this.feedbacks   = feedbacks.filter(feedbacks => feedbacks.archieve === false );
+                    this.published   = feedbacks.filter(feedbacks => feedbacks.status === 'publish' && feedbacks.archieve === false );
                     
                     setTimeout(() => this.loading = false, 1000);
                 });

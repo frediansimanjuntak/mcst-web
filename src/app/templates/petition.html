@@ -151,8 +151,8 @@
 						</p-column>
 						<p-column [style]="{'width':'300px'}" styleClass="col-button" header="Action">
 							<template class="pull-right" let-petitions="rowData" pTemplate="body">
-								<a *ngIf="petitions.approval.status == 'pending'" type="button" style="cursor:pointer; margin: 0 5px 0 5px;" class="btn-underline" (click)="approvePetition(petitions)">Approve</a>
-								<a *ngIf="petitions.approval.status == 'pending'" type="button" style="cursor:pointer; margin: 0 5px 0 5px;" class="btn-underline" (click)="rejectPetition(petitions)">Reject</a>
+								<a *ngIf="petitions?.approval && petitions?.approval?.status == 'pending'" type="button" style="cursor:pointer; margin: 0 5px 0 5px;" class="btn-underline" (click)="approvePetition(petitions)">Approve</a>
+								<a *ngIf="petitions?.approval && petitions?.approval?.status == 'pending'" type="button" style="cursor:pointer; margin: 0 5px 0 5px;" class="btn-underline" (click)="rejectPetition(petitions)">Reject</a>
 								<a type="button" style="cursor:pointer; margin: 0 5px 0 5px;" class="btn-underline" (click)="viewPetition(petitions)">View</a>
 								<!-- <a (click)="viewPdf(petitions)" style="cursor:pointer; margin: 0 25px 0 5px;" class="btn-underline"><img src="../../assets/image/icon_pdf.png" class="img-btn" />Pdf</a> -->
 								<a style="cursor:pointer; margin: 0 5px 0 5px;" class="btn-underline" [attr.href]="pdfUrl" download><img src="../../assets/image/icon_pdf.png" class="img-btn" />Pdf</a>
