@@ -23,7 +23,7 @@
 							          <select class="form-control" name="selectedType" (change)="filterType($event)" [(ngModel)]="typeFilter">
 							          	<option value="">Status (default/all)</option>
 							            <option value="own stay">Owned</option>
-							            <option value="tenanted">Tenanted</option>
+							            <option value="occupied">Occupied</option>
 							          </select>
 							    </div>
 						    </div>
@@ -64,7 +64,7 @@
 						<p-column field="status" header="Status" sortable="true">
 							<template let-dataUnit="rowData" pTemplate="body">
 								<span *ngIf="dataUnit.status == 'own stay'">Owned</span>
-								<span *ngIf="dataUnit.status == 'tenanted' || dataUnit.status == 'occupired'">Occupired</span>
+								<span *ngIf="dataUnit.status == 'tenanted' || dataUnit.status == 'occupied'">Occupied</span>
 								<span style="color: red" *ngIf="dataUnit.status == 'empty'">Empty</span>
 							</template>
 						</p-column>

@@ -109,9 +109,14 @@ export class UnitComponent implements OnInit {
                                                     ('#'+data.address.unit_no+'-'+data.address.unit_no_2.toLowerCase()).indexOf(this.unitFilter.toLowerCase()) !==  -1
                                             );    
         }else{
-            this.dataUnit = this.all.filter(data => data.status.toLowerCase().indexOf(this.typeFilter.toLowerCase()) !==  -1);  
+            if (this.typeFilter == "occupied") {
+                this.dataUnit = this.all.filter(data => data.status.toLowerCase().indexOf(this.typeFilter.toLowerCase()) !==  -1 || data.status.toLowerCase().indexOf('tenanted') !==  -1);
+            } else {
+                this.dataUnit = this.all.filter(data => data.status.toLowerCase().indexOf(this.typeFilter.toLowerCase()) !==  -1);
+            }  
         }
         setTimeout(() => this.loading = false, 500);
+            
     }
 
     view(unit: any){
