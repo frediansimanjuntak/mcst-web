@@ -64,11 +64,11 @@
 						<p-column field="status" header="Status" sortable="true">
 							<template let-dataUnit="rowData" pTemplate="body">
 								<span *ngIf="dataUnit.status == 'own stay'">Owned</span>
-								<span *ngIf="dataUnit.status == 'tenanted'">Tenanted</span>
+								<span *ngIf="dataUnit.status == 'tenanted' || dataUnit.status == 'occupired'">Occupired</span>
 								<span style="color: red" *ngIf="dataUnit.status == 'empty'">Empty</span>
 							</template>
 						</p-column>
-						<p-column sortable="true" field="tenant.data.length" header="No. of Tenant" [filter]="true" filterPlaceholder="Search no of tenant">
+						<p-column sortable="true" field="tenant.data.length" header="No. of Occupier" [filter]="true" filterPlaceholder="Search no of tenant">
 							<template let-dataUnit="rowData" pTemplate="body">
 								<span *ngIf="dataUnit.tenant.data">{{dataUnit.tenant.data.length}}</span>
 							</template>

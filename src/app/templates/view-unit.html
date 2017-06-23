@@ -27,11 +27,11 @@
                                 <span class="break" *ngIf="hasLandlord"><b>Owner :&nbsp;</b>{{unit?.landlord?.data?.resident?.username | capitalize}}<br></span>
                                 <b>Status :</b>
                                 <span *ngIf="unit.status == 'own stay'">Owned</span>
-                                <span *ngIf="unit.status == 'tenanted'">Tenanted</span>
+                                <span *ngIf="unit.status == 'tenanted' || unit.status == 'occupired'">Occupired</span>
                                 <span style="color: red" *ngIf="unit.status == 'empty'">Empty</span>
                             </div>
                             <div class="col-md-4">
-                                <span *ngIf="unit?.tenant?.data"><b>No. of Tenant :&nbsp;</b>{{ tenantTotal }}<br></span>
+                                <span *ngIf="unit?.tenant?.data"><b>No. of Occupier :&nbsp;</b>{{ tenantTotal }}<br></span>
                                 <span  *ngIf="vehicles"><b>Vehicle :&nbsp;</b>{{vehicles.length}}</span>
                                 
                             </div>
@@ -69,7 +69,7 @@
 
                 <div class="row bg-dark no-margin">
                     <div class="col-md-6 col-padding" style="color:#eee;">
-                        <h5>Resident/Tenant</h5>
+                        <h5>Resident/Occupier</h5>
                     </div>
                     <div class="col-md-6">
                         <a class="btn btn-gray btn-tab-dark pull-right" (click)="firstModal.open(); resetForm()"><img class="img-btn" src="../../assets/image/icon_addresident.png"   />&nbsp;Add Resident</a>
@@ -86,7 +86,8 @@
                         </p-column>
                         <p-column header="Type" sortable="true" field="type">
                             <template let-residents="rowData" pTemplate="body">
-                                <span>{{residents.type | capitalize}}</span>
+                                <span *ngIf="residents.type != 'tenant'">{{residents.type | capitalize}}</span>
+                                <span *ngIf="residents.type == 'tenant'">Occupier</span>
                             </template>
                         </p-column>
                         <p-column header="Added on" field="created_at" sortable="true">
@@ -193,7 +194,7 @@
                                 <label  class="control-label col-sm-4" for="type">Type :</label>
                                 <div class="col-sm-8">
                                     <select class="form-control" name="type"  (change)="residentTypeChange($event)" [(ngModel)]="model.type" [ngModelOptions]="{standalone: true}">
-                                        <option [selected]="hasLandlord" value="tenant">Tenant</option>
+                                        <option [selected]="hasLandlord" value="occupier">Occupier</option>
                                         <option [selected]="!hasLandlord" value="landlord">Owner</option>
                                     </select>
                                     <span *ngIf="!valid" style="color: red">{{errorMessage}}</span>
