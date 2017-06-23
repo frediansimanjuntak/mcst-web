@@ -272,7 +272,8 @@
                                 </p-column>
                                 <p-column filterMatchMode="contains" [style]="{'width': '112px'}" field="status" header="Status" sortable="true" [filter]="true" filterPlaceholder="Search Status">
                                     <template let-contracts="rowData" pTemplate="body">
-                                        <span>{{contracts.status | capitalize}}</span>
+                                        <span *ngIf="contracts.status == 'open'" class="color-accept">{{contracts.status | capitalize}}</span>
+                                        <span *ngIf="contracts.status == 'close'" class="color-reject">{{contracts.status | capitalize}}</span>
                                     </template>
                                 </p-column>
                                 <p-column field="updated_at" header="Created/Update" sortable="true">
